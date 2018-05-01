@@ -1,0 +1,15 @@
+/.vs/Mushka.Accounting/v15/*.suo
+/.vs/Mushka.Accounting/v15/Server/sqlite3/*.lock
+/.vs/Mushka.Accounting/v15/Server/sqlite3/*.ide
+/.vs/Mushka.Accounting/v15/Server/sqlite3/*.ide-shm
+/.vs/Mushka.Accounting/v15/Server/sqlite3/*.ide-wal
+/Mushka.Accounting.Core/obj
+/Mushka.Accounting.Core/bin
+/Mushka.Accounting.Domain/obj
+/Mushka.Accounting.Domain/bin
+/Mushka.Accounting.Infrastructure.DataAccess/obj
+/Mushka.Accounting.Infrastructure.DataAccess/bin
+/Mushka.Accounting.Service/obj
+/Mushka.Accounting.Service/bin
+/Mushka.Accounting.WebApi/obj
+/Mushka.Accounting.WebApi/bin
