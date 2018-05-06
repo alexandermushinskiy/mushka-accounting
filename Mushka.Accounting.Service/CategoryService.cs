@@ -62,9 +62,18 @@ namespace Mushka.Accounting.Service
             throw new NotImplementedException();
         }
 
-        public Task<ValidationResponse<Category>> DeleteAsync(Guid categorywId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<ValidationResponse<Category>> DeleteAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            Category category = await categoryRepository.GetByIdAsync(categoryId, cancellationToken);
+
+            if (category == null)
+            {
+                return CreateWarningValidationResponse($"Category with id {categoryId} is not found.", ValidationStatusType.NotFound);
+            }
+
+            await categoryRepository.DeleteAsync(category, cancellationToken);
+
+            return new ValidationResponse<Category>(category, ValidationResult.CreateInfo($"Category {category.Id} was successfully deleted."));
         }
 
         private static ValidationResponse<Category> CreateWarningValidationResponse(

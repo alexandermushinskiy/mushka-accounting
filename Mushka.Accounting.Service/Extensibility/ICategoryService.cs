@@ -17,6 +17,6 @@ namespace Mushka.Accounting.Service.Extensibility
 
         Task<ValidationResponse<Category>> UpdateAsync(Category category, CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<ValidationResponse<Category>> DeleteAsync(Guid categorywId, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ValidationResponse<Category>> DeleteAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
