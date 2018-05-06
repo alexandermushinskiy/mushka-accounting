@@ -4,4 +4,13 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mushka.Accounting.Core\Mushka.Accounting.Core.csproj" />
+    <ProjectReference Include="..\Mushka.Accounting.Domain\Mushka.Accounting.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
