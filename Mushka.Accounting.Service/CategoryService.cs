@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Mushka.Accounting.Core.Validation;
@@ -12,7 +11,7 @@ using Mushka.Accounting.Service.Extensibility;
 
 namespace Mushka.Accounting.Service
 {
-    internal class CategoryService : ICategoryService
+    internal class CategoryService : ServiceBase<Category>, ICategoryService
     {
         private readonly ICategoryRepository categoryRepository;
 
@@ -31,7 +30,7 @@ namespace Mushka.Accounting.Service
                 ? "Categories were successfully retrieved."
                 : "No categories found.";
 
-            return new ValidationResponse<IEnumerable<Category>>(categories, ValidationResult.CreateInfo(message));
+            return CreateInfoValidationResponse(categories, message);
         }
 
         public async Task<ValidationResponse<Category>> GetByIdAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))
@@ -40,7 +39,7 @@ namespace Mushka.Accounting.Service
 
             return category == null
                 ? CreateWarningValidationResponse($"Category with id {categoryId} is not found.", ValidationStatusType.NotFound)
-                : new ValidationResponse<Category>(category, ValidationResult.CreateInfo($"Category {category.Id} was successfully retrieved."));
+                : CreateInfoValidationResponse(category, $"Category {category.Id} was successfully retrieved.");
         }
 
         public async Task<ValidationResponse<Category>> AddAsync(Category category, CancellationToken cancellationToken = default(CancellationToken))
@@ -54,7 +53,7 @@ namespace Mushka.Accounting.Service
 
             Category addedCategory = await categoryRepository.AddAsync(category, cancellationToken);
 
-            return new ValidationResponse<Category>(addedCategory, ValidationResult.CreateInfo($"Category {category.Id} was successfully created."));
+            return CreateInfoValidationResponse(addedCategory, $"Category {category.Id} was successfully created.");
         }
 
         public async Task<ValidationResponse<Category>> UpdateAsync(Category category, CancellationToken cancellationToken = default(CancellationToken))
@@ -73,7 +72,7 @@ namespace Mushka.Accounting.Service
 
             Category updatedCategory = await categoryRepository.UpdateAsync(category, cancellationToken);
 
-            return new ValidationResponse<Category>(updatedCategory, ValidationResult.CreateInfo($"Category {category.Id} was successfully updated."));
+            return CreateInfoValidationResponse(updatedCategory, $"Category {category.Id} was successfully updated.");
         }
 
         public async Task<ValidationResponse<Category>> DeleteAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))
@@ -87,12 +86,7 @@ namespace Mushka.Accounting.Service
 
             await categoryRepository.DeleteAsync(category, cancellationToken);
 
-            return new ValidationResponse<Category>(category, ValidationResult.CreateInfo($"Category {category.Id} was successfully deleted."));
+            return CreateInfoValidationResponse(category, $"Category {category.Id} was successfully deleted.");
         }
-
-        private static ValidationResponse<Category> CreateWarningValidationResponse(
-            string message,
-            ValidationStatusType validationStatus = ValidationStatusType.BadOperation) =>
-            new ValidationResponse<Category>(null, ValidationResult.CreateWarning(message, validationStatus));
     }
 }

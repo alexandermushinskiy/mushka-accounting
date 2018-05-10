@@ -9,6 +9,7 @@ namespace Mushka.Accounting.Infrastructure.DataAccess
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<CategoryRepository>().As<ICategoryRepository>();
+            builder.RegisterType<SupplierRepository>().As<ISupplierRepository>();
         }
     }
 }

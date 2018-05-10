@@ -14,7 +14,8 @@ namespace Mushka.Accounting.Infrastructure.DataAccess.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ConfigureView();
+            modelBuilder.ConfigureCategory();
+            modelBuilder.ConfigureSupplier();
 
             base.OnModelCreating(modelBuilder);
         }

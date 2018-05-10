@@ -30,6 +30,18 @@ namespace Mushka.Accounting.WebApi
 
             CreateMap<CategoryRequestModel, Category>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<ValidationResponse<IEnumerable<Supplier>>, SuppliersResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => src.ValidationResults));
+
+            CreateMap<ValidationResponse<Supplier>, SupplierResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => src.ValidationResults));
+
+            CreateMap<SupplierRequestModel, Supplier>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedOn, opt => opt.Ignore());
         }
     }
 }

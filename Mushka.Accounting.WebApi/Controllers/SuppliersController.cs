@@ -11,45 +11,45 @@ using Mushka.Accounting.WebApi.Extensibility.Providers;
 namespace Mushka.Accounting.WebApi.Controllers
 {
     [Route("api/v1/[controller]")]
-    public class CategoriesController : ControllerBase<Category>
+    public class SuppliersController : ControllerBase<Supplier>
     {
-        public CategoriesController(
+        public SuppliersController(
             ICancellationTokenSourceProvider cancellationTokenSourceProvider,
             IActionResultProvider actionResultProvider,
             IMapper mapper,
-            ICategoryService categoryService)
-            : base(cancellationTokenSourceProvider, actionResultProvider, mapper, categoryService)
+            ISupplierService supplierService)
+            : base(cancellationTokenSourceProvider, actionResultProvider, mapper, supplierService)
         {
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return await GetAll<CategoriesResponseModel>();
+            return await GetAll<SuppliersResponseModel>();
         }
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            return await GetById<CategoryResponseModel>(id);
+            return await GetById<SupplierResponseModel>(id);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]CategoryRequestModel categoryRequest)
+        public async Task<IActionResult> Post([FromBody]SupplierRequestModel supplierRequest)
         {
-            return await Post<CategoryRequestModel, CategoryResponseModel>(categoryRequest);
+            return await Post<SupplierRequestModel, SupplierResponseModel>(supplierRequest);
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody]CategoryRequestModel categoryRequest)
+        public async Task<IActionResult> Put(Guid id, [FromBody]SupplierRequestModel supplierRequest)
         {
-            return await Put<CategoryRequestModel, CategoryResponseModel>(id, categoryRequest);
+            return await Put<SupplierRequestModel, SupplierResponseModel>(id, supplierRequest);
         }
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            return await Delete<CategoryResponseModel>(id);
+            return await Delete<SupplierResponseModel>(id);
         }
     }
 }

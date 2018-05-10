@@ -1,8 +1,9 @@
 ﻿using System;
+using Mushka.Accounting.Domain.Extensibility.Entities;
 
 namespace Mushka.Accounting.Domain.Entities
 {
-    public class Category
+    public class Category : IEntity
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

@@ -8,6 +8,7 @@ namespace Mushka.Accounting.Service
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<CategoryService>().As<ICategoryService>();
+            builder.RegisterType<SupplierService>().As<ISupplierService>();
         }
     }
 }

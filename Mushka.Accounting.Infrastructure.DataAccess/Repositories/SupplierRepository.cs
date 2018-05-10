@@ -4,9 +4,9 @@ using Mushka.Accounting.Infrastructure.DataAccess.Database;
 
 namespace Mushka.Accounting.Infrastructure.DataAccess.Repositories
 {
-    internal class CategoryRepository : RepositoryBase<Category>, ICategoryRepository
+    internal class SupplierRepository : RepositoryBase<Supplier>, ISupplierRepository
     {
-        public CategoryRepository(AccountingDbContext context) : base(context)
+        public SupplierRepository(AccountingDbContext context) : base(context)
         {
         }
     }

@@ -2,7 +2,7 @@
 
 namespace Mushka.Accounting.Service.Extensibility
 {
-    public interface ICategoryService : IServiceBase<Category>
+    public interface ISupplierService : IServiceBase<Supplier>
     {
     }
 }

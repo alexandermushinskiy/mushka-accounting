@@ -2,7 +2,7 @@
 
 namespace Mushka.Accounting.Domain.Extensibility.Repositories
 {
-    public interface ICategoryRepository : IRepository<Category>
+    public interface ISupplierRepository : IRepository<Supplier>
     {
     }
 }
