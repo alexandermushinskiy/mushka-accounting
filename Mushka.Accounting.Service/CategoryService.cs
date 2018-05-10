@@ -57,9 +57,23 @@ namespace Mushka.Accounting.Service
             return new ValidationResponse<Category>(addedCategory, ValidationResult.CreateInfo($"Category {category.Id} was successfully created."));
         }
 
-        public Task<ValidationResponse<Category>> UpdateAsync(Category category, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<ValidationResponse<Category>> UpdateAsync(Category category, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            Category categoryToUpdate = await categoryRepository.GetByIdAsync(category.Id, cancellationToken);
+
+            if (categoryToUpdate == null)
+            {
+                return CreateWarningValidationResponse($"Category with id {category.Id} is not found.", ValidationStatusType.NotFound);
+            }
+
+            if (categoryRepository.Get(cat => cat.Id != category.Id && cat.Name == category.Name).Any())
+            {
+                return CreateWarningValidationResponse($"Category with the name {category.Name} is already exist.");
+            }
+
+            Category updatedCategory = await categoryRepository.UpdateAsync(category, cancellationToken);
+
+            return new ValidationResponse<Category>(updatedCategory, ValidationResult.CreateInfo($"Category {category.Id} was successfully updated."));
         }
 
         public async Task<ValidationResponse<Category>> DeleteAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))

@@ -2,7 +2,7 @@
 
 namespace Mushka.Accounting.WebApi.ClientModels
 {
-    public class PostCategoryRequestModel
+    public class CategoryRequestModel
     {
         [Required]
         public string Name { get; set; }

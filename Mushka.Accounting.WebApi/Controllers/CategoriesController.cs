@@ -55,15 +55,36 @@ namespace Mushka.Accounting.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]PostCategoryRequestModel categoryRequest)
+        public async Task<IActionResult> Post([FromBody]CategoryRequestModel categoryRequest)
         {
             ValidationResponse<Category> response = await categoryService.AddAsync(
-                mapper.Map<PostCategoryRequestModel, Category>(categoryRequest),
+                mapper.Map<CategoryRequestModel, Category>(categoryRequest),
                 cancellationTokenSourceProvider.Get().Token);
 
             CategoryResponseModel clientResponse = mapper.Map<ValidationResponse<Category>, CategoryResponseModel>(response);
 
             return actionResultProvider.Get(clientResponse, StatusCodes.Status201Created);
+        }
+
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Put(Guid id, [FromBody]CategoryRequestModel viewRequestModel)
+        {
+            Category viewToUpdate = mapper.Map<CategoryRequestModel, Category>(viewRequestModel);
+            viewToUpdate.Id = id;
+
+            ValidationResponse<Category> view = await categoryService.UpdateAsync(viewToUpdate, cancellationTokenSourceProvider.Get().Token);
+            CategoryResponseModel clientResponse = mapper.Map<ValidationResponse<Category>, CategoryResponseModel>(view);
+
+            return actionResultProvider.Get(clientResponse);
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            ValidationResponse<Category> category = await categoryService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
+            CategoryResponseModel clientResponse = mapper.Map<ValidationResponse<Category>, CategoryResponseModel>(category);
+
+            return actionResultProvider.Get(clientResponse);
         }
 
     }

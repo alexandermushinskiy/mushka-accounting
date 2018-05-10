@@ -27,6 +27,9 @@ namespace Mushka.Accounting.WebApi
             CreateMap<ValidationResponse<Category>, CategoryResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => src.ValidationResults));
+
+            CreateMap<CategoryRequestModel, Category>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
         }
     }
 }
