@@ -1,5 +1,6 @@
 ﻿using Autofac;
-using Mushka.Accounting.Service.Extensibility;
+using Mushka.Accounting.Service.Extensibility.Services;
+using Mushka.Accounting.Service.Services;
 
 namespace Mushka.Accounting.Service
 {
@@ -9,6 +10,7 @@ namespace Mushka.Accounting.Service
         {
             builder.RegisterType<CategoryService>().As<ICategoryService>();
             builder.RegisterType<SupplierService>().As<ISupplierService>();
+            builder.RegisterType<ProductService>().As<IProductService>();
         }
     }
 }

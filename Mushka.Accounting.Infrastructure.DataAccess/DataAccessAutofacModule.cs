@@ -10,6 +10,7 @@ namespace Mushka.Accounting.Infrastructure.DataAccess
         {
             builder.RegisterType<CategoryRepository>().As<ICategoryRepository>();
             builder.RegisterType<SupplierRepository>().As<ISupplierRepository>();
+            builder.RegisterType<ProductRepository>().As<IProductRepository>();
         }
     }
 }

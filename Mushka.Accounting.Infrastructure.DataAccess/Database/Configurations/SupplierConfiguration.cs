@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Mushka.Accounting.Domain.Entities;
 
-namespace Mushka.Accounting.Infrastructure.DataAccess.Database
+namespace Mushka.Accounting.Infrastructure.DataAccess.Database.Configurations
 {
     internal static class SupplierConfiguration
     {
         public static void ConfigureSupplier(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Supplier>().ToTable("supplier");
+            modelBuilder.Entity<Supplier>().ToTable("Suppliers");
 
             modelBuilder.Entity<Supplier>()
                 .Property(supplier => supplier.Id)
@@ -57,6 +57,10 @@ namespace Mushka.Accounting.Infrastructure.DataAccess.Database
             modelBuilder.Entity<Supplier>()
                 .Property(supplier => supplier.CreatedOn)
                 .HasColumnName("CreatedOn");
+
+            modelBuilder.Entity<Supplier>()
+                .HasMany(supplier => supplier.Deliveries)
+                .WithOne(delivery => delivery.Supplier);
         }
     }
 }

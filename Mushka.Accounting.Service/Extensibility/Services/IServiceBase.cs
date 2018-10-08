@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mushka.Accounting.Core.Validation;
 
-namespace Mushka.Accounting.Service.Extensibility
+namespace Mushka.Accounting.Service.Extensibility.Services
 {
     public interface IServiceBase<TEntity>
     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Mushka.Accounting.Domain.Extensibility.Entities;
 
 namespace Mushka.Accounting.Domain.Entities
@@ -16,5 +17,7 @@ namespace Mushka.Accounting.Domain.Entities
         public string Services { get; set; }
         public string Comments { get; set; }
         public DateTime CreatedOn { get; set; }
+
+        public IEnumerable<Delivery> Deliveries { get; set; }
     }
 }

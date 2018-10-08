@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Mushka.Accounting.Core.Extensibility.Logging;
 using Mushka.Accounting.Core.Validation;
 using Mushka.Accounting.Core.Validation.Enums;
 using Mushka.Accounting.Domain.Entities;
 using Mushka.Accounting.Domain.Extensibility.Repositories;
-using Mushka.Accounting.Service.Extensibility;
+using Mushka.Accounting.Service.Extensibility.Services;
 
-namespace Mushka.Accounting.Service
+namespace Mushka.Accounting.Service.Services
 {
     internal class CategoryService : ServiceBase<Category>, ICategoryService
     {
         private readonly ICategoryRepository categoryRepository;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(
+            ICategoryRepository categoryRepository,
+            ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
             this.categoryRepository = categoryRepository;
         }

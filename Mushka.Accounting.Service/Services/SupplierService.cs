@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Mushka.Accounting.Core.Extensibility.Logging;
 using Mushka.Accounting.Core.Validation;
 using Mushka.Accounting.Core.Validation.Enums;
 using Mushka.Accounting.Domain.Entities;
 using Mushka.Accounting.Domain.Extensibility.Repositories;
-using Mushka.Accounting.Service.Extensibility;
+using Mushka.Accounting.Service.Extensibility.Services;
 
-namespace Mushka.Accounting.Service
+namespace Mushka.Accounting.Service.Services
 {
     internal class SupplierService : ServiceBase<Supplier>, ISupplierService
     {
         private readonly ISupplierRepository supplierRepository;
 
-        public SupplierService(ISupplierRepository supplierRepository)
+        public SupplierService(
+            ISupplierRepository supplierRepository,
+            ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
             this.supplierRepository = supplierRepository;
         }

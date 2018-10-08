@@ -29,7 +29,8 @@ namespace Mushka.Accounting.WebApi
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => src.ValidationResults));
 
             CreateMap<CategoryRequestModel, Category>()
-                .ForMember(dest => dest.Id, opt => opt.Ignore());
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Products, opt => opt.Ignore());
 
             CreateMap<ValidationResponse<IEnumerable<Supplier>>, SuppliersResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
@@ -41,7 +42,8 @@ namespace Mushka.Accounting.WebApi
 
             CreateMap<SupplierRequestModel, Supplier>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.CreatedOn, opt => opt.Ignore());
+                .ForMember(dest => dest.CreatedOn, opt => opt.Ignore())
+                .ForMember(dest => dest.Deliveries, opt => opt.Ignore());
         }
     }
 }

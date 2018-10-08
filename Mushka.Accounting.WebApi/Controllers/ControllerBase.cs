@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Mushka.Accounting.Core.Extensibility.Providers;
 using Mushka.Accounting.Core.Validation;
 using Mushka.Accounting.Domain.Extensibility.Entities;
-using Mushka.Accounting.Service.Extensibility;
+using Mushka.Accounting.Service.Extensibility.Services;
 using Mushka.Accounting.WebApi.ClientModels;
 using Mushka.Accounting.WebApi.Extensibility.Providers;
 using Mushka.Accounting.WebApi.Filters;
