@@ -3,7 +3,7 @@ using Mushka.Accounting.Domain.Entities;
 
 namespace Mushka.Accounting.Infrastructure.DataAccess.Database.Configurations
 {
-    internal static class DeliveryConfiguration
+    internal static class DeliveryConf
     {
         public static void ConfigureDelivery(this ModelBuilder modelBuilder)
         {
@@ -54,7 +54,8 @@ namespace Mushka.Accounting.Infrastructure.DataAccess.Database.Configurations
 
             modelBuilder.Entity<Delivery>()
                 .HasOne(delivery => delivery.Supplier)
-                .WithMany(supplier => supplier.Deliveries);
+                .WithMany(supplier => supplier.Deliveries)
+                .HasForeignKey(delivery => delivery.SupplierId);
 
             modelBuilder.Entity<Delivery>()
                 .HasMany(delivery => delivery.Services)

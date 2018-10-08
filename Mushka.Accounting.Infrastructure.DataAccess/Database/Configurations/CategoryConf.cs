@@ -3,7 +3,7 @@ using Mushka.Accounting.Domain.Entities;
 
 namespace Mushka.Accounting.Infrastructure.DataAccess.Database.Configurations
 {
-    internal static class CategoryConfiguration
+    internal static class CategoryConf
     {
         public static void ConfigureCategory(this ModelBuilder modelBuilder)
         {

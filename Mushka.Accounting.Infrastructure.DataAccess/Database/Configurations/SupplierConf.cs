@@ -3,7 +3,7 @@ using Mushka.Accounting.Domain.Entities;
 
 namespace Mushka.Accounting.Infrastructure.DataAccess.Database.Configurations
 {
-    internal static class SupplierConfiguration
+    internal static class SupplierConf
     {
         public static void ConfigureSupplier(this ModelBuilder modelBuilder)
         {

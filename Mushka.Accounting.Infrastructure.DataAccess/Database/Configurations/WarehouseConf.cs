@@ -3,7 +3,7 @@ using Mushka.Accounting.Domain.Entities;
 
 namespace Mushka.Accounting.Infrastructure.DataAccess.Database.Configurations
 {
-    internal static class WarehouseConfiguration
+    internal static class WarehouseConf
     {
         public static void ConfigureWarehouse(this ModelBuilder modelBuilder)
         {

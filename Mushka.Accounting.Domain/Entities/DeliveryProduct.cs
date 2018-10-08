@@ -13,9 +13,9 @@ namespace Mushka.Accounting.Domain.Entities
         public int Amount { get; set; }
         public int CostPerItem { get; set; }
         public string Notes { get; set; }
+        
+        public ICollection<ProductSizeItem> SizeItems { get; set; }
 
         public int TotalCost => Amount * CostPerItem;
-
-        public ICollection<ProductSizeItem> SizeItems { get; set; }
     }
 }

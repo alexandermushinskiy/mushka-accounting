@@ -14,8 +14,9 @@ namespace Mushka.Accounting.Domain.Entities
         public decimal DeliveryCost { get; set; }
         public decimal TotalCost { get; set; }
         public bool IsDraft { get; set; }
-
         public PaymentMethod PaymentMethod { get; set; }
+
+        public Guid SupplierId { get; set; }
         public Supplier Supplier { get; set; }
 
         public ICollection<DeliveryProduct> Products { get; set; }

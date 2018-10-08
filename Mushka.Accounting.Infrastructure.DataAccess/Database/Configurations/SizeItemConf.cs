@@ -3,7 +3,7 @@ using Mushka.Accounting.Domain.Entities;
 
 namespace Mushka.Accounting.Infrastructure.DataAccess.Database.Configurations
 {
-    internal static class SizeItemConfiguration
+    internal static class SizeItemConf
     {
         public static void ConfigureSizeItem(this ModelBuilder modelBuilder)
         {

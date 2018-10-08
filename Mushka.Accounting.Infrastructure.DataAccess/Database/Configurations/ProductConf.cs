@@ -3,7 +3,7 @@ using Mushka.Accounting.Domain.Entities;
 
 namespace Mushka.Accounting.Infrastructure.DataAccess.Database.Configurations
 {
-    internal static class ProductConfiguration
+    internal static class ProductConf
     {
         public static void ConfigureProduct(this ModelBuilder modelBuilder)
         {
@@ -33,7 +33,8 @@ namespace Mushka.Accounting.Infrastructure.DataAccess.Database.Configurations
 
             modelBuilder.Entity<Product>()
                 .HasOne(product => product.Category)
-                .WithMany(category => category.Products);
+                .WithMany(category => category.Products)
+                .HasForeignKey(product => product.CategoryId);
         }
     }
 }
