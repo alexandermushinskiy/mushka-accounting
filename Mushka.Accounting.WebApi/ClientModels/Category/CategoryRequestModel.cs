@@ -6,10 +6,5 @@ namespace Mushka.Accounting.WebApi.ClientModels.Category
     {
         [Required]
         public string Name { get; set; }
-
-        [Required]
-        public bool IsSizesRequired { get; set; }
-
-        public string Sizes { get; set; }
     }
 }

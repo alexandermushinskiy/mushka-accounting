@@ -2,12 +2,12 @@
 
 namespace Mushka.Accounting.WebApi.ClientModels.Product
 {
-    public class ProductResponseModel : ResourceResponseModelBase
+    public class ProductResponseModel : ResponseModelBase
     {
         public ProductModel Data { get; set; }
     }
 
-    public class ProductsResponseModel : ResourceResponseModelBase
+    public class ProductsResponseModel : ResponseModelBase
     {
         public IEnumerable<ProductModel> Data { get; set; }
     }

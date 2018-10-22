@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using Mushka.Accounting.Core.Extensibility.Validation;
 using Mushka.Accounting.Core.Validation;
@@ -22,7 +21,11 @@ namespace Mushka.Accounting.WebApi
                 .ForMember(dest => dest.LevelType, opts => opts.MapFrom(src => src.Level))
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Message, opts => opts.MapFrom(src => src.Message));
-            
+
+            CreateMap<ValidationResponse, DeleteResponseModel>()
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }))
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status));
+
             // Products
             CreateMap<ProductRequestModel, Product>().ConvertUsing<ProductRequestConverter>();
 
@@ -30,11 +33,13 @@ namespace Mushka.Accounting.WebApi
 
             CreateMap<ValidationResponse<Product>, ProductResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ProductResponseResolver>())
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => src.ValidationResults));
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
 
             CreateMap<ValidationResponse<IEnumerable<Product>>, ProductsResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ProductResponseResolver>())
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => src.ValidationResults));
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
             //-------------------------
 
             // Category
@@ -46,15 +51,17 @@ namespace Mushka.Accounting.WebApi
 
             CreateMap<ValidationResponse<Category>, CategoryResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<CategoryResponseResolver>())
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => src.ValidationResults));
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
 
             CreateMap<ValidationResponse<IEnumerable<Category>>, CategoriesResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<CategoryResponseResolver>())
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => src.ValidationResults));
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
             //-------------------------
 
 
-            
+
 
             //CreateMap<ValidationResponse<IEnumerable<Supplier>>, SuppliersResponseModel>()
             //    .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))

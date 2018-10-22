@@ -1,34 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Mushka.Accounting.Core.Extensibility.Validation;
-using Mushka.Accounting.Core.Extensions;
 
 namespace Mushka.Accounting.Core.Validation
 {
     public class ValidationResponse : IValidationResponse
     {
-        public ValidationResponse(IEnumerable<IValidationResult> validationResults)
+        public ValidationResponse(IValidationResult validationResult)
         {
-            ValidationResults = validationResults ?? Enumerable.Empty<IValidationResult>();
+            ValidationResult = validationResult;
         }
 
-        public IEnumerable<IValidationResult> ValidationResults { get; }
+        public IValidationResult ValidationResult { get; }
 
-        public bool IsValid => ValidationResults.All(vr => vr.IsValid());
+        public bool IsValid => ValidationResult.IsValid();
     }
 
     public class ValidationResponse<TResult> : ValidationResponse, IDisposable
     {
-        public ValidationResponse(TResult result, IEnumerable<IValidationResult> validationResults)
-            : base(validationResults)
+        public ValidationResponse(TResult result, IValidationResult validationResult)
+            : base(validationResult)
         {
             Result = result;
-        }
-
-        public ValidationResponse(TResult result, IValidationResult validationResult)
-            : this(result, validationResult.AsArray())
-        {
         }
 
         public TResult Result { get; }

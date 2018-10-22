@@ -1,36 +1,38 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mushka.Accounting.Core.Extensibility.Validation;
+using Mushka.Accounting.Core.Validation.Enums;
 using Mushka.Accounting.WebApi.ClientModels;
 using Mushka.Accounting.WebApi.Extensibility.Providers;
 
 namespace Mushka.Accounting.WebApi.Providers
 {
-    public class ActionResultProvider : IActionResultProvider
+    internal class ActionResultProvider : IActionResultProvider
     {
-        private const int DefaultSuccessfulStatusCode = StatusCodes.Status200OK;
+        private readonly IMapper mapper;
 
-        public IActionResult Get(ResourceResponseModelBase resourceResponseModel, int successfulStatusCode = StatusCodes.Status200OK) =>
-            new ObjectResult(resourceResponseModel)
-            {
-                StatusCode = Get(resourceResponseModel.Messages.Select(m => m.StatusCode).Cast<int>(), successfulStatusCode)
-            };
-
-        private static int Get(IEnumerable<int> statusCodes, int successfulStatusCode = DefaultSuccessfulStatusCode)
+        public ActionResultProvider(IMapper mapper)
         {
-            int[] distinctStatusCodes = statusCodes
-                .Distinct().ToArray();
+            this.mapper = mapper;
+        }
 
-            switch (distinctStatusCodes.Length)
+        public IActionResult Get(object responseModel, int successfulStatusCode = StatusCodes.Status200OK)
+        {
+            return new ObjectResult(responseModel)
             {
-                case 0:
-                    return successfulStatusCode;
-                case 1:
-                    return distinctStatusCodes[0] == DefaultSuccessfulStatusCode ? successfulStatusCode : distinctStatusCodes[0];
-            }
+                StatusCode = (responseModel as ResponseModelBase)?.StatusCode ?? successfulStatusCode
+            };
+        }
 
-            return StatusCodes.Status207MultiStatus;
+        public IActionResult GetFailedResult(IValidationResponse validationResponse)
+        {
+            var statusCode = mapper.Map<ValidationStatusType, int?>(validationResponse.ValidationResult.Status);
+            var responseModel = mapper.Map<IValidationResult, ResponseModelBase>(validationResponse.ValidationResult);
+
+            return Get(responseModel, statusCode.Value);
         }
     }
 }

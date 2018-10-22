@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace Mushka.Accounting.Core.Extensibility.Validation
+﻿namespace Mushka.Accounting.Core.Extensibility.Validation
 {
     public interface IValidationResponse
     {
         bool IsValid { get; }
 
-        IEnumerable<IValidationResult> ValidationResults { get; }
+        IValidationResult ValidationResult { get; }
     }
 }
