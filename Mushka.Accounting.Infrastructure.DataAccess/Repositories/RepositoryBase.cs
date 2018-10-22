@@ -25,30 +25,43 @@ namespace Mushka.Accounting.Infrastructure.DataAccess.Repositories
 
         protected AccountingDbContext Context { get; }
 
-        public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate) =>
+        public virtual async Task<IEnumerable<TEntity>> GetAsync(
+            Expression<Func<TEntity, bool>> predicate,
+            CancellationToken cancellationToken = default(CancellationToken)) =>
+                await dbSet.Where(predicate)
+                    .AsNoTracking()
+                    .ToListAsync(cancellationToken);
+
+        public async Task<bool> IsExistAsync(Expression<Func<TEntity, bool>> predicate,
+            CancellationToken cancellationToken = default(CancellationToken)) =>
+                await dbSet.Where(predicate).AsNoTracking()
+                    .AnyAsync(cancellationToken);
+
+
+        public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate) =>
             dbSet.Where(predicate).AsNoTracking();
 
-        public async Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public virtual async Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default(CancellationToken)) =>
             await dbSet.Where(entity => entity.Id == id).AsNoTracking().FirstOrDefaultAsync(cancellationToken);
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
             await dbSet.AsNoTracking().ToArrayAsync(cancellationToken);
 
-        public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
         {
             dbSet.Add(entity);
             await Context.SaveChangesAsync(cancellationToken);
             return entity;
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
         {
             dbSet.Update(entity);
             await Context.SaveChangesAsync(cancellationToken);
             return entity;
         }
 
-        public async Task<TEntity> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
         {
             dbSet.Remove(entity);
             await Context.SaveChangesAsync(cancellationToken);

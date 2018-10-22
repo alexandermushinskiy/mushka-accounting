@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Mushka.Accounting.Core.Extensibility.Logging;
-using Mushka.Accounting.Core.Extensibility.Validation;
 using Mushka.Accounting.Core.Validation;
 using Mushka.Accounting.Core.Validation.Enums;
 using Mushka.Accounting.Domain.Entities;
@@ -41,15 +40,20 @@ namespace Mushka.Accounting.Service.Services
             return CreateInfoValidationResponse(products, message);
         }
 
+        public async Task<ValidationResponse<Product>> GetByIdAsync(Guid productId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            Product product = await productRepository.GetByIdAsync(productId, cancellationToken);
+
+            return product == null
+                ? CreateWarningValidationResponse($"Product with id {productId} is not found.", ValidationStatusType.NotFound)
+                : CreateInfoValidationResponse(product, $"Product {product.Id} was successfully retrieved.");
+        }
+
         public async Task<ValidationResponse<IEnumerable<Product>>> GetByCategoryAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Category category = await categoryRepository.GetByIdAsync(categoryId, cancellationToken);
-
-            if (category == null)
+            if (!await categoryRepository.IsExistAsync(category => category.Id == categoryId, cancellationToken))
             {
-                IValidationResult validationResult = ValidationResult.CreateWarning(
-                    $"Category with id {categoryId} is not found.", ValidationStatusType.NotFound);
-                return new ValidationResponse<IEnumerable<Product>>(null, validationResult);
+                CreateWarningValidationResponse($"Category with id {categoryId} is not found.", ValidationStatusType.NotFound);
             }
 
             IEnumerable<Product> products = productRepository.Get(prod => prod.Category.Id == categoryId);
@@ -61,24 +65,18 @@ namespace Mushka.Accounting.Service.Services
             return CreateInfoValidationResponse(products, message);
         }
 
-        public async Task<ValidationResponse<Product>> GetByIdAsync(Guid productId, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            Product product = await productRepository.GetByIdAsync(productId, cancellationToken);
-
-            return product == null
-                ? CreateWarningValidationResponse($"Product with id {productId} is not found.", ValidationStatusType.NotFound)
-                : CreateInfoValidationResponse(product, $"Product {product.Id} was successfully retrieved.");
-        }
-
         public async Task<ValidationResponse<Product>> AddAsync(Product product, CancellationToken cancellationToken = default(CancellationToken))
         {
-            bool isExistProductName = productRepository.Get(prod => prod.Name == product.Name).Any();
+            if (!await categoryRepository.IsExistAsync(category => category.Id == product.CategoryId, cancellationToken))
+            {
+                return CreateWarningValidationResponse($"Category with id {product.CategoryId} is not found.", ValidationStatusType.NotFound);
+            }
 
-            if (isExistProductName)
+            if (await productRepository.IsExistAsync(prod => prod.Name == product.Name, cancellationToken))
             {
                 return CreateWarningValidationResponse($"Product with the name {product.Name} is already existed.");
             }
-
+            
             Product addedProduct = await productRepository.AddAsync(product, cancellationToken);
 
             return CreateInfoValidationResponse(addedProduct, $"Product {product.Id} was successfully created.");

@@ -6,24 +6,21 @@ namespace Mushka.Accounting.Core.Logging
 {
     internal class Logger : ILogger
     {
-        private readonly ITraceIdentifierProvider traceIdentifierProvider;
-
         private readonly NLogLogger logger;
 
-        public Logger(NLogLogger logger, ITraceIdentifierProvider traceIdentifierProvider)
+        public Logger(NLogLogger logger)
         {
             this.logger = logger;
-            this.traceIdentifierProvider = traceIdentifierProvider;
         }
 
-        public void LogInfo(string message) => logger.Info(message, traceIdentifierProvider.TraceIdentifier);
+        public void LogInfo(string message) => logger.Info(message);
 
-        public void LogError(string message) => logger.Error(message, traceIdentifierProvider.TraceIdentifier);
+        public void LogError(string message) => logger.Error(message);
 
-        public void LogError(Exception exception) => logger.Error(exception, traceIdentifierProvider.TraceIdentifier);
+        public void LogError(Exception exception) => logger.Error(exception);
 
-        public void LogDebug(string message) => logger.Debug(message, traceIdentifierProvider.TraceIdentifier);
+        public void LogDebug(string message) => logger.Debug(message);
 
-        public void LogWarning(string message) => logger.Warn(message, traceIdentifierProvider.TraceIdentifier);
+        public void LogWarning(string message) => logger.Warn(message);
     }
 }

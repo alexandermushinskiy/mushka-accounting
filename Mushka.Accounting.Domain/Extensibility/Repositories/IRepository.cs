@@ -20,5 +20,10 @@ namespace Mushka.Accounting.Domain.Extensibility.Repositories
         Task<TEntity> UpdateAsync(TEntity category, CancellationToken cancellationToken = default(CancellationToken));
 
         Task<TEntity> DeleteAsync(TEntity category, CancellationToken cancellationToken = default(CancellationToken));
+
+
+        Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<bool> IsExistAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

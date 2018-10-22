@@ -12,12 +12,9 @@ namespace Mushka.Accounting.Core
         {
             builder.RegisterType<Logger>().As<ILogger>();
             builder.RegisterType<LoggerFactory>().As<ILoggerFactory>();
-            builder.RegisterType<ScopeBasedTraceIdentifierProvider>().As<ITraceIdentifierProvider>();
             builder.RegisterType<CancellationTokenSourceProvider>().As<ICancellationTokenSourceProvider>();
-            builder.RegisterType<CorrelationIdProvider>().As<ICorrelationIdProvider>();
-            //builder.RegisterType<HttpJsonMessageSender>().As<IHttpJsonMessageSender>();
-            //builder.RegisterType<ProxyHttpMessageSender>().As<IProxyHttpMessageSender>();
-            //builder.RegisterType<ProxyHttpJsonMessageSender>().As<IProxyHttpJsonMessageSender>();
+            builder.RegisterType<GuidProvider>().As<IGuidProvider>();
+            builder.RegisterType<DateTimeProvider>().As<IDateTimeProvider>();
         }
     }
 }
