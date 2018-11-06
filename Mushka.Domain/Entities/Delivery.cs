@@ -23,6 +23,8 @@ namespace Mushka.Domain.Entities
 
         public decimal TransferFee { get; set; }
 
+        public decimal BankFee { get; set; }
+
         public ICollection<DeliveryProduct> Products { get; set; }
 
         //public Guid SupplierId { get; set; }

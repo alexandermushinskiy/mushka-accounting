@@ -41,6 +41,11 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .Property(del => del.TransferFee)
                 .HasColumnName("TransferFee")
                 .HasColumnType("Money");
+
+            builder
+                .Property(del => del.BankFee)
+                .HasColumnName("BankFee")
+                .HasColumnType("Money");
         }
     }
 }

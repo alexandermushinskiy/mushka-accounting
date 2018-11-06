@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Mushka.Domain.Entities;
 
 namespace Mushka.Service.Extensibility.Services
 {
-    public interface IOrderService
+    public interface IOrderService : IServiceBase<Order>
     {
     }
 }

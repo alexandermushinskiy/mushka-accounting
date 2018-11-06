@@ -11,6 +11,7 @@ namespace Mushka.Service
             builder.RegisterType<CategoryService>().As<ICategoryService>();
             builder.RegisterType<ProductService>().As<IProductService>();
             builder.RegisterType<DeliveryService>().As<IDeliveryService>();
+            builder.RegisterType<OrderService>().As<IOrderService>();
         }
     }
 }

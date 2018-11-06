@@ -15,6 +15,8 @@ namespace Mushka.Domain.Entities
 
         public DateTime OrderDate { get; set; }
 
+        public PaymentMethod PaymentMethod { get; set; }
+
         public ICollection<OrderProduct> Products { get; set; }
     }
 }
