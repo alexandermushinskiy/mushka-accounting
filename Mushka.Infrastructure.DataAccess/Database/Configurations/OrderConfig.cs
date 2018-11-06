@@ -19,6 +19,7 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
             builder
                 .Property(order => order.OrderDate)
                 .HasColumnName("OrderDate")
+                .HasColumnType("Date")
                 .IsRequired();
         }
     }

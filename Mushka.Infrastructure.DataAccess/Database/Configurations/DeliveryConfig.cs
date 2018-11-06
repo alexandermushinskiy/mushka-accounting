@@ -23,18 +23,20 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .IsRequired();
 
             builder
+                .Property(del => del.RequestDate)
+                .HasColumnName("RequestDate")
+                .HasColumnType("Date")
+                .IsRequired();
+
+            builder
                 .Property(del => del.DeliveryDate)
                 .HasColumnName("DeliveryDate")
+                .HasColumnType("Date")
                 .IsRequired();
 
             builder
                 .Property(del => del.PaymentMethod)
                 .HasColumnName("PaymentMethod")
-                .IsRequired();
-
-            builder
-                .Property(del => del.RequestDate)
-                .HasColumnName("RequestDate")
                 .IsRequired();
 
             builder

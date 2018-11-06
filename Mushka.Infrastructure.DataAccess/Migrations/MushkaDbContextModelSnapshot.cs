@@ -55,13 +55,15 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .HasColumnType("Money");
 
                     b.Property<DateTime>("DeliveryDate")
-                        .HasColumnName("DeliveryDate");
+                        .HasColumnName("DeliveryDate")
+                        .HasColumnType("Date");
 
                     b.Property<int>("PaymentMethod")
                         .HasColumnName("PaymentMethod");
 
                     b.Property<DateTime>("RequestDate")
-                        .HasColumnName("RequestDate");
+                        .HasColumnName("RequestDate")
+                        .HasColumnType("Date");
 
                     b.Property<decimal>("TransferFee")
                         .HasColumnName("TransferFee")
@@ -146,7 +148,8 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .HasColumnName("Id");
 
                     b.Property<DateTime>("OrderDate")
-                        .HasColumnName("OrderDate");
+                        .HasColumnName("OrderDate")
+                        .HasColumnType("Date");
 
                     b.Property<int>("PaymentMethod");
 
@@ -242,40 +245,40 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.ToTable("ProductSizes");
 
                     b.HasData(
-                        new { ProductId = new Guid("a9ab38d1-c2b2-4c50-9ab9-80335f4561f8"), SizeId = new Guid("fb8356a5-1629-4f9f-9b51-3d40e0e55f84"), Quantity = 0 },
-                        new { ProductId = new Guid("a9ab38d1-c2b2-4c50-9ab9-80335f4561f8"), SizeId = new Guid("6e519491-8fd8-45f2-992e-270b01f25971"), Quantity = 0 },
-                        new { ProductId = new Guid("dfa69fa0-2df3-4254-95b7-f65eb4ed6c92"), SizeId = new Guid("fb8356a5-1629-4f9f-9b51-3d40e0e55f84"), Quantity = 0 },
-                        new { ProductId = new Guid("dfa69fa0-2df3-4254-95b7-f65eb4ed6c92"), SizeId = new Guid("6e519491-8fd8-45f2-992e-270b01f25971"), Quantity = 0 },
-                        new { ProductId = new Guid("f9b055d3-5fd9-417f-b71d-0af81c821029"), SizeId = new Guid("fb8356a5-1629-4f9f-9b51-3d40e0e55f84"), Quantity = 0 },
-                        new { ProductId = new Guid("f9b055d3-5fd9-417f-b71d-0af81c821029"), SizeId = new Guid("6e519491-8fd8-45f2-992e-270b01f25971"), Quantity = 0 },
-                        new { ProductId = new Guid("365510f0-fb1a-42cd-b249-5ad514bf2f33"), SizeId = new Guid("fb8356a5-1629-4f9f-9b51-3d40e0e55f84"), Quantity = 0 },
-                        new { ProductId = new Guid("365510f0-fb1a-42cd-b249-5ad514bf2f33"), SizeId = new Guid("6e519491-8fd8-45f2-992e-270b01f25971"), Quantity = 0 },
-                        new { ProductId = new Guid("ba641024-d50a-4f9c-bfd9-a330fe12071e"), SizeId = new Guid("fb8356a5-1629-4f9f-9b51-3d40e0e55f84"), Quantity = 0 },
-                        new { ProductId = new Guid("ba641024-d50a-4f9c-bfd9-a330fe12071e"), SizeId = new Guid("6e519491-8fd8-45f2-992e-270b01f25971"), Quantity = 0 },
-                        new { ProductId = new Guid("55386f8f-3234-42c0-a82a-65ea7dd50b28"), SizeId = new Guid("fb8356a5-1629-4f9f-9b51-3d40e0e55f84"), Quantity = 0 },
-                        new { ProductId = new Guid("55386f8f-3234-42c0-a82a-65ea7dd50b28"), SizeId = new Guid("6e519491-8fd8-45f2-992e-270b01f25971"), Quantity = 0 },
-                        new { ProductId = new Guid("bddc1231-0952-4c6d-9a30-9de441cfa3a0"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 0 },
-                        new { ProductId = new Guid("bddc1231-0952-4c6d-9a30-9de441cfa3a0"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 0 },
-                        new { ProductId = new Guid("f869224c-80e6-43b6-94a4-2528ecd67a75"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 0 },
-                        new { ProductId = new Guid("f869224c-80e6-43b6-94a4-2528ecd67a75"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 0 },
-                        new { ProductId = new Guid("a9899cd5-9b2d-4241-8e28-0d1441933bad"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 0 },
-                        new { ProductId = new Guid("a9899cd5-9b2d-4241-8e28-0d1441933bad"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 0 },
-                        new { ProductId = new Guid("637b0ba2-f1d9-4bf6-b1c7-1bc685033b36"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 0 },
-                        new { ProductId = new Guid("637b0ba2-f1d9-4bf6-b1c7-1bc685033b36"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 0 },
-                        new { ProductId = new Guid("65801c7f-37f6-4452-a304-ceaafc940d08"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 0 },
-                        new { ProductId = new Guid("65801c7f-37f6-4452-a304-ceaafc940d08"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 0 },
-                        new { ProductId = new Guid("8636296d-e47c-4bb8-a6fd-e0cc01d4e27a"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 0 },
-                        new { ProductId = new Guid("8636296d-e47c-4bb8-a6fd-e0cc01d4e27a"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 0 },
-                        new { ProductId = new Guid("32ae1bae-c186-4e7c-a6af-d683e10d1480"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 0 },
-                        new { ProductId = new Guid("32ae1bae-c186-4e7c-a6af-d683e10d1480"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 0 },
-                        new { ProductId = new Guid("574f3353-0c6e-4148-a8ef-0db9559f3864"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 0 },
-                        new { ProductId = new Guid("574f3353-0c6e-4148-a8ef-0db9559f3864"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 0 },
-                        new { ProductId = new Guid("304af5df-1d03-40c3-af40-9c6259898f75"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 0 },
-                        new { ProductId = new Guid("304af5df-1d03-40c3-af40-9c6259898f75"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 0 },
-                        new { ProductId = new Guid("b62555e5-e51b-41e2-9bf8-6a750edc0d8a"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 0 },
-                        new { ProductId = new Guid("b62555e5-e51b-41e2-9bf8-6a750edc0d8a"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 0 },
-                        new { ProductId = new Guid("6bb026fc-ae0f-4a87-b0e3-845b3d55e05b"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 0 },
-                        new { ProductId = new Guid("6bb026fc-ae0f-4a87-b0e3-845b3d55e05b"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 0 }
+                        new { ProductId = new Guid("a9ab38d1-c2b2-4c50-9ab9-80335f4561f8"), SizeId = new Guid("fb8356a5-1629-4f9f-9b51-3d40e0e55f84"), Quantity = 39 },
+                        new { ProductId = new Guid("a9ab38d1-c2b2-4c50-9ab9-80335f4561f8"), SizeId = new Guid("6e519491-8fd8-45f2-992e-270b01f25971"), Quantity = 38 },
+                        new { ProductId = new Guid("dfa69fa0-2df3-4254-95b7-f65eb4ed6c92"), SizeId = new Guid("fb8356a5-1629-4f9f-9b51-3d40e0e55f84"), Quantity = 52 },
+                        new { ProductId = new Guid("dfa69fa0-2df3-4254-95b7-f65eb4ed6c92"), SizeId = new Guid("6e519491-8fd8-45f2-992e-270b01f25971"), Quantity = 56 },
+                        new { ProductId = new Guid("f9b055d3-5fd9-417f-b71d-0af81c821029"), SizeId = new Guid("fb8356a5-1629-4f9f-9b51-3d40e0e55f84"), Quantity = 53 },
+                        new { ProductId = new Guid("f9b055d3-5fd9-417f-b71d-0af81c821029"), SizeId = new Guid("6e519491-8fd8-45f2-992e-270b01f25971"), Quantity = 40 },
+                        new { ProductId = new Guid("365510f0-fb1a-42cd-b249-5ad514bf2f33"), SizeId = new Guid("fb8356a5-1629-4f9f-9b51-3d40e0e55f84"), Quantity = 56 },
+                        new { ProductId = new Guid("365510f0-fb1a-42cd-b249-5ad514bf2f33"), SizeId = new Guid("6e519491-8fd8-45f2-992e-270b01f25971"), Quantity = 46 },
+                        new { ProductId = new Guid("ba641024-d50a-4f9c-bfd9-a330fe12071e"), SizeId = new Guid("fb8356a5-1629-4f9f-9b51-3d40e0e55f84"), Quantity = 52 },
+                        new { ProductId = new Guid("ba641024-d50a-4f9c-bfd9-a330fe12071e"), SizeId = new Guid("6e519491-8fd8-45f2-992e-270b01f25971"), Quantity = 54 },
+                        new { ProductId = new Guid("55386f8f-3234-42c0-a82a-65ea7dd50b28"), SizeId = new Guid("fb8356a5-1629-4f9f-9b51-3d40e0e55f84"), Quantity = 57 },
+                        new { ProductId = new Guid("55386f8f-3234-42c0-a82a-65ea7dd50b28"), SizeId = new Guid("6e519491-8fd8-45f2-992e-270b01f25971"), Quantity = 75 },
+                        new { ProductId = new Guid("bddc1231-0952-4c6d-9a30-9de441cfa3a0"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 50 },
+                        new { ProductId = new Guid("bddc1231-0952-4c6d-9a30-9de441cfa3a0"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 48 },
+                        new { ProductId = new Guid("f869224c-80e6-43b6-94a4-2528ecd67a75"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 53 },
+                        new { ProductId = new Guid("f869224c-80e6-43b6-94a4-2528ecd67a75"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 53 },
+                        new { ProductId = new Guid("a9899cd5-9b2d-4241-8e28-0d1441933bad"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 43 },
+                        new { ProductId = new Guid("a9899cd5-9b2d-4241-8e28-0d1441933bad"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 44 },
+                        new { ProductId = new Guid("637b0ba2-f1d9-4bf6-b1c7-1bc685033b36"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 57 },
+                        new { ProductId = new Guid("637b0ba2-f1d9-4bf6-b1c7-1bc685033b36"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 58 },
+                        new { ProductId = new Guid("65801c7f-37f6-4452-a304-ceaafc940d08"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 52 },
+                        new { ProductId = new Guid("65801c7f-37f6-4452-a304-ceaafc940d08"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 51 },
+                        new { ProductId = new Guid("8636296d-e47c-4bb8-a6fd-e0cc01d4e27a"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 53 },
+                        new { ProductId = new Guid("8636296d-e47c-4bb8-a6fd-e0cc01d4e27a"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 53 },
+                        new { ProductId = new Guid("32ae1bae-c186-4e7c-a6af-d683e10d1480"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 50 },
+                        new { ProductId = new Guid("32ae1bae-c186-4e7c-a6af-d683e10d1480"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 48 },
+                        new { ProductId = new Guid("574f3353-0c6e-4148-a8ef-0db9559f3864"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 48 },
+                        new { ProductId = new Guid("574f3353-0c6e-4148-a8ef-0db9559f3864"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 64 },
+                        new { ProductId = new Guid("304af5df-1d03-40c3-af40-9c6259898f75"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 60 },
+                        new { ProductId = new Guid("304af5df-1d03-40c3-af40-9c6259898f75"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 57 },
+                        new { ProductId = new Guid("b62555e5-e51b-41e2-9bf8-6a750edc0d8a"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 65 },
+                        new { ProductId = new Guid("b62555e5-e51b-41e2-9bf8-6a750edc0d8a"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 66 },
+                        new { ProductId = new Guid("6bb026fc-ae0f-4a87-b0e3-845b3d55e05b"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 54 },
+                        new { ProductId = new Guid("6bb026fc-ae0f-4a87-b0e3-845b3d55e05b"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 62 }
                     );
                 });
 
