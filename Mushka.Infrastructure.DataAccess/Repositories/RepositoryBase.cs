@@ -56,7 +56,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
 
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
         {
-            dbSet.Update(entity);
+            Context.Entry(entity).State = EntityState.Modified;
             await Context.SaveChangesAsync(cancellationToken);
             return entity;
         }

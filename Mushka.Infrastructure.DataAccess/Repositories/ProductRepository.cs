@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,28 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 .Include(p => p.Sizes)
                     .ThenInclude(s => s.Size)
                 .ToListAsync(cancellationToken);
+        }
+
+        public override async Task<Product> GetByIdAsync(Guid id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await Context.Products
+                .AsNoTracking()
+                .Include(prod => prod.Sizes)
+                .FirstOrDefaultAsync(prod => prod.Id == id, cancellationToken);
+        }
+
+        public async Task<ProductSize> GetProductSizeAsync(Guid productId, Guid sizeId, CancellationToken cancellationToken)
+        {
+            return await Context.ProductSizes
+                .AsNoTracking()
+                .FirstOrDefaultAsync(prod => prod.ProductId == productId && prod.SizeId == sizeId, cancellationToken);
+        }
+
+        public async Task<ProductSize> UpdateProductSize(ProductSize productSize, CancellationToken cancellationToken)
+        {
+            Context.Entry(productSize).State = EntityState.Modified;
+            await Context.SaveChangesAsync(cancellationToken);
+            return productSize;
         }
     }
 }

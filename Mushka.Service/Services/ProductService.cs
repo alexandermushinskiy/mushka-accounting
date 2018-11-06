@@ -46,7 +46,7 @@ namespace Mushka.Service.Services
 
             return product == null
                 ? CreateWarningValidationResponse($"Product with id {productId} is not found.", ValidationStatusType.NotFound)
-                : CreateInfoValidationResponse(product, $"Product {product.Id} was successfully retrieved.");
+                : CreateInfoValidationResponse(product, $"Product with id {product.Id} was successfully retrieved.");
         }
 
         public async Task<ValidationResponse<IEnumerable<Product>>> GetByCategoryAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))
@@ -79,7 +79,7 @@ namespace Mushka.Service.Services
             
             Product addedProduct = await productRepository.AddAsync(product, cancellationToken);
 
-            return CreateInfoValidationResponse(addedProduct, $"Product {product.Id} was successfully created.");
+            return CreateInfoValidationResponse(addedProduct, $"Product with id {product.Id} was successfully created.");
         }
 
         public async Task<ValidationResponse<Product>> UpdateAsync(Product product, CancellationToken cancellationToken = default(CancellationToken))
@@ -98,7 +98,7 @@ namespace Mushka.Service.Services
 
             Product updatedProduct = await productRepository.UpdateAsync(product, cancellationToken);
 
-            return CreateInfoValidationResponse(updatedProduct, $"Product {product.Id} was successfully updated.");
+            return CreateInfoValidationResponse(updatedProduct, $"Product with id {product.Id} was successfully updated.");
         }
 
         public async Task<ValidationResponse<Product>> DeleteAsync(Guid productId, CancellationToken cancellationToken = default(CancellationToken))
@@ -112,7 +112,7 @@ namespace Mushka.Service.Services
 
             await productRepository.DeleteAsync(product, cancellationToken);
 
-            return CreateInfoValidationResponse(product, $"Product {product.Id} was successfully deleted.");
+            return CreateInfoValidationResponse(product, $"Product with id {product.Id} was successfully deleted.");
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Mushka.Service.Services
 
             return category == null
                 ? CreateWarningValidationResponse($"Category with id {categoryId} is not found.", ValidationStatusType.NotFound)
-                : CreateInfoValidationResponse(category, $"Category {category.Id} was successfully retrieved.");
+                : CreateInfoValidationResponse(category, $"Category with id {category.Id} was successfully retrieved.");
         }
 
         public async Task<ValidationResponse<Category>> AddAsync(Category category, CancellationToken cancellationToken = default(CancellationToken))
@@ -57,7 +57,7 @@ namespace Mushka.Service.Services
 
             Category addedCategory = await categoryRepository.AddAsync(category, cancellationToken);
 
-            return CreateInfoValidationResponse(addedCategory, $"Category {category.Id} was successfully created.");
+            return CreateInfoValidationResponse(addedCategory, $"Category with id {category.Id} was successfully created.");
         }
 
         public async Task<ValidationResponse<Category>> UpdateAsync(Category category, CancellationToken cancellationToken = default(CancellationToken))
@@ -76,7 +76,7 @@ namespace Mushka.Service.Services
 
             Category updatedCategory = await categoryRepository.UpdateAsync(category, cancellationToken);
 
-            return CreateInfoValidationResponse(updatedCategory, $"Category {category.Id} was successfully updated.");
+            return CreateInfoValidationResponse(updatedCategory, $"Category with id {category.Id} was successfully updated.");
         }
 
         public async Task<ValidationResponse<Category>> DeleteAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))
@@ -90,7 +90,7 @@ namespace Mushka.Service.Services
 
             await categoryRepository.DeleteAsync(category, cancellationToken);
 
-            return CreateInfoValidationResponse(category, $"Category {category.Id} was successfully deleted.");
+            return CreateInfoValidationResponse(category, $"Category with id {category.Id} was successfully deleted.");
         }
     }
 }
