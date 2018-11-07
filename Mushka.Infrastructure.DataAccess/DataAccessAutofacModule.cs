@@ -13,6 +13,7 @@ namespace Mushka.Infrastructure.DataAccess
             builder.RegisterType<SizeRepository>().As<ISizeRepository>();
             builder.RegisterType<DeliveryRepository>().As<IDeliveryRepository>();
             builder.RegisterType<OrderRepository>().As<IOrderRepository>();
+            builder.RegisterType<SupplierRepository>().As<ISupplierRepository>();
         }
     }
 }

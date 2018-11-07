@@ -31,6 +31,9 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Categories");
 
                     b.HasData(
@@ -38,6 +41,46 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         new { Id = new Guid("0e7be1de-267c-4c0a-8ee9-aba0a267f27a"), Name = "Pack" },
                         new { Id = new Guid("b425d75b-2e72-45f0-a55d-3ba400051e5f"), Name = "Other" }
                     );
+                });
+
+            modelBuilder.Entity("Mushka.Domain.Entities.ContactPerson", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
+
+                    b.Property<string>("City")
+                        .HasColumnName("City")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnName("Email")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnName("FirstName")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnName("LastName")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Phones");
+
+                    b.Property<string>("Position")
+                        .HasColumnName("Position")
+                        .HasMaxLength(255);
+
+                    b.Property<Guid>("SupplierId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("ContactPersons");
                 });
 
             modelBuilder.Entity("Mushka.Domain.Entities.Delivery", b =>
@@ -58,12 +101,11 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .HasColumnName("DeliveryDate")
                         .HasColumnType("Date");
 
-                    b.Property<int>("PaymentMethod")
-                        .HasColumnName("PaymentMethod");
-
                     b.Property<DateTime>("RequestDate")
                         .HasColumnName("RequestDate")
                         .HasColumnType("Date");
+
+                    b.Property<Guid?>("SupplierId");
 
                     b.Property<decimal>("TransferFee")
                         .HasColumnName("TransferFee")
@@ -71,12 +113,14 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("SupplierId");
+
                     b.ToTable("Deliveries");
 
                     b.HasData(
-                        new { Id = new Guid("4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6"), BankFee = 222.00m, Cost = 41319.00m, DeliveryDate = new DateTime(2018, 4, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), PaymentMethod = 3, RequestDate = new DateTime(2018, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), TransferFee = 940.00m },
-                        new { Id = new Guid("32c74ef3-adfd-4723-a319-9b8984d1b7fb"), BankFee = 90.00m, Cost = 16500.00m, DeliveryDate = new DateTime(2018, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), PaymentMethod = 3, RequestDate = new DateTime(2018, 5, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), TransferFee = 90.00m },
-                        new { Id = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), BankFee = 110.00m, Cost = 39720.00m, DeliveryDate = new DateTime(2018, 9, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), PaymentMethod = 3, RequestDate = new DateTime(2018, 8, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), TransferFee = 810.00m }
+                        new { Id = new Guid("4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6"), BankFee = 222.00m, Cost = 41319.00m, DeliveryDate = new DateTime(2018, 4, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), RequestDate = new DateTime(2018, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), TransferFee = 940.00m },
+                        new { Id = new Guid("32c74ef3-adfd-4723-a319-9b8984d1b7fb"), BankFee = 90.00m, Cost = 16500.00m, DeliveryDate = new DateTime(2018, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), RequestDate = new DateTime(2018, 5, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), TransferFee = 90.00m },
+                        new { Id = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), BankFee = 110.00m, Cost = 39720.00m, DeliveryDate = new DateTime(2018, 9, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), RequestDate = new DateTime(2018, 8, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), TransferFee = 810.00m }
                     );
                 });
 
@@ -137,7 +181,35 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         new { ProductId = new Guid("b62555e5-e51b-41e2-9bf8-6a750edc0d8a"), DeliveryId = new Guid("4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), PriceForItem = 20.0m, Quantity = 65 },
                         new { ProductId = new Guid("b62555e5-e51b-41e2-9bf8-6a750edc0d8a"), DeliveryId = new Guid("4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 20.0m, Quantity = 66 },
                         new { ProductId = new Guid("6bb026fc-ae0f-4a87-b0e3-845b3d55e05b"), DeliveryId = new Guid("4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), PriceForItem = 20.0m, Quantity = 54 },
-                        new { ProductId = new Guid("6bb026fc-ae0f-4a87-b0e3-845b3d55e05b"), DeliveryId = new Guid("4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 20.0m, Quantity = 62 }
+                        new { ProductId = new Guid("6bb026fc-ae0f-4a87-b0e3-845b3d55e05b"), DeliveryId = new Guid("4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 20.0m, Quantity = 62 },
+                        new { ProductId = new Guid("84c601ce-a32d-432d-99e2-c23916cf4d1f"), DeliveryId = new Guid("32c74ef3-adfd-4723-a319-9b8984d1b7fb"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), PriceForItem = 30.0m, Quantity = 51 },
+                        new { ProductId = new Guid("84c601ce-a32d-432d-99e2-c23916cf4d1f"), DeliveryId = new Guid("32c74ef3-adfd-4723-a319-9b8984d1b7fb"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 30.0m, Quantity = 48 },
+                        new { ProductId = new Guid("09cfb881-d707-49e5-a2c1-730ce136b710"), DeliveryId = new Guid("32c74ef3-adfd-4723-a319-9b8984d1b7fb"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), PriceForItem = 30.0m, Quantity = 53 },
+                        new { ProductId = new Guid("09cfb881-d707-49e5-a2c1-730ce136b710"), DeliveryId = new Guid("32c74ef3-adfd-4723-a319-9b8984d1b7fb"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 30.0m, Quantity = 63 },
+                        new { ProductId = new Guid("85ceb6f2-c29b-4809-b30a-5ccf427a0447"), DeliveryId = new Guid("32c74ef3-adfd-4723-a319-9b8984d1b7fb"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), PriceForItem = 30.0m, Quantity = 13 },
+                        new { ProductId = new Guid("85ceb6f2-c29b-4809-b30a-5ccf427a0447"), DeliveryId = new Guid("32c74ef3-adfd-4723-a319-9b8984d1b7fb"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 30.0m, Quantity = 53 },
+                        new { ProductId = new Guid("5e838aa5-dd8c-4b6b-81ea-a0aaedf44f7d"), DeliveryId = new Guid("32c74ef3-adfd-4723-a319-9b8984d1b7fb"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), PriceForItem = 27.0m, Quantity = 47 },
+                        new { ProductId = new Guid("5e838aa5-dd8c-4b6b-81ea-a0aaedf44f7d"), DeliveryId = new Guid("32c74ef3-adfd-4723-a319-9b8984d1b7fb"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 27.0m, Quantity = 46 },
+                        new { ProductId = new Guid("db645119-1b9f-4161-966d-97a7cca8d2c7"), DeliveryId = new Guid("32c74ef3-adfd-4723-a319-9b8984d1b7fb"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), PriceForItem = 27.0m, Quantity = 52 },
+                        new { ProductId = new Guid("db645119-1b9f-4161-966d-97a7cca8d2c7"), DeliveryId = new Guid("32c74ef3-adfd-4723-a319-9b8984d1b7fb"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 27.0m, Quantity = 49 },
+                        new { ProductId = new Guid("5bf3988b-ba17-4802-90ad-b77abe68677a"), DeliveryId = new Guid("32c74ef3-adfd-4723-a319-9b8984d1b7fb"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), PriceForItem = 27.0m, Quantity = 57 },
+                        new { ProductId = new Guid("5bf3988b-ba17-4802-90ad-b77abe68677a"), DeliveryId = new Guid("32c74ef3-adfd-4723-a319-9b8984d1b7fb"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 27.0m, Quantity = 61 },
+                        new { ProductId = new Guid("e536c61e-c2c5-41ec-9205-660726baa18b"), DeliveryId = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), PriceForItem = 25.35m, Quantity = 110 },
+                        new { ProductId = new Guid("e536c61e-c2c5-41ec-9205-660726baa18b"), DeliveryId = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 25.35m, Quantity = 122 },
+                        new { ProductId = new Guid("380e3a08-08c5-40b1-b401-ec6b57d2e549"), DeliveryId = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), PriceForItem = 21.31m, Quantity = 107 },
+                        new { ProductId = new Guid("380e3a08-08c5-40b1-b401-ec6b57d2e549"), DeliveryId = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 21.31m, Quantity = 115 },
+                        new { ProductId = new Guid("d772b195-65e3-4250-8b2c-e2d59e7d24da"), DeliveryId = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), PriceForItem = 19.6m, Quantity = 108 },
+                        new { ProductId = new Guid("d772b195-65e3-4250-8b2c-e2d59e7d24da"), DeliveryId = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 19.6m, Quantity = 111 },
+                        new { ProductId = new Guid("eabc3ce7-3c55-465e-9f27-11033bcc4f33"), DeliveryId = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), PriceForItem = 25.0m, Quantity = 98 },
+                        new { ProductId = new Guid("eabc3ce7-3c55-465e-9f27-11033bcc4f33"), DeliveryId = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 25.0m, Quantity = 92 },
+                        new { ProductId = new Guid("76f1b29c-edac-4ca9-b529-da383c04905b"), DeliveryId = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), PriceForItem = 19.60m, Quantity = 105 },
+                        new { ProductId = new Guid("76f1b29c-edac-4ca9-b529-da383c04905b"), DeliveryId = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 19.6m, Quantity = 112 },
+                        new { ProductId = new Guid("8823f027-9074-4fa9-a5ef-552a5b08ef5e"), DeliveryId = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), PriceForItem = 25.5m, Quantity = 115 },
+                        new { ProductId = new Guid("8823f027-9074-4fa9-a5ef-552a5b08ef5e"), DeliveryId = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 25.5m, Quantity = 114 },
+                        new { ProductId = new Guid("1054708a-aa30-4ba6-84f7-321eac6aa041"), DeliveryId = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), PriceForItem = 18.7m, Quantity = 110 },
+                        new { ProductId = new Guid("1054708a-aa30-4ba6-84f7-321eac6aa041"), DeliveryId = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 18.7m, Quantity = 160 },
+                        new { ProductId = new Guid("297af444-055f-4b76-a3ee-fbe65b9752f6"), DeliveryId = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), PriceForItem = 25.0m, Quantity = 132 },
+                        new { ProductId = new Guid("297af444-055f-4b76-a3ee-fbe65b9752f6"), DeliveryId = new Guid("b2d8b13b-aa82-4820-ba85-e23501869c3a"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), PriceForItem = 25.0m, Quantity = 65 }
                     );
                 });
 
@@ -225,7 +297,20 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         new { Id = new Guid("304af5df-1d03-40c3-af40-9c6259898f75"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "SWY001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Limono" },
                         new { Id = new Guid("b62555e5-e51b-41e2-9bf8-6a750edc0d8a"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "SWR001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Cherry" },
                         new { Id = new Guid("6bb026fc-ae0f-4a87-b0e3-845b3d55e05b"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "SBY001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Navy" },
-                        new { Id = new Guid("a6f3cc9a-bd32-49f5-8a5e-cad1262298f8"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "" }
+                        new { Id = new Guid("84c601ce-a32d-432d-99e2-c23916cf4d1f"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "STE001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Jobsy" },
+                        new { Id = new Guid("09cfb881-d707-49e5-a2c1-730ce136b710"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "EIN001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Einstein" },
+                        new { Id = new Guid("85ceb6f2-c29b-4809-b30a-5ccf427a0447"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "YOG001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Yoga" },
+                        new { Id = new Guid("5e838aa5-dd8c-4b6b-81ea-a0aaedf44f7d"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "BAN001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Banana" },
+                        new { Id = new Guid("db645119-1b9f-4161-966d-97a7cca8d2c7"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "PEP001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Pepper" },
+                        new { Id = new Guid("5bf3988b-ba17-4802-90ad-b77abe68677a"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "LAM001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Lamp" },
+                        new { Id = new Guid("e536c61e-c2c5-41ec-9205-660726baa18b"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "PAS001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Royal Passion" },
+                        new { Id = new Guid("380e3a08-08c5-40b1-b401-ec6b57d2e549"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "SAI001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Sailor" },
+                        new { Id = new Guid("d772b195-65e3-4250-8b2c-e2d59e7d24da"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "BEE001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Bumble-bee" },
+                        new { Id = new Guid("eabc3ce7-3c55-465e-9f27-11033bcc4f33"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "CAC001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Cactus" },
+                        new { Id = new Guid("76f1b29c-edac-4ca9-b529-da383c04905b"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "GRE001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Deep Green" },
+                        new { Id = new Guid("8823f027-9074-4fa9-a5ef-552a5b08ef5e"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "FLM001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Flamingo" },
+                        new { Id = new Guid("1054708a-aa30-4ba6-84f7-321eac6aa041"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "MST001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Multi stripe" },
+                        new { Id = new Guid("297af444-055f-4b76-a3ee-fbe65b9752f6"), CategoryId = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Code = "ORA001", CreatedOn = new DateTime(2018, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Orange mood" }
                     );
                 });
 
@@ -278,7 +363,35 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         new { ProductId = new Guid("b62555e5-e51b-41e2-9bf8-6a750edc0d8a"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 65 },
                         new { ProductId = new Guid("b62555e5-e51b-41e2-9bf8-6a750edc0d8a"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 66 },
                         new { ProductId = new Guid("6bb026fc-ae0f-4a87-b0e3-845b3d55e05b"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 54 },
-                        new { ProductId = new Guid("6bb026fc-ae0f-4a87-b0e3-845b3d55e05b"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 62 }
+                        new { ProductId = new Guid("6bb026fc-ae0f-4a87-b0e3-845b3d55e05b"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 62 },
+                        new { ProductId = new Guid("84c601ce-a32d-432d-99e2-c23916cf4d1f"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 51 },
+                        new { ProductId = new Guid("84c601ce-a32d-432d-99e2-c23916cf4d1f"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 48 },
+                        new { ProductId = new Guid("09cfb881-d707-49e5-a2c1-730ce136b710"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 53 },
+                        new { ProductId = new Guid("09cfb881-d707-49e5-a2c1-730ce136b710"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 63 },
+                        new { ProductId = new Guid("85ceb6f2-c29b-4809-b30a-5ccf427a0447"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 13 },
+                        new { ProductId = new Guid("85ceb6f2-c29b-4809-b30a-5ccf427a0447"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 53 },
+                        new { ProductId = new Guid("5e838aa5-dd8c-4b6b-81ea-a0aaedf44f7d"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 47 },
+                        new { ProductId = new Guid("5e838aa5-dd8c-4b6b-81ea-a0aaedf44f7d"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 46 },
+                        new { ProductId = new Guid("db645119-1b9f-4161-966d-97a7cca8d2c7"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 52 },
+                        new { ProductId = new Guid("db645119-1b9f-4161-966d-97a7cca8d2c7"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 49 },
+                        new { ProductId = new Guid("5bf3988b-ba17-4802-90ad-b77abe68677a"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 57 },
+                        new { ProductId = new Guid("5bf3988b-ba17-4802-90ad-b77abe68677a"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 61 },
+                        new { ProductId = new Guid("e536c61e-c2c5-41ec-9205-660726baa18b"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 110 },
+                        new { ProductId = new Guid("e536c61e-c2c5-41ec-9205-660726baa18b"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 122 },
+                        new { ProductId = new Guid("380e3a08-08c5-40b1-b401-ec6b57d2e549"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 107 },
+                        new { ProductId = new Guid("380e3a08-08c5-40b1-b401-ec6b57d2e549"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 115 },
+                        new { ProductId = new Guid("d772b195-65e3-4250-8b2c-e2d59e7d24da"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 108 },
+                        new { ProductId = new Guid("d772b195-65e3-4250-8b2c-e2d59e7d24da"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 111 },
+                        new { ProductId = new Guid("eabc3ce7-3c55-465e-9f27-11033bcc4f33"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 98 },
+                        new { ProductId = new Guid("eabc3ce7-3c55-465e-9f27-11033bcc4f33"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 92 },
+                        new { ProductId = new Guid("76f1b29c-edac-4ca9-b529-da383c04905b"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 105 },
+                        new { ProductId = new Guid("76f1b29c-edac-4ca9-b529-da383c04905b"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 112 },
+                        new { ProductId = new Guid("8823f027-9074-4fa9-a5ef-552a5b08ef5e"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 115 },
+                        new { ProductId = new Guid("8823f027-9074-4fa9-a5ef-552a5b08ef5e"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 114 },
+                        new { ProductId = new Guid("1054708a-aa30-4ba6-84f7-321eac6aa041"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 110 },
+                        new { ProductId = new Guid("1054708a-aa30-4ba6-84f7-321eac6aa041"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 160 },
+                        new { ProductId = new Guid("297af444-055f-4b76-a3ee-fbe65b9752f6"), SizeId = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Quantity = 132 },
+                        new { ProductId = new Guid("297af444-055f-4b76-a3ee-fbe65b9752f6"), SizeId = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Quantity = 65 }
                     );
                 });
 
@@ -305,6 +418,58 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         new { Id = new Guid("fb8356a5-1629-4f9f-9b51-3d40e0e55f84"), Name = "39-42" },
                         new { Id = new Guid("6e519491-8fd8-45f2-992e-270b01f25971"), Name = "43-46" }
                     );
+                });
+
+            modelBuilder.Entity("Mushka.Domain.Entities.Supplier", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnName("Address");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnName("Email");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("Name")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Notes")
+                        .HasColumnName("Notes");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnName("Phone");
+
+                    b.Property<string>("WebSite")
+                        .HasColumnName("WebSite");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Suppliers");
+                });
+
+            modelBuilder.Entity("Mushka.Domain.Entities.ContactPerson", b =>
+                {
+                    b.HasOne("Mushka.Domain.Entities.Supplier", "Supplier")
+                        .WithMany("ContactPersons")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Mushka.Domain.Entities.Delivery", b =>
+                {
+                    b.HasOne("Mushka.Domain.Entities.Supplier")
+                        .WithMany("Deliveries")
+                        .HasForeignKey("SupplierId");
                 });
 
             modelBuilder.Entity("Mushka.Domain.Entities.DeliveryProduct", b =>

@@ -25,7 +25,7 @@ namespace Mushka.Domain.Entities
 
         public ICollection<DeliveryProduct> Products { get; set; }
 
-        public Guid SupplierId { get; set; }
-        public Supplier Supplier { get; set; }
+        //public Guid SupplierId { get; set; }
+        //public Supplier Supplier { get; set; }
     }
 }

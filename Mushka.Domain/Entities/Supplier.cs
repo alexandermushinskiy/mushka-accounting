@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using Mushka.Domain.Extensibility.Entities;
 
 namespace Mushka.Domain.Entities
 {
-    public class Supplier
+    public class Supplier : IEntity
     {
         public Supplier()
         {
             Deliveries = new List<Delivery>();
             ContactPersons = new List<ContactPerson>();
-            Payments = new List<Payment>();
+            //Payments = new List<Payment>();
         }
 
         public Guid Id { get; set; }
@@ -28,7 +29,7 @@ namespace Mushka.Domain.Entities
 
         public ICollection<ContactPerson> ContactPersons { get; set; }
 
-        public ICollection<Payment> Payments { get; set; }
+        //public ICollection<Payment> Payments { get; set; }
 
         public ICollection<Delivery> Deliveries { get; set; }
     }

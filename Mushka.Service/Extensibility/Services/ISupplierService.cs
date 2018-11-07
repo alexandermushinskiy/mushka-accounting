@@ -1,6 +1,8 @@
-﻿namespace Mushka.Service.Extensibility.Services
+﻿using Mushka.Domain.Entities;
+
+namespace Mushka.Service.Extensibility.Services
 {
-    //public interface ISupplierService : IServiceBase<Supplier>
-    //{
-    //}
+    public interface ISupplierService : IServiceBase<Supplier>
+    {
+    }
 }

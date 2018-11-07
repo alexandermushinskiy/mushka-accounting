@@ -1,11 +1,7 @@
-﻿using System;
-
-namespace Mushka.Domain.Entities
+﻿namespace Mushka.WebApi.ClientModels.Supplier
 {
-    public class ContactPerson
+    public class SupplierContactPersonModel
     {
-        public Guid Id { get; set; }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -17,8 +13,5 @@ namespace Mushka.Domain.Entities
         public string Email { get; set; }
 
         public string Phones { get; set; }
-
-        public Guid SupplierId { get; set; }
-        public Supplier Supplier { get; set; }
     }
 }

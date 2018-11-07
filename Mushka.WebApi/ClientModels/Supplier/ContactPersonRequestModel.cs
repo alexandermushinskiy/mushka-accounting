@@ -1,24 +1,23 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Mushka.Domain.Entities
+namespace Mushka.WebApi.ClientModels.Supplier
 {
-    public class ContactPerson
+    public class ContactPersonRequestModel
     {
-        public Guid Id { get; set; }
-
+        [Required]
         public string FirstName { get; set; }
 
+        [Required]
         public string LastName { get; set; }
 
         public string Position { get; set; }
 
         public string City { get; set; }
 
+        [Required]
         public string Email { get; set; }
 
+        [Required]
         public string Phones { get; set; }
-
-        public Guid SupplierId { get; set; }
-        public Supplier Supplier { get; set; }
     }
 }

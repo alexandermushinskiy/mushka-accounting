@@ -57,7 +57,8 @@ namespace Mushka.Infrastructure.DataAccess.Database
             );
 
             modelBuilder.HasProducts();
-            modelBuilder.HasDeliveries(); 
+            modelBuilder.HasDeliveries();
+            modelBuilder.HasSuppliers();
         }
     }
 }

@@ -9,6 +9,7 @@ using Mushka.WebApi.ClientModels.Category;
 using Mushka.WebApi.ClientModels.Delivery;
 using Mushka.WebApi.ClientModels.Order;
 using Mushka.WebApi.ClientModels.Product;
+using Mushka.WebApi.ClientModels.Supplier;
 using Mushka.WebApi.Resolvers;
 
 namespace Mushka.WebApi
@@ -73,6 +74,21 @@ namespace Mushka.WebApi
 
             CreateMap<ValidationResponse<IEnumerable<Delivery>>, DeliveriesResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<DeliveryResponseResolver>())
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+            //-------------------------
+
+            // Supplier
+            CreateMap<SupplierRequestModel, Supplier>().ConvertUsing<SupplierRequestConverter>();
+            CreateMap<Supplier, SupplierModel>().ConvertUsing<SupplierConverter>();
+
+            CreateMap<ValidationResponse<Supplier>, SupplierResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SupplierResponseResolver>())
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+
+            CreateMap<ValidationResponse<IEnumerable<Supplier>>, SuppliersResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SupplierResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
             //-------------------------
