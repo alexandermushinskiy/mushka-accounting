@@ -15,13 +15,16 @@ namespace Mushka.Service.Services
     internal class CategoryService : ServiceBase<Category>, ICategoryService
     {
         private readonly ICategoryRepository categoryRepository;
+        private readonly IProductRepository productRepository;
 
         public CategoryService(
             ICategoryRepository categoryRepository,
+            IProductRepository productRepository,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             this.categoryRepository = categoryRepository;
+            this.productRepository = productRepository;
         }
 
         public async Task<ValidationResponse<IEnumerable<Category>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -30,7 +33,7 @@ namespace Mushka.Service.Services
                 .OrderBy(category => category.Name)
                 .ToList();
 
-            string message = categories.Any()
+            var message = categories.Any()
                 ? "Categories were successfully retrieved."
                 : "No categories found.";
 
@@ -39,7 +42,7 @@ namespace Mushka.Service.Services
 
         public async Task<ValidationResponse<Category>> GetByIdAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Category category = await categoryRepository.GetByIdAsync(categoryId, cancellationToken);
+            var category = await categoryRepository.GetByIdAsync(categoryId, cancellationToken);
 
             return category == null
                 ? CreateWarningValidationResponse($"Category with id {categoryId} is not found.", ValidationStatusType.NotFound)
@@ -48,21 +51,19 @@ namespace Mushka.Service.Services
 
         public async Task<ValidationResponse<Category>> AddAsync(Category category, CancellationToken cancellationToken = default(CancellationToken))
         {
-            bool isExistCategoryName = categoryRepository.Get(cat => cat.Name == category.Name).Any();
-
-            if (isExistCategoryName)
+            if (await categoryRepository.IsExistAsync(cat => cat.Name == category.Name, cancellationToken))
             {
                 return CreateWarningValidationResponse($"Category with the name {category.Name} is already existed.");
             }
 
-            Category addedCategory = await categoryRepository.AddAsync(category, cancellationToken);
+            var addedCategory = await categoryRepository.AddAsync(category, cancellationToken);
 
             return CreateInfoValidationResponse(addedCategory, $"Category with id {category.Id} was successfully created.");
         }
 
         public async Task<ValidationResponse<Category>> UpdateAsync(Category category, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Category categoryToUpdate = await categoryRepository.GetByIdAsync(category.Id, cancellationToken);
+            var categoryToUpdate = await categoryRepository.GetByIdAsync(category.Id, cancellationToken);
 
             if (categoryToUpdate == null)
             {
@@ -74,18 +75,23 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Category with the name {category.Name} is already exist.");
             }
 
-            Category updatedCategory = await categoryRepository.UpdateAsync(category, cancellationToken);
+            var updatedCategory = await categoryRepository.UpdateAsync(category, cancellationToken);
 
             return CreateInfoValidationResponse(updatedCategory, $"Category with id {category.Id} was successfully updated.");
         }
 
         public async Task<ValidationResponse<Category>> DeleteAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Category category = await categoryRepository.GetByIdAsync(categoryId, cancellationToken);
+            var category = await categoryRepository.GetByIdAsync(categoryId, cancellationToken);
 
             if (category == null)
             {
                 return CreateWarningValidationResponse($"Category with id {categoryId} is not found.", ValidationStatusType.NotFound);
+            }
+
+            if ((await productRepository.GetByCategoryId(categoryId, cancellationToken)).Any())
+            {
+                return CreateWarningValidationResponse($"Category with id {categoryId} contains products.");
             }
 
             await categoryRepository.DeleteAsync(category, cancellationToken);

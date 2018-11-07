@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,14 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 .AsNoTracking()
                 .Include(prod => prod.Sizes)
                 .FirstOrDefaultAsync(prod => prod.Id == id, cancellationToken);
+        }
+
+        public async Task<IEnumerable<Product>> GetByCategoryId(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await Context.Products
+                .AsNoTracking()
+                .Where(prod => prod.CategoryId == categoryId)
+                .ToListAsync(cancellationToken);
         }
 
         public async Task<ProductSize> GetProductSizeAsync(Guid productId, Guid sizeId, CancellationToken cancellationToken)

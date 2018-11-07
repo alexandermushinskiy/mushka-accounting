@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mushka.Core", "Mushka.Core\Mushka.Core.csproj", "{20260310-4EF2-4CB5-AE8E-B8DE5B6A8B57}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mushka.Infrastructure.DataAccess", "Mushka.Infrastructure.DataAccess\Mushka.Infrastructure.DataAccess.csproj", "{FF43B05C-B611-45E6-A304-BE8E05D99561}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mushka.WebApi", "Mushka.WebApi\Mushka.WebApi.csproj", "{30228CBD-1CFB-46EF-829E-A4FBB42F3683}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mushka.Tests", "Mushka.Tests\Mushka.Tests.csproj", "{C23360D0-AA52-4559-80BD-2F2FB894ECB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{30228CBD-1CFB-46EF-829E-A4FBB42F3683}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30228CBD-1CFB-46EF-829E-A4FBB42F3683}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30228CBD-1CFB-46EF-829E-A4FBB42F3683}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C23360D0-AA52-4559-80BD-2F2FB894ECB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C23360D0-AA52-4559-80BD-2F2FB894ECB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C23360D0-AA52-4559-80BD-2F2FB894ECB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C23360D0-AA52-4559-80BD-2F2FB894ECB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

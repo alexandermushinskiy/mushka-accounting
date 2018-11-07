@@ -26,7 +26,22 @@ namespace Mushka.Infrastructure.DataAccess.Database.SeedData
                 new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("304AF5DF-1D03-40C3-AF40-9C6259898F75"), Name = "Limono", Code = "SWY001", CreatedOn = DateTime.Parse("2018-11-06") },
                 new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("B62555E5-E51B-41E2-9BF8-6A750EDC0D8A"), Name = "Cherry", Code = "SWR001", CreatedOn = DateTime.Parse("2018-11-06") },
                 new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("6BB026FC-AE0F-4A87-B0E3-845B3D55E05B"), Name = "Navy", Code = "SBY001", CreatedOn = DateTime.Parse("2018-11-06") },
-                new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("A6F3CC9A-BD32-49F5-8A5E-CAD1262298F8"), Name = "", Code = "", CreatedOn = DateTime.Parse("2018-11-06") }
+
+                new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("84C601CE-A32D-432D-99E2-C23916CF4D1F"), Name = "Jobsy", Code = "STE001", CreatedOn = DateTime.Parse("2018-11-06") },
+                new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("09CFB881-D707-49E5-A2C1-730CE136B710"), Name = "Einstein", Code = "EIN001", CreatedOn = DateTime.Parse("2018-11-06") },
+                new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("85CEB6F2-C29B-4809-B30A-5CCF427A0447"), Name = "Yoga", Code = "YOG001", CreatedOn = DateTime.Parse("2018-11-06") },
+                new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("5E838AA5-DD8C-4B6B-81EA-A0AAEDF44F7D"), Name = "Banana", Code = "BAN001", CreatedOn = DateTime.Parse("2018-11-06") },
+                new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("DB645119-1B9F-4161-966D-97A7CCA8D2C7"), Name = "Pepper", Code = "PEP001", CreatedOn = DateTime.Parse("2018-11-06") },
+                new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("5BF3988B-BA17-4802-90AD-B77ABE68677A"), Name = "Lamp", Code = "LAM001", CreatedOn = DateTime.Parse("2018-11-06") },
+                
+                new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("E536C61E-C2C5-41EC-9205-660726BAA18B"), Name = "Royal Passion", Code = "PAS001", CreatedOn = DateTime.Parse("2018-11-06") },
+                new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("380E3A08-08C5-40B1-B401-EC6B57D2E549"), Name = "Sailor", Code = "SAI001", CreatedOn = DateTime.Parse("2018-11-06") },
+                new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("D772B195-65E3-4250-8B2C-E2D59E7D24DA"), Name = "Bumble-bee", Code = "BEE001", CreatedOn = DateTime.Parse("2018-11-06") },
+                new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("EABC3CE7-3C55-465E-9F27-11033BCC4F33"), Name = "Cactus", Code = "CAC001", CreatedOn = DateTime.Parse("2018-11-06") },
+                new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("76F1B29C-EDAC-4CA9-B529-DA383C04905B"), Name = "Deep Green", Code = "GRE001", CreatedOn = DateTime.Parse("2018-11-06") },
+                new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("8823F027-9074-4FA9-A5EF-552A5B08EF5E"), Name = "Flamingo", Code = "FLM001", CreatedOn = DateTime.Parse("2018-11-06") },
+                new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("1054708A-AA30-4BA6-84F7-321EAC6AA041"), Name = "Multi stripe", Code = "MST001", CreatedOn = DateTime.Parse("2018-11-06") },
+                new { CategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Id = Guid.Parse("297AF444-055F-4B76-A3EE-FBE65B9752F6"), Name = "Orange mood", Code = "ORA001", CreatedOn = DateTime.Parse("2018-11-06") }
             );
 
             modelBuilder.Entity<ProductSize>().HasData(
@@ -63,8 +78,37 @@ namespace Mushka.Infrastructure.DataAccess.Database.SeedData
                 new { ProductId = Guid.Parse("B62555E5-E51B-41E2-9BF8-6A750EDC0D8A"), SizeId = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Quantity = 65 },
                 new { ProductId = Guid.Parse("B62555E5-E51B-41E2-9BF8-6A750EDC0D8A"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 66 },
                 new { ProductId = Guid.Parse("6BB026FC-AE0F-4A87-B0E3-845B3D55E05B"), SizeId = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Quantity = 54 },
-                new { ProductId = Guid.Parse("6BB026FC-AE0F-4A87-B0E3-845B3D55E05B"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 62 }//,
-                //new { ProductId = Guid.Parse(""), SizeId = Guid.Parse(""), Quantity = 0 }
+                new { ProductId = Guid.Parse("6BB026FC-AE0F-4A87-B0E3-845B3D55E05B"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 62 },
+
+                new { ProductId = Guid.Parse("84C601CE-A32D-432D-99E2-C23916CF4D1F"), SizeId = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Quantity = 51 },
+                new { ProductId = Guid.Parse("84C601CE-A32D-432D-99E2-C23916CF4D1F"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 48 },
+                new { ProductId = Guid.Parse("09CFB881-D707-49E5-A2C1-730CE136B710"), SizeId = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Quantity = 53 },
+                new { ProductId = Guid.Parse("09CFB881-D707-49E5-A2C1-730CE136B710"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 63 },
+                new { ProductId = Guid.Parse("85CEB6F2-C29B-4809-B30A-5CCF427A0447"), SizeId = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Quantity = 13 },
+                new { ProductId = Guid.Parse("85CEB6F2-C29B-4809-B30A-5CCF427A0447"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 53 },
+                new { ProductId = Guid.Parse("5E838AA5-DD8C-4B6B-81EA-A0AAEDF44F7D"), SizeId = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Quantity = 47 },
+                new { ProductId = Guid.Parse("5E838AA5-DD8C-4B6B-81EA-A0AAEDF44F7D"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 46 },
+                new { ProductId = Guid.Parse("DB645119-1B9F-4161-966D-97A7CCA8D2C7"), SizeId = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Quantity = 52 },
+                new { ProductId = Guid.Parse("DB645119-1B9F-4161-966D-97A7CCA8D2C7"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 49 },
+                new { ProductId = Guid.Parse("5BF3988B-BA17-4802-90AD-B77ABE68677A"), SizeId = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Quantity = 57 },
+                new { ProductId = Guid.Parse("5BF3988B-BA17-4802-90AD-B77ABE68677A"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 61 },
+
+                new { ProductId = Guid.Parse("E536C61E-C2C5-41EC-9205-660726BAA18B"), SizeId = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Quantity = 110 },
+                new { ProductId = Guid.Parse("E536C61E-C2C5-41EC-9205-660726BAA18B"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 122 },
+                new { ProductId = Guid.Parse("380E3A08-08C5-40B1-B401-EC6B57D2E549"), SizeId = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Quantity = 107 },
+                new { ProductId = Guid.Parse("380E3A08-08C5-40B1-B401-EC6B57D2E549"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 115 },
+                new { ProductId = Guid.Parse("D772B195-65E3-4250-8B2C-E2D59E7D24DA"), SizeId = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Quantity = 108 },
+                new { ProductId = Guid.Parse("D772B195-65E3-4250-8B2C-E2D59E7D24DA"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 111 },
+                new { ProductId = Guid.Parse("EABC3CE7-3C55-465E-9F27-11033BCC4F33"), SizeId = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Quantity = 98 },
+                new { ProductId = Guid.Parse("EABC3CE7-3C55-465E-9F27-11033BCC4F33"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 92 },
+                new { ProductId = Guid.Parse("76F1B29C-EDAC-4CA9-B529-DA383C04905B"), SizeId = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Quantity = 105 },
+                new { ProductId = Guid.Parse("76F1B29C-EDAC-4CA9-B529-DA383C04905B"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 112 },
+                new { ProductId = Guid.Parse("8823F027-9074-4FA9-A5EF-552A5B08EF5E"), SizeId = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Quantity = 115 },
+                new { ProductId = Guid.Parse("8823F027-9074-4FA9-A5EF-552A5B08EF5E"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 114 },
+                new { ProductId = Guid.Parse("1054708A-AA30-4BA6-84F7-321EAC6AA041"), SizeId = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Quantity = 110 },
+                new { ProductId = Guid.Parse("1054708A-AA30-4BA6-84F7-321EAC6AA041"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 160 },
+                new { ProductId = Guid.Parse("297AF444-055F-4B76-A3EE-FBE65B9752F6"), SizeId = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Quantity = 132 },
+                new { ProductId = Guid.Parse("297AF444-055F-4B76-A3EE-FBE65B9752F6"), SizeId = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Quantity = 65 }
             );
         }
     }

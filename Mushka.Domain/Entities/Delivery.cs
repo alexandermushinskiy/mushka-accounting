@@ -16,9 +16,7 @@ namespace Mushka.Domain.Entities
         public DateTime RequestDate { get; set; }
 
         public DateTime DeliveryDate { get; set; }
-
-        public PaymentMethod PaymentMethod { get; set; }
-
+        
         public decimal Cost { get; set; }
 
         public decimal TransferFee { get; set; }
@@ -27,7 +25,7 @@ namespace Mushka.Domain.Entities
 
         public ICollection<DeliveryProduct> Products { get; set; }
 
-        //public Guid SupplierId { get; set; }
-        //public Supplier Supplier { get; set; }
+        public Guid SupplierId { get; set; }
+        public Supplier Supplier { get; set; }
     }
 }

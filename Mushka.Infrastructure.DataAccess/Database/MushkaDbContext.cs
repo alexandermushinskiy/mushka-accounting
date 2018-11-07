@@ -23,7 +23,7 @@ namespace Mushka.Infrastructure.DataAccess.Database
 
         public DbSet<Order> Orders { get; set; }
 
-        //public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +35,7 @@ namespace Mushka.Infrastructure.DataAccess.Database
             modelBuilder.ApplyConfiguration(new DeliveryProductConfig());
             modelBuilder.ApplyConfiguration(new OrderConfig());
             modelBuilder.ApplyConfiguration(new OrderProductConfig());
+            modelBuilder.ApplyConfiguration(new SupplierConfig());
 
             SeedData(modelBuilder);
         }

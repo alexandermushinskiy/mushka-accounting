@@ -13,7 +13,6 @@ namespace Mushka.WebApi.Resolvers
                 Id = source.Id,
                 RequestDate = source.RequestDate,
                 DeliveryDate = source.DeliveryDate,
-                PaymentMethod = source.PaymentMethod,
                 Cost = source.Cost,
                 TransferFee = source.TransferFee,
                 Products = source.Products.Select(CreateDeliveryProductModel)

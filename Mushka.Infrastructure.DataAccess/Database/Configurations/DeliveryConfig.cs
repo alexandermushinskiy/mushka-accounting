@@ -33,12 +33,7 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .HasColumnName("DeliveryDate")
                 .HasColumnType("Date")
                 .IsRequired();
-
-            builder
-                .Property(del => del.PaymentMethod)
-                .HasColumnName("PaymentMethod")
-                .IsRequired();
-
+            
             builder
                 .Property(del => del.TransferFee)
                 .HasColumnName("TransferFee")
@@ -48,6 +43,11 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .Property(del => del.BankFee)
                 .HasColumnName("BankFee")
                 .HasColumnType("Money");
+
+            builder
+                .HasOne(del => del.Supplier)
+                .WithMany(sup => sup.Deliveries)
+                .HasForeignKey(del => del.SupplierId);
         }
     }
 }

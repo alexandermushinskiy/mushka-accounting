@@ -21,6 +21,8 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .Property(category => category.Name)
                 .HasColumnName("Name")
                 .IsRequired();
+
+            builder.HasIndex(category => category.Name).IsUnique();
         }
     }
 }
