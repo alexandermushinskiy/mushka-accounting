@@ -8,6 +8,11 @@ namespace Mushka.Domain.Entities
 
         public PaymentMethod PaymentMethod { get; set; }
 
-        public string CardNumber { get; set; }
+        public string CreditCardNumber { get; set; }
+
+        public string Notes { get; set; }
+
+        public Guid SupplierId { get; set; }
+        public Supplier Supplier { get; set; }
     }
 }

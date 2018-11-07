@@ -44,13 +44,13 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .HasColumnName("WebSite");
 
             builder
-                .Property(sup => sup.ContactPerson)
-                .HasColumnName("ContactPerson")
-                .IsRequired();
-
-            builder
                 .Property(sup => sup.Notes)
                 .HasColumnName("Notes");
+
+            builder
+                .HasMany(sup => sup.ContactPersons)
+                .WithOne(cp => cp.Supplier)
+                .HasForeignKey(cp => cp.SupplierId);
         }
     }
 }

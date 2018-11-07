@@ -36,6 +36,7 @@ namespace Mushka.Infrastructure.DataAccess.Database
             modelBuilder.ApplyConfiguration(new OrderConfig());
             modelBuilder.ApplyConfiguration(new OrderProductConfig());
             modelBuilder.ApplyConfiguration(new SupplierConfig());
+            modelBuilder.ApplyConfiguration(new ContactPersonConfig());
 
             SeedData(modelBuilder);
         }
