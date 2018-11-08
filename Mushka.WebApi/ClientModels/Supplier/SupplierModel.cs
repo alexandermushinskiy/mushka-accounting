@@ -11,7 +11,7 @@ namespace Mushka.WebApi.ClientModels.Supplier
 
         public string Address { get; set; }
 
-        public string Phone { get; set; }
+        public string Phones { get; set; }
 
         public string Email { get; set; }
 

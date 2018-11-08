@@ -56,9 +56,9 @@ namespace Mushka.Infrastructure.DataAccess.Database
                 new { Id = Guid.Parse("6E519491-8FD8-45F2-992E-270B01F25971"), Name = "43-46" }
             );
 
-            modelBuilder.HasProducts();
-            modelBuilder.HasDeliveries();
-            modelBuilder.HasSuppliers();
+            //modelBuilder.HasProducts();
+            //modelBuilder.HasDeliveries();
+            //modelBuilder.HasSuppliers();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Mushka.WebApi.Resolvers
                 Name = source.Name,
                 Address = source.Address,
                 Email = source.Email,
-                Phone = source.Phone,
+                Phones = source.Phones,
                 WebSite = source.WebSite,
                 Notes = source.Notes,
                 ContactPersons = source.ContactPersons.Select(CreateSupplierContactPersonModel)
@@ -23,8 +23,7 @@ namespace Mushka.WebApi.Resolvers
         private static SupplierContactPersonModel CreateSupplierContactPersonModel(ContactPerson contactPerson) =>
             new SupplierContactPersonModel
             {
-                FirstName = contactPerson.FirstName,
-                LastName = contactPerson.LastName,
+                Name = contactPerson.Name,
                 Email = contactPerson.Email,
                 Phones = contactPerson.Phones,
                 City = contactPerson.City,

@@ -17,14 +17,8 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
             builder.HasKey(cp => cp.Id);
 
             builder
-                .Property(cp => cp.FirstName)
-                .HasColumnName("FirstName")
-                .HasMaxLength(255)
-                .IsRequired();
-
-            builder
-                .Property(cp => cp.LastName)
-                .HasColumnName("LastName")
+                .Property(cp => cp.Name)
+                .HasColumnName("Name")
                 .HasMaxLength(255)
                 .IsRequired();
 
@@ -41,8 +35,12 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
             builder
                 .Property(cp => cp.Email)
                 .HasColumnName("Email")
-                .HasMaxLength(255)
-                .IsRequired();
+                .HasMaxLength(255);
+
+            builder
+                .Property(cp => cp.Phones)
+                .HasColumnName("Phones")
+                .HasMaxLength(255);
         }
     }
 }

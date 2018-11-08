@@ -26,7 +26,7 @@ namespace Mushka.WebApi.Resolvers
                 Name = source.Name,
                 Address = source.Address,
                 Email = source.Email,
-                Phone = source.Phone,
+                Phones = source.Phones,
                 WebSite = source.WebSite,
                 Notes = source.Notes,
                 ContactPersons = source.ContactPersons.Select(cp => CreateContactPerson(supplierId, cp)).ToList()
@@ -38,8 +38,7 @@ namespace Mushka.WebApi.Resolvers
             {
                 SupplierId = supplierId,
                 Id = guidProvider.NewGuid(),
-                FirstName = contactPerson.FirstName,
-                LastName = contactPerson.LastName,
+                Name = contactPerson.Name,
                 Email = contactPerson.Email,
                 Phones = contactPerson.Phones,
                 Position = contactPerson.Position,

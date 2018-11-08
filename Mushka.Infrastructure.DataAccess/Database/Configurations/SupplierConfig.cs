@@ -30,8 +30,8 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .IsRequired();
 
             builder
-                .Property(sup => sup.Phone)
-                .HasColumnName("Phone")
+                .Property(sup => sup.Phones)
+                .HasColumnName("Phones")
                 .IsRequired();
 
             builder
