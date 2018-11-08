@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -20,6 +21,7 @@ namespace Mushka.Tests.Service.Services
         private const string TestCategoryName = Component.Service + nameof(CategoryService);
         private const string GetAllAsyncMethodName = nameof(CategoryService.GetAllAsync) + ". ";
         private const string GetByIdAsyncMethodName = nameof(CategoryService.GetByIdAsync) + ". ";
+        private const string AddAsyncMethodName = nameof(CategoryService.AddAsync) + ". ";
         private const string DeleteAsyncMethodName = nameof(CategoryService.DeleteAsync) + ". ";
 
         private const string CategoryName = "Category";
@@ -27,9 +29,11 @@ namespace Mushka.Tests.Service.Services
         private const string NoCategoriesFoundMessage = "No categories found.";
         private static readonly Guid CategoryId = Guid.Parse("00000000000000000000000000000001");
         private static readonly string CategoryRetrievedMessage = $"Category with id {CategoryId} was successfully retrieved.";
-        private static readonly string CategoryDeleteMessage = $"Category with id {CategoryId} was successfully deleted.";
+        private static readonly string CategoryDeletedMessage = $"Category with id {CategoryId} was successfully deleted.";
         private static readonly string CategoryNotFoundMessage = $"Category with id {CategoryId} is not found.";
         private static readonly string CategoryHasProductsMessage = $"Category with id {CategoryId} contains products.";
+        private static readonly string CategoryNameDuplicationMessage = $"Category with the name {CategoryName} is already existed.";
+        private static readonly string CategoryCreatedMessage = $"Category with id {CategoryId} was successfully created.";
 
         private readonly Mock<ICategoryRepository> categoryRepositoryMock;
         private readonly Mock<IProductRepository> productRepositoryMock;
@@ -104,6 +108,37 @@ namespace Mushka.Tests.Service.Services
         }
 
         [Category(TestCategoryName)]
+        [Fact(DisplayName = AddAsyncMethodName)]
+        public async Task AddAsyncTest()
+        {
+            var category = CreateCategory();
+
+            categoryRepositoryMock
+                .SetupAsync(repo => repo.IsExistAsync(It.IsAny<Expression<Func<Category, bool>>>(), default(CancellationToken)), false)
+                .SetupAsync(repo => repo.AddAsync(category, default(CancellationToken)), category);
+
+            var actual = await categoryService.AddAsync(category);
+
+            var expected = CreateValidValidationResponse(category, CategoryCreatedMessage);
+            actual.Should().BeEquivalentTo(expected);
+        }
+
+        [Category(TestCategoryName)]
+        [Fact(DisplayName = AddAsyncMethodName + "Category name is duplicated")]
+        public async Task AddAsyncNameDuplicationTest()
+        {
+            var category = CreateCategory();
+
+            categoryRepositoryMock
+                .SetupAsync(repo => repo.IsExistAsync(It.IsAny<Expression<Func<Category, bool>>>(), default(CancellationToken)), true);
+
+            var actual = await categoryService.AddAsync(category);
+
+            var expected = CreateWarningValidationResponse<Category>(CategoryNameDuplicationMessage);
+            actual.Should().BeEquivalentTo(expected);
+        }
+
+        [Category(TestCategoryName)]
         [Fact(DisplayName = DeleteAsyncMethodName)]
         public async Task DeleteAsyncTest()
         {
@@ -118,7 +153,7 @@ namespace Mushka.Tests.Service.Services
 
             var actual = await categoryService.DeleteAsync(CategoryId);
 
-            var expected = CreateValidValidationResponse(category, CategoryDeleteMessage);
+            var expected = CreateValidValidationResponse(category, CategoryDeletedMessage);
             actual.Should().BeEquivalentTo(expected);
         }
 
