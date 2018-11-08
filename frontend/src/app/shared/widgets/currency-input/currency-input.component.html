@@ -1,0 +1,13 @@
+<div class="input-currency">
+  <input required
+        type="text"
+        class="form-control"
+        currencyMask
+        [options]="{ prefix: '', thousands: ' ', decimal: ',', align:'left' }"
+        [disabled]="isDisabled"
+        [attr.placeholder]="placeholder"
+        [ngModel]="value"
+        (ngModelChange)="onChanged($event)"
+        (clickOutside)="blur()"
+        (blur)="blur()" />
+</div>

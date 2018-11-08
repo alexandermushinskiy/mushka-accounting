@@ -1,0 +1,42 @@
+<div class="appmain" [ngClass]="{'collapsed': isCollapsed}">
+  <div class="appbar">
+    <psa-datatable-header
+                    [title]="title"
+                    [total]="total"
+                    [shown]="shown"
+                    [availableColumns]="availableCols"
+                    [showMenuToggle]="true"
+                    [showAddButton]="isAddButtonShown"
+                    (onCollapseMenu)="toggleCollapseMode()"
+                    (onAddItem)="addProduct(content)"
+                    (onFilter)="datatable.onFilter($event)"
+                    (onFilterReset)="datatable.resetFilter()"
+                    (onExportAllToCSV)="datatable.onExportAllToCSV($event)"
+                    (onExportFilteredToCSV)="datatable.onExportFilteredToCSV($event)">
+    </psa-datatable-header>
+  </div>
+  <div class="appbody">
+    <psa-categories-nav
+      [selectedCategory]="selectedCategory"
+      (onCategorySelected)="onCategotySelected($event)">
+    </psa-categories-nav>
+    <div class="appcontent">
+    <psa-products-table #datatable
+                    [rows]="rows"
+                    [loadingIndicator]="loadingIndicator"
+                    [cols]="availableCols"
+                    (onRowsUpdated)="onRowsUpdated($event)">
+    </psa-products-table>
+    </div>
+  </div>
+</div>
+
+<ng-template #content>
+  <psa-product-modal
+              [product]="selectedProduct"
+              [categoryId]="selectedCategory.id"
+              [isSaving]="isModalLoading"
+              (onSave)="saveProduct($event)"
+              (onClose)="closeModal()">
+  </psa-product-modal>
+</ng-template>

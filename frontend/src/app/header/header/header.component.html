@@ -1,0 +1,21 @@
+<header id="header">
+  <div class="actions-left">
+      <div class="logo" routerlink="/" title="MUSHKA Accounting" tabindex="0">
+        <img alt="Ericsson" class="logo-ericsson" height="25" src="./assets/images/mushka-logo.svg" width="35">
+        <span class="accounting">Учет товаров и услуг</span>
+        <!-- <img alt="M-PSA" class="logo-csrh" height="11" src="./assets/images/mushka-logo_MPSA.svg" width="46"> -->
+    </div>
+    <psa-global-search #search (onSearch)="jumpToCsr($event)" [isLoading]="isLoadingInProgress"></psa-global-search>
+  </div>
+  <div class="actions-right">
+    <a class="btn btn-outline-light" aria-label="Сделка" [routerLink]="'/delivery'">Сделка</a>
+    <a class="btn btn-outline-light" aria-label="Поступление" [routerLink]="'/delivery'">Поступление</a>
+    <psa-user-notification></psa-user-notification>
+    <div class="badge-group">
+      <psa-header-badge [title]="'Unrated'" [icon]="'ico-favorites'" [value]="totalUnrated"></psa-header-badge>
+      <psa-header-badge [title]="'Unassigned'" [icon]="'ico-eye'" [value]="totalUnassigned"></psa-header-badge>
+      <psa-header-badge [title]="'Unread'" [icon]="'ico-csr-new'" [value]="totalUnseen"></psa-header-badge>
+    </div>
+    <psa-user></psa-user>
+  </div>
+</header>

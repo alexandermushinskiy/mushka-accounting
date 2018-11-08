@@ -1,0 +1,44 @@
+<header class="data-table-header">
+  <span *ngIf="showMenuToggle" class="gutter-toggle" (click)="onCollapseMenu.emit()">
+    <i class="fa fa-angle-double-left"></i>
+  </span>
+  <div class="data-table-header-wrapper">
+    <div class="data-table-header-title">
+      <h1 class="csr-slogan" *ngIf="showTitle">{{ title }}</h1>
+      <button *ngIf="showAddButton" class="btn btn-light btn-block btn-xs" (click)="addItem()">Добавить</button>
+      <!-- <span *ngIf="isAddButtonShown" class="btn-add"><i class="fa fa-plus fa-border"></i></span> -->
+    </div>
+    <div class="data-table-header-actions" *ngIf="showActions">
+      <div class="data-table-header-search">
+        <div class="current-from-total-amount" *ngIf="total > 0">
+           <span class="text-muted total-count">
+            <span *ngIf="shown !== total; else totalBlock">
+              {{ shown }} из {{ total }}
+            </span>
+            <ng-template #totalBlock>
+              {{ total }} всего
+            </ng-template>
+          </span>
+          <button class="btn btn-icon" (click)="resetFilters()" *ngIf="shown !== total">
+            <i class="ico ico-close" aria-hidden="true" title="Reset filters"></i>
+          </button>
+        </div>
+        <psa-search-form (onSearch)="filter($event)"></psa-search-form>
+      </div>
+      <div class="btn-set" *ngIf="showOptions">
+        <button class="btn btn-icon btn-refresh" title="Refresh table" (click)="reloadTickets()">
+          <i class="fa fa-refresh"></i>
+        </button>
+        <div ngbDropdown placement="bottom-right">
+          <button class="btn btn-icon btn-download" ngbDropdownToggle id="export-csv">
+            <i class="fa fa-download" title="Export to CSV" aria-hidden="true"></i>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="export-csv">
+            <button class="dropdown-item" (click)="exportAllToCSV()">Экспорт всех данных в CSV</button>
+            <button class="dropdown-item" (click)="exportFilteredToCSV()">Экспорт видимых данных в CSV</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

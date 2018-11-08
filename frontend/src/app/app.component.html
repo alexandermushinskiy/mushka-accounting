@@ -1,0 +1,8 @@
+<psa-loading-screen></psa-loading-screen>
+<div *ngIf="isAppReady" id="app">
+  <psa-header></psa-header>
+  <main id="main" [ngClass]="{'sidebar-collapsed': isCollapsed}">
+    <psa-sidebar [ngClass]="{'sidebar-collapsed': isCollapsed}"></psa-sidebar>
+    <router-outlet></router-outlet>
+  </main>
+</div>

@@ -1,0 +1,209 @@
+<form [formGroup]="deliveryForm" class="new-csr w-100" autocomplete="off">
+  <div class="app-page-body row flex-nowrap">
+    <!-- left side -->
+    <div class="app-page-content">
+      <div class="app-page-header">
+        <div class="app-page-description">
+          <!-- left pointing back arrow -->
+          <a tabindex="0" (click)="goBack()" class="link-back">
+            <i class="ico ico-arrow-up ico-arrow-left"></i>
+          </a>
+          <h1 class="app-page-title">ПОСТУПЛЕНИЕ ТОВАРОВ И УСЛУГ</h1>
+          <a>
+            <span class="btn-add btn-add-delivery" (click)="reset()"><i class="fa fa-plus fa-border"></i></span>
+          </a>
+        </div>
+      </div>
+      <div class="content-body">
+        <div class="form-row">
+          <div class="col-lg-9">
+              <div class="form-row">
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label>Номер:</label>
+                    <input class="form-control" readonly="readonly" formControlName="batchNumber" />
+                  </div>
+                </div>
+                <div class="col-lg-5">
+                  <div class="form-row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label>Дата заявки:</label>
+                        <psa-datetimepicker [date]="requestDate"
+                                            [dateFormat]="'YYYY-MM-DD'"
+                                            [pickerType]="'calendar'"
+                                            [isNow]="true"
+                                            (onDateChanged)="onReuestDateChanged($event)">
+                          <div class="input-wrapper datepicker-input">
+                            <input class="form-control requestDate"
+                                            [(ngModel)]="requestDate"
+                                            placeholder="Введите дату"
+                                            formControlName="requestDate"/>
+                            <i class="fa fa-calendar-o"></i>
+                          </div>
+                        </psa-datetimepicker>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label>Дата поступления:</label>
+                        <psa-datetimepicker [date]="deliveryDate"
+                                            [dateFormat]="'YYYY-MM-DD'"
+                                            [pickerType]="'calendar'"
+                                            [isNow]="true"
+                                            (onDateChanged)="onDeliveryDateChanged($event)">
+                          <div class="input-wrapper datepicker-input">
+                            <input class="form-control deliveryDate"
+                                            [(ngModel)]="deliveryDate"
+                                            placeholder="Введите дату"
+                                            formControlName="deliveryDate"/>
+                            <i class="fa fa-calendar-o"></i>
+                          </div>
+                        </psa-datetimepicker>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="dropdown">Организация:</label>
+              <psa-suppliers-dropdown #suppliersList (onSupplierSelected)="onSupplierSelected($event)" formControlName="supplier"></psa-suppliers-dropdown>
+            </div>
+          </div>
+          <div class="col-lg-2 col-lg-auto">
+            <div class="form-group">
+              <label for="dropdown">Прошлые заказы:</label>
+              <input class="form-control" readonly="readonly" formControlName="previousOrdersAmount" />
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-lg-3">
+            <div class="form-group">
+              <label for="dropdown">Способ оплаты:</label>
+              <psa-dropdown [options]="PaymentMethodsList" [required]="true" formControlName="paymentMethod"></psa-dropdown>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>Общая стоимость:</label>
+              <psa-currency-input formControlName="totalCost"></psa-currency-input>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>Стоимость доставки:</label>
+              <psa-currency-input formControlName="deliveryCost"></psa-currency-input>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>Комиссия за перевод:</label>
+              <psa-currency-input formControlName="transferFee"></psa-currency-input>
+            </div>
+          </div>
+        </div>
+        <div class="delivery-items">
+          <div ngbRadioGroup
+                    class="btn-group btn-group-toggle btn-group-underline" 
+                    name="searchBasic" 
+                    data-toggle="buttons"
+                    [ngModel]="selectedDeliveryType"
+                    [ngModelOptions]="{standalone: true}">
+            <label ngbButtonLabel 
+                    class="btn btn-underline delivery-type"
+                    *ngFor="let type of deliveryTypesList"
+                    [ngClass]="{'active': selectedDeliveryType === type, 'not-implemented': type === deliveryType.EQUIPMENT}"
+                    (click)="changeDeliveryType(type)">
+              <input #deliveryTypeInput ngbButton type="radio" [value]="type"> {{ deliveryItems[type].displayName }} ({{ deliveryItems[type].amount }} поз.)
+            </label>
+          </div>
+          <div [ngSwitch]="selectedDeliveryType">
+            <div *ngSwitchCase="deliveryType.PRODUCTS">
+              <psa-delivery-products-list #productsList
+                    [productItems]="deliveryItems[selectedDeliveryType].data"
+                    [isReadOnly]="isReadOnly"
+                    (onItemAdded)="addDeliveryItem(deliveryType.PRODUCTS, $event)"
+                    (onItemUpdated)="updateDeliveryItem(deliveryType.PRODUCTS, $event)"
+                    (onItemDeleted)="removeDeliveryItem(deliveryType.PRODUCTS, $event)">
+              </psa-delivery-products-list>
+            </div>
+            <div *ngSwitchCase="deliveryType.SERVICES">
+              <psa-delivery-services-list #servicesList
+                    [serviceItems]="deliveryItems[selectedDeliveryType].data"
+                    [isReadOnly]="isReadOnly"
+                    (onItemAdded)="addDeliveryItem(deliveryType.SERVICES, $event)"
+                    (onItemUpdated)="updateDeliveryItem(deliveryType.SERVICES, $event)"
+                    (onItemDeleted)="removeDeliveryItem(deliveryType.SERVICES, $event)">
+              </psa-delivery-services-list>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- right side -->
+    <div class="app-page-aside">
+      <div class="aside-body">
+        <div class="aside-body-inner">
+          <div ngbRadioGroup
+                    class="btn-group btn-group-toggle btn-group-underline" 
+                    name="options" 
+                    data-toggle="buttons"
+                    [ngModel]="selectedOption"
+                    [ngModelOptions]="{standalone: true}">
+            <label ngbButtonLabel 
+                    class="btn btn-underline delivery-type"
+                    *ngFor="let option of optionsList"
+                    [ngClass]="{'active': selectedOption === option}"
+                    (click)="selectedOption = option">
+              <input ngbButton type="radio" [value]="option"> {{ option }}
+            </label>
+          </div>
+          <div [ngSwitch]="selectedOption">
+              <div *ngSwitchCase="deliveryOption.DRAFTS">
+                <psa-delivery-item
+                      class="delivery-item-wrapper"
+                      *ngFor="let delivery of draftDeliveries"
+                      [delivery]="delivery"
+                      [canEdit]="true"
+                      [canDelete]="true"
+                      (onEdit)="viewDelivery($event)"
+                      (onDelete)="deleteDraft($event, removetConfirmation)">
+                </psa-delivery-item>
+              </div>
+            <div *ngSwitchCase="deliveryOption.HISTORY">
+              <psa-delivery-item
+                    class="delivery-item-wrapper"
+                    *ngFor="let delivery of historicalDeliveries"
+                    [delivery]="delivery"
+                    (onView)="viewDelivery($event)">
+              </psa-delivery-item>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="aside-footer">
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-buttons">
+      <button type="button" class="btn btn-md btn-light" [disabled]="isReadOnly || !isDraftValid" (click)="saveAsDraft()">Сохранить как черновик <psa-spinner [isLoading]="isDraftSaving"></psa-spinner></button>
+      <button type="submit" class="btn btn-md btn-primary" [disabled]="isReadOnly || deliveryForm.invalid" (click)="save()">Сохранить <psa-spinner [isLoading]="isSaving"></psa-spinner></button>
+    </div>
+  </div>
+</form>
+
+<ng-template #removetConfirmation let-c="close">
+  <psa-confirmation
+    (onClose)="c()"
+    (onConfirm)="confirmDeleteDraft(); c();"
+    [confirmButtonText]="'Удалить'"
+    [text]="'Вы уверены, что хотите удалить черновик?'">
+  </psa-confirmation>
+</ng-template>

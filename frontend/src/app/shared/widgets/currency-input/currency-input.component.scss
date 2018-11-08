@@ -1,0 +1,13 @@
+@import '../../../../variables';
+
+.form-control.ng-invalid {
+  box-shadow: 1px 0 0 $orange inset;
+  &:focus{
+    box-shadow: none;
+  }
+}
+
+/* webkit solution */
+::-webkit-input-placeholder { text-align:left; }
+/* mozilla solution */
+input:-moz-placeholder { text-align:left; }
