@@ -29,7 +29,5 @@ namespace Mushka.Domain.Entities
 
         public Guid CategoryId { get; set; }
         public Category Category { get; set; }
-
-        //public int TotalCount { get { return Sizes.Sum(s => s.Quantity); } }
     }
 }
