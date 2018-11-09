@@ -103,12 +103,12 @@ VALUES
 -- Suppliers
 INSERT INTO [Suppliers] ([Id], [Name], [Address], [Email], [WebSite], [Phones], [CreatedOn])
 VALUES
-('CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', 'Нова Линия', 'Тернопольская обл., с. Чистилов', 'office@novaliniya.com.ua', 'https://novaliniya.com.ua/', '(067)674-84-94;(067)208-35-02;(066) 229-38-88', GETDATE())
+('CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', N'Нова Линия', N'Тернопольская обл., с. Чистилов', 'office@novaliniya.com.ua', 'https://novaliniya.com.ua/', '(067)674-84-94;(067)208-35-02;(066) 229-38-88', GETDATE())
 
 INSERT INTO [ContactPersons] ([Id], [Name], [Phones], [SupplierId])
 VALUES
-('B3B024EB-D8FB-4F0A-B6A3-1D2CF0784617', 'Леся', '0984162095', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45'),
-('E944B628-61FE-412D-9D5A-B9C2EA748E06', 'Степан', '0676748494', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45')
+('B3B024EB-D8FB-4F0A-B6A3-1D2CF0784617', N'Леся', '0984162095', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45'),
+('E944B628-61FE-412D-9D5A-B9C2EA748E06', N'Степан', '0676748494', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45')
 
 -- Deliveries
 INSERT INTO [Deliveries] ([Id], [BankFee], [Cost], [DeliveryDate], [RequestDate], [SupplierId], [TransferFee])
