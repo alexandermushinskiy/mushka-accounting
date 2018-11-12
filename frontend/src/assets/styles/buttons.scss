@@ -512,3 +512,24 @@ button.close {
     color: $btn-light-color-hover;
   }
 }
+
+// MUSHKA
+.more {
+  cursor: pointer;
+  width: 16px;
+  opacity: 0.2;
+  -webkit-transition: all ease 500ms;
+     -moz-transition: all ease 500ms;
+      -ms-transition: all ease 500ms;
+       -o-transition: all ease 500ms;
+          transition: all ease 500ms;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  > img {
+    position: relative;
+    left: 5px;
+  }
+}

@@ -21,17 +21,7 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .HasColumnName("Name")
                 .HasMaxLength(255)
                 .IsRequired();
-
-            builder
-                .Property(cp => cp.Position)
-                .HasColumnName("Position")
-                .HasMaxLength(255);
-
-            builder
-                .Property(cp => cp.City)
-                .HasColumnName("City")
-                .HasMaxLength(255);
-
+            
             builder
                 .Property(cp => cp.Email)
                 .HasColumnName("Email")

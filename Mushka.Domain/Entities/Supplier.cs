@@ -23,17 +23,15 @@ namespace Mushka.Domain.Entities
         public string Email { get; set; }
 
         public string WebSite { get; set; }
-
-        public string Phones { get; set; }
-
+        
         public string Notes { get; set; }
 
         public DateTime CreatedOn { get; set; }
-
+        
+        public string Service { get; set; }
+        
         public ICollection<ContactPerson> ContactPersons { get; set; }
-
-        //public ICollection<PhoneNumber> Phones { get; set; }
-
+        
         public ICollection<Delivery> Deliveries { get; set; }
 
         //public ICollection<Payment> Payments { get; set; }

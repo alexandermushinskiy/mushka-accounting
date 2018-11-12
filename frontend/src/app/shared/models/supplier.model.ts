@@ -1,16 +1,17 @@
+import { ContactPerson } from './contact-person.model';
+
 export class Supplier {
   id: string;
   name: string;
   address: string;
-  phone: string;
   email: string;
   webSite: string;
-  contactPerson: string;
-  paymentConditions: string;
-  services: string;
-  comments: string;
-  createdOn: string;
+  notes: string;
+  contactPersons: ContactPerson[];
+  service: string;
 
+  paymentConditions: string;
+  
   constructor(data: any) {
     Object.assign(this, data);
   }

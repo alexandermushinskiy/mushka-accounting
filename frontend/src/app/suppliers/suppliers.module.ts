@@ -5,6 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { SuppliersListComponent } from './suppliers-list/suppliers-list.component';
 import { SuppliersTableComponent } from './suppliers-table/suppliers-table.component';
 import { SupplierModalComponent } from './shared/widgets/supplier-modal/supplier-modal.component';
+import { SuppliersComponent } from './suppliers/suppliers.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { SupplierModalComponent } from './shared/widgets/supplier-modal/supplier
   declarations: [
     SuppliersListComponent,
     SuppliersTableComponent,
-    SupplierModalComponent
+    SupplierModalComponent,
+    SuppliersComponent
   ],
   exports: [SuppliersListComponent]
 })

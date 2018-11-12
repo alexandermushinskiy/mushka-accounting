@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Mushka.Domain.Entities;
 using Mushka.Infrastructure.DataAccess.Database.Configurations;
-using Mushka.Infrastructure.DataAccess.Database.SeedData;
 
 namespace Mushka.Infrastructure.DataAccess.Database
 {
@@ -37,6 +36,7 @@ namespace Mushka.Infrastructure.DataAccess.Database
             modelBuilder.ApplyConfiguration(new OrderProductConfig());
             modelBuilder.ApplyConfiguration(new SupplierConfig());
             modelBuilder.ApplyConfiguration(new ContactPersonConfig());
+            //modelBuilder.ApplyConfiguration(new PaymentConfig());
 
             SeedData(modelBuilder);
         }

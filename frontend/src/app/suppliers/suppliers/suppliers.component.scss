@@ -1,0 +1,59 @@
+@import '../../../variables';
+
+.appmain {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  min-width: 0;
+}
+
+.appbar {
+  background-color: $layer1;
+  flex: none;
+}
+
+.appbody {
+  flex: 1 1 auto;
+  margin: $padding-base $padding-base 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.row-details-wrapper {
+  display: flex;
+  padding: 10px 0 30px;
+}
+
+.details-column {
+  display: inline-block;
+  // padding-right: 8px;
+  // padding-left: 8px;
+  // text-overflow: ellipsis;
+  // overflow: hidden;
+
+  .column-title {
+    display: inline-block;
+    vertical-align: top;
+    min-width: 100px;
+    //padding-top: 4px;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    &.-short {
+      min-width: 70px;
+    }
+  }
+
+  .column-data {
+    display: inline-block;
+  }
+
+  a {
+    vertical-align: super;
+  }
+}
+
+.contact-person {
+  display: inline-block;
+  min-width: 200px;
+}

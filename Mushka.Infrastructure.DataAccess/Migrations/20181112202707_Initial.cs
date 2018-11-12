@@ -53,9 +53,9 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     Address = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
                     WebSite = table.Column<string>(nullable: true),
-                    Phones = table.Column<string>(nullable: false),
                     Notes = table.Column<string>(nullable: true),
-                    CreatedOn = table.Column<DateTime>(nullable: false)
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    Service = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -89,8 +89,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 255, nullable: false),
-                    Position = table.Column<string>(maxLength: 255, nullable: true),
-                    City = table.Column<string>(maxLength: 255, nullable: true),
                     Email = table.Column<string>(maxLength: 255, nullable: true),
                     Phones = table.Column<string>(maxLength: 255, nullable: true),
                     SupplierId = table.Column<Guid>(nullable: false)

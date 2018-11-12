@@ -14,6 +14,8 @@ import { UserSettingsService } from './api/user-settings.service';
 import { CategoriesService } from './api/categories.service';
 import { SuppliersService } from './api/suppliers.service';
 import { DeliveriesService } from './api/deliveries.service';
+import { ConverterService } from './converter/converter.service';
+import { DatetimeService } from './datetime/datetime.service';
 
 @NgModule({
   imports: [
@@ -32,7 +34,9 @@ import { DeliveriesService } from './api/deliveries.service';
     CategoriesService,
     UserSettingsService,
     SuppliersService,
-    DeliveriesService
+    DeliveriesService,
+    ConverterService,
+    DatetimeService
   ],
   declarations: [],
   exports: []

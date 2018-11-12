@@ -1,27 +1,28 @@
 import { DataTablePreview } from "../../../shared/models/data-table-preview";
+import { ContactPerson } from "../../../shared/models/contact-person.model";
 
 export class SupplierTablePreview extends DataTablePreview {
   name: string;
   address: string;
-  phone: string;
   email: string;
   webSite: string;
-  contactPerson: string;
+  service: string;
+  contactPersons: ContactPerson[];
+
   paymentConditions: string;
-  services: string;
-  comments: string;
+  notes: string;
 
   constructor(elem, index: number = 0) {
     super(elem, index);
 
     this.name = elem.name;
     this.address = elem.address;
-    this.phone = elem.phone;
     this.email = elem.email || this.defaultValue;
     this.webSite = elem.webSite || this.defaultValue;
-    this.contactPerson = elem.contactPerson;
+    this.notes = elem.notes;
+    this.contactPersons = elem.contactPersons;
+    
     this.paymentConditions = elem.paymentConditions;
-    this.services = elem.services;
-    this.comments = elem.comments;
+    this.service = elem.service;
   }
 }

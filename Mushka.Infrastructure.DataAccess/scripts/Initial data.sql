@@ -101,9 +101,9 @@ VALUES
 ('297af444-055f-4b76-a3ee-fbe65b9752f6', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 65);
 
 -- Suppliers
-INSERT INTO [Suppliers] ([Id], [Name], [Address], [Email], [WebSite], [Phones], [CreatedOn])
+INSERT INTO [Suppliers] ([Id], [Name], [Address], [Email], [WebSite], [CreatedOn], [Service])
 VALUES
-('CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', N'Нова Линия', N'Тернопольская обл., с. Чистилов', 'office@novaliniya.com.ua', 'https://novaliniya.com.ua/', '(067)674-84-94;(067)208-35-02;(066) 229-38-88', GETDATE())
+('CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', N'Нова Линия', N'Тернопольская обл., с. Чистилов', 'office@novaliniya.com.ua', 'https://novaliniya.com.ua/', GETDATE(), N'Носки')
 
 INSERT INTO [ContactPersons] ([Id], [Name], [Phones], [SupplierId])
 VALUES

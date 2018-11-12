@@ -28,12 +28,7 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .Property(sup => sup.Address)
                 .HasColumnName("Address")
                 .IsRequired();
-
-            builder
-                .Property(sup => sup.Phones)
-                .HasColumnName("Phones")
-                .IsRequired();
-
+            
             builder
                 .Property(sup => sup.Email)
                 .HasColumnName("Email")
@@ -48,9 +43,18 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .HasColumnName("Notes");
 
             builder
+                .Property(sup => sup.Service)
+                .HasColumnName("Service");
+            
+            builder
                 .HasMany(sup => sup.ContactPersons)
                 .WithOne(cp => cp.Supplier)
                 .HasForeignKey(cp => cp.SupplierId);
+
+            //builder
+            //    .HasMany(sup => sup.Payments)
+            //    .WithOne(p => p.Supplier)
+            //    .HasForeignKey(p => p.SupplierId);
         }
     }
 }

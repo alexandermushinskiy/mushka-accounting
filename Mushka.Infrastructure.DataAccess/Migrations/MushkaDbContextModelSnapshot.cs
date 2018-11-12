@@ -49,10 +49,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("Id");
 
-                    b.Property<string>("City")
-                        .HasColumnName("City")
-                        .HasMaxLength(255);
-
                     b.Property<string>("Email")
                         .HasColumnName("Email")
                         .HasMaxLength(255);
@@ -64,10 +60,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
                     b.Property<string>("Phones")
                         .HasColumnName("Phones")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("Position")
-                        .HasColumnName("Position")
                         .HasMaxLength(255);
 
                     b.Property<Guid>("SupplierId");
@@ -270,9 +262,8 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.Property<string>("Notes")
                         .HasColumnName("Notes");
 
-                    b.Property<string>("Phones")
-                        .IsRequired()
-                        .HasColumnName("Phones");
+                    b.Property<string>("Service")
+                        .HasColumnName("Service");
 
                     b.Property<string>("WebSite")
                         .HasColumnName("WebSite");

@@ -1,51 +1,46 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { DatatableComponent } from 'ngx-datatable-with-ie-fix';
 
-import { SupplierTablePreview } from '../shared/models/supplier-table-preview';
-import { SuppliersTableComponent } from '../suppliers-table/suppliers-table.component';
-import { availableColumns } from '../../shared/constants/available-columns.const';
 import { SuppliersService } from '../../core/api/suppliers.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
+import { SupplierTablePreview } from '../shared/models/supplier-table-preview';
 import { Supplier } from '../../shared/models/supplier.model';
 
 @Component({
-  selector: 'psa-suppliers-list',
-  templateUrl: './suppliers-list.component.html',
-  styleUrls: ['./suppliers-list.component.scss']
+  selector: 'psa-suppliers',
+  templateUrl: './suppliers.component.html',
+  styleUrls: ['./suppliers.component.scss']
 })
-export class SuppliersListComponent implements OnInit {
-  @ViewChild(SuppliersTableComponent) datatable: SuppliersTableComponent;
+export class SuppliersComponent implements OnInit {
+  @ViewChild('datatable') datatable: DatatableComponent;
   
-  rows: SupplierTablePreview[];
   loadingIndicator = true;
   isModalLoading = false;
+  supplierRows: SupplierTablePreview[];
   total = 0;
   shown = 0;
-  availableCols = availableColumns.suppliers;
-  selectedSupplier: Supplier = null;
-
+  colNameWidth: number;
   private modalRef: NgbModalRef;
   private readonly modalConfig: NgbModalOptions = {
     windowClass: 'supplier-modal',
     backdrop: 'static'
   };
-  
+
   constructor(private modalService: NgbModal,
               private suppliersService: SuppliersService,
               private notificationsService: NotificationsService) { }
 
   ngOnInit() {
-    this.loadingIndicator = true;
-
-    this.suppliersService.getSuppliers()
-      .subscribe(
-        res => this.onSuccess(res),
-        () => this.onError()
-      );
+    this.loadSuppliers();
   }
+  
+  toggleExpandRow(row, index) {
+    row.index = index;
 
-  onRowsUpdated(rowsAmount: number) {
-    this.shown = rowsAmount;
+    this.colNameWidth = this.getColumnWidth('name');
+
+    this.datatable.rowDetail.toggleExpandRow(row);
   }
 
   addSupplier(content: ElementRef) {
@@ -64,13 +59,23 @@ export class SuppliersListComponent implements OnInit {
     this.modalRef.close();
   }
 
-  private onSuccess(suppliers) {
-    this.rows = suppliers.map((el, index) => new SupplierTablePreview(el, index));
+  private loadSuppliers() {
+    this.loadingIndicator = true;
+
+    this.suppliersService.getAll()
+      .subscribe(
+        res => this.onLoadSuccess(res),
+        () => this.onLoadError()
+      );
+  }
+  
+  private onLoadSuccess(suppliers) {
+    this.supplierRows = suppliers.map((el, index) => new SupplierTablePreview(el, index));
     this.total = suppliers.length;
     this.loadingIndicator = false;
   }
 
-  private onError() {
+  private onLoadError() {
     this.loadingIndicator = false;
     this.notificationsService.danger('Ошибка', 'Невозможно загрузить поставщиков');
   }
@@ -84,6 +89,10 @@ export class SuppliersListComponent implements OnInit {
   private onSaveError() {
     this.notificationsService.danger('Ошибка', 'Невозможно соранить данные поставщика');
     this.isModalLoading = false;
+  }  
+  private getColumnWidth(columnName: string): number {
+    const datatableColumns = this.datatable.bodyComponent._columns;
+    const column = datatableColumns.find(col => col.name === columnName);
+    return !!column ? column.width : 0;
   }
-
 }

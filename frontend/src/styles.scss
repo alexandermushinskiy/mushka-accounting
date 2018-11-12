@@ -1,7 +1,6 @@
 @import 'variables';
 @import '../node_modules/font-awesome/scss/font-awesome';
 @import '../node_modules/bootstrap/scss/bootstrap';
-@import '../node_modules/summernote/dist/summernote-bs4.css';
 @import '../node_modules/ngx-datatable-with-ie-fix/release/assets/icons.css';
 @import '../node_modules/ngx-datatable-with-ie-fix/release/index.css';
 @import '../node_modules/ngx-datatable-with-ie-fix/release/themes/material.css';
@@ -16,12 +15,10 @@
 @import 'assets/styles/ngx-treeview';
 @import 'assets/styles/progressbar';
 @import 'assets/styles/type';
-@import 'assets/styles/summernote-editor';
 @import 'assets/styles/forum';
 @import 'assets/styles/tooltips';
 @import 'assets/styles/notifications';
 @import 'assets/styles/modal';
-@import 'assets/styles/rating';
 @import 'assets/styles/panel';
 @import 'assets/styles/inline-editor';
 @import 'assets/styles/ngx-datepicker';
