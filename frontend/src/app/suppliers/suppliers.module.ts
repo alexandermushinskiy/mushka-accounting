@@ -6,6 +6,7 @@ import { SuppliersListComponent } from './suppliers-list/suppliers-list.componen
 import { SuppliersTableComponent } from './suppliers-table/suppliers-table.component';
 import { SupplierModalComponent } from './shared/widgets/supplier-modal/supplier-modal.component';
 import { SuppliersComponent } from './suppliers/suppliers.component';
+import { SupplierComponent } from './supplier/supplier.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { SuppliersComponent } from './suppliers/suppliers.component';
     SuppliersListComponent,
     SuppliersTableComponent,
     SupplierModalComponent,
-    SuppliersComponent
+    SuppliersComponent,
+    SupplierComponent
   ],
   exports: [SuppliersListComponent]
 })

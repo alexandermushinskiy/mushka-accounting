@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="16px" viewBox="0 0 14 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>18E404FD-BF10-4F68-A5CF-76205CB858D4</title>
+    <desc>Created with sketchtool.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01-MVP-design--Teacher--Dashboard" transform="translate(-1294.000000, -508.000000)">
+            <g id="ic-edit" transform="translate(1292.000000, 508.000000)">
+                <g id="background">
+                    <rect id="Rectangle-path" x="0" y="0" width="16" height="16"></rect>
+                </g>
+                <g id="edit" transform="translate(2.000000, 0.000000)" fill="#0082F0" fill-rule="nonzero">
+                    <polygon id="Shape" points="3 14 0 14 0 11"></polygon>
+                    <rect id="Rectangle-path" transform="translate(7.500277, 6.500177) rotate(135.000000) translate(-7.500277, -6.500177) " x="0.429344586" y="4.37894712" width="14.1418644" height="4.24245931"></rect>
+                    <polygon id="Shape" points="0 16 0 15 11 15 11 16"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

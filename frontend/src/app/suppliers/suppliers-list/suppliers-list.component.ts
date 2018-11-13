@@ -29,7 +29,7 @@ export class SuppliersListComponent implements OnInit {
     windowClass: 'supplier-modal',
     backdrop: 'static'
   };
-  
+
   constructor(private modalService: NgbModal,
               private suppliersService: SuppliersService,
               private notificationsService: NotificationsService) { }
@@ -37,7 +37,7 @@ export class SuppliersListComponent implements OnInit {
   ngOnInit() {
     this.loadingIndicator = true;
 
-    this.suppliersService.getSuppliers()
+    this.suppliersService.getAll()
       .subscribe(
         res => this.onSuccess(res),
         () => this.onError()
@@ -53,11 +53,11 @@ export class SuppliersListComponent implements OnInit {
   }
 
   saveSupplier(supplier: Supplier) {
-    this.suppliersService.addSupplier(supplier)
-      .subscribe(
-        (res: Supplier) => this.onSaveSuccess(res, supplier.id ? 'изменен' : 'добавлен'),
-        () => this.onSaveError()
-      );
+    // this.suppliersService.addSupplier(supplier)
+    //   .subscribe(
+    //     (res: Supplier) => this.onSaveSuccess(res, supplier.id ? 'изменен' : 'добавлен'),
+    //     () => this.onSaveError()
+    //   );
   }
 
   closeModal() {

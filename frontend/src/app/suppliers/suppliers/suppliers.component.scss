@@ -56,4 +56,9 @@
 .contact-person {
   display: inline-block;
   min-width: 200px;
+
+  &-data {
+    width: 50px;
+    display: inline-block;
+  }
 }

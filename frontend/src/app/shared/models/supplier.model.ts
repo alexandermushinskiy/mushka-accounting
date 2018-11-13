@@ -7,11 +7,11 @@ export class Supplier {
   email: string;
   webSite: string;
   notes: string;
-  contactPersons: ContactPerson[];
+  contactPersons: ContactPerson[] = [];
   service: string;
 
-  paymentConditions: string;
-  
+  //paymentConditions: string;
+
   constructor(data: any) {
     Object.assign(this, data);
   }

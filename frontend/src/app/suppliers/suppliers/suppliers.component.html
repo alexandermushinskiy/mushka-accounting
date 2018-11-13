@@ -54,10 +54,10 @@
       
       <ngx-datatable-column name="webSite">
         <ng-template ngx-datatable-header-template let-column="column">
-          <span>Адрес сайта</span>
+          <span>Сайт</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
-          <span [title]="value" class="bold">{{ value }}</span>
+          <span [title]="value" class="bold"><a [attr.href]="value" target="_blank">{{ value }}</a></span>
         </ng-template>
       </ngx-datatable-column>
       
@@ -72,17 +72,20 @@
       <ngx-datatable-row-detail [rowHeight]="auto" #myDetailRow>
         <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
           <div class="row-details-wrapper">
-            <div class="details-column">
+            <div class="details-column" [style.width.px]="contactsWidth">
               <span class="column-title">Контакты:</span><br>
               <span class="column-data">
                 <span *ngFor="let contactPerson of row.contactPersons">
                   <div class="contact-person">
                     <b>{{ contactPerson.name }}</b><br>
-                    тел: {{ contactPerson.phones }}<br>
-                    міло: {{ contactPerson.email }}<br>
+                    <span><span class="contact-person-data">тел:</span> {{ contactPerson.phones }}</span><br>
+                    <span><span class="contact-person-data">міло:</span> {{ !!contactPerson.email ? contactPerson.email : '-' }}</span><br>
                   </div>
                 </span>
               </span>
+            </div>
+            <div class="details-column" >
+              <a class="edit" [routerLink]="[row.id]">Редактировать</a>
             </div>
           </div>
         </ng-template>

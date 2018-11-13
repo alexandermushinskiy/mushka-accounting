@@ -12,10 +12,8 @@
 @import 'assets/styles/icons';
 @import 'assets/styles/forms';
 @import 'assets/styles/ngx-datatable';
-@import 'assets/styles/ngx-treeview';
 @import 'assets/styles/progressbar';
 @import 'assets/styles/type';
-@import 'assets/styles/forum';
 @import 'assets/styles/tooltips';
 @import 'assets/styles/notifications';
 @import 'assets/styles/modal';
@@ -69,6 +67,10 @@ body {
   overflow: hidden;
 }
 
+.hidden {
+  display: none;
+}
+
 //General module styles
 .module {
   margin-bottom: $padding-base*2;
@@ -109,10 +111,10 @@ body {
   height: 100vh;
 }
 
-// disabled state for unimplemented controls
-.csr-disabled-control {
-  opacity: 0.3;
-  pointer-events: none;
-  cursor: default;
-  user-select: none;
+textarea {
+  resize: none;
 }
+
+// a:not([href]) {
+//   color: $blue !important;
+// }

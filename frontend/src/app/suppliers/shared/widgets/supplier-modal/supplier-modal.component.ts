@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 
 import { Supplier } from '../../../../shared/models/supplier.model';
 import { SuppliersService } from '../../../../core/api/suppliers.service';
+import { ContactPerson } from '../../../../shared/models/contact-person.model';
 
 @Component({
   selector: 'psa-supplier-modal',
@@ -14,7 +15,7 @@ export class SupplierModalComponent implements OnInit {
   @Input() isSaving = false;
   @Output() onClose = new EventEmitter<void>();
   @Output() onSave = new EventEmitter<Supplier>();
-  
+
   supplierForm: FormGroup;
   isEdit = false;
   name: string;
@@ -22,9 +23,9 @@ export class SupplierModalComponent implements OnInit {
   email: string;
   phone: string;
   webSite: string;
-  contactPerson: string;
   paymentConditions: string;
   services: string;
+  contactPersons: ContactPerson[] = [];
 
   constructor(private formBuilder: FormBuilder,
               private suppliersService: SuppliersService) { }
@@ -34,12 +35,28 @@ export class SupplierModalComponent implements OnInit {
 
     if (this.isEdit) {
       this.name = this.supplier.name;
+    } else {
+      this.contactPersons.push(new ContactPerson({}));
     }
 
     this.buildForm();
   }
 
+  addContactPerson() {
+    const contactPersons = <FormArray>this.supplierForm.get('contactPersons');
+    contactPersons.push(this.createContactPersonFormGroup(new ContactPerson({})));
+  }
+
+  removeContactPerson(index: number) {
+    const contactPersons = <FormArray>this.supplierForm.get('contactPersons');
+    contactPersons.removeAt(index);
+  }
+
   save() {
+    if (this.supplierForm.invalid) {
+      return;
+    }
+
     const supplierFormValue = this.supplierForm.value;
 
     if (this.isEdit) {
@@ -71,9 +88,19 @@ export class SupplierModalComponent implements OnInit {
       email: [this.email],
       phone: [this.phone],
       webSite: [this.webSite],
-      contactPerson: [this.contactPerson],
       paymentConditions: [this.paymentConditions],
-      services: [this.services]
+      services: [this.services],
+      contactPersons: this.formBuilder.array(
+        this.contactPersons.map(param => this.createContactPersonFormGroup(param))
+      )
+    });
+  }
+
+  private createContactPersonFormGroup(contactPerson: ContactPerson): FormGroup {
+    return this.formBuilder.group({
+      name: [contactPerson.name, Validators.required],
+      email: [contactPerson.email],
+      phones: [contactPerson.phones, Validators.required]
     });
   }
 }

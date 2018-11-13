@@ -395,67 +395,6 @@ button.close {
   }
 }
 
-//gutter-toggle
-.gutter-toggle {
-  min-width: $gutter-toggle-width;
-  min-height: $gutter-toggle-height;
-  position: relative;
-  cursor: pointer;
-  color: $gutter-toggle-color;
-  float: left;
-
-  .fa-angle-double-left {
-    position: absolute;
-    top: calc(50% - 9px);
-    left: 0;
-    right: 0;
-    text-align: center;
-    vertical-align: top;
-    font-size: 16px;
-  }
-
-  .collapsed:not(main) & {
-    .fa-angle-double-left {
-      transform: rotate(180deg);
-    }
-  }
-}
-
-//btn-group-underline
-.btn-group-underline {
-  .btn-underline {
-    border: 0;
-    position: relative;
-    font-size: $btn-underline-font-size;
-    line-height: $btn-underline-line-height;
-    padding: $btn-underline-padding;
-    margin: $btn-underline-margin;
-
-    &:before {
-      content: '';
-      position: absolute;
-      z-index: -1;
-      left: 0;
-      right: 100%;
-      bottom: 0;
-      background: $btn-underline-border-color;
-      height: 3px;
-      transition: right 300ms ease-out;
-    }
-
-    &:focus,
-    &:hover,
-    &.active {
-      color: $btn-underline-color-hover;
-    }
-
-    &.active {
-      &:before {
-        right: 0;
-      }
-    }
-  }
-}
 //link back
 .link-back {
   color: $arrow-back-color;
@@ -499,20 +438,6 @@ button.close {
   }
 }
 
-.btn-prefix {
-  background-color: $input-border-color;
-  border-color: $input-border-color;
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-  line-height: 14px;
-
-  &:hover {
-    border-color: $btn-light-border-hover;
-    background-color: $btn-light-bg-hover;
-    color: $btn-light-color-hover;
-  }
-}
-
 // MUSHKA
 .more {
   cursor: pointer;
@@ -531,5 +456,24 @@ button.close {
   > img {
     position: relative;
     left: 5px;
+  }
+}
+
+.edit {
+  display: block;
+  height: 20px;
+  width: 86px;
+  color: $blue;
+  line-height: 20px;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  cursor: pointer;
+  background-image: url(./assets/images/ic-edit.svg);
+  background-repeat: no-repeat;
+  //background-position-y: 1px;
+
+  &:not(.disabled):hover {
+    color: $blue;
+    text-decoration: underline !important;
   }
 }

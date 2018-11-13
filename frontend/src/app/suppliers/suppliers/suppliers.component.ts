@@ -14,13 +14,13 @@ import { Supplier } from '../../shared/models/supplier.model';
 })
 export class SuppliersComponent implements OnInit {
   @ViewChild('datatable') datatable: DatatableComponent;
-  
+
   loadingIndicator = true;
   isModalLoading = false;
   supplierRows: SupplierTablePreview[];
   total = 0;
   shown = 0;
-  colNameWidth: number;
+  contactsWidth: number;
   private modalRef: NgbModalRef;
   private readonly modalConfig: NgbModalOptions = {
     windowClass: 'supplier-modal',
@@ -34,11 +34,12 @@ export class SuppliersComponent implements OnInit {
   ngOnInit() {
     this.loadSuppliers();
   }
-  
+
   toggleExpandRow(row, index) {
     row.index = index;
 
-    this.colNameWidth = this.getColumnWidth('name');
+    this.contactsWidth = this.getColumnWidth('name') + this.getColumnWidth('service') +
+                         this.getColumnWidth('address') + this.getColumnWidth('email');
 
     this.datatable.rowDetail.toggleExpandRow(row);
   }
@@ -48,11 +49,11 @@ export class SuppliersComponent implements OnInit {
   }
 
   saveSupplier(supplier: Supplier) {
-    this.suppliersService.addSupplier(supplier)
-      .subscribe(
-        (res: Supplier) => this.onSaveSuccess(res, supplier.id ? 'изменен' : 'добавлен'),
-        () => this.onSaveError()
-      );
+    // this.suppliersService.addSupplier(supplier)
+    //   .subscribe(
+    //     (res: Supplier) => this.onSaveSuccess(res, supplier.id ? 'изменен' : 'добавлен'),
+    //     () => this.onSaveError()
+    //   );
   }
 
   closeModal() {
@@ -68,7 +69,7 @@ export class SuppliersComponent implements OnInit {
         () => this.onLoadError()
       );
   }
-  
+
   private onLoadSuccess(suppliers) {
     this.supplierRows = suppliers.map((el, index) => new SupplierTablePreview(el, index));
     this.total = suppliers.length;
@@ -79,7 +80,7 @@ export class SuppliersComponent implements OnInit {
     this.loadingIndicator = false;
     this.notificationsService.danger('Ошибка', 'Невозможно загрузить поставщиков');
   }
-  
+
   private onSaveSuccess(supplier: Supplier, action: string) {
     this.isModalLoading = false;
     this.closeModal();
@@ -89,10 +90,15 @@ export class SuppliersComponent implements OnInit {
   private onSaveError() {
     this.notificationsService.danger('Ошибка', 'Невозможно соранить данные поставщика');
     this.isModalLoading = false;
-  }  
+  }
+
   private getColumnWidth(columnName: string): number {
     const datatableColumns = this.datatable.bodyComponent._columns;
     const column = datatableColumns.find(col => col.name === columnName);
     return !!column ? column.width : 0;
   }
+
+  // private getColumnsWidth(columnNames: string[]): number {
+  //   columnNames.reduce((x, y) => );
+  // }
 }

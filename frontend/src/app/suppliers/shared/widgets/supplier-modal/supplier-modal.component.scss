@@ -73,3 +73,25 @@
     color: $text-muted;
   }
 }
+
+.btn-remove {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
+  color: $text-muted;
+  .ico-close {
+    font-size: 1rem;
+  }
+}
+
+.contact-persons-title {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.contact-person-row {
+  padding-right: 25px;
+  > div:last-of-type {
+    //padding-left: 13px;
+  }
+}

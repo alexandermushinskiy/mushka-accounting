@@ -28,7 +28,7 @@ export class SuppliersDropdownComponent implements OnInit, ControlValueAccessor 
   constructor(private suppliersService: SuppliersService) { }
 
   ngOnInit() {
-    this.suppliersService.getSuppliers()
+    this.suppliersService.getAll()
       .subscribe((suppliers: Supplier[]) => this.suppliers = suppliers);
   }
 
