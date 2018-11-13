@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { DatatableComponent } from 'ngx-datatable-with-ie-fix';
+import { Router } from '@angular/router';
 
 import { SuppliersService } from '../../core/api/suppliers.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
@@ -28,6 +29,7 @@ export class SuppliersComponent implements OnInit {
   };
 
   constructor(private modalService: NgbModal,
+              private router: Router,
               private suppliersService: SuppliersService,
               private notificationsService: NotificationsService) { }
 
@@ -45,7 +47,8 @@ export class SuppliersComponent implements OnInit {
   }
 
   addSupplier(content: ElementRef) {
-    this.modalRef = this.modalService.open(content, this.modalConfig);
+    this.router.navigate(['suppliers/new']);
+    //this.modalRef = this.modalService.open(content, this.modalConfig);
   }
 
   saveSupplier(supplier: Supplier) {

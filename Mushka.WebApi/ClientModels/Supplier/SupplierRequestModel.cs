@@ -10,15 +10,14 @@ namespace Mushka.WebApi.ClientModels.Supplier
 
         [Required]
         public string Address { get; set; }
-
-        [Required]
-        public string Phones { get; set; }
-
+        
         [Required]
         public string Email { get; set; }
 
         public string WebSite { get; set; }
-        
+
+        public string Service { get; set; }
+
         public string Notes { get; set; }
 
         [Required]

@@ -28,6 +28,7 @@ namespace Mushka.WebApi.Resolvers
                 Email = source.Email,
                 WebSite = source.WebSite,
                 Notes = source.Notes,
+                Service = source.Service,
                 ContactPersons = source.ContactPersons.Select(cp => CreateContactPerson(supplierId, cp)).ToList()
             };
         }

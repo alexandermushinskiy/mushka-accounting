@@ -16,8 +16,8 @@ const routes: Routes = [
   { path: 'orders', component: OrdersComponent, pathMatch: 'full' },
   { path: 'suppliers', children: [
     { path: '', component: SuppliersComponent, pathMatch: 'full' },
-    { path: ':id', component: SupplierComponent, pathMatch: 'full' },
-    { path: 'new', component: SupplierComponent, pathMatch: 'full' }
+    { path: 'new', component: SupplierComponent, pathMatch: 'full' },
+    { path: ':id', component: SupplierComponent, pathMatch: 'full' }
   ]},
   { path: 'products', component: ProductsListComponent, pathMatch: 'full' },
   { path: 'logistics', component: LogisticsComponent, pathMatch: 'full' },

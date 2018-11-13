@@ -29,6 +29,40 @@ export class SuppliersService {
       .catch((res: any) => Observable.throw(res.error.messages));
   }
 
+  create(supplier: Supplier): Observable<Supplier> {
+    //const requestData = this.convertToRequestData(supplier);
+
+    return this.http.post(this.endPoint, supplier)
+      .map((res: any) => this.converterService.convertToSupplier(res.data))
+      .catch((res: any) => Observable.throw(res.error.messages));
+  }
+
+  update(supplierId: string, supplier: Supplier): Observable<Supplier> {
+    //const requestData = this.convertToRequestData(supplier);
+debugger;
+    return this.http.put(`${this.endPoint}/${supplierId}`, supplier)
+      .map((res: any) => this.converterService.convertToSupplier(res.data))
+      .catch((error) => Observable.throw(error.error.messages));
+  }
+
+  private convertToRequestData(supplier: Supplier): any {
+    return {
+      name: supplier.name,
+      address: supplier.address,
+      email: supplier.email,
+      webSite: supplier.webSite,
+      notes: supplier.notes,
+      service: supplier.service,
+      contactPersons: supplier.contactPersons.map(cp => {
+        return {
+          name: cp.name,
+          phones: cp.phones,
+          email: cp.email
+        }
+      })
+    };
+  }
+
   // getSuppliers(): Observable<Supplier[]> {
   //   return this.suppliers$.asObservable().delay(500);
   // }
