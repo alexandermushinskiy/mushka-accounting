@@ -29,12 +29,13 @@
 
 .email-input {
   display: inline-block;
+  width: 100%;
 }
 
 .btn-remove {
-  position: relative;
-  left: 7px;
-  top: 2px;
+  position: absolute;
+  right: -17px;
+  top: 12px;
   color: $text-muted;
   .ico-close {
     font-size: 1rem;
