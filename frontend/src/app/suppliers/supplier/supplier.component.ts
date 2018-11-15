@@ -31,7 +31,7 @@ export class SupplierComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.supplierId = params['id'];
       this.isEdit = !!this.supplierId;
-    
+
       if (this.isEdit) {
         this.notificationTitle = `${this.isEdit ? 'Изменение' : 'Добавление'} поставщика`;
         this.suppliersService.getById(this.supplierId)
@@ -74,7 +74,7 @@ export class SupplierComponent implements OnInit {
   private onSaveSuccess() {
     this.isLoading = false;
     this.notificationsService.success(this.notificationTitle, `Поставщик был успешно ${this.isEdit ? 'изменен' : 'добавлен'}`);
-    
+
     this.router.navigate(['/suppliers']);
   }
 
@@ -91,12 +91,13 @@ export class SupplierComponent implements OnInit {
       webSite: [supplier.webSite],
       // paymentConditions: [supplier.paymentConditions],
       service: [supplier.service],
+      notes: [supplier.notes],
       contactPersons: this.formBuilder.array(
         supplier.contactPersons.map(param => this.createContactPersonFormGroup(param))
       )
     });
   }
-  
+
   private createSupplierModel(supplierFormValue): Supplier {
     return new Supplier({
       name: supplierFormValue.name,
@@ -104,6 +105,7 @@ export class SupplierComponent implements OnInit {
       email: supplierFormValue.email,
       webSite: supplierFormValue.webSite,
       service: supplierFormValue.service,
+      notes: supplierFormValue.notes,
       contactPersons: supplierFormValue.contactPersons
     });
   }

@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="data-container">
   <form *ngIf="supplierForm" [formGroup]="supplierForm" (ngSubmit)="saveSupplier()">
 
     <div class="row">
@@ -12,9 +12,9 @@
     </div>
 
     <div class="row">
-      <div class="col-md-8 col-sm-12">
+      <div class="col-md-12">
         <div class="row">
-          <div class="col-md-6 col-sm-6">
+          <div class="col-md-4">
             <div class="row">
               <div class="col-md-12">
                 <div class="fields-group-title">Основная информация</div>
@@ -32,7 +32,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="field-group">
-                  <label for="paymentConditions">Список услуг *</label>
+                  <label>Список услуг *</label>
                   <textarea class="form-control text-area-vertical" rows="3" formControlName="service"></textarea>
                 </div>
               </div>
@@ -40,7 +40,7 @@
 
           </div>
 
-          <div class="col-md-6 col-sm-6">
+          <div class="col-md-4">
             <div class="row">
               <div class="col-md-12">
                 <div class="fields-group-title">Контактная информация</div>
@@ -70,51 +70,77 @@
             </div>
           </div>
           
-          <div class="col-md-12">
+          <div class="col-md-4">
             <div class="row">
               <div class="col-md-12">
-                <div class="fields-group-title">Контактные лица</div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div>
-                  <div class="form-row contact-person-row text-muted">
-                    <div class="col-sm-4">Имя</div>
-                    <div class="col-sm-4">Телефон(ы)</div>
-                    <div class="col-sm-4">Почта</div>
-                  </div>
-                  <div formArrayName="contactPersons">
-                    <div class="form-row contact-person-row" *ngFor="let contactPersonControl of supplierForm.get('contactPersons').controls; let index=index" [formGroupName]="index">
-                      <div class="col-sm-4">
-                        <div class="field-group">
-                          <input type="text" class="form-control" formControlName="name" />
-                        </div>
-                      </div>
-                      <div class="col-sm-4">
-                        <div class="field-group">
-                          <input type="text" class="form-control" formControlName="phones" />
-                        </div>
-                      </div>
-                      <div class="col-sm-4">
-                        <div class="field-group email-input">
-                          <input type="text" class="form-control" formControlName="email" />
-                        </div>
-                        <button class="btn-remove" title="Remove" type="button" (click)="removeContactPerson(index)" *ngIf="supplierForm.get('contactPersons').controls.length > 1">
-                          <i class="ico ico-close"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <button class="btn-add" type="button" (click)="addContactPerson()">
-                    <i class="fa fa-plus fa-border"></i>
-                  </button>
-                </div>
+                <div class="fields-group-title">Способы оплаты</div>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12">
+              <div class="fields-group-title">Контактные лица</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div>
+                <div class="form-row contact-person-row text-muted">
+                  <div class="col-sm-4">Имя</div>
+                  <div class="col-sm-4">Телефон(ы)</div>
+                  <div class="col-sm-4">Почта</div>
+                </div>
+                <div formArrayName="contactPersons">
+                  <div class="form-row contact-person-row" *ngFor="let contactPersonControl of supplierForm.get('contactPersons').controls; let index=index" [formGroupName]="index">
+                    <div class="col-sm-4">
+                      <div class="field-group">
+                        <input type="text" class="form-control" formControlName="name" />
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="field-group">
+                        <input type="text" class="form-control" formControlName="phones" />
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="field-group email-input">
+                        <input type="text" class="form-control" formControlName="email" />
+                      </div>
+                      <button class="btn-remove" title="Remove" type="button" (click)="removeContactPerson(index)" *ngIf="supplierForm.get('contactPersons').controls.length > 1">
+                        <i class="ico ico-close"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn-add" type="button" (click)="addContactPerson()">
+                  <i class="fa fa-plus fa-border"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="fields-group-title">Дополнительно</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="field-group">
+              <label>Примечание</label>
+              <textarea class="form-control text-area-vertical" rows="7" formControlName="notes"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
 
