@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DatatableComponent } from 'ngx-datatable-with-ie-fix';
 import { Router } from '@angular/router';
+import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 import { SuppliersService } from '../../core/api/suppliers.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
@@ -14,6 +15,7 @@ import { Supplier } from '../../shared/models/supplier.model';
 })
 export class SuppliersComponent implements OnInit {
   @ViewChild('datatable') datatable: DatatableComponent;
+  @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
 
   loadingIndicator = true;
   isModalLoading = false;
@@ -22,7 +24,16 @@ export class SuppliersComponent implements OnInit {
   shown = 0;
   contactsWidth: number;
   
+  private supplierToDelete: string;
+  private modalRef: NgbModalRef;
+  private readonly modalConfig: NgbModalOptions = {
+    windowClass: 'supplier-modal',
+    backdrop: 'static',
+    size: 'sm'
+  };
+  
   constructor(private router: Router,
+              private modalService: NgbModal,
               private suppliersService: SuppliersService,
               private notificationsService: NotificationsService) { }
 
@@ -41,6 +52,40 @@ export class SuppliersComponent implements OnInit {
 
   addSupplier() {
     this.router.navigate(['suppliers/new']);
+  }
+
+  delete(supplierId: string) {
+    this.supplierToDelete = supplierId;
+    this.modalRef = this.modalService.open(this.confirmRemoveTmpl, this.modalConfig);
+  }
+
+  confirmDelete() {
+    this.loadingIndicator = true;
+    this.closeModal();
+
+    this.suppliersService.delete(this.supplierToDelete)
+      .subscribe(
+        () => this.onDeleteSuccess(),
+        (error: string) => this.onDeleteFailed(error)
+      );
+  }
+  
+  closeModal() {
+    if (this.modalRef) {
+      this.modalRef.close();
+    }
+  }
+
+  private onDeleteSuccess() {
+    this.notificationsService.success('Успех', `Поставщик успешно удален из системы.`);
+    this.supplierToDelete = null;
+    this.loadSuppliers();
+  }
+
+  private onDeleteFailed(error: string) {
+    this.loadingIndicator = false;
+    this.supplierToDelete = null;
+    this.notificationsService.danger('Ошибка', `Ошибка при удалении поставщика: ${error}.`);
   }
 
   private loadSuppliers() {

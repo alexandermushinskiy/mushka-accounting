@@ -37,4 +37,9 @@ export class SuppliersService {
       .map((res: any) => this.converterService.convertToSupplier(res.data))
       .catch((error) => Observable.throw(error.error.messages));
   }
+
+  delete(supplierId: string) {
+    return this.http.delete(`${this.endPoint}/${supplierId}`)
+      .catch((res: any) => Observable.throw(res.error.messages));
+  }
 }

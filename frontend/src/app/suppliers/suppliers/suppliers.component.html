@@ -86,6 +86,7 @@
             </div>
             <div class="details-column" >
               <a class="edit" [routerLink]="[row.id]">Редактировать</a>
+              <a class="remove" (click)="delete(row.id)">Удалить</a>
             </div>
           </div>
         </ng-template>
@@ -93,3 +94,12 @@
     </ngx-datatable>
   </div>
 </div>
+
+<ng-template #confirmRemoveTmpl>
+  <psa-confirmation
+          [confirmButtonText]="'Удалить'"
+          [text]="'Вы уверены, что хотите удалить выбранного поставщика?'"
+          (onClose)="closeModal()"
+          (onConfirm)="confirmDelete();">
+  </psa-confirmation>
+</ng-template>

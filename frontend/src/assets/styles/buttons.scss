@@ -462,7 +462,7 @@ button.close {
 .edit {
   display: block;
   height: 20px;
-  width: 86px;
+  width: 150px;
   color: $blue;
   line-height: 20px;
   margin-bottom: 10px;
@@ -471,6 +471,25 @@ button.close {
   background-image: url(./assets/images/ic-edit.svg);
   background-repeat: no-repeat;
   //background-position-y: 1px;
+
+  &:not(.disabled):hover {
+    color: $blue;
+    text-decoration: underline !important;
+  }
+}
+
+.remove {
+  display: block;
+  height: 20px;
+  width: 150px;
+  color: $blue;
+  line-height: 20px;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  background-image: url(./assets/images/ic-remove.png);
+  background-repeat: no-repeat;
+  //background-position-y: 1.5px;
+  cursor: pointer;
 
   &:not(.disabled):hover {
     color: $blue;

@@ -170,6 +170,6 @@ textarea {
   }
 }
 
-// a:not([href]) {
-//   color: $blue !important;
-// }
+a:not([href]) {
+  color: $blue !important;
+}
