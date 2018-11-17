@@ -1,9 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mushka.WebApi.ClientModels.Supplier
 {
     public class ContactPersonRequestModel
     {
+        public Guid? Id { get; set; }
+
         [Required]
         public string Name { get; set; }
         

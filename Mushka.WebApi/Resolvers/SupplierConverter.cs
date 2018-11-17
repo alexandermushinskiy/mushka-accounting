@@ -23,6 +23,7 @@ namespace Mushka.WebApi.Resolvers
         private static SupplierContactPersonModel CreateSupplierContactPersonModel(ContactPerson contactPerson) =>
             new SupplierContactPersonModel
             {
+                Id = contactPerson.Id,
                 Name = contactPerson.Name,
                 Email = contactPerson.Email,
                 Phones = contactPerson.Phones

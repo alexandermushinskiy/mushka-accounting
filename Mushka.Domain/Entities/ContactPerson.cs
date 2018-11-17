@@ -1,8 +1,9 @@
 ﻿using System;
+using Mushka.Domain.Extensibility.Entities;
 
 namespace Mushka.Domain.Entities
 {
-    public class ContactPerson
+    public class ContactPerson : IEntity
     {
         public Guid Id { get; set; }
 

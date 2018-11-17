@@ -113,6 +113,7 @@ export class SupplierComponent implements OnInit {
 
   private createContactPersonFormGroup(contactPerson: ContactPerson): FormGroup {
     return this.formBuilder.group({
+      id: [contactPerson.id],
       name: [contactPerson.name, Validators.required],
       email: [contactPerson.email],
       phones: [contactPerson.phones, Validators.required]

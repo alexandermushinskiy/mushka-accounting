@@ -1,7 +1,11 @@
-﻿namespace Mushka.WebApi.ClientModels.Supplier
+﻿using System;
+
+namespace Mushka.WebApi.ClientModels.Supplier
 {
     public class SupplierContactPersonModel
     {
+        public Guid Id { get; set; }
+
         public string Name { get; set; }
 
         public string Position { get; set; }

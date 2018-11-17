@@ -37,7 +37,7 @@ namespace Mushka.WebApi.Resolvers
             new ContactPerson
             {
                 SupplierId = supplierId,
-                Id = guidProvider.NewGuid(),
+                Id = contactPerson.Id ?? guidProvider.NewGuid(),
                 Name = contactPerson.Name,
                 Email = contactPerson.Email,
                 Phones = contactPerson.Phones
