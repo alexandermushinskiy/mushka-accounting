@@ -93,12 +93,3 @@
     </ngx-datatable>
   </div>
 </div>
-
-<ng-template #supplierTmpl>
-  <psa-supplier-modal
-                    [supplier]="selectedSupplier"
-                    [isSaving]="isModalLoading"
-                    (onSave)="saveSupplier($event)"
-                    (onClose)="closeModal()">
-  </psa-supplier-modal>
-</ng-template>

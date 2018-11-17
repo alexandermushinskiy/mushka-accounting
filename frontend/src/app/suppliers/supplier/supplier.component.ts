@@ -87,10 +87,10 @@ export class SupplierComponent implements OnInit {
     this.supplierForm = this.formBuilder.group({
       name: [supplier.name, Validators.required],
       address: [supplier.address],
-      email: [supplier.email],
+      email: [supplier.email, Validators.required],
       webSite: [supplier.webSite],
       // paymentConditions: [supplier.paymentConditions],
-      service: [supplier.service],
+      service: [supplier.service, Validators.required],
       notes: [supplier.notes],
       contactPersons: this.formBuilder.array(
         supplier.contactPersons.map(param => this.createContactPersonFormGroup(param))

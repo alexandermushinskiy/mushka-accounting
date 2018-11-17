@@ -6,7 +6,7 @@ import { SidebarMenuStateService } from './core/sidebar-menu-state/sidebar-menu-
 @Component({
   selector: 'psa-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
 
