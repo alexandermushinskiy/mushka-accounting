@@ -31,9 +31,9 @@ export class SupplierComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.supplierId = params['id'];
       this.isEdit = !!this.supplierId;
+      this.notificationTitle = `${this.isEdit ? 'Изменение' : 'Добавление'} поставщика`;
 
       if (this.isEdit) {
-        this.notificationTitle = `${this.isEdit ? 'Изменение' : 'Добавление'} поставщика`;
         this.suppliersService.getById(this.supplierId)
           .subscribe((supplier: Supplier) => this.buildForm(supplier));
       } else {
