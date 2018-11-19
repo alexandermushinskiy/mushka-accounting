@@ -2,10 +2,22 @@ import { Injectable } from '@angular/core';
 
 import { Supplier } from '../../shared/models/supplier.model';
 import { ContactPerson } from '../../shared/models/contact-person.model';
+import { Category } from '../../shared/models/category.model';
 
 @Injectable()
 export class ConverterService {
   constructor() {
+  }
+
+  convertToCategories(response: any[]): Category[] {
+    return response.map(res => this.convertToCategory(res));
+  }
+
+  convertToCategory(source: any): Category {
+    return new Category({
+      id: source.id,
+      name: source.name,
+    });
   }
 
   convertToSuppliers(response: any[]): Supplier[] {

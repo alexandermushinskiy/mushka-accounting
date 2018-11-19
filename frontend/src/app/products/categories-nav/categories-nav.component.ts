@@ -45,9 +45,7 @@ export class CategoriesNavComponent extends UnsubscriberComponent implements OnI
   }
 
   ngOnInit() {
-    this.categoriesService.getCategories()
-      .takeUntil(this.ngUnsubscribe$)
-      .subscribe((res: Category[]) => this.categories = res);
+    this.loadCategories();
 
     this.delayedLoad$
       .debounceTime(100)
@@ -91,7 +89,7 @@ export class CategoriesNavComponent extends UnsubscriberComponent implements OnI
   saveCategory(category: Category) {
     this.isSaving = true;
 
-    (category.id ? this.categoriesService.update(category) : this.categoriesService.create(category))
+    (category.id ? this.categoriesService.update(category.id, category) : this.categoriesService.create(category))
       .subscribe(
         () => this.onSavedSucces(category.name, category.id ? 'updated' : 'created'),
         () => this.onError('Unable to save category'),
@@ -111,7 +109,13 @@ export class CategoriesNavComponent extends UnsubscriberComponent implements OnI
     this.modalRef.close();
   }
 
+  private loadCategories() {
+    this.categoriesService.getAll()
+      .subscribe((res: Category[]) => this.categories = res);
+  }
+
   private onSavedSucces(categoryName: string, action: 'updated' | 'created' | 'deleted') {
+    this.loadCategories();
     this.notificationsService.success('Success', `Category \"${categoryName}\" has been successfully ${action}`);
   }
 

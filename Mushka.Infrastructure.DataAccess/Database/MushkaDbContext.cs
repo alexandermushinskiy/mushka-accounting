@@ -44,9 +44,9 @@ namespace Mushka.Infrastructure.DataAccess.Database
         private static void SeedData(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
-                new { Id = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Name = "Socks" },
-                new { Id = Guid.Parse("0E7BE1DE-267C-4C0A-8EE9-ABA0A267F27A"), Name = "Pack" },
-                new { Id = Guid.Parse("B425D75B-2E72-45F0-A55D-3BA400051E5F"), Name = "Other" }
+                new { Id = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Name = "Носки" },
+                new { Id = Guid.Parse("0E7BE1DE-267C-4C0A-8EE9-ABA0A267F27A"), Name = "Упаковка" },
+                new { Id = Guid.Parse("B425D75B-2E72-45F0-A55D-3BA400051E5F"), Name = "Другое" }
             );
 
             modelBuilder.Entity<Size>().HasData(

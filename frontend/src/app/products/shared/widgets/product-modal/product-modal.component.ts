@@ -55,7 +55,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
 
     this.buildForm();
 
-    this.categoriesService.getCategories()
+    this.categoriesService.getAll()
       .subscribe((categories: Category[]) => {
         this.categories = categories;
         if (this.categoryId) {
