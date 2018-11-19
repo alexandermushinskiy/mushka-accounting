@@ -43,16 +43,14 @@ namespace Mushka.Service.Services
 
             return supplier == null
                 ? CreateWarningValidationResponse($"Supplier with id {supplierId} is not found.", ValidationStatusType.NotFound)
-                : CreateInfoValidationResponse(supplier, $"Supplier {supplier.Id} was successfully retrieved.");
+                : CreateInfoValidationResponse(supplier, $"Supplier with id {supplier.Id} was successfully retrieved.");
         }
 
         public async Task<ValidationResponse<Supplier>> AddAsync(Supplier supplier, CancellationToken cancellationToken = default(CancellationToken))
         {
-            bool isExistSupplierName = supplierRepository.Get(supp => supp.Name == supplier.Name).Any();
-
-            if (isExistSupplierName)
+            if (await supplierRepository.IsExistAsync(supp => supp.Name == supplier.Name, cancellationToken))
             {
-                return CreateWarningValidationResponse($"Supplier with the name {supplier.Name} is already existed.");
+                return CreateWarningValidationResponse($"Supplier with name {supplier.Name} is already exist.");
             }
             
             Supplier addedSupplier = await supplierRepository.AddAsync(supplier, cancellationToken);
@@ -69,9 +67,9 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Supplier with id {supplier.Id} is not found.", ValidationStatusType.NotFound);
             }
 
-            if (supplierRepository.Get(supp => supp.Id != supplier.Id && supp.Name == supplier.Name).Any())
+            if (await supplierRepository.IsExistAsync(supp => supp.Id != supplier.Id && supp.Name == supplier.Name, cancellationToken))
             {
-                return CreateWarningValidationResponse($"Supplier with the name {supplier.Name} is already exist.");
+                return CreateWarningValidationResponse($"Supplier with name {supplier.Name} is already exist.");
             }
 
             Supplier updatedSupplier = await supplierRepository.UpdateAsync(supplier, cancellationToken);

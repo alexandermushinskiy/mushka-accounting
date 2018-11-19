@@ -53,7 +53,7 @@ namespace Mushka.Service.Services
         {
             if (await categoryRepository.IsExistAsync(cat => cat.Name == category.Name, cancellationToken))
             {
-                return CreateWarningValidationResponse($"Category with the name {category.Name} is already existed.");
+                return CreateWarningValidationResponse($"Category with name {category.Name} is already exist.");
             }
 
             var addedCategory = await categoryRepository.AddAsync(category, cancellationToken);
@@ -72,7 +72,7 @@ namespace Mushka.Service.Services
 
             if (categoryRepository.Get(cat => cat.Id != category.Id && cat.Name == category.Name).Any())
             {
-                return CreateWarningValidationResponse($"Category with the name {category.Name} is already exist.");
+                return CreateWarningValidationResponse($"Category with name {category.Name} is already exist.");
             }
 
             var updatedCategory = await categoryRepository.UpdateAsync(category, cancellationToken);

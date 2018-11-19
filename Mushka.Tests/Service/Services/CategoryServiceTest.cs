@@ -32,7 +32,7 @@ namespace Mushka.Tests.Service.Services
         private static readonly string CategoryDeletedMessage = $"Category with id {CategoryId} was successfully deleted.";
         private static readonly string CategoryNotFoundMessage = $"Category with id {CategoryId} is not found.";
         private static readonly string CategoryHasProductsMessage = $"Category with id {CategoryId} contains products.";
-        private static readonly string CategoryNameDuplicationMessage = $"Category with the name {CategoryName} is already existed.";
+        private static readonly string CategoryNameDuplicationMessage = $"Category with name {CategoryName} is already exist.";
         private static readonly string CategoryCreatedMessage = $"Category with id {CategoryId} was successfully created.";
 
         private readonly Mock<ICategoryRepository> categoryRepositoryMock;
