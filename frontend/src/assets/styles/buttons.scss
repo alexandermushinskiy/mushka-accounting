@@ -395,6 +395,41 @@ button.close {
   }
 }
 
+//btn-group-underline
+.btn-group-underline {
+  .btn-underline {
+    border: 0;
+    position: relative;
+    font-size: $btn-underline-font-size;
+    line-height: $btn-underline-line-height;
+    padding: $btn-underline-padding;
+    margin: $btn-underline-margin;
+
+    &:before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      left: 0;
+      right: 100%;
+      bottom: 0;
+      background: $btn-underline-border-color;
+      height: 3px;
+      transition: right 300ms ease-out;
+    }
+
+    &:focus,
+    &:hover,
+    &.active {
+      color: $btn-underline-color-hover;
+    }
+
+    &.active {
+      &:before {
+        right: 0;
+      }
+    }
+  }
+}
 //link back
 .link-back {
   color: $arrow-back-color;
