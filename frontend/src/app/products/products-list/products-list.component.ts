@@ -68,9 +68,10 @@ export class ProductsListComponent implements OnInit {
       )
       .finally(() => this.loadingIndicator = false)
       .subscribe(([category, products]) => {
-        const availableCols = category.isSizesRequired
-          ? availableColumns.products
-          : availableColumns.products.filter(col => col !== 'sizes');
+        // const availableCols = category.isSizesRequired
+        //   ? availableColumns.products
+        //   : availableColumns.products.filter(col => col !== 'sizes');
+        const availableCols = availableColumns.products.filter(col => col !== 'sizes');
         this.datatable.updateColumns(availableCols);
         this.onLoadProductsSuccess(products);
       });

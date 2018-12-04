@@ -16,10 +16,8 @@ export class CategoryModalComponent implements OnInit {
   @Output() onClose = new EventEmitter<void>();
   @Output() onSave = new EventEmitter<Category>();
 
+  title: string;
   categoryForm: FormGroup;
-  name: string;
-  isSizesRequired = false;
-  sizes: string;
   isEdit: boolean;
   
   constructor(private formBuilder: FormBuilder,
@@ -27,14 +25,9 @@ export class CategoryModalComponent implements OnInit {
 
   ngOnInit() {
     this.isEdit = !!this.category;
+    this.title = `${this.isEdit ? 'Редактирование' : 'Добавление'} категории`;
 
-    if (this.isEdit) {
-      this.name = this.category.name;
-      this.isSizesRequired = this.category.isSizesRequired;
-      this.sizes = this.sizesHelperServices.convertToString(this.category.sizes);
-    }
-
-    this.buildForm();
+    this.buildForm(this.isEdit ? this.category : new Category({}));
   }
 
   close() {
@@ -43,45 +36,21 @@ export class CategoryModalComponent implements OnInit {
 
   save() {
     const categoryFormValue = this.categoryForm.value;
-    const sizes = this.sizesHelperServices.convertToArray(categoryFormValue.sizes);
 
     if (this.isEdit) {
       this.category.name = categoryFormValue.name;
-      this.category.isSizesRequired = categoryFormValue.isSizesRequired;
-      this.category.sizes = sizes;
     } else {
       this.category = new Category({
-        name: categoryFormValue.name,
-        isSizesRequired: categoryFormValue.isSizesRequired,
-        sizes: sizes
+        name: categoryFormValue.name
       });
     }
 
     this.onSave.emit(this.category);
   }
 
-  private buildForm() {
+  private buildForm(category: Category) {
     this.categoryForm = this.formBuilder.group({
-      name: [this.name, Validators.required],
-      isSizesRequired: [this.isSizesRequired],
-      sizes: [this.sizes]
+      name: [category.name, Validators.required]
     });
-
-    this.addFieldChangeListeners();
-  }
-
-  private addFieldChangeListeners() {
-    const isSizesRequiredCtrl = this.categoryForm.controls['isSizesRequired'];
-    const sizesCtrl = this.categoryForm.controls['sizes'];
-
-    isSizesRequiredCtrl.valueChanges.subscribe((value: boolean) => {
-      if (value) {
-        sizesCtrl.setValidators(Validators.required);
-      } else {
-        sizesCtrl.clearValidators();
-      }
-      sizesCtrl.updateValueAndValidity({ onlySelf: true, emitEvent: false });
-    });
-  }
-  
+  }  
 }
