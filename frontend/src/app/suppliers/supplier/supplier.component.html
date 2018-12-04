@@ -3,11 +3,9 @@
   <form *ngIf="supplierForm" [formGroup]="supplierForm" (ngSubmit)="saveSupplier()">
 
     <div class="row">
-      <div class="col-md-6 col-sm-6 col-xs-12">
-        <h1 class="float-left">Редактирование поставщика</h1>
-      </div>
-      <div class="col-md-6 col-sm-6 col-xs-12">
-        <p class="float-right reponsive-pull required-fields-caption">* - Поля, обязательные для заполнения</p>
+      <div class="app-page-description">
+        <psa-back-arrow></psa-back-arrow>
+        <h1 class="app-page-title">{{ title }}</h1>
       </div>
     </div>
 

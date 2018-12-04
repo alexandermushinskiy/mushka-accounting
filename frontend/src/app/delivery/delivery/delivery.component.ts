@@ -1,19 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, NG_VALIDATORS, FormArray } from '@angular/forms';
-import { Location } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
 import { Supplier } from '../../shared/models/supplier.model';
 import { DeliveryType } from '../shared/enums/delivery-type.enum';
 import { PaymentMethod } from '../shared/enums/payment-method.enum';
-import { availableColumns } from '../../shared/constants/available-columns.const';
 import { ProductItem } from '../shared/models/product-item.model';
 import { ServiceItem } from '../shared/models/service-item.model';
-import { Product } from '../../shared/models/product.model';
 import { DeliveriesService } from '../../core/api/deliveries.service';
 import { Delivery } from '../shared/models/delivery.model';
-import { KeyValuePair } from '../../shared/models/key-value-pair.model';
 import { deliveryTypeNames } from '../shared/constants/delivery-type-names.const';
 import { DeliveryItem } from '../shared/models/delivery-item.model';
 import { DeliveryOption } from '../shared/enums/delivery-option.enum';
@@ -39,7 +35,7 @@ export class DeliveryComponent implements OnInit {
   deliveryDate: string;
   supplier: Supplier;
   previousOrdersAmount: number;
-  batchNumber: string = '1234567890';
+  batchNumber = '1234567890';
   paymentMethod: string;
   deliveryCost: number;
   transferFee: number;
@@ -71,7 +67,6 @@ export class DeliveryComponent implements OnInit {
   };
 
   constructor(private formBuilder: FormBuilder,
-              private location: Location,
               private modalService: NgbModal,
               private deliveryService: DeliveriesService,
               private notificationsService: NotificationsService) {
@@ -89,13 +84,9 @@ export class DeliveryComponent implements OnInit {
       .subscribe((deliveries: Delivery[]) => {
         this.historicalDeliveries = deliveries.filter((del: Delivery) => !del.isDraft);
         this.draftDeliveries = deliveries.filter((del: Delivery) => del.isDraft);
-      })
+      });
 
     this.buildForm();
-  }
-
-  goBack() {
-    this.location.back();
   }
 
   onReuestDateChanged(date) {
@@ -156,7 +147,7 @@ export class DeliveryComponent implements OnInit {
   viewDelivery(delivery: Delivery) {
     this.deliverId = delivery.id;
     this.isReadOnly = !delivery.isDraft;
-    
+
     if (this.isReadOnly) {
       this.deliveryForm.disable();
     } else {

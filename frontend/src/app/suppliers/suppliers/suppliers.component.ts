@@ -23,7 +23,7 @@ export class SuppliersComponent implements OnInit {
   total = 0;
   shown = 0;
   contactsWidth: number;
-  
+
   private supplierToDelete: string;
   private modalRef: NgbModalRef;
   private readonly modalConfig: NgbModalOptions = {
@@ -31,7 +31,7 @@ export class SuppliersComponent implements OnInit {
     backdrop: 'static',
     size: 'sm'
   };
-  
+
   constructor(private router: Router,
               private modalService: NgbModal,
               private suppliersService: SuppliersService,
@@ -69,7 +69,7 @@ export class SuppliersComponent implements OnInit {
         (error: string) => this.onDeleteFailed(error)
       );
   }
-  
+
   closeModal() {
     if (this.modalRef) {
       this.modalRef.close();

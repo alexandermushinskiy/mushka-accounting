@@ -24,6 +24,7 @@ import { DropdownComponent } from './widgets/dropdown/dropdown.component';
 import { NumberFieldDirective } from './directives/number-field.directive';
 import { ConfirmationComponent } from './widgets/confirmation/confirmation.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
+import { BackArrowComponent } from './back-arrow/back-arrow.component';
 
 @NgModule({
   imports: [
@@ -54,7 +55,8 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
     DatetimepickerComponent,
     CurrencyInputComponent,
     DropdownComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    BackArrowComponent
   ],
   exports: [
     /* Common modules */
@@ -82,7 +84,8 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
     DatetimepickerComponent,
     CurrencyInputComponent,
     DropdownComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    BackArrowComponent
   ]
 })
 

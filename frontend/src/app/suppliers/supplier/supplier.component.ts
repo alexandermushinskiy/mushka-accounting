@@ -19,7 +19,7 @@ export class SupplierComponent implements OnInit {
   isSubmitted = false;
   supplierId: string;
   errors: string[];
-  private notificationTitle: string;
+  title: string;
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -31,7 +31,7 @@ export class SupplierComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.supplierId = params['id'];
       this.isEdit = !!this.supplierId;
-      this.notificationTitle = `${this.isEdit ? 'Изменение' : 'Добавление'} поставщика`;
+      this.title = `${this.isEdit ? 'Редактирование' : 'Добавление'} поставщика`;
 
       if (this.isEdit) {
         this.suppliersService.getById(this.supplierId)
@@ -73,14 +73,14 @@ export class SupplierComponent implements OnInit {
 
   private onSaveSuccess() {
     this.isLoading = false;
-    this.notificationsService.success(this.notificationTitle, `Поставщик был успешно ${this.isEdit ? 'изменен' : 'добавлен'}`);
+    this.notificationsService.success(this.title, `Поставщик был успешно ${this.isEdit ? 'изменен' : 'добавлен'}`);
 
     this.router.navigate(['/suppliers']);
   }
 
   private onSaveFailed(errors: string[]) {
     this.isLoading = false;
-    this.notificationsService.danger(this.notificationTitle, errors[0]);
+    this.notificationsService.danger(this.title, errors[0]);
   }
 
   private buildForm(supplier: Supplier) {

@@ -70,16 +70,16 @@
 
 //Typography
 .csr-number,
-.csr-slogan {
+.header-title {
   display: inline-block;
-  font-size: $csr-slogan-font-size;
+  font-size: $header-title-font-size;
   font-weight: bold;
-  line-height: $csr-slogan-line-height;
+  line-height: $header-title-line-height;
   margin: 0;
   vertical-align: top;
 }
 
-.csr-slogan {
+.header-title {
   @include text-ellipsis(100%);
   flex: 1;
 }
@@ -106,7 +106,7 @@
     color: $text-danger !important;
   }
   .fa-bolt {
-    font-size: $csr-slogan-font-size;
+    font-size: $header-title-font-size;
   }
 }
 

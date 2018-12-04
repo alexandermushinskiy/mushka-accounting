@@ -67,6 +67,31 @@ body {
   overflow: hidden;
 }
 
+.app-page-header {
+  align-items: center;
+  display: flex;
+  flex: none;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: $padding-base/2;
+}
+
+.app-page-title {
+  color: $blue;
+  font-size: 1.8rem;
+  line-height: 2.1rem;
+  margin: 0;
+  padding-right: 50px;
+  text-transform: uppercase;
+}
+
+.app-page-description {
+  align-items: center;
+  display: flex;
+  padding: $padding-base/2;
+}
+
+
 .hidden {
   display: none;
 }
