@@ -6,14 +6,14 @@ import { ProductsListComponent } from './products/products-list/products-list.co
 import { PartnersComponent } from './partners/partners/partners.component';
 import { LogisticsComponent } from './logistics/logistics/logistics.component';
 import { DeliveryComponent } from './delivery/delivery/delivery.component';
-import { SuppliersComponent } from './suppliers/suppliers/suppliers.component';
+import { SuppliersListComponent } from './suppliers/suppliers-list/suppliers-list.component';
 import { SupplierComponent } from './suppliers/supplier/supplier.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'orders', pathMatch: 'full' },
   { path: 'orders', component: OrdersComponent, pathMatch: 'full' },
   { path: 'suppliers', children: [
-    { path: '', component: SuppliersComponent, pathMatch: 'full' },
+    { path: '', component: SuppliersListComponent, pathMatch: 'full' },
     { path: 'new', component: SupplierComponent, pathMatch: 'full' },
     { path: ':id', component: SupplierComponent, pathMatch: 'full' }
   ]},

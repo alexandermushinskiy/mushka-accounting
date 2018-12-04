@@ -6,6 +6,7 @@ import { SuppliersService } from '../../core/api/suppliers.service';
 import { ContactPerson } from '../../shared/models/contact-person.model';
 import { Supplier } from '../../shared/models/supplier.model';
 import { NotificationsService } from '../../core/notifications/notifications.service';
+import { PaymentMethod } from '../../delivery/shared/enums/payment-method.enum';
 
 @Component({
   selector: 'psa-supplier',
@@ -20,6 +21,7 @@ export class SupplierComponent implements OnInit {
   supplierId: string;
   errors: string[];
   title: string;
+  paymentMethodsList = Object.values(PaymentMethod);
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -71,6 +73,10 @@ export class SupplierComponent implements OnInit {
       );
   }
 
+  addPaymentMethod() {
+    
+  }
+
   private onSaveSuccess() {
     this.isLoading = false;
     this.notificationsService.success(this.title, `Поставщик был успешно ${this.isEdit ? 'изменен' : 'добавлен'}`);
@@ -89,6 +95,7 @@ export class SupplierComponent implements OnInit {
       address: [supplier.address],
       email: [supplier.email, Validators.required],
       webSite: [supplier.webSite],
+      paymentMethod: [],
       // paymentConditions: [supplier.paymentConditions],
       service: [supplier.service, Validators.required],
       notes: [supplier.notes],

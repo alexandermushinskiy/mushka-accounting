@@ -74,6 +74,15 @@
                 <div class="fields-group-title">Способы оплаты</div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="field-group">
+                  <label>Список</label>
+                  <psa-dropdown [options]="paymentMethodsList" formControlName="paymentMethod"></psa-dropdown>
+                  <a><span class="btn-add btn-add-delivery" (click)="addPaymentMethod()"><i class="fa fa-plus fa-border"></i></span></a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

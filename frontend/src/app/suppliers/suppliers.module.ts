@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
 import { SupplierModalComponent } from './shared/widgets/supplier-modal/supplier-modal.component';
-import { SuppliersComponent } from './suppliers/suppliers.component';
+import { SuppliersListComponent } from './suppliers-list/suppliers-list.component';
 import { SupplierComponent } from './supplier/supplier.component';
 
 @NgModule({
@@ -13,7 +13,7 @@ import { SupplierComponent } from './supplier/supplier.component';
   ],
   declarations: [
     SupplierModalComponent,
-    SuppliersComponent,
+    SuppliersListComponent,
     SupplierComponent
   ],
   exports: []

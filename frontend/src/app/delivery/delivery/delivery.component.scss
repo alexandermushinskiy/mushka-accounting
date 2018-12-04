@@ -116,7 +116,7 @@
 }
 
 //new CSR form controls
-.new-csr {
+.delivery {
   // label {
   //   color: $text-muted;
   //   font-size: 1.2rem;
@@ -179,15 +179,6 @@
     top: 50%;
     transform: translate(0, -50%);
     width: 100%;
-  }
-}
-
-.csr-severity {
-  align-items: center;
-  display: flex;
-
-  .csr-severity-icon {
-    margin-right: .6rem;
   }
 }
 

@@ -9,11 +9,11 @@ import { SupplierTablePreview } from '../shared/models/supplier-table-preview';
 import { Supplier } from '../../shared/models/supplier.model';
 
 @Component({
-  selector: 'psa-suppliers',
-  templateUrl: './suppliers.component.html',
-  styleUrls: ['./suppliers.component.scss']
+  selector: 'psa-suppliers-list',
+  templateUrl: './suppliers-list.component.html',
+  styleUrls: ['./suppliers-list.component.scss']
 })
-export class SuppliersComponent implements OnInit {
+export class SuppliersListComponent implements OnInit {
   @ViewChild('datatable') datatable: DatatableComponent;
   @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
 

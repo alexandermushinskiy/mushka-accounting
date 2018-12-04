@@ -43,7 +43,7 @@ export class DeliveryComponent implements OnInit {
 
   datePickerOptions: any;
   deliveryTypesList = [DeliveryType.PRODUCTS, DeliveryType.SERVICES, DeliveryType.EQUIPMENT];
-  PaymentMethodsList = Object.values(PaymentMethod);
+  paymentMethodsList = Object.values(PaymentMethod);
   dateFormat = 'YYYY-MM-DD';
   deliveryType = DeliveryType;
   selectedDeliveryType: DeliveryType = DeliveryType.PRODUCTS;
