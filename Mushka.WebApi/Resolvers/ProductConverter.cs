@@ -14,7 +14,15 @@ namespace Mushka.WebApi.Resolvers
                     Name = source.Name,
                     Code = source.Code,
                     CreatedOn = source.CreatedOn,
-                    Sizes = source.Sizes.Select(s => s.SizeId).ToArray()
+                    Sizes = source.Sizes.Select(CreateProductSizeModel).ToArray()
                 };
+
+        private static ProductSizeModel CreateProductSizeModel(ProductSize productSize) =>
+            new ProductSizeModel
+            {
+                Id = productSize.SizeId,
+                Size = productSize.Size.Name,
+                Quantity = productSize.Quantity
+            };
     }
 }

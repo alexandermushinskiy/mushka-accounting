@@ -45,6 +45,15 @@ namespace Mushka.WebApi.Controllers
             return actionResultProvider.Get(clientResponse);
         }
 
+        [HttpGet("~/api/v1/categories/{categoryId:guid}/products")]
+        public async Task<IActionResult> GetByCategoryId(Guid categoryId)
+        {
+            var products = await productService.GetByCategoryAsync(categoryId, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Product>>, ProductsResponseModel>(products);
+
+            return actionResultProvider.Get(clientResponse);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]ProductRequestModel productRequest)
         {

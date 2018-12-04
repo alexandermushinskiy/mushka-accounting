@@ -13,6 +13,6 @@ namespace Mushka.WebApi.ClientModels.Product
 
         public DateTime CreatedOn { get; set; }
 
-        public IEnumerable<Guid> Sizes { get; set; }
+        public IEnumerable<ProductSizeModel> Sizes { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         public ProductRepository(MushkaDbContext context) : base(context)
         {
         }
-
+        
         public override async Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Context.Products
@@ -38,6 +39,8 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
             return await Context.Products
                 .AsNoTracking()
                 .Where(prod => prod.CategoryId == categoryId)
+                .Include(p => p.Sizes)
+                    .ThenInclude(s => s.Size)
                 .ToListAsync(cancellationToken);
         }
 
