@@ -63,9 +63,7 @@
             <span>Размеры и наличие</span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-value="value">
-            <span *ngFor="let size of value">
-              <span>{{ size.name }} - {{ size.quantity }}</span>
-            </span>
+            <psa-sizes-labels [sizes]="value"></psa-sizes-labels>
           </ng-template>
         </ngx-datatable-column>
 

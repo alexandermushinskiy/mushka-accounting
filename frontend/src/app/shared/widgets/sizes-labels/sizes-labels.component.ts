@@ -12,7 +12,7 @@ export class SizesLabelsComponent implements OnInit {
     this.sizeItems = !source ? [] : source;
   }
 
-  sizeItems: SizeItem[]
+  sizeItems: SizeItem[];
 
   constructor() { }
 
