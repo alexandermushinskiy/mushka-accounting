@@ -56,7 +56,9 @@ namespace Mushka.Service.Services
                 CreateWarningValidationResponse($"Category with id {categoryId} is not found.", ValidationStatusType.NotFound);
             }
 
-            IEnumerable<Product> products = (await productRepository.GetByCategoryId(categoryId, cancellationToken)).ToList();
+            IEnumerable<Product> products = (await productRepository.GetByCategoryId(categoryId, cancellationToken))
+                .OrderBy(product => product.Name)
+                .ToList();
 
             string message = products.Any()
                 ? $"Products were successfully retrieved for category {categoryId}."

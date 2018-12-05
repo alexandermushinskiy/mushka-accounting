@@ -39,8 +39,10 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
             return await Context.Products
                 .AsNoTracking()
                 .Where(prod => prod.CategoryId == categoryId)
-                .Include(p => p.Sizes)
+                .Include(prod => prod.Sizes)
                     .ThenInclude(s => s.Size)
+                .Include(prod => prod.Deliveries)
+                    .ThenInclude(del => del.Delivery)
                 .ToListAsync(cancellationToken);
         }
 

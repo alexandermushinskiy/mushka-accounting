@@ -1,4 +1,6 @@
-﻿-- Sizes
+﻿USE [Mushka]
+
+-- Sizes
 INSERT INTO [Sizes] ([Id], [Name])
 VALUES
 ('ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2', '36-39'),
