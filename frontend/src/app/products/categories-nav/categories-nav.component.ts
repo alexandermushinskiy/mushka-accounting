@@ -18,7 +18,7 @@ export class CategoriesNavComponent extends UnsubscriberComponent implements OnI
   @Output() onCategorySelected = new EventEmitter<Category>();
   @Output() onEditCategory = new EventEmitter<Category>();
   @Output() onDeleteCategory = new EventEmitter<string>();
-  
+
   categories: Category[];
   categoryToDelete: Category;
   keywords = '';
@@ -31,13 +31,13 @@ export class CategoriesNavComponent extends UnsubscriberComponent implements OnI
     backdrop: 'static',
     size: 'sm'
   };
-  
+
   get filteredCategories(): Category[] {
     return this.keywords.length > 0
       ? this.categories.filter(view => view.name.toLowerCase().includes(this.keywords.toLowerCase()))
       : this.categories;
   }
-  
+
   constructor(private categoriesService: CategoriesService,
               private modalService: NgbModal,
               private notificationsService: NotificationsService) {

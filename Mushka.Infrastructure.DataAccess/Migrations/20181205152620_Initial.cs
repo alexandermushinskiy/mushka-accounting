@@ -218,27 +218,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), "Socks" },
-                    { new Guid("0e7be1de-267c-4c0a-8ee9-aba0a267f27a"), "Pack" },
-                    { new Guid("b425d75b-2e72-45f0-a55d-3ba400051e5f"), "Other" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Sizes",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), "36-39" },
-                    { new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), "41-45" },
-                    { new Guid("fb8356a5-1629-4f9f-9b51-3d40e0e55f84"), "39-42" },
-                    { new Guid("6e519491-8fd8-45f2-992e-270b01f25971"), "43-46" }
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_Name",
                 table: "Categories",

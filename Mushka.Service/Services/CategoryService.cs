@@ -55,7 +55,7 @@ namespace Mushka.Service.Services
             {
                 return CreateWarningValidationResponse($"Category with name {category.Name} is already exist.");
             }
-
+            
             var addedCategory = await categoryRepository.AddAsync(category, cancellationToken);
 
             return CreateInfoValidationResponse(addedCategory, $"Category with id {category.Id} was successfully created.");

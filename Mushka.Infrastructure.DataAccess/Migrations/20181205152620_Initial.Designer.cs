@@ -10,7 +10,7 @@ using Mushka.Infrastructure.DataAccess.Database;
 namespace Mushka.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(MushkaDbContext))]
-    [Migration("20181112202707_Initial")]
+    [Migration("20181205152620_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,12 +37,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new { Id = new Guid("88cd0f34-9d4a-4e45-be97-8899a97fb82c"), Name = "Socks" },
-                        new { Id = new Guid("0e7be1de-267c-4c0a-8ee9-aba0a267f27a"), Name = "Pack" },
-                        new { Id = new Guid("b425d75b-2e72-45f0-a55d-3ba400051e5f"), Name = "Other" }
-                    );
                 });
 
             modelBuilder.Entity("Mushka.Domain.Entities.ContactPerson", b =>
@@ -231,13 +225,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("Sizes");
-
-                    b.HasData(
-                        new { Id = new Guid("eccef8a9-2c41-4270-9001-d0eb7e21b9e2"), Name = "36-39" },
-                        new { Id = new Guid("2dfa21ef-5eed-462f-b5e5-06ee31281ba2"), Name = "41-45" },
-                        new { Id = new Guid("fb8356a5-1629-4f9f-9b51-3d40e0e55f84"), Name = "39-42" },
-                        new { Id = new Guid("6e519491-8fd8-45f2-992e-270b01f25971"), Name = "43-46" }
-                    );
                 });
 
             modelBuilder.Entity("Mushka.Domain.Entities.Supplier", b =>
