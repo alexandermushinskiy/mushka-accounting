@@ -21,7 +21,7 @@ namespace Mushka.WebApi.Resolvers
             new ProductSizeModel
             {
                 Id = productSize.SizeId,
-                Size = productSize.Size.Name,
+                Name = productSize.Size.Name,
                 Quantity = productSize.Quantity
             };
     }

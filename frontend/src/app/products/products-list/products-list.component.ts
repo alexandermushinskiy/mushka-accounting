@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { TreeviewItem } from 'ngx-treeview';
 
 import { ProductsServce } from '../../core/api/products.service';
 import { ProductTablePreview } from '../shared/models/product-table-preview';
@@ -10,7 +9,6 @@ import { ProductsTableComponent } from '../products-table/products-table.compone
 import { Product } from '../../shared/models/product.model';
 import { CategoriesService } from '../../core/api/categories.service';
 import { Category } from '../../shared/models/category.model';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'psa-products-list',
@@ -19,15 +17,14 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ProductsListComponent implements OnInit {
   @ViewChild(ProductsTableComponent) datatable: ProductsTableComponent;
-  
+
   isCollapsed = false;
-  rows: ProductTablePreview[];
+  productsRows: ProductTablePreview[];
   loadingIndicator = false;
   isModalLoading = false;
   total = 0;
   shown = 0;
   availableCols = availableColumns.products;
-  //categories: TreeviewItem[];
   selectedCategory: Category;
   title = 'Товары';
   isMenuToggleShown = false;
@@ -39,7 +36,7 @@ export class ProductsListComponent implements OnInit {
     backdrop: 'static',
     size: 'sm'
   };
-  
+
   constructor(private modalService: NgbModal,
               private productsService: ProductsServce,
               private categoriesService: CategoriesService,
@@ -62,17 +59,8 @@ export class ProductsListComponent implements OnInit {
 
     this.loadingIndicator = true;
 
-    Observable.forkJoin(
-        this.categoriesService.getById(category.id),
-        this.productsService.getProductsByCategory(category.id)
-      )
-      .finally(() => this.loadingIndicator = false)
-      .subscribe(([category, products]) => {
-        // const availableCols = category.isSizesRequired
-        //   ? availableColumns.products
-        //   : availableColumns.products.filter(col => col !== 'sizes');
-        const availableCols = availableColumns.products.filter(col => col !== 'sizes');
-        this.datatable.updateColumns(availableCols);
+    this.productsService.getProductsByCategory(category.id)
+      .subscribe((products: Product[]) => {
         this.onLoadProductsSuccess(products);
       });
   }
@@ -98,7 +86,7 @@ export class ProductsListComponent implements OnInit {
   }
 
   private onLoadProductsSuccess(products) {
-    this.rows = products.map((el, index) => new ProductTablePreview(el, index));
+    this.productsRows = products.map((el, index) => new ProductTablePreview(el, index));
     this.total = products.length;
     this.isAddButtonShown = true;
     this.loadingIndicator = false;
@@ -108,7 +96,7 @@ export class ProductsListComponent implements OnInit {
     this.loadingIndicator = false;
     this.notificationsService.danger('Error', 'Unable to load products');
   }
-  
+
   private onSaveSuccess(product: Product, action: string) {
     if (this.selectedCategory.id !== product.category.id) {
       this.onCategotySelected(product.category);
@@ -118,15 +106,4 @@ export class ProductsListComponent implements OnInit {
     this.closeModal();
     this.notificationsService.success('Success', `Product \"${product.name}\" has been successfully ${action}`);
   }
-
-  // private createCategoryTreeviewItem(category) {
-  //   const { id, name } = category;
-  //   const parsedCategory = {
-  //     children: null,
-  //     value: id,
-  //     text: name,
-  //     collapsed: true
-  //   };
-  //   return new TreeviewItem(parsedCategory);
-  // }
 }

@@ -1,13 +1,17 @@
 export class SizeItem {
-  constructor(public size: string,
-              public amount: number = 0) {
+  id: string;
+  name: string;
+  quantity = 0;
+
+  constructor(data: any) {
+    Object.assign(this, data);
   }
 
   getCssClass() {
-    if (this.amount === 0 ) {
+    if (this.quantity === 0 ) {
       return 'size-label-sold';
     }
-    return this.amount > 10
+    return this.quantity > 10
       ? 'size-label'
       : 'size-label-ends';
   }

@@ -12,7 +12,8 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(nullable: false),
+                    Order = table.Column<int>(nullable: false, defaultValue: 100)
                 },
                 constraints: table =>
                 {

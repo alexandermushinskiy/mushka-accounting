@@ -50,7 +50,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       this.name = this.product.name;
       this.code = this.product.code;
       this.category = this.product.category;
-      this.sizes = this.sizesHelperServices.convertToString(this.product.sizes.map(s => s.size));
+      this.sizes = this.sizesHelperServices.convertToString(this.product.sizes.map(s => s.name));
     }
 
     this.buildForm();

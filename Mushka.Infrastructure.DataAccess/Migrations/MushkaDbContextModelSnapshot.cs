@@ -29,6 +29,11 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnName("Name");
 
+                    b.Property<int>("Order")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Order")
+                        .HasDefaultValue(100);
+
                     b.HasKey("Id");
 
                     b.HasIndex("Name")

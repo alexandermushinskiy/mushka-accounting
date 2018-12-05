@@ -10,6 +10,8 @@ namespace Mushka.Domain.Entities
 
         public string Name { get; set; }
 
+        public int Order { get; set; }
+
         public ICollection<Product> Products { get; set; }
     }
 }

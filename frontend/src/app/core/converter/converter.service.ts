@@ -3,10 +3,13 @@ import { Injectable } from '@angular/core';
 import { Supplier } from '../../shared/models/supplier.model';
 import { ContactPerson } from '../../shared/models/contact-person.model';
 import { Category } from '../../shared/models/category.model';
+import { Product } from '../../shared/models/product.model';
+import { DatetimeService } from '../datetime/datetime.service';
+import { SizeItem } from '../../shared/models/size-item.model';
 
 @Injectable()
 export class ConverterService {
-  constructor() {
+  constructor(private datetimeService: DatetimeService) {
   }
 
   convertToCategories(response: any[]): Category[] {
@@ -17,6 +20,32 @@ export class ConverterService {
     return new Category({
       id: source.id,
       name: source.name,
+    });
+  }
+
+  convertToProducts(response: any[]): Product[] {
+    return response.map(res => this.convertToProduct(res));
+  }
+
+  convertToProduct(source: any): Product {
+    return new Product({
+      id: source.id,
+      name: source.name,
+      code: source.code,
+      createdOn: this.datetimeService.toString(source.createdOn),
+      sizes: this.convertToSizes(source.sizes)
+    });
+  }
+
+  convertToSizes(response: any[]): SizeItem[] {
+    return response.map(res => this.convertToSize(res));
+  }
+
+  convertToSize(source: any): SizeItem {
+    return new SizeItem({
+      id: source.id,
+      name: source.name,
+      quantity: source.quantity
     });
   }
 

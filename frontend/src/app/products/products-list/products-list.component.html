@@ -8,25 +8,68 @@
                     [showMenuToggle]="true"
                     [showAddButton]="isAddButtonShown"
                     (onCollapseMenu)="toggleCollapseMode()"
-                    (onAddItem)="addProduct(content)"
-                    (onFilter)="datatable.onFilter($event)"
-                    (onFilterReset)="datatable.resetFilter()"
-                    (onExportAllToCSV)="datatable.onExportAllToCSV($event)"
-                    (onExportFilteredToCSV)="datatable.onExportFilteredToCSV($event)">
+                    (onAddItem)="addProduct(content)">
     </psa-datatable-header>
   </div>
   <div class="appbody">
     <psa-categories-nav
-      [selectedCategory]="selectedCategory"
-      (onCategorySelected)="onCategotySelected($event)">
+                    [selectedCategory]="selectedCategory"
+                    (onCategorySelected)="onCategotySelected($event)">
     </psa-categories-nav>
     <div class="appcontent">
-    <psa-products-table #datatable
-                    [rows]="rows"
-                    [loadingIndicator]="loadingIndicator"
-                    [cols]="availableCols"
-                    (onRowsUpdated)="onRowsUpdated($event)">
-    </psa-products-table>
+      <!-- <psa-products-table #datatable
+                      [rows]="rows"
+                      [loadingIndicator]="loadingIndicator"
+                      [cols]="availableCols"
+                      (onRowsUpdated)="onRowsUpdated($event)">
+      </psa-products-table> -->
+      <ngx-datatable #datatable
+               class="material fullscreen"
+               [loadingIndicator]="loadingIndicator"
+               [headerHeight]="40"
+               [rowHeight]="40"
+               [rows]="productsRows"
+               [columnMode]="'force'">
+               
+        <ngx-datatable-column name="name">
+          <ng-template ngx-datatable-header-template>
+            <span>Название</span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-value="value">
+            <span [title]="value" class="bold">{{ value }}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="code">
+          <ng-template ngx-datatable-header-template>
+            <span>Артикул</span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-value="value">
+            <span [title]="value" class="bold">{{ value }}</span>
+          </ng-template>
+        </ngx-datatable-column>
+        
+        <ngx-datatable-column name="createdOn">
+          <ng-template ngx-datatable-header-template>
+            <span>Дата Добавления</span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-value="value">
+            <span [title]="value" class="bold">{{ value }}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="sizes">
+          <ng-template ngx-datatable-header-template>
+            <span>Размеры и наличие</span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-value="value">
+            <span *ngFor="let size of value">
+              <span>{{ size.name }} - {{ size.quantity }}</span>
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+      </ngx-datatable>
     </div>
   </div>
 </div>

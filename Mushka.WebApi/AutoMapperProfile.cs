@@ -49,6 +49,7 @@ namespace Mushka.WebApi
 
             CreateMap<CategoryRequestModel, Category>()
                 .ForMember(dest => dest.Id, opt => opt.ResolveUsing<GuidResolver>())
+                .ForMember(dest => dest.Order, opt => opt.Ignore())
                 .ForMember(dest => dest.Products, opt => opt.Ignore());
 
             CreateMap<ValidationResponse<Category>, CategoryResponseModel>()

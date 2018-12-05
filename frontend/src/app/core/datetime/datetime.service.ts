@@ -2,7 +2,7 @@ import * as moment from 'moment';
 
 export class DatetimeService {
   parseDate(date: string, format = 'YYYY-MM-DD HH:mm'): string {
-    const utcDate = moment.utc(date);debugger;
+    const utcDate = moment.utc(date);
     return moment(utcDate).local().format(format);
   }
 

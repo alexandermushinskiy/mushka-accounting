@@ -111,7 +111,12 @@ export class CategoriesNavComponent extends UnsubscriberComponent implements OnI
 
   private loadCategories() {
     this.categoriesService.getAll()
-      .subscribe((res: Category[]) => this.categories = res);
+      .subscribe((categories: Category[]) => {
+        this.categories = categories;
+        if (categories.length > 0) {
+          this.selectCategory(categories[0]);
+        }
+      });
   }
 
   private onSavedSucces(categoryName: string, action: 'updated' | 'created' | 'deleted') {

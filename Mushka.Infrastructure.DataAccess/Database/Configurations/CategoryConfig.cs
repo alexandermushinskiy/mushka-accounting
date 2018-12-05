@@ -22,6 +22,12 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .HasColumnName("Name")
                 .IsRequired();
 
+            builder
+                .Property(category => category.Order)
+                .HasColumnName("Order")
+                .HasDefaultValue(100)
+                .IsRequired();
+
             builder.HasIndex(category => category.Name).IsUnique();
         }
     }

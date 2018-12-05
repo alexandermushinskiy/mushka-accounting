@@ -3,7 +3,7 @@ import { DataTablePreview } from '../../../shared/models/data-table-preview';
 
 export class ProductTablePreview extends DataTablePreview {
   name: string;
-  сode: string;
+  code: string;
   createdOn: string;
   deliveriesNumber: number;
   lastDeliveryDate: string;
@@ -15,7 +15,7 @@ export class ProductTablePreview extends DataTablePreview {
     super(elem, index);
 
     this.name = elem.name;
-    this.сode = elem.code;
+    this.code = elem.code;
     this.createdOn = elem.createdOn;
     this.deliveriesNumber = elem.deliveriesNumber || this.defaultValue;
     this.lastDeliveryDate = elem.lastDeliveryDate || this.defaultValue;
