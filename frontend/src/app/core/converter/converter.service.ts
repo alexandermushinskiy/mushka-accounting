@@ -33,7 +33,10 @@ export class ConverterService {
       name: source.name,
       code: source.code,
       createdOn: this.datetimeService.toString(source.createdOn),
-      sizes: this.convertToSizes(source.sizes)
+      sizes: this.convertToSizes(source.sizes),
+      lastDeliveryDate: this.datetimeService.toString(source.lastDeliveryDate),
+      lastDeliveryCount: source.lastDeliveryCount,
+      deliveriesCount: source.deliveriesCount
     });
   }
 

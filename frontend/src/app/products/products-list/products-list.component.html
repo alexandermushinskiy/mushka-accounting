@@ -54,7 +54,7 @@
         
         <ngx-datatable-column name="createdOn">
           <ng-template ngx-datatable-header-template>
-            <span>Дата Добавления</span>
+            <span>Дата<br>добавления</span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-value="value">
             <span [title]="value" class="bold">{{ value }}</span>
@@ -63,10 +63,37 @@
 
         <ngx-datatable-column name="sizes">
           <ng-template ngx-datatable-header-template>
-            <span>Размеры и наличие</span>
+            <span>Размеры и<br>наличие</span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-value="value">
             <psa-sizes-labels [sizes]="value"></psa-sizes-labels>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="lastDeliveryDate">
+          <ng-template ngx-datatable-header-template>
+            <span>Дата последней<br>доставки</span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-value="value">
+            <span>{{ value }}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="lastDeliveryCount">
+          <ng-template ngx-datatable-header-template>
+            <span>Количество в<br>последней доставке</span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-value="value">
+            <span>{{ value }}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="deliveriesCount">
+          <ng-template ngx-datatable-header-template>
+            <span>Количество<br>доставок</span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-value="value">
+            <span>{{ value }}</span>
           </ng-template>
         </ngx-datatable-column>
 

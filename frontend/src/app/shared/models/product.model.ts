@@ -7,7 +7,7 @@ export class Product {
   code: string;
   category: Category;
   createdOn: string;
-  deliveriesNumber: number;
+  deliveriesCount: number;
   lastDeliveryDate: string;
   lastDeliveryCount: number;
   totalCount: number;

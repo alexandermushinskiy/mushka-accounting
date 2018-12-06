@@ -5,7 +5,7 @@ export class ProductTablePreview extends DataTablePreview {
   name: string;
   code: string;
   createdOn: string;
-  deliveriesNumber: number;
+  deliveriesCount: number;
   lastDeliveryDate: string;
   lastDeliveryCount: number;
   totalCount: number;
@@ -17,7 +17,7 @@ export class ProductTablePreview extends DataTablePreview {
     this.name = elem.name;
     this.code = elem.code;
     this.createdOn = elem.createdOn;
-    this.deliveriesNumber = elem.deliveriesNumber || this.defaultValue;
+    this.deliveriesCount = elem.deliveriesCount || this.defaultValue;
     this.lastDeliveryDate = elem.lastDeliveryDate || this.defaultValue;
     this.lastDeliveryCount = elem.lastDeliveryCount || this.defaultValue;
     this.totalCount = elem.totalCount;

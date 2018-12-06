@@ -20,7 +20,7 @@ namespace Mushka.WebApi.Resolvers
                 Name = source.Name,
                 Code = source.Code,
                 CreatedOn = source.CreatedOn,
-                DeliveriesCount = source.Deliveries.Count,
+                DeliveriesCount = source.Deliveries.Select(l => l.Delivery.DeliveryDate).Distinct().Count(),
                 LastDeliveryDate = lastDelivery.DeliveryDate,
                 LastDeliveryCount = lastDelivery.Products.Count,
                 Sizes = source.Sizes.Select(CreateProductSizeModel).ToArray()
