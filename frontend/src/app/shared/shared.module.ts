@@ -29,6 +29,7 @@ import { BackArrowComponent } from './back-arrow/back-arrow.component';
 import { DatatableFooterComponent } from './widgets/datatable-footer/datatable-footer.component';
 import { DataTablePagerComponent } from './widgets/datatable-pager/datatable-pager.component';
 import { SelectSizeComponent } from './widgets/select-size/select-size.component';
+import { ToggleComponent } from './widgets/toggle/toggle.component';
 
 @NgModule({
   imports: [
@@ -64,7 +65,8 @@ import { SelectSizeComponent } from './widgets/select-size/select-size.component
     BackArrowComponent,
     DatatableFooterComponent,
     DataTablePagerComponent,
-    SelectSizeComponent
+    SelectSizeComponent,
+    ToggleComponent
   ],
   exports: [
     /* Common modules */
@@ -96,7 +98,8 @@ import { SelectSizeComponent } from './widgets/select-size/select-size.component
     BackArrowComponent,
     DatatableFooterComponent,
     DataTablePagerComponent,
-    SelectSizeComponent
+    SelectSizeComponent,
+    ToggleComponent
   ]
 })
 

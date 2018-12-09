@@ -35,18 +35,13 @@
     <div class="row">
       <div class="col">
         <div class="field-group w-50">
-          <label class="toggle">
-            <input class="toggle-control" type="checkbox" formControlName="isSizesRequired">
-            <span class="toggle-control-indicator"></span>
-            <span class="toggle-description">Требуются размеры</span>
-          </label>
+          <psa-toggle formControlName="isSizesRequired" [label]="'Требуются размеры'"></psa-toggle>
         </div>
       </div>
     </div>
     <div class="row" *ngIf="productForm.controls.isSizesRequired.value">
       <div class="col">
         <div class="field-group">
-          <label class="text-muted">Размеры</label>
           <psa-select-size class="form-control" formControlName="sizes" [availableSizes]="availableSizes"></psa-select-size>
         </div>
       </div>

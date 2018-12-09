@@ -109,6 +109,16 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       isSizesRequired: [false],
       sizes: [[]]
     });
+
+    this.addFieldChangeListeners();
+  }
+
+  addFieldChangeListeners() {
+    const isSizesRequiredControl = this.productForm.controls['isSizesRequired'];
+    
+    isSizesRequiredControl.valueChanges.subscribe((value) => {
+      this.updateSizesValidity(value);
+    });
   }
 
   private updateSizesValidity(isRequired: boolean) {
@@ -125,9 +135,6 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
 
   private loadSizes() {
     this.productsService.getSizes()
-      .subscribe((sizes: Size[]) => {
-        this.availableSizes = sizes;
-        console.info(sizes);
-      });
+      .subscribe((sizes: Size[]) => this.availableSizes = sizes);
   }
 }
