@@ -3,11 +3,10 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 
 import { Product } from '../../shared/models/product.model';
-import { SizeItem } from '../../shared/models/size-item.model';
-import { Category } from '../../shared/models/category.model';
 import { GuidGenerator } from '../guid-generator/guid.generator';
 import { environment } from '../../../environments/environment';
 import { ConverterService } from '../converter/converter.service';
+import { Size } from '../../shared/models/size.model';
 
 @Injectable()
 export class ProductsServce {
@@ -23,6 +22,12 @@ export class ProductsServce {
   getProductsByCategory(categoryId: string): Observable<Product[]> {
     return this.http.get(`${this.categoriesEndPoint}/${categoryId}/products`)
       .map((res: any) => this.converterService.convertToProducts(res.data))
+      .catch((res: any) => Observable.throw(res.error.messages));
+  }
+
+  getSizes(): Observable<Size[]> {
+    return this.http.get(`${this.endPoint}/sizes`)
+      .map((res: any) => this.converterService.convertToSizes(res.data))
       .catch((res: any) => Observable.throw(res.error.messages));
   }
 

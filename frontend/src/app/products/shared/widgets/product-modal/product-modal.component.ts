@@ -8,6 +8,7 @@ import { ProductsServce } from '../../../../core/api/products.service';
 import { CategoriesService } from '../../../../core/api/categories.service';
 import { SizeItem } from '../../../../shared/models/size-item.model';
 import { SizesHelperServices } from '../../services/sizes-helper.service';
+import { Size } from '../../../../shared/models/size.model';
 
 @Component({
   selector: 'psa-product-modal',
@@ -28,7 +29,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
   category: Category;
   sizes: string;
   isSizesRequired: boolean;
-  availableSizes: string[] = [];
+  availableSizes: Size[] = [];
   categories: Category[] = [];
   selectedSizes: string[] = [];
 
@@ -46,25 +47,19 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
   ngOnInit() {
     this.isEdit = !!this.product;
 
-    if (this.isEdit) {
-      this.name = this.product.name;
-      this.code = this.product.code;
-      this.category = this.product.category;
-      this.sizes = this.sizesHelperServices.convertToString(this.product.sizes.map(s => s.name));
-    }
+    this.loadSizes();
+
+    // if (this.isEdit) {
+    //   this.name = this.product.name;
+    //   this.code = this.product.code;
+    //   this.category = this.product.category;
+    //   this.sizes = this.sizesHelperServices.convertToString(this.product.sizes.map(s => s.name));
+    // }
 
     this.buildForm();
 
     this.categoriesService.getAll()
-      .subscribe((categories: Category[]) => {
-        this.categories = categories;
-        if (this.categoryId) {
-          const category = categories.find(cat => cat.id === this.categoryId);
-          this.categoryFormGroup.setValue(category);
-
-          this.onCategoryChanged(category);
-        }
-      });
+      .subscribe((categories: Category[]) => this.onCategoryChanged(categories));
   }
 
   save() {
@@ -92,16 +87,18 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
     this.onClose.emit();
   }
 
-  onOptionChanged(sizes: string) {
-    this.sizes = sizes;
-    this.selectedSizes = this.sizesHelperServices.convertToArray(sizes);
-  }
+  // onOptionChanged(sizes: string) {
+  //   this.sizes = sizes;
+  //   this.selectedSizes = this.sizesHelperServices.convertToArray(sizes);
+  // }
 
-  onCategoryChanged(category) {
-    this.isSizesRequired = category.isSizesRequired;
-    this.availableSizes = category.sizes || [];
+  onCategoryChanged(categories: Category[]) {
+    this.categories = categories;
 
-    this.updateSizesValidity(category.isSizesRequired);
+    if (this.categoryId) {
+      const category = categories.find(cat => cat.id === this.categoryId);
+      this.categoryFormGroup.setValue(category);
+    }
   }
 
   private buildForm() {
@@ -109,7 +106,8 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       name: [this.name, Validators.required],
       category: [null, Validators.required],
       code: [this.code, Validators.required],
-      sizes: [this.sizes]
+      isSizesRequired: [false],
+      sizes: [[]]
     });
   }
 
@@ -123,5 +121,13 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
     }
 
     valueCtrl.updateValueAndValidity();
+  }
+
+  private loadSizes() {
+    this.productsService.getSizes()
+      .subscribe((sizes: Size[]) => {
+        this.availableSizes = sizes;
+        console.info(sizes);
+      });
   }
 }

@@ -76,5 +76,16 @@ namespace Mushka.WebApi.Controllers
         //{
         //    return await Delete<ProductResponseModel>(id);
         //}
+
+
+        [HttpGet("sizes")]
+        public async Task<IActionResult> GetSizes()
+        {
+            var sizes = await productService.GetSizesAsync(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Size>>, SizesResponseModel>(sizes);
+
+            return actionResultProvider.Get(clientResponse);
+        }
+
     }
 }

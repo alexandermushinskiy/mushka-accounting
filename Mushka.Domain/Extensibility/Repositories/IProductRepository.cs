@@ -13,5 +13,7 @@ namespace Mushka.Domain.Extensibility.Repositories
         Task<ProductSize> GetProductSizeAsync(Guid productId, Guid sizeId, CancellationToken cancellationToken);
 
         Task<ProductSize> UpdateProductSize(ProductSize productSize, CancellationToken cancellationToken);
+
+        Task<IEnumerable<Size>> GetSizesAsync(CancellationToken cancellationToken);
     }
 }

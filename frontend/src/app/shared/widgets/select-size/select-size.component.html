@@ -1,0 +1,22 @@
+<ng-select
+        bindValue="id"
+        bindLabel="name"
+        [items]="sizes"
+        [multiple]="isMultiple"
+        [closeOnSelect]="!isMultiple"
+        [placeholder]="'Выбирете размер(ы)'"
+        [ngModel]="selectedIds"
+        [clearable]="canClearAll"
+        [loading]="isLoading"
+        (change)="onChange($event)">
+  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+      <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.name}}
+  </ng-template>
+  <!-- <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+    <div *ngIf="!isMultiple">{{item.name}}</div>
+    <div *ngIf="isMultiple">
+      <byn-checkbox id="item-{{index}}" [checked]="item$.selected"></byn-checkbox>
+      {{item.name}}
+    </div>
+  </ng-template> -->
+</ng-select>

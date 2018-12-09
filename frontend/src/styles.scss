@@ -4,6 +4,7 @@
 @import '../node_modules/@swimlane/ngx-datatable/release/assets/icons.css';
 @import '../node_modules/@swimlane/ngx-datatable/release/index.css';
 @import '../node_modules/@swimlane/ngx-datatable/release/themes/material.css';
+@import '../node_modules/@ng-select/ng-select/themes/default.theme.css';
 
 @import 'assets/styles/autocomplete';
 @import 'assets/styles/boxes';
@@ -22,6 +23,7 @@
 @import 'assets/styles/ngx-datepicker';
 @import 'assets/styles/ngb-datepicker';
 @import 'assets/styles/ngb-timepicker';
+@import 'assets/styles/ng-select';
 /* You can add global styles to this file, and also import other style files */
 html {
   font-size: 10px;
@@ -164,7 +166,7 @@ textarea {
 }
 
 .field-group input, .field-group select, .field-group textarea {
-  width: 100%;
+  //width: 100%;
   background: #fff;
   border: 1px solid #d8d8d8;
   //border-radius: 5px;

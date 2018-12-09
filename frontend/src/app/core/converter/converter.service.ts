@@ -6,6 +6,7 @@ import { Category } from '../../shared/models/category.model';
 import { Product } from '../../shared/models/product.model';
 import { DatetimeService } from '../datetime/datetime.service';
 import { SizeItem } from '../../shared/models/size-item.model';
+import { Size } from '../../shared/models/size.model';
 
 @Injectable()
 export class ConverterService {
@@ -33,22 +34,33 @@ export class ConverterService {
       name: source.name,
       code: source.code,
       createdOn: this.datetimeService.toString(source.createdOn),
-      sizes: this.convertToSizes(source.sizes),
+      sizes: this.convertToProductSizes(source.sizes),
       lastDeliveryDate: this.datetimeService.toString(source.lastDeliveryDate),
       lastDeliveryCount: source.lastDeliveryCount,
       deliveriesCount: source.deliveriesCount
     });
   }
 
-  convertToSizes(response: any[]): SizeItem[] {
-    return response.map(res => this.convertToSize(res));
+  convertToProductSizes(response: any[]): SizeItem[] {
+    return response.map(res => this.convertToProductSize(res));
   }
 
-  convertToSize(source: any): SizeItem {
+  convertToProductSize(source: any): SizeItem {
     return new SizeItem({
       id: source.id,
       name: source.name,
       quantity: source.quantity
+    });
+  }
+
+  convertToSizes(response: any[]): Size[] {
+    return response.map(res => this.convertToSize(res));
+  }
+
+  convertToSize(source: any): Size {
+    return new SizeItem({
+      id: source.id,
+      name: source.name
     });
   }
 

@@ -116,5 +116,16 @@ namespace Mushka.Service.Services
 
             return CreateInfoValidationResponse(product, $"Product with id {product.Id} was successfully deleted.");
         }
+
+        public async Task<ValidationResponse<IEnumerable<Size>>> GetSizesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var sizes = (await productRepository.GetSizesAsync(cancellationToken)).ToList();
+
+            string message = sizes.Any()
+                ? "Sizes were successfully retrieved."
+                : "No sizes found.";
+
+            return CreateInfoValidationResponse<IEnumerable<Size>>(sizes, message);
+        }
     }
 }

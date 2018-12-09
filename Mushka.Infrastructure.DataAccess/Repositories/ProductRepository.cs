@@ -59,5 +59,10 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
             await Context.SaveChangesAsync(cancellationToken);
             return productSize;
         }
+
+        public async Task<IEnumerable<Size>> GetSizesAsync(CancellationToken cancellationToken)
+        {
+            return await Context.Sizes.AsNoTracking().ToListAsync(cancellationToken);
+        }
     }
 }

@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CurrencyMaskModule } from "ng2-currency-mask";
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { LoadingScreenComponent } from './widgets/loading-screen/loading-screen.component';
 import { SpinnerComponent } from './widgets/spinner/spinner.component';
@@ -27,6 +28,7 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { BackArrowComponent } from './back-arrow/back-arrow.component';
 import { DatatableFooterComponent } from './widgets/datatable-footer/datatable-footer.component';
 import { DataTablePagerComponent } from './widgets/datatable-pager/datatable-pager.component';
+import { SelectSizeComponent } from './widgets/select-size/select-size.component';
 
 @NgModule({
   imports: [
@@ -36,6 +38,7 @@ import { DataTablePagerComponent } from './widgets/datatable-pager/datatable-pag
     ReactiveFormsModule,
     NgxDatatableModule,
     CurrencyMaskModule,
+    NgSelectModule,
     NgbModule.forRoot(),
     //NgxMyDatePickerModule.forRoot()
   ],
@@ -60,7 +63,8 @@ import { DataTablePagerComponent } from './widgets/datatable-pager/datatable-pag
     ConfirmationComponent,
     BackArrowComponent,
     DatatableFooterComponent,
-    DataTablePagerComponent
+    DataTablePagerComponent,
+    SelectSizeComponent
   ],
   exports: [
     /* Common modules */
@@ -91,7 +95,8 @@ import { DataTablePagerComponent } from './widgets/datatable-pager/datatable-pag
     ConfirmationComponent,
     BackArrowComponent,
     DatatableFooterComponent,
-    DataTablePagerComponent
+    DataTablePagerComponent,
+    SelectSizeComponent
   ]
 })
 

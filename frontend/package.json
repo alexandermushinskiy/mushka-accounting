@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^7.1.2",
     "@angular/router": "^7.1.2",
     "@ng-bootstrap/ng-bootstrap": "^4.0.0",
+    "@ng-select/ng-select": "^2.13.1",
     "@swimlane/ngx-datatable": "^14.0.0",
     "bootstrap": "^4.0.0",
     "bootstrap-sass": "^3.3.7",

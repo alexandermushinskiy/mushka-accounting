@@ -14,6 +14,8 @@ namespace Mushka.Infrastructure.DataAccess.Database
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<Size> Sizes { get; set; }
+
         public DbSet<ProductSize> ProductSizes { get; set; }
 
         public DbSet<Category> Categories { get; set; }
