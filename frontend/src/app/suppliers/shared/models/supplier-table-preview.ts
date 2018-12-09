@@ -1,4 +1,4 @@
-import { DataTablePreview } from "../../../shared/models/data-table-preview";
+import { DataTablePreview } from "../../../shared/models/data-table-preview.model";
 import { ContactPerson } from "../../../shared/models/contact-person.model";
 
 export class SupplierTablePreview extends DataTablePreview {

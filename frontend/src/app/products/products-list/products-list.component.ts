@@ -7,15 +7,15 @@ import { availableColumns } from '../../shared/constants/available-columns.const
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { ProductsTableComponent } from '../products-table/products-table.component';
 import { Product } from '../../shared/models/product.model';
-import { CategoriesService } from '../../core/api/categories.service';
 import { Category } from '../../shared/models/category.model';
+import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatable.component';
 
 @Component({
   selector: 'psa-products-list',
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.scss']
 })
-export class ProductsListComponent implements OnInit {
+export class ProductsListComponent extends SortableDatatableComponent implements OnInit {
   @ViewChild(ProductsTableComponent) datatable: ProductsTableComponent;
 
   isCollapsed = false;
@@ -39,14 +39,17 @@ export class ProductsListComponent implements OnInit {
 
   constructor(private modalService: NgbModal,
               private productsService: ProductsServce,
-              private categoriesService: CategoriesService,
-              private notificationsService: NotificationsService) { }
+              private notificationsService: NotificationsService) {
+    super();
+  }
 
   ngOnInit() {
-    // this.categoriesService.getCategories()
-    //   .subscribe((categories: Category[]) => {
-    //     this.categories = categories.map((category: Category) => this.createCategoryTreeviewItem(category));
-    //   });
+  }
+
+  onActive(event) {
+    if (event.type === 'click') {
+      event.cellElement.blur();
+    }
   }
 
   onRowsUpdated(rowsAmount: number) {

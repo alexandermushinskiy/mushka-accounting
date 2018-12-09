@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TreeviewModule } from 'ngx-treeview';
 
 import { SharedModule } from '../shared/shared.module';
 import { ProductsListComponent } from './products-list/products-list.component';
@@ -13,8 +12,7 @@ import { SizesHelperServices } from './shared/services/sizes-helper.service';
 @NgModule({
   imports: [
     SharedModule,
-    ReactiveFormsModule,
-    TreeviewModule.forRoot()
+    ReactiveFormsModule
   ],
   providers: [
     SizesHelperServices

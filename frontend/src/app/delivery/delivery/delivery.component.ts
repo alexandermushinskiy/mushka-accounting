@@ -170,7 +170,7 @@ export class DeliveryComponent implements OnInit {
   confirmDeleteDraft() {
     this.deliveryService.delete(this.deliveryToDelete.id)
       .subscribe(
-        (res: Delivery) => this.onDeletedSucces(),
+        () => this.onDeletedSucces(),
         () => this.onError('Unable to delete draft delivery'));
   }
 

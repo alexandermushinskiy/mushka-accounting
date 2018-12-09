@@ -11,8 +11,7 @@ export abstract class DataTablePreview {
     this.className = elem.className || this.getClassName(index);
   }
 
-  getClassName(index: number, isActive: boolean = false) {
-    const isOdd = (index % 2 === 0);
-    return `${isOdd ? 'odd' : 'even'} ${isActive ? 'active' : 'non-active'}`;
+  getClassName(index: number) {
+    return index % 2 === 0 ? 'even' : 'odd';
   }
 }

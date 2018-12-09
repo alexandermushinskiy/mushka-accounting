@@ -1,4 +1,4 @@
-import { DataTablePreview } from '../../../shared/models/data-table-preview';
+import { DataTablePreview } from '../../../shared/models/data-table-preview.model';
 
 export class ProductItemTablePreview extends DataTablePreview {
   id: string;

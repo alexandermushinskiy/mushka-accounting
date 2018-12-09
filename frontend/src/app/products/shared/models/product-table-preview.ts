@@ -1,5 +1,5 @@
 import { SizeItem } from '../../../shared/models/size-item.model';
-import { DataTablePreview } from '../../../shared/models/data-table-preview';
+import { DataTablePreview } from '../../../shared/models/data-table-preview.model';
 
 export class ProductTablePreview extends DataTablePreview {
   name: string;

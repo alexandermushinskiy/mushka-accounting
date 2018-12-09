@@ -38,7 +38,7 @@ export class CategoriesService {
       .catch((error) => Observable.throw(error.error.messages));
   }
 
-  delete(categoryId: string): Observable<Category> {
+  delete(categoryId: string): Observable<any> {
     return this.http.delete(`${this.endPoint}/${categoryId}`)
       .catch((res: any) => Observable.throw(res.error.messages));
   }
