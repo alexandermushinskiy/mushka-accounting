@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { DatatableComponent } from 'ngx-datatable-with-ie-fix';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 import { ColumnConfiguration } from '../../shared/models/column-configuration.model';
 import { ProductTablePreview } from '../shared/models/product-table-preview';

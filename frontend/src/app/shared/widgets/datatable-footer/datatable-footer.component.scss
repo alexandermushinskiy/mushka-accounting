@@ -1,0 +1,69 @@
+:host {
+  width: 100%;
+}
+
+.footer {
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.select-per-page {
+  height: 44px;
+  width: 71px;
+  border: 1px solid #D8D8D8;
+  border-radius: 5px;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 6px 0 rgba(0,0,0,0.16);
+}
+
+.ngx-datatable.material .datatable-footer-inner {
+  font-weight: bold;
+  padding: 0;
+}
+
+.table-per-page {
+  padding: 0%;
+}
+
+.table-paging {
+  text-align: center;
+}
+
+.table-page-size {
+  text-align: right;
+  vertical-align: middle;
+  line-height: 60px;
+}
+
+.text-btn {
+  color: #F47721;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.text-btn {
+  color: #F47721;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.container-preorder {
+  display: contents;
+}
+
+.page-limits-container { 
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.page-limits {
+  text-align-last: center;
+  height: 40px;
+  width: unset;
+  padding: 9px 15px;
+}

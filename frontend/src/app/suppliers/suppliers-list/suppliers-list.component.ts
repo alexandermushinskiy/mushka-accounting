@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { DatatableComponent } from 'ngx-datatable-with-ie-fix';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 

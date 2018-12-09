@@ -1,0 +1,31 @@
+<div class="row footer" *ngIf="!loadingIndicator && total > minItemsForPagination">
+  <div class="col-md-3">
+    Всего: {{ total }} <span class="text-lowercase">{{ itemsName }}</span>
+  </div>
+  <div class="table-paging col-md-6">
+    <psa-datatable-pager
+                    [page]="curPage" 
+                    [size]="pageSize"
+                    [count]="rowCount"
+                    [hidden]="false"
+                    (change)="datatable.onFooterPage($event)">
+    </psa-datatable-pager>
+  </div>
+
+  <div class="p-0 col-md-3">
+    <!-- <div class="row m-0">
+      <div class="table-page-size col-md-8 col-lg-9">
+        На странице:
+      </div>
+      <div class="col-md-4 col-lg-3 p-0">
+        <div class="field-group page-limits-container">
+          <select class="page-limits" (change)="onLimitChange($event.target.value)">
+            <option *ngFor="let option of pageLimitOptions"
+                    [value]="option"
+                    [selected]="option === currentPageLimit"> {{ option }} </option>
+          </select>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>

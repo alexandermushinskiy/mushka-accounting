@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgxDatatableModule } from 'ngx-datatable-with-ie-fix';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CurrencyMaskModule } from "ng2-currency-mask";
 
 import { LoadingScreenComponent } from './widgets/loading-screen/loading-screen.component';
@@ -25,6 +25,8 @@ import { NumberFieldDirective } from './directives/number-field.directive';
 import { ConfirmationComponent } from './widgets/confirmation/confirmation.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { BackArrowComponent } from './back-arrow/back-arrow.component';
+import { DatatableFooterComponent } from './widgets/datatable-footer/datatable-footer.component';
+import { DataTablePagerComponent } from './widgets/datatable-pager/datatable-pager.component';
 
 @NgModule({
   imports: [
@@ -56,7 +58,9 @@ import { BackArrowComponent } from './back-arrow/back-arrow.component';
     CurrencyInputComponent,
     DropdownComponent,
     ConfirmationComponent,
-    BackArrowComponent
+    BackArrowComponent,
+    DatatableFooterComponent,
+    DataTablePagerComponent
   ],
   exports: [
     /* Common modules */
@@ -85,7 +89,9 @@ import { BackArrowComponent } from './back-arrow/back-arrow.component';
     CurrencyInputComponent,
     DropdownComponent,
     ConfirmationComponent,
-    BackArrowComponent
+    BackArrowComponent,
+    DatatableFooterComponent,
+    DataTablePagerComponent
   ]
 })
 

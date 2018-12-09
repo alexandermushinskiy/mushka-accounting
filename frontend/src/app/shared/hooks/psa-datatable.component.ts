@@ -3,7 +3,7 @@ import { OnInit, TemplateRef, Output, EventEmitter } from '@angular/core';
 import { DatatableColumn } from '../interfaces/datatable-column.interface';
 import { ColumnConfiguration } from '../models/column-configuration.model';
 import { FileHelper } from '../utils/file-helper';
-import { DatatableComponent } from 'ngx-datatable-with-ie-fix';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 export abstract class PsaDatatableComponent implements OnInit {
   @Output() onRowsUpdated = new EventEmitter<number>();
