@@ -4,7 +4,7 @@
                     [title]="'Поставщики'"
                     [total]="total"
                     [shown]="shown"
-                    (onAddItem)="addSupplier(supplierTmpl)">
+                    (onAddItem)="addSupplier()">
       </psa-datatable-header>
   </div>
   <div class="appbody">
@@ -69,7 +69,7 @@
         </ng-template>
       </ngx-datatable-column>
       
-      <ngx-datatable-row-detail [rowHeight]="auto" #myDetailRow>
+      <ngx-datatable-row-detail [rowHeight]="'auto'" #myDetailRow>
         <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
           <div class="row-details-wrapper">
             <div class="details-column" [style.width.px]="contactsWidth">

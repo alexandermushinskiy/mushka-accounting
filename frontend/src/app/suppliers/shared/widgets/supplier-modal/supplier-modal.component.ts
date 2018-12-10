@@ -27,6 +27,10 @@ export class SupplierModalComponent implements OnInit {
   services: string;
   contactPersons: ContactPerson[] = [];
 
+  get contactPersonsControls() {
+    return <FormArray>this.supplierForm.get('contactPersons');
+  }
+
   constructor(private formBuilder: FormBuilder,
               private suppliersService: SuppliersService) { }
 

@@ -61,7 +61,7 @@
       <div class="col-sm-4">Почта</div>
     </div>
     <div formArrayName="contactPersons">
-      <div class="form-row contact-person-row" *ngFor="let contactPersonControl of supplierForm.get('contactPersons').controls; let index=index" [formGroupName]="index">
+      <div class="form-row contact-person-row" *ngFor="let contactPersonControl of contactPersonsControls; let index=index" [formGroupName]="index">
         <div class="col-sm-4">
           <div class="form-group">
             <input type="text" class="form-control" formControlName="name" />
