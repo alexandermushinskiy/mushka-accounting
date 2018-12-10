@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mushka.Core.Extensibility.Logging;
 using Mushka.Core.Validation;
+using Mushka.Core.Validation.Codes;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
@@ -42,7 +43,7 @@ namespace Mushka.Service.Services
             Supplier supplier = await supplierRepository.GetByIdAsync(supplierId, cancellationToken);
 
             return supplier == null
-                ? CreateWarningValidationResponse($"Supplier with id {supplierId} is not found.", ValidationStatusType.NotFound)
+                ? CreateWarningValidationResponse(ValidationCodes.SupplierNotFound, $"Supplier with id {supplierId} is not found.", ValidationStatusType.NotFound)
                 : CreateInfoValidationResponse(supplier, $"Supplier with id {supplier.Id} was successfully retrieved.");
         }
 
@@ -50,7 +51,7 @@ namespace Mushka.Service.Services
         {
             if (await supplierRepository.IsExistAsync(supp => supp.Name == supplier.Name, cancellationToken))
             {
-                return CreateWarningValidationResponse($"Supplier with name {supplier.Name} is already exist.");
+                return CreateWarningValidationResponse(ValidationCodes.SupplierNameExist, $"Supplier with name {supplier.Name} is already exist.");
             }
             
             Supplier addedSupplier = await supplierRepository.AddAsync(supplier, cancellationToken);
@@ -64,12 +65,12 @@ namespace Mushka.Service.Services
 
             if (supplierToUpdate == null)
             {
-                return CreateWarningValidationResponse($"Supplier with id {supplier.Id} is not found.", ValidationStatusType.NotFound);
+                return CreateWarningValidationResponse(ValidationCodes.SupplierNotFound, $"Supplier with id {supplier.Id} is not found.", ValidationStatusType.NotFound);
             }
 
             if (await supplierRepository.IsExistAsync(supp => supp.Id != supplier.Id && supp.Name == supplier.Name, cancellationToken))
             {
-                return CreateWarningValidationResponse($"Supplier with name {supplier.Name} is already exist.");
+                return CreateWarningValidationResponse(ValidationCodes.SupplierNameExist, $"Supplier with name {supplier.Name} is already exist.");
             }
 
             Supplier updatedSupplier = await supplierRepository.UpdateAsync(supplier, cancellationToken);
@@ -83,7 +84,7 @@ namespace Mushka.Service.Services
 
             if (supplier == null)
             {
-                return CreateWarningValidationResponse($"Supplier with id {supplierId} is not found.", ValidationStatusType.NotFound);
+                return CreateWarningValidationResponse(ValidationCodes.SupplierNotFound, $"Supplier with id {supplierId} is not found.", ValidationStatusType.NotFound);
             }
 
             await supplierRepository.DeleteAsync(supplier, cancellationToken);

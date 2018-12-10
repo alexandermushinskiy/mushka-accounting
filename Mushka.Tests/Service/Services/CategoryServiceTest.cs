@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using Mushka.Core.Extensibility.Logging;
+using Mushka.Core.Validation.Codes;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
@@ -103,7 +104,7 @@ namespace Mushka.Tests.Service.Services
 
             var actual = await categoryService.GetByIdAsync(CategoryId);
 
-            var expected = CreateWarningValidationResponse<Category>(CategoryNotFoundMessage, ValidationStatusType.NotFound);
+            var expected = CreateWarningValidationResponse<Category>(ValidationCodes.CategoryNotFound, CategoryNotFoundMessage, ValidationStatusType.NotFound);
             actual.Should().BeEquivalentTo(expected);
         }
 
@@ -134,7 +135,7 @@ namespace Mushka.Tests.Service.Services
 
             var actual = await categoryService.AddAsync(category);
 
-            var expected = CreateWarningValidationResponse<Category>(CategoryNameDuplicationMessage);
+            var expected = CreateWarningValidationResponse<Category>(ValidationCodes.CategoryNameExist, CategoryNameDuplicationMessage);
             actual.Should().BeEquivalentTo(expected);
         }
 
@@ -165,7 +166,7 @@ namespace Mushka.Tests.Service.Services
 
             var actual = await categoryService.DeleteAsync(CategoryId);
 
-            var expected = CreateWarningValidationResponse<Category>(CategoryNotFoundMessage, ValidationStatusType.NotFound);
+            var expected = CreateWarningValidationResponse<Category>(ValidationCodes.CategoryNotFound, CategoryNotFoundMessage, ValidationStatusType.NotFound);
             actual.Should().BeEquivalentTo(expected);
         }
 
@@ -181,7 +182,7 @@ namespace Mushka.Tests.Service.Services
 
             var actual = await categoryService.DeleteAsync(CategoryId);
 
-            var expected = CreateWarningValidationResponse<Category>(CategoryHasProductsMessage);
+            var expected = CreateWarningValidationResponse<Category>(ValidationCodes.CategoryHasProducts, CategoryHasProductsMessage);
             actual.Should().BeEquivalentTo(expected);
         }
 

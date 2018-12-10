@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mushka.Core.Extensibility.Logging;
 using Mushka.Core.Validation;
+using Mushka.Core.Validation.Codes;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
@@ -43,7 +44,7 @@ namespace Mushka.Service.Services
             var order = await orderRepository.GetByIdAsync(orderId, cancellationToken);
 
             return order == null
-                ? CreateWarningValidationResponse($"Order with id {orderId} is not found.", ValidationStatusType.NotFound)
+                ? CreateWarningValidationResponse(ValidationCodes.OrderNotFound, $"Order with id {orderId} is not found.", ValidationStatusType.NotFound)
                 : CreateInfoValidationResponse(order, $"Order with id {orderId} was successfully retrieved.");
         }
 
@@ -55,14 +56,14 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateWarningValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return CreateWarningValidationResponse(ValidationCodes.ProductNotFound, $"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
                 }
 
                 var storedProductSize = await productRepository.GetProductSizeAsync(orderProduct.ProductId, orderProduct.SizeId, cancellationToken);
 
                 if (storedProductSize == null)
                 {
-                    return CreateWarningValidationResponse($"Size with id {orderProduct.SizeId} is not found.", ValidationStatusType.NotFound);
+                    return CreateWarningValidationResponse(ValidationCodes.SizeNotFound, $"Size with id {orderProduct.SizeId} is not found.", ValidationStatusType.NotFound);
                 }
 
                 storedProductSize.Quantity -= orderProduct.Quantity;

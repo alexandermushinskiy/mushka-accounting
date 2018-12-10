@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mushka.Core.Extensibility.Logging;
 using Mushka.Core.Validation;
+using Mushka.Core.Validation.Codes;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
@@ -45,7 +46,7 @@ namespace Mushka.Service.Services
             var category = await categoryRepository.GetByIdAsync(categoryId, cancellationToken);
 
             return category == null
-                ? CreateWarningValidationResponse($"Category with id {categoryId} is not found.", ValidationStatusType.NotFound)
+                ? CreateWarningValidationResponse(ValidationCodes.CategoryNotFound, $"Category with id {categoryId} is not found.", ValidationStatusType.NotFound)
                 : CreateInfoValidationResponse(category, $"Category with id {category.Id} was successfully retrieved.");
         }
 
@@ -53,7 +54,7 @@ namespace Mushka.Service.Services
         {
             if (await categoryRepository.IsExistAsync(cat => cat.Name == category.Name, cancellationToken))
             {
-                return CreateWarningValidationResponse($"Category with name {category.Name} is already exist.");
+                return CreateWarningValidationResponse(ValidationCodes.CategoryNameExist, $"Category with name {category.Name} is already exist.");
             }
             
             var addedCategory = await categoryRepository.AddAsync(category, cancellationToken);
@@ -67,12 +68,12 @@ namespace Mushka.Service.Services
 
             if (categoryToUpdate == null)
             {
-                return CreateWarningValidationResponse($"Category with id {category.Id} is not found.", ValidationStatusType.NotFound);
+                return CreateWarningValidationResponse(ValidationCodes.CategoryNotFound, $"Category with id {category.Id} is not found.", ValidationStatusType.NotFound);
             }
 
             if (categoryRepository.Get(cat => cat.Id != category.Id && cat.Name == category.Name).Any())
             {
-                return CreateWarningValidationResponse($"Category with name {category.Name} is already exist.");
+                return CreateWarningValidationResponse(ValidationCodes.CategoryNameExist, $"Category with name {category.Name} is already exist.");
             }
 
             var updatedCategory = await categoryRepository.UpdateAsync(category, cancellationToken);
@@ -86,12 +87,12 @@ namespace Mushka.Service.Services
 
             if (category == null)
             {
-                return CreateWarningValidationResponse($"Category with id {categoryId} is not found.", ValidationStatusType.NotFound);
+                return CreateWarningValidationResponse(ValidationCodes.CategoryNotFound, $"Category with id {categoryId} is not found.", ValidationStatusType.NotFound);
             }
 
             if ((await productRepository.GetByCategoryId(categoryId, cancellationToken)).Any())
             {
-                return CreateWarningValidationResponse($"Category with id {categoryId} contains products.");
+                return CreateWarningValidationResponse(ValidationCodes.CategoryHasProducts, $"Category with id {categoryId} contains products.");
             }
 
             await categoryRepository.DeleteAsync(category, cancellationToken);

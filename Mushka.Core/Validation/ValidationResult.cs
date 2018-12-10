@@ -12,9 +12,17 @@ namespace Mushka.Core.Validation
             Status = status;
         }
 
+        private ValidationResult(LevelType level, string message, string code, ValidationStatusType status)
+            : this(level, message, status)
+        {
+            Code = code;
+        }
+
         public LevelType Level { get; }
 
         public string Message { get; }
+
+        public string Code { get; }
 
         public ValidationStatusType Status { get; }
 
@@ -24,8 +32,8 @@ namespace Mushka.Core.Validation
         public static IValidationResult CreateError(string message, ValidationStatusType status = ValidationStatusType.Error)
             => new ValidationResult(LevelType.Error, message, status);
 
-        public static IValidationResult CreateWarning(string message, ValidationStatusType status = ValidationStatusType.BadOperation)
-            => new ValidationResult(LevelType.Warning, message, status);
+        public static IValidationResult CreateWarning(string code, string message, ValidationStatusType status = ValidationStatusType.BadOperation)
+            => new ValidationResult(LevelType.Warning, message, code, status);
 
         public bool IsValid()
         {

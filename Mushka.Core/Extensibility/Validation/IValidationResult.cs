@@ -6,6 +6,8 @@ namespace Mushka.Core.Extensibility.Validation
     {
         LevelType Level { get; }
 
+        string Code { get; }
+
         string Message { get; }
 
         ValidationStatusType Status { get; }

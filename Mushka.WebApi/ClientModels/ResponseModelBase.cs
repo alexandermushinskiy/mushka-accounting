@@ -8,6 +8,13 @@ namespace Mushka.WebApi.ClientModels
         [JsonIgnore]
         public int? StatusCode { get; set; }
 
-        public IEnumerable<string> Messages { get; set; }
+        public IEnumerable<ResponseMessageModel> Messages { get; set; }
+    }
+
+    public class ResponseMessageModel
+    {
+        public string Code { get; set; }
+
+        public string Message { get; set; }
     }
 }

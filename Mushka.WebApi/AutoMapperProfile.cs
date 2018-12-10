@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Mushka.Core.Extensibility.Validation;
 using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
@@ -22,11 +24,11 @@ namespace Mushka.WebApi
 
             CreateMap<IEnumerable<string>, ResponseModelBase>()
                 .ForMember(dest => dest.StatusCode, opt => opt.UseValue(StatusCodes.Status400BadRequest))
-                .ForMember(dest => dest.Messages, opts => opts.MapFrom(src => src));
+                .ForMember(dest => dest.Messages, opts => opts.MapFrom(src => CreateReponseMessageModel(src)));
 
             CreateMap<ValidationResponse, DeleteResponseModel>()
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }))
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status));
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => CreateReponseMessageModel(src.ValidationResult)));
 
             // Products
             CreateMap<ProductRequestModel, Product>().ConvertUsing<ProductRequestConverter>();
@@ -36,17 +38,17 @@ namespace Mushka.WebApi
             CreateMap<ValidationResponse<Product>, ProductResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ProductResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => CreateReponseMessageModel(src.ValidationResult)));
 
             CreateMap<ValidationResponse<IEnumerable<Product>>, ProductsResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ProductResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => CreateReponseMessageModel(src.ValidationResult)));
 
             CreateMap<ValidationResponse<IEnumerable<Size>>, SizesResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SizeResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => CreateReponseMessageModel(src.ValidationResult)));
             //-------------------------
 
             // Category
@@ -60,12 +62,12 @@ namespace Mushka.WebApi
             CreateMap<ValidationResponse<Category>, CategoryResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<CategoryResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => CreateReponseMessageModel(src.ValidationResult)));
 
             CreateMap<ValidationResponse<IEnumerable<Category>>, CategoriesResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<CategoryResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => CreateReponseMessageModel(src.ValidationResult)));
             //-------------------------
 
             // Delivery
@@ -76,12 +78,12 @@ namespace Mushka.WebApi
             CreateMap<ValidationResponse<Delivery>, DeliveryResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<DeliveryResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => CreateReponseMessageModel(src.ValidationResult)));
 
             CreateMap<ValidationResponse<IEnumerable<Delivery>>, DeliveriesResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<DeliveryResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => CreateReponseMessageModel(src.ValidationResult)));
             //-------------------------
 
             // Supplier
@@ -91,12 +93,12 @@ namespace Mushka.WebApi
             CreateMap<ValidationResponse<Supplier>, SupplierResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SupplierResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => CreateReponseMessageModel(src.ValidationResult)));
 
             CreateMap<ValidationResponse<IEnumerable<Supplier>>, SuppliersResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SupplierResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => CreateReponseMessageModel(src.ValidationResult)));
             //-------------------------
 
             // Order
@@ -106,12 +108,12 @@ namespace Mushka.WebApi
             CreateMap<ValidationResponse<Order>, OrderResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<OrderResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => CreateReponseMessageModel(src.ValidationResult)));
 
             CreateMap<ValidationResponse<IEnumerable<Order>>, OrdersResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<OrderResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => CreateReponseMessageModel(src.ValidationResult)));
             //-------------------------
 
             //CreateMap<ValidationResponse<IEnumerable<Supplier>>, SuppliersResponseModel>()
@@ -126,6 +128,19 @@ namespace Mushka.WebApi
             //    .ForMember(dest => dest.Id, opt => opt.Ignore())
             //    .ForMember(dest => dest.CreatedOn, opt => opt.Ignore())
             //    .ForMember(dest => dest.Deliveries, opt => opt.Ignore());
+        }
+
+        private static IEnumerable<ResponseMessageModel> CreateReponseMessageModel(IEnumerable<string> messages)
+        {
+            return new List<ResponseMessageModel>(messages.Select(msg => new ResponseMessageModel { Message = msg }));
+        }
+
+        private static IEnumerable<ResponseMessageModel> CreateReponseMessageModel(IValidationResult validationResult)
+        {
+            return new List<ResponseMessageModel>
+            {
+                new ResponseMessageModel { Code = validationResult.Code, Message = validationResult.Message }
+            };
         }
     }
 }

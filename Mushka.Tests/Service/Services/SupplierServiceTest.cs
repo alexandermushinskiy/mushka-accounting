@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using Mushka.Core.Extensibility.Logging;
+using Mushka.Core.Validation.Codes;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
@@ -101,7 +102,7 @@ namespace Mushka.Tests.Service.Services
 
             var actual = await supplierService.GetByIdAsync(SupplierId);
 
-            var expected = CreateWarningValidationResponse<Supplier>(SupplierNotFoundMessage, ValidationStatusType.NotFound);
+            var expected = CreateWarningValidationResponse<Supplier>(ValidationCodes.SupplierNotFound, SupplierNotFoundMessage, ValidationStatusType.NotFound);
             actual.Should().BeEquivalentTo(expected);
         }
 
@@ -132,7 +133,7 @@ namespace Mushka.Tests.Service.Services
 
             var actual = await supplierService.AddAsync(supplier);
 
-            var expected = CreateWarningValidationResponse<Supplier>(SupplierNameDuplicationMessage);
+            var expected = CreateWarningValidationResponse<Supplier>(ValidationCodes.SupplierNameExist, SupplierNameDuplicationMessage);
             actual.Should().BeEquivalentTo(expected);
         }
 
@@ -164,7 +165,7 @@ namespace Mushka.Tests.Service.Services
 
             var actual = await supplierService.UpdateAsync(supplier);
 
-            var expected = CreateWarningValidationResponse<Category>(SupplierNotFoundMessage, ValidationStatusType.NotFound);
+            var expected = CreateWarningValidationResponse<Category>(ValidationCodes.SupplierNotFound, SupplierNotFoundMessage, ValidationStatusType.NotFound);
             actual.Should().BeEquivalentTo(expected);
         }
 
@@ -180,7 +181,7 @@ namespace Mushka.Tests.Service.Services
 
             var actual = await supplierService.UpdateAsync(supplier);
 
-            var expected = CreateWarningValidationResponse<Supplier>(SupplierNameDuplicationMessage);
+            var expected = CreateWarningValidationResponse<Supplier>(ValidationCodes.SupplierNameExist, SupplierNameDuplicationMessage);
             actual.Should().BeEquivalentTo(expected);
         }
 
@@ -208,7 +209,7 @@ namespace Mushka.Tests.Service.Services
 
             var actual = await supplierService.DeleteAsync(SupplierId);
 
-            var expected = CreateWarningValidationResponse<Category>(SupplierNotFoundMessage, ValidationStatusType.NotFound);
+            var expected = CreateWarningValidationResponse<Category>(ValidationCodes.SupplierNotFound, SupplierNotFoundMessage, ValidationStatusType.NotFound);
             actual.Should().BeEquivalentTo(expected);
         }
         

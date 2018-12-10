@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mushka.Core.Extensibility.Logging;
 using Mushka.Core.Validation;
+using Mushka.Core.Validation.Codes;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
@@ -43,7 +44,7 @@ namespace Mushka.Service.Services
             var delivery = await deliveryRepository.GetByIdAsync(deliveryId, cancellationToken);
 
             return delivery == null
-                ? CreateWarningValidationResponse($"Delivery with id {deliveryId} is not found.", ValidationStatusType.NotFound)
+                ? CreateWarningValidationResponse(ValidationCodes.DeliveryNotFound, $"Delivery with id {deliveryId} is not found.", ValidationStatusType.NotFound)
                 : CreateInfoValidationResponse(delivery, $"Delivery with id {deliveryId} was successfully retrieved.");
         }
 
@@ -55,14 +56,14 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateWarningValidationResponse($"Product with id {deliveryProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return CreateWarningValidationResponse(ValidationCodes.ProductNotFound, $"Product with id {deliveryProduct.ProductId} is not found.", ValidationStatusType.NotFound);
                 }
 
                 var storedProductSize = await productRepository.GetProductSizeAsync(deliveryProduct.ProductId, deliveryProduct.SizeId, cancellationToken);
 
                 if (storedProductSize == null)
                 {
-                    return CreateWarningValidationResponse($"Size with id {deliveryProduct.SizeId} is not found.", ValidationStatusType.NotFound);
+                    return CreateWarningValidationResponse(ValidationCodes.SizeNotFound, $"Size with id {deliveryProduct.SizeId} is not found.", ValidationStatusType.NotFound);
                 }
                 
                 storedProductSize.Quantity += deliveryProduct.Quantity;
@@ -85,7 +86,7 @@ namespace Mushka.Service.Services
 
             if (delivery == null)
             {
-                return CreateWarningValidationResponse($"Delivery with id {deliveryId} is not found.", ValidationStatusType.NotFound);
+                return CreateWarningValidationResponse(ValidationCodes.DeliveryNotFound, $"Delivery with id {deliveryId} is not found.", ValidationStatusType.NotFound);
             }
 
             foreach (var deliveryProduct in delivery.Products)
