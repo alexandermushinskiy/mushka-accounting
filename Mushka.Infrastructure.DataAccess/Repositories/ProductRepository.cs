@@ -31,6 +31,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
             return await Context.Products
                 .AsNoTracking()
                 .Include(prod => prod.Sizes)
+                    .ThenInclude(s => s.Size)
                 .FirstOrDefaultAsync(prod => prod.Id == id, cancellationToken);
         }
 

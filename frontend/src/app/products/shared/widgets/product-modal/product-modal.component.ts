@@ -7,7 +7,6 @@ import { Category } from '../../../../shared/models/category.model';
 import { ProductsServce } from '../../../../core/api/products.service';
 import { CategoriesService } from '../../../../core/api/categories.service';
 import { SizeItem } from '../../../../shared/models/size-item.model';
-import { SizesHelperServices } from '../../services/sizes-helper.service';
 import { Size } from '../../../../shared/models/size.model';
 
 @Component({
@@ -18,20 +17,16 @@ import { Size } from '../../../../shared/models/size.model';
 export class ProductModalComponent extends UnsubscriberComponent implements OnInit {
   @Input() product: Product = null;
   @Input() categoryId: string;
-  @Input() isSaving = false;
   @Output() onClose = new EventEmitter<void>();
   @Output() onSave = new EventEmitter<Product>();
 
+  isSaving = false;
   productForm: FormGroup;
-  isEdit = false;
-  name: string;
-  code: string;
-  category: Category;
-  sizes: string;
-  isSizesRequired: boolean;
+  productId: string;
+  isEdit: boolean;
+
   availableSizes: Size[] = [];
   categories: Category[] = [];
-  selectedSizes: string[] = [];
 
   private get categoryFormGroup(): FormGroup {
     return <FormGroup>this.productForm.get('category');
@@ -39,8 +34,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
 
   constructor(private formBuilder: FormBuilder,
               private categoriesService: CategoriesService,
-              private productsService: ProductsServce,
-              private sizesHelperServices: SizesHelperServices) {
+              private productsService: ProductsServce) {
     super();
   }
 
@@ -49,48 +43,32 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
 
     this.loadSizes();
 
-    // if (this.isEdit) {
-    //   this.name = this.product.name;
-    //   this.code = this.product.code;
-    //   this.category = this.product.category;
-    //   this.sizes = this.sizesHelperServices.convertToString(this.product.sizes.map(s => s.name));
-    // }
-
-    this.buildForm();
+    this.buildForm(this.isEdit ? this.product : new Product({}));
 
     this.categoriesService.getAll()
       .subscribe((categories: Category[]) => this.onCategoryChanged(categories));
   }
 
   save() {
-    const productFormValue = this.productForm.value;
-    const sizes = this.sizesHelperServices.convertToArray(productFormValue.sizes).map(size => new SizeItem(size));
-
-    if (this.isEdit) {
-      this.product.name = productFormValue.name;
-      this.product.code = productFormValue.code;
-      this.product.category = this.categoryFormGroup.value;
-      this.product.sizes = sizes;
-    } else {
-      this.product = new Product({
-        name: productFormValue.name,
-        code: productFormValue.code.toUpperCase(),
-        category: this.categoryFormGroup.value,
-        sizes: sizes
-      });
+    if (this.productForm.invalid || (this.productForm.errors && this.productForm.errors.length > 0)) {
+      return;
     }
 
-    this.onSave.emit(this.product);
+    this.isSaving = true;
+    const product = this.createProductModel(this.productForm.value);
+
+    (this.isEdit
+      ? this.productsService.update(this.productId, product)
+      : this.productsService.create(product))
+        .subscribe(
+          (savedProduct: Product) => this.onSave.emit(savedProduct),
+          (errors: string[]) => this.onSaveError(errors)
+        );
   }
 
   close() {
     this.onClose.emit();
   }
-
-  // onOptionChanged(sizes: string) {
-  //   this.sizes = sizes;
-  //   this.selectedSizes = this.sizesHelperServices.convertToArray(sizes);
-  // }
 
   onCategoryChanged(categories: Category[]) {
     this.categories = categories;
@@ -101,21 +79,21 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
     }
   }
 
-  private buildForm() {
+  private buildForm(product: Product) {
     this.productForm = this.formBuilder.group({
-      name: [this.name, Validators.required],
-      category: [null, Validators.required],
-      code: [this.code, Validators.required],
-      isSizesRequired: [false],
-      sizes: [[]]
+      name: [product.name, Validators.required],
+      category: [product.category, Validators.required],
+      code: [product.code, Validators.required],
+      isSizesRequired: [true],
+      sizes: [product.sizes, Validators.required]
     });
 
     this.addFieldChangeListeners();
   }
 
-  addFieldChangeListeners() {
+  private addFieldChangeListeners() {
     const isSizesRequiredControl = this.productForm.controls['isSizesRequired'];
-    
+
     isSizesRequiredControl.valueChanges.subscribe((value) => {
       this.updateSizesValidity(value);
     });
@@ -136,5 +114,23 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
   private loadSizes() {
     this.productsService.getSizes()
       .subscribe((sizes: Size[]) => this.availableSizes = sizes);
+  }
+
+  private createProductModel(productFormValue): Product {
+    const sizes = !!productFormValue.sizes
+      ? productFormValue.sizes.map(sizeId => new SizeItem({ id: sizeId }))
+      : [];
+
+    return new Product({
+      name: productFormValue.name,
+      code: productFormValue.code.toUpperCase(),
+      category: this.categoryFormGroup.value,
+      sizes: sizes
+    });
+  }
+
+  private onSaveError(errors: string[]) {
+    this.isSaving = false;
+    console.info(errors);
   }
 }

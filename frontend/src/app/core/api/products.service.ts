@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { Product } from '../../shared/models/product.model';
@@ -25,10 +25,35 @@ export class ProductsServce {
       .catch((res: any) => Observable.throw(res.error.messages));
   }
 
+  create(product: Product): Observable<Product> {
+    const requestModel = this.convertToRequestData(product);
+
+    return this.http.post(this.endPoint, requestModel)
+      .map((res: any) => this.converterService.convertToProduct(res.data))
+      .catch((res: any) => throwError(res.error.messages));
+  }
+
+  update(productId: string, product: Product): Observable<Product> {
+    const requestModel = this.convertToRequestData(product);
+
+    return this.http.put(`${this.endPoint}/${productId}`, requestModel)
+      .map((res: any) => this.converterService.convertToProduct(res.data))
+      .catch((res: any) => Observable.throw(res.error.messages));
+  }
+
   getSizes(): Observable<Size[]> {
     return this.http.get(`${this.endPoint}/sizes`)
       .map((res: any) => this.converterService.convertToSizes(res.data))
       .catch((res: any) => Observable.throw(res.error.messages));
+  }
+
+  private convertToRequestData(product: Product): any {
+    return {
+      name: product.name,
+      code: product.code,
+      categoryId: product.category.id,
+      sizes: product.sizes.map(sz => sz.id)
+    };
   }
 
   getProducts(criteria: string): Observable<Product[]> {

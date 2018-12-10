@@ -78,8 +78,14 @@ namespace Mushka.Service.Services
             {
                 return CreateWarningValidationResponse($"Product with the name {product.Name} is already existed.");
             }
-            
-            Product addedProduct = await productRepository.AddAsync(product, cancellationToken);
+
+            if (await productRepository.IsExistAsync(prod => prod.Code == product.Code, cancellationToken))
+            {
+                return CreateWarningValidationResponse($"Product with the code {product.Code} is already existed.");
+            }
+
+            await productRepository.AddAsync(product, cancellationToken);
+            var addedProduct = await productRepository.GetByIdAsync(product.Id, cancellationToken);
 
             return CreateInfoValidationResponse(addedProduct, $"Product with id {product.Id} was successfully created.");
         }

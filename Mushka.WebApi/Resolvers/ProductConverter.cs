@@ -12,7 +12,7 @@ namespace Mushka.WebApi.Resolvers
             var lastDelivery = source.Deliveries
                 .OrderByDescending(del => del.Delivery.DeliveryDate)
                 .Select(del => del.Delivery)
-                .First();
+                .FirstOrDefault();
 
             return new ProductModel
             {
@@ -20,9 +20,10 @@ namespace Mushka.WebApi.Resolvers
                 Name = source.Name,
                 Code = source.Code,
                 CreatedOn = source.CreatedOn,
+                CategoryId = source.CategoryId,
                 DeliveriesCount = source.Deliveries.Select(l => l.Delivery.DeliveryDate).Distinct().Count(),
-                LastDeliveryDate = lastDelivery.DeliveryDate,
-                LastDeliveryCount = lastDelivery.Products.Count,
+                LastDeliveryDate = lastDelivery?.DeliveryDate,
+                LastDeliveryCount = lastDelivery?.Products.Count,
                 Sizes = source.Sizes.Select(CreateProductSizeModel).ToArray()
             };
         }

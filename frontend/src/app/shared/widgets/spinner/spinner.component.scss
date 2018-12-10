@@ -1,3 +1,7 @@
+:host {
+  padding-right: 3px;
+}
+
 //ie loader animation
 .ie-loading,
 .ie-loading:after {
@@ -17,8 +21,9 @@
 }
 
 //svg loading animation
-.loading{
+.loading {
   position: relative;
+  top: 2px;
   margin: 0 auto;
   display: inline-block;
   vertical-align: top;
@@ -27,14 +32,15 @@
   zoom: 1;
   text-align: center;
 }
+
 .loading .circular {
   animation: loadingrotate 3s linear infinite;
   width: 1em;
   height: 1em;
   position: relative;
   overflow: visible;
-
 }
+
 @keyframes loadingrotate {
   0% {
     transform: rotate(0deg);

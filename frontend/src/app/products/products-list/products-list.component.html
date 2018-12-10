@@ -113,8 +113,7 @@
   <psa-product-modal
               [product]="selectedProduct"
               [categoryId]="selectedCategory.id"
-              [isSaving]="isModalLoading"
-              (onSave)="saveProduct($event)"
+              (onSave)="onProductSaved($event)"
               (onClose)="closeModal()">
   </psa-product-modal>
 </ng-template>

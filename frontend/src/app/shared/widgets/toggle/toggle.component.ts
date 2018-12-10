@@ -12,20 +12,20 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   }]
 })
 export class ToggleComponent implements OnInit, ControlValueAccessor {
-  @Input() value: boolean;
   @Input() label: string;
+  isChecked = true;
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  onChange(value: boolean) {
-    this.onChangeCallback(value);
+  onChange(isChecked: boolean) {
+    this.onChangeCallback(isChecked);
   }
 
-  writeValue(value: any): void {
-    this.value = value;
+  writeValue(isChecked: any): void {
+    this.isChecked = isChecked;
   }
 
   registerOnChange(fn: any): void {

@@ -21,7 +21,6 @@ export class ProductsListComponent extends SortableDatatableComponent implements
   isCollapsed = false;
   productsRows: ProductTablePreview[];
   loadingIndicator = false;
-  isModalLoading = false;
   total = 0;
   shown = 0;
   availableCols = availableColumns.products;
@@ -60,24 +59,22 @@ export class ProductsListComponent extends SortableDatatableComponent implements
     this.title = category.name;
     this.selectedCategory = category;
 
-    this.loadingIndicator = true;
-
-    this.productsService.getProductsByCategory(category.id)
-      .subscribe((products: Product[]) => {
-        this.onLoadProductsSuccess(products);
-      });
+    this.loadProducts(category.id);
   }
 
   addProduct(content: ElementRef) {
     this.modalRef = this.modalService.open(content, this.modalConfig);
   }
 
-  saveProduct(product: Product) {
-    this.productsService.addProduct(product)
-      .subscribe(
-        (res: Product) => this.onSaveSuccess(res, product.id ? 'updated' : 'created'),
-        () => this.onError('Unable to save Product')
-      );
+  onProductSaved(product: Product) {
+    if (this.selectedCategory.id !== product.category.id) {
+      this.onCategotySelected(product.category);
+    } else {
+      this.loadProducts(this.selectedCategory.id);
+    }
+
+    this.closeModal();
+    this.notificationsService.success('Успех', `Товар \"${product.name}\" был успешно сохранён.`);
   }
 
   closeModal() {
@@ -88,25 +85,19 @@ export class ProductsListComponent extends SortableDatatableComponent implements
     this.isCollapsed = !this.isCollapsed;
   }
 
+  private loadProducts(categoryId: string) {
+    this.loadingIndicator = true;
+
+    this.productsService.getProductsByCategory(categoryId)
+      .subscribe((products: Product[]) => {
+        this.onLoadProductsSuccess(products);
+      });
+  }
+
   private onLoadProductsSuccess(products) {
     this.productsRows = products.map((el, index) => new ProductTablePreview(el, index));
     this.total = products.length;
     this.isAddButtonShown = true;
     this.loadingIndicator = false;
-  }
-
-  private onError(message: string) {
-    this.loadingIndicator = false;
-    this.notificationsService.danger('Error', 'Unable to load products');
-  }
-
-  private onSaveSuccess(product: Product, action: string) {
-    if (this.selectedCategory.id !== product.category.id) {
-      this.onCategotySelected(product.category);
-    }
-
-    this.isModalLoading = false;
-    this.closeModal();
-    this.notificationsService.success('Success', `Product \"${product.name}\" has been successfully ${action}`);
   }
 }

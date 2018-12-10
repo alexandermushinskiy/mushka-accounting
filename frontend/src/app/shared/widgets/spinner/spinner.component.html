@@ -1,5 +1,6 @@
 <span [hidden]="!isLoading">
   <span *ngIf="isIE;then fontLoader else svgLoader"></span>
+</span>
 
 <ng-template #svgLoader>
   <i class="loading">
@@ -12,4 +13,3 @@
 <ng-template #fontLoader>
   <i class="ie-loading"></i>
 </ng-template>
-</span>

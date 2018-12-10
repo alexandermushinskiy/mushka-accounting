@@ -13,6 +13,8 @@ namespace Mushka.WebApi.ClientModels.Product
 
         public DateTime CreatedOn { get; set; }
 
+        public Guid CategoryId { get; set; }
+
         public int? DeliveriesCount { get; set; }
 
         public DateTime? LastDeliveryDate { get; set; }
