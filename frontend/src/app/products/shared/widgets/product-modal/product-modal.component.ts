@@ -46,7 +46,16 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
     this.buildForm(this.isEdit ? this.product : new Product({}));
 
     this.categoriesService.getAll()
-      .subscribe((categories: Category[]) => this.onCategoryChanged(categories));
+      .subscribe((categories: Category[]) => this.onCategoriesLoaded(categories));
+  }
+
+  private onCategoriesLoaded(categories: Category[]) {
+    this.categories = categories;
+    
+    if (this.categoryId) {
+      const category = categories.find(cat => cat.id === this.categoryId);
+      this.categoryFormGroup.setValue(category);
+    }
   }
 
   save() {
@@ -70,13 +79,8 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
     this.onClose.emit();
   }
 
-  onCategoryChanged(categories: Category[]) {
-    this.categories = categories;
-
-    if (this.categoryId) {
-      const category = categories.find(cat => cat.id === this.categoryId);
-      this.categoryFormGroup.setValue(category);
-    }
+  onCategoryChanged(category: Category) {
+    this.categoryFormGroup.setValue(category);
   }
 
   private buildForm(product: Product) {

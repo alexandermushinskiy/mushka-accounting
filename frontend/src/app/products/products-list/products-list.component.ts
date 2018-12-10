@@ -56,7 +56,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
   }
 
   onCategotySelected(category: Category) {
-    this.title = category.name;
+    this.title = `Товары / ${category.name}`;
     this.selectedCategory = category;
 
     this.loadProducts(category.id);
