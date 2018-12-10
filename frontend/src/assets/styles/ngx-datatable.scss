@@ -216,9 +216,10 @@
   }
 
   .datatable-footer {
-    border: 0;
+    //border: 0;
     background-color: none;
     font-size: 14px;
+    border-top-color: $table-header-border;
 
     &-inner {
       font-weight: bold;
