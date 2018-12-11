@@ -89,13 +89,13 @@ export class ProductsListComponent extends SortableDatatableComponent implements
   }
 
   confirmDelete() {
-    this.closeModal();
-
     this.productsService.delete(this.productToDelete)
       .subscribe(
         () => this.onDeleteSuccess(),
         (errors) => this.onDeleteFailed()
       );
+
+    this.closeModal();
   }
 
   filter(searchKey) {
