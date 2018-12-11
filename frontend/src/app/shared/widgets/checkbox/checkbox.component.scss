@@ -1,0 +1,22 @@
+@import '../../../../variables';
+
+input[type=checkbox] {
+  display: none;
+  -webkit-appearance: none;
+}
+
+.checkbox {
+  width: 13px;
+  height: 13px;
+  border: 2px solid #fff;
+  outline: 1px solid #D8D8D8;
+  display: inline-block;
+  margin-right: 8px;
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+
+  &.checked {
+    background: $blue;
+  }
+}

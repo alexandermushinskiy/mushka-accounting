@@ -219,7 +219,6 @@
     //border: 0;
     background-color: none;
     font-size: 14px;
-    border-top-color: $table-header-border;
 
     &-inner {
       font-weight: bold;
@@ -240,7 +239,7 @@
       }
       
       li.active {
-        background-color: #989797;
+        background-color: $blue;
 
         a {
           background-color: transparent;
@@ -300,7 +299,7 @@
     text-align: center;
     color: $text-muted;
     font-size: 1.4rem;
-    background: $white;
+    //background: $white;
     padding: $padding-base;
   }
 

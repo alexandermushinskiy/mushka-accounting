@@ -24,9 +24,9 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
   productForm: FormGroup;
   productId: string;
   isEdit: boolean;
-
   availableSizes: Size[] = [];
   categories: Category[] = [];
+  errors: string[];
 
   private get categoryFormGroup(): FormGroup {
     return <FormGroup>this.productForm.get('category');
@@ -51,7 +51,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
 
   private onCategoriesLoaded(categories: Category[]) {
     this.categories = categories;
-    
+
     if (this.categoryId) {
       const category = categories.find(cat => cat.id === this.categoryId);
       this.categoryFormGroup.setValue(category);
@@ -135,6 +135,6 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
 
   private onSaveError(errors: string[]) {
     this.isSaving = false;
-    console.info(errors);
+    //console.info(errors);
   }
 }

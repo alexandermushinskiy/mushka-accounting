@@ -9,14 +9,14 @@
         [clearable]="canClearAll"
         [loading]="isLoading"
         (change)="onChange($event)">
-  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-      <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.name}}
-  </ng-template>
   <!-- <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+      <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.name}}
+  </ng-template> -->
+  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
     <div *ngIf="!isMultiple">{{item.name}}</div>
     <div *ngIf="isMultiple">
-      <byn-checkbox id="item-{{index}}" [checked]="item$.selected"></byn-checkbox>
+      <psa-checkbox id="item-{{index}}" [checked]="item$.selected"></psa-checkbox>
       {{item.name}}
     </div>
-  </ng-template> -->
+  </ng-template>
 </ng-select>

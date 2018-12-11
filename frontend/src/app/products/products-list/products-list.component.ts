@@ -43,6 +43,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
   }
 
   ngOnInit() {
+    this.loadingIndicator = true;
   }
 
   onActive(event) {

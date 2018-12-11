@@ -18,8 +18,8 @@
 .ng-select-container
 .ng-value-container
 .ng-placeholder {
-  top: auto;
-  padding-left: 10px;
+  top: 10px;
+  padding-left: 5px;
 
   &:focus,
   &:active {
@@ -72,4 +72,8 @@
 >.ng-select-container {
   border-color: #ccc;
   box-shadow: none;
+}
+
+.ng-select .ng-select-container {
+  border-radius: 0;
 }

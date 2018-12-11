@@ -26,6 +26,7 @@
                [rows]="productsRows"
                [columnMode]="'force'"
                [limit]="10"
+               [messages]="{ emptyMessage: 'Нет данных для отображения' }"
                (activate)="onActive($event)"
                (sort)="onTableSort(productsRows, $event)">
                
@@ -47,7 +48,7 @@
           </ng-template>
         </ngx-datatable-column>
         
-        <ngx-datatable-column name="createdOn">
+        <ngx-datatable-column name="createdOn" [width]="80">
           <ng-template ngx-datatable-header-template>
             <span>Дата<br>добавления</span>
           </ng-template>
@@ -56,7 +57,7 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="sizes">
+        <ngx-datatable-column name="sizes" [width]="130">
           <ng-template ngx-datatable-header-template>
             <span>Размеры и<br>наличие</span>
           </ng-template>
@@ -65,7 +66,7 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="lastDeliveryDate">
+        <ngx-datatable-column name="lastDeliveryDate" [width]="80">
           <ng-template ngx-datatable-header-template>
             <span>Дата посл.<br>доставки</span>
           </ng-template>
@@ -74,7 +75,7 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="lastDeliveryCount">
+        <ngx-datatable-column name="lastDeliveryCount" [width]="80">
           <ng-template ngx-datatable-header-template>
             <span>Кол-во в<br>посл. доставке</span>
           </ng-template>
@@ -83,7 +84,7 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="deliveriesCount">
+        <ngx-datatable-column name="deliveriesCount" [width]="50">
           <ng-template ngx-datatable-header-template>
             <span>Кол-во<br>доставок</span>
           </ng-template>
