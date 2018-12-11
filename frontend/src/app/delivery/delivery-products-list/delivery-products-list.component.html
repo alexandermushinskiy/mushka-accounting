@@ -1,5 +1,5 @@
 <div class="list-view">
-  <psa-datatable-header
+  <mk-datatable-header
                 [total]="total"
                 [shown]="shown"
                 [availableColumns]="availableColumns"
@@ -8,7 +8,7 @@
                 [showTitle]="false"
                 [showActions]="false"
                 (onAddItem)="addDeliveryItem(content)">
-  </psa-datatable-header>
+  </mk-datatable-header>
   <ngx-datatable #datatable
                  class="material grid"
                  [rows]="deliveryItemRows"
@@ -45,7 +45,7 @@
           {{ value }}
         </span>
         <input #amountInputBox
-                psaNumberField
+                mkNumberField
                 autofocus
                 type="number"
                 class="form-control amount"
@@ -64,13 +64,13 @@
         <span [title]="value"
               *ngIf="!editing[rowIndex + '-costPerItem']"
               (dblclick)="startEditing(rowIndex + '-costPerItem')">
-          {{ value | psaCurrency }}
+          {{ value | mkCurrency }}
         </span>
-        <psa-currency-input *ngIf="editing[rowIndex + '-costPerItem']"
+        <mk-currency-input *ngIf="editing[rowIndex + '-costPerItem']"
                             [placeholder]="''"
                             [value]="value"
                             (onBlur)="updateValue($event, 'costPerItem', rowIndex)">
-        </psa-currency-input>
+        </mk-currency-input>
       </ng-template>
     </ngx-datatable-column>
 
@@ -79,7 +79,7 @@
         Общая стоимость
       </ng-template>
       <ng-template ngx-datatable-cell-template let-value="value">
-        <span [title]="value">{{ value | psaCurrency }}</span>
+        <span [title]="value">{{ value | mkCurrency }}</span>
       </ng-template>
     </ngx-datatable-column>
 
@@ -119,18 +119,18 @@
 </div>
 
 <ng-template #content>
-  <psa-delivery-product-modal
+  <mk-delivery-product-modal
               [isSaving]="isModalLoading"
               (onSave)="saveDeliveryItem($event)"
               (onClose)="closeModal()">
-  </psa-delivery-product-modal>
+  </mk-delivery-product-modal>
 </ng-template>
 
 <ng-template #removeConfirmation let-c="close">
-  <psa-confirmation
+  <mk-confirmation
     (onClose)="c()"
     (onConfirm)="confirmDelete(); c();"
     [confirmButtonText]="'Удалить'"
     [text]="'Вы уверены, что хотите удалить выбранный товар?'">
-  </psa-confirmation>
+  </mk-confirmation>
 </ng-template>

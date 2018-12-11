@@ -1,11 +1,11 @@
 <div class="appmain">
   <div class="appbar">
-      <psa-datatable-header
+      <mk-datatable-header
                     [title]="'Поставщики'"
                     [total]="total"
                     [shown]="shown"
                     (onAddItem)="addSupplier()">
-      </psa-datatable-header>
+      </mk-datatable-header>
   </div>
   <div class="appbody">
     <ngx-datatable #datatable
@@ -96,10 +96,10 @@
 </div>
 
 <ng-template #confirmRemoveTmpl>
-  <psa-confirmation
+  <mk-confirmation
           [confirmButtonText]="'Удалить'"
           [text]="'Вы уверены, что хотите удалить выбранного поставщика?'"
           (onClose)="closeModal()"
           (onConfirm)="confirmDelete();">
-  </psa-confirmation>
+  </mk-confirmation>
 </ng-template>

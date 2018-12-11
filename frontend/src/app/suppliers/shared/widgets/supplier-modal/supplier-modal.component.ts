@@ -6,7 +6,7 @@ import { SuppliersService } from '../../../../core/api/suppliers.service';
 import { ContactPerson } from '../../../../shared/models/contact-person.model';
 
 @Component({
-  selector: 'psa-supplier-modal',
+  selector: 'mk-supplier-modal',
   templateUrl: './supplier-modal.component.html',
   styleUrls: ['./supplier-modal.component.scss']
 })

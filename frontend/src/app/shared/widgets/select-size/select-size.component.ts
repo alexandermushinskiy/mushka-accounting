@@ -6,7 +6,7 @@ import { SelectSize } from '../../models/select-size.model';
 import { Size } from '../../models/size.model';
 
 @Component({
-  selector: 'psa-select-size',
+  selector: 'mk-select-size',
   templateUrl: './select-size.component.html',
   styleUrls: ['./select-size.component.scss'],
   providers: [{

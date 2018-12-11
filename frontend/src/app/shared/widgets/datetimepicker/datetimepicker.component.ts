@@ -3,7 +3,7 @@ import { NgbDateStruct, NgbTimeStruct, NgbDatepicker } from '@ng-bootstrap/ng-bo
 import * as moment from 'moment';
 
 @Component({
-  selector: 'psa-datetimepicker',
+  selector: 'mk-datetimepicker',
   templateUrl: './datetimepicker.component.html',
   styleUrls: ['./datetimepicker.component.scss']
 })

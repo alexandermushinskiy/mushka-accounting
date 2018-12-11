@@ -20,7 +20,7 @@ import { DeliveryProductsListComponent } from '../delivery-products-list/deliver
 import { DeliveryServicesListComponent } from '../delivery-services-list/delivery-services-list.component';
 
 @Component({
-  selector: 'psa-delivery',
+  selector: 'mk-delivery',
   templateUrl: './delivery.component.html',
   styleUrls: ['./delivery.component.scss']
 })

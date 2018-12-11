@@ -2,7 +2,7 @@ import { Component, OnInit, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'psa-toggle',
+  selector: 'mk-toggle',
   templateUrl: './toggle.component.html',
   styleUrls: ['./toggle.component.scss'],
   providers: [{

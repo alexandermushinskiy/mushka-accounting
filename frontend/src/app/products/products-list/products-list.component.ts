@@ -12,7 +12,7 @@ import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatabl
 import { ProductFilter } from '../../shared/filters/product-filter';
 
 @Component({
-  selector: 'psa-products-list',
+  selector: 'mk-products-list',
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.scss']
 })

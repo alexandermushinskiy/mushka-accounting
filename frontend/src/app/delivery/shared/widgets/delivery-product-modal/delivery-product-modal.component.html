@@ -35,11 +35,11 @@
     </div>
     <div class="form-group w-50">
       <label for="amount" class="text-muted">Количество:</label>
-      <input psaNumberField type="number" class="form-control amount" id="amount" formControlName="amount">
+      <input mkNumberField type="number" class="form-control amount" id="amount" formControlName="amount">
     </div>
     <div class="form-group w-50">
       <label for="costPerItem" class="text-muted">Стоимость за единицу:</label>
-      <psa-currency-input id="costPerItem" [placeholder]="''" formControlName="costPerItem"></psa-currency-input>
+      <mk-currency-input id="costPerItem" [placeholder]="''" formControlName="costPerItem"></mk-currency-input>
     </div>
     <div class="form-group">
       <label for="notes" class="text-muted">Примечание:</label>
@@ -49,7 +49,7 @@
   <div class="modal-footer">
     <button class="btn btn-light btn-cancel" type="button" (click)="close()">Отмена</button>
     <button class="btn btn-primary" type="button" (click)="save()" [disabled]="!(deliveryItemForm.valid && !!selectedProduct)">
-      <psa-spinner [isLoading]="isSaving"></psa-spinner>
+      <mk-spinner [isLoading]="isSaving"></mk-spinner>
       Добавить</button>
   </div>
 </form>

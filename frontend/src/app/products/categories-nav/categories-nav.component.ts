@@ -8,7 +8,7 @@ import { CategoriesService } from '../../core/api/categories.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 
 @Component({
-  selector: 'psa-categories-nav',
+  selector: 'mk-categories-nav',
   templateUrl: './categories-nav.component.html',
   styleUrls: ['./categories-nav.component.scss']
 })

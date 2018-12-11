@@ -2,10 +2,10 @@ import { Directive, Input, HostListener } from '@angular/core';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 
 @Directive({
-  selector: '[psaClosePopoverOnClickOutside=popover][ngbPopover]'
+  selector: '[mkClosePopoverOnClickOutside=popover][ngbPopover]'
 })
 export class ClosePopoverOnClickOutsideDirective {
-  @Input() set psaClosePopoverOnClickOutside(popover: NgbPopover) {
+  @Input() set mkClosePopoverOnClickOutside(popover: NgbPopover) {
     this.popover = popover;
   }
 

@@ -35,14 +35,14 @@
     <div class="row">
       <div class="col">
         <div class="field-group w-50">
-          <psa-toggle formControlName="isSizesRequired" [label]="'Требуются размеры'"></psa-toggle>
+          <mk-toggle formControlName="isSizesRequired" [label]="'Требуются размеры'"></mk-toggle>
         </div>
       </div>
     </div>
     <div class="row" *ngIf="productForm.controls.isSizesRequired.value">
       <div class="col">
         <div class="field-group">
-          <psa-select-size class="form-control" formControlName="sizes" [availableSizes]="availableSizes"></psa-select-size>
+          <mk-select-size class="form-control" formControlName="sizes" [availableSizes]="availableSizes"></mk-select-size>
         </div>
       </div>
     </div>
@@ -50,7 +50,7 @@
   <div class="modal-footer">
     <button class="btn btn-light btn-cancel" type="button" (click)="close()">Отмена</button>
     <button class="btn btn-primary" type="button" (click)="save()" [disabled]="productForm.invalid">
-      <psa-spinner [isLoading]="isSaving"></psa-spinner>
+      <mk-spinner [isLoading]="isSaving"></mk-spinner>
       Сохранить</button>
   </div>
 </form>

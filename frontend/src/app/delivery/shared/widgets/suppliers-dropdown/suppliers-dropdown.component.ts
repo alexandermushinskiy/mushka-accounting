@@ -1,14 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { TypeaheadMatch } from 'ngx-bootstrap';
-import { Observable } from 'rxjs/Observable';
 
 import { Supplier } from '../../../../shared/models/supplier.model';
 import { SuppliersService } from '../../../../core/api/suppliers.service';
 
 
 @Component({
-  selector: 'psa-suppliers-dropdown',
+  selector: 'mk-suppliers-dropdown',
   templateUrl: './suppliers-dropdown.component.html',
   styleUrls: ['./suppliers-dropdown.component.scss'],
   providers: [{

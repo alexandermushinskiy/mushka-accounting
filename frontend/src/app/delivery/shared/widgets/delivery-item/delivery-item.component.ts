@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Delivery } from '../../models/delivery.model';
 
 @Component({
-  selector: 'psa-delivery-item',
+  selector: 'mk-delivery-item',
   templateUrl: './delivery-item.component.html',
   styleUrls: ['./delivery-item.component.scss']
 })

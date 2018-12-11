@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'psa-orders',
+  selector: 'mk-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss']
 })

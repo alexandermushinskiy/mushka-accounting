@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'psa-back-arrow',
+  selector: 'mk-back-arrow',
   templateUrl: './back-arrow.component.html',
   styleUrls: ['./back-arrow.component.scss']
 })

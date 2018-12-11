@@ -1,8 +1,8 @@
-<psa-loading-screen></psa-loading-screen>
+<mk-loading-screen></mk-loading-screen>
 <div *ngIf="isAppReady" id="app">
-  <psa-header></psa-header>
+  <mk-header></mk-header>
   <main id="main" [ngClass]="{'sidebar-collapsed': isCollapsed}">
-    <psa-sidebar [ngClass]="{'sidebar-collapsed': isCollapsed}"></psa-sidebar>
+    <mk-sidebar [ngClass]="{'sidebar-collapsed': isCollapsed}"></mk-sidebar>
     <router-outlet></router-outlet>
   </main>
 </div>

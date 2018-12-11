@@ -9,7 +9,7 @@ import { SupplierTablePreview } from '../shared/models/supplier-table-preview';
 import { Supplier } from '../../shared/models/supplier.model';
 
 @Component({
-  selector: 'psa-suppliers-list',
+  selector: 'mk-suppliers-list',
   templateUrl: './suppliers-list.component.html',
   styleUrls: ['./suppliers-list.component.scss']
 })

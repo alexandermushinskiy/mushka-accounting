@@ -4,7 +4,7 @@
 
     <div class="row">
       <div class="app-page-description">
-        <psa-back-arrow></psa-back-arrow>
+        <mk-back-arrow></mk-back-arrow>
         <h1 class="app-page-title">{{ title }}</h1>
       </div>
     </div>
@@ -78,7 +78,7 @@
               <div class="col-md-12">
                 <div class="field-group">
                   <label>Список</label>
-                  <psa-dropdown [options]="paymentMethodsList" formControlName="paymentMethod"></psa-dropdown>
+                  <mk-dropdown [options]="paymentMethodsList" formControlName="paymentMethod"></mk-dropdown>
                   <a><span class="btn-add btn-add-delivery" (click)="addPaymentMethod()"><i class="fa fa-plus fa-border"></i></span></a>
                 </div>
               </div>

@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'psaCurrency'
+  name: 'mkCurrency'
 })
-export class PsaCurrencyPipe implements PipeTransform {
+export class CurrencyPipe implements PipeTransform {
   options = {
     allowNegative: true,
     decimal: ',',
@@ -18,10 +18,10 @@ export class PsaCurrencyPipe implements PipeTransform {
   }
 
   private applyMask(rawValue: string): string {
-    let { allowNegative, decimal, precision, prefix, suffix, thousands } = this.options;
+    const { allowNegative, decimal, precision, prefix, suffix, thousands } = this.options;
 
     rawValue = new Number(rawValue).toFixed(precision);
-    let onlyNumbers = rawValue.replace(/[^0-9]/g, '');
+    const onlyNumbers = rawValue.replace(/[^0-9]/g, '');
 
     if (!onlyNumbers) {
         return '';
@@ -29,7 +29,7 @@ export class PsaCurrencyPipe implements PipeTransform {
 
     let integerPart = onlyNumbers.slice(0, onlyNumbers.length - precision).replace(/^0*/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, thousands);
 
-    if (integerPart == '') {
+    if (integerPart === '') {
         integerPart = '0';
     }
 
@@ -41,8 +41,8 @@ export class PsaCurrencyPipe implements PipeTransform {
         newRawValue += decimal + decimalPart;
     }
 
-    let isZero = parseInt(integerPart) == 0 && (parseInt(decimalPart) == 0 || decimalPart == '');
-    let operator = (rawValue.indexOf('-') > -1 && allowNegative && !isZero) ? '-' : '';
+    const isZero = parseInt(integerPart, 10) === 0 && (parseInt(decimalPart, 10) === 0 || decimalPart === '');
+    const operator = (rawValue.indexOf('-') > -1 && allowNegative && !isZero) ? '-' : '';
     return operator + prefix + newRawValue + suffix;
   }
 }

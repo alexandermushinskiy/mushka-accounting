@@ -119,13 +119,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "psa",
+      "mk",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "psa",
+      "mk",
       "kebab-case"
     ],
     "use-input-property-decorator": true,

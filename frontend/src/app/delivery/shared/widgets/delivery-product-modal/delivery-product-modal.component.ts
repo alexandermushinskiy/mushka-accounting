@@ -9,7 +9,7 @@ import { ProductsServce } from '../../../../core/api/products.service';
 import { Product } from '../../../../shared/models/product.model';
 
 @Component({
-  selector: 'psa-delivery-product-modal',
+  selector: 'mk-delivery-product-modal',
   templateUrl: './delivery-product-modal.component.html',
   styleUrls: ['./delivery-product-modal.component.scss']
 })
@@ -17,9 +17,8 @@ export class DeliveryProductModalComponent implements OnInit {
   @Input() isSaving = false;
   @Output() onClose = new EventEmitter<void>();
   @Output() onSave = new EventEmitter<ProductItem>();
-  
+
   deliveryItemForm: FormGroup;
-  
   displayValue: string;
   selectedProduct: Product;
   items: Observable<Product[]>;
@@ -27,7 +26,7 @@ export class DeliveryProductModalComponent implements OnInit {
   isLoadingItems: false;
   isCreateProduct = false;
   private requestedItem$ = new Subject<string>();
-  
+
   constructor(private formBuilder: FormBuilder,
               private productsServce: ProductsServce) { }
 
@@ -63,11 +62,11 @@ export class DeliveryProductModalComponent implements OnInit {
   close() {
     this.onClose.emit();
   }
-  
+
   onLoading(isLoading: boolean) {
     //this.isLoadingItems = isLoading;
   }
-  
+
   onSelectItem(match: TypeaheadMatch) {
     this.selectedProduct = match.item;
   }

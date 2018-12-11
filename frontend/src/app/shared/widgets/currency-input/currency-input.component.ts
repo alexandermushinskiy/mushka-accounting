@@ -3,7 +3,7 @@ import { Subject } from 'rxjs/Subject';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'psa-currency-input',
+  selector: 'mk-currency-input',
   templateUrl: './currency-input.component.html',
   styleUrls: ['./currency-input.component.scss'],
   providers: [{

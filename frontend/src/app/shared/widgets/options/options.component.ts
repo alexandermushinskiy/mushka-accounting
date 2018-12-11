@@ -4,7 +4,7 @@ import { SearchFormComponent } from '../search-form/search-form.component';
 import { UnsubscriberComponent } from '../../hooks/unsubscriber.component';
 
 @Component({
-  selector: 'psa-options',
+  selector: 'mk-options',
   templateUrl: './options.component.html',
   styleUrls: ['./options.component.scss']
 })

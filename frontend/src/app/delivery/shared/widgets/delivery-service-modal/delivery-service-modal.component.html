@@ -12,7 +12,7 @@
     </div>
     <div class="form-group w-50">
       <label for="cost" class="text-muted">Стоимость:</label>
-      <psa-currency-input id="cost" [placeholder]="''" formControlName="cost"></psa-currency-input>
+      <mk-currency-input id="cost" [placeholder]="''" formControlName="cost"></mk-currency-input>
     </div>
     <div class="form-group">
       <label for="notes" class="text-muted">Примечание:</label>
@@ -22,7 +22,7 @@
   <div class="modal-footer">
     <button class="btn btn-light btn-cancel" type="button" (click)="close()">Отмена</button>
     <button class="btn btn-primary" type="button" (click)="save()" [disabled]="serviceItemForm.invalid">
-      <psa-spinner [isLoading]="isSaving"></psa-spinner> 
+      <mk-spinner [isLoading]="isSaving"></mk-spinner> 
       Добавить</button>
   </div>
 </form>

@@ -5,7 +5,7 @@ import { Category } from '../../../../shared/models/category.model';
 import { SizesHelperServices } from '../../services/sizes-helper.service';
 
 @Component({
-  selector: 'psa-category-modal',
+  selector: 'mk-category-modal',
   templateUrl: './category-modal.component.html',
   styleUrls: ['./category-modal.component.scss']
 })
@@ -19,7 +19,7 @@ export class CategoryModalComponent implements OnInit {
   title: string;
   categoryForm: FormGroup;
   isEdit: boolean;
-  
+
   constructor(private formBuilder: FormBuilder,
               private sizesHelperServices: SizesHelperServices) { }
 
@@ -52,5 +52,5 @@ export class CategoryModalComponent implements OnInit {
     this.categoryForm = this.formBuilder.group({
       name: [category.name, Validators.required]
     });
-  }  
+  }
 }

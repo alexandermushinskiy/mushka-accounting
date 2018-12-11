@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'psa-logistics',
+  selector: 'mk-logistics',
   templateUrl: './logistics.component.html',
   styleUrls: ['./logistics.component.scss']
 })

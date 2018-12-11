@@ -4,7 +4,7 @@
     <div class="app-page-content">
       <div class="app-page-header">
         <div class="app-page-description">
-          <psa-back-arrow></psa-back-arrow>
+          <mk-back-arrow></mk-back-arrow>
           <h1 class="app-page-title">ПОСТУПЛЕНИЕ ТОВАРОВ И УСЛУГ</h1>
           <a>
             <span class="btn-add btn-add-delivery" (click)="reset()"><i class="fa fa-plus fa-border"></i></span>
@@ -26,7 +26,7 @@
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label>Дата заявки:</label>
-                        <psa-datetimepicker [date]="requestDate"
+                        <mk-datetimepicker [date]="requestDate"
                                             [dateFormat]="'YYYY-MM-DD'"
                                             [pickerType]="'calendar'"
                                             [isNow]="true"
@@ -38,13 +38,13 @@
                                             formControlName="requestDate"/>
                             <i class="fa fa-calendar-o"></i>
                           </div>
-                        </psa-datetimepicker>
+                        </mk-datetimepicker>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label>Дата поступления:</label>
-                        <psa-datetimepicker [date]="deliveryDate"
+                        <mk-datetimepicker [date]="deliveryDate"
                                             [dateFormat]="'YYYY-MM-DD'"
                                             [pickerType]="'calendar'"
                                             [isNow]="true"
@@ -56,7 +56,7 @@
                                             formControlName="deliveryDate"/>
                             <i class="fa fa-calendar-o"></i>
                           </div>
-                        </psa-datetimepicker>
+                        </mk-datetimepicker>
                       </div>
                     </div>
                   </div>
@@ -68,7 +68,7 @@
           <div class="col-lg-6">
             <div class="form-group">
               <label for="dropdown">Организация:</label>
-              <psa-suppliers-dropdown #suppliersList (onSupplierSelected)="onSupplierSelected($event)" formControlName="supplier"></psa-suppliers-dropdown>
+              <mk-suppliers-dropdown #suppliersList (onSupplierSelected)="onSupplierSelected($event)" formControlName="supplier"></mk-suppliers-dropdown>
             </div>
           </div>
           <div class="col-lg-2 col-lg-auto">
@@ -82,25 +82,25 @@
           <div class="col-lg-3">
             <div class="form-group">
               <label for="dropdown">Способ оплаты:</label>
-              <psa-dropdown [options]="paymentMethodsList" [required]="true" formControlName="paymentMethod"></psa-dropdown>
+              <mk-dropdown [options]="paymentMethodsList" [required]="true" formControlName="paymentMethod"></mk-dropdown>
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
               <label>Общая стоимость:</label>
-              <psa-currency-input formControlName="totalCost"></psa-currency-input>
+              <mk-currency-input formControlName="totalCost"></mk-currency-input>
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
               <label>Стоимость доставки:</label>
-              <psa-currency-input formControlName="deliveryCost"></psa-currency-input>
+              <mk-currency-input formControlName="deliveryCost"></mk-currency-input>
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
               <label>Комиссия за перевод:</label>
-              <psa-currency-input formControlName="transferFee"></psa-currency-input>
+              <mk-currency-input formControlName="transferFee"></mk-currency-input>
             </div>
           </div>
         </div>
@@ -121,22 +121,22 @@
           </div>
           <div [ngSwitch]="selectedDeliveryType">
             <div *ngSwitchCase="deliveryType.PRODUCTS">
-              <psa-delivery-products-list #productsList
+              <mk-delivery-products-list #productsList
                     [productItems]="deliveryItems[selectedDeliveryType].data"
                     [isReadOnly]="isReadOnly"
                     (onItemAdded)="addDeliveryItem(deliveryType.PRODUCTS, $event)"
                     (onItemUpdated)="updateDeliveryItem(deliveryType.PRODUCTS, $event)"
                     (onItemDeleted)="removeDeliveryItem(deliveryType.PRODUCTS, $event)">
-              </psa-delivery-products-list>
+              </mk-delivery-products-list>
             </div>
             <div *ngSwitchCase="deliveryType.SERVICES">
-              <psa-delivery-services-list #servicesList
+              <mk-delivery-services-list #servicesList
                     [serviceItems]="deliveryItems[selectedDeliveryType].data"
                     [isReadOnly]="isReadOnly"
                     (onItemAdded)="addDeliveryItem(deliveryType.SERVICES, $event)"
                     (onItemUpdated)="updateDeliveryItem(deliveryType.SERVICES, $event)"
                     (onItemDeleted)="removeDeliveryItem(deliveryType.SERVICES, $event)">
-              </psa-delivery-services-list>
+              </mk-delivery-services-list>
             </div>
           </div>
         </div>
@@ -163,7 +163,7 @@
           </div>
           <div [ngSwitch]="selectedOption">
               <div *ngSwitchCase="deliveryOption.DRAFTS">
-                <psa-delivery-item
+                <mk-delivery-item
                       class="delivery-item-wrapper"
                       *ngFor="let delivery of draftDeliveries"
                       [delivery]="delivery"
@@ -171,15 +171,15 @@
                       [canDelete]="true"
                       (onEdit)="viewDelivery($event)"
                       (onDelete)="deleteDraft($event, removetConfirmation)">
-                </psa-delivery-item>
+                </mk-delivery-item>
               </div>
             <div *ngSwitchCase="deliveryOption.HISTORY">
-              <psa-delivery-item
+              <mk-delivery-item
                     class="delivery-item-wrapper"
                     *ngFor="let delivery of historicalDeliveries"
                     [delivery]="delivery"
                     (onView)="viewDelivery($event)">
-              </psa-delivery-item>
+              </mk-delivery-item>
             </div>
           </div>
         </div>
@@ -190,17 +190,17 @@
   </div>
   <div class="footer">
     <div class="footer-buttons">
-      <button type="button" class="btn btn-md btn-light" [disabled]="isReadOnly || !isDraftValid" (click)="saveAsDraft()">Сохранить как черновик <psa-spinner [isLoading]="isDraftSaving"></psa-spinner></button>
-      <button type="submit" class="btn btn-md btn-primary" [disabled]="isReadOnly || deliveryForm.invalid" (click)="save()">Сохранить <psa-spinner [isLoading]="isSaving"></psa-spinner></button>
+      <button type="button" class="btn btn-md btn-light" [disabled]="isReadOnly || !isDraftValid" (click)="saveAsDraft()">Сохранить как черновик <mk-spinner [isLoading]="isDraftSaving"></mk-spinner></button>
+      <button type="submit" class="btn btn-md btn-primary" [disabled]="isReadOnly || deliveryForm.invalid" (click)="save()">Сохранить <mk-spinner [isLoading]="isSaving"></mk-spinner></button>
     </div>
   </div>
 </form>
 
 <ng-template #removetConfirmation let-c="close">
-  <psa-confirmation
+  <mk-confirmation
     (onClose)="c()"
     (onConfirm)="confirmDeleteDraft(); c();"
     [confirmButtonText]="'Удалить'"
     [text]="'Вы уверены, что хотите удалить черновик?'">
-  </psa-confirmation>
+  </mk-confirmation>
 </ng-template>

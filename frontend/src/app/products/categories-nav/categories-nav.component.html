@@ -1,6 +1,6 @@
 <nav class="categories-nav">
   <div class="categories-nav-search">
-    <psa-search-form [placeholder]="'Фильтр...'" (onSearch)="onSearch($event)"></psa-search-form>
+    <mk-search-form [placeholder]="'Фильтр...'" (onSearch)="onSearch($event)"></mk-search-form>
   </div>
   <div class="categories-nav-header">
     <button class="btn btn-light btn-block" (click)="create(content)">Добавить категорию</button>
@@ -21,20 +21,20 @@
 </nav>
 
 <ng-template #confirmDeleteModalCategory let-c="close">
-  <psa-confirmation (onClose)="c()"
+  <mk-confirmation (onClose)="c()"
                     (onConfirm)="confirmDelete()"
                     [isSaving]="isSaving"
                     [confirmButtonText]="'Удалить'"
                     [text]="'Выбранныя категория \'\'' + categoryToDelete.name + '\'\' будет удалена. Вы уверены, что хотите продолжить?'">
-  </psa-confirmation>
+  </mk-confirmation>
 </ng-template>
 
 <ng-template #content>
-  <psa-category-modal
+  <mk-category-modal
               [category]="selectedCategory"
               [isSaving]="isSaving"
               (onSave)="saveCategory($event)"
               (onClose)="closeModal()">
-  </psa-category-modal>
+  </mk-category-modal>
 </ng-template>
   

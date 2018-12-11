@@ -23,14 +23,14 @@
             <i class="ico ico-close" aria-hidden="true" title="Reset filters"></i>
           </button>
         </div>
-        <psa-search-form (onSearch)="filter($event)"></psa-search-form>
+        <mk-search-form (onSearch)="filter($event)"></mk-search-form>
       </div>
       <div class="btn-set" *ngIf="showOptions">
         <button class="btn btn-icon btn-refresh" title="Refresh table" (click)="reloadTickets()">
           <i class="fa fa-refresh"></i>
         </button>
         <div ngbDropdown placement="bottom-right">
-          <button class="btn btn-icon btn-download" ngbDropdownToggle id="export-csv">
+          <button class="btn btn-icon" ngbDropdownToggle id="export-csv">
             <i class="fa fa-download" title="Export to CSV" aria-hidden="true"></i>
           </button>
           <div ngbDropdownMenu aria-labelledby="export-csv">

@@ -10,7 +10,7 @@ import { ProductSize } from '../../../../shared/models/product-size.model';
 import { Size } from '../../../../shared/models/size.model';
 
 @Component({
-  selector: 'psa-product-modal',
+  selector: 'mk-product-modal',
   templateUrl: './product-modal.component.html',
   styleUrls: ['./product-modal.component.scss']
 })

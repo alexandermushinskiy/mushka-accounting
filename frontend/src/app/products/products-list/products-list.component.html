@@ -1,6 +1,6 @@
 <div class="appmain" [ngClass]="{'collapsed': isCollapsed}">
   <div class="appbar">
-    <psa-datatable-header
+    <mk-datatable-header
                     [title]="title"
                     [total]="total"
                     [shown]="shown"
@@ -10,13 +10,13 @@
                     (onCollapseMenu)="toggleCollapseMode()"
                     (onAddItem)="addProduct(content)"
                     (onFilter)="filter($event)">
-    </psa-datatable-header>
+    </mk-datatable-header>
   </div>
   <div class="appbody">
-    <psa-categories-nav
+    <mk-categories-nav
                     [selectedCategory]="selectedCategory"
                     (onCategorySelected)="onCategotySelected($event)">
-    </psa-categories-nav>
+    </mk-categories-nav>
     <div class="appcontent">
       <ngx-datatable #datatable
                class="material fullscreen"
@@ -64,7 +64,7 @@
             <span>Размеры и<br>наличие</span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-value="value">
-            <psa-sizes-labels [sizes]="value"></psa-sizes-labels>
+            <mk-sizes-labels [sizes]="value"></mk-sizes-labels>
           </ng-template>
         </ngx-datatable-column>
 
@@ -97,14 +97,14 @@
 
         <ngx-datatable-footer class="p-0">
           <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize" let-curPage="curPage" class="p-0">
-            <psa-datatable-footer [loadingIndicator]="loadingIndicator"
+            <mk-datatable-footer [loadingIndicator]="loadingIndicator"
                                   [datatable]="datatable"
                                   [total]="total"
                                   [curPage]="curPage"
                                   [rowCount]="rowCount"
                                   [pageSize]="pageSize"
                                   [itemsName]="'Товаров'">
-            </psa-datatable-footer>
+            </mk-datatable-footer>
           </ng-template>
         </ngx-datatable-footer>
       </ngx-datatable>
@@ -113,10 +113,10 @@
 </div>
 
 <ng-template #content>
-  <psa-product-modal
+  <mk-product-modal
               [product]="selectedProduct"
               [categoryId]="selectedCategory.id"
               (onSave)="onProductSaved($event)"
               (onClose)="closeModal()">
-  </psa-product-modal>
+  </mk-product-modal>
 </ng-template>

@@ -6,7 +6,7 @@ import { ServiceItem } from '../shared/models/service-item.model';
 import { ServiceItemTablePreview } from '../shared/models/service-item-table-preview.model';
 
 @Component({
-  selector: 'psa-delivery-services-list',
+  selector: 'mk-delivery-services-list',
   templateUrl: './delivery-services-list.component.html',
   styleUrls: ['./delivery-services-list.component.scss']
 })
@@ -25,7 +25,7 @@ export class DeliveryServicesListComponent implements OnInit {
   @Output() onItemAdded = new EventEmitter<ServiceItem>();
   @Output() onItemUpdated = new EventEmitter<{rowIndex: number, property: string, value: number | string}>();
   @Output() onItemDeleted = new EventEmitter<number>();
-  
+
   availableColumns = availableColumns.deliveryServices;
   total = 0;
   shown = 0;
@@ -52,7 +52,7 @@ export class DeliveryServicesListComponent implements OnInit {
   addDeliveryItem(content: ElementRef) {
     this.modalRef = this.modalService.open(content, this.modalConfig);
   }
-  
+
   closeModal() {
     this.modalRef.close();
   }

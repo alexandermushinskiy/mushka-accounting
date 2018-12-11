@@ -3,8 +3,8 @@ import { Directive, HostListener, ComponentRef, ViewContainerRef, Input, Output,
 import { PopoverComponent } from '../widgets/popover/popover.component';
 
 @Directive({
-  selector: '[psaPopover]',
-  exportAs: 'psaPopover'
+  selector: '[mkPopover]',
+  exportAs: 'mkPopover'
 })
 export class PopoverDirective {
   @Input()

@@ -6,7 +6,7 @@ import {
 import { PopoverDirective } from '../../directives/popover.directive';
 
 @Component({
-  selector: 'psa-popover',
+  selector: 'mk-popover',
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.scss']
 })
@@ -14,7 +14,7 @@ export class PopoverComponent implements AfterViewInit {
   @Input() hasPadding = true;
   @Input() placement: string;
   @Output() onShown = new EventEmitter<boolean>();
-  @ViewChild('psaPopover') popoverElement: ElementRef;
+  @ViewChild('popover') popoverElement: ElementRef;
 
   readonly hiddenTopPosition = -4000;
   readonly hiddenLeftPosition = -4000;

@@ -4,7 +4,7 @@ import { AppLoaderService } from './core/app-loader/app-loader.service';
 import { SidebarMenuStateService } from './core/sidebar-menu-state/sidebar-menu-state.service';
 
 @Component({
-  selector: 'psa-root',
+  selector: 'mk-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

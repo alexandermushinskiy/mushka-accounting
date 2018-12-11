@@ -4,7 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { UnsubscriberComponent } from '../../hooks/unsubscriber.component';
 
 @Component({
-  selector: 'psa-search-form',
+  selector: 'mk-search-form',
   templateUrl: './search-form.component.html',
   styleUrls: ['./search-form.component.scss']
 })

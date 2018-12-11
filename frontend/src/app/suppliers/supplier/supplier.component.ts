@@ -9,7 +9,7 @@ import { NotificationsService } from '../../core/notifications/notifications.ser
 import { PaymentMethod } from '../../delivery/shared/enums/payment-method.enum';
 
 @Component({
-  selector: 'psa-supplier',
+  selector: 'mk-supplier',
   templateUrl: './supplier.component.html',
   styleUrls: ['./supplier.component.scss']
 })

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "m-psa": {
+    "mushka": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -53,18 +53,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "m-psa:build"
+            "browserTarget": "mushka:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "m-psa:build:production"
+              "browserTarget": "mushka:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "m-psa:build"
+            "browserTarget": "mushka:build"
           }
         },
         "test": {
@@ -103,7 +103,7 @@
         }
       }
     },
-    "m-psa-e2e": {
+    "mushka-e2e": {
       "root": "e2e",
       "sourceRoot": "e2e",
       "projectType": "application",
@@ -112,7 +112,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "m-psa:serve"
+            "devServerTarget": "mushka:serve"
           }
         },
         "lint": {
@@ -129,7 +129,7 @@
       }
     }
   },
-  "defaultProject": "m-psa",
+  "defaultProject": "mushka",
   "schematics": {
     "@schematics/angular:class": {
       "spec": false
@@ -138,12 +138,12 @@
       "spec": false,
       "inlineStyle": false,
       "inlineTemplate": false,
-      "prefix": "psa",
+      "prefix": "mk",
       "styleext": "scss"
     },
     "@schematics/angular:directive": {
       "spec": false,
-      "prefix": "psa"
+      "prefix": "mk"
     },
     "@schematics/angular:guard": {
       "spec": false

@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ServiceItem } from '../../models/service-item.model';
 
 @Component({
-  selector: 'psa-delivery-service-modal',
+  selector: 'mk-delivery-service-modal',
   templateUrl: './delivery-service-modal.component.html',
   styleUrls: ['./delivery-service-modal.component.scss']
 })
@@ -12,7 +12,7 @@ export class DeliveryServiceModalComponent implements OnInit {
   @Input() isSaving = false;
   @Output() onClose = new EventEmitter<void>();
   @Output() onSave = new EventEmitter<ServiceItem>();
-  
+
   serviceItemForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder) { }

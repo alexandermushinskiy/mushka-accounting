@@ -16,7 +16,7 @@ import { PopoverComponent } from './widgets/popover/popover.component';
 import { PopoverDirective } from './directives/popover.directive';
 import { ClosePopoverOnClickOutsideDirective } from './directives/close-popover-on-click-outside.directive';
 import { DashIfEmptyPipe } from './pipes/dash-if-empty.pipe';
-import { PsaCurrencyPipe } from './pipes/psa-currency.pipe';
+import { CurrencyPipe } from './pipes/currency.pipe';
 import { FormatDatePipe } from './pipes/format-data.pipe';
 import { DatatableHeaderComponent } from './widgets/datatable/datatable-header/datatable-header.component';
 import { DatetimepickerComponent } from './widgets/datetimepicker/datetimepicker.component';
@@ -56,7 +56,7 @@ import { CheckboxComponent } from './widgets/checkbox/checkbox.component';
     NumberFieldDirective,
     ClickOutsideDirective,
     DashIfEmptyPipe,
-    PsaCurrencyPipe,
+    CurrencyPipe,
     FormatDatePipe,
     DatatableHeaderComponent,
     DatetimepickerComponent,
@@ -84,7 +84,7 @@ import { CheckboxComponent } from './widgets/checkbox/checkbox.component';
     ClickOutsideDirective,
     /* Pipes */
     DashIfEmptyPipe,
-    PsaCurrencyPipe,
+    CurrencyPipe,
     FormatDatePipe,
     /* Components */
     LoadingScreenComponent,

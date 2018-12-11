@@ -5,7 +5,7 @@ import { UserNotification } from '../../shared/models/user-notification.model';
 import { UserNotificationType } from '../../shared/enums/user-notification-type.enum';
 
 @Component({
-  selector: 'psa-user-notification',
+  selector: 'mk-user-notification',
   templateUrl: './user-notification.component.html',
   styleUrls: ['./user-notification.component.scss']
 })

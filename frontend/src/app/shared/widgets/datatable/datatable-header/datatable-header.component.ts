@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output, ViewChild, OnInit } from '@angu
 import { SearchFormComponent } from '../../search-form/search-form.component';
 
 @Component({
-  selector: 'psa-datatable-header',
+  selector: 'mk-datatable-header',
   templateUrl: './datatable-header.component.html',
   styleUrls: ['./datatable-header.component.scss']
 })

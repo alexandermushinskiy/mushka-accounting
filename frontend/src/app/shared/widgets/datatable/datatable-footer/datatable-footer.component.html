@@ -3,13 +3,13 @@
     Всего: {{ total }} <span class="text-lowercase">{{ itemsName }}</span>
   </div>
   <div class="table-paging col-md-6">
-    <psa-datatable-pager
+    <mk-datatable-pager
                     [page]="curPage" 
                     [size]="pageSize"
                     [count]="rowCount"
                     [hidden]="false"
                     (change)="datatable.onFooterPage($event)">
-    </psa-datatable-pager>
+    </mk-datatable-pager>
   </div>
 
   <div class="p-0 col-md-3">

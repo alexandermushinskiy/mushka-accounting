@@ -1,18 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 
-import { ColumnConfiguration } from '../../shared/models/column-configuration.model';
 import { ProductTablePreview } from '../shared/models/product-table-preview';
 import { columnsConfig } from '../shared/constants/columns-config.const';
 import { propertiesToFilter } from '../shared/constants/properties-to-filter.const';
-import { PsaDatatableComponent } from '../../shared/hooks/psa-datatable.component';
+import { MkDatatableComponent } from '../../shared/hooks/datatable.component';
 
 @Component({
-  selector: 'psa-products-table',
+  selector: 'mk-products-table',
   templateUrl: './products-table.component.html',
   styleUrls: ['./products-table.component.scss']
 })
-export class ProductsTableComponent extends PsaDatatableComponent implements OnInit {
+export class ProductsTableComponent extends MkDatatableComponent implements OnInit {
   @ViewChild('datatable') datatable: DatatableComponent;
   @ViewChild('totalColumn') totalCol: TemplateRef<any>;
   @ViewChild('sizesColumn') sizesCol: TemplateRef<any>;

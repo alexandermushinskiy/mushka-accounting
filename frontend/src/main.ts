@@ -1,4 +1,4 @@
-import { enableProdMode, LOCALE_ID } from '@angular/core';
+import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
@@ -9,5 +9,5 @@ if (environment.production) {
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
-  .then(() => console.info(`M-PSA app loaded`))
+  .then(() => console.info(`Mushka app loaded`))
   .catch(err => console.log(err));

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'psa-datatable-pager',
+  selector: 'mk-datatable-pager',
   templateUrl: './datatable-pager.component.html',
   styleUrls: ['./datatable-pager.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -1,5 +1,5 @@
 <div class="list-view">
-  <psa-datatable-header
+  <mk-datatable-header
                 [total]="total"
                 [shown]="shown"
                 [availableColumns]="availableColumns"
@@ -8,7 +8,7 @@
                 [showTitle]="false"
                 [showActions]="false"
                 (onAddItem)="addDeliveryItem(content)">
-  </psa-datatable-header>
+  </mk-datatable-header>
   <ngx-datatable #datatable
                  class="material"
                  [rows]="serviceItemRows"
@@ -43,13 +43,13 @@
        <span [title]="value"
               *ngIf="!editing[rowIndex + '-cost']"
               (dblclick)="startEditing(rowIndex + '-cost')">
-          {{ value | psaCurrency }}
+          {{ value | mkCurrency }}
         </span>
-        <psa-currency-input *ngIf="editing[rowIndex + '-cost']"
+        <mk-currency-input *ngIf="editing[rowIndex + '-cost']"
                             [placeholder]="''"
                             [value]="value"
                             (onBlur)="updateValue($event, 'cost', rowIndex)">
-        </psa-currency-input>
+        </mk-currency-input>
       </ng-template>
     </ngx-datatable-column>
 
@@ -76,18 +76,18 @@
 </div>
   
 <ng-template #content>
-  <psa-delivery-service-modal
+  <mk-delivery-service-modal
               [isSaving]="isModalLoading"
               (onSave)="saveServiceItem($event)"
               (onClose)="closeModal()">
-  </psa-delivery-service-modal>
+  </mk-delivery-service-modal>
 </ng-template>
 
 <ng-template #removeConfirmation let-c="close">
-  <psa-confirmation
+  <mk-confirmation
     (onClose)="c()"
     (onConfirm)="confirmDelete(); c();"
     [confirmButtonText]="'Удалить'"
     [text]="'Вы уверены, что хотите удалить выбранный сервис?'">
-  </psa-confirmation>
+  </mk-confirmation>
 </ng-template>

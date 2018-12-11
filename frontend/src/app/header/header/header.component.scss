@@ -14,6 +14,12 @@
   padding: $header-padding-y $header-padding-x;
 }
 
+.logo {
+  &:focus {
+    outline: none;
+  }
+}
+
 .actions-left {
   align-items: center;
   display: flex;

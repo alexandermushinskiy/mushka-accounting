@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 @Component({
-  selector: 'psa-datatable-footer',
+  selector: 'mk-datatable-footer',
   templateUrl: './datatable-footer.component.html',
   styleUrls: ['./datatable-footer.component.scss']
 })

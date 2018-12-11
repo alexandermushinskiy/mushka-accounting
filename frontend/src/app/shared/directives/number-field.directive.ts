@@ -1,7 +1,7 @@
 import { Directive, HostListener } from '@angular/core';
 
 @Directive({
-  selector: 'input[psaNumberField]'
+  selector: 'input[mkNumberField]'
 })
 export class NumberFieldDirective {
   @HostListener('keydown', ['$event']) onKeyDown(event) {

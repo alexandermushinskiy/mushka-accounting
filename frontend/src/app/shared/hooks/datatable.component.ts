@@ -5,7 +5,7 @@ import { ColumnConfiguration } from '../models/column-configuration.model';
 import { FileHelper } from '../utils/file-helper';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 
-export abstract class PsaDatatableComponent implements OnInit {
+export abstract class MkDatatableComponent implements OnInit {
   @Output() onRowsUpdated = new EventEmitter<number>();
 
   datatable: DatatableComponent;
@@ -130,7 +130,7 @@ export abstract class PsaDatatableComponent implements OnInit {
 
   onExportToCSV(fileSuffix: string, rowsData: any[]) {
     FileHelper.toCSVFormat(
-      `MUSHKA-PSA_${fileSuffix}`,
+      `MUSHKA-${fileSuffix}`,
       [this.getExportedColumnTitles()].concat(rowsData),
       this.getExportedProps()
     );
@@ -189,7 +189,7 @@ export abstract class PsaDatatableComponent implements OnInit {
     this.filterText = this.filterText.toLowerCase().trim();
 
     return filteredRows.filter(row => {
-      let filterFields = [];
+      const filterFields = [];
       columns.forEach(column => {
         if (propertiesToFilterKeys.includes(column) && row[this.propertiesToFilter[column]]) {
           filterFields.push(row[this.propertiesToFilter[column]].toString().toLowerCase());
@@ -228,7 +228,7 @@ export abstract class PsaDatatableComponent implements OnInit {
     const sort = sortColumn
       ? { dir: sortColumn.sort.order, prop: sortColumn.name }
       : { dir: 'asc', prop: 'name' };
-    
+
     this.sorts = [sort];
     return sort;
   }

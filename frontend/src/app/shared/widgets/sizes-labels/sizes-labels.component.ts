@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ProductSize } from '../../models/product-size.model';
 
 @Component({
-  selector: 'psa-sizes-labels',
+  selector: 'mk-sizes-labels',
   templateUrl: './sizes-labels.component.html',
   styleUrls: ['./sizes-labels.component.scss']
 })
