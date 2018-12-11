@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiEndpoint: 'http://localhost:61393'
+  apiEndpoint: 'http://mushidesktop/mushka-api'
 };

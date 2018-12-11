@@ -17,9 +17,9 @@ export class ProductTablePreview extends DataTablePreview {
     this.name = elem.name;
     this.code = elem.code;
     this.createdOn = elem.createdOn;
-    this.deliveriesCount = elem.deliveriesCount || this.defaultValue;
-    this.lastDeliveryDate = elem.lastDeliveryDate || this.defaultValue;
-    this.lastDeliveryCount = elem.lastDeliveryCount || this.defaultValue;
+    this.deliveriesCount = elem.deliveriesCount || 0;
+    this.lastDeliveryDate = elem.lastDeliveryDate;
+    this.lastDeliveryCount = elem.lastDeliveryCount;
     this.totalCount = elem.totalCount;
     this.sizes = elem.sizes;
   }
