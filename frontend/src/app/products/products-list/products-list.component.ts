@@ -95,6 +95,10 @@ export class ProductsListComponent extends SortableDatatableComponent implements
     this.isCollapsed = !this.isCollapsed;
   }
 
+  getRowClass(row: any) {
+    return row.className;
+  }
+
   private loadProducts(categoryId: string) {
     this.loadingIndicator = true;
 

@@ -28,6 +28,7 @@
                [columnMode]="'force'"
                [limit]="10"
                [messages]="{ emptyMessage: 'Нет данных для отображения' }"
+               [rowClass]="getRowClass"
                (activate)="onActive($event)"
                (sort)="onTableSort(productsRows, $event)">
                

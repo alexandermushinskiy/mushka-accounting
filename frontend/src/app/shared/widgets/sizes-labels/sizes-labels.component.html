@@ -1,3 +1,6 @@
 <span *ngFor="let sizeItem of sizeItems" class="size-label" [ngClass]="sizeItem.getCssClass()">
   {{ sizeItem.name }} <span class="amount">({{ sizeItem.quantity }})</span>
 </span>
+<span *ngIf="sizeItems.length === 0">
+{{ noSizes }}
+</span>

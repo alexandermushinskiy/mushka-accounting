@@ -13,6 +13,7 @@ export class SizesLabelsComponent implements OnInit {
   }
 
   sizeItems: SizeItem[];
+  noSizes = ' - ';
 
   constructor() { }
 

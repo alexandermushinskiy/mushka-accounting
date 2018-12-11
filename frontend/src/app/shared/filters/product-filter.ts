@@ -11,5 +11,4 @@ export class ProductFilter extends FiltersBase {
     return this.containsSearchKey(product.code, this.searchKey)
       || this.containsSearchKey(product.name, this.searchKey);
   }
-
 }
