@@ -9,6 +9,7 @@ import { ProductsTableComponent } from '../products-table/products-table.compone
 import { Product } from '../../shared/models/product.model';
 import { Category } from '../../shared/models/category.model';
 import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatable.component';
+import { ProductFilter } from '../../shared/filters/product-filter';
 
 @Component({
   selector: 'psa-products-list',
@@ -19,6 +20,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
   @ViewChild(ProductsTableComponent) datatable: ProductsTableComponent;
 
   isCollapsed = false;
+  products: Product[];
   productsRows: ProductTablePreview[];
   loadingIndicator = false;
   total = 0;
@@ -67,6 +69,13 @@ export class ProductsListComponent extends SortableDatatableComponent implements
     this.modalRef = this.modalService.open(content, this.modalConfig);
   }
 
+  filter(searchKey) {
+    const productFilter = new ProductFilter(searchKey);
+    const filteredProducts = this.products.filter(prod => productFilter.filter(prod));
+
+    this.updateDatatableRows(filteredProducts);
+  }
+
   onProductSaved(product: Product) {
     if (this.selectedCategory.id !== product.category.id) {
       this.onCategotySelected(product.category);
@@ -95,10 +104,17 @@ export class ProductsListComponent extends SortableDatatableComponent implements
       });
   }
 
-  private onLoadProductsSuccess(products) {
-    this.productsRows = products.map((el, index) => new ProductTablePreview(el, index));
+  private onLoadProductsSuccess(products: Product[]) {
+    this.products = products;
     this.total = products.length;
+    this.updateDatatableRows(products);
+
     this.isAddButtonShown = true;
     this.loadingIndicator = false;
+  }
+
+  private updateDatatableRows(products: Product[]) {
+    this.productsRows = products.map((el, index) => new ProductTablePreview(el, index));
+    this.shown = products.length;
   }
 }

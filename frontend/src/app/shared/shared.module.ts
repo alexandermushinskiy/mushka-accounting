@@ -18,7 +18,7 @@ import { ClosePopoverOnClickOutsideDirective } from './directives/close-popover-
 import { DashIfEmptyPipe } from './pipes/dash-if-empty.pipe';
 import { PsaCurrencyPipe } from './pipes/psa-currency.pipe';
 import { FormatDatePipe } from './pipes/format-data.pipe';
-import { PsaDatatableHeaderComponent } from './widgets/datatable/psa-datatable-header/psa-datatable-header.component';
+import { DatatableHeaderComponent } from './widgets/datatable/datatable-header/datatable-header.component';
 import { DatetimepickerComponent } from './widgets/datetimepicker/datetimepicker.component';
 import { CurrencyInputComponent } from './widgets/currency-input/currency-input.component';
 import { DropdownComponent } from './widgets/dropdown/dropdown.component';
@@ -26,8 +26,8 @@ import { NumberFieldDirective } from './directives/number-field.directive';
 import { ConfirmationComponent } from './widgets/confirmation/confirmation.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { BackArrowComponent } from './widgets/back-arrow/back-arrow.component';
-import { DatatableFooterComponent } from './widgets/datatable-footer/datatable-footer.component';
-import { DataTablePagerComponent } from './widgets/datatable-pager/datatable-pager.component';
+import { DatatableFooterComponent } from './widgets/datatable/datatable-footer/datatable-footer.component';
+import { DataTablePagerComponent } from './widgets/datatable/datatable-pager/datatable-pager.component';
 import { SelectSizeComponent } from './widgets/select-size/select-size.component';
 import { ToggleComponent } from './widgets/toggle/toggle.component';
 import { CheckboxComponent } from './widgets/checkbox/checkbox.component';
@@ -58,7 +58,7 @@ import { CheckboxComponent } from './widgets/checkbox/checkbox.component';
     DashIfEmptyPipe,
     PsaCurrencyPipe,
     FormatDatePipe,
-    PsaDatatableHeaderComponent,
+    DatatableHeaderComponent,
     DatetimepickerComponent,
     CurrencyInputComponent,
     DropdownComponent,
@@ -92,7 +92,7 @@ import { CheckboxComponent } from './widgets/checkbox/checkbox.component';
     SearchFormComponent,
     SizesLabelsComponent,
     OptionsComponent,
-    PsaDatatableHeaderComponent,
+    DatatableHeaderComponent,
     DatetimepickerComponent,
     CurrencyInputComponent,
     DropdownComponent,

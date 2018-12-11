@@ -8,7 +8,8 @@
                     [showMenuToggle]="true"
                     [showAddButton]="isAddButtonShown"
                     (onCollapseMenu)="toggleCollapseMode()"
-                    (onAddItem)="addProduct(content)">
+                    (onAddItem)="addProduct(content)"
+                    (onFilter)="filter($event)">
     </psa-datatable-header>
   </div>
   <div class="appbody">

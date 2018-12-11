@@ -4,10 +4,10 @@ import { SearchFormComponent } from '../../search-form/search-form.component';
 
 @Component({
   selector: 'psa-datatable-header',
-  templateUrl: './psa-datatable-header.component.html',
-  styleUrls: ['./psa-datatable-header.component.scss']
+  templateUrl: './datatable-header.component.html',
+  styleUrls: ['./datatable-header.component.scss']
 })
-export class PsaDatatableHeaderComponent implements OnInit {
+export class DatatableHeaderComponent implements OnInit {
   @ViewChild(SearchFormComponent) searchForm: SearchFormComponent;
   @Input() isCollapsed: false;
   @Input() total: number;
@@ -18,7 +18,7 @@ export class PsaDatatableHeaderComponent implements OnInit {
   @Input() showTitle = true;
   @Input() showOptions = true;
   @Input() showActions = true;
-  @Input() title: string = '';
+  @Input() title = '';
 
   @Output() onFilter = new EventEmitter<string>();
   @Output() onCollapseMenu = new EventEmitter<any>();
