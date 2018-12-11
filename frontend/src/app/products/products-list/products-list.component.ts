@@ -18,6 +18,7 @@ import { ProductFilter } from '../../shared/filters/product-filter';
 })
 export class ProductsListComponent extends SortableDatatableComponent implements OnInit {
   @ViewChild(ProductsTableComponent) datatable: ProductsTableComponent;
+  @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
 
   isCollapsed = false;
   products: Product[];
@@ -30,7 +31,9 @@ export class ProductsListComponent extends SortableDatatableComponent implements
   title = 'Товары';
   isMenuToggleShown = false;
   isAddButtonShown = false;
+  confirmDeleteMessage: string;
 
+  private productToDelete: string;
   private modalRef: NgbModalRef;
   private readonly modalConfig: NgbModalOptions = {
     windowClass: 'products-modal',
@@ -69,6 +72,28 @@ export class ProductsListComponent extends SortableDatatableComponent implements
     this.modalRef = this.modalService.open(content, this.modalConfig);
   }
 
+  edit(content: ElementRef, row: ProductTablePreview) {
+    setTimeout(() => { this.modalRef = this.modalService.open(content, this.modalConfig); });
+  }
+
+  delete(row: ProductTablePreview) {
+    setTimeout(() => {
+      this.productToDelete = row.id;
+      this.confirmDeleteMessage = `Вы уверены, что хотите удалить выбранный товар <b>${row.name}</b>?`;
+      this.modalRef = this.modalService.open(this.confirmRemoveTmpl, this.modalConfig);
+    });
+  }
+
+  confirmDelete() {
+    this.closeModal();
+
+    this.productsService.delete(this.productToDelete)
+      .subscribe(
+        () => this.onDeleteSuccess(),
+        (errors) => this.onDeleteFailed()
+      );
+  }
+
   filter(searchKey) {
     const productFilter = new ProductFilter(searchKey);
     const filteredProducts = this.products.filter(prod => productFilter.filter(prod));
@@ -97,6 +122,14 @@ export class ProductsListComponent extends SortableDatatableComponent implements
 
   getRowClass(row: any) {
     return row.className;
+  }
+
+  private onDeleteSuccess() {
+    this.loadProducts(this.selectedCategory.id);
+    this.notificationsService.success('Успех', 'Товар был успешно удалён.');
+  }
+
+  private onDeleteFailed() {
   }
 
   private loadProducts(categoryId: string) {

@@ -185,12 +185,14 @@
         }
       }
       // stylelint-disable selector-max-class
-      &.odd .datatable-body-cell { background-color: $table-body-row-odd; }
+      &.odd .datatable-body-cell,
+      &.odd:hover .datatable-body-cell { background-color: $table-body-row-odd; }
 
-      &.even .datatable-body-cell { background-color: $table-body-row-even; }
+      &.even .datatable-body-cell,
+      &.even:hover .datatable-body-cell { background-color: $table-body-row-even; }
 
-      &.odd:hover .datatable-body-cell,
-      &.even:hover .datatable-body-cell { background-color: $table-body-row-hover; }
+      // &.odd:hover .datatable-body-cell,
+      // &.even:hover .datatable-body-cell { background-color: $table-body-row-hover; }
 
       &.bold .datatable-body-cell *:not(.csr-severity-icon) { font-weight: bold !important; }
 
@@ -204,6 +206,7 @@
       &.active.non-active .datatable-body-cell,
       &.active.non-active .datatable-body-cell:hover { background: $table-body-row-checked !important; }
       // stylelint-enable selector-max-class
+
     }
 
     .progress-linear {
@@ -417,4 +420,9 @@
   &.sold {
     background-color: $products-count-sold-bg;
   }
+}
+
+.ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover, 
+.ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group {
+  background-color: unset;
 }

@@ -95,6 +95,15 @@
           </ng-template>
         </ngx-datatable-column>
 
+        <ngx-datatable-column [width]="120" [canAutoResize]="false" [resizeable]="false">
+          <ng-template ngx-datatable-cell-template let-expanded="expanded" let-row="row" let-rowIndex="rowIndex">
+            <span class="buttons">
+              <a class="grid-edit edit" (click)="edit(content, row)"></a>
+              <a class="grid-remove" (click)="delete(row)"></a>
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
         <ngx-datatable-footer class="p-0">
           <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize" let-curPage="curPage" class="p-0">
             <mk-datatable-footer [loadingIndicator]="loadingIndicator"
@@ -119,4 +128,13 @@
               (onSave)="onProductSaved($event)"
               (onClose)="closeModal()">
   </mk-product-modal>
+</ng-template>
+
+<ng-template #confirmRemoveTmpl>
+  <mk-confirmation
+          [confirmButtonText]="'Удалить'"
+          [text]="confirmDeleteMessage"
+          (onClose)="closeModal()"
+          (onConfirm)="confirmDelete();">
+  </mk-confirmation>
 </ng-template>

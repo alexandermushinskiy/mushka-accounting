@@ -1,7 +1,7 @@
-import { ProductItem } from "./product-item.model";
-import { ServiceItem } from "./service-item.model";
-import { Supplier } from "../../../shared/models/supplier.model";
-import { PaymentMethod } from "../enums/payment-method.enum";
+import { ProductItem } from './product-item.model';
+import { ServiceItem } from './service-item.model';
+import { Supplier } from '../../../shared/models/supplier.model';
+import { PaymentMethod } from '../enums/payment-method.enum';
 
 export class Delivery {
   id: string;

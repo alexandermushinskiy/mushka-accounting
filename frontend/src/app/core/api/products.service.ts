@@ -22,7 +22,7 @@ export class ProductsServce {
   getProductsByCategory(categoryId: string): Observable<Product[]> {
     return this.http.get(`${this.categoriesEndPoint}/${categoryId}/products`)
       .map((res: any) => this.converterService.convertToProducts(res.data))
-      .catch((res: any) => Observable.throw(res.error.messages));
+      .catch((res: any) => throwError(res.error.messages));
   }
 
   create(product: Product): Observable<Product> {
@@ -38,13 +38,18 @@ export class ProductsServce {
 
     return this.http.put(`${this.endPoint}/${productId}`, requestModel)
       .map((res: any) => this.converterService.convertToProduct(res.data))
-      .catch((res: any) => Observable.throw(res.error.messages));
+      .catch((res: any) => throwError(res.error.messages));
   }
 
   getSizes(): Observable<Size[]> {
     return this.http.get(`${this.endPoint}/sizes`)
       .map((res: any) => this.converterService.convertToSizes(res.data))
-      .catch((res: any) => Observable.throw(res.error.messages));
+      .catch((res: any) => throwError(res.error.messages));
+  }
+
+  delete(productId: string): Observable<any> {
+    return this.http.delete(`${this.endPoint}/${productId}`)
+      .catch((res: any) => throwError(res.error.messages));
   }
 
   private convertToRequestData(product: Product): any {

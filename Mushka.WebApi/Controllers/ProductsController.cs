@@ -7,6 +7,7 @@ using Mushka.Core.Extensibility.Providers;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
 using Mushka.Service.Extensibility.Services;
+using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Product;
 using Mushka.WebApi.Extensibility.Providers;
 
@@ -71,12 +72,14 @@ namespace Mushka.WebApi.Controllers
         //    return await Put<ProductRequestModel, ProductResponseModel>(id, productRequest);
         //}
 
-        //[HttpDelete("{id:guid}")]
-        //public async Task<IActionResult> Delete(Guid id)
-        //{
-        //    return await Delete<ProductResponseModel>(id);
-        //}
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var productResponse = await productService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<Product>, DeleteResponseModel>(productResponse);
 
+            return actionResultProvider.Get(clientResponse);
+        }
 
         [HttpGet("sizes")]
         public async Task<IActionResult> GetSizes()
