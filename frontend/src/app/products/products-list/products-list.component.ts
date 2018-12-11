@@ -5,7 +5,6 @@ import { ProductsServce } from '../../core/api/products.service';
 import { ProductTablePreview } from '../shared/models/product-table-preview';
 import { availableColumns } from '../../shared/constants/available-columns.const';
 import { NotificationsService } from '../../core/notifications/notifications.service';
-import { ProductsTableComponent } from '../products-table/products-table.component';
 import { Product } from '../../shared/models/product.model';
 import { Category } from '../../shared/models/category.model';
 import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatable.component';
@@ -17,7 +16,6 @@ import { ProductFilter } from '../../shared/filters/product-filter';
   styleUrls: ['./products-list.component.scss']
 })
 export class ProductsListComponent extends SortableDatatableComponent implements OnInit {
-  @ViewChild(ProductsTableComponent) datatable: ProductsTableComponent;
   @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
 
   isCollapsed = false;
