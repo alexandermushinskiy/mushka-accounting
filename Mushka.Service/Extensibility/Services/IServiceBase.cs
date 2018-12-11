@@ -10,12 +10,12 @@ namespace Mushka.Service.Extensibility.Services
     {
         Task<ValidationResponse<IEnumerable<TEntity>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<ValidationResponse<TEntity>> GetByIdAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ValidationResponse<TEntity>> GetByIdAsync(Guid entityId, CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<ValidationResponse<TEntity>> AddAsync(TEntity category, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ValidationResponse<TEntity>> AddAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<ValidationResponse<TEntity>> UpdateAsync(TEntity category, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ValidationResponse<TEntity>> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<ValidationResponse<TEntity>> DeleteAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ValidationResponse<TEntity>> DeleteAsync(Guid entityId, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

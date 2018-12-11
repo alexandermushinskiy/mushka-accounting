@@ -15,21 +15,20 @@ import { Size } from '../../../../shared/models/size.model';
   styleUrls: ['./product-modal.component.scss']
 })
 export class ProductModalComponent extends UnsubscriberComponent implements OnInit {
-  @Input() product: Product = null;
+  @Input() productId: string = null;
   @Input() categoryId: string;
   @Output() onClose = new EventEmitter<void>();
   @Output() onSave = new EventEmitter<Product>();
 
   isSaving = false;
   productForm: FormGroup;
-  productId: string;
   isEdit: boolean;
   availableSizes: Size[] = [];
   categories: Category[] = [];
   errors: string[];
 
   private get categoryFormGroup(): FormGroup {
-    return <FormGroup>this.productForm.get('category');
+    return <FormGroup>this.productForm.get('categoryId');
   }
 
   constructor(private formBuilder: FormBuilder,
@@ -39,11 +38,15 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
   }
 
   ngOnInit() {
-    this.isEdit = !!this.product;
+    this.isEdit = !!this.productId;
 
     this.loadSizes();
+    this.buildForm(new Product({}));
 
-    this.buildForm(this.isEdit ? this.product : new Product({}));
+    if (this.isEdit) {
+      this.productsService.getById(this.productId)
+        .subscribe((product: Product) => this.buildForm(product));
+    }
 
     this.categoriesService.getAll()
       .subscribe((categories: Category[]) => this.onCategoriesLoaded(categories));
@@ -53,8 +56,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
     this.categories = categories;
 
     if (this.categoryId) {
-      const category = categories.find(cat => cat.id === this.categoryId);
-      this.categoryFormGroup.setValue(category);
+      this.productForm.controls.categoryId.setValue(this.categoryId);
     }
   }
 
@@ -84,12 +86,16 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
   }
 
   private buildForm(product: Product) {
+    const sizes = product.sizes
+      ? product.sizes.map(sz => sz.id)
+      : [];
+
     this.productForm = this.formBuilder.group({
       name: [product.name, Validators.required],
-      category: [product.category, Validators.required],
+      categoryId: [product.categoryId, Validators.required],
       code: [product.code, Validators.required],
       isSizesRequired: [true],
-      sizes: [product.sizes, Validators.required]
+      sizes: [sizes, Validators.required]
     });
 
     this.addFieldChangeListeners();
@@ -128,13 +134,13 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
     return new Product({
       name: productFormValue.name,
       code: productFormValue.code.toUpperCase(),
-      category: this.categoryFormGroup.value,
+      categoryId: productFormValue.categoryId,
       sizes: sizes
     });
   }
 
   private onSaveError(errors: string[]) {
     this.isSaving = false;
-    //console.info(errors);
+    // console.info(errors);
   }
 }

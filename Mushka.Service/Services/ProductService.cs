@@ -42,7 +42,7 @@ namespace Mushka.Service.Services
 
         public async Task<ValidationResponse<Product>> GetByIdAsync(Guid productId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Product product = await productRepository.GetByIdAsync(productId, cancellationToken);
+            var product = await productRepository.GetByIdAsync(productId, cancellationToken);
 
             return product == null
                 ? CreateWarningValidationResponse($"Product with id {productId} is not found.", ValidationStatusType.NotFound)
@@ -92,7 +92,7 @@ namespace Mushka.Service.Services
 
         public async Task<ValidationResponse<Product>> UpdateAsync(Product product, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Product productToUpdate = await productRepository.GetByIdAsync(product.Id, cancellationToken);
+            var productToUpdate = await productRepository.GetByIdAsync(product.Id, cancellationToken);
 
             if (productToUpdate == null)
             {
@@ -104,14 +104,15 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Product with the name {product.Name} is already exist.");
             }
 
-            Product updatedProduct = await productRepository.UpdateAsync(product, cancellationToken);
+            await productRepository.UpdateAsync(product, cancellationToken);
+            var updatedProduct = await productRepository.GetByIdAsync(product.Id, cancellationToken);
 
             return CreateInfoValidationResponse(updatedProduct, $"Product with id {product.Id} was successfully updated.");
         }
 
         public async Task<ValidationResponse<Product>> DeleteAsync(Guid productId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Product product = await productRepository.GetByIdAsync(productId, cancellationToken);
+            var product = await productRepository.GetByIdAsync(productId, cancellationToken);
 
             if (product == null)
             {

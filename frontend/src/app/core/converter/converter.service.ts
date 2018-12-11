@@ -34,6 +34,7 @@ export class ConverterService {
       name: source.name,
       code: source.code,
       category: this.convertToCategory({id: source.categoryId}),
+      categoryId: source.categoryId,
       createdOn: this.datetimeService.toString(source.createdOn),
       sizes: this.convertToProductSizes(source.sizes),
       lastDeliveryDate: !!source.lastDeliveryDate ? this.datetimeService.toString(source.lastDeliveryDate) : null,

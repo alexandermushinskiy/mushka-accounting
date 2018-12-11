@@ -66,11 +66,17 @@ namespace Mushka.WebApi.Controllers
             return actionResultProvider.Get(clientResponse);
         }
 
-        //[HttpPut("{id:guid}")]
-        //public async Task<IActionResult> Put(Guid id, [FromBody]ProductRequestModel productRequest)
-        //{
-        //    return await Put<ProductRequestModel, ProductResponseModel>(id, productRequest);
-        //}
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Put(Guid id, [FromBody]ProductRequestModel productRequest)
+        {
+            var product = mapper.Map<ProductRequestModel, Product>(productRequest);
+            product.Id = id;
+
+            var productResponse = await productService.UpdateAsync(product, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<Product>, ProductResponseModel>(productResponse);
+
+            return actionResultProvider.Get(clientResponse);
+        }
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)

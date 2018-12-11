@@ -98,7 +98,7 @@
         <ngx-datatable-column [width]="120" [canAutoResize]="false" [resizeable]="false">
           <ng-template ngx-datatable-cell-template let-expanded="expanded" let-row="row" let-rowIndex="rowIndex">
             <span class="buttons">
-              <a class="grid-edit edit" (click)="edit(content, row)"></a>
+              <a class="grid-edit edit" (click)="edit(content, row.id)"></a>
               <a class="grid-remove" (click)="delete(row)"></a>
             </span>
           </ng-template>
@@ -123,7 +123,7 @@
 
 <ng-template #content>
   <mk-product-modal
-              [product]="selectedProduct"
+              [productId]="productToEdit"
               [categoryId]="selectedCategory.id"
               (onSave)="onProductSaved($event)"
               (onClose)="closeModal()">

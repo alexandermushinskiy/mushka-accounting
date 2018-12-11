@@ -32,6 +32,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
   isMenuToggleShown = false;
   isAddButtonShown = false;
   confirmDeleteMessage: string;
+  productToEdit: string;
 
   private productToDelete: string;
   private modalRef: NgbModalRef;
@@ -72,8 +73,11 @@ export class ProductsListComponent extends SortableDatatableComponent implements
     this.modalRef = this.modalService.open(content, this.modalConfig);
   }
 
-  edit(content: ElementRef, row: ProductTablePreview) {
-    setTimeout(() => { this.modalRef = this.modalService.open(content, this.modalConfig); });
+  edit(content: ElementRef, productId: string) {
+    setTimeout(() => {
+      this.productToEdit = productId;
+      this.modalRef = this.modalService.open(content, this.modalConfig);
+    });
   }
 
   delete(row: ProductTablePreview) {
@@ -102,18 +106,21 @@ export class ProductsListComponent extends SortableDatatableComponent implements
   }
 
   onProductSaved(product: Product) {
+    this.closeModal();
+    this.notificationsService.success('Успех', `Товар \"${product.name}\" был успешно сохранён.`);
+
     if (this.selectedCategory.id !== product.category.id) {
       this.onCategotySelected(product.category);
     } else {
       this.loadProducts(this.selectedCategory.id);
     }
-
-    this.closeModal();
-    this.notificationsService.success('Успех', `Товар \"${product.name}\" был успешно сохранён.`);
   }
 
   closeModal() {
     this.modalRef.close();
+
+    this.productToDelete = null;
+    this.productToEdit = null;
   }
 
   toggleCollapseMode() {
@@ -130,6 +137,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
   }
 
   private onDeleteFailed() {
+    this.notificationsService.danger('Ошибка', 'Возникла ошибка при удалении товара.');
   }
 
   private loadProducts(categoryId: string) {

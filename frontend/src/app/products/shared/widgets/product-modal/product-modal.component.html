@@ -1,4 +1,4 @@
-<form [formGroup]="productForm" class="product-form">
+<form [formGroup]="productForm" class="product-form" *ngIf="productForm">
   <div class="modal-header">
     <h4 class="modal-title">Добаление товара</h4>
     <button type="button" class="close" aria-label="Close" (click)="close()">
@@ -17,9 +17,9 @@
       <div class="col">
         <div class="form-group">
           <label for="nacodeme" class="text-muted">Категория</label>
-          <select class="form-control custom-select" formControlName="category"
+          <select class="form-control custom-select" formControlName="categoryId"
                     (change)="onCategoryChanged(productForm.value.category)">
-            <option *ngFor="let category of categories" [ngValue]="category">{{ category.name }}</option>
+            <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
           </select>
         </div>
       </div>

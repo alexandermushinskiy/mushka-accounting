@@ -6,6 +6,7 @@ export class Product {
   name: string;
   code: string;
   category: Category;
+  categoryId: string;
   createdOn: string;
   deliveriesCount: number;
   lastDeliveryDate: string;

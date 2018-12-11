@@ -25,6 +25,12 @@ export class ProductsServce {
       .catch((res: any) => throwError(res.error.messages));
   }
 
+  getById(productId: string): Observable<Product> {
+    return this.http.get(`${this.endPoint}/${productId}`)
+      .map((res: any) => this.converterService.convertToProduct(res.data))
+      .catch((res: any) => throwError(res.error.messages));
+  }
+
   create(product: Product): Observable<Product> {
     const requestModel = this.convertToRequestData(product);
 
@@ -56,7 +62,7 @@ export class ProductsServce {
     return {
       name: product.name,
       code: product.code,
-      categoryId: product.category.id,
+      categoryId: product.categoryId,
       sizes: product.sizes.map(sz => sz.id)
     };
   }
