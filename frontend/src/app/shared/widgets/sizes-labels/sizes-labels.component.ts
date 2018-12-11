@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { SizeItem } from '../../models/size-item.model';
+import { ProductSize } from '../../models/product-size.model';
 
 @Component({
   selector: 'psa-sizes-labels',
@@ -8,11 +8,11 @@ import { SizeItem } from '../../models/size-item.model';
   styleUrls: ['./sizes-labels.component.scss']
 })
 export class SizesLabelsComponent implements OnInit {
-  @Input() set sizes(source: SizeItem[]) {
-    this.sizeItems = !source ? [] : source;
+  @Input() set sizes(source: ProductSize[]) {
+    this.productSizes = !source ? [] : source;
   }
 
-  sizeItems: SizeItem[];
+  productSizes: ProductSize[];
   noSizes = ' - ';
 
   constructor() { }

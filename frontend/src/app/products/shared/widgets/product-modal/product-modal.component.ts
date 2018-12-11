@@ -6,7 +6,7 @@ import { Product } from '../../../../shared/models/product.model';
 import { Category } from '../../../../shared/models/category.model';
 import { ProductsServce } from '../../../../core/api/products.service';
 import { CategoriesService } from '../../../../core/api/categories.service';
-import { SizeItem } from '../../../../shared/models/size-item.model';
+import { ProductSize } from '../../../../shared/models/product-size.model';
 import { Size } from '../../../../shared/models/size.model';
 
 @Component({
@@ -122,7 +122,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
 
   private createProductModel(productFormValue): Product {
     const sizes = !!productFormValue.sizes
-      ? productFormValue.sizes.map(sizeId => new SizeItem({ id: sizeId }))
+      ? productFormValue.sizes.map(sizeId => new ProductSize({ id: sizeId }))
       : [];
 
     return new Product({

@@ -1,4 +1,4 @@
-import { SizeItem } from '../../../shared/models/size-item.model';
+import { ProductSize } from '../../../shared/models/product-size.model';
 import { DataTablePreview } from '../../../shared/models/data-table-preview.model';
 
 export class ProductTablePreview extends DataTablePreview {
@@ -9,7 +9,7 @@ export class ProductTablePreview extends DataTablePreview {
   lastDeliveryDate: string;
   lastDeliveryCount: number;
   totalCount: number;
-  sizes: SizeItem[];
+  sizes: ProductSize[];
 
   constructor(elem, index: number = 0) {
     super(elem, index);

@@ -1,7 +1,7 @@
 import { Component, OnInit, forwardRef, Input, Output, EventEmitter } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
-import { SizeItem } from '../../models/size-item.model';
+import { ProductSize } from '../../models/product-size.model';
 import { SelectSize } from '../../models/select-size.model';
 import { Size } from '../../models/size.model';
 
@@ -16,7 +16,7 @@ import { Size } from '../../models/size.model';
   }]
 })
 export class SelectSizeComponent implements OnInit, ControlValueAccessor {
-  @Input() set availableSizes(source: SizeItem[]) {
+  @Input() set availableSizes(source: ProductSize[]) {
     if (source) {
       this.isLoading = false;
       this.sizes = source.map((school: Size) => new SelectSize({ id: school.id, name: school.name }));

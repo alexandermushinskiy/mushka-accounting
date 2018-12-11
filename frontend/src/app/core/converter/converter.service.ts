@@ -5,7 +5,7 @@ import { ContactPerson } from '../../shared/models/contact-person.model';
 import { Category } from '../../shared/models/category.model';
 import { Product } from '../../shared/models/product.model';
 import { DatetimeService } from '../datetime/datetime.service';
-import { SizeItem } from '../../shared/models/size-item.model';
+import { ProductSize } from '../../shared/models/product-size.model';
 import { Size } from '../../shared/models/size.model';
 
 @Injectable()
@@ -42,12 +42,12 @@ export class ConverterService {
     });
   }
 
-  convertToProductSizes(response: any[]): SizeItem[] {
+  convertToProductSizes(response: any[]): ProductSize[] {
     return response.map(res => this.convertToProductSize(res));
   }
 
-  convertToProductSize(source: any): SizeItem {
-    return new SizeItem({
+  convertToProductSize(source: any): ProductSize {
+    return new ProductSize({
       id: source.id,
       name: source.name,
       quantity: source.quantity
@@ -59,7 +59,7 @@ export class ConverterService {
   }
 
   convertToSize(source: any): Size {
-    return new SizeItem({
+    return new Size({
       id: source.id,
       name: source.name
     });

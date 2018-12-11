@@ -1,4 +1,4 @@
-export class SizeItem {
+export class ProductSize {
   id: string;
   name: string;
   quantity = 0;
