@@ -10,7 +10,8 @@ namespace Mushka.WebApi.Resolvers
             new CategoryModel
             {
                 Id = source.Id,
-                Name = source.Name
+                Name = source.Name,
+                IsSizeRequired = source.IsSizeRequired
             };
     }
 }

@@ -72,8 +72,8 @@ export class CategoriesNavComponent extends UnsubscriberComponent implements OnI
     this.isSaving = true;
     this.categoriesService.delete(this.categoryToDelete.id)
       .subscribe(
-        () => this.onSavedSucces(this.categoryToDelete.name, 'deleted'),
-        () => this.onError('Unable to delete category'),
+        () => this.onSavedSucces(this.categoryToDelete.name, 'удалена'),
+        () => this.onError('Возникла ошибка при удалении категории.'),
         () => {
           this.isSaving = false;
           this.closeModal();
@@ -91,8 +91,8 @@ export class CategoriesNavComponent extends UnsubscriberComponent implements OnI
 
     (category.id ? this.categoriesService.update(category.id, category) : this.categoriesService.create(category))
       .subscribe(
-        () => this.onSavedSucces(category.name, category.id ? 'updated' : 'created'),
-        () => this.onError('Unable to save category'),
+        () => this.onSavedSucces(category.name, !!category.id ? 'обновлена' : 'создана'),
+        () => this.onError('Возникла ошибка при сохранении категории.'),
         () => {
           this.isSaving = false;
           this.closeModal();
@@ -119,12 +119,12 @@ export class CategoriesNavComponent extends UnsubscriberComponent implements OnI
       });
   }
 
-  private onSavedSucces(categoryName: string, action: 'updated' | 'created' | 'deleted') {
+  private onSavedSucces(categoryName: string, action: 'обновлена' | 'создана' | 'удалена') {
     this.loadCategories();
-    this.notificationsService.success('Success', `Category \"${categoryName}\" has been successfully ${action}`);
+    this.notificationsService.success('Успех', `Категория \"${categoryName}\" была успешно ${action}.`);
   }
 
   private onError(message: string) {
-    this.notificationsService.danger('Error', message);
+    this.notificationsService.danger('Ошибка', message);
   }
 }

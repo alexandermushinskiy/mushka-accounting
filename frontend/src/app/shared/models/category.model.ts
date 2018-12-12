@@ -1,8 +1,7 @@
 export class Category {
   id: string;
   name: string;
-  // sizes: string[];
-  // isSizesRequired: boolean;
+  isSizeRequired: boolean;
 
   constructor(data: any) {
     Object.assign(this, data);

@@ -28,7 +28,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
   errors: string[];
 
   private get categoryFormGroup(): FormGroup {
-    return <FormGroup>this.productForm.get('categoryId');
+    return <FormGroup>this.productForm.get('category');
   }
 
   constructor(private formBuilder: FormBuilder,
@@ -56,7 +56,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
     this.categories = categories;
 
     if (this.categoryId) {
-      this.productForm.controls.categoryId.setValue(this.categoryId);
+      this.categoryFormGroup.setValue(this.getCategoryById(this.categoryId));
     }
   }
 
@@ -83,6 +83,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
 
   onCategoryChanged(category: Category) {
     this.categoryFormGroup.setValue(category);
+    this.updateSizesValidity(category.isSizeRequired);
   }
 
   private buildForm(product: Product) {
@@ -90,22 +91,13 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       ? product.sizes.map(sz => sz.id)
       : [];
 
+    const category = this.getCategoryById(product.categoryId);
+
     this.productForm = this.formBuilder.group({
       name: [product.name, Validators.required],
-      categoryId: [product.categoryId, Validators.required],
+      category: [category, Validators.required],
       code: [product.code, Validators.required],
-      isSizesRequired: [true],
       sizes: [sizes, Validators.required]
-    });
-
-    this.addFieldChangeListeners();
-  }
-
-  private addFieldChangeListeners() {
-    const isSizesRequiredControl = this.productForm.controls['isSizesRequired'];
-
-    isSizesRequiredControl.valueChanges.subscribe((value) => {
-      this.updateSizesValidity(value);
     });
   }
 
@@ -126,6 +118,10 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       .subscribe((sizes: Size[]) => this.availableSizes = sizes);
   }
 
+  private getCategoryById(categoryId): Category {
+    return this.categories.find(cat => cat.id === categoryId);
+  }
+
   private createProductModel(productFormValue): Product {
     const sizes = !!productFormValue.sizes
       ? productFormValue.sizes.map(sizeId => new ProductSize({ id: sizeId }))
@@ -134,7 +130,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
     return new Product({
       name: productFormValue.name,
       code: productFormValue.code.toUpperCase(),
-      categoryId: productFormValue.categoryId,
+      categoryId: productFormValue.category.id,
       sizes: sizes
     });
   }

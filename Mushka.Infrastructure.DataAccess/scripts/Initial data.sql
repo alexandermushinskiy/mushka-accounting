@@ -9,11 +9,11 @@ VALUES
 ('6E519491-8FD8-45F2-992E-270B01F25971', '43-46');
 
 -- Categories
-INSERT INTO [Categories] ([Id], [Name], [Order])
+INSERT INTO [Categories] ([Id], [Name], [IsSizeRequired], [Order])
 VALUES
-('88CD0F34-9D4A-4E45-BE97-8899A97FB82C', N'Носки', 1),
-('0E7BE1DE-267C-4C0A-8EE9-ABA0A267F27A', N'Упаковка', 2),
-('B425D75B-2E72-45F0-A55D-3BA400051E5F', N'Другое', 3);
+('88CD0F34-9D4A-4E45-BE97-8899A97FB82C', N'Носки', 1, 1),
+('0E7BE1DE-267C-4C0A-8EE9-ABA0A267F27A', N'Упаковка', 1, 2),
+('B425D75B-2E72-45F0-A55D-3BA400051E5F', N'Другое', 0, 3);
 
 -- Products
 INSERT INTO [Products] ([Id], [CategoryId], [Code], [CreatedOn], [Name])

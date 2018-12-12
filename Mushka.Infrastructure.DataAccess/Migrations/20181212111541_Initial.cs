@@ -13,7 +13,8 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Order = table.Column<int>(nullable: false, defaultValue: 100)
+                    Order = table.Column<int>(nullable: false, defaultValue: 100),
+                    IsSizeRequired = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

@@ -51,11 +51,7 @@ namespace Mushka.WebApi
 
             // Category
             CreateMap<Category, CategoryModel>().ConvertUsing<CategoryConverter>();
-
-            CreateMap<CategoryRequestModel, Category>()
-                .ForMember(dest => dest.Id, opt => opt.ResolveUsing<GuidResolver>())
-                .ForMember(dest => dest.Order, opt => opt.Ignore())
-                .ForMember(dest => dest.Products, opt => opt.Ignore());
+            CreateMap<CategoryRequestModel, Category>().ConvertUsing<CategoryRequestResolver>();
 
             CreateMap<ValidationResponse<Category>, CategoryResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<CategoryResponseResolver>())
@@ -70,7 +66,6 @@ namespace Mushka.WebApi
 
             // Delivery
             CreateMap<DeliveryRequestModel, Delivery>().ConvertUsing<DeliveryRequestConverter>();
-            
             CreateMap<Delivery, DeliveryModel>().ConvertUsing<DeliveryConverter>();
 
             CreateMap<ValidationResponse<Delivery>, DeliveryResponseModel>()

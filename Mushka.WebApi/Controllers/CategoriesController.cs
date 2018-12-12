@@ -57,6 +57,18 @@ namespace Mushka.WebApi.Controllers
             return actionResultProvider.Get(clientResponse);
         }
 
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Put(Guid id, [FromBody]CategoryRequestModel categoryRequest)
+        {
+            var category = mapper.Map<CategoryRequestModel, Category>(categoryRequest);
+            category.Id = id;
+
+            var categoryResponse = await categoryService.UpdateAsync(category, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<Category>, CategoryResponseModel>(categoryResponse);
+
+            return actionResultProvider.Get(clientResponse);
+        }
+
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {

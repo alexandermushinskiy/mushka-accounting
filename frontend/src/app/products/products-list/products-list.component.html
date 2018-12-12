@@ -59,7 +59,7 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="sizes" [width]="180">
+        <ngx-datatable-column name="sizes" [width]="180" *ngIf="selectedCategory?.isSizeRequired">
           <ng-template ngx-datatable-header-template>
             <span>Размеры и<br>наличие</span>
           </ng-template>

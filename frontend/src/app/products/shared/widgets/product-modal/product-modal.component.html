@@ -12,14 +12,13 @@
         <input type="text" id="name" class="form-control" formControlName="name" autocomplete="off">
       </div>
     </div>
-
     <div class="row">
       <div class="col">
         <div class="form-group">
           <label for="nacodeme" class="text-muted">Категория</label>
-          <select class="form-control custom-select" formControlName="categoryId"
+          <select class="form-control custom-select" formControlName="category"
                     (change)="onCategoryChanged(productForm.value.category)">
-            <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            <option *ngFor="let category of categories" [ngValue]="category">{{ category.name }}</option>
           </select>
         </div>
       </div>
@@ -32,16 +31,10 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <div class="field-group w-50">
-          <mk-toggle formControlName="isSizesRequired" [label]="'Требуются размеры'"></mk-toggle>
-        </div>
-      </div>
-    </div>
-    <div class="row" *ngIf="productForm.controls.isSizesRequired.value">
+    <div class="row" *ngIf="!!productForm.value.category && productForm.value.category.isSizeRequired">
       <div class="col">
         <div class="field-group">
+          <label for="nacodeme" class="text-muted">Размер(ы)</label>
           <mk-select-size class="form-control" formControlName="sizes" [availableSizes]="availableSizes"></mk-select-size>
         </div>
       </div>

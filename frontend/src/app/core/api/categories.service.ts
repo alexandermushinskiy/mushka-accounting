@@ -34,7 +34,7 @@ export class CategoriesService {
 
   update(categoryId: string, category: Category): Observable<Category> {
     return this.http.put(`${this.endPoint}/${categoryId}`, category)
-      .map((res: any) => this.converterService.convertToSupplier(res.data))
+      .map((res: any) => this.converterService.convertToCategory(res.data))
       .catch((error) => Observable.throw(error.error.messages));
   }
 

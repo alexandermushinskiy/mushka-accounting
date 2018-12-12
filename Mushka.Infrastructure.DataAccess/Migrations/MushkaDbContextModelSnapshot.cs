@@ -25,6 +25,8 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("Id");
 
+                    b.Property<bool>("IsSizeRequired");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnName("Name");

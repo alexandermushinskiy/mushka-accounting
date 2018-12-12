@@ -12,6 +12,8 @@ namespace Mushka.Domain.Entities
 
         public int Order { get; set; }
 
+        public bool IsSizeRequired { get; set; }
+
         public ICollection<Product> Products { get; set; }
     }
 }

@@ -21,6 +21,7 @@ export class ConverterService {
     return new Category({
       id: source.id,
       name: source.name,
+      isSizeRequired: source.isSizeRequired
     });
   }
 

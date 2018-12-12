@@ -20,8 +20,7 @@ export class CategoryModalComponent implements OnInit {
   categoryForm: FormGroup;
   isEdit: boolean;
 
-  constructor(private formBuilder: FormBuilder,
-              private sizesHelperServices: SizesHelperServices) { }
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.isEdit = !!this.category;
@@ -39,9 +38,11 @@ export class CategoryModalComponent implements OnInit {
 
     if (this.isEdit) {
       this.category.name = categoryFormValue.name;
+      this.category.isSizeRequired = categoryFormValue.isSizeRequired;
     } else {
       this.category = new Category({
-        name: categoryFormValue.name
+        name: categoryFormValue.name,
+        isSizeRequired: categoryFormValue.isSizeRequired
       });
     }
 
@@ -50,7 +51,8 @@ export class CategoryModalComponent implements OnInit {
 
   private buildForm(category: Category) {
     this.categoryForm = this.formBuilder.group({
-      name: [category.name, Validators.required]
+      name: [category.name, Validators.required],
+      isSizeRequired: [category.isSizeRequired]
     });
   }
 }
