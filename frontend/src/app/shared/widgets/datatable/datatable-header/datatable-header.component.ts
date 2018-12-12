@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild, OnInit } from '@angular/core';
 
 import { SearchFormComponent } from '../../search-form/search-form.component';
+import { QuickFilter } from '../../../../shared/filters/quick-filter';
 
 @Component({
   selector: 'mk-datatable-header',
@@ -19,13 +20,16 @@ export class DatatableHeaderComponent implements OnInit {
   @Input() showOptions = true;
   @Input() showActions = true;
   @Input() title = '';
+  @Input() quickFilters: QuickFilter[];
 
   @Output() onFilter = new EventEmitter<string>();
+  @Output() onQuickFilter = new EventEmitter<QuickFilter>();
   @Output() onCollapseMenu = new EventEmitter<any>();
   @Output() onExportAllToCSV = new EventEmitter<string>();
   @Output() onExportFilteredToCSV = new EventEmitter<string>();
   @Output() onReload = new EventEmitter();
   @Output() onFilterReset = new EventEmitter();
+  @Output() onQuickFilterReset = new EventEmitter();
   @Output() onAddItem = new EventEmitter();
 
   currentFilter = '';
@@ -61,5 +65,13 @@ export class DatatableHeaderComponent implements OnInit {
     this.searchForm.reset();
     this.filter('');
     this.onFilterReset.emit();
+  }
+
+  quickFilterBy(filter: QuickFilter) {
+    this.onQuickFilter.emit(filter);
+  }
+
+  resetQuickFilter() {
+    this.onQuickFilterReset.emit();
   }
 }

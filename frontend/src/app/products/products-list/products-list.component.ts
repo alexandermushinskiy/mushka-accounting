@@ -9,6 +9,8 @@ import { Product } from '../../shared/models/product.model';
 import { Category } from '../../shared/models/category.model';
 import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatable.component';
 import { ProductFilter } from '../../shared/filters/product-filter';
+import { QuickFilter } from '../../shared/filters/quick-filter';
+import { ProductQuickFilter } from '../../shared/filters/product-quick-filter';
 
 @Component({
   selector: 'mk-products-list',
@@ -31,6 +33,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
   isAddButtonShown = false;
   confirmDeleteMessage: string;
   productToEdit: string;
+  productFilters: QuickFilter[];
 
   private productToDelete: string;
   private modalRef: NgbModalRef;
@@ -48,6 +51,8 @@ export class ProductsListComponent extends SortableDatatableComponent implements
 
   ngOnInit() {
     this.loadingIndicator = true;
+
+    this.productFilters = new ProductQuickFilter().getFilters();
   }
 
   onActive(event) {
@@ -101,6 +106,16 @@ export class ProductsListComponent extends SortableDatatableComponent implements
     const filteredProducts = this.products.filter(prod => productFilter.filter(prod));
 
     this.updateDatatableRows(filteredProducts);
+  }
+
+  quickFilter(filter: QuickFilter) {
+    const filteredProducts = this.products.filter(prod => filter.filterFunc(prod));
+
+    this.updateDatatableRows(filteredProducts);
+  }
+
+  resetQuickFilter() {
+    this.updateDatatableRows(this.products);
   }
 
   onProductSaved(product: Product) {

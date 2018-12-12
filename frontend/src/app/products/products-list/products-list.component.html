@@ -7,9 +7,12 @@
                     [availableColumns]="availableCols"
                     [showMenuToggle]="true"
                     [showAddButton]="isAddButtonShown"
+                    [quickFilters]="productFilters"
                     (onCollapseMenu)="toggleCollapseMode()"
                     (onAddItem)="addProduct(content)"
-                    (onFilter)="filter($event)">
+                    (onFilter)="filter($event)"
+                    (onQuickFilter)="quickFilter($event)"
+                    (onQuickFilterReset)="resetQuickFilter()">
     </mk-datatable-header>
   </div>
   <div class="appbody">

@@ -26,9 +26,17 @@
         <mk-search-form (onSearch)="filter($event)"></mk-search-form>
       </div>
       <div class="btn-set" *ngIf="showOptions">
-        <button class="btn btn-icon btn-refresh" title="Refresh table" (click)="reloadTickets()">
-          <i class="fa fa-refresh"></i>
-        </button>
+
+        <div ngbDropdown placement="bottom-right" *ngIf="quickFilters && quickFilters.length > 0">
+          <button class="btn btn-icon" ngbDropdownToggle id="filters">
+            <i class="fa fa-filter" title="Show filters" aria-hidden="true"></i>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="filters">
+            <button class="dropdown-item" *ngFor="let filter of quickFilters" (click)="quickFilterBy(filter)">{{ filter.description }}</button>
+            <button class="dropdown-item show-all" (click)="resetQuickFilter()">Показать все</button>
+          </div>
+        </div>
+
         <div ngbDropdown placement="bottom-right">
           <button class="btn btn-icon" ngbDropdownToggle id="export-csv">
             <i class="fa fa-download" title="Export to CSV" aria-hidden="true"></i>
@@ -38,6 +46,7 @@
             <button class="dropdown-item" (click)="exportFilteredToCSV()">Экспорт видимых данных в CSV</button>
           </div>
         </div>
+
       </div>
     </div>
   </div>

@@ -39,7 +39,7 @@ export class ConverterService {
       createdOn: this.datetimeService.toString(source.createdOn),
       sizes: this.convertToProductSizes(source.sizes),
       lastDeliveryDate: !!source.lastDeliveryDate ? this.datetimeService.toString(source.lastDeliveryDate) : null,
-      lastDeliveryCount: source.lastDeliveryCount,
+      lastDeliveryCount: !!source.lastDeliveryCount ? source.lastDeliveryCount : 0,
       deliveriesCount: source.deliveriesCount
     });
   }
