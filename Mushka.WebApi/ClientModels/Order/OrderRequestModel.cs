@@ -11,7 +11,7 @@ namespace Mushka.WebApi.ClientModels.Order
         public DateTime OrderDate { get; set; }
 
         [Required]
-        public PaymentMethod PaymentMethod { get; set; }
+        public OrderPaymentType PaymentType { get; set; }
 
         [Required]
         [MinLength(1)]

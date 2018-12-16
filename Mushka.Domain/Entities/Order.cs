@@ -15,7 +15,14 @@ namespace Mushka.Domain.Entities
 
         public DateTime OrderDate { get; set; }
 
-        public PaymentMethod PaymentMethod { get; set; }
+        public OrderPaymentType PaymentType { get; set; }
+
+        public string City { get; set; }
+
+        public string Region { get; set; }
+
+        public Guid ClientId { get; set; }
+        public Client Client { get; set; }
 
         public ICollection<OrderProduct> Products { get; set; }
     }

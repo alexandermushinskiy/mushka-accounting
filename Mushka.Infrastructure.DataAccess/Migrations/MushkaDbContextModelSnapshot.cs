@@ -44,6 +44,29 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("Mushka.Domain.Entities.Client", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
+                    b.Property<string>("MiddleName");
+
+                    b.Property<string>("Phone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clients");
+                });
+
             modelBuilder.Entity("Mushka.Domain.Entities.ContactPerson", b =>
                 {
                     b.Property<Guid>("Id")
@@ -137,13 +160,23 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("Id");
 
+                    b.Property<string>("City")
+                        .IsRequired();
+
+                    b.Property<Guid>("ClientId");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnName("OrderDate")
                         .HasColumnType("Date");
 
-                    b.Property<int>("PaymentMethod");
+                    b.Property<int>("PaymentType");
+
+                    b.Property<string>("Region")
+                        .IsRequired();
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
 
                     b.ToTable("Orders");
                 });
@@ -300,6 +333,14 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.HasOne("Mushka.Domain.Entities.Size", "Size")
                         .WithMany("DeliveryProducts")
                         .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Mushka.Domain.Entities.Order", b =>
+                {
+                    b.HasOne("Mushka.Domain.Entities.Client", "Client")
+                        .WithMany("Orders")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

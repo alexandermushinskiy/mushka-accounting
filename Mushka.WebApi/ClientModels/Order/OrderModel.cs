@@ -10,7 +10,7 @@ namespace Mushka.WebApi.ClientModels.Order
 
         public DateTime OrderDate { get; set; }
 
-        public PaymentMethod PaymentMethod { get; set; }
+        public OrderPaymentType PaymentType { get; set; }
 
         public IEnumerable<OrderProductModel> Products { get; set; }
     }

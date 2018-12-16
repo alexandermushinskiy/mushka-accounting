@@ -12,7 +12,7 @@ namespace Mushka.WebApi.Resolvers
             {
                 Id = source.Id,
                 OrderDate = source.OrderDate,
-                PaymentMethod = source.PaymentMethod,
+                PaymentType = source.PaymentType,
                 Products = source.Products.Select(CreateOrderProductModel)
             };
 

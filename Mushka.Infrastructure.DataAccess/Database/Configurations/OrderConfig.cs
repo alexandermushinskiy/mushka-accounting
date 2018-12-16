@@ -21,6 +21,14 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .HasColumnName("OrderDate")
                 .HasColumnType("Date")
                 .IsRequired();
+
+            builder.Property(order => order.PaymentType);
+            builder.Property(order => order.City).IsRequired();
+            builder.Property(order => order.Region).IsRequired();
+
+            builder.HasOne(order => order.Client)
+                .WithMany(client => client.Orders)
+                .HasForeignKey(order => order.ClientId);
         }
     }
 }
