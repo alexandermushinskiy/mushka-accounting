@@ -29,7 +29,9 @@ namespace Mushka.Service.Services
 
         public async Task<ValidationResponse<IEnumerable<Delivery>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            IEnumerable<Delivery> deliveries = (await deliveryRepository.GetAllAsync(cancellationToken)).ToList();
+            IEnumerable<Delivery> deliveries = (await deliveryRepository.GetAllAsync(cancellationToken))
+                .OrderByDescending(delivery => delivery.DeliveryDate)
+                .ToList();
 
             string message = deliveries.Any()
                 ? "Deliveries were successfully retrieved."

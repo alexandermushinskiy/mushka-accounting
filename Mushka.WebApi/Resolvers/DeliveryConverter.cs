@@ -11,10 +11,14 @@ namespace Mushka.WebApi.Resolvers
             new DeliveryModel
             {
                 Id = source.Id,
+                Supplier = source.Supplier.Name,
                 RequestDate = source.RequestDate,
                 DeliveryDate = source.DeliveryDate,
                 Cost = source.Cost,
                 TransferFee = source.TransferFee,
+                BankFee = source.BankFee,
+                TotalCost = source.Cost + source.TransferFee + source.BankFee,
+                ProductsAmount = source.Products.Sum(prod => prod.ProductSizes.Sum(ps => ps.Quantity)),
                 Products = source.Products.Select(CreateDeliveryProductModel)
             };
 
@@ -31,7 +35,6 @@ namespace Mushka.WebApi.Resolvers
             new DeliveryProductSizeModel
             {
                 SizeId = deliveryProductSize.SizeId,
-                //SizeName = deliveryProductSize.Size?.Name,
                 Quantity = deliveryProductSize.Quantity
             };
     }

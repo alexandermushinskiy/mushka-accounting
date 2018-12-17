@@ -9,6 +9,7 @@ export class Supplier {
   notes: string;
   contactPersons: ContactPerson[] = [];
   service: string;
+  deliveriesCount: number;
 
   //paymentConditions: string;
 

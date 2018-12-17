@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Mushka.Domain.Comparers;
 using Mushka.Domain.Entities;
-using Mushka.Domain.Extensibility.Entities;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Infrastructure.DataAccess.Database;
 
@@ -22,6 +21,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         {
             return await Context.Suppliers
                 .Include(sup => sup.ContactPersons)
+                .Include(sup => sup.Deliveries)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
         }

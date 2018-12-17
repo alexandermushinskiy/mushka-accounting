@@ -19,11 +19,11 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         public override async Task<IEnumerable<Delivery>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Context.Deliveries
+                .Include(del => del.Supplier)
                 .Include(del => del.Products)
                     .ThenInclude(delProd => delProd.Product)
                 .Include(del => del.Products)
                     .ThenInclude(delProd => delProd.ProductSizes)
-                        //.ThenInclude(ps => ps.Size)
                 .ToListAsync(cancellationToken);
         }
 

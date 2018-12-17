@@ -1,12 +1,12 @@
 <nav class="menu">
   <span *ngFor="let item of menuItems">
-    <a [routerLink]="item.routePath"
-       (click)="onMenuItemSelected(item.title)"
-       [queryParams]="item.queryParams"
+    <a class="menu-item"
+       routerLinkActive="active"   
        [title]="item.title"
-       routerLinkActive="active"
-       class="menu-item"
-       [ngClass]="{'csr-disabled-control': !item.isEnabled}">
+       [routerLink]="item.routePath"
+       [queryParams]="item.queryParams"
+       [ngClass]="{'csr-disabled-control': !item.isEnabled}"
+       (click)="onMenuItemSelected(item.title)">
       <i class="fa" [ngClass]="item.icon"></i>
       {{ item.title }}
       <span *ngIf="item.badges > 0" class="badge">{{ item.badges }}</span>

@@ -44,10 +44,10 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .HasColumnName("BankFee")
                 .HasColumnType("Money");
 
-            //builder
-            //    .HasOne(del => del.Supplier)
-            //    .WithMany(sup => sup.Deliveries)
-            //    .HasForeignKey(del => del.SupplierId);
+            builder
+                .HasOne(del => del.Supplier)
+                .WithMany(sup => sup.Deliveries)
+                .HasForeignKey(del => del.SupplierId);
         }
     }
 }

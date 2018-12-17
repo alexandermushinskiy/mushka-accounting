@@ -156,7 +156,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
   private loadProducts(categoryId: string) {
     this.loadingIndicator = true;
 
-    this.productsService.getProductsByCategory(categoryId)
+    this.productsService.getByCategory(categoryId)
       .subscribe((products: Product[]) => {
         this.onLoadProductsSuccess(products);
       });

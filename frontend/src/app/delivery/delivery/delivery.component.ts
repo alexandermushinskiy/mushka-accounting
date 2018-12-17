@@ -80,11 +80,11 @@ export class DeliveryComponent implements OnInit {
     this.deliveryTypesList
       .map(type => this.deliveryItems[type] = new DeliveryItem(type, deliveryTypeNames[type], []));
 
-    this.deliveryService.getDeliveries()
-      .subscribe((deliveries: Delivery[]) => {
-        this.historicalDeliveries = deliveries.filter((del: Delivery) => !del.isDraft);
-        this.draftDeliveries = deliveries.filter((del: Delivery) => del.isDraft);
-      });
+    // this.deliveryService.getDeliveries()
+    //   .subscribe((deliveries: Delivery[]) => {
+    //     this.historicalDeliveries = deliveries.filter((del: Delivery) => !del.isDraft);
+    //     this.draftDeliveries = deliveries.filter((del: Delivery) => del.isDraft);
+    //   });
 
     this.buildForm();
   }

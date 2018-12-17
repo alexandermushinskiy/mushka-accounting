@@ -31,6 +31,7 @@ import { DataTablePagerComponent } from './widgets/datatable/datatable-pager/dat
 import { SelectSizeComponent } from './widgets/select-size/select-size.component';
 import { ToggleComponent } from './widgets/toggle/toggle.component';
 import { CheckboxComponent } from './widgets/checkbox/checkbox.component';
+import { NumberPipe } from './pipes/number.pipe';
 
 @NgModule({
   imports: [
@@ -58,6 +59,7 @@ import { CheckboxComponent } from './widgets/checkbox/checkbox.component';
     DashIfEmptyPipe,
     CurrencyPipe,
     FormatDatePipe,
+    NumberPipe,
     DatatableHeaderComponent,
     DatetimepickerComponent,
     CurrencyInputComponent,
@@ -86,6 +88,7 @@ import { CheckboxComponent } from './widgets/checkbox/checkbox.component';
     DashIfEmptyPipe,
     CurrencyPipe,
     FormatDatePipe,
+    NumberPipe,
     /* Components */
     LoadingScreenComponent,
     SpinnerComponent,

@@ -7,6 +7,7 @@ import { Product } from '../../shared/models/product.model';
 import { DatetimeService } from '../datetime/datetime.service';
 import { ProductSize } from '../../shared/models/product-size.model';
 import { Size } from '../../shared/models/size.model';
+import { Delivery } from '../../delivery/shared/models/delivery.model';
 
 @Injectable()
 export class ConverterService {
@@ -80,6 +81,7 @@ export class ConverterService {
       webSite: source.webSite,
       notes: source.notes,
       service: source.service,
+      deliveriesCount: source.deliveriesCount,
       contactPersons: this.convertToContactPersons(source.contactPersons)
     });
   }
@@ -96,6 +98,25 @@ export class ConverterService {
       email: source.email,
       position: source.position,
       city: source.city
+    });
+  }
+
+  convertToDeliveries(response: any[]): Delivery[] {
+    return response.map(res => this.convertToDelivery(res));
+  }
+
+  convertToDelivery(source: any): Delivery {
+    return new Delivery({
+      id: source.id,
+      supplier: source.supplier,
+      requestDate: this.datetimeService.toString(source.requestDate),
+      deliveryDate: this.datetimeService.toString(source.deliveryDate),
+      paymentMethod: source.paymentMethod,
+      cost: source.cost,
+      transferFee: source.transferFee,
+      bankFee: source.bankFee,
+      totalCost: source.totalCost,
+      productsAmount: source.productsAmount
     });
   }
 }

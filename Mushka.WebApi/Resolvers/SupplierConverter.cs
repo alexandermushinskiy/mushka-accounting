@@ -17,6 +17,7 @@ namespace Mushka.WebApi.Resolvers
                 WebSite = source.WebSite,
                 Notes = source.Notes,
                 Service = source.Service,
+                DeliveriesCount = source.Deliveries.Count,
                 ContactPersons = source.ContactPersons.Select(CreateSupplierContactPersonModel)
             };
 

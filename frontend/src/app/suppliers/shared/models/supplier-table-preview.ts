@@ -8,9 +8,9 @@ export class SupplierTablePreview extends DataTablePreview {
   webSite: string;
   service: string;
   contactPersons: ContactPerson[];
-
   paymentConditions: string;
   notes: string;
+  deliveriesCount: number;
 
   constructor(elem, index: number = 0) {
     super(elem, index);
@@ -21,8 +21,8 @@ export class SupplierTablePreview extends DataTablePreview {
     this.webSite = elem.webSite || this.defaultValue;
     this.notes = elem.notes;
     this.contactPersons = elem.contactPersons;
-    
     this.paymentConditions = elem.paymentConditions;
     this.service = elem.service;
+    this.deliveriesCount = elem.deliveriesCount;
   }
 }

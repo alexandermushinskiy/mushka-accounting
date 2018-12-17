@@ -1,0 +1,106 @@
+<div class="list-page">
+  <div class="list-page-header">
+    <mk-datatable-header
+                  [title]="'Поставки'"
+                  [total]="total"
+                  [shown]="shown"
+                  (onAddItem)="addDelivery()"
+                  (onFilter)="filter($event)">
+    </mk-datatable-header>
+  </div>
+  <div class="list-page-body">
+    <ngx-datatable #datatable
+                  class="material fullscreen"
+                  [loadingIndicator]="loadingIndicator"
+                  [headerHeight]="40"
+                  [rowHeight]="40"
+                  [rows]="deliveryRows"
+                  [columnMode]="'force'"
+                  [limit]="10"
+                  [messages]="{ emptyMessage: 'Нет данных для отображения' }"
+                  [rowClass]="getRowClass">
+
+      <ngx-datatable-column name="supplier">
+        <ng-template ngx-datatable-header-template let-column="column">
+          <span>Поставщик</span>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <span [title]="value" class="bold">{{ value }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      
+      <ngx-datatable-column name="deliveryDate">
+        <ng-template ngx-datatable-header-template let-column="column">
+          <span>Дата<br>получения</span>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <span [title]="value" class="bold">{{ value }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      
+      <ngx-datatable-column name="requestDate">
+        <ng-template ngx-datatable-header-template let-column="column">
+          <span>Дата<br>заявки</span>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <span [title]="value" class="bold">{{ value }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="productsAmount">
+        <ng-template ngx-datatable-header-template let-column="column">
+          <span>Количество<br>товаров</span>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <span [title]="value" class="bold">{{ value | mkNumber }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="cost">
+        <ng-template ngx-datatable-header-template let-column="column">
+          <span>Стоимость<br>товара</span>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <span [title]="value" class="bold">{{ value | mkCurrency }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="transferFee">
+        <ng-template ngx-datatable-header-template let-column="column">
+          <span>Стоимость<br>доставки</span>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <span [title]="value" class="bold">{{ value | mkCurrency }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="bankFee">
+        <ng-template ngx-datatable-header-template let-column="column">
+          <span>Комиссия<br>банка</span>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <span [title]="value" class="bold">{{ value | mkCurrency }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      
+      <ngx-datatable-column name="totalCost">
+        <ng-template ngx-datatable-header-template let-column="column">
+          <span>Общая<br>стоимость</span>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <span [title]="value" class="bold">{{ value | mkCurrency }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [width]="80" [canAutoResize]="false" [resizeable]="false">
+        <ng-template ngx-datatable-cell-template let-expanded="expanded" let-row="row" let-rowIndex="rowIndex">
+          <span class="buttons">
+            <a class="grid-edit edit" [routerLink]="[row.id]"></a>
+            <a class="grid-remove" (click)="delete(row)"></a>
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+    
+    </ngx-datatable>
+  </div>
+</div>

@@ -117,7 +117,7 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .HasColumnName("RequestDate")
                         .HasColumnType("Date");
 
-                    b.Property<Guid?>("SupplierId");
+                    b.Property<Guid>("SupplierId");
 
                     b.Property<decimal>("TransferFee")
                         .HasColumnName("TransferFee")
@@ -324,9 +324,10 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
             modelBuilder.Entity("Mushka.Domain.Entities.Delivery", b =>
                 {
-                    b.HasOne("Mushka.Domain.Entities.Supplier")
+                    b.HasOne("Mushka.Domain.Entities.Supplier", "Supplier")
                         .WithMany("Deliveries")
-                        .HasForeignKey("SupplierId");
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Mushka.Domain.Entities.DeliveryProduct", b =>

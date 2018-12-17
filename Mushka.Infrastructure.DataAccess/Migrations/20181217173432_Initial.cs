@@ -141,7 +141,7 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     Cost = table.Column<decimal>(type: "Money", nullable: false),
                     TransferFee = table.Column<decimal>(type: "Money", nullable: false),
                     BankFee = table.Column<decimal>(type: "Money", nullable: false),
-                    SupplierId = table.Column<Guid>(nullable: true)
+                    SupplierId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -151,7 +151,7 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         column: x => x.SupplierId,
                         principalTable: "Suppliers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

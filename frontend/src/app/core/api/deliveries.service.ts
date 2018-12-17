@@ -1,29 +1,38 @@
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs/Observable";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError, BehaviorSubject, of } from 'rxjs';
 
-import { Delivery } from "../../delivery/shared/models/delivery.model";
-import { Supplier } from "../../shared/models/supplier.model";
-import { ProductItem } from "../../delivery/shared/models/product-item.model";
-import { ServiceItem } from "../../delivery/shared/models/service-item.model";
-import { PaymentMethod } from "../../delivery/shared/enums/payment-method.enum";
-import { GuidGenerator } from "../guid-generator/guid.generator";
-import { Product } from "../../shared/models/product.model";
+import { Delivery } from '../../delivery/shared/models/delivery.model';
+import { Supplier } from '../../shared/models/supplier.model';
+import { ProductItem } from '../../delivery/shared/models/product-item.model';
+import { ServiceItem } from '../../delivery/shared/models/service-item.model';
+import { PaymentMethod } from '../../delivery/shared/enums/payment-method.enum';
+import { GuidGenerator } from '../guid-generator/guid.generator';
+import { Product } from '../../shared/models/product.model';
+import { ConverterService } from '../converter/converter.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class DeliveriesService {
+  private readonly endPoint = `${environment.apiEndpoint}/api/v1/deliveries`;
+  
   private static fakeDeliveries: Delivery[];
   private deliveries$: BehaviorSubject<Delivery[]> = new BehaviorSubject([]);
   
-  constructor() {
+  constructor(private http: HttpClient,
+    private converterService: ConverterService) {
     DeliveriesService.fakeDeliveries = this.getFakeDeliveries();
 
     this.loadDeliveries();
   }
   
-  getDeliveries(): Observable<Delivery[]> {
-    return this.deliveries$.asObservable().delay(500);
+  getAll(): Observable<Delivery[]> {
+    return this.http.get(this.endPoint)
+      .map((res: any) => this.converterService.convertToDeliveries(res.data))
+      .catch((res: any) => throwError(res.error.messages));
   }
+
+  
 
   create(delivery: Delivery): Observable<Delivery> {
     return this.addDeliveryInternal(delivery)

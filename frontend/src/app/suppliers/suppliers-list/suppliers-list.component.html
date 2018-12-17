@@ -1,13 +1,13 @@
-<div class="appmain">
-  <div class="appbar">
-      <mk-datatable-header
-                    [title]="'Поставщики'"
-                    [total]="total"
-                    [shown]="shown"
-                    (onAddItem)="addSupplier()">
-      </mk-datatable-header>
+<div class="list-page">
+  <div class="list-page-header">
+    <mk-datatable-header
+                  [title]="'Поставщики'"
+                  [total]="total"
+                  [shown]="shown"
+                  (onAddItem)="addSupplier()">
+    </mk-datatable-header>
   </div>
-  <div class="appbody">
+  <div class="list-page-body">
     <ngx-datatable #datatable
                   class="material fullscreen"
                   [loadingIndicator]="loadingIndicator"
@@ -17,7 +17,7 @@
                   [columnMode]="'force'">
 
       <ngx-datatable-column name="name">
-        <ng-template ngx-datatable-header-template let-column="column">
+        <ng-template ngx-datatable-header-template>
           <span>Название</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
@@ -26,7 +26,7 @@
       </ngx-datatable-column>
 
       <ngx-datatable-column name="service">
-        <ng-template ngx-datatable-header-template let-column="column">
+        <ng-template ngx-datatable-header-template>
           <span>Сервис</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
@@ -35,7 +35,7 @@
       </ngx-datatable-column>
       
       <ngx-datatable-column name="address">
-        <ng-template ngx-datatable-header-template let-column="column">
+        <ng-template ngx-datatable-header-template>
           <span>Адрес</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
@@ -44,7 +44,7 @@
       </ngx-datatable-column>
 
       <ngx-datatable-column name="email">
-        <ng-template ngx-datatable-header-template let-column="column">
+        <ng-template ngx-datatable-header-template>
           <span>Эл. почта</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
@@ -53,7 +53,7 @@
       </ngx-datatable-column>
       
       <ngx-datatable-column name="webSite">
-        <ng-template ngx-datatable-header-template let-column="column">
+        <ng-template ngx-datatable-header-template>
           <span>Сайт</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
@@ -61,6 +61,15 @@
         </ng-template>
       </ngx-datatable-column>
       
+      <ngx-datatable-column name="deliveriesCount" [width]="50">
+        <ng-template ngx-datatable-header-template>
+          <span>Кол-во<br>поставок</span>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-value="value">
+            <span [title]="value" class="bold">{{ value }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
       <ngx-datatable-column [width]="70" [canAutoResize]="false" [resizeable]="false">
         <ng-template ngx-datatable-cell-template let-expanded="expanded" let-row="row" let-rowIndex="rowIndex">
           <div class="more" (click)="toggleExpandRow(row, rowIndex)">
