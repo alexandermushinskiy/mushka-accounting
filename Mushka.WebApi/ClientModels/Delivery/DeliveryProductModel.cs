@@ -13,13 +13,4 @@ namespace Mushka.WebApi.ClientModels.Delivery
 
         public IEnumerable<DeliveryProductSizeModel> Sizes { get; set; }
     }
-
-    public class DeliveryProductSizeModel
-    {
-        public Guid SizeId { get; set; }
-
-        public string SizeName { get; set; }
-
-        public int Quantity { get; set; }
-    }
 }

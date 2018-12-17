@@ -5,6 +5,7 @@ export enum MenuLabels {
   SUPPLIERS = 'Поставщики',
   PARTNERS = 'Партнеры',
   LOGISTICS = 'Логистика',
+  DELIVERIES = 'Поставки',
   
   SEARCH_CSR = 'Search CSR',
   DASHBOARD = 'Dashboard',

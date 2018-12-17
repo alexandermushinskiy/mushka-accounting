@@ -17,6 +17,12 @@ export const MenuItems: MenuItem[] = [
     isExternal: true,
   }),
   new MenuItem({
+    title: MenuLabels.DELIVERIES,
+    icon: 'fa-archive',
+    routePath: '/deliveries',
+    isEnabled: true,
+  }),
+  new MenuItem({
     title: MenuLabels.SUPPLIERS,
     icon: 'fa-users',
     routePath: '/suppliers',

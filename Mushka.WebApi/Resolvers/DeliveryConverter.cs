@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using AutoMapper;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Delivery;
@@ -16,24 +15,24 @@ namespace Mushka.WebApi.Resolvers
                 DeliveryDate = source.DeliveryDate,
                 Cost = source.Cost,
                 TransferFee = source.TransferFee,
-                Products = source.Products.Select(prod => CreateDeliveryProductModel(source.Products, prod))
+                Products = source.Products.Select(CreateDeliveryProductModel)
             };
 
-        private static DeliveryProductModel CreateDeliveryProductModel(IEnumerable<DeliveryProduct> allDeliveryProducts, DeliveryProduct deliveryProduct) =>
+        private static DeliveryProductModel CreateDeliveryProductModel(DeliveryProduct deliveryProduct) =>
             new DeliveryProductModel
             {
                 ProductId = deliveryProduct.ProductId,
                 ProductName = deliveryProduct.Product?.Name,
                 PriceForItem = deliveryProduct.PriceForItem,
-                Sizes = allDeliveryProducts.Where(all => all.ProductId == deliveryProduct.ProductId).Select(CreateDeliveryProductSizeModel).ToList()
+                Sizes = deliveryProduct.ProductSizes.Select(CreateDeliveryProductSizeModel).ToList()
             };
 
-        private static DeliveryProductSizeModel CreateDeliveryProductSizeModel(DeliveryProduct deliveryProduct) =>
+        private static DeliveryProductSizeModel CreateDeliveryProductSizeModel(DeliveryProductSize deliveryProductSize) =>
             new DeliveryProductSizeModel
             {
-                //SizeId = deliveryProduct.SizeId,
-                //SizeName = deliveryProduct.Size?.Name,
-                //Quantity = deliveryProduct.Quantity,
+                SizeId = deliveryProductSize.SizeId,
+                //SizeName = deliveryProductSize.Size?.Name,
+                Quantity = deliveryProductSize.Quantity
             };
     }
 }
