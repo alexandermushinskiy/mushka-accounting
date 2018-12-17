@@ -31,9 +31,9 @@ namespace Mushka.WebApi.Resolvers
         private static DeliveryProductSizeModel CreateDeliveryProductSizeModel(DeliveryProduct deliveryProduct) =>
             new DeliveryProductSizeModel
             {
-                SizeId = deliveryProduct.SizeId,
-                SizeName = deliveryProduct.Size?.Name,
-                Quantity = deliveryProduct.Quantity,
+                //SizeId = deliveryProduct.SizeId,
+                //SizeName = deliveryProduct.Size?.Name,
+                //Quantity = deliveryProduct.Quantity,
             };
     }
 }

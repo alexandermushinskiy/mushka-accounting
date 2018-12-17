@@ -10,7 +10,7 @@ using Mushka.Infrastructure.DataAccess.Database;
 namespace Mushka.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(MushkaDbContext))]
-    [Migration("20181215163910_Initial")]
+    [Migration("20181216215634_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -138,22 +138,33 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
                     b.Property<Guid>("DeliveryId");
 
-                    b.Property<Guid>("SizeId");
-
                     b.Property<decimal>("PriceForItem")
                         .HasColumnName("PriceForItem")
                         .HasColumnType("Money");
+
+                    b.HasKey("ProductId", "DeliveryId");
+
+                    b.HasIndex("DeliveryId");
+
+                    b.ToTable("DeliveryProducts");
+                });
+
+            modelBuilder.Entity("Mushka.Domain.Entities.DeliveryProductSize", b =>
+                {
+                    b.Property<Guid>("ProductId");
+
+                    b.Property<Guid>("DeliveryId");
+
+                    b.Property<Guid>("SizeId");
 
                     b.Property<int>("Quantity")
                         .HasColumnName("Quantity");
 
                     b.HasKey("ProductId", "DeliveryId", "SizeId");
 
-                    b.HasIndex("DeliveryId");
-
                     b.HasIndex("SizeId");
 
-                    b.ToTable("DeliveryProducts");
+                    b.ToTable("DeliveryProductSizes");
                 });
 
             modelBuilder.Entity("Mushka.Domain.Entities.Order", b =>
@@ -331,10 +342,18 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .WithMany("Deliveries")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
 
+            modelBuilder.Entity("Mushka.Domain.Entities.DeliveryProductSize", b =>
+                {
                     b.HasOne("Mushka.Domain.Entities.Size", "Size")
-                        .WithMany("DeliveryProducts")
+                        .WithMany("DeliveryProductSizes")
                         .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Mushka.Domain.Entities.DeliveryProduct", "Product")
+                        .WithMany("ProductSizes")
+                        .HasForeignKey("ProductId", "DeliveryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

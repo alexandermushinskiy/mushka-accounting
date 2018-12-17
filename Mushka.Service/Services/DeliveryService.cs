@@ -51,22 +51,22 @@ namespace Mushka.Service.Services
         {
             foreach (var deliveryProduct in delivery.Products)
             {
-                var storedProduct = await productRepository.GetByIdAsync(deliveryProduct.ProductId, cancellationToken);
+                //var storedProduct = await productRepository.GetByIdAsync(deliveryProduct.ProductId, cancellationToken);
 
-                if (storedProduct == null)
-                {
-                    return CreateWarningValidationResponse($"Product with id {deliveryProduct.ProductId} is not found.", ValidationStatusType.NotFound);
-                }
+                //if (storedProduct == null)
+                //{
+                //    return CreateWarningValidationResponse($"Product with id {deliveryProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                //}
 
-                var storedProductSize = await productRepository.GetProductSizeAsync(deliveryProduct.ProductId, deliveryProduct.SizeId, cancellationToken);
+                //var storedProductSize = await productRepository.GetProductSizeAsync(deliveryProduct.ProductId, deliveryProduct.SizeId, cancellationToken);
 
-                if (storedProductSize == null)
-                {
-                    return CreateWarningValidationResponse($"Size with id {deliveryProduct.SizeId} is not found.", ValidationStatusType.NotFound);
-                }
+                //if (storedProductSize == null)
+                //{
+                //    return CreateWarningValidationResponse($"Size with id {deliveryProduct.SizeId} is not found.", ValidationStatusType.NotFound);
+                //}
                 
-                storedProductSize.Quantity += deliveryProduct.Quantity;
-                await productRepository.UpdateProductSize(storedProductSize, cancellationToken);
+                //storedProductSize.Quantity += deliveryProduct.Quantity;
+                //await productRepository.UpdateProductSize(storedProductSize, cancellationToken);
             }
 
             var addedDelivery = await deliveryRepository.AddAsync(delivery, cancellationToken);
@@ -88,13 +88,13 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Delivery with id {deliveryId} is not found.", ValidationStatusType.NotFound);
             }
 
-            foreach (var deliveryProduct in delivery.Products)
-            {
-                var storedProductSize = await productRepository.GetProductSizeAsync(deliveryProduct.ProductId, deliveryProduct.SizeId, cancellationToken);
-                storedProductSize.Quantity -= deliveryProduct.Quantity;
+            //foreach (var deliveryProduct in delivery.Products)
+            //{
+            //    var storedProductSize = await productRepository.GetProductSizeAsync(deliveryProduct.ProductId, deliveryProduct.SizeId, cancellationToken);
+            //    storedProductSize.Quantity -= deliveryProduct.Quantity;
 
-                await productRepository.UpdateProductSize(storedProductSize, cancellationToken);
-            }
+            //    await productRepository.UpdateProductSize(storedProductSize, cancellationToken);
+            //}
 
             await deliveryRepository.DeleteAsync(delivery, cancellationToken);
 

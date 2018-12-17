@@ -34,6 +34,7 @@ namespace Mushka.Infrastructure.DataAccess.Database
             modelBuilder.ApplyConfiguration(new ProductSizeConfig());
             modelBuilder.ApplyConfiguration(new DeliveryConfig());
             modelBuilder.ApplyConfiguration(new DeliveryProductConfig());
+            modelBuilder.ApplyConfiguration(new DeliveryProductSizeConfig());
             modelBuilder.ApplyConfiguration(new OrderConfig());
             modelBuilder.ApplyConfiguration(new OrderProductConfig());
             modelBuilder.ApplyConfiguration(new SupplierConfig());

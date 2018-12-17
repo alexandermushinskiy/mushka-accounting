@@ -9,7 +9,7 @@ namespace Mushka.Domain.Entities
         public Size()
         {
             Products = new List<ProductSize>();
-            DeliveryProducts = new List<DeliveryProduct>();
+            DeliveryProductSizes = new List<DeliveryProductSize>();
             OrderProducts = new List<OrderProduct>();
         }
 
@@ -19,7 +19,7 @@ namespace Mushka.Domain.Entities
 
         public IEnumerable<ProductSize> Products { get; set; }
 
-        public IEnumerable<DeliveryProduct> DeliveryProducts { get; set; }
+        public IEnumerable<DeliveryProductSize> DeliveryProductSizes { get; set; }
 
         public IEnumerable<OrderProduct> OrderProducts { get; set; }
     }

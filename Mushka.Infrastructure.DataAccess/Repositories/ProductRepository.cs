@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +43,9 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                     .ThenInclude(s => s.Size)
                 .Include(prod => prod.Deliveries)
                     .ThenInclude(del => del.Delivery)
+                .Include(prod => prod.Deliveries)
+                    .ThenInclude(del => del.ProductSizes)
+                        .ThenInclude(ps => ps.Size)
                 .ToListAsync(cancellationToken);
         }
 
