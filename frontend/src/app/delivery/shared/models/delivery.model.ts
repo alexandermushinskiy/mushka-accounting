@@ -6,9 +6,10 @@ export class Delivery {
   id: string;
   supplier: string;
   requestDate: string;
-  deliveryDate: string;
+  receivedDate: string;
   paymentMethod: PaymentMethod;
   transferFee: number;
+  bankFee: number;
   cost: number;
   totalCost: number;
   productsAmount: number;

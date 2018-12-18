@@ -9,6 +9,7 @@ import { SuppliersListComponent } from './suppliers/suppliers-list/suppliers-lis
 import { SupplierComponent } from './suppliers/supplier/supplier.component';
 import { DeliveriesListComponent } from './delivery/deliveries-list/deliveries-list.component';
 import { DeliveryComponent } from './delivery/delivery/delivery.component';
+import { DeliveryTmpComponent } from './delivery/delivery-tmp/delivery-tmp.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'orders', pathMatch: 'full' },
@@ -23,8 +24,8 @@ const routes: Routes = [
   { path: 'partners', component: PartnersComponent, pathMatch: 'full' },
   { path: 'deliveries', children: [
     { path: '', component: DeliveriesListComponent, pathMatch: 'full' },
-    { path: 'new', component: DeliveryComponent, pathMatch: 'full' },
-    { path: ':id', component: DeliveryComponent, pathMatch: 'full' }
+    { path: 'new', component: DeliveryTmpComponent, pathMatch: 'full' },
+    { path: ':id', component: DeliveryTmpComponent, pathMatch: 'full' }
   ]}
 ];
 

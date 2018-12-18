@@ -10,7 +10,7 @@ namespace Mushka.WebApi.ClientModels.Delivery
 
         public DateTime RequestDate { get; set; }
 
-        public DateTime DeliveryDate { get; set; }
+        public DateTime ReceivedDate { get; set; }
 
         public PaymentMethod PaymentMethod { get; set; }
 

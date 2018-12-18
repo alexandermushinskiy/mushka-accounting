@@ -1,0 +1,12 @@
+<mk-datetimepicker [date]="requestDate"
+                   [dateFormat]="'YYYY-MM-DD'"
+                   [pickerType]="'calendar'"
+                   [isNow]="true"
+                   (onDateChanged)="dateChanged($event)">
+  <div class="input-wrapper datepicker-input">
+    <input class="form-control requestDate"
+                    [(ngModel)]="dateValue"
+                    [placeholder]="placeholder"/>
+    <i class="fa fa-calendar-o"></i>
+  </div>
+</mk-datetimepicker>

@@ -1,8 +1,9 @@
 @import "../../../../variables";
 
-.csr-datetimepicker {
+.mk-datetimepicker {
   position: relative;
   display: inline-block;
+  width: 100%;
 
   &-dialog {
     position: absolute;

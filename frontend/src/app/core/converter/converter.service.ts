@@ -110,7 +110,7 @@ export class ConverterService {
       id: source.id,
       supplier: source.supplier,
       requestDate: this.datetimeService.toString(source.requestDate),
-      deliveryDate: this.datetimeService.toString(source.deliveryDate),
+      receivedDate: this.datetimeService.toString(source.receivedDate),
       paymentMethod: source.paymentMethod,
       cost: source.cost,
       transferFee: source.transferFee,

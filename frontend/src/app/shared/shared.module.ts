@@ -32,6 +32,7 @@ import { SelectSizeComponent } from './widgets/select-size/select-size.component
 import { ToggleComponent } from './widgets/toggle/toggle.component';
 import { CheckboxComponent } from './widgets/checkbox/checkbox.component';
 import { NumberPipe } from './pipes/number.pipe';
+import { DatetimepickerWrapperComponent } from './widgets/datetimepicker-wrapper/datetimepicker-wrapper.component';
 
 @NgModule({
   imports: [
@@ -70,7 +71,8 @@ import { NumberPipe } from './pipes/number.pipe';
     DataTablePagerComponent,
     SelectSizeComponent,
     ToggleComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    DatetimepickerWrapperComponent
   ],
   exports: [
     /* Common modules */
@@ -105,7 +107,8 @@ import { NumberPipe } from './pipes/number.pipe';
     DataTablePagerComponent,
     SelectSizeComponent,
     ToggleComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    DatetimepickerWrapperComponent
   ]
 })
 

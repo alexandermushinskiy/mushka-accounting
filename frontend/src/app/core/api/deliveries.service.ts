@@ -32,6 +32,12 @@ export class DeliveriesService {
       .catch((res: any) => throwError(res.error.messages));
   }
 
+  getById(deliveryId: string): Observable<Delivery> {
+    return this.http.get(`${this.endPoint}/${deliveryId}`)
+      .map((res: any) => this.converterService.convertToDelivery(res.data))
+      .catch((res: any) => throwError(res.error.messages));
+  }
+
   
 
   create(delivery: Delivery): Observable<Delivery> {
