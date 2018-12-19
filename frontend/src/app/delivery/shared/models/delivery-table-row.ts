@@ -4,7 +4,7 @@ import { PaymentMethod } from '../enums/payment-method.enum';
 export class DeliveryTableRow extends DataTablePreview {
   supplier: string;
   requestDate: string;
-  deliveryDate: string;
+  receivedDate: string;
   paymentMethod: PaymentMethod;
   cost: number;
   transferFee: number;
@@ -17,7 +17,7 @@ export class DeliveryTableRow extends DataTablePreview {
 
     this.supplier = elem.supplier;
     this.requestDate = elem.requestDate;
-    this.deliveryDate = elem.deliveryDate;
+    this.receivedDate = elem.receivedDate;
     this.paymentMethod = elem.paymentMethod;
     this.transferFee = elem.transferFee;
     this.bankFee = elem.bankFee;
