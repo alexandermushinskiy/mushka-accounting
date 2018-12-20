@@ -14,7 +14,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
     public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
         where TEntity : class, IEntity
     {
-        private readonly DbSet<TEntity> dbSet;
+        protected readonly DbSet<TEntity> dbSet;
 
         protected RepositoryBase(MushkaDbContext context)
         {

@@ -1,0 +1,16 @@
+<div ngbDropdown class="dropdown">
+  <button type="button"
+          class="btn form-control"
+          id="dropdown"
+          [ngClass]="(!selectedSize && isRequired) ? 'required-dropdown' : ''"
+          ngbDropdownToggle>
+    <span [ngClass]="{'placeholder': !selectedSize}">{{ selectedSize ? selectedSize.name : 'Выберите размер' }}</span>
+    <i class="ico-chevron-down"></i>
+  </button>
+  <div ngbDropdownMenu aria-labelledby="dropdown" class="dropdown-max-height">
+    <button class="dropdown-item" *ngFor="let size of sizes" (click)="onOptionSelected(size)">
+      {{ size.name }}
+    </button>
+  </div>
+</div>
+  

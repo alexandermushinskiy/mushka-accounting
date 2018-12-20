@@ -1,5 +1,4 @@
 import { Component, OnInit, forwardRef, Input, Output, EventEmitter } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -24,7 +23,7 @@ export class CurrencyInputComponent implements OnInit, ControlValueAccessor {
   ngOnInit() {
   }
 
-  onChanged(value) {
+  onChanged(value: number | null) {
     this.value = value;
     this.onChangeCallback(this.value);
   }

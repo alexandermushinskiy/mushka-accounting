@@ -1,0 +1,35 @@
+<div class="input-wrapper">
+<input #item
+        type="text"
+        id="name"
+        class="form-control"
+        autocomplete="off"
+        typeaheadOptionField="name"
+        [placeholder]="placeholder"
+        [ngClass]="{'required-dropdown' : isRequired && displayValue.length === 0}"
+        [ngModel]="displayValue"
+        (ngModelChange)="onValueChanged($event)"
+        [typeahead]="items"
+        [typeaheadMinLength]="1"
+        [typeaheadOptionsLimit]="7"
+        [typeaheadWaitMs]="300"
+        [typeaheadItemTemplate]="itemAutocompleteTpl"
+        (typeaheadLoading)="onLoading($event)"
+        (typeaheadOnSelect)="onSelectItem($event)"
+        (keyup)="onKeyup()" />
+<i class="fa fa-close" *ngIf="!isLoading && displayValue.length > 0" (click)="clear()"></i>
+<mk-spinner [isLoading]="isLoading"></mk-spinner>
+</div>
+<div class="error-message" *ngIf="displayValue.length > 0 && foundItems.length === 0 && !isLoading">
+  <i class="arrow"></i>
+  Данного товара нет в системе, добавьте его во вкладке 
+  <a aria-label="Товары" [routerLink]="'/products'">"Товары"</a>
+</div>
+
+<ng-template #itemAutocompleteTpl let-model="item">
+  <p>
+    {{ model.name }} ({{ model.code }})
+    <br>
+    <small>{{ model.category.name }}</small>
+  </p>
+</ng-template>

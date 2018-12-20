@@ -74,7 +74,6 @@ export class SupplierComponent implements OnInit {
   }
 
   addPaymentMethod() {
-    
   }
 
   private onSaveSuccess() {
@@ -116,7 +115,6 @@ export class SupplierComponent implements OnInit {
       contactPersons: supplierFormValue.contactPersons
     });
   }
-
 
   private createContactPersonFormGroup(contactPerson: ContactPerson): FormGroup {
     return this.formBuilder.group({

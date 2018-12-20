@@ -26,11 +26,17 @@ namespace Mushka.WebApi.Resolvers
                 Code = source.Code,
                 CreatedOn = source.CreatedOn,
                 CategoryId = source.CategoryId,
+                Category = ConvertToCategoryModel(source.Category),
                 DeliveriesCount = source.Deliveries.Count,
                 LastDeliveryDate = lastDelivery?.DeliveryDate,
                 LastDeliveryCount = lastDeliveryCount,
                 Sizes = source.Sizes.Select(CreateProductSizeModel).ToArray()
             };
+        }
+
+        private static CategoryModel ConvertToCategoryModel(Category category)
+        {
+            return category == null ? null : new CategoryModel { Id = category.Id, Name = category.Name };
         }
 
         private static ProductSizeModel CreateProductSizeModel(ProductSize productSize) =>

@@ -11,6 +11,7 @@ using Mushka.WebApi.ClientModels.Order;
 using Mushka.WebApi.ClientModels.Product;
 using Mushka.WebApi.ClientModels.Supplier;
 using Mushka.WebApi.Resolvers;
+using CategoryModel = Mushka.WebApi.ClientModels.Category.CategoryModel;
 
 namespace Mushka.WebApi
 {

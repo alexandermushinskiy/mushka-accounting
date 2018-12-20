@@ -30,6 +30,12 @@ export class ProductsServce {
       .catch((res: any) => throwError(res.error.messages));
   }
 
+  getByCriteria(criteria: string): Observable<Product[]> {
+    return this.http.get(`${this.endPoint}/criteria/${criteria}`)
+      .map((res: any) => this.converterService.convertToProducts(res.data))
+      .catch((res: any) => throwError(res.error.messages));
+  }
+
   create(product: Product): Observable<Product> {
     const requestModel = this.convertToRequestData(product);
 
@@ -56,6 +62,8 @@ export class ProductsServce {
     return this.http.delete(`${this.endPoint}/${productId}`)
       .catch((res: any) => throwError(res.error.messages));
   }
+
+
 
   getProducts(criteria: string): Observable<Product[]> {
     const foundProducts = ProductsServce.fakeProducts

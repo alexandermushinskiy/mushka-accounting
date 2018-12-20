@@ -15,9 +15,9 @@ import { DeliveryItem } from '../shared/models/delivery-item.model';
 import { DeliveryOption } from '../shared/enums/delivery-option.enum';
 import { DeliveryItemsValidator } from '../shared/validators/delivery-items.validator';
 import { NotificationsService } from '../../core/notifications/notifications.service';
-import { SuppliersDropdownComponent } from '../shared/widgets/suppliers-dropdown/suppliers-dropdown.component';
 import { DeliveryProductsListComponent } from '../delivery-products-list/delivery-products-list.component';
 import { DeliveryServicesListComponent } from '../delivery-services-list/delivery-services-list.component';
+import { SuppliersDropdownComponent } from '../../shared/widgets/suppliers-dropdown/suppliers-dropdown.component';
 
 @Component({
   selector: 'mk-delivery',

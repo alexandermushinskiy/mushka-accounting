@@ -1,3 +1,5 @@
+@import '../../../variables';
+
 .data-container {
   margin-right: 0;
   margin-left: 0;
@@ -6,4 +8,27 @@
 
 .notes {
   width: 100%;
+}
+
+// input[type="number"] {
+//   -moz-appearance: textfield;
+// }
+// input[type="number"]::-webkit-inner-spin-button, 
+// input[type="number"]::-webkit-outer-spin-button { 
+//   -webkit-appearance: none; 
+//   margin: 0; 
+// }
+
+.btn-remove {
+  position: absolute;
+  right: -17px;
+  top: 12px;
+  color: $text-muted;
+  .ico-close {
+    font-size: 1rem;
+  }
+}
+
+.product-row {
+  padding-right: 25px;
 }

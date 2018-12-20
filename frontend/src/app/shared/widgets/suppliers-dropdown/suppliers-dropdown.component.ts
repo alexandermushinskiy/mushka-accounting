@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { Supplier } from '../../../../shared/models/supplier.model';
-import { SuppliersService } from '../../../../core/api/suppliers.service';
+import { Supplier } from '../../../shared/models/supplier.model';
+import { SuppliersService } from '../../../core/api/suppliers.service';
 
 
 @Component({
@@ -47,7 +47,7 @@ export class SuppliersDropdownComponent implements OnInit, ControlValueAccessor 
 
   onOptionSelected(supplier: Supplier) {
     this.selectedSupplier = supplier;
-    
+
     this.onChangeCallback(supplier);
     this.onSupplierSelected.emit(supplier);
   }

@@ -35,7 +35,7 @@ export class ConverterService {
       id: source.id,
       name: source.name,
       code: source.code,
-      category: this.convertToCategory({id: source.categoryId}),
+      category: this.convertToCategory(source.category),
       categoryId: source.categoryId,
       createdOn: this.datetimeService.toString(source.createdOn),
       sizes: this.convertToProductSizes(source.sizes),

@@ -64,7 +64,7 @@ export class DeliveryProductModalComponent implements OnInit {
   }
 
   onLoading(isLoading: boolean) {
-    //this.isLoadingItems = isLoading;
+    // this.isLoadingItems = isLoading;
   }
 
   onSelectItem(match: TypeaheadMatch) {

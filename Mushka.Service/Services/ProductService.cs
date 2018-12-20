@@ -60,9 +60,23 @@ namespace Mushka.Service.Services
                 .OrderBy(product => product.Name)
                 .ToList();
 
-            string message = products.Any()
+            var message = products.Any()
                 ? $"Products were successfully retrieved for category {categoryId}."
                 : $"No products for category {categoryId}.";
+
+            return CreateInfoValidationResponse(products, message);
+        }
+
+        public async Task<ValidationResponse<IEnumerable<Product>>> GetByCriteriaAsync(string criteria, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            IEnumerable<Product> products = (await productRepository.GetAsync(prod =>
+                    prod.Name.ToUpper().Contains(criteria.ToUpper()) || prod.Code.ToUpper().Contains(criteria.ToUpper()), cancellationToken))
+                .OrderBy(product => product.Name)
+                .ToList();
+
+            var message = products.Any()
+                ? $"Products were successfully retrieved by criteria {criteria}."
+                : $"No products for criteria {criteria}.";
 
             return CreateInfoValidationResponse(products, message);
         }

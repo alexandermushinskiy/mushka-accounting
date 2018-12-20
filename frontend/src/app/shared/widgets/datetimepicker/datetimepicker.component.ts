@@ -49,7 +49,7 @@ export class DatetimepickerComponent implements OnInit {
   timeModel: NgbTimeStruct;
   maxDate: NgbDateStruct;
   minDate: NgbDateStruct;
-  
+
   constructor() { }
 
   ngOnInit() {
@@ -62,7 +62,7 @@ export class DatetimepickerComponent implements OnInit {
     }
     const contentChild = this.getPositionElement();
 
-    if (contentChild !== el && !this.root.nativeElement.contains(el) && !el.parentNode.classList.contains('ngb-dp-day')) {
+    if (contentChild !== el && !this.root.nativeElement.contains(el) && el.parentNode && !el.parentNode.classList.contains('ngb-dp-day')) {
       this.close();
     }
   }

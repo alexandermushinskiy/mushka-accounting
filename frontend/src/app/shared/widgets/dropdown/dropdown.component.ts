@@ -16,10 +16,11 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
   @Input() initialValue: string;
   @Input() required: boolean;
   @Input() isDisabled = false;
+  @Input() defaultValue: string;
   @Output() onSelectedValue = new EventEmitter<string>();
 
   value: string;
-  
+
   constructor() { }
 
   ngOnInit() {
@@ -27,7 +28,7 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
       this.value = this.initialValue;
     }
   }
-  
+
   writeValue(value: any): void {
     this.value = value;
   }

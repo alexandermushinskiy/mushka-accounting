@@ -15,17 +15,17 @@ import { environment } from '../../../environments/environment';
 @Injectable()
 export class DeliveriesService {
   private readonly endPoint = `${environment.apiEndpoint}/api/v1/deliveries`;
-  
+
   private static fakeDeliveries: Delivery[];
   private deliveries$: BehaviorSubject<Delivery[]> = new BehaviorSubject([]);
-  
+
   constructor(private http: HttpClient,
     private converterService: ConverterService) {
     DeliveriesService.fakeDeliveries = this.getFakeDeliveries();
 
     this.loadDeliveries();
   }
-  
+
   getAll(): Observable<Delivery[]> {
     return this.http.get(this.endPoint)
       .map((res: any) => this.converterService.convertToDeliveries(res.data))
@@ -38,7 +38,6 @@ export class DeliveriesService {
       .catch((res: any) => throwError(res.error.messages));
   }
 
-  
 
   create(delivery: Delivery): Observable<Delivery> {
     return this.addDeliveryInternal(delivery)

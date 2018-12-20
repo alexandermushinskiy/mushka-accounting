@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { LoadingScreenComponent } from './widgets/loading-screen/loading-screen.component';
 import { SpinnerComponent } from './widgets/spinner/spinner.component';
@@ -33,6 +34,9 @@ import { ToggleComponent } from './widgets/toggle/toggle.component';
 import { CheckboxComponent } from './widgets/checkbox/checkbox.component';
 import { NumberPipe } from './pipes/number.pipe';
 import { DatetimepickerWrapperComponent } from './widgets/datetimepicker-wrapper/datetimepicker-wrapper.component';
+import { DropdownSizesComponent } from './widgets/dropdown-sizes/dropdown-sizes.component';
+import { SuppliersDropdownComponent } from './widgets/suppliers-dropdown/suppliers-dropdown.component';
+import { TypeaheadProductsComponent } from './widgets/typeahead-products/typeahead-products.component';
 
 @NgModule({
   imports: [
@@ -44,6 +48,7 @@ import { DatetimepickerWrapperComponent } from './widgets/datetimepicker-wrapper
     CurrencyMaskModule,
     NgSelectModule,
     NgbModule.forRoot(),
+    TypeaheadModule.forRoot()
     // NgxMyDatePickerModule.forRoot()
   ],
   declarations: [
@@ -72,7 +77,10 @@ import { DatetimepickerWrapperComponent } from './widgets/datetimepicker-wrapper
     SelectSizeComponent,
     ToggleComponent,
     CheckboxComponent,
-    DatetimepickerWrapperComponent
+    DatetimepickerWrapperComponent,
+    DropdownSizesComponent,
+    SuppliersDropdownComponent,
+    TypeaheadProductsComponent
   ],
   exports: [
     /* Common modules */
@@ -108,7 +116,10 @@ import { DatetimepickerWrapperComponent } from './widgets/datetimepicker-wrapper
     SelectSizeComponent,
     ToggleComponent,
     CheckboxComponent,
-    DatetimepickerWrapperComponent
+    DatetimepickerWrapperComponent,
+    DropdownSizesComponent,
+    SuppliersDropdownComponent,
+    TypeaheadProductsComponent
   ]
 })
 
