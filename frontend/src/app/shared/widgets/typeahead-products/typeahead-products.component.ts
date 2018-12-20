@@ -19,6 +19,7 @@ import { ProductsServce } from '../../../core/api/products.service';
 export class TypeaheadProductsComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder = 'Начните печать';
   @Input() isRequired = true;
+  
 
   displayValue = '';
   selectedProduct: Product;
@@ -59,6 +60,7 @@ export class TypeaheadProductsComponent implements OnInit, ControlValueAccessor 
 
   onSelectItem(match: TypeaheadMatch) {
     this.selectedProduct = match.item;
+    console.info(match.item);
     this.onChangeCallback(this.selectedProduct);
   }
 

@@ -26,11 +26,12 @@ export class SelectSizeComponent implements OnInit, ControlValueAccessor {
   @Input() isMultiple = true;
   @Input() canClearAll = true;
   @Input() isDisablePreselected = false;
+  @Input() notFoundText = 'Нет данных';
   @Output() onSelectedSizes = new EventEmitter<string[]>();
 
   selectedIds: string[];
   sizes: SelectSize[] = [];
-  isLoading = true;
+  isLoading = false;
 
   constructor() { }
 

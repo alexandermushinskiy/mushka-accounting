@@ -182,12 +182,22 @@
                   <div class="form-row product-row" *ngFor="let productControl of deliveryForm.get('products').controls; let index=index" [formGroupName]="index">
                     <div class="col-sm-6">
                       <div class="field-group">
-                        <mk-typeahead-products formControlName="name"></mk-typeahead-products>
+                        <!-- <mk-typeahead-products formControlName="name"></mk-typeahead-products> -->
+                        <mk-select-products [products]="productsList" formControlName="product"></mk-select-products>
                       </div>
                     </div>
                     <div class="col-sm-2">
                       <div class="field-group">
-                        <mk-dropdown-sizes formControlName="size"></mk-dropdown-sizes>
+                        <select class="form-control" formControlName="size">
+                          <option *ngIf="!hasProductSizes(productControl.value.product)" [ngValue]="null">Нет</option>
+                          <option *ngFor="let size of getProductSizes(productControl.value.product)" [ngValue]="size">{{ size.name }}</option>
+                        </select>
+                        <!-- <mk-select-size class="form-control"
+                                        formControlName="size"
+                                        [isMultiple]="false"
+                                        [availableSizes]="getProductSizes(productControl.value.product)">
+                        </mk-select-size> -->
+                        <!-- <mk-dropdown-sizes formControlName="size"></mk-dropdown-sizes> -->
                       </div>
                     </div>
                     <div class="col-sm-2">

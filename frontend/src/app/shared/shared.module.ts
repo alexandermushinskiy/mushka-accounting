@@ -37,6 +37,7 @@ import { DatetimepickerWrapperComponent } from './widgets/datetimepicker-wrapper
 import { DropdownSizesComponent } from './widgets/dropdown-sizes/dropdown-sizes.component';
 import { SuppliersDropdownComponent } from './widgets/suppliers-dropdown/suppliers-dropdown.component';
 import { TypeaheadProductsComponent } from './widgets/typeahead-products/typeahead-products.component';
+import { SelectProductsComponent } from './widgets/select-products/select-products.component';
 
 @NgModule({
   imports: [
@@ -80,7 +81,8 @@ import { TypeaheadProductsComponent } from './widgets/typeahead-products/typeahe
     DatetimepickerWrapperComponent,
     DropdownSizesComponent,
     SuppliersDropdownComponent,
-    TypeaheadProductsComponent
+    TypeaheadProductsComponent,
+    SelectProductsComponent
   ],
   exports: [
     /* Common modules */
@@ -119,7 +121,8 @@ import { TypeaheadProductsComponent } from './widgets/typeahead-products/typeahe
     DatetimepickerWrapperComponent,
     DropdownSizesComponent,
     SuppliersDropdownComponent,
-    TypeaheadProductsComponent
+    TypeaheadProductsComponent,
+    SelectProductsComponent
   ]
 })
 

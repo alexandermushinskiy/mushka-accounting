@@ -103,7 +103,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
 
   private updateSizesValidity(isRequired: boolean) {
     const valueCtrl = this.productForm.controls['sizes'];
-
+    
     if (isRequired) {
       valueCtrl.setValidators(Validators.required);
     } else {

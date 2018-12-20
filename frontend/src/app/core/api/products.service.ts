@@ -18,6 +18,12 @@ export class ProductsServce {
               private converterService: ConverterService) {
   }
 
+  getAll(): Observable<Product[]>  {
+    return this.http.get(this.endPoint)
+      .map((res: any) => this.converterService.convertToProducts(res.data))
+      .catch((res: any) => throwError(res.error.messages));
+  }
+
   getByCategory(categoryId: string): Observable<Product[]> {
     return this.http.get(`${this.categoriesEndPoint}/${categoryId}/products`)
       .map((res: any) => this.converterService.convertToProducts(res.data))

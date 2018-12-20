@@ -26,6 +26,7 @@ export class DeliveryTmpComponent implements OnInit {
   title: string;
   paymentMethodsList = Object.values(PaymentMethod);
   sizesList: string[];
+  productsList: Product[];
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -33,9 +34,11 @@ export class DeliveryTmpComponent implements OnInit {
               private deliveryService: DeliveriesService) { }
 
   ngOnInit() {
-
     this.productsService.getSizes()
       .subscribe((sizes: Size[]) => this.sizesList = sizes.map(sz => sz.name));
+
+    this.productsService.getAll()
+      .subscribe((products: Product[]) => this.productsList = products);
 
     this.route.params.subscribe(params => {
       this.deliverId = params['id'];
@@ -51,6 +54,20 @@ export class DeliveryTmpComponent implements OnInit {
         }));
       }
     });
+  }
+
+  getProductSizes(product: Product): Size[] {
+    return !!product ? product.sizes : [];
+  }
+
+  hasProductSizes(product: Product): boolean {
+    return !!product && product.sizes.length > 0;
+  }
+
+  onProductSelected(index: number, product: Product) {
+    const products = <FormArray>this.deliveryForm.get('products');
+    const t1 = products.at(index); //.setValue({product: product});
+    debugger;
   }
 
   addProduct() {
@@ -85,8 +102,7 @@ export class DeliveryTmpComponent implements OnInit {
 
   private createProductModel(productItem: ProductItem): FormGroup {
     return this.formBuilder.group({
-      name: [productItem.name],
-      hasSizes: [productItem.hasSizes],
+      product: [productItem.product],
       amount: [productItem.amount, Validators.required],
       size: [productItem.size],
       costPerItem: [productItem.costPerItem, Validators.required]

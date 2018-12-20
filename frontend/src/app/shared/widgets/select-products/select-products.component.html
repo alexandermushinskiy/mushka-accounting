@@ -1,0 +1,16 @@
+<ng-select
+      bindValue="id"
+      bindLabel="name"
+      [items]="products"
+      [closeOnSelect]="true"
+      [placeholder]="'Выбирете товар'"
+      [ngModel]="selectedIds"
+      [clearable]="canClearAll"
+      [loading]="isLoading"
+      [searchFn]="customSearchFn"
+      (change)="onChange($event)">
+  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+    <div>{{ item.name }}</div>
+    <span class="text-muted category">{{ item.category.name.toUpperCase() }}</span>
+  </ng-template>
+</ng-select>

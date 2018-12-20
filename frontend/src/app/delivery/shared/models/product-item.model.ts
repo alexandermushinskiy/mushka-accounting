@@ -1,5 +1,5 @@
 import { Product } from '../../../shared/models/product.model';
-import { Size } from 'src/app/shared/models/size.model';
+import { Size } from '../../../shared/models/size.model';
 
 export class ProductItem {
   // id: string;
