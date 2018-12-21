@@ -1,5 +1,5 @@
 <div class="data-container">
-  <form *ngIf="deliveryForm" [formGroup]="deliveryForm" autocomplete="off">
+  <form *ngIf="deliveryForm" [formGroup]="deliveryForm" autocomplete="off" (ngSubmit)="saveDelivery()">
     
     <div class="row">
       <div class="app-page-description">
@@ -48,8 +48,15 @@
               <div class="col-md-6">
                 <div class="field-group">
                   <label>Стоимость</label>
-                  <mk-currency-input formControlName="totalCost"></mk-currency-input>
+                  <mk-currency-input formControlName="cost"></mk-currency-input>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-md-12">
+                <div>Общая стоимость: {{ totalCost | mkCurrency }}</div>
               </div>
             </div>
           </div>
@@ -131,7 +138,7 @@
                   <div class="col-md-6">
                     <div class="field-group">
                       <label>Стоимость:</label>
-                      <mk-currency-input formControlName="totalCost"></mk-currency-input>
+                      <mk-currency-input formControlName="transferFee"></mk-currency-input>
                     </div>
                   </div>
                 </div>
@@ -153,7 +160,7 @@
                   <div class="col-md-6">
                     <div class="field-group">
                       <label>Стоимость:</label>
-                      <mk-currency-input formControlName="totalCost"></mk-currency-input>
+                      <mk-currency-input formControlName="bankFee"></mk-currency-input>
                     </div>
                   </div>
                 </div>
@@ -183,20 +190,24 @@
                     <div class="col-sm-6">
                       <div class="field-group">
                         <!-- <mk-typeahead-products formControlName="name"></mk-typeahead-products> -->
-                        <mk-select-products [products]="productsList" formControlName="product"></mk-select-products>
+                        <mk-select-products formControlName="product"
+                                            [products]="productsList"
+                                            (onClear)="onClearProducts()"></mk-select-products>
                       </div>
                     </div>
                     <div class="col-sm-2">
                       <div class="field-group">
-                        <select class="form-control" formControlName="size">
+                        <!-- <select class="form-control" formControlName="size">
                           <option *ngIf="!hasProductSizes(productControl.value.product)" [ngValue]="null">Нет</option>
-                          <option *ngFor="let size of getProductSizes(productControl.value.product)" [ngValue]="size">{{ size.name }}</option>
-                        </select>
-                        <!-- <mk-select-size class="form-control"
+                          <option *ngFor="let prodSize of getProductSizes(productControl.value.product)" [ngValue]="prodSize">{{ prodSize.name }}</option>
+                        </select> -->
+                        <mk-select-size class="form-control"
                                         formControlName="size"
                                         [isMultiple]="false"
-                                        [availableSizes]="getProductSizes(productControl.value.product)">
-                        </mk-select-size> -->
+                                        [isDisabled]="!productControl.value.product"
+                                        [placeholder]="!productControl.value.product ? 'Нет' : 'Выбирете размер(ы)'"
+                                        [availableSizes]="!!productControl.value.product ? productControl.value.product.sizes : []">
+                        </mk-select-size>
                         <!-- <mk-dropdown-sizes formControlName="size"></mk-dropdown-sizes> -->
                       </div>
                     </div>
@@ -207,7 +218,7 @@
                     </div>
                     <div class="col-sm-2">
                       <div class="field-group">
-                        <input type="text" class="form-control" formControlName="amount" />
+                        <input type="number" class="form-control" formControlName="amount" placeholder="Введите количество" />
                       </div>  
                       <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="deliveryForm.get('products').controls.length > 1">
                         <i class="ico ico-close"></i>
@@ -226,7 +237,15 @@
 
       </div>
     </div>
-
+    <div class="row buttons">
+      <div class="form-group">
+        <button class="btn btn-primary" type="submit" [disabled]="isLoading">
+          {{ isEdit ? 'Обновить поступление' : 'Сохранить поступление' }}
+          <div *ngIf="isLoading" class="btn--spinner"></div>
+        </button>
+        <button type="button" class="btn btn-outline" [routerLink]="['/deliveries']" [disabled]="isLoading">Отмена</button>
+      </div>
+    </div>
   </form>
   
 </div>

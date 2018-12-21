@@ -103,7 +103,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
 
   private updateSizesValidity(isRequired: boolean) {
     const valueCtrl = this.productForm.controls['sizes'];
-    
+
     if (isRequired) {
       valueCtrl.setValidators(Validators.required);
     } else {
@@ -118,13 +118,13 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       .subscribe((sizes: Size[]) => this.availableSizes = sizes);
   }
 
-  private getCategoryById(categoryId): Category {
+  private getCategoryById(categoryId: string): Category {
     return this.categories.find(cat => cat.id === categoryId);
   }
 
   private createProductModel(productFormValue): Product {
     const sizes = !!productFormValue.sizes
-      ? productFormValue.sizes.map(sizeId => new ProductSize({ id: sizeId }))
+      ? productFormValue.sizes.map((size: Size) => new ProductSize({ id: size.id }))
       : [];
 
     return new Product({

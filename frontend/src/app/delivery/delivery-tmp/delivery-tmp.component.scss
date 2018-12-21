@@ -10,14 +10,20 @@
   width: 100%;
 }
 
-// input[type="number"] {
-//   -moz-appearance: textfield;
-// }
-// input[type="number"]::-webkit-inner-spin-button, 
-// input[type="number"]::-webkit-outer-spin-button { 
-//   -webkit-appearance: none; 
-//   margin: 0; 
-// }
+input[type="number"] {
+  -moz-appearance: textfield;
+  text-align: right;
+}
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+  margin: 0;
+  text-align: right;
+}
+
+input[type="number"]::-webkit-input-placeholder { text-align:left  !important; }
+/* mozilla solution */
+input[type="number"]:-moz-placeholder { text-align:left !important; }
 
 .btn-remove {
   position: absolute;
@@ -31,4 +37,12 @@
 
 .product-row {
   padding-right: 25px;
+}
+
+.buttons {
+  padding: 35px 15px;
+
+  .btn-primary {
+    margin-right: 10px;
+  }
 }

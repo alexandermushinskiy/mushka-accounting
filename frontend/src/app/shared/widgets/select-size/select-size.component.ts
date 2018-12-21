@@ -19,14 +19,16 @@ export class SelectSizeComponent implements OnInit, ControlValueAccessor {
   @Input() set availableSizes(source: ProductSize[]) {
     if (source) {
       this.isLoading = false;
-      this.sizes = source.map((school: Size) => new SelectSize({ id: school.id, name: school.name }));
+      this.sizes = source.map((size: Size) => new SelectSize({ id: size.id, name: size.name }));
     }
   }
   @Input() disabledSchools: string[];
   @Input() isMultiple = true;
   @Input() canClearAll = true;
   @Input() isDisablePreselected = false;
+  @Input() isDisabled = false;
   @Input() notFoundText = 'Нет данных';
+  @Input() placeholder = 'Выбирете размер(ы)';
   @Output() onSelectedSizes = new EventEmitter<string[]>();
 
   selectedIds: string[];
@@ -61,11 +63,15 @@ export class SelectSizeComponent implements OnInit, ControlValueAccessor {
   }
 
   private getValue(selectedData: SelectSize | SelectSize[]) {
-    const selectedSchools = Array.isArray(selectedData)
-      ? selectedData.map(school => school.id)
-      : [selectedData.id];
+    if (!selectedData) {
+      return null;
+    }
 
-    return selectedSchools.length !== 0 ? selectedSchools : null;
+    const selectedSizes = Array.isArray(selectedData)
+      ? selectedData.map(size => new Size({id: size.id, name: size.name}))
+      : [new Size({id: selectedData.id, name: selectedData.name})];
+
+    return selectedSizes.length !== 0 ? selectedSizes : null;
   }
 
   private onChangeCallback: any = () => {};

@@ -15,7 +15,10 @@ import { Product } from '../../models/product.model';
 })
 export class SelectProductsComponent implements OnInit, ControlValueAccessor {
   @Input() products: Product;
+  @Input() notFoundText = 'Нет данных';
+  @Input() canClearAll = true;
   @Output() onProductSelected = new EventEmitter<Product>();
+  @Output() onClear = new EventEmitter<any>();
 
   selectedIds: string[];
   isLoading = false;
@@ -28,7 +31,7 @@ export class SelectProductsComponent implements OnInit, ControlValueAccessor {
   writeValue(selectedIds: string[]) {
     this.selectedIds = selectedIds;
   }
-  
+
   registerOnChange(fn: any) {
     this.onChangeCallback = fn;
   }
@@ -44,6 +47,10 @@ export class SelectProductsComponent implements OnInit, ControlValueAccessor {
   customSearchFn(term: string, item: Product) {
     term = term.toLocaleLowerCase();
     return item.name.toLocaleLowerCase().indexOf(term) > -1 || item.code.toLocaleLowerCase() === term;
+  }
+
+  clear() {
+    this.onClear.emit();
   }
 
   private onChangeCallback: any = () => {};

@@ -192,10 +192,10 @@ export class DeliveryComponent implements OnInit {
   private saveDelivery(isDraft: boolean) {
     const delivery = this.createDelivery(isDraft);
 
-    (this.deliverId ? this.deliveryService.update(delivery) : this.deliveryService.create(delivery))
-      .subscribe(
-        (res: Delivery) => this.onSavedSucces(res, delivery.id ? 'updated' : 'created'),
-        () => this.onError('Unable to save delivery data'));
+    // (this.deliverId ? this.deliveryService.update(delivery) : this.deliveryService.create(delivery))
+    //   .subscribe(
+    //     (res: Delivery) => this.onSavedSucces(res, delivery.id ? 'updated' : 'created'),
+    //     () => this.onError('Unable to save delivery data'));
   }
 
   private onSavedSucces(delivery: Delivery, action: string) {

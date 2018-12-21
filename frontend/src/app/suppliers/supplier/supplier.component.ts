@@ -104,7 +104,7 @@ export class SupplierComponent implements OnInit {
     });
   }
 
-  private createSupplierModel(supplierFormValue): Supplier {
+  private createSupplierModel(supplierFormValue: any): Supplier {
     return new Supplier({
       name: supplierFormValue.name,
       address: supplierFormValue.address,
