@@ -4,7 +4,7 @@
         class="form-control"
         currencyMask
         [options]="{ prefix: '', thousands: ' ', decimal: ',', align:'left' }"
-        [disabled]="isDisabled"
+        [disabled]="disabled"
         [attr.placeholder]="placeholder"
         [ngModel]="value"
         (ngModelChange)="onChanged($event)"
