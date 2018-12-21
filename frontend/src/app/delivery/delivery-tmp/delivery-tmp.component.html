@@ -35,20 +35,14 @@
           <div class="col-md-4">
             <div class="row">
               <div class="col-md-12">
-                <div class="fields-group-title">Оплата</div>
+                <div class="fields-group-title">Организация</div>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <div class="field-group">
-                  <label for="dropdown">Способ оплаты</label>
-                  <mk-dropdown [options]="paymentMethodsList" [required]="true" formControlName="paymentMethod"></mk-dropdown>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="field-group">
-                  <label>Стоимость</label>
-                  <mk-currency-input formControlName="cost"></mk-currency-input>
+                  <label for="address">Наименование</label>
+                  <mk-suppliers-dropdown formControlName="supplier"></mk-suppliers-dropdown>
                 </div>
               </div>
             </div>
@@ -66,14 +60,20 @@
           <div class="col-md-4">
             <div class="row">
               <div class="col-md-12">
-                <div class="fields-group-title">Организация</div>
+                <div class="fields-group-title">Оплата</div>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-6">
                 <div class="field-group">
-                  <label for="address">Наименование</label>
-                  <mk-suppliers-dropdown formControlName="supplier"></mk-suppliers-dropdown>
+                  <label for="dropdown">Способ оплаты</label>
+                  <mk-dropdown [options]="paymentMethodsList" [required]="true" formControlName="paymentMethod"></mk-dropdown>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="field-group">
+                  <label>Стоимость</label>
+                  <mk-currency-input formControlName="cost"></mk-currency-input>
                 </div>
               </div>
             </div>
@@ -93,78 +93,49 @@
           <div class="col-md-4">
             <div class="row">
               <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="fields-group-title">Дополнительная оплата</div>
-                  </div>
+                <div class="fields-group-title">Дополнительная оплата</div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="field-group">
+                  <label>Доставка</label>
+                  <mk-currency-input formControlName="transferFee"></mk-currency-input>
                 </div>
-                
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="field-group">
-                      <mk-toggle formControlName="hasPrepayment" [label]="'Аванс'"></mk-toggle>
-                    </div>
-                  </div>
+              </div>
+              <div class="col-md-6">
+                <div class="field-group">
+                  <label>Комиссия банка</label>
+                  <mk-currency-input formControlName="bankFee"></mk-currency-input>
                 </div>
-                <div class="row" *ngIf="!!deliveryForm.value.hasPrepayment">
-                  <div class="col-md-6">
-                    <div class="field-group">
-                      <label for="dropdown">Способ оплаты:</label>
-                      <mk-dropdown [options]="paymentMethodsList" [required]="true" formControlName="paymentMethod"></mk-dropdown>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="field-group">
-                      <label>Стоимость:</label>
-                      <mk-currency-input formControlName="totalCost"></mk-currency-input>
-                    </div>
-                  </div>
-                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            
+          </div>
+        </div>
 
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="field-group">
-                      <mk-toggle formControlName="hasTransferFee" [label]="'Доставка'"></mk-toggle>
-                    </div>
-                  </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="fields-group-title">Предоплата</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="field-group">
+                  <label for="dropdown">Способ оплаты:</label>
+                  <mk-dropdown [options]="paymentMethodsList" [required]="true" formControlName="paymentMethod"></mk-dropdown>
                 </div>
-                <div class="row" *ngIf="!!deliveryForm.value.hasTransferFee">
-                  <div class="col-md-6">
-                    <div class="field-group">
-                      <label for="dropdown">Способ оплаты:</label>
-                      <mk-dropdown [options]="paymentMethodsList" [required]="true" formControlName="paymentMethod"></mk-dropdown>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="field-group">
-                      <label>Стоимость:</label>
-                      <mk-currency-input formControlName="transferFee"></mk-currency-input>
-                    </div>
-                  </div>
+              </div>
+              <div class="col-md-6">
+                <div class="field-group">
+                  <label>Стоимость:</label>
+                  <mk-currency-input formControlName="totalCost"></mk-currency-input>
                 </div>
-
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="field-group">
-                      <mk-toggle formControlName="hasBankFee" [label]="'Комиссия банка'"></mk-toggle>
-                    </div>
-                  </div>
-                </div>
-                <div class="row" *ngIf="!!deliveryForm.value.hasBankFee">
-                  <div class="col-md-6">
-                    <div class="field-group">
-                      <label for="dropdown">Способ оплаты:</label>
-                      <mk-dropdown [options]="paymentMethodsList" [required]="true" formControlName="paymentMethod"></mk-dropdown>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="field-group">
-                      <label>Стоимость:</label>
-                      <mk-currency-input formControlName="bankFee"></mk-currency-input>
-                    </div>
-                  </div>
-                </div>
-
               </div>
             </div>
           </div>
@@ -189,7 +160,6 @@
                   <div class="form-row product-row" *ngFor="let productControl of deliveryForm.get('products').controls; let index=index" [formGroupName]="index">
                     <div class="col-sm-6">
                       <div class="field-group">
-                        <!-- <mk-typeahead-products formControlName="name"></mk-typeahead-products> -->
                         <mk-select-products formControlName="product"
                                             [products]="productsList"
                                             (onClear)="onClearProducts()"></mk-select-products>
@@ -197,10 +167,6 @@
                     </div>
                     <div class="col-sm-2">
                       <div class="field-group">
-                        <!-- <select class="form-control" formControlName="size">
-                          <option *ngIf="!hasProductSizes(productControl.value.product)" [ngValue]="null">Нет</option>
-                          <option *ngFor="let prodSize of getProductSizes(productControl.value.product)" [ngValue]="prodSize">{{ prodSize.name }}</option>
-                        </select> -->
                         <mk-select-size class="form-control"
                                         formControlName="size"
                                         [isMultiple]="false"
@@ -208,7 +174,6 @@
                                         [placeholder]="!productControl.value.product ? 'Нет' : 'Выбирете размер(ы)'"
                                         [availableSizes]="!!productControl.value.product ? productControl.value.product.sizes : []">
                         </mk-select-size>
-                        <!-- <mk-dropdown-sizes formControlName="size"></mk-dropdown-sizes> -->
                       </div>
                     </div>
                     <div class="col-sm-2">
