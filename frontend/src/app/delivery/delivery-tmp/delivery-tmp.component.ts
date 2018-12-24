@@ -28,7 +28,7 @@ export class DeliveryTmpComponent implements OnInit {
   paymentMethodsList = Object.values(PaymentMethod);
   sizesList: string[];
   productsList: Product[];
-  totalCost = 0;
+  totalCost: number;
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -54,6 +54,7 @@ export class DeliveryTmpComponent implements OnInit {
           .subscribe((delivery: Delivery) => this.buildForm(delivery));
       } else {
         this.buildForm(new Delivery({
+          cost: 0,
           products: [new ProductItem({})]
         }));
       }
@@ -82,6 +83,10 @@ export class DeliveryTmpComponent implements OnInit {
   }
 
   saveDelivery() {
+
+    const tmp = this.createDeliveryModel(this.deliveryForm.value);
+    console.info(tmp);
+
     if (this.deliveryForm.invalid) {
       return;
     }
@@ -111,51 +116,24 @@ export class DeliveryTmpComponent implements OnInit {
   }
 
   private buildForm(delivery: Delivery) {
+    this.totalCost = !!delivery.totalCost ? delivery.totalCost : 0;
+
     this.deliveryForm = this.formBuilder.group({
       requestDate: [delivery.requestDate, Validators.required],
       receivedDate: [delivery.receivedDate, Validators.required],
       supplier: [delivery.supplier, Validators.required],
       paymentMethod: [delivery.paymentMethod, Validators.required],
-      hasTransferFee: [!!delivery.transferFee],
       transferFee: [delivery.transferFee],
-      hasBankFee: [!!delivery.bankFee],
       bankFee: [delivery.bankFee],
-      hasPrepayment: [false],
-      prepayment: [],
-      cost: [delivery.cost, Validators.required],
-      totalCost: [delivery.totalCost, Validators.required],
+      prepayment: [delivery.prepayment],
+      cost: [{value: delivery.cost, disabled: true}],
+      notes: [delivery.notes],
       products: this.formBuilder.array(
         delivery.products.map(param => this.createProductModel(param))
       )
     });
 
-    (this.deliveryForm.get('products') as FormArray).valueChanges.subscribe(() => {
-      this.calculateTotalCostMain();
-    });
-
-    this.deliveryForm.controls['bankFee'].valueChanges.subscribe(() => {
-      this.calculateTotalCostMain();
-    });
-
-    this.deliveryForm.controls['transferFee'].valueChanges.subscribe(() => {
-      this.calculateTotalCostMain();
-    });
-  }
-
-  private calculateTotalCostMain() {
-    const bankFeeCtrl = this.deliveryForm.controls['bankFee'];
-    const transferFeeCtrl = this.deliveryForm.controls['transferFee'];
-
-    const bankFee = !!bankFeeCtrl.value ? bankFeeCtrl.value : 0;
-    const transferFee = !!transferFeeCtrl.value ? transferFeeCtrl.value : 0;
-
-    this.totalCost = bankFee + transferFee;
-
-    (this.deliveryForm.get('products') as FormArray).controls.forEach(control => {
-      if (!!control.value.costPerItem && !!control.value.amount) {
-        this.totalCost += control.value.costPerItem * control.value.amount;
-      }
-    });
+    this.addFieldChangeListeners();
   }
 
   private createProductModel(productItem: ProductItem): FormGroup {
@@ -167,16 +145,57 @@ export class DeliveryTmpComponent implements OnInit {
     });
   }
 
+  private addFieldChangeListeners() {
+    (this.deliveryForm.get('products') as FormArray).valueChanges.subscribe(() => {
+      this.calculateProductsCost();
+    });
+
+    this.deliveryForm.controls['bankFee'].valueChanges.subscribe(() => {
+      this.calculateTotalCost();
+    });
+
+    this.deliveryForm.controls['transferFee'].valueChanges.subscribe(() => {
+      this.calculateTotalCost();
+    });
+  }
+
+  private calculateProductsCost() {
+    let cost = 0;
+    (this.deliveryForm.get('products') as FormArray).controls.forEach(control => {
+      if (!!control.value.costPerItem && !!control.value.amount) {
+        cost += control.value.costPerItem * control.value.amount;
+      }
+    });
+
+    this.deliveryForm.get('cost').setValue(cost);
+    this.calculateTotalCost();
+  }
+
+  private calculateTotalCost() {
+    const bankFeeCtrl = this.deliveryForm.controls['bankFee'];
+    const transferFeeCtrl = this.deliveryForm.controls['transferFee'];
+    const costCtrl = this.deliveryForm.controls['cost'];
+
+    const bankFee = !!bankFeeCtrl.value ? bankFeeCtrl.value : 0;
+    const transferFee = !!transferFeeCtrl.value ? transferFeeCtrl.value : 0;
+    const cost = !!costCtrl.value ? costCtrl.value : 0;
+
+    this.totalCost = cost + bankFee + transferFee;
+  }
+
   private createDeliveryModel(deliveryFormValue: any): Delivery {
     return new Delivery({
       id: this.deliverId,
       requestDate: deliveryFormValue.requestDate || null,
-      deliveryDate: deliveryFormValue.deliveryDate || null,
+      receivedDate: deliveryFormValue.receivedDate || null,
       supplier: deliveryFormValue.supplier,
       paymentMethod: deliveryFormValue.paymentMethod,
       transferFee: deliveryFormValue.transferFee,
-      deliveryCost: deliveryFormValue.deliveryCost,
-      totalCost: deliveryFormValue.totalCost
+      bankFee: deliveryFormValue.bankFee,
+      prepayment: deliveryFormValue.prepayment,
+      cost: deliveryFormValue.cost,
+      totalCost: deliveryFormValue.totalCost,
+      notes: deliveryFormValue.notes
     });
   }
 }

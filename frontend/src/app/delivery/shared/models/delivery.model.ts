@@ -13,6 +13,8 @@ export class Delivery {
   cost: number;
   totalCost: number;
   productsAmount: number;
+  prepayment: number;
+  notes: string;
 
   products: ProductItem[];
   services: ServiceItem[];

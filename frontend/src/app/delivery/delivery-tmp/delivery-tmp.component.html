@@ -35,7 +35,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="fields-group-title">Организация</div>
@@ -50,15 +50,7 @@
                     </div>
                   </div>
                 </div>
-                <!-- <div class="col-md-4">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div>Общая стоимость: {{ totalCost | mkCurrency }}</div>
-                    </div>
-                  </div>
-                </div> -->
               </div>
-
 
               <div class="row">
                 <div class="col-md-12">
@@ -69,7 +61,7 @@
                   </div>
                   <div class="row">
                     <div class="col-md-12">
-                      <div class="form-row product-row text-muted">
+                      <div class="form-row product-row">
                         <div class="col-sm-6">Наименование товара</div>
                         <div class="col-sm-2">Размер</div>                  
                         <div class="col-sm-2">Цена</div>
@@ -97,7 +89,10 @@
                           </div>
                           <div class="col-sm-2">
                             <div class="field-group">
-                              <mk-currency-input formControlName="costPerItem" [placeholder]="'Цена'"></mk-currency-input>
+                              <mk-currency-input formControlName="costPerItem"
+                                                 [placeholder]="'Цена'"
+                                                 [required]="true">
+                              </mk-currency-input>
                             </div>
                           </div>
                           <div class="col-sm-2">
@@ -130,35 +125,37 @@
           <div class="aside-body-inner">
             <div class="row">
               <div class="col-md-12 cost">
-                <span class="cost-title">Стоимость:</span>
-                <span class="cost-value">{{ totalCost | mkCurrency }}</span>
+                <span class="cost-title">Оплата:</span>
+                <span class="cost-value"><mk-currency-input formControlName="cost"></mk-currency-input></span>
                 <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" [required]="true"></mk-dropdown></span>
               </div>
               <div class="col-md-12 cost">
                 <span class="cost-title">Предоплата:</span>
-                <span class="cost-value"><mk-currency-input></mk-currency-input></span>
-                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" [required]="true"></mk-dropdown></span>
+                <span class="cost-value"><mk-currency-input formControlName="prepayment"></mk-currency-input></span>
+                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList"></mk-dropdown></span>
               </div>
               <div class="col-md-12 cost">
                 <span class="cost-title">Доставка:</span>
-                <span class="cost-value"><mk-currency-input></mk-currency-input></span>
-                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" [required]="true"></mk-dropdown></span>
+                <span class="cost-value"><mk-currency-input formControlName="transferFee"></mk-currency-input></span>
+                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList"></mk-dropdown></span>
               </div>
               <div class="col-md-12 cost">
                 <span class="cost-title">Комиссия:</span>
-                <span class="cost-value"><mk-currency-input></mk-currency-input></span>
-                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" [required]="true"></mk-dropdown></span>
+                <span class="cost-value"><mk-currency-input formControlName="bankFee"></mk-currency-input></span>
+                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList"></mk-dropdown></span>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-12">
-                <div class="fields-group-title">Примичание</div>
+              <div class="col-md-12 total-cost">
+                <span class="total-cost-title">Итого:</span>
+                <span class="total-cost-value">{{ totalCost | mkCurrency }}</span>
               </div>
             </div>
-            <div class="row">
+            <div class="row notes-row">
               <div class="col-md-12">
                 <div class="field-group">
-                  <textarea class="notes" rows="5"></textarea>
+                  <label>Примечание</label>
+                  <textarea class="notes" rows="5" formControlName="notes"></textarea>
                 </div>
               </div>
             </div>
