@@ -147,6 +147,10 @@ h1 {
   height: 100vh;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 textarea {
   resize: none;
 }
@@ -175,7 +179,7 @@ textarea {
 
 .fields-group-title {
   display: inline-block;
-  border-bottom: 2px solid #F47721;
+  //border-bottom: 2px solid #F47721;
   margin-top: 25px;
   margin-bottom: 10px;
   font-weight: bold;
