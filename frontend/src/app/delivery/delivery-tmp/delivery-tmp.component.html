@@ -1,243 +1,158 @@
-<!-- <div class="data-container"> -->
-  <form *ngIf="deliveryForm" class="delivery w-100" [formGroup]="deliveryForm" autocomplete="off" (ngSubmit)="saveDelivery()">
-    
-      <div class="app-page-body row flex-nowrap">
-        <!-- left side -->
-        <div class="app-page-content">
-          <div class="app-page-header">
-            <div class="app-page-description">
-              <mk-back-arrow></mk-back-arrow>
-              <h1 class="app-page-title">{{ title }}</h1>
-            </div>
+<form *ngIf="deliveryForm" class="delivery w-100" [formGroup]="deliveryForm" autocomplete="off" (ngSubmit)="saveDelivery()">
+  
+    <div class="app-page-body row flex-nowrap">
+      <!-- left side -->
+      <div class="app-page-content">
+        <div class="app-page-header">
+          <div class="app-page-description">
+            <mk-back-arrow></mk-back-arrow>
+            <h1 class="app-page-title">{{ title }}</h1>
           </div>
-          <div class="content-body">
-            <div class="row">
-              <div class="col-md-12">
+        </div>
+        <div class="content-body">
+          <div class="row">
+            <div class="col-md-12">
 
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="fields-group-title">Дата заявки/получения</div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="fields-group-title">Дата заявки/получения</div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="field-group">
+                        <label>Дата заявки</label>
+                        <mk-datetimepicker-wrapper formControlName="requestDate"></mk-datetimepicker-wrapper>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="field-group">
-                          <label>Дата заявки</label>
-                          <mk-datetimepicker-wrapper formControlName="requestDate"></mk-datetimepicker-wrapper>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="field-group">
-                          <label>Дата получения</label>
-                          <mk-datetimepicker-wrapper formControlName="receivedDate"></mk-datetimepicker-wrapper>
-                        </div>
+                    <div class="col-md-6">
+                      <div class="field-group">
+                        <label>Дата получения</label>
+                        <mk-datetimepicker-wrapper formControlName="receivedDate"></mk-datetimepicker-wrapper>
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="fields-group-title">Организация</div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="field-group">
-                          <label for="address">Наименование</label>
-                          <mk-suppliers-dropdown formControlName="supplier"></mk-suppliers-dropdown>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- <div class="col-md-4">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div>Общая стоимость: {{ totalCost | mkCurrency }}</div>
-                      </div>
-                    </div>
-                  </div> -->
                 </div>
-
-
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="fields-group-title">Список товаров/услуг</div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="fields-group-title">Организация</div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="field-group">
+                        <label for="address">Наименование</label>
+                        <mk-suppliers-dropdown formControlName="supplier"></mk-suppliers-dropdown>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-row product-row text-muted">
-                          <div class="col-sm-6">Наименование товара</div>
-                          <div class="col-sm-2">Размер</div>                  
-                          <div class="col-sm-2">Цена</div>
-                          <div class="col-sm-2">Количество</div>
-                        </div>
-                        <div formArrayName="products">
-                          <div class="form-row product-row" *ngFor="let productControl of deliveryForm.get('products').controls; let index=index" [formGroupName]="index">
-                            <div class="col-sm-6">
-                              <div class="field-group">
-                                <mk-select-products formControlName="product"
-                                                    [products]="productsList"
-                                                    (onClear)="onClearProducts()"></mk-select-products>
-                              </div>
-                            </div>
-                            <div class="col-sm-2">
-                              <div class="field-group">
-                                <mk-select-size class="form-control"
-                                                formControlName="size"
-                                                [isMultiple]="false"
-                                                [isDisabled]="!productControl.value.product"
-                                                [placeholder]="!productControl.value.product ? 'Нет' : 'Выбирете размер(ы)'"
-                                                [availableSizes]="!!productControl.value.product ? productControl.value.product.sizes : []">
-                                </mk-select-size>
-                              </div>
-                            </div>
-                            <div class="col-sm-2">
-                              <div class="field-group">
-                                <mk-currency-input formControlName="costPerItem"></mk-currency-input>
-                              </div>
-                            </div>
-                            <div class="col-sm-2">
-                              <div class="field-group">
-                                <input type="number" class="form-control" formControlName="amount" placeholder="Введите количество" />
-                              </div>  
-                              <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="deliveryForm.get('products').controls.length > 1">
-                                <i class="ico ico-close"></i>
-                              </button>
-                              {{ productControl.name }}
+                  </div>
+                </div>
+                <!-- <div class="col-md-4">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div>Общая стоимость: {{ totalCost | mkCurrency }}</div>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="fields-group-title">Список товаров/услуг</div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-row product-row text-muted">
+                        <div class="col-sm-6">Наименование товара</div>
+                        <div class="col-sm-2">Размер</div>                  
+                        <div class="col-sm-2">Цена</div>
+                        <div class="col-sm-2">Количество</div>
+                      </div>
+                      <div formArrayName="products">
+                        <div class="form-row product-row" *ngFor="let productControl of deliveryForm.get('products').controls; let index=index" [formGroupName]="index">
+                          <div class="col-sm-6">
+                            <div class="field-group">
+                              <mk-select-products formControlName="product"
+                                                  [products]="productsList"
+                                                  (onClear)="onClearProducts()"></mk-select-products>
                             </div>
                           </div>
+                          <div class="col-sm-2">
+                            <div class="field-group">
+                              <mk-select-size class="form-control"
+                                              formControlName="size"
+                                              [isMultiple]="false"
+                                              [isDisabled]="!productControl.value.product"
+                                              [placeholder]="!productControl.value.product ? 'Нет' : 'Размер'"
+                                              [availableSizes]="!!productControl.value.product ? productControl.value.product.sizes : []">
+                              </mk-select-size>
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="field-group">
+                              <mk-currency-input formControlName="costPerItem" [placeholder]="'Цена'"></mk-currency-input>
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="field-group">
+                              <input type="number" class="form-control" formControlName="amount" placeholder="Количество" />
+                            </div>  
+                            <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="deliveryForm.get('products').controls.length > 1">
+                              <i class="ico ico-close"></i>
+                            </button>
+                            {{ productControl.name }}
+                          </div>
                         </div>
-                        <button class="btn-add" type="button" (click)="addProduct()">
-                          <i class="fa fa-plus fa-border"></i>
-                        </button>
                       </div>
+                      <button class="btn-add" type="button" (click)="addProduct()">
+                        <i class="fa fa-plus fa-border"></i>
+                      </button>
                     </div>
                   </div>
                 </div>
-
               </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- right side -->
-        <div class="app-page-aside">
-          <div class="aside-body">
-            <div class="aside-body-inner">
-              <div class="row">
-                <div class="col-md-12 cost">
-                  <span class="cost-title">Стоимость:</span>
-                  <span class="cost-value">{{ totalCost | mkCurrency }}</span>
-                </div>
-                <div class="col-md-12 cost">
-                  <span class="cost-title">Предоплата:</span>
-                  <span class="cost-value"><mk-currency-input></mk-currency-input></span>
-                  <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" [required]="true"></mk-dropdown></span>
-                </div>
-                <div class="col-md-12 cost">
-                  <span class="cost-title">Доставка:</span>
-                  <span class="cost-value"><mk-currency-input></mk-currency-input></span>
-                  <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" [required]="true"></mk-dropdown></span>
-                </div>
-                <div class="col-md-12 cost">
-                  <span class="cost-title">Комиссия:</span>
-                  <span class="cost-value"><mk-currency-input></mk-currency-input></span>
-                  <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" [required]="true"></mk-dropdown></span>
-                </div>
-              </div>
             </div>
-          </div>
-          <div class="aside-footer">
           </div>
         </div>
       </div>
-      <div class="footer">
-        <div class="footer-buttons">
-          <button class="btn btn-primary" type="submit" [disabled]="isLoading">
-            {{ isEdit ? 'Обновить поступление' : 'Сохранить поступление' }}
-            <div *ngIf="isLoading" class="btn--spinner"></div>
-          </button>
-          <button type="button" class="btn btn-outline" [routerLink]="['/deliveries']" [disabled]="isLoading">Отмена</button>
-        </div>
-      </div>
 
-    <!-- <div class="row">
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-4">
+      <!-- right side -->
+      <div class="app-page-aside">
+        <div class="aside-body">
+          <div class="aside-body-inner">
             <div class="row">
-              <div class="col-md-12">
-                <div class="fields-group-title">Дата заявки/получения</div>
+              <div class="col-md-12 cost">
+                <span class="cost-title">Стоимость:</span>
+                <span class="cost-value">{{ totalCost | mkCurrency }}</span>
+                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" [required]="true"></mk-dropdown></span>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="field-group">
-                  <label>Дата заявки</label>
-                  <mk-datetimepicker-wrapper formControlName="requestDate"></mk-datetimepicker-wrapper>
-                </div>
+              <div class="col-md-12 cost">
+                <span class="cost-title">Предоплата:</span>
+                <span class="cost-value"><mk-currency-input></mk-currency-input></span>
+                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" [required]="true"></mk-dropdown></span>
               </div>
-              <div class="col-md-6">
-                <div class="field-group">
-                  <label>Дата получения</label>
-                  <mk-datetimepicker-wrapper formControlName="receivedDate"></mk-datetimepicker-wrapper>
-                </div>
+              <div class="col-md-12 cost">
+                <span class="cost-title">Доставка:</span>
+                <span class="cost-value"><mk-currency-input></mk-currency-input></span>
+                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" [required]="true"></mk-dropdown></span>
               </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="fields-group-title">Организация</div>
+              <div class="col-md-12 cost">
+                <span class="cost-title">Комиссия:</span>
+                <span class="cost-value"><mk-currency-input></mk-currency-input></span>
+                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" [required]="true"></mk-dropdown></span>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12">
-                <div class="field-group">
-                  <label for="address">Наименование</label>
-                  <mk-suppliers-dropdown formControlName="supplier"></mk-suppliers-dropdown>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="row">
-              <div class="col-md-12">
-                <div>Общая стоимость: {{ totalCost | mkCurrency }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-4">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="fields-group-title">Оплата</div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="field-group">
-                  <label for="dropdown">Способ оплаты</label>
-                  <mk-dropdown [options]="paymentMethodsList" [required]="true" formControlName="paymentMethod"></mk-dropdown>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="field-group">
-                  <label>Стоимость</label>
-                  <mk-currency-input formControlName="cost"></mk-currency-input>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="fields-group-title">Примечание</div>
+                <div class="fields-group-title">Примичание</div>
               </div>
             </div>
             <div class="row">
@@ -248,127 +163,222 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="fields-group-title">Дополнительная оплата</div>
-              </div>
-            </div>
-            
-            <div class="row">
-              <div class="col-md-6">
-                <div class="field-group">
-                  <label>Доставка</label>
-                  <mk-currency-input formControlName="transferFee"></mk-currency-input>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="field-group">
-                  <label>Комиссия банка</label>
-                  <mk-currency-input formControlName="bankFee"></mk-currency-input>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            
-          </div>
         </div>
-
-        <div class="row">
-          <div class="col-md-4">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="fields-group-title">Предоплата</div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="field-group">
-                  <label for="dropdown">Способ оплаты:</label>
-                  <mk-dropdown [options]="paymentMethodsList" [required]="true" formControlName="paymentMethod"></mk-dropdown>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="field-group">
-                  <label>Стоимость:</label>
-                  <mk-currency-input formControlName="totalCost"></mk-currency-input>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="aside-footer">
         </div>
-
-        <div class="row">
-          <div class="col-md-8">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="fields-group-title">Список товаров/услуг</div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-row product-row text-muted">
-                  <div class="col-sm-6">Наименование товара</div>
-                  <div class="col-sm-2">Размер</div>                  
-                  <div class="col-sm-2">Цена</div>
-                  <div class="col-sm-2">Количество</div>
-                </div>
-                <div formArrayName="products">
-                  <div class="form-row product-row" *ngFor="let productControl of deliveryForm.get('products').controls; let index=index" [formGroupName]="index">
-                    <div class="col-sm-6">
-                      <div class="field-group">
-                        <mk-select-products formControlName="product"
-                                            [products]="productsList"
-                                            (onClear)="onClearProducts()"></mk-select-products>
-                      </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="field-group">
-                        <mk-select-size class="form-control"
-                                        formControlName="size"
-                                        [isMultiple]="false"
-                                        [isDisabled]="!productControl.value.product"
-                                        [placeholder]="!productControl.value.product ? 'Нет' : 'Выбирете размер(ы)'"
-                                        [availableSizes]="!!productControl.value.product ? productControl.value.product.sizes : []">
-                        </mk-select-size>
-                      </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="field-group">
-                        <mk-currency-input formControlName="costPerItem"></mk-currency-input>
-                      </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="field-group">
-                        <input type="number" class="form-control" formControlName="amount" placeholder="Введите количество" />
-                      </div>  
-                      <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="deliveryForm.get('products').controls.length > 1">
-                        <i class="ico ico-close"></i>
-                      </button>
-                      {{ productControl.name }}
-                    </div>
-                  </div>
-                </div>
-                <button class="btn-add" type="button" (click)="addProduct()">
-                  <i class="fa fa-plus fa-border"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
-    <div class="row buttons">
-      <div class="form-group">
+    <div class="footer">
+      <div class="footer-buttons">
         <button class="btn btn-primary" type="submit" [disabled]="isLoading">
           {{ isEdit ? 'Обновить поступление' : 'Сохранить поступление' }}
           <div *ngIf="isLoading" class="btn--spinner"></div>
         </button>
         <button type="button" class="btn btn-outline" [routerLink]="['/deliveries']" [disabled]="isLoading">Отмена</button>
       </div>
-    </div> -->
-  </form>
-  
-<!-- </div> -->
+    </div>
+
+  <!-- <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="fields-group-title">Дата заявки/получения</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="field-group">
+                <label>Дата заявки</label>
+                <mk-datetimepicker-wrapper formControlName="requestDate"></mk-datetimepicker-wrapper>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="field-group">
+                <label>Дата получения</label>
+                <mk-datetimepicker-wrapper formControlName="receivedDate"></mk-datetimepicker-wrapper>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="fields-group-title">Организация</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="field-group">
+                <label for="address">Наименование</label>
+                <mk-suppliers-dropdown formControlName="supplier"></mk-suppliers-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-12">
+              <div>Общая стоимость: {{ totalCost | mkCurrency }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="fields-group-title">Оплата</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="field-group">
+                <label for="dropdown">Способ оплаты</label>
+                <mk-dropdown [options]="paymentMethodsList" [required]="true" formControlName="paymentMethod"></mk-dropdown>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="field-group">
+                <label>Стоимость</label>
+                <mk-currency-input formControlName="cost"></mk-currency-input>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="fields-group-title">Примечание</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="field-group">
+                <textarea class="notes" rows="5"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="fields-group-title">Дополнительная оплата</div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="field-group">
+                <label>Доставка</label>
+                <mk-currency-input formControlName="transferFee"></mk-currency-input>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="field-group">
+                <label>Комиссия банка</label>
+                <mk-currency-input formControlName="bankFee"></mk-currency-input>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="fields-group-title">Предоплата</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="field-group">
+                <label for="dropdown">Способ оплаты:</label>
+                <mk-dropdown [options]="paymentMethodsList" [required]="true" formControlName="paymentMethod"></mk-dropdown>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="field-group">
+                <label>Стоимость:</label>
+                <mk-currency-input formControlName="totalCost"></mk-currency-input>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="fields-group-title">Список товаров/услуг</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-row product-row text-muted">
+                <div class="col-sm-6">Наименование товара</div>
+                <div class="col-sm-2">Размер</div>                  
+                <div class="col-sm-2">Цена</div>
+                <div class="col-sm-2">Количество</div>
+              </div>
+              <div formArrayName="products">
+                <div class="form-row product-row" *ngFor="let productControl of deliveryForm.get('products').controls; let index=index" [formGroupName]="index">
+                  <div class="col-sm-6">
+                    <div class="field-group">
+                      <mk-select-products formControlName="product"
+                                          [products]="productsList"
+                                          (onClear)="onClearProducts()"></mk-select-products>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="field-group">
+                      <mk-select-size class="form-control"
+                                      formControlName="size"
+                                      [isMultiple]="false"
+                                      [isDisabled]="!productControl.value.product"
+                                      [placeholder]="!productControl.value.product ? 'Нет' : 'Выбирете размер(ы)'"
+                                      [availableSizes]="!!productControl.value.product ? productControl.value.product.sizes : []">
+                      </mk-select-size>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="field-group">
+                      <mk-currency-input formControlName="costPerItem"></mk-currency-input>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="field-group">
+                      <input type="number" class="form-control" formControlName="amount" placeholder="Введите количество" />
+                    </div>  
+                    <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="deliveryForm.get('products').controls.length > 1">
+                      <i class="ico ico-close"></i>
+                    </button>
+                    {{ productControl.name }}
+                  </div>
+                </div>
+              </div>
+              <button class="btn-add" type="button" (click)="addProduct()">
+                <i class="fa fa-plus fa-border"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="row buttons">
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit" [disabled]="isLoading">
+        {{ isEdit ? 'Обновить поступление' : 'Сохранить поступление' }}
+        <div *ngIf="isLoading" class="btn--spinner"></div>
+      </button>
+      <button type="button" class="btn btn-outline" [routerLink]="['/deliveries']" [disabled]="isLoading">Отмена</button>
+    </div>
+  </div> -->
+</form>

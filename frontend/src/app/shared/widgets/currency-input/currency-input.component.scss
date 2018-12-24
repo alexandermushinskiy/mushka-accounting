@@ -11,3 +11,7 @@
 ::-webkit-input-placeholder { text-align:left; }
 /* mozilla solution */
 input:-moz-placeholder { text-align:left; }
+
+.input-currency input {
+  background-color: #fff;
+}

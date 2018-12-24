@@ -4,7 +4,7 @@
       <div class="title" *ngIf="delivery.supplier"> {{ delivery.supplier.name }} </div>
       <div class="delivery-supplier-row">
         <span class="delivery-supplier text-muted" *ngIf="delivery.supplier">{{ delivery.supplier.address }}</span>
-        <time class="timestamp"> {{ delivery.deliveryDate | formatDate }} </time>
+        <time class="timestamp"> {{ delivery.requestDate | formatDate }} </time>
       </div>
     </div>
     <div class="delivery-item-body" [ngbCollapse]="!isExpanded">
