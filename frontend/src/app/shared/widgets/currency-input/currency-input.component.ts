@@ -47,6 +47,8 @@ export class CurrencyInputComponent implements OnInit, ControlValueAccessor {
   blur() {
     if (this.value) {
       this.onBlur.emit(this.value);
+    } else {
+      this.value = null;
     }
   }
 
