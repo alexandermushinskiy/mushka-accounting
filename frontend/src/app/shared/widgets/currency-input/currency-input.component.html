@@ -1,8 +1,9 @@
 <div class="input-currency">
-  <input required
+  <input
         type="text"
         class="form-control"
         currencyMask
+        [required]="required"
         [options]="{ prefix: '', thousands: ' ', decimal: ',', align:'left' }"
         [disabled]="disabled"
         [attr.placeholder]="placeholder"
