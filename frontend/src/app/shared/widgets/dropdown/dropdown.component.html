@@ -7,8 +7,8 @@
     <i class="ico-chevron-down"></i>
   </button>
   <div ngbDropdownMenu aria-labelledby="dropdown" class="dropdown-max-height">
-    <button class="dropdown-item" *ngIf="!value && defaultValue">{{ defaultValue }}</button>
-    <button class="dropdown-item" *ngFor="let option of options" (click)="onOptionSelect(option)">
+    <button type="button" class="dropdown-item" *ngIf="!value && defaultValue">{{ defaultValue }}</button>
+    <button type="button" class="dropdown-item" *ngFor="let option of options" (click)="onOptionSelect(option)">
       {{ option }}
     </button>
   </div>

@@ -87,6 +87,7 @@ export class DeliveryTmpComponent implements OnInit {
 
     const tmp = this.createDeliveryModel(this.deliveryForm.value);
     console.info(tmp);
+    return;
 
     if (this.deliveryForm.invalid) {
       return;
@@ -123,11 +124,14 @@ export class DeliveryTmpComponent implements OnInit {
       requestDate: [delivery.requestDate, Validators.required],
       receivedDate: [delivery.receivedDate, Validators.required],
       supplier: [delivery.supplier, Validators.required],
-      paymentMethod: [delivery.paymentMethod, Validators.required],
       transferFee: [delivery.transferFee],
+      transferFeeMethod: [delivery.transferFeeMethod],
       bankFee: [delivery.bankFee],
+      bankFeeMethod: [delivery.bankFeeMethod],
       prepayment: [delivery.prepayment],
+      prepaymentMethod: [delivery.prepaymentMethod],
       cost: [{value: delivery.cost, disabled: true}],
+      costMethod: [delivery.costMethod, Validators.required],
       notes: [delivery.notes],
       products: this.formBuilder.array(
         delivery.products.map(param => this.createProductModel(param))
@@ -190,11 +194,14 @@ export class DeliveryTmpComponent implements OnInit {
       requestDate: deliveryFormValue.requestDate || null,
       receivedDate: deliveryFormValue.receivedDate || null,
       supplier: deliveryFormValue.supplier,
-      paymentMethod: deliveryFormValue.paymentMethod,
       transferFee: deliveryFormValue.transferFee,
       bankFee: deliveryFormValue.bankFee,
+      bankFeeMethod: deliveryFormValue.bankFeeMethod,
       prepayment: deliveryFormValue.prepayment,
+      prepaymentMethod: deliveryFormValue.prepaymentMethod,
       cost: deliveryFormValue.cost,
+      costMethod: deliveryFormValue.costMethod,
+      paymentMethod: deliveryFormValue.paymentMethod,
       totalCost: deliveryFormValue.totalCost,
       notes: deliveryFormValue.notes
     });

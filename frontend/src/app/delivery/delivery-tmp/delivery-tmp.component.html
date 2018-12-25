@@ -129,22 +129,22 @@
               <div class="col-md-12 cost">
                 <span class="cost-title">Оплата:</span>
                 <span class="cost-value"><mk-currency-input formControlName="cost"></mk-currency-input></span>
-                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" [required]="true"></mk-dropdown></span>
+                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" formControlName="costMethod"></mk-dropdown></span>
               </div>
               <div class="col-md-12 cost">
                 <span class="cost-title">Предоплата:</span>
                 <span class="cost-value"><mk-currency-input formControlName="prepayment"></mk-currency-input></span>
-                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList"></mk-dropdown></span>
+                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" formControlName="prepaymentMethod"></mk-dropdown></span>
               </div>
               <div class="col-md-12 cost">
                 <span class="cost-title">Доставка:</span>
                 <span class="cost-value"><mk-currency-input formControlName="transferFee"></mk-currency-input></span>
-                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList"></mk-dropdown></span>
+                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" formControlName="transferFeeMethod"></mk-dropdown></span>
               </div>
               <div class="col-md-12 cost">
                 <span class="cost-title">Комиссия:</span>
                 <span class="cost-value"><mk-currency-input formControlName="bankFee"></mk-currency-input></span>
-                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList"></mk-dropdown></span>
+                <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" formControlName="bankFeeMethod"></mk-dropdown></span>
               </div>
             </div>
             <div class="row">
