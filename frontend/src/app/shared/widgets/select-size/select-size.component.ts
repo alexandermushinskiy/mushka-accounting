@@ -1,5 +1,6 @@
-import { Component, OnInit, forwardRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, forwardRef, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 import { ProductSize } from '../../models/product-size.model';
 import { SelectSize } from '../../models/select-size.model';
@@ -16,16 +17,16 @@ import { Size } from '../../models/size.model';
   }]
 })
 export class SelectSizeComponent implements OnInit, ControlValueAccessor {
+  @ViewChild('ngselect') ngselect: NgSelectComponent;
   @Input() set availableSizes(source: ProductSize[]) {
     if (source) {
       this.isLoading = false;
       this.sizes = source.map((size: Size) => new SelectSize({ id: size.id, name: size.name }));
     }
   }
-  @Input() disabledSchools: string[];
+  @Input() disabledSizes: string[];
   @Input() isMultiple = true;
   @Input() canClearAll = true;
-  @Input() isDisablePreselected = false;
   @Input() isDisabled = false;
   @Input() notFoundText = 'Нет данных';
   @Input() placeholder = 'Выбирете размер(ы)';
@@ -47,10 +48,10 @@ export class SelectSizeComponent implements OnInit, ControlValueAccessor {
   writeValue(selectedIds: string[]) {
     this.selectedIds = selectedIds;
 
-    if (this.isDisablePreselected) {
+    if (!!selectedIds) {
       this.sizes
-        .filter((school: SelectSize) =>
-          selectedIds.some(id => id === school.id && this.disabledSchools.some(disabledId => disabledId === id)))
+        .filter((size: SelectSize) =>
+          selectedIds.some(id => id === size.id && this.disabledSizes.some(disabledId => disabledId === id)))
         .forEach((school: SelectSize) => school.disabled = true);
     }
   }
@@ -60,6 +61,10 @@ export class SelectSizeComponent implements OnInit, ControlValueAccessor {
   }
 
   registerOnTouched() {
+  }
+
+  reset() {
+    this.ngselect.clearModel();
   }
 
   private getValue(selectedData: SelectSize | SelectSize[]) {

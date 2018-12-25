@@ -17,8 +17,8 @@ export class Delivery {
   notes: string;
 
   products: ProductItem[];
-  services: ServiceItem[];
-  isDraft: boolean;
+  // services: ServiceItem[];
+  // isDraft: boolean;
 
   constructor(data: any) {
     Object.assign(this, data);

@@ -10,6 +10,7 @@ import { ProductItem } from '../shared/models/product-item.model';
 import { Size } from '../../shared/models/size.model';
 import { ProductsServce } from '../../core/api/products.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
+import { SelectSizeComponent } from '../../shared/widgets/select-size/select-size.component';
 
 @Component({
   selector: 'mk-delivery-tmp',
@@ -17,7 +18,6 @@ import { NotificationsService } from '../../core/notifications/notifications.ser
   styleUrls: ['./delivery-tmp.component.scss']
 })
 export class DeliveryTmpComponent implements OnInit {
-
   deliveryForm: FormGroup;
   deliverId: string;
   isEdit = false;
@@ -79,7 +79,9 @@ export class DeliveryTmpComponent implements OnInit {
     products.removeAt(index);
   }
 
-  onClearProducts() {
+  onClearProducts(productCtrl: FormGroup, selectSizeCmpnt: SelectSizeComponent) {
+    productCtrl.controls.size.setValue(null);
+    selectSizeCmpnt.reset();
   }
 
   saveDelivery() {

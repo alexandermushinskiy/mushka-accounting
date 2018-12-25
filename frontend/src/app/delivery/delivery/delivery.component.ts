@@ -146,7 +146,7 @@ export class DeliveryComponent implements OnInit {
 
   viewDelivery(delivery: Delivery) {
     this.deliverId = delivery.id;
-    this.isReadOnly = !delivery.isDraft;
+    //this.isReadOnly = !delivery.isDraft;
 
     if (this.isReadOnly) {
       this.deliveryForm.disable();
@@ -155,11 +155,11 @@ export class DeliveryComponent implements OnInit {
     }
 
     this.deliveryItems[DeliveryType.PRODUCTS].data = delivery.products;
-    this.deliveryItems[DeliveryType.SERVICES].data = delivery.services;
+    //this.deliveryItems[DeliveryType.SERVICES].data = delivery.services;
 
     this.deliveryForm.patchValue(delivery);
     this.deliveryForm.setControl('products', this.formBuilder.array(delivery.products.map(param => param)));
-    this.deliveryForm.setControl('services', this.formBuilder.array(delivery.services.map(param => param)));
+    //this.deliveryForm.setControl('services', this.formBuilder.array(delivery.services.map(param => param)));
   }
 
   deleteDraft(delivery: Delivery, content) {
