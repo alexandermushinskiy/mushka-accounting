@@ -79,9 +79,8 @@ export class DeliveryTmpComponent implements OnInit {
     products.removeAt(index);
   }
 
-  onClearProducts(productCtrl: FormGroup, selectSizeCmpnt: SelectSizeComponent) {
+  onClearProducts(productCtrl: FormGroup) {
     productCtrl.controls.size.setValue(null);
-    selectSizeCmpnt.reset();
   }
 
   saveDelivery() {

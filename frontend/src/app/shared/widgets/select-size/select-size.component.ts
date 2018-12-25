@@ -48,7 +48,9 @@ export class SelectSizeComponent implements OnInit, ControlValueAccessor {
   writeValue(selectedIds: string[]) {
     this.selectedIds = selectedIds;
 
-    if (!!selectedIds) {
+    if (!selectedIds) {
+      this.reset();
+    } else {
       this.sizes
         .filter((size: SelectSize) =>
           selectedIds.some(id => id === size.id && this.disabledSizes.some(disabledId => disabledId === id)))
@@ -63,7 +65,7 @@ export class SelectSizeComponent implements OnInit, ControlValueAccessor {
   registerOnTouched() {
   }
 
-  reset() {
+  private reset() {
     this.ngselect.clearModel();
   }
 

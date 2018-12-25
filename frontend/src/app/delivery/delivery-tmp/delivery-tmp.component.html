@@ -73,12 +73,12 @@
                             <div class="field-group">
                               <mk-select-products formControlName="product"
                                                   [products]="productsList"
-                                                  (onClear)="onClearProducts(productControl, selectSizes)"></mk-select-products>
+                                                  (onClear)="onClearProducts(productControl)"></mk-select-products>
                             </div>
                           </div>
                           <div class="col-sm-2">
                             <div class="field-group">
-                              <mk-select-size class="form-control" #selectSizes
+                              <mk-select-size class="form-control"
                                               formControlName="size"
                                               [ngClass]="{'required-select': !!productControl.value.product && productControl.value.product.sizes.length > 0}"
                                               [isMultiple]="false"
