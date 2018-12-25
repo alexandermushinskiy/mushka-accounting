@@ -13,6 +13,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class DatetimepickerWrapperComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder = 'Введите дату';
+  @Input() required = false;
   @Output() onDateChanged = new EventEmitter<any>();
 
   dateValue: string;
@@ -23,7 +24,7 @@ export class DatetimepickerWrapperComponent implements OnInit, ControlValueAcces
   }
 
   dateChanged(newValue: string) {
-    this.dateValue = newValue
+    this.dateValue = newValue;
 
     this.onChangeCallback(newValue);
     this.onDateChanged.emit(newValue);
