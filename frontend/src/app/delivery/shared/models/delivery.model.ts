@@ -16,8 +16,7 @@ export class Delivery {
   bankFeeMethod: PaymentMethod;
   prepayment: number;
   prepaymentMethod: PaymentMethod;
-  
-  totalCost: number;  
+  totalCost: number;
   notes: string;
 
   products: ProductItem[];

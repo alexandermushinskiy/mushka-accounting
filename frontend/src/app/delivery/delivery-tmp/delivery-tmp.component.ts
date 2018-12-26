@@ -84,17 +84,12 @@ export class DeliveryTmpComponent implements OnInit {
   }
 
   saveDelivery() {
-debugger;
-    const tmp = this.createDeliveryModel(this.deliveryForm.value);
-    console.info(tmp);
-    return;
-
     if (this.deliveryForm.invalid) {
       return;
     }
 
     this.isLoading = true;
-    const delivery = this.createDeliveryModel(this.deliveryForm.value);
+    const delivery = this.createDeliveryModel(this.deliveryForm.getRawValue());
 
     (this.isEdit
       ? this.deliveryService.update(this.deliverId, delivery)
@@ -201,24 +196,24 @@ debugger;
     const transferFee = !!transferFeeCtrl.value ? transferFeeCtrl.value : 0;
     const cost = !!costCtrl.value ? costCtrl.value : 0;
 
-    this.totalCost = cost + bankFee + transferFee;
+    this.totalCost = Math.round((cost + bankFee + transferFee) * 100) / 100;
   }
 
-  private createDeliveryModel(deliveryFormValue: any): Delivery {
+  private createDeliveryModel(formRawValue: any): Delivery {
     return new Delivery({
       id: this.deliverId,
-      requestDate: deliveryFormValue.requestDate || null,
-      receivedDate: deliveryFormValue.receivedDate || null,
-      supplier: deliveryFormValue.supplier,
-      transferFee: deliveryFormValue.transferFee,
-      bankFee: deliveryFormValue.bankFee,
-      bankFeeMethod: deliveryFormValue.bankFeeMethod,
-      prepayment: deliveryFormValue.prepayment,
-      prepaymentMethod: deliveryFormValue.prepaymentMethod,
-      cost: this.deliveryForm.controls['cost'].value,
-      costMethod: deliveryFormValue.costMethod,
+      requestDate: formRawValue.requestDate,
+      receivedDate: formRawValue.receivedDate,
+      supplier: formRawValue.supplier,
+      transferFee: formRawValue.transferFee,
+      bankFee: formRawValue.bankFee,
+      bankFeeMethod: formRawValue.bankFeeMethod,
+      prepayment: formRawValue.prepayment,
+      prepaymentMethod: formRawValue.prepaymentMethod,
+      cost: formRawValue.cost,
+      costMethod: formRawValue.costMethod,
       totalCost: this.totalCost,
-      notes: deliveryFormValue.notes
+      notes: formRawValue.notes
     });
   }
 }
