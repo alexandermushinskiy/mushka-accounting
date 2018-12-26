@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { DeliveriesService } from '../../core/api/deliveries.service';
@@ -84,7 +84,7 @@ export class DeliveryTmpComponent implements OnInit {
   }
 
   saveDelivery() {
-
+debugger;
     const tmp = this.createDeliveryModel(this.deliveryForm.value);
     console.info(tmp);
     return;
@@ -155,13 +155,26 @@ export class DeliveryTmpComponent implements OnInit {
       this.calculateProductsCost();
     });
 
-    this.deliveryForm.controls['bankFee'].valueChanges.subscribe(() => {
+    this.deliveryForm.controls['bankFee'].valueChanges.subscribe((value: number) => {
       this.calculateTotalCost();
+      this.updateControlValidator('bankFeeMethod', !!value);
     });
 
-    this.deliveryForm.controls['transferFee'].valueChanges.subscribe(() => {
+    this.deliveryForm.controls['transferFee'].valueChanges.subscribe((value: number) => {
       this.calculateTotalCost();
+      this.updateControlValidator('transferFeeMethod', !!value);
     });
+
+    this.deliveryForm.controls['prepayment'].valueChanges.subscribe((value: number) => {
+      this.calculateTotalCost();
+      this.updateControlValidator('prepaymentMethod', !!value);
+    });
+  }
+
+  private updateControlValidator(controlName: string, hasValidator: boolean) {
+    const formCtrl = this.deliveryForm.controls[controlName];
+    formCtrl.setValidators(hasValidator ? [Validators.required] : []);
+    formCtrl.updateValueAndValidity();
   }
 
   private calculateProductsCost() {
@@ -172,7 +185,10 @@ export class DeliveryTmpComponent implements OnInit {
       }
     });
 
-    this.deliveryForm.get('cost').setValue(cost);
+    const costCtrl = this.deliveryForm.get('cost');
+    costCtrl.setValue(cost, {onlySelf: true});
+    costCtrl.updateValueAndValidity();
+
     this.calculateTotalCost();
   }
 
@@ -199,10 +215,9 @@ export class DeliveryTmpComponent implements OnInit {
       bankFeeMethod: deliveryFormValue.bankFeeMethod,
       prepayment: deliveryFormValue.prepayment,
       prepaymentMethod: deliveryFormValue.prepaymentMethod,
-      cost: deliveryFormValue.cost,
+      cost: this.deliveryForm.controls['cost'].value,
       costMethod: deliveryFormValue.costMethod,
-      paymentMethod: deliveryFormValue.paymentMethod,
-      totalCost: deliveryFormValue.totalCost,
+      totalCost: this.totalCost,
       notes: deliveryFormValue.notes
     });
   }
