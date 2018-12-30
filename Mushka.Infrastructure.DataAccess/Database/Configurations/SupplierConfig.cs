@@ -26,13 +26,11 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
 
             builder
                 .Property(sup => sup.Address)
-                .HasColumnName("Address")
-                .IsRequired();
+                .HasColumnName("Address");
             
             builder
                 .Property(sup => sup.Email)
-                .HasColumnName("Email")
-                .IsRequired();
+                .HasColumnName("Email");
 
             builder
                 .Property(sup => sup.WebSite)

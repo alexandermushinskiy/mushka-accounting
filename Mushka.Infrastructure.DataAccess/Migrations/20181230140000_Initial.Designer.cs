@@ -10,7 +10,7 @@ using Mushka.Infrastructure.DataAccess.Database;
 namespace Mushka.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(MushkaDbContext))]
-    [Migration("20181230092242_Initial")]
+    [Migration("20181230140000_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -313,13 +313,11 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .HasColumnName("Id");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnName("Address");
 
                     b.Property<DateTime>("CreatedOn");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnName("Email");
 
                     b.Property<string>("Name")

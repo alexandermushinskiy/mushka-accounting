@@ -104,9 +104,8 @@ export class SupplierComponent implements OnInit {
     this.supplierForm = this.formBuilder.group({
       name: [supplier.name, Validators.required],
       address: [supplier.address],
-      email: [supplier.email, Validators.required],
+      email: [supplier.email],
       webSite: [supplier.webSite],
-      paymentMethod: [],
       service: [supplier.service, Validators.required],
       notes: [supplier.notes],
       paymentCards: this.formBuilder.array(

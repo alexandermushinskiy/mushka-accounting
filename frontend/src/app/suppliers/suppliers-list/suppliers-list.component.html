@@ -30,7 +30,7 @@
           <span>Сервис</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
-          <span [title]="value" class="bold">{{ value }}</span>
+          <span [title]="value">{{ value }}</span>
         </ng-template>
       </ngx-datatable-column>
       
@@ -39,7 +39,7 @@
           <span>Адрес</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
-          <span [title]="value" class="bold">{{ value }}</span>
+          <span [title]="value">{{ value }}</span>
         </ng-template>
       </ngx-datatable-column>
 
@@ -48,7 +48,7 @@
           <span>Эл. почта</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
-          <span [title]="value" class="bold">{{ value }}</span>
+          <span [title]="value">{{ value }}</span>
         </ng-template>
       </ngx-datatable-column>
       
@@ -57,7 +57,7 @@
           <span>Сайт</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
-          <span [title]="value" class="bold"><a [attr.href]="value" target="_blank">{{ value }}</a></span>
+          <span [title]="value"><a [attr.href]="value" target="_blank">{{ value }}</a></span>
         </ng-template>
       </ngx-datatable-column>
       
@@ -66,7 +66,7 @@
           <span>Кол-во<br>поставок</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
-            <span [title]="value" class="bold">{{ value }}</span>
+            <span [title]="value">{{ value }}</span>
         </ng-template>
       </ngx-datatable-column>
 

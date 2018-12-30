@@ -55,8 +55,8 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 255, nullable: false),
-                    Address = table.Column<string>(nullable: false),
-                    Email = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
                     WebSite = table.Column<string>(nullable: true),
                     Notes = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false),

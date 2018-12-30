@@ -311,13 +311,11 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .HasColumnName("Id");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnName("Address");
 
                     b.Property<DateTime>("CreatedOn");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnName("Email");
 
                     b.Property<string>("Name")
