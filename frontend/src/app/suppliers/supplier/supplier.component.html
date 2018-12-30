@@ -9,87 +9,246 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="fields-group-title">Основная информация</div>
+    <div class="content-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+
+            <div class="col-md-3">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="fields-group-title">Основная информация</div>
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="field-group">
-                  <label for="name">Наименование *</label>
-                  <input type="text" id="name" class="form-control" formControlName="name" autocomplete="off">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="field-group">
+                    <label for="name">Наименование *</label>
+                    <input type="text" id="name" class="form-control" formControlName="name" autocomplete="off">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="field-group">
+                    <label>Список услуг *</label>
+                    <textarea class="form-control text-area-vertical" rows="3" formControlName="service"></textarea>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <div class="col-md-3">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="fields-group-title">Контактная информация</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="field-group">
+                    <label for="address">Адрес</label>
+                    <input type="text" class="form-control" formControlName="address">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="field-group">
+                    <label>Эл. Почта *</label>
+                    <input type="text" class="form-control" formControlName="email" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="field-group">
+                    <label>Сайт</label>
+                    <input type="text" class="form-control" formControlName="webSite" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="fields-group-title">Дополнительно</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="field-group">
+                    <label>Примечание</label>
+                    <textarea class="form-control text-area-vertical" rows="7" formControlName="notes"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="fields-group-title">Контактная информация</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="field-group">
+                    <label for="address">Адрес</label>
+                    <input type="text" class="form-control" formControlName="address">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="field-group">
+                    <label>Эл. Почта *</label>
+                    <input type="text" class="form-control" formControlName="email" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="field-group">
+                    <label>Сайт</label>
+                    <input type="text" class="form-control" formControlName="webSite" />
+                  </div>
+                </div>
+              </div>
+            </div> -->
             
-            <div class="row">
-              <div class="col-md-12">
-                <div class="field-group">
-                  <label>Список услуг *</label>
-                  <textarea class="form-control text-area-vertical" rows="3" formControlName="service"></textarea>
-                </div>
-              </div>
-            </div>
+            
 
-          </div>
+            <!-- <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="fields-group-title">Способы оплаты</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="field-group">
+                    <mk-toggle style="display: block; padding-bottom: 10px;" [label]="'Наличый расчет'"></mk-toggle>
+                    <mk-toggle style="display: block; padding-bottom: 10px;" [label]="'Перечисление на карту'"></mk-toggle>
+                    <mk-toggle style="display: block; padding-bottom: 10px;" [label]="'Перечисление на банковский счет'"></mk-toggle>
+                  </div>
+                </div>
+              </div>
+            </div> -->
 
-          <div class="col-md-4">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="fields-group-title">Контактная информация</div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="field-group">
-                  <label for="address">Адрес</label>
-                  <input type="text" class="form-control" formControlName="address">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="field-group">
-                  <label>Эл. Почта *</label>
-                  <input type="text" class="form-control" formControlName="email" />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="field-group">
-                  <label>Сайт</label>
-                  <input type="text" class="form-control" formControlName="webSite" />
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-4">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="fields-group-title">Способы оплаты</div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="field-group">
-                  <label>Список</label>
-                  <mk-dropdown [options]="paymentMethodsList" formControlName="paymentMethod"></mk-dropdown>
-                  <a><span class="btn-add btn-add-delivery" (click)="addPaymentMethod()"><i class="fa fa-plus fa-border"></i></span></a>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-8">
-        <div class="row">
+      <div class="row">
+          <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="fields-group-title">Контактные лица</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-row contact-person-row text-muted">
+                    <div class="col-sm-4"><label>Имя</label></div>
+                    <div class="col-sm-4"><label>Телефон(ы)</label></div>
+                    <div class="col-sm-4"><label>Почта</label></div>
+                  </div>
+                  <div formArrayName="contactPersons">
+                    <div class="form-row contact-person-row" *ngFor="let contactPersonControl of supplierForm.get('contactPersons').controls; let index=index" [formGroupName]="index">
+                      <div class="col-sm-4">
+                        <div class="field-group">
+                          <input type="text" class="form-control" formControlName="name" />
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="field-group">
+                          <input type="text" class="form-control" formControlName="phones" />
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="field-group email-input">
+                          <input type="text" class="form-control" formControlName="email" />
+                        </div>
+                        <button class="btn-remove" title="Remove" type="button" (click)="removeContactPerson(index)" *ngIf="supplierForm.get('contactPersons').controls.length > 1">
+                          <i class="ico ico-close"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn-add" type="button" (click)="addContactPerson()">
+                    <i class="fa fa-plus fa-border"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="fields-group-title">Карты для оплаты</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-row card-number-row text-muted">
+                    <div class="col-sm-6"><label>Номер карты</label></div>
+                    <div class="col-sm-6"><label>Владелец карты</label></div>
+                  </div>
+                  <div formArrayName="paymentCards">
+                    <div class="form-row card-number-row" *ngFor="let paymentCardControl of supplierForm.get('paymentCards').controls; let index=index" [formGroupName]="index">
+                      <div class="col-sm-6">
+                        <div class="field-group">
+                          <input type="text" class="form-control" formControlName="number" mask="0000 0000 0000 0000" />
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="field-group">
+                          <input type="text" class="form-control" formControlName="owner" />
+                        </div>
+                        <button class="btn-remove" title="Remove" type="button" (click)="removePaymentCard(index)" *ngIf="supplierForm.get('paymentCards').controls.length > 1">
+                          <i class="ico ico-close"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn-add" type="button" (click)="addPaymentCard()">
+                    <i class="fa fa-plus fa-border"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+        <!-- <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="fields-group-title">Контактная информация</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="field-group">
+                <label for="address">Адрес</label>
+                <input type="text" class="form-control" formControlName="address">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="field-group">
+                <label>Эл. Почта *</label>
+                <input type="text" class="form-control" formControlName="email" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="field-group">
+                <label>Сайт</label>
+                <input type="text" class="form-control" formControlName="webSite" />
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- <div class="col-md-6">
+          <div class="row">
             <div class="col-md-12">
               <div class="fields-group-title">Контактные лица</div>
             </div>
@@ -128,26 +287,26 @@
               </button>
             </div>
           </div>
-        </div>
-    
-      <div class="col-md-4">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="fields-group-title">Дополнительно</div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="field-group">
-              <label>Примечание</label>
-              <textarea class="form-control text-area-vertical" rows="7" formControlName="notes"></textarea>
+        </div> -->
+      
+        <!-- <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="fields-group-title">Дополнительно</div>
             </div>
           </div>
-        </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="field-group">
+                <label>Примечание</label>
+                <textarea class="form-control text-area-vertical" rows="7" formControlName="notes"></textarea>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
       </div>
-
-    </div>
-
+    
 
   <!-- <form *ngIf="supplierForm" [formGroup]="supplierForm" (ngSubmit)="saveSupplier()">
     <div class="row">
@@ -226,13 +385,14 @@
         <i class="fa fa-plus fa-border"></i>
       </button>
     </div> -->
-    <div class="row buttons">
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit" [disabled]="isLoading">
-          {{ isEdit ? 'Обновить постащика' : 'Сохранить постащика' }}
-          <div *ngIf="isLoading" class="btn--spinner"></div>
-        </button>
-        <button type="button" class="btn btn-outline" [routerLink]="['/suppliers']" [disabled]="isLoading">Отмена</button>
+      <div class="row buttons">
+        <div class="form-group">
+          <button class="btn btn-primary" type="submit" [disabled]="isLoading">
+            {{ isEdit ? 'Обновить постащика' : 'Сохранить постащика' }}
+            <div *ngIf="isLoading" class="btn--spinner"></div>
+          </button>
+          <button type="button" class="btn btn-outline" [routerLink]="['/suppliers']" [disabled]="isLoading">Отмена</button>
+        </div>
       </div>
     </div>
   </form>

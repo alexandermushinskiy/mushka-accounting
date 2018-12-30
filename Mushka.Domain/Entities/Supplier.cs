@@ -10,8 +10,7 @@ namespace Mushka.Domain.Entities
         {
             Deliveries = new List<Delivery>();
             ContactPersons = new List<ContactPerson>();
-            //Phones = new List<PhoneNumber>();
-            //Payments = new List<Payment>();
+            PaymentCards = new List<PaymentCard>();
         }
 
         public Guid Id { get; set; }
@@ -33,7 +32,7 @@ namespace Mushka.Domain.Entities
         public ICollection<ContactPerson> ContactPersons { get; set; }
         
         public ICollection<Delivery> Deliveries { get; set; }
-
-        //public ICollection<Payment> Payments { get; set; }
+        
+        public ICollection<PaymentCard> PaymentCards { get; set; }
     }
 }

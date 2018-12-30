@@ -7,6 +7,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { NgxMaskModule } from 'ngx-mask';
 
 import { LoadingScreenComponent } from './widgets/loading-screen/loading-screen.component';
 import { SpinnerComponent } from './widgets/spinner/spinner.component';
@@ -49,7 +50,8 @@ import { SelectProductsComponent } from './widgets/select-products/select-produc
     CurrencyMaskModule,
     NgSelectModule,
     NgbModule.forRoot(),
-    TypeaheadModule.forRoot()
+    TypeaheadModule.forRoot(),
+    NgxMaskModule.forRoot()
     // NgxMyDatePickerModule.forRoot()
   ],
   declarations: [
@@ -91,6 +93,7 @@ import { SelectProductsComponent } from './widgets/select-products/select-produc
     FormsModule,
     RouterModule,
     NgxDatatableModule,
+    NgxMaskModule,
     /* Directives */
     PopoverDirective,
     ClosePopoverOnClickOutsideDirective,

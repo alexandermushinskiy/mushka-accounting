@@ -10,7 +10,7 @@ using Mushka.Infrastructure.DataAccess.Database;
 namespace Mushka.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(MushkaDbContext))]
-    [Migration("20181217173432_Initial")]
+    [Migration("20181230092242_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -218,6 +218,34 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.ToTable("OrderProducts");
                 });
 
+            modelBuilder.Entity("Mushka.Domain.Entities.PaymentCard", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnName("Number")
+                        .HasMaxLength(16);
+
+                    b.Property<string>("Owner")
+                        .IsRequired()
+                        .HasColumnName("Owner")
+                        .HasMaxLength(255);
+
+                    b.Property<Guid>("SupplierId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("PaymentCards");
+                });
+
             modelBuilder.Entity("Mushka.Domain.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -381,6 +409,14 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.HasOne("Mushka.Domain.Entities.Size", "Size")
                         .WithMany("OrderProducts")
                         .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Mushka.Domain.Entities.PaymentCard", b =>
+                {
+                    b.HasOne("Mushka.Domain.Entities.Supplier", "Supplier")
+                        .WithMany("PaymentCards")
+                        .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

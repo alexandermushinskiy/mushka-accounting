@@ -1,4 +1,5 @@
 import { ContactPerson } from './contact-person.model';
+import { PaymentCard } from './payment-card.model';
 
 export class Supplier {
   id: string;
@@ -11,6 +12,7 @@ export class Supplier {
   service: string;
   deliveriesCount: number;
 
+  paymentCards: PaymentCard[] = [];
   //paymentConditions: string;
 
   constructor(data: any) {

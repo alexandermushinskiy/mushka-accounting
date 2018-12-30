@@ -24,5 +24,7 @@ namespace Mushka.WebApi.ClientModels.Supplier
         public int DeliveriesCount { get; set; }
 
         public IEnumerable<SupplierContactPersonModel> ContactPersons { get; set; }
+
+        public IEnumerable<PaymentCardModel> PaymentCards { get; set; }
     }
 }

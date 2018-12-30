@@ -7,6 +7,7 @@ import { ContactPerson } from '../../shared/models/contact-person.model';
 import { Supplier } from '../../shared/models/supplier.model';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { PaymentMethod } from '../../delivery/shared/enums/payment-method.enum';
+import { PaymentCard } from '../../shared/models/payment-card.model';
 
 @Component({
   selector: 'mk-supplier',
@@ -40,7 +41,8 @@ export class SupplierComponent implements OnInit {
           .subscribe((supplier: Supplier) => this.buildForm(supplier));
       } else {
         this.buildForm(new Supplier({
-          contactPersons: [new ContactPerson({})]
+          contactPersons: [new ContactPerson({})],
+          paymentCards: [new PaymentCard({})]
         }));
       }
     });
@@ -54,6 +56,16 @@ export class SupplierComponent implements OnInit {
   removeContactPerson(index: number) {
     const contactPersons = <FormArray>this.supplierForm.get('contactPersons');
     contactPersons.removeAt(index);
+  }
+
+  addPaymentCard() {
+    const paymentCards = <FormArray>this.supplierForm.get('paymentCards');
+    paymentCards.push(this.createPaymentCardFormGroup(new PaymentCard({})));
+  }
+
+  removePaymentCard(index: number) {
+    const paymentCards = <FormArray>this.supplierForm.get('paymentCards');
+    paymentCards.removeAt(index);
   }
 
   saveSupplier() {
@@ -95,9 +107,11 @@ export class SupplierComponent implements OnInit {
       email: [supplier.email, Validators.required],
       webSite: [supplier.webSite],
       paymentMethod: [],
-      // paymentConditions: [supplier.paymentConditions],
       service: [supplier.service, Validators.required],
       notes: [supplier.notes],
+      paymentCards: this.formBuilder.array(
+        supplier.paymentCards.map(param => this.createPaymentCardFormGroup(param))
+      ),
       contactPersons: this.formBuilder.array(
         supplier.contactPersons.map(param => this.createContactPersonFormGroup(param))
       )
@@ -112,7 +126,8 @@ export class SupplierComponent implements OnInit {
       webSite: supplierFormValue.webSite,
       service: supplierFormValue.service,
       notes: supplierFormValue.notes,
-      contactPersons: supplierFormValue.contactPersons
+      contactPersons: supplierFormValue.contactPersons,
+      paymentCards: supplierFormValue.paymentCards
     });
   }
 
@@ -122,6 +137,14 @@ export class SupplierComponent implements OnInit {
       name: [contactPerson.name, Validators.required],
       email: [contactPerson.email],
       phones: [contactPerson.phones, Validators.required]
+    });
+  }
+
+  private createPaymentCardFormGroup(paymentCard: PaymentCard): FormGroup {
+    return this.formBuilder.group({
+      id: [paymentCard.id],
+      number: [paymentCard.number],
+      owner: [paymentCard.owner]
     });
   }
 }

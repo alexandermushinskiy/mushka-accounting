@@ -30,6 +30,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         {
             return await Context.Suppliers
                 .Include(sup => sup.ContactPersons)
+                .Include(sup => sup.PaymentCards)
                 .Where(entity => entity.Id == id)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(cancellationToken);
@@ -37,21 +38,26 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
 
         public override async Task<Supplier> UpdateAsync(Supplier supplier, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var storedContactPersons = await Context.Suppliers
-                .Where(sup => sup.Id == supplier.Id)
-                .SelectMany(sup => sup.ContactPersons)
-                .AsNoTracking()
-                .ToListAsync(cancellationToken);
-
+            var storedSupplier = await GetByIdAsync(supplier.Id, cancellationToken);
+            
             supplier.ContactPersons
                 .ToList()
-                .ForEach(cp => Context.Entry(cp).State = storedContactPersons.Any(scp => scp.Id == cp.Id) ? EntityState.Modified : EntityState.Added);
-            
-            storedContactPersons
+                .ForEach(cp => Context.Entry(cp).State = storedSupplier.ContactPersons.Any(scp => scp.Id == cp.Id) ? EntityState.Modified : EntityState.Added);
+
+            storedSupplier.ContactPersons
                 .Except(supplier.ContactPersons, new EntityComparer<ContactPerson>())
                 .ToList()
                 .ForEach(dcp => Context.Entry(dcp).State = EntityState.Deleted);
             
+            supplier.PaymentCards
+                .ToList()
+                .ForEach(cp => Context.Entry(cp).State = storedSupplier.PaymentCards.Any(spc => spc.Id == cp.Id) ? EntityState.Modified : EntityState.Added);
+
+            storedSupplier.PaymentCards
+                .Except(supplier.PaymentCards, new EntityComparer<PaymentCard>())
+                .ToList()
+                .ForEach(dpc => Context.Entry(dpc).State = EntityState.Deleted);
+
             Context.Suppliers.Update(supplier);
             await Context.SaveChangesAsync(cancellationToken);
 

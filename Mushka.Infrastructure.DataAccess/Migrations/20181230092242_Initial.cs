@@ -155,6 +155,26 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PaymentCards",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Number = table.Column<string>(maxLength: 16, nullable: false),
+                    Owner = table.Column<string>(maxLength: 255, nullable: false),
+                    SupplierId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentCards", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PaymentCards_Suppliers_SupplierId",
+                        column: x => x.SupplierId,
+                        principalTable: "Suppliers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProductSizes",
                 columns: table => new
                 {
@@ -305,6 +325,17 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PaymentCards_Number",
+                table: "PaymentCards",
+                column: "Number",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymentCards_SupplierId",
+                table: "PaymentCards",
+                column: "SupplierId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
@@ -337,6 +368,9 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderProducts");
+
+            migrationBuilder.DropTable(
+                name: "PaymentCards");
 
             migrationBuilder.DropTable(
                 name: "ProductSizes");

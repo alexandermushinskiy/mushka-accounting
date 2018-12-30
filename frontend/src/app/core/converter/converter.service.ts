@@ -8,6 +8,7 @@ import { DatetimeService } from '../datetime/datetime.service';
 import { ProductSize } from '../../shared/models/product-size.model';
 import { Size } from '../../shared/models/size.model';
 import { Delivery } from '../../delivery/shared/models/delivery.model';
+import { PaymentCard } from '../../shared/models/payment-card.model';
 
 @Injectable()
 export class ConverterService {
@@ -82,7 +83,8 @@ export class ConverterService {
       notes: source.notes,
       service: source.service,
       deliveriesCount: source.deliveriesCount,
-      contactPersons: this.convertToContactPersons(source.contactPersons)
+      contactPersons: this.convertToContactPersons(source.contactPersons),
+      paymentCards: this.convertToPaymentCards(source.paymentCards)
     });
   }
 
@@ -117,6 +119,18 @@ export class ConverterService {
       bankFee: source.bankFee,
       totalCost: source.totalCost,
       productsAmount: source.productsAmount
+    });
+  }
+
+  private convertToPaymentCards(response: any[]): PaymentCard[] {
+    return response.map(res => this.convertToPaymentCard(res));
+  }
+
+  private convertToPaymentCard(source: any): PaymentCard {
+    return new PaymentCard({
+      id: source.id,
+      number: source.number,
+      owner: source.owner
     });
   }
 }

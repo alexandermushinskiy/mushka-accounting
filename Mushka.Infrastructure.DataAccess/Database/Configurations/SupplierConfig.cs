@@ -51,10 +51,10 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .WithOne(cp => cp.Supplier)
                 .HasForeignKey(cp => cp.SupplierId);
 
-            //builder
-            //    .HasMany(sup => sup.Payments)
-            //    .WithOne(p => p.Supplier)
-            //    .HasForeignKey(p => p.SupplierId);
+            builder
+                .HasMany(sup => sup.PaymentCards)
+                .WithOne(cn => cn.Supplier)
+                .HasForeignKey(cn => cn.SupplierId);
         }
     }
 }

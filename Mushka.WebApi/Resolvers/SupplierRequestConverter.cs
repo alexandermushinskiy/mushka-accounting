@@ -29,7 +29,8 @@ namespace Mushka.WebApi.Resolvers
                 WebSite = source.WebSite,
                 Notes = source.Notes,
                 Service = source.Service,
-                ContactPersons = source.ContactPersons.Select(cp => CreateContactPerson(supplierId, cp)).ToList()
+                ContactPersons = source.ContactPersons.Select(cp => CreateContactPerson(supplierId, cp)).ToList(),
+                PaymentCards = source.PaymentCards.Select(pc => CreatePaymentCard(supplierId, pc)).ToList()
             };
         }
 
@@ -41,6 +42,15 @@ namespace Mushka.WebApi.Resolvers
                 Name = contactPerson.Name,
                 Email = contactPerson.Email,
                 Phones = contactPerson.Phones
+            };
+
+        private PaymentCard CreatePaymentCard(Guid supplierId, PaymentCardRequestModel requestModel) =>
+            new PaymentCard
+            {
+                SupplierId = supplierId,
+                Id = requestModel.Id ?? guidProvider.NewGuid(),
+                Number = requestModel.Number,
+                Owner = requestModel.Owner
             };
     }
 }
