@@ -1,4 +1,4 @@
-<form *ngIf="deliveryForm" class="delivery w-100" [formGroup]="deliveryForm" autocomplete="off" (ngSubmit)="saveDelivery()">
+<form *ngIf="supplyForm" class="delivery w-100" [formGroup]="supplyForm" autocomplete="off" (ngSubmit)="saveSupply()">
   
     <div class="app-page-body row flex-nowrap">
       <!-- left side -->
@@ -56,7 +56,7 @@
                 <div class="col-md-12">
                   <div class="row">
                     <div class="col-md-12">
-                      <div class="fields-group-title">Список товаров/услуг</div>
+                      <div class="fields-group-title">Список товаров</div>
                     </div>
                   </div>
                   <div class="row">
@@ -68,7 +68,7 @@
                         <div class="col-sm-2">Количество</div>
                       </div>
                       <div formArrayName="products">
-                        <div class="form-row product-row" *ngFor="let productControl of deliveryForm.get('products').controls; let index=index" [formGroupName]="index">
+                        <div class="form-row product-row" *ngFor="let productControl of supplyForm.get('products').controls; let index=index" [formGroupName]="index">
                           <div class="col-sm-6">
                             <div class="field-group">
                               <mk-select-products formControlName="product"
@@ -99,9 +99,9 @@
                           </div>
                           <div class="col-sm-2">
                             <div class="field-group">
-                              <input type="number" class="form-control" formControlName="amount" placeholder="Количество" />
+                              <input type="number" class="form-control" formControlName="quantity" placeholder="Количество" />
                             </div>  
-                            <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="deliveryForm.get('products').controls.length > 1">
+                            <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="supplyForm.get('products').controls.length > 1">
                               <i class="ico ico-close"></i>
                             </button>
                             {{ productControl.name }}
@@ -137,29 +137,23 @@
                 <span class="cost-payment-type">
                   <mk-dropdown formControlName="prepaymentMethod"
                                [options]="paymentMethodsList"
-                               [required]="deliveryForm.hasError('required', ['prepaymentMethod'])">
+                               [required]="supplyForm.hasError('required', ['prepaymentMethod'])">
                   </mk-dropdown>
                 </span>
               </div>
               <div class="col-md-12 cost">
                 <span class="cost-title">Доставка:</span>
-                <span class="cost-value"><mk-currency-input formControlName="transferFee"></mk-currency-input></span>
+                <span class="cost-value"><mk-currency-input formControlName="deliveryCost"></mk-currency-input></span>
                 <span class="cost-payment-type">
-                  <mk-dropdown formControlName="transferFeeMethod"
+                  <mk-dropdown formControlName="deliveryCostMethod"
                                [options]="paymentMethodsList"
-                               [required]="deliveryForm.hasError('required', ['transferFeeMethod'])">
+                               [required]="supplyForm.hasError('required', ['deliveryCostMethod'])">
                   </mk-dropdown>
                 </span>
               </div>
               <div class="col-md-12 cost">
                 <span class="cost-title">Комиссия:</span>
                 <span class="cost-value"><mk-currency-input formControlName="bankFee"></mk-currency-input></span>
-                <span class="cost-payment-type">
-                  <mk-dropdown formControlName="bankFeeMethod"
-                               [options]="paymentMethodsList"
-                               [required]="deliveryForm.hasError('required', ['bankFeeMethod'])">
-                  </mk-dropdown>
-                </span>
               </div>
             </div>
             <div class="row">
@@ -188,7 +182,7 @@
           {{ isEdit ? 'Обновить поступление' : 'Сохранить поступление' }}
           <div *ngIf="isLoading" class="btn--spinner"></div>
         </button>
-        <button type="button" class="btn btn-outline" [routerLink]="['/deliveries']" [disabled]="isLoading">Отмена</button>
+        <button type="button" class="btn btn-outline" [routerLink]="['/supplies']" [disabled]="isLoading">Отмена</button>
       </div>
     </div>
 </form>

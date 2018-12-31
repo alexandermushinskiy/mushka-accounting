@@ -8,7 +8,7 @@ namespace Mushka.Infrastructure.DataAccess.Database.SeedData
     {
         public static void HasDeliveries(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Delivery>().HasData(
+            modelBuilder.Entity<Supply>().HasData(
                 new
                 {
                     Id = Guid.Parse("4E50F00D-4FD9-4DFE-8D56-18A2399DD7B6"),
@@ -41,7 +41,7 @@ namespace Mushka.Infrastructure.DataAccess.Database.SeedData
                 }
             );
 
-            modelBuilder.Entity<DeliveryProduct>().HasData(
+            modelBuilder.Entity<SupplyProduct>().HasData(
                 new { DeliveryId = Guid.Parse("4E50F00D-4FD9-4DFE-8D56-18A2399DD7B6"), ProductId = Guid.Parse("A9AB38D1-C2B2-4C50-9AB9-80335F4561F8"), SizeId = Guid.Parse("FB8356A5-1629-4F9F-9B51-3D40E0E55F84"), Quantity = 39, PriceForItem = 25.0m },
                 new { DeliveryId = Guid.Parse("4E50F00D-4FD9-4DFE-8D56-18A2399DD7B6"), ProductId = Guid.Parse("A9AB38D1-C2B2-4C50-9AB9-80335F4561F8"), SizeId = Guid.Parse("6E519491-8FD8-45F2-992E-270B01F25971"), Quantity = 38, PriceForItem = 25.0m },
                 new { DeliveryId = Guid.Parse("4E50F00D-4FD9-4DFE-8D56-18A2399DD7B6"), ProductId = Guid.Parse("DFA69FA0-2DF3-4254-95B7-F65EB4ED6C92"), SizeId = Guid.Parse("FB8356A5-1629-4F9F-9B51-3D40E0E55F84"), Quantity = 52, PriceForItem = 25.0m },

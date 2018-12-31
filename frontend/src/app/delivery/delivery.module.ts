@@ -4,7 +4,6 @@ import { TypeaheadModule } from 'ngx-bootstrap';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 import { SharedModule } from '../shared/shared.module';
-import { DeliveryComponent } from './delivery/delivery.component';
 import { DeliveryProductsListComponent } from './delivery-products-list/delivery-products-list.component';
 import { DeliveryProductModalComponent } from './shared/widgets/delivery-product-modal/delivery-product-modal.component';
 import { DeliveryServicesListComponent } from './delivery-services-list/delivery-services-list.component';
@@ -21,7 +20,6 @@ import { DeliveryTmpComponent } from './delivery-tmp/delivery-tmp.component';
     CurrencyMaskModule
   ],
   declarations: [
-    DeliveryComponent,
     DeliveryProductsListComponent,
     DeliveryProductModalComponent,
     DeliveryServicesListComponent,
@@ -30,6 +28,6 @@ import { DeliveryTmpComponent } from './delivery-tmp/delivery-tmp.component';
     DeliveriesListComponent,
     DeliveryTmpComponent
   ],
-  exports: [DeliveryComponent]
+  exports: [/*DeliveryComponent*/]
 })
 export class DeliveryModule { }

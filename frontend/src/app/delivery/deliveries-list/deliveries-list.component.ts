@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { DeliveriesService } from '../../core/api/deliveries.service';
-import { Delivery } from '../shared/models/delivery.model';
-import { DeliveryTableRow } from '../shared/models/delivery-table-row';
+import { SuppliesService } from '../../core/api/supplies.service';
+import { Supply } from '../shared/models/supply.model';
+import { SupplyTableRow } from '../shared/models/supply-table-row.model';
 import { NotificationsService } from '../../core/notifications/notifications.service';
-import { DeliveryFilter } from '../../shared/filters/delivery.filter';
+import { SupplyFilter } from '../../shared/filters/supply.filter';
 
 @Component({
   selector: 'mk-deliveries-list',
@@ -14,54 +14,54 @@ import { DeliveryFilter } from '../../shared/filters/delivery.filter';
 })
 export class DeliveriesListComponent implements OnInit {
 
-  deliveries: Delivery[];
-  deliveryRows: DeliveryTableRow[];
+  supplies: Supply[];
+  supplyRows: SupplyTableRow[];
   loadingIndicator = false;
   total = 0;
   shown = 0;
 
   constructor(private router: Router,
-              private deliveryService: DeliveriesService,
+              private suppliesService: SuppliesService,
               private notificationsService: NotificationsService) { }
 
   ngOnInit() {
-    this.loadDeliveris();
+    this.loadSupplies();
   }
 
   getRowClass(row: any) {
     return row.className;
   }
 
-  addDelivery() {
-    this.router.navigate(['deliveries/new']);
+  addSupply() {
+    this.router.navigate(['supplies/new']);
   }
 
-  filter(searchKey) {
-    const deliveryFilter = new DeliveryFilter(searchKey);
-    const filteredDeliveries = this.deliveries.filter(delivery => deliveryFilter.filter(delivery));
+  filter(searchKey: string) {
+    const supplyFilter = new SupplyFilter(searchKey);
+    const filteredSupplies = this.supplies.filter(supply => supplyFilter.filter(supply));
 
-    this.updateDatatableRows(filteredDeliveries);
+    this.updateDatatableRows(filteredSupplies);
   }
   
-  delete(row: DeliveryTableRow) {
+  delete(row: SupplyTableRow) {
     setTimeout(() => {
     });
   }
 
-  private loadDeliveris() {
+  private loadSupplies() {
     this.loadingIndicator = true;
 
-    this.deliveryService.getAll()
+    this.suppliesService.getAll()
       .subscribe(
-        (res: Delivery[]) => this.onLoadSuccess(res),
+        (res: Supply[]) => this.onLoadSuccess(res),
         () => this.onLoadError()
       );
   }
 
-  private onLoadSuccess(deliveries: Delivery[]) {
-    this.deliveries = deliveries;
-    this.total = deliveries.length;
-    this.updateDatatableRows(deliveries);
+  private onLoadSuccess(supplies: Supply[]) {
+    this.supplies = supplies;
+    this.total = supplies.length;
+    this.updateDatatableRows(supplies);
 
     this.loadingIndicator = false;
   }
@@ -71,8 +71,8 @@ export class DeliveriesListComponent implements OnInit {
     this.notificationsService.danger('Ошибка', 'Невозможно загрузить все поставки');
   }
   
-  private updateDatatableRows(deliveries: Delivery[]) {
-    this.deliveryRows = deliveries.map((el, index) => new DeliveryTableRow(el, index));
-    this.shown = deliveries.length;
+  private updateDatatableRows(supplies: Supply[]) {
+    this.supplyRows = supplies.map((el, index) => new SupplyTableRow(el, index));
+    this.shown = supplies.length;
   }
 }

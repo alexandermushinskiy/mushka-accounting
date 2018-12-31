@@ -7,8 +7,9 @@ import { Product } from '../../shared/models/product.model';
 import { DatetimeService } from '../datetime/datetime.service';
 import { ProductSize } from '../../shared/models/product-size.model';
 import { Size } from '../../shared/models/size.model';
-import { Delivery } from '../../delivery/shared/models/delivery.model';
+import { Supply } from '../../delivery/shared/models/supply.model';
 import { PaymentCard } from '../../shared/models/payment-card.model';
+import { copyStyles } from '@angular/animations/browser/src/util';
 
 @Injectable()
 export class ConverterService {
@@ -103,19 +104,22 @@ export class ConverterService {
     });
   }
 
-  convertToDeliveries(response: any[]): Delivery[] {
-    return response.map(res => this.convertToDelivery(res));
+  convertToSupplies(response: any[]): Supply[] {
+    return response.map(res => this.convertToSupply(res));
   }
 
-  convertToDelivery(source: any): Delivery {
-    return new Delivery({
+  convertToSupply(source: any): Supply {
+    return new Supply({
       id: source.id,
-      supplier: source.supplier,
+      supplier: source.supplierName,
       requestDate: this.datetimeService.toString(source.requestDate),
       receivedDate: this.datetimeService.toString(source.receivedDate),
-      paymentMethod: source.paymentMethod,
+      prepayment: source.prepayment,
+      prepaymentMethod: source.prepaymentMethod,
       cost: source.cost,
-      transferFee: source.transferFee,
+      costMethod: source.costMethod,
+      deliveryCost: source.deliveryCost,
+      deliveryCostMethod: source.deliveryCostMethod,
       bankFee: source.bankFee,
       totalCost: source.totalCost,
       productsAmount: source.productsAmount

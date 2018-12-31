@@ -6,10 +6,10 @@ using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Category;
-using Mushka.WebApi.ClientModels.Delivery;
 using Mushka.WebApi.ClientModels.Order;
 using Mushka.WebApi.ClientModels.Product;
 using Mushka.WebApi.ClientModels.Supplier;
+using Mushka.WebApi.ClientModels.Supply;
 using Mushka.WebApi.Resolvers;
 using CategoryModel = Mushka.WebApi.ClientModels.Category.CategoryModel;
 
@@ -66,16 +66,16 @@ namespace Mushka.WebApi
             //-------------------------
 
             // Delivery
-            CreateMap<DeliveryRequestModel, Delivery>().ConvertUsing<DeliveryRequestConverter>();
-            CreateMap<Delivery, DeliveryModel>().ConvertUsing<DeliveryConverter>();
+            CreateMap<SupplyRequestModel, Supply>().ConvertUsing<SupplyRequestConverter>();
+            CreateMap<Supply, SupplyModel>().ConvertUsing<SupplyConverter>();
 
-            CreateMap<ValidationResponse<Delivery>, DeliveryResponseModel>()
-                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<DeliveryResponseResolver>())
+            CreateMap<ValidationResponse<Supply>, SupplyResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SupplyResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
 
-            CreateMap<ValidationResponse<IEnumerable<Delivery>>, DeliveriesResponseModel>()
-                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<DeliveryResponseResolver>())
+            CreateMap<ValidationResponse<IEnumerable<Supply>>, SuppliesResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SupplyResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
             //-------------------------

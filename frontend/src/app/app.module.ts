@@ -40,7 +40,7 @@ import { ProductsModule } from './products/products.module';
 import { PackagesModule } from './packages/packages.module';
 import { PartnersModule } from './partners/partners.module';
 import { LogisticsModule } from './logistics/logistics.module';
-import { DeliveryModule } from './delivery/delivery.module';
+import { SupplyModule } from './supplies/supply.module';
 
 @NgModule({
   declarations: [
@@ -60,7 +60,7 @@ import { DeliveryModule } from './delivery/delivery.module';
     PackagesModule,
     PartnersModule,
     LogisticsModule,
-    DeliveryModule,
+    SupplyModule,
     NgxWebstorageModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',

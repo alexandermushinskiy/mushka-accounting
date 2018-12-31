@@ -17,9 +17,9 @@ export const MenuItems: MenuItem[] = [
     isExternal: true,
   }),
   new MenuItem({
-    title: MenuLabels.DELIVERIES,
+    title: MenuLabels.SUPPLIES,
     icon: 'fa-archive',
-    routePath: '/deliveries',
+    routePath: '/supplies',
     isEnabled: true,
   }),
   new MenuItem({

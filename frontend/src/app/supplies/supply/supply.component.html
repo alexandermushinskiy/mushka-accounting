@@ -1,0 +1,188 @@
+<form *ngIf="supplyForm" class="delivery w-100" [formGroup]="supplyForm" autocomplete="off" (ngSubmit)="saveSupply()">
+  
+  <div class="app-page-body row flex-nowrap">
+    <!-- left side -->
+    <div class="app-page-content">
+      <div class="app-page-header">
+        <div class="app-page-description">
+          <mk-back-arrow></mk-back-arrow>
+          <h1 class="app-page-title">{{ title }}</h1>
+        </div>
+      </div>
+      <div class="content-body">
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="fields-group-title">Дата заявки/получения</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="field-group">
+                      <label>Дата заявки</label>
+                      <mk-datetimepicker-wrapper formControlName="requestDate" [required]="true"></mk-datetimepicker-wrapper>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="field-group">
+                      <label>Дата получения</label>
+                      <mk-datetimepicker-wrapper formControlName="receivedDate" [required]="true"></mk-datetimepicker-wrapper>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="fields-group-title">Организация</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="field-group">
+                      <label for="address">Наименование</label>
+                      <mk-suppliers-dropdown formControlName="supplier"></mk-suppliers-dropdown>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="fields-group-title">Список товаров</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-row product-row">
+                      <div class="col-sm-6">Наименование товара</div>
+                      <div class="col-sm-2">Размер</div>                  
+                      <div class="col-sm-2">Цена</div>
+                      <div class="col-sm-2">Количество</div>
+                    </div>
+                    <div formArrayName="products">
+                      <div class="form-row product-row" *ngFor="let productControl of supplyForm.get('products').controls; let index=index" [formGroupName]="index">
+                        <div class="col-sm-6">
+                          <div class="field-group">
+                            <mk-select-products formControlName="product"
+                                                [products]="productsList"
+                                                (onClear)="onClearProducts(productControl)"></mk-select-products>
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="field-group">
+                            <mk-select-size class="form-control"
+                                            formControlName="size"
+                                            [ngClass]="{'required-select': !!productControl.value.product && productControl.value.product.sizes.length > 0}"
+                                            [isMultiple]="false"
+                                            [isDisabled]="!productControl.value.product"
+                                            [placeholder]="!productControl.value.product ? 'Нет' : 'Размер'"
+                                            [availableSizes]="!!productControl.value.product ? productControl.value.product.sizes : []">
+                            </mk-select-size>
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="field-group">
+                            <mk-currency-input formControlName="costPerItem"
+                                               [placeholder]="'Цена'"
+                                               [required]="true"
+                                               [id]="'costPerItem-' + index">
+                            </mk-currency-input>
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="field-group">
+                            <input type="number" class="form-control" formControlName="quantity" placeholder="Количество" />
+                          </div>  
+                          <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="supplyForm.get('products').controls.length > 1">
+                            <i class="ico ico-close"></i>
+                          </button>
+                          {{ productControl.name }}
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn-add" type="button" (click)="addProduct()">
+                      <i class="fa fa-plus fa-border"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- right side -->
+    <div class="app-page-aside">
+      <div class="aside-body">
+        <div class="aside-body-inner">
+          <div class="row">
+            <div class="col-md-12 cost">
+              <span class="cost-title">Оплата:</span>
+              <span class="cost-value"><mk-currency-input formControlName="cost"></mk-currency-input></span>
+              <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" formControlName="costMethod"></mk-dropdown></span>
+            </div>
+            <div class="col-md-12 cost">
+              <span class="cost-title">Предоплата:</span>
+              <span class="cost-value"><mk-currency-input formControlName="prepayment"></mk-currency-input></span>
+              <span class="cost-payment-type">
+                <mk-dropdown formControlName="prepaymentMethod"
+                             [options]="paymentMethodsList"
+                             [required]="supplyForm.hasError('required', ['prepaymentMethod'])">
+                </mk-dropdown>
+              </span>
+            </div>
+            <div class="col-md-12 cost">
+              <span class="cost-title">Доставка:</span>
+              <span class="cost-value"><mk-currency-input formControlName="deliveryCost"></mk-currency-input></span>
+              <span class="cost-payment-type">
+                <mk-dropdown formControlName="deliveryCostMethod"
+                             [options]="paymentMethodsList"
+                             [required]="supplyForm.hasError('required', ['deliveryCostMethod'])">
+                </mk-dropdown>
+              </span>
+            </div>
+            <div class="col-md-12 cost">
+              <span class="cost-title">Комиссия:</span>
+              <span class="cost-value"><mk-currency-input formControlName="bankFee"></mk-currency-input></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 total-cost">
+              <span class="total-cost-title">Итого:</span>
+              <span class="total-cost-value">{{ totalCost | mkCurrency }}</span>
+            </div>
+          </div>
+          <div class="row notes-row">
+            <div class="col-md-12">
+              <div class="field-group">
+                <label>Примечание</label>
+                <textarea class="notes" rows="5" formControlName="notes"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="aside-footer">
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-buttons">
+      <button class="btn btn-primary" type="submit" [disabled]="isLoading">
+        {{ isEdit ? 'Обновить поступление' : 'Сохранить поступление' }}
+        <div *ngIf="isLoading" class="btn--spinner"></div>
+      </button>
+      <button type="button" class="btn btn-outline" [routerLink]="['/supplies']" [disabled]="isLoading">Отмена</button>
+    </div>
+  </div>
+</form>

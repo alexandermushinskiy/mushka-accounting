@@ -9,12 +9,12 @@ namespace Mushka.WebApi.Resolvers
     {
         public ProductModel Convert(Product source, ProductModel destination, ResolutionContext context)
         {
-            var lastDelivery = source.Deliveries
-                .OrderByDescending(del => del.Delivery.DeliveryDate)
-                .Select(del => del.Delivery)
+            var lastSupply = source.Supplies
+                .OrderByDescending(del => del.Supply.ReceivedDate)
+                .Select(del => del.Supply)
                 .FirstOrDefault();
 
-            var lastDeliveryCount = lastDelivery?.Products
+            var lastSupplyCount = lastSupply?.Products
                 .Where(del => del.ProductId == source.Id)
                 .Select(prod => prod.ProductSizes.Sum(ps => ps.Quantity))
                 .Single();
@@ -27,9 +27,9 @@ namespace Mushka.WebApi.Resolvers
                 CreatedOn = source.CreatedOn,
                 CategoryId = source.CategoryId,
                 Category = ConvertToCategoryModel(source.Category),
-                DeliveriesCount = source.Deliveries.Count,
-                LastDeliveryDate = lastDelivery?.DeliveryDate,
-                LastDeliveryCount = lastDeliveryCount,
+                DeliveriesCount = source.Supplies.Count,
+                LastDeliveryDate = lastSupply?.ReceivedDate,
+                LastDeliveryCount = lastSupplyCount,
                 Sizes = source.Sizes.Select(CreateProductSizeModel).ToArray()
             };
         }

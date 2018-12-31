@@ -131,261 +131,261 @@ INSERT INTO [PaymentCards] ([Id], [Number], [Owner], [SupplierId])
 VALUES
 ('DCC06950-941E-4D1E-A2A4-8347C287775B', '5363542600860200', N'Чубак Степан', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45')
 
--- Deliveries
-INSERT INTO [Deliveries] ([Id], [BankFee], [Cost], [DeliveryDate], [RequestDate], [SupplierId], [TransferFee])
+-- Supplies
+INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost])
 VALUES
-('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 222.0, 41319.0, '2018-04-05T00:00:00.0000000', '2018-02-13T00:00:00.0000000', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', 940.0),
-('32c74ef3-adfd-4723-a319-9b8984d1b7fb', 90.0, 16500.0, '2018-06-01T00:00:00.0000000', '2018-05-03T00:00:00.0000000', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', 90.0),
-('b2d8b13b-aa82-4820-ba85-e23501869c3a', 110.0, 39720.0, '2018-09-26T00:00:00.0000000', '2018-08-26T00:00:00.0000000', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', 810.0);
+('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 222.0, 41319.0, 2, '2018-04-05T00:00:00.0000000', '2018-02-13T00:00:00.0000000', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', 940.0, 1, 42481),
+('32c74ef3-adfd-4723-a319-9b8984d1b7fb', 90.0, 16500.0, 2, '2018-06-01T00:00:00.0000000', '2018-05-03T00:00:00.0000000', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', 90.0, 1, 16680),
+('b2d8b13b-aa82-4820-ba85-e23501869c3a', 110.0, 39720.0, 2, '2018-09-26T00:00:00.0000000', '2018-08-26T00:00:00.0000000', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', 810.0, 1, 40640);
 
 
--- Delivery Products
--- Delivery Products
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+-- Supply Products
+
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'a9ab38d1-c2b2-4c50-9ab9-80335f4561f8', 25.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'a9ab38d1-c2b2-4c50-9ab9-80335f4561f8', 'fb8356a5-1629-4f9f-9b51-3d40e0e55f84', 39),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'a9ab38d1-c2b2-4c50-9ab9-80335f4561f8', '6e519491-8fd8-45f2-992e-270b01f25971', 38);
 
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '6bb026fc-ae0f-4a87-b0e3-845b3d55e05b', 20.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '6bb026fc-ae0f-4a87-b0e3-845b3d55e05b', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 62),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '6bb026fc-ae0f-4a87-b0e3-845b3d55e05b', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 54);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'b62555e5-e51b-41e2-9bf8-6a750edc0d8a', 20.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'b62555e5-e51b-41e2-9bf8-6a750edc0d8a', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 65),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'b62555e5-e51b-41e2-9bf8-6a750edc0d8a', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 66);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '304af5df-1d03-40c3-af40-9c6259898f75', 20.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '304af5df-1d03-40c3-af40-9c6259898f75', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 57),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '304af5df-1d03-40c3-af40-9c6259898f75', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 60);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '574f3353-0c6e-4148-a8ef-0db9559f3864', 25.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '574f3353-0c6e-4148-a8ef-0db9559f3864', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 64),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '574f3353-0c6e-4148-a8ef-0db9559f3864', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 48);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '32ae1bae-c186-4e7c-a6af-d683e10d1480', 25.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '32ae1bae-c186-4e7c-a6af-d683e10d1480', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 48),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '32ae1bae-c186-4e7c-a6af-d683e10d1480', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 50);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '8636296d-e47c-4bb8-a6fd-e0cc01d4e27a', 25.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '8636296d-e47c-4bb8-a6fd-e0cc01d4e27a', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 53),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '8636296d-e47c-4bb8-a6fd-e0cc01d4e27a', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 53);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'a9899cd5-9b2d-4241-8e28-0d1441933bad', 25.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'a9899cd5-9b2d-4241-8e28-0d1441933bad', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 44),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'a9899cd5-9b2d-4241-8e28-0d1441933bad', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 43);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'f869224c-80e6-43b6-94a4-2528ecd67a75', 25.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'f869224c-80e6-43b6-94a4-2528ecd67a75', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 53),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'f869224c-80e6-43b6-94a4-2528ecd67a75', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 53);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'ba641024-d50a-4f9c-bfd9-a330fe12071e', 25.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'ba641024-d50a-4f9c-bfd9-a330fe12071e', '6e519491-8fd8-45f2-992e-270b01f25971', 54),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'ba641024-d50a-4f9c-bfd9-a330fe12071e', 'fb8356a5-1629-4f9f-9b51-3d40e0e55f84', 52);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'f9b055d3-5fd9-417f-b71d-0af81c821029', 30.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'f9b055d3-5fd9-417f-b71d-0af81c821029', '6e519491-8fd8-45f2-992e-270b01f25971', 40),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'f9b055d3-5fd9-417f-b71d-0af81c821029', 'fb8356a5-1629-4f9f-9b51-3d40e0e55f84', 53);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'bddc1231-0952-4c6d-9a30-9de441cfa3a0', 25.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'bddc1231-0952-4c6d-9a30-9de441cfa3a0', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 50),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'bddc1231-0952-4c6d-9a30-9de441cfa3a0', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 48);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'dfa69fa0-2df3-4254-95b7-f65eb4ed6c92', 25.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'dfa69fa0-2df3-4254-95b7-f65eb4ed6c92', '6e519491-8fd8-45f2-992e-270b01f25971', 56),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 'dfa69fa0-2df3-4254-95b7-f65eb4ed6c92', 'fb8356a5-1629-4f9f-9b51-3d40e0e55f84', 52);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '365510f0-fb1a-42cd-b249-5ad514bf2f33', 25.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '365510f0-fb1a-42cd-b249-5ad514bf2f33', '6e519491-8fd8-45f2-992e-270b01f25971', 46),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '365510f0-fb1a-42cd-b249-5ad514bf2f33', 'fb8356a5-1629-4f9f-9b51-3d40e0e55f84', 56);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '637b0ba2-f1d9-4bf6-b1c7-1bc685033b36', 25.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '637b0ba2-f1d9-4bf6-b1c7-1bc685033b36', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 58),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '637b0ba2-f1d9-4bf6-b1c7-1bc685033b36', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 57);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '55386f8f-3234-42c0-a82a-65ea7dd50b28', .0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '55386f8f-3234-42c0-a82a-65ea7dd50b28', '6e519491-8fd8-45f2-992e-270b01f25971', 75),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '55386f8f-3234-42c0-a82a-65ea7dd50b28', 'fb8356a5-1629-4f9f-9b51-3d40e0e55f84', 57);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '65801c7f-37f6-4452-a304-ceaafc940d08', 20.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '65801c7f-37f6-4452-a304-ceaafc940d08', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 52),
 ('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', '65801c7f-37f6-4452-a304-ceaafc940d08', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 51);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', '5e838aa5-dd8c-4b6b-81ea-a0aaedf44f7d', 27.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', '5e838aa5-dd8c-4b6b-81ea-a0aaedf44f7d', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 47),
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', '5e838aa5-dd8c-4b6b-81ea-a0aaedf44f7d', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 46);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', '85ceb6f2-c29b-4809-b30a-5ccf427a0447', 30.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', '85ceb6f2-c29b-4809-b30a-5ccf427a0447', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 53),
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', '85ceb6f2-c29b-4809-b30a-5ccf427a0447', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 13);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', '09cfb881-d707-49e5-a2c1-730ce136b710', 30.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', '09cfb881-d707-49e5-a2c1-730ce136b710', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 63),
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', '09cfb881-d707-49e5-a2c1-730ce136b710', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 53);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', '84c601ce-a32d-432d-99e2-c23916cf4d1f', 30.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', '84c601ce-a32d-432d-99e2-c23916cf4d1f', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 48),
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', '84c601ce-a32d-432d-99e2-c23916cf4d1f', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 51);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', 'db645119-1b9f-4161-966d-97a7cca8d2c7', 27.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', 'db645119-1b9f-4161-966d-97a7cca8d2c7', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 52),
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', 'db645119-1b9f-4161-966d-97a7cca8d2c7', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 49);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', '5bf3988b-ba17-4802-90ad-b77abe68677a', 27.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', '5bf3988b-ba17-4802-90ad-b77abe68677a', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 61),
 ('32c74ef3-adfd-4723-a319-9b8984d1b7fb', '5bf3988b-ba17-4802-90ad-b77abe68677a', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 57);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', '297af444-055f-4b76-a3ee-fbe65b9752f6', 25.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', '297af444-055f-4b76-a3ee-fbe65b9752f6', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 65),
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', '297af444-055f-4b76-a3ee-fbe65b9752f6', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 132);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', '1054708a-aa30-4ba6-84f7-321eac6aa041', 18.7);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', '1054708a-aa30-4ba6-84f7-321eac6aa041', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 160),
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', '1054708a-aa30-4ba6-84f7-321eac6aa041', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 110);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', '8823f027-9074-4fa9-a5ef-552a5b08ef5e', 25.5);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', '8823f027-9074-4fa9-a5ef-552a5b08ef5e', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 114),
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', '8823f027-9074-4fa9-a5ef-552a5b08ef5e', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 115);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', '76f1b29c-edac-4ca9-b529-da383c04905b', 19.6);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', '76f1b29c-edac-4ca9-b529-da383c04905b', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 112),
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', '76f1b29c-edac-4ca9-b529-da383c04905b', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 105);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', 'eabc3ce7-3c55-465e-9f27-11033bcc4f33', 25.0);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', 'eabc3ce7-3c55-465e-9f27-11033bcc4f33', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 92),
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', 'eabc3ce7-3c55-465e-9f27-11033bcc4f33', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 98);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', 'd772b195-65e3-4250-8b2c-e2d59e7d24da', 19.6);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', 'd772b195-65e3-4250-8b2c-e2d59e7d24da', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 111),
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', 'd772b195-65e3-4250-8b2c-e2d59e7d24da', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 108);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', '380e3a08-08c5-40b1-b401-ec6b57d2e549', 21.31);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', '380e3a08-08c5-40b1-b401-ec6b57d2e549', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 115),
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', '380e3a08-08c5-40b1-b401-ec6b57d2e549', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 107);
 
-INSERT INTO [DeliveryProducts] ([DeliveryId], [ProductId], [PriceForItem])
+INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [CostForItem])
 VALUES 
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', 'e536c61e-c2c5-41ec-9205-660726baa18b', 25.35);
-INSERT INTO [DeliveryProductSizes] ([DeliveryId], [ProductId], [SizeId], [Quantity])
+INSERT INTO [SupplyProductSizes] ([SupplyId], [ProductId], [SizeId], [Quantity])
 VALUES 
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', 'e536c61e-c2c5-41ec-9205-660726baa18b', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 122),
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', 'e536c61e-c2c5-41ec-9205-660726baa18b', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 110);

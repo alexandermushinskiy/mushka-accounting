@@ -8,7 +8,7 @@ namespace Mushka.Domain.Entities
     {
         public Supplier()
         {
-            Deliveries = new List<Delivery>();
+            Supplies = new List<Supply>();
             ContactPersons = new List<ContactPerson>();
             PaymentCards = new List<PaymentCard>();
         }
@@ -31,7 +31,7 @@ namespace Mushka.Domain.Entities
         
         public ICollection<ContactPerson> ContactPersons { get; set; }
         
-        public ICollection<Delivery> Deliveries { get; set; }
+        public ICollection<Supply> Supplies { get; set; }
         
         public ICollection<PaymentCard> PaymentCards { get; set; }
     }

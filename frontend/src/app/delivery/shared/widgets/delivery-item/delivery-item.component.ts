@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { Delivery } from '../../models/delivery.model';
+import { Supply } from '../../models/supply.model';
 
 @Component({
   selector: 'mk-delivery-item',
@@ -8,12 +8,12 @@ import { Delivery } from '../../models/delivery.model';
   styleUrls: ['./delivery-item.component.scss']
 })
 export class DeliveryItemComponent implements OnInit {
-  @Input() delivery: Delivery;
+  @Input() delivery: Supply;
   @Input() canEdit = false;
   @Input() canDelete = false;
-  @Output() onEdit = new EventEmitter<Delivery>();
-  @Output() onDelete = new EventEmitter<Delivery>();
-  @Output() onView = new EventEmitter<Delivery>();
+  @Output() onEdit = new EventEmitter<Supply>();
+  @Output() onDelete = new EventEmitter<Supply>();
+  @Output() onView = new EventEmitter<Supply>();
 
   expandedItemsStates: { [id: string]: boolean } = {};
   isExpanded = false;

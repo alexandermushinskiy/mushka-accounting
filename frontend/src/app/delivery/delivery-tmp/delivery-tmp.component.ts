@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { DeliveriesService } from '../../core/api/deliveries.service';
-import { Delivery } from '../shared/models/delivery.model';
+import { SuppliesService } from '../../core/api/supplies.service';
+import { Supply } from '../shared/models/supply.model';
 import { PaymentMethod } from '../shared/enums/payment-method.enum';
 import { Product } from '../../shared/models/product.model';
-import { ProductItem } from '../shared/models/product-item.model';
 import { Size } from '../../shared/models/size.model';
 import { ProductsServce } from '../../core/api/products.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
-import { SelectSizeComponent } from '../../shared/widgets/select-size/select-size.component';
+import { SupplyProduct } from '../shared/models/supply-product.model';
 
 @Component({
   selector: 'mk-delivery-tmp',
@@ -18,8 +17,8 @@ import { SelectSizeComponent } from '../../shared/widgets/select-size/select-siz
   styleUrls: ['./delivery-tmp.component.scss']
 })
 export class DeliveryTmpComponent implements OnInit {
-  deliveryForm: FormGroup;
-  deliverId: string;
+  supplyForm: FormGroup;
+  supplyId: string;
   isEdit = false;
   isLoading = false;
   isSubmitted = false;
@@ -35,7 +34,7 @@ export class DeliveryTmpComponent implements OnInit {
               private router: Router,
               private notificationsService: NotificationsService,
               private productsService: ProductsServce,
-              private deliveryService: DeliveriesService) { }
+              private suppliesService: SuppliesService) { }
 
   ngOnInit() {
     this.productsService.getSizes()
@@ -45,17 +44,17 @@ export class DeliveryTmpComponent implements OnInit {
       .subscribe((products: Product[]) => this.productsList = products);
 
     this.route.params.subscribe(params => {
-      this.deliverId = params['id'];
-      this.isEdit = !!this.deliverId;
+      this.supplyId = params['id'];
+      this.isEdit = !!this.supplyId;
       this.title = `${this.isEdit ? 'Редактирование поступления' : 'Новое поступление'}`;
 
       if (this.isEdit) {
-        this.deliveryService.getById(this.deliverId)
-          .subscribe((delivery: Delivery) => this.buildForm(delivery));
+        this.suppliesService.getById(this.supplyId)
+          .subscribe((delivery: Supply) => this.buildForm(delivery));
       } else {
-        this.buildForm(new Delivery({
+        this.buildForm(new Supply({
           cost: 0,
-          products: [new ProductItem({})]
+          products: [new SupplyProduct({})]
         }));
       }
     });
@@ -70,12 +69,12 @@ export class DeliveryTmpComponent implements OnInit {
   }
 
   addProduct() {
-    const products = <FormArray>this.deliveryForm.get('products');
-    products.push(this.createProductModel(new ProductItem({})));
+    const products = <FormArray>this.supplyForm.get('products');
+    products.push(this.createProductModel(new SupplyProduct({})));
   }
 
   removeProduct(index: number) {
-    const products = <FormArray>this.deliveryForm.get('products');
+    const products = <FormArray>this.supplyForm.get('products');
     products.removeAt(index);
   }
 
@@ -83,17 +82,21 @@ export class DeliveryTmpComponent implements OnInit {
     productCtrl.controls.size.setValue(null);
   }
 
-  saveDelivery() {
-    if (this.deliveryForm.invalid) {
+  saveSupply() {
+    const t1 = this.createSupplyModel(this.supplyForm.getRawValue());
+    console.info(t1);
+    return;
+
+    if (this.supplyForm.invalid) {
       return;
     }
 
     this.isLoading = true;
-    const delivery = this.createDeliveryModel(this.deliveryForm.getRawValue());
+    const supply = this.createSupplyModel(this.supplyForm.getRawValue());
 
     (this.isEdit
-      ? this.deliveryService.update(this.deliverId, delivery)
-      : this.deliveryService.create(delivery))
+      ? this.suppliesService.update(this.supplyId, supply)
+      : this.suppliesService.create(supply))
       .subscribe(
         () => this.onSaveSuccess(),
         (errors: string[]) => this.onSaveFailed(errors)
@@ -104,7 +107,7 @@ export class DeliveryTmpComponent implements OnInit {
     this.isLoading = false;
     this.notificationsService.success(this.title, `Поступление было успешно ${this.isEdit ? 'изменено' : 'добавлено'}`);
 
-    this.router.navigate(['/deliveries']);
+    this.router.navigate(['/supplies']);
   }
 
   private onSaveFailed(errors: string[]) {
@@ -112,108 +115,116 @@ export class DeliveryTmpComponent implements OnInit {
     this.notificationsService.danger(this.title, errors[0]);
   }
 
-  private buildForm(delivery: Delivery) {
-    this.totalCost = !!delivery.totalCost ? delivery.totalCost : 0;
+  private buildForm(supply: Supply) {
+    this.totalCost = !!supply.totalCost ? supply.totalCost : 0;
 
-    this.deliveryForm = this.formBuilder.group({
-      requestDate: [delivery.requestDate, Validators.required],
-      receivedDate: [delivery.receivedDate, Validators.required],
-      supplier: [delivery.supplier, Validators.required],
-      transferFee: [delivery.transferFee],
-      transferFeeMethod: [delivery.transferFeeMethod],
-      bankFee: [delivery.bankFee],
-      bankFeeMethod: [delivery.bankFeeMethod],
-      prepayment: [delivery.prepayment],
-      prepaymentMethod: [delivery.prepaymentMethod],
-      cost: [{value: delivery.cost, disabled: true}],
-      costMethod: [delivery.costMethod, Validators.required],
-      notes: [delivery.notes],
+    this.supplyForm = this.formBuilder.group({
+      requestDate: [supply.requestDate, Validators.required],
+      receivedDate: [supply.receivedDate, Validators.required],
+      supplier: [supply.supplier, Validators.required],
+      bankFee: [supply.bankFee],
+      deliveryCost: [supply.deliveryCost],
+      deliveryCostMethod: [supply.deliveryCostMethod],
+      prepayment: [supply.prepayment],
+      prepaymentMethod: [supply.prepaymentMethod],
+      cost: [{value: supply.cost, disabled: true}],
+      costMethod: [supply.costMethod, Validators.required],
+      notes: [supply.notes],
       products: this.formBuilder.array(
-        delivery.products.map(param => this.createProductModel(param))
+        supply.products.map(param => this.createProductModel(param))
       )
     });
 
     this.addFieldChangeListeners();
   }
 
-  private createProductModel(productItem: ProductItem): FormGroup {
+  private createProductModel(productItem: SupplyProduct): FormGroup {
     return this.formBuilder.group({
       product: [productItem.product],
-      amount: [productItem.amount, Validators.required],
+      quantity: [productItem.quantity, Validators.required],
       size: [productItem.size],
       costPerItem: [productItem.costPerItem, Validators.required]
     });
   }
 
   private addFieldChangeListeners() {
-    (this.deliveryForm.get('products') as FormArray).valueChanges.subscribe(() => {
+    (this.supplyForm.get('products') as FormArray).valueChanges.subscribe(() => {
       this.calculateProductsCost();
     });
 
-    this.deliveryForm.controls['bankFee'].valueChanges.subscribe((value: number) => {
+    this.supplyForm.controls['deliveryCost'].valueChanges.subscribe((value: number) => {
       this.calculateTotalCost();
-      this.updateControlValidator('bankFeeMethod', !!value);
+      this.updateControlValidator('deliveryCostMethod', !!value);
     });
 
-    this.deliveryForm.controls['transferFee'].valueChanges.subscribe((value: number) => {
+    this.supplyForm.controls['bankFee'].valueChanges.subscribe(() => {
       this.calculateTotalCost();
-      this.updateControlValidator('transferFeeMethod', !!value);
     });
 
-    this.deliveryForm.controls['prepayment'].valueChanges.subscribe((value: number) => {
+    this.supplyForm.controls['prepayment'].valueChanges.subscribe((value: number) => {
       this.calculateTotalCost();
       this.updateControlValidator('prepaymentMethod', !!value);
     });
   }
 
   private updateControlValidator(controlName: string, hasValidator: boolean) {
-    const formCtrl = this.deliveryForm.controls[controlName];
+    const formCtrl = this.supplyForm.controls[controlName];
     formCtrl.setValidators(hasValidator ? [Validators.required] : []);
     formCtrl.updateValueAndValidity();
   }
 
   private calculateProductsCost() {
     let cost = 0;
-    (this.deliveryForm.get('products') as FormArray).controls.forEach(control => {
-      if (!!control.value.costPerItem && !!control.value.amount) {
-        cost += control.value.costPerItem * control.value.amount;
+    (this.supplyForm.get('products') as FormArray).controls.forEach(control => {
+      if (!!control.value.costPerItem && !!control.value.quantity) {
+        cost += control.value.costPerItem * control.value.quantity;
       }
     });
 
-    const costCtrl = this.deliveryForm.get('cost');
-    costCtrl.setValue(cost, {onlySelf: true});
+    const costCtrl = this.supplyForm.get('cost');
+    costCtrl.setValue(Math.round(cost * 100) / 100, {onlySelf: true});
     costCtrl.updateValueAndValidity();
 
     this.calculateTotalCost();
   }
 
   private calculateTotalCost() {
-    const bankFeeCtrl = this.deliveryForm.controls['bankFee'];
-    const transferFeeCtrl = this.deliveryForm.controls['transferFee'];
-    const costCtrl = this.deliveryForm.controls['cost'];
+    const bankFeeCtrl = this.supplyForm.controls['bankFee'];
+    const deliveryCostCtrl = this.supplyForm.controls['deliveryCost'];
+    const costCtrl = this.supplyForm.controls['cost'];
 
     const bankFee = !!bankFeeCtrl.value ? bankFeeCtrl.value : 0;
-    const transferFee = !!transferFeeCtrl.value ? transferFeeCtrl.value : 0;
+    const deliveryCost = !!deliveryCostCtrl.value ? deliveryCostCtrl.value : 0;
     const cost = !!costCtrl.value ? costCtrl.value : 0;
 
-    this.totalCost = Math.round((cost + bankFee + transferFee) * 100) / 100;
+    this.totalCost = Math.round((cost + bankFee + deliveryCost) * 100) / 100;
   }
 
-  private createDeliveryModel(formRawValue: any): Delivery {
-    return new Delivery({
-      id: this.deliverId,
+  private createSupplyModel(formRawValue: any): Supply {
+    return new Supply({
+      id: this.supplyId,
       requestDate: formRawValue.requestDate,
       receivedDate: formRawValue.receivedDate,
       supplier: formRawValue.supplier,
       transferFee: formRawValue.transferFee,
-      bankFee: formRawValue.bankFee,
-      bankFeeMethod: formRawValue.bankFeeMethod,
+      deliveryCost: formRawValue.deliveryCost,
+      deliveryCostMethod: formRawValue.deliveryCostMethod,
       prepayment: formRawValue.prepayment,
       prepaymentMethod: formRawValue.prepaymentMethod,
       cost: formRawValue.cost,
       costMethod: formRawValue.costMethod,
       totalCost: this.totalCost,
-      notes: formRawValue.notes
+      notes: formRawValue.notes,
+      products: formRawValue.products.map((prod: any) => this.createSupplyProduct(prod))
+    });
+  }
+
+  private createSupplyProduct(formValue: any): SupplyProduct {
+    return new SupplyProduct({
+      product: formValue.product,
+      size: formValue.size[0],
+      amount: formValue.amount,
+      costPerItem: formValue.costPerItem
     });
   }
 }

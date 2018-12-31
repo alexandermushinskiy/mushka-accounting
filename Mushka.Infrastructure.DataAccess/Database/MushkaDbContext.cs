@@ -19,7 +19,7 @@ namespace Mushka.Infrastructure.DataAccess.Database
 
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<Delivery> Deliveries { get; set; }
+        public DbSet<Supply> Supplies { get; set; }
 
         public DbSet<Order> Orders { get; set; }
 
@@ -31,9 +31,9 @@ namespace Mushka.Infrastructure.DataAccess.Database
             modelBuilder.ApplyConfiguration(new CategoryConfig());
             modelBuilder.ApplyConfiguration(new ProductConfig());
             modelBuilder.ApplyConfiguration(new ProductSizeConfig());
-            modelBuilder.ApplyConfiguration(new DeliveryConfig());
-            modelBuilder.ApplyConfiguration(new DeliveryProductConfig());
-            modelBuilder.ApplyConfiguration(new DeliveryProductSizeConfig());
+            modelBuilder.ApplyConfiguration(new SupplyConfig());
+            modelBuilder.ApplyConfiguration(new SupplyProductConfig());
+            modelBuilder.ApplyConfiguration(new SupplyProductSizeConfig());
             modelBuilder.ApplyConfiguration(new OrderConfig());
             modelBuilder.ApplyConfiguration(new OrderProductConfig());
             modelBuilder.ApplyConfiguration(new SupplierConfig());

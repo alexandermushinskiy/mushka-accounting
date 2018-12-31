@@ -21,7 +21,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         {
             return await Context.Suppliers
                 .Include(sup => sup.ContactPersons)
-                .Include(sup => sup.Deliveries)
+                .Include(sup => sup.Supplies)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
         }

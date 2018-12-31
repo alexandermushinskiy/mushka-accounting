@@ -55,9 +55,9 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 .Include(p => p.Category)
                 .Include(prod => prod.Sizes)
                     .ThenInclude(s => s.Size)
-                .Include(prod => prod.Deliveries)
-                    .ThenInclude(del => del.Delivery)
-                .Include(prod => prod.Deliveries)
+                .Include(prod => prod.Supplies)
+                    .ThenInclude(del => del.Supply)
+                .Include(prod => prod.Supplies)
                     .ThenInclude(del => del.ProductSizes)
                         .ThenInclude(ps => ps.Size)
                 .ToListAsync(cancellationToken);

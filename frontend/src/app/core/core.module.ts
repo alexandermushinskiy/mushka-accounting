@@ -13,7 +13,7 @@ import { ProductsServce } from './api/products.service';
 import { UserSettingsService } from './api/user-settings.service';
 import { CategoriesService } from './api/categories.service';
 import { SuppliersService } from './api/suppliers.service';
-import { DeliveriesService } from './api/deliveries.service';
+import { SuppliesService } from './api/supplies.service';
 import { ConverterService } from './converter/converter.service';
 import { DatetimeService } from './datetime/datetime.service';
 
@@ -34,7 +34,7 @@ import { DatetimeService } from './datetime/datetime.service';
     CategoriesService,
     UserSettingsService,
     SuppliersService,
-    DeliveriesService,
+    SuppliesService,
     ConverterService,
     DatetimeService
   ],

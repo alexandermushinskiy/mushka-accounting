@@ -9,7 +9,7 @@ namespace Mushka.Domain.Entities
         public Product()
         {
             Sizes = new List<ProductSize>();
-            Deliveries = new List<DeliveryProduct>();
+            Supplies = new List<SupplyProduct>();
             Orders = new List<OrderProduct>();
         }
 
@@ -23,7 +23,7 @@ namespace Mushka.Domain.Entities
         
         public ICollection<ProductSize> Sizes { get; set; }
 
-        public ICollection<DeliveryProduct> Deliveries { get; set; }
+        public ICollection<SupplyProduct> Supplies { get; set; }
 
         public ICollection<OrderProduct> Orders { get; set; }
 

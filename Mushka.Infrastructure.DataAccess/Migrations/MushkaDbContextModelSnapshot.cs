@@ -95,76 +95,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.ToTable("ContactPersons");
                 });
 
-            modelBuilder.Entity("Mushka.Domain.Entities.Delivery", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("Id");
-
-                    b.Property<decimal>("BankFee")
-                        .HasColumnName("BankFee")
-                        .HasColumnType("Money");
-
-                    b.Property<decimal>("Cost")
-                        .HasColumnName("Cost")
-                        .HasColumnType("Money");
-
-                    b.Property<DateTime>("DeliveryDate")
-                        .HasColumnName("DeliveryDate")
-                        .HasColumnType("Date");
-
-                    b.Property<DateTime>("RequestDate")
-                        .HasColumnName("RequestDate")
-                        .HasColumnType("Date");
-
-                    b.Property<Guid>("SupplierId");
-
-                    b.Property<decimal>("TransferFee")
-                        .HasColumnName("TransferFee")
-                        .HasColumnType("Money");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SupplierId");
-
-                    b.ToTable("Deliveries");
-                });
-
-            modelBuilder.Entity("Mushka.Domain.Entities.DeliveryProduct", b =>
-                {
-                    b.Property<Guid>("ProductId");
-
-                    b.Property<Guid>("DeliveryId");
-
-                    b.Property<decimal>("PriceForItem")
-                        .HasColumnName("PriceForItem")
-                        .HasColumnType("Money");
-
-                    b.HasKey("ProductId", "DeliveryId");
-
-                    b.HasIndex("DeliveryId");
-
-                    b.ToTable("DeliveryProducts");
-                });
-
-            modelBuilder.Entity("Mushka.Domain.Entities.DeliveryProductSize", b =>
-                {
-                    b.Property<Guid>("ProductId");
-
-                    b.Property<Guid>("DeliveryId");
-
-                    b.Property<Guid>("SizeId");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnName("Quantity");
-
-                    b.HasKey("ProductId", "DeliveryId", "SizeId");
-
-                    b.HasIndex("SizeId");
-
-                    b.ToTable("DeliveryProductSizes");
-                });
-
             modelBuilder.Entity("Mushka.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
@@ -340,45 +270,101 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.ToTable("Suppliers");
                 });
 
+            modelBuilder.Entity("Mushka.Domain.Entities.Supply", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
+
+                    b.Property<decimal?>("BankFee")
+                        .HasColumnName("BankFee")
+                        .HasColumnType("Money");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnName("Cost")
+                        .HasColumnType("Money");
+
+                    b.Property<int>("CostMethod")
+                        .HasColumnName("CostMethod");
+
+                    b.Property<decimal?>("DeliveryCost")
+                        .HasColumnName("DeliveryCost")
+                        .HasColumnType("Money");
+
+                    b.Property<int?>("DeliveryCostMethod")
+                        .HasColumnName("DeliveryCostMethod");
+
+                    b.Property<string>("Notes")
+                        .HasColumnName("Notes");
+
+                    b.Property<decimal?>("Prepayment")
+                        .HasColumnName("Prepayment")
+                        .HasColumnType("Money");
+
+                    b.Property<int?>("PrepaymentMethod")
+                        .HasColumnName("PrepaymentMethod");
+
+                    b.Property<DateTime>("ReceivedDate")
+                        .HasColumnName("ReceivedDate")
+                        .HasColumnType("Date");
+
+                    b.Property<DateTime>("RequestDate")
+                        .HasColumnName("RequestDate")
+                        .HasColumnType("Date");
+
+                    b.Property<Guid>("SupplierId");
+
+                    b.Property<decimal>("TotalCost")
+                        .HasColumnName("TotalCost")
+                        .HasColumnType("Money");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("Supplies");
+                });
+
+            modelBuilder.Entity("Mushka.Domain.Entities.SupplyProduct", b =>
+                {
+                    b.Property<Guid>("ProductId");
+
+                    b.Property<Guid>("SupplyId");
+
+                    b.Property<decimal>("CostForItem")
+                        .HasColumnName("CostForItem")
+                        .HasColumnType("Money");
+
+                    b.HasKey("ProductId", "SupplyId");
+
+                    b.HasIndex("SupplyId");
+
+                    b.ToTable("SupplyProducts");
+                });
+
+            modelBuilder.Entity("Mushka.Domain.Entities.SupplyProductSize", b =>
+                {
+                    b.Property<Guid>("ProductId");
+
+                    b.Property<Guid>("SupplyId");
+
+                    b.Property<Guid>("SizeId");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnName("Quantity");
+
+                    b.HasKey("ProductId", "SupplyId", "SizeId");
+
+                    b.HasIndex("SizeId");
+
+                    b.ToTable("SupplyProductSizes");
+                });
+
             modelBuilder.Entity("Mushka.Domain.Entities.ContactPerson", b =>
                 {
                     b.HasOne("Mushka.Domain.Entities.Supplier", "Supplier")
                         .WithMany("ContactPersons")
                         .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Mushka.Domain.Entities.Delivery", b =>
-                {
-                    b.HasOne("Mushka.Domain.Entities.Supplier", "Supplier")
-                        .WithMany("Deliveries")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Mushka.Domain.Entities.DeliveryProduct", b =>
-                {
-                    b.HasOne("Mushka.Domain.Entities.Delivery", "Delivery")
-                        .WithMany("Products")
-                        .HasForeignKey("DeliveryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Mushka.Domain.Entities.Product", "Product")
-                        .WithMany("Deliveries")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Mushka.Domain.Entities.DeliveryProductSize", b =>
-                {
-                    b.HasOne("Mushka.Domain.Entities.Size", "Size")
-                        .WithMany("DeliveryProductSizes")
-                        .HasForeignKey("SizeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Mushka.Domain.Entities.DeliveryProduct", "Product")
-                        .WithMany("ProductSizes")
-                        .HasForeignKey("ProductId", "DeliveryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -434,6 +420,40 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.HasOne("Mushka.Domain.Entities.Size", "Size")
                         .WithMany("Products")
                         .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Mushka.Domain.Entities.Supply", b =>
+                {
+                    b.HasOne("Mushka.Domain.Entities.Supplier", "Supplier")
+                        .WithMany("Supplies")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Mushka.Domain.Entities.SupplyProduct", b =>
+                {
+                    b.HasOne("Mushka.Domain.Entities.Product", "Product")
+                        .WithMany("Supplies")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Mushka.Domain.Entities.Supply", "Supply")
+                        .WithMany("Products")
+                        .HasForeignKey("SupplyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Mushka.Domain.Entities.SupplyProductSize", b =>
+                {
+                    b.HasOne("Mushka.Domain.Entities.Size", "Size")
+                        .WithMany("SupplyProductSizes")
+                        .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Mushka.Domain.Entities.SupplyProduct", "Product")
+                        .WithMany("ProductSizes")
+                        .HasForeignKey("ProductId", "SupplyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
