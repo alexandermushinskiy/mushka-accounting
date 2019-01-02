@@ -16,23 +16,32 @@ namespace Mushka.WebApi.Controllers
     [Route("api/v1/[controller]")]
     public class SuppliesController : ControllerBase
     {
-        private readonly ISupplyService deliveryService;
+        private readonly ISupplyService supplyService;
 
         public SuppliesController(
-            ISupplyService deliveryService,
+            ISupplyService supplyService,
             ICancellationTokenSourceProvider cancellationTokenSourceProvider,
             IActionResultProvider actionResultProvider,
             IMapper mapper)
             : base(cancellationTokenSourceProvider, actionResultProvider, mapper)
         {
-            this.deliveryService = deliveryService;
+            this.supplyService = supplyService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var suppliesResponse = await deliveryService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
+            var suppliesResponse = await supplyService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
             var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Supply>>, SuppliesResponseModel>(suppliesResponse);
+
+            return actionResultProvider.Get(clientResponse);
+        }
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var supplyResponse = await supplyService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<Supply>, SupplyResponseModel>(supplyResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -42,7 +51,7 @@ namespace Mushka.WebApi.Controllers
         {
             var supply = mapper.Map<SupplyRequestModel, Supply>(supplyRequest);
 
-            var supplyResponse = await deliveryService.AddAsync(supply, cancellationTokenSourceProvider.Get().Token);
+            var supplyResponse = await supplyService.AddAsync(supply, cancellationTokenSourceProvider.Get().Token);
             var clientResponse = mapper.Map<ValidationResponse<Supply>, SupplyResponseModel>(supplyResponse);
 
             return actionResultProvider.Get(clientResponse);
@@ -51,7 +60,7 @@ namespace Mushka.WebApi.Controllers
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var supplyResponse = await deliveryService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var supplyResponse = await supplyService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
             var clientResponse = mapper.Map<ValidationResponse<Supply>, DeleteResponseModel>(supplyResponse);
 
             return actionResultProvider.Get(clientResponse);

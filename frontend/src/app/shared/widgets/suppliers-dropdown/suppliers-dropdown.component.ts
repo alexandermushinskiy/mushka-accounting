@@ -2,8 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@ang
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Supplier } from '../../../shared/models/supplier.model';
-import { SuppliersService } from '../../../core/api/suppliers.service';
-
 
 @Component({
   selector: 'mk-suppliers-dropdown',
@@ -18,20 +16,18 @@ import { SuppliersService } from '../../../core/api/suppliers.service';
 export class SuppliersDropdownComponent implements OnInit, ControlValueAccessor {
   @Input() isRequired = true;
   @Input() isDisabled = false;
+  @Input() suppliers: Supplier[];
   @Output() onSupplierSelected = new EventEmitter<Supplier>();
 
   selectedSupplier: Supplier;
-  suppliers: Supplier[];
 
-  constructor(private suppliersService: SuppliersService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.suppliersService.getAll()
-      .subscribe((suppliers: Supplier[]) => this.suppliers = suppliers);
   }
 
-  writeValue(value: Supplier): void {
-    this.selectedSupplier = value;
+  writeValue(supplierId: string): void {
+    this.selectedSupplier = this.suppliers.find(sup => sup.id === supplierId);
   }
 
   registerOnChange(fn: any) {

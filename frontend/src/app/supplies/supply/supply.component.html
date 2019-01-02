@@ -45,7 +45,7 @@
                   <div class="col-md-12">
                     <div class="field-group">
                       <label for="address">Наименование</label>
-                      <mk-suppliers-dropdown formControlName="supplier"></mk-suppliers-dropdown>
+                      <mk-suppliers-dropdown formControlName="supplier" [suppliers]="suppliers"></mk-suppliers-dropdown>
                     </div>
                   </div>
                 </div>
@@ -73,8 +73,7 @@
                         <div class="col-sm-4">
                           <div class="field-group">
                             <mk-select-products formControlName="product"
-                                                [products]="productsList"
-                                                (onClear)="onClearProducts(productControl)"></mk-select-products>
+                                                [products]="productsList"></mk-select-products>
                           </div>
                         </div>
                         <div class="col-sm-2">
@@ -89,10 +88,10 @@
                         </div>
                         <div class="col-sm-2">
                           <div class="field-group">
-                            <mk-currency-input formControlName="costPerItem"
+                            <mk-currency-input formControlName="costForItem"
                                                [placeholder]="'Цена'"
                                                [required]="true"
-                                               [id]="'costPerItem-' + index">
+                                               [id]="'costForItem-' + index">
                             </mk-currency-input>
                           </div>
                         </div>

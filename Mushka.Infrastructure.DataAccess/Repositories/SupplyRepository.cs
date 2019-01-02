@@ -32,6 +32,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 .Where(del => del.Id == id)
                 .Include(del => del.Products)
                     .ThenInclude(delProd => delProd.Product)
+                    .ThenInclude(delProd => delProd.Size)
                 .Include(del => del.Products)
                 .FirstOrDefaultAsync(cancellationToken);
         }

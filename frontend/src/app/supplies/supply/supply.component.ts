@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { SuppliesService } from '../../core/api/supplies.service';
 import { Supply } from '../shared/models/supply.model';
 import { PaymentMethod } from '../shared/enums/payment-method.enum';
 import { Product } from '../../shared/models/product.model';
-import { Size } from '../../shared/models/size.model';
 import { ProductsServce } from '../../core/api/products.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { SupplyProduct } from '../shared/models/supply-product.model';
 import { paymentMethods } from '../shared/constants/payment-methods.const';
+import { SuppliersService } from '../../core/api/suppliers.service';
+import { Supplier } from '../../shared/models/supplier.model';
 
 @Component({
   selector: 'mk-supply',
@@ -26,9 +28,9 @@ export class SupplyComponent implements OnInit {
   errors: string[];
   title: string;
   paymentMethodsList = paymentMethods;
-  sizesList: string[];
   productsList: Product[];
   totalCost: number;
+  suppliers: Supplier[];
 
   paymentMethodsHash = new Map<string, PaymentMethod>()
     .set('Наличный расчет', PaymentMethod.CASH)
@@ -39,16 +41,27 @@ export class SupplyComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private notificationsService: NotificationsService,
+              private suppliersService: SuppliersService,
               private productsService: ProductsServce,
               private suppliesService: SuppliesService) { }
 
   ngOnInit() {
-    this.productsService.getSizes()
-      .subscribe((sizes: Size[]) => this.sizesList = sizes.map(sz => sz.name));
+    this.isLoading = true;
 
-    this.productsService.getAll()
-      .subscribe((products: Product[]) => this.productsList = products);
+    Observable.forkJoin(
+      this.suppliersService.getAll(),
+      this.productsService.getAll()
+      ).subscribe(([suppliers, products]) => {
+        this.suppliers = suppliers;
+        this.productsList = products;
 
+        this.getRouteParams();
+
+        this.isLoading = false;
+      });    
+  }
+
+  private getRouteParams() {
     this.route.params.subscribe(params => {
       this.supplyId = params['id'];
       this.isEdit = !!this.supplyId;
@@ -74,10 +87,6 @@ export class SupplyComponent implements OnInit {
   removeProduct(index: number) {
     const products = <FormArray>this.supplyForm.get('products');
     products.removeAt(index);
-  }
-
-  onClearProducts(productCtrl: FormGroup) {
-    productCtrl.controls.size.setValue(null);
   }
 
   saveSupply() {
@@ -140,7 +149,7 @@ export class SupplyComponent implements OnInit {
     return this.formBuilder.group({
       product: [productItem.product],
       quantity: [productItem.quantity, Validators.required],
-      costPerItem: [productItem.costPerItem, Validators.required]
+      costForItem: [productItem.costForItem, Validators.required]
     });
   }
 
@@ -173,8 +182,8 @@ export class SupplyComponent implements OnInit {
   private calculateProductsCost() {
     let cost = 0;
     (this.supplyForm.get('products') as FormArray).controls.forEach(control => {
-      if (!!control.value.costPerItem && !!control.value.quantity) {
-        cost += control.value.costPerItem * control.value.quantity;
+      if (!!control.value.costForItem && !!control.value.quantity) {
+        cost += control.value.costForItem * control.value.quantity;
       }
     });
 
@@ -220,7 +229,7 @@ export class SupplyComponent implements OnInit {
     return new SupplyProduct({
       productId: formValue.product.id,
       quantity: formValue.quantity,
-      costPerItem: formValue.costPerItem
+      costForItem: formValue.costForItem
     });
   }
 }

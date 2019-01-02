@@ -9,7 +9,7 @@ import { ProductSize } from '../../shared/models/product-size.model';
 import { Size } from '../../shared/models/size.model';
 import { Supply } from '../../supplies/shared/models/supply.model';
 import { PaymentCard } from '../../shared/models/payment-card.model';
-import { copyStyles } from '@angular/animations/browser/src/util';
+import { SupplyProduct } from '../../supplies/shared/models/supply-product.model';
 
 @Injectable()
 export class ConverterService {
@@ -124,7 +124,18 @@ export class ConverterService {
       deliveryCostMethod: source.deliveryCostMethod,
       bankFee: source.bankFee,
       totalCost: source.totalCost,
-      productsAmount: source.productsAmount
+      productsAmount: source.productsAmount,
+      notes: source.notes,
+      products: source.products.map((prod: any) => new SupplyProduct({
+        quantity: prod.quantity,
+        costForItem: prod.costForItem,
+        product: {
+          id: prod.product.id,
+          name: prod.product.name,
+          vendorCode: prod.product.vendorCode,
+          size: new Size({name: prod.product.size})
+        }
+      }))
     });
   }
 

@@ -1,13 +1,9 @@
-﻿using System;
-
-namespace Mushka.WebApi.ClientModels.Supply
+﻿namespace Mushka.WebApi.ClientModels.Supply
 {
     public class SupplyProductModel
     {
-        public Guid ProductId { get; set; }
+        public ProductModel Product { get; set; }
 
-        public string ProductName { get; set; }
-        
         public decimal CostForItem { get; set; }
 
         public int Quantity { get; set; }

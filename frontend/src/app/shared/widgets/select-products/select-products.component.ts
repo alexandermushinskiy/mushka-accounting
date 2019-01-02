@@ -21,7 +21,7 @@ export class SelectProductsComponent implements OnInit, ControlValueAccessor {
   @Output() onProductSelected = new EventEmitter<Product>();
   @Output() onClear = new EventEmitter<any>();
 
-  selectedIds: string[];
+  selectedId: string;
   isLoading = false;
 
   constructor() { }
@@ -29,8 +29,10 @@ export class SelectProductsComponent implements OnInit, ControlValueAccessor {
   ngOnInit() {
   }
 
-  writeValue(selectedIds: string[]) {
-    this.selectedIds = selectedIds;
+  writeValue(product: Product) {
+    if (product) {
+      this.selectedId = product.id;
+    }
   }
 
   registerOnChange(fn: any) {

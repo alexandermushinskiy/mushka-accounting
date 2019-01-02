@@ -28,9 +28,13 @@ namespace Mushka.WebApi.ClientModels.Supply
         
         public decimal TotalCost { get; set; }
 
+        public Guid SupplierId { get; set; }
+
         public string SupplierName { get; set; }
 
         public int ProductsAmount { get; set; }
+
+        public string Notes { get; set; }
 
         public IEnumerable<SupplyProductModel> Products { get; set; }
     }
