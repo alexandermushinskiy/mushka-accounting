@@ -2,7 +2,7 @@ import { DataTablePreview } from '../../../shared/models/data-table-preview.mode
 import { PaymentMethod } from '../enums/payment-method.enum';
 
 export class SupplyTableRow extends DataTablePreview {
-  supplier: string;
+  supplierName: string;
   requestDate: string;
   receivedDate: string;
   paymentMethod: PaymentMethod;
@@ -15,7 +15,7 @@ export class SupplyTableRow extends DataTablePreview {
   constructor(elem, index: number = 0) {
     super(elem, index);
 
-    this.supplier = elem.supplier;
+    this.supplierName = elem.supplierName;
     this.requestDate = elem.requestDate;
     this.receivedDate = elem.receivedDate;
     this.paymentMethod = elem.paymentMethod;

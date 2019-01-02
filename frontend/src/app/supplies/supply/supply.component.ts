@@ -31,7 +31,7 @@ export class SupplyComponent implements OnInit {
   totalCost: number;
 
   paymentMethodsHash = new Map<string, PaymentMethod>()
-    .set('Наличные расчет', PaymentMethod.CASH)
+    .set('Наличный расчет', PaymentMethod.CASH)
     .set('Перевод на карту', PaymentMethod.TRANSFER_TO_CARD)
     .set('LiqPay', PaymentMethod.LIQPAY);
   
@@ -64,14 +64,6 @@ export class SupplyComponent implements OnInit {
         }));
       }
     });
-  }
-
-  getProductSizes(product: Product): Size[] {
-    return []; //!!product ? product.sizes : [];
-  }
-
-  hasProductSizes(product: Product): boolean {
-    return !!product && !!product.size;
   }
 
   addProduct() {
@@ -127,7 +119,7 @@ export class SupplyComponent implements OnInit {
     this.supplyForm = this.formBuilder.group({
       requestDate: [supply.requestDate, Validators.required],
       receivedDate: [supply.receivedDate, Validators.required],
-      supplier: [supply.supplier, Validators.required],
+      supplier: [supply.supplierId, Validators.required],
       bankFee: [supply.bankFee],
       deliveryCost: [supply.deliveryCost],
       deliveryCostMethod: [supply.deliveryCostMethod],
@@ -148,13 +140,12 @@ export class SupplyComponent implements OnInit {
     return this.formBuilder.group({
       product: [productItem.product],
       quantity: [productItem.quantity, Validators.required],
-      size: [productItem.size],
       costPerItem: [productItem.costPerItem, Validators.required]
     });
   }
 
   private addFieldChangeListeners() {
-    (this.supplyForm.get('products') as FormArray).valueChanges.subscribe(() => {
+    (this.supplyForm.get('products') as FormArray).valueChanges.subscribe((items: any[]) => {
       this.calculateProductsCost();
     });
 
@@ -211,14 +202,14 @@ export class SupplyComponent implements OnInit {
       id: this.supplyId,
       requestDate: formRawValue.requestDate,
       receivedDate: formRawValue.receivedDate,
-      supplier: formRawValue.supplier,
-      transferFee: formRawValue.transferFee,
+      supplierId: formRawValue.supplier.id,
       deliveryCost: formRawValue.deliveryCost,
-      deliveryCostMethod: this.paymentMethodsHash.get(formRawValue.deliveryCostMethod),
+      deliveryCostMethod: !!formRawValue.deliveryCostMethod ? this.paymentMethodsHash.get(formRawValue.deliveryCostMethod) : null,
       prepayment: formRawValue.prepayment,
-      prepaymentMethod: this.paymentMethodsHash.get(formRawValue.prepaymentMethod),
+      prepaymentMethod: !!formRawValue.prepaymentMethod ? this.paymentMethodsHash.get(formRawValue.prepaymentMethod) : null,
       cost: formRawValue.cost,
       costMethod: this.paymentMethodsHash.get(formRawValue.costMethod),
+      bankFee: formRawValue.bankFee,
       totalCost: this.totalCost,
       notes: formRawValue.notes,
       products: formRawValue.products.map((prod: any) => this.createSupplyProduct(prod))
@@ -226,17 +217,10 @@ export class SupplyComponent implements OnInit {
   }
 
   private createSupplyProduct(formValue: any): SupplyProduct {
-    const t1 = formValue.size[0].id;
-    debugger;
     return new SupplyProduct({
       productId: formValue.product.id,
-      sizeId: formValue.size[0].id,
       quantity: formValue.quantity,
       costPerItem: formValue.costPerItem
     });
-  }
-
-  private ConvertPaymentMethod(value: string) {
-
   }
 }

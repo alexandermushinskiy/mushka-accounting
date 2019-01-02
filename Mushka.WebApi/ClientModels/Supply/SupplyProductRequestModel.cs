@@ -7,10 +7,7 @@ namespace Mushka.WebApi.ClientModels.Supply
     {
         [RequireNonDefault]
         public Guid ProductId { get; set; }
-
-        [RequireNonDefault]
-        public Guid SizeId { get; set; }
-
+        
         [RequireNonDefault]
         public int Quantity { get; set; }
 

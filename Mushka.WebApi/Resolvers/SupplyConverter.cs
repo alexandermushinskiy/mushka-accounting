@@ -11,7 +11,7 @@ namespace Mushka.WebApi.Resolvers
             new SupplyModel
             {
                 Id = source.Id,
-                SupplierName = source.Supplier.Name,
+                SupplierName = source.Supplier?.Name,
                 RequestDate = source.RequestDate,
                 ReceivedDate = source.ReceivedDate,
                 Cost = source.Cost,
@@ -22,7 +22,7 @@ namespace Mushka.WebApi.Resolvers
                 DeliveryCost = source.DeliveryCost,
                 DeliveryCostMethod = source.DeliveryCostMethod,
                 TotalCost = source.TotalCost,
-                ProductsAmount = source.Products.Count,
+                ProductsAmount = source.Products.Sum(prod => prod.Quantity),
                 Products = source.Products.Select(CreateDeliveryProductModel)
             };
 
@@ -32,9 +32,7 @@ namespace Mushka.WebApi.Resolvers
                 ProductId = supplyProduct.ProductId,
                 ProductName = supplyProduct.Product?.Name,
                 CostForItem = supplyProduct.CostForItem,
-                Quantity = supplyProduct.Quantity,
-                SizeId = supplyProduct.Product?.SizeId,
-                SizeName = supplyProduct.Product?.Size.Name
+                Quantity = supplyProduct.Quantity
             };
     }
 }

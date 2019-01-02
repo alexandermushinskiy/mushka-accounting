@@ -18,9 +18,10 @@
                   [columnMode]="'force'"
                   [limit]="10"
                   [messages]="{ emptyMessage: 'Нет данных для отображения' }"
-                  [rowClass]="getRowClass">
+                  [rowClass]="getRowClass"
+                  (activate)="onActive($event)">
 
-      <ngx-datatable-column name="supplier">
+      <ngx-datatable-column name="supplierName">
         <ng-template ngx-datatable-header-template let-column="column">
           <span>Поставщик</span>
         </ng-template>
@@ -104,3 +105,12 @@
     </ngx-datatable>
   </div>
 </div>
+
+<ng-template #confirmRemoveTmpl>
+    <mk-confirmation
+            [confirmButtonText]="'Удалить'"
+            [text]="'Вы уверены, что хотите удалить выбранную поставку от поставщика <b>' + supplyToDelete.supplierName + '</b>?'"
+            (onClose)="closeModal()"
+            (onConfirm)="confirmDelete();">
+    </mk-confirmation>
+  </ng-template>

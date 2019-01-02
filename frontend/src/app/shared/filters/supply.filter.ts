@@ -8,7 +8,7 @@ export class SupplyFilter extends FiltersBase {
     super();
   }
 
-  filter(delivery: Supply): boolean {
-    return this.containsSearchKey(delivery.supplier, this.searchKey);
+  filter(supply: Supply): boolean {
+    return this.containsSearchKey(supply.supplierName, this.searchKey);
   }
 }

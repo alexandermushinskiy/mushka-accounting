@@ -53,27 +53,20 @@ namespace Mushka.Service.Services
         {
             foreach (var supplyProduct in supply.Products)
             {
-                //var storedProduct = await productRepository.GetByIdAsync(deliveryProduct.ProductId, cancellationToken);
+                var storedProduct = await productRepository.GetByIdAsync(supplyProduct.ProductId, cancellationToken);
 
-                //if (storedProduct == null)
-                //{
-                //    return CreateWarningValidationResponse($"Product with id {deliveryProduct.ProductId} is not found.", ValidationStatusType.NotFound);
-                //}
-
-                //var storedProductSize = await productRepository.GetProductSizeAsync(deliveryProduct.ProductId, deliveryProduct.SizeId, cancellationToken);
-
-                //if (storedProductSize == null)
-                //{
-                //    return CreateWarningValidationResponse($"Size with id {deliveryProduct.SizeId} is not found.", ValidationStatusType.NotFound);
-                //}
+                if (storedProduct == null)
+                {
+                    return CreateWarningValidationResponse($"Product with id {supplyProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                }
                 
-                //storedProductSize.Quantity += deliveryProduct.Quantity;
-                //await productRepository.UpdateProductSize(storedProductSize, cancellationToken);
+                storedProduct.Quantity += supplyProduct.Quantity;
+                await productRepository.UpdateAsync(storedProduct, cancellationToken);
             }
 
-            var addedDelivery = await supplyRepository.AddAsync(supply, cancellationToken);
+            var addedSupply = await supplyRepository.AddAsync(supply, cancellationToken);
             
-            return CreateInfoValidationResponse(addedDelivery, $"Supply with id {addedDelivery.Id} was successfully added.");
+            return CreateInfoValidationResponse(addedSupply, $"Supply with id {addedSupply.Id} was successfully added.");
         }
 
         public Task<ValidationResponse<Supply>> UpdateAsync(Supply supply, CancellationToken cancellationToken = default(CancellationToken))

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModalRef, NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { SuppliesService } from '../../core/api/supplies.service';
 import { Supply } from '../shared/models/supply.model';
@@ -13,19 +14,34 @@ import { SupplyFilter } from '../../shared/filters/supply.filter';
   styleUrls: ['./supplies-list.component.scss']
 })
 export class SuppliesListComponent implements OnInit {
-
+  @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
   supplies: Supply[];
   supplyRows: SupplyTableRow[];
   loadingIndicator = false;
   total = 0;
   shown = 0;
+  
+  private supplyToDelete: SupplyTableRow;
+  private modalRef: NgbModalRef;
+  private readonly modalConfig: NgbModalOptions = {
+    windowClass: 'supply-modal',
+    backdrop: 'static',
+    size: 'sm'
+  };
 
   constructor(private router: Router,
+              private modalService: NgbModal,
               private suppliesService: SuppliesService,
               private notificationsService: NotificationsService) { }
 
   ngOnInit() {
     this.loadSupplies();
+  }
+
+  onActive(event: any) {
+    if (event.type === 'click') {
+      event.cellElement.blur();
+    }
   }
 
   getRowClass(row: any) {
@@ -43,9 +59,40 @@ export class SuppliesListComponent implements OnInit {
     this.updateDatatableRows(filteredSupplies);
   }
   
-  delete(row: SupplyTableRow) {
+  delete(supply: SupplyTableRow) {
     setTimeout(() => {
+      this.supplyToDelete = supply;
+      this.modalRef = this.modalService.open(this.confirmRemoveTmpl, this.modalConfig);
     });
+  }
+
+  confirmDelete() {
+    this.loadingIndicator = true;
+    this.closeModal();
+
+    this.suppliesService.delete(this.supplyToDelete.id)
+      .subscribe(
+        () => this.onDeleteSuccess(),
+        (error: string) => this.onDeleteFailed(error)
+      );
+  }
+
+  closeModal() {
+    if (this.modalRef) {
+      this.modalRef.close();
+    }
+  }  
+
+  private onDeleteSuccess() {
+    this.notificationsService.success('Успех', `Поставка успешно удален из системы.`);
+    this.supplyToDelete = null;
+    this.loadSupplies();
+  }
+
+  private onDeleteFailed(error: string) {
+    this.loadingIndicator = false;
+    this.supplyToDelete = null;
+    this.notificationsService.danger('Ошибка', `Ошибка при удалении поставки: ${error}.`);
   }
 
   private loadSupplies() {

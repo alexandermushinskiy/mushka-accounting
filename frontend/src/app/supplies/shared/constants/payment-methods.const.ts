@@ -1,5 +1,5 @@
 export const paymentMethods: string[] = [
-  'Наличные расчет',
+  'Наличный расчет',
   'Перевод на карту',
   'LiqPay'
 ];

@@ -13,6 +13,19 @@
       (clear)="clear()">
   <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
     <div>{{ item.name }}</div>
-    <span class="text-muted category">{{ item.category.name.toUpperCase() }}</span>
+    <div class="text-muted info">
+      <div>
+        <span class="title">Категория:</span>
+        <span class="category">{{ item.category.name }}</span>
+      </div>
+      <div>
+        <span class="title">Артикул:</span>
+        <span>{{ item.vendorCode }}</span>
+      </div>
+      <div *ngIf="!!item.size">
+        <span class="title">Размер:</span>
+        <span>{{ item.size.name }}</span>
+      </div>
+    </div>
   </ng-template>
 </ng-select>

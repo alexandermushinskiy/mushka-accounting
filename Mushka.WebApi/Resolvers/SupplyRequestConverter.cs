@@ -23,26 +23,29 @@ namespace Mushka.WebApi.Resolvers
             return new Supply
             {
                 Id = supplyId,
+                SupplierId = source.SupplierId,
                 RequestDate = source.RequestDate,
                 ReceivedDate = source.ReceivedDate,
                 Cost = source.Cost,
                 CostMethod = source.CostMethod,
                 DeliveryCost = source.DeliveryCost,
                 DeliveryCostMethod = source.DeliveryCostMethod,
+                Prepayment = source.Prepayment,
+                PrepaymentMethod = source.PrepaymentMethod,
                 BankFee = source.BankFee,
+                TotalCost = source.TotalCost,
                 Notes = source.Notes,
-                Products = source.Products.Select(prod => CreateDeliveryProduct(supplyId, prod)).ToList()
+                Products = source.Products.Select(prod => CreateSupplyProduct(supplyId, prod)).ToList()
             };
         }
 
-        private static SupplyProduct CreateDeliveryProduct(Guid supplyId, SupplyProductRequestModel requestModel)
+        private static SupplyProduct CreateSupplyProduct(Guid supplyId, SupplyProductRequestModel requestModel)
         {
             return new SupplyProduct
             {
                 SupplyId = supplyId,
                 ProductId = requestModel.ProductId,
-                //SizeId = requestModel.SizeId,
-                //Quantity = requestModel.Quantity,
+                Quantity = requestModel.Quantity,
                 CostForItem = requestModel.CostPerItem
             };
         }

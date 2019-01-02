@@ -11,9 +11,5 @@ namespace Mushka.WebApi.ClientModels.Supply
         public decimal CostForItem { get; set; }
 
         public int Quantity { get; set; }
-
-        public Guid? SizeId { get; set; }
-
-        public string SizeName { get; set; }
     }
 }

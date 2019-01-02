@@ -5,10 +5,8 @@ export class SupplyProduct {
   product: Product;
   quantity: number;
   costPerItem: number;
-  size: Size;
 
   productId: string;
-  sizeId: string;
 
   constructor(data: any) {
     Object.assign(this, data);

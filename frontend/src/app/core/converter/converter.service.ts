@@ -112,7 +112,8 @@ export class ConverterService {
   convertToSupply(source: any): Supply {
     return new Supply({
       id: source.id,
-      supplier: source.supplierName,
+      supplierId: source.supplierId,
+      supplierName: source.supplierName,
       requestDate: this.datetimeService.toString(source.requestDate),
       receivedDate: this.datetimeService.toString(source.receivedDate),
       prepayment: source.prepayment,

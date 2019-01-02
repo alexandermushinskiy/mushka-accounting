@@ -27,8 +27,6 @@ export class SuppliesService {
   }
 
   create(supply: Supply): Observable<Supply> {
-    //const requestModel = this.convertToRequestData(delivery);
-
     return this.http.post(this.endPoint, supply)
       .map((res: any) => this.converterService.convertToSupply(res.data))
       .catch((res: any) => throwError(res.error.messages));
@@ -49,7 +47,7 @@ export class SuppliesService {
 
   private convertToRequestData(supply: Supply): any {
     return {
-      supplierId: supply.supplier,
+      supplierId: supply.supplierId,
       requestDate: supply.requestDate,
       receivedDate: supply.receivedDate,
     };

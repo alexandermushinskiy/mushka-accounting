@@ -62,14 +62,15 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-row product-row">
-                      <div class="col-sm-6">Наименование товара</div>
-                      <div class="col-sm-2">Размер</div>                  
+                      <div class="col-sm-4">Наименование товара</div>
+                      <div class="col-sm-2">Артикул</div>
+                      <div class="col-sm-2">Размер</div>
                       <div class="col-sm-2">Цена</div>
                       <div class="col-sm-2">Количество</div>
                     </div>
                     <div formArrayName="products">
                       <div class="form-row product-row" *ngFor="let productControl of supplyForm.get('products').controls; let index=index" [formGroupName]="index">
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                           <div class="field-group">
                             <mk-select-products formControlName="product"
                                                 [products]="productsList"
@@ -77,15 +78,13 @@
                           </div>
                         </div>
                         <div class="col-sm-2">
+                            <div class="field-group">
+                              <input type="text" class="form-control" disabled [value]="productControl.value.product?.vendorCode">
+                            </div>
+                          </div>
+                        <div class="col-sm-2">
                           <div class="field-group">
-                            <mk-select-size class="form-control"
-                                            formControlName="size"
-                                            [ngClass]="{'required-select': !!productControl.value.product && productControl.value.product.sizes.length > 0}"
-                                            [isMultiple]="false"
-                                            [isDisabled]="!productControl.value.product"
-                                            [placeholder]="!productControl.value.product ? 'Нет' : 'Размер'"
-                                            [availableSizes]="!!productControl.value.product ? productControl.value.product.sizes : []">
-                            </mk-select-size>
+                            <input type="text" class="form-control" disabled [value]="productControl.value.product?.size?.name">
                           </div>
                         </div>
                         <div class="col-sm-2">

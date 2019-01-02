@@ -3,7 +3,8 @@ import { SupplyProduct } from './supply-product.model';
 
 export class Supply {
   id: string;
-  supplier: string;
+  supplierId: string;
+  supplierName: string;
   requestDate: string;
   receivedDate: string;
   cost: number;

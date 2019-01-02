@@ -31,8 +31,8 @@ namespace Mushka.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var deliveriesResponse = await deliveryService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Supply>>, SuppliesResponseModel>(deliveriesResponse);
+            var suppliesResponse = await deliveryService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Supply>>, SuppliesResponseModel>(suppliesResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -40,10 +40,10 @@ namespace Mushka.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]SupplyRequestModel supplyRequest)
         {
-            var delivery = mapper.Map<SupplyRequestModel, Supply>(supplyRequest);
+            var supply = mapper.Map<SupplyRequestModel, Supply>(supplyRequest);
 
-            var deliveryResponse = await deliveryService.AddAsync(delivery, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Supply>, SupplyResponseModel>(deliveryResponse);
+            var supplyResponse = await deliveryService.AddAsync(supply, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<Supply>, SupplyResponseModel>(supplyResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -51,8 +51,8 @@ namespace Mushka.WebApi.Controllers
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var deliveryResponse = await deliveryService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Supply>, DeleteResponseModel>(deliveryResponse);
+            var supplyResponse = await deliveryService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<Supply>, DeleteResponseModel>(supplyResponse);
 
             return actionResultProvider.Get(clientResponse);
         }

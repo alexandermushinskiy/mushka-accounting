@@ -29,6 +29,8 @@ namespace Mushka.WebApi.ClientModels.Supply
 
         public decimal? BankFee { get; set; }
 
+        public decimal TotalCost { get; set; }
+
         public string Notes { get; set; }
 
         [Required]
