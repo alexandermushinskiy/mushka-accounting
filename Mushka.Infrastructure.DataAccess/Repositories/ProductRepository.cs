@@ -23,8 +23,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
             await dbSet.Where(predicate)
                 .AsNoTracking()
                 .Include(p => p.Category)
-                .Include(p => p.Sizes)
-                    .ThenInclude(s => s.Size)
+                .Include(p => p.Size)
                 .ToListAsync(cancellationToken);
 
         public override async Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -32,8 +31,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
             return await Context.Products
                 .AsNoTracking()
                 .Include(p => p.Category)
-                .Include(p => p.Sizes)
-                    .ThenInclude(s => s.Size)
+                .Include(p => p.Size)
                 .ToListAsync(cancellationToken);
         }
 
@@ -42,8 +40,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
             return await Context.Products
                 .AsNoTracking()
                 .Include(p => p.Category)
-                .Include(prod => prod.Sizes)
-                    .ThenInclude(s => s.Size)
+                .Include(prod => prod.Size)
                 .FirstOrDefaultAsync(prod => prod.Id == id, cancellationToken);
         }
 
@@ -53,29 +50,25 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 .AsNoTracking()
                 .Where(prod => prod.CategoryId == categoryId)
                 .Include(p => p.Category)
-                .Include(prod => prod.Sizes)
-                    .ThenInclude(s => s.Size)
+                .Include(prod => prod.Size)
                 .Include(prod => prod.Supplies)
                     .ThenInclude(del => del.Supply)
-                .Include(prod => prod.Supplies)
-                    .ThenInclude(del => del.ProductSizes)
-                        .ThenInclude(ps => ps.Size)
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<ProductSize> GetProductSizeAsync(Guid productId, Guid sizeId, CancellationToken cancellationToken)
-        {
-            return await Context.ProductSizes
-                .AsNoTracking()
-                .FirstOrDefaultAsync(prod => prod.ProductId == productId && prod.SizeId == sizeId, cancellationToken);
-        }
+        //public async Task<ProductSize> GetProductSizeAsync(Guid productId, Guid sizeId, CancellationToken cancellationToken)
+        //{
+        //    return await Context.ProductSizes
+        //        .AsNoTracking()
+        //        .FirstOrDefaultAsync(prod => prod.ProductId == productId && prod.SizeId == sizeId, cancellationToken);
+        //}
 
-        public async Task<ProductSize> UpdateProductSize(ProductSize productSize, CancellationToken cancellationToken)
-        {
-            Context.Entry(productSize).State = EntityState.Modified;
-            await Context.SaveChangesAsync(cancellationToken);
-            return productSize;
-        }
+        //public async Task<ProductSize> UpdateProductSize(ProductSize productSize, CancellationToken cancellationToken)
+        //{
+        //    Context.Entry(productSize).State = EntityState.Modified;
+        //    await Context.SaveChangesAsync(cancellationToken);
+        //    return productSize;
+        //}
 
         public async Task<IEnumerable<Size>> GetSizesAsync(CancellationToken cancellationToken)
         {

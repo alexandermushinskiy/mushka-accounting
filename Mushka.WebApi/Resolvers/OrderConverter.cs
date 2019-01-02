@@ -21,8 +21,6 @@ namespace Mushka.WebApi.Resolvers
             {
                 ProductId = orderProduct.ProductId,
                 ProductName = orderProduct.Product?.Name,
-                SizeId = orderProduct.SizeId,
-                SizeName = orderProduct.Size?.Name,
                 Quantity = orderProduct.Quantity,
                 PriceForItem = orderProduct.PriceForItem
             };

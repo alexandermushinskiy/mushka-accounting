@@ -1,0 +1,7 @@
+<span class="size-label" *ngIf="!!productSize" [ngClass]="getCssClass()">
+  {{ productSize.name }} <span class="amount">({{ quantity }})</span>
+</span>
+
+<span *ngIf="!productSize">
+{{ noSizes }}
+</span>

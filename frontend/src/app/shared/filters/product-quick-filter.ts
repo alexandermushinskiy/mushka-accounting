@@ -3,11 +3,11 @@ import { QuickFilter } from './quick-filter';
 
 export class ProductQuickFilter {
   filterFinished(product: Product): boolean {
-    return product.sizes.filter(ps => ps.quantity === 0).length > 0;
+    return product.quantity === 0;
   }
 
   filterAlmostFinished(product: Product): boolean {
-    return product.sizes.filter(ps => ps.quantity > 0 && ps.quantity < 10).length > 0;
+    return product.quantity > 0 && product.quantity < 10;
   }
 
   filterWithoutDeliveries(product: Product): boolean {

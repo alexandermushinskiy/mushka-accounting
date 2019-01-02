@@ -68,27 +68,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    Code = table.Column<string>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    CategoryId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Products_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -106,6 +85,35 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         name: "FK_Orders_Clients_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    VendorCode = table.Column<string>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false, defaultValue: 0),
+                    CategoryId = table.Column<Guid>(nullable: false),
+                    SizeId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Products_Sizes_SizeId",
+                        column: x => x.SizeId,
+                        principalTable: "Sizes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -181,43 +189,18 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductSizes",
-                columns: table => new
-                {
-                    ProductId = table.Column<Guid>(nullable: false),
-                    SizeId = table.Column<Guid>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductSizes", x => new { x.ProductId, x.SizeId });
-                    table.ForeignKey(
-                        name: "FK_ProductSizes_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductSizes_Sizes_SizeId",
-                        column: x => x.SizeId,
-                        principalTable: "Sizes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OrderProducts",
                 columns: table => new
                 {
                     OrderId = table.Column<Guid>(nullable: false),
                     ProductId = table.Column<Guid>(nullable: false),
-                    SizeId = table.Column<Guid>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    PriceForItem = table.Column<decimal>(type: "Money", nullable: false)
+                    PriceForItem = table.Column<decimal>(type: "Money", nullable: false),
+                    SizeId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderProducts", x => new { x.ProductId, x.OrderId, x.SizeId });
+                    table.PrimaryKey("PK_OrderProducts", x => new { x.ProductId, x.OrderId });
                     table.ForeignKey(
                         name: "FK_OrderProducts_Orders_OrderId",
                         column: x => x.OrderId,
@@ -235,7 +218,7 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         column: x => x.SizeId,
                         principalTable: "Sizes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -244,6 +227,7 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 {
                     SupplyId = table.Column<Guid>(nullable: false),
                     ProductId = table.Column<Guid>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
                     CostForItem = table.Column<decimal>(type: "Money", nullable: false)
                 },
                 constraints: table =>
@@ -260,32 +244,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         column: x => x.SupplyId,
                         principalTable: "Supplies",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SupplyProductSizes",
-                columns: table => new
-                {
-                    ProductId = table.Column<Guid>(nullable: false),
-                    SupplyId = table.Column<Guid>(nullable: false),
-                    SizeId = table.Column<Guid>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SupplyProductSizes", x => new { x.ProductId, x.SupplyId, x.SizeId });
-                    table.ForeignKey(
-                        name: "FK_SupplyProductSizes_Sizes_SizeId",
-                        column: x => x.SizeId,
-                        principalTable: "Sizes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_SupplyProductSizes_SupplyProducts_ProductId_SupplyId",
-                        columns: x => new { x.ProductId, x.SupplyId },
-                        principalTable: "SupplyProducts",
-                        principalColumns: new[] { "ProductId", "SupplyId" },
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -332,9 +290,21 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductSizes_SizeId",
-                table: "ProductSizes",
+                name: "IX_Products_SizeId",
+                table: "Products",
                 column: "SizeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_VendorCode",
+                table: "Products",
+                column: "VendorCode",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_Name_SizeId",
+                table: "Products",
+                columns: new[] { "Name", "SizeId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sizes_Name",
@@ -357,11 +327,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 name: "IX_SupplyProducts_SupplyId",
                 table: "SupplyProducts",
                 column: "SupplyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SupplyProductSizes_SizeId",
-                table: "SupplyProductSizes",
-                column: "SizeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -376,22 +341,10 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 name: "PaymentCards");
 
             migrationBuilder.DropTable(
-                name: "ProductSizes");
-
-            migrationBuilder.DropTable(
-                name: "SupplyProductSizes");
-
-            migrationBuilder.DropTable(
-                name: "Orders");
-
-            migrationBuilder.DropTable(
-                name: "Sizes");
-
-            migrationBuilder.DropTable(
                 name: "SupplyProducts");
 
             migrationBuilder.DropTable(
-                name: "Clients");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Products");
@@ -400,7 +353,13 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 name: "Supplies");
 
             migrationBuilder.DropTable(
+                name: "Clients");
+
+            migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Sizes");
 
             migrationBuilder.DropTable(
                 name: "Suppliers");

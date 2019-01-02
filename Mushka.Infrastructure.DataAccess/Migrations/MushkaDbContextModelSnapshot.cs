@@ -128,8 +128,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
                     b.Property<Guid>("OrderId");
 
-                    b.Property<Guid>("SizeId");
-
                     b.Property<decimal>("PriceForItem")
                         .HasColumnName("PriceForItem")
                         .HasColumnType("Money");
@@ -137,7 +135,9 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnName("Quantity");
 
-                    b.HasKey("ProductId", "OrderId", "SizeId");
+                    b.Property<Guid?>("SizeId");
+
+                    b.HasKey("ProductId", "OrderId");
 
                     b.HasIndex("OrderId");
 
@@ -182,10 +182,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
                     b.Property<Guid>("CategoryId");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnName("Code");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnName("CreatedOn");
 
@@ -193,27 +189,30 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnName("Name");
 
+                    b.Property<int>("Quantity")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Quantity")
+                        .HasDefaultValue(0);
+
+                    b.Property<Guid>("SizeId");
+
+                    b.Property<string>("VendorCode")
+                        .IsRequired()
+                        .HasColumnName("VendorCode");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Mushka.Domain.Entities.ProductSize", b =>
-                {
-                    b.Property<Guid>("ProductId");
-
-                    b.Property<Guid>("SizeId");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnName("Quantity");
-
-                    b.HasKey("ProductId", "SizeId");
-
                     b.HasIndex("SizeId");
 
-                    b.ToTable("ProductSizes");
+                    b.HasIndex("VendorCode")
+                        .IsUnique();
+
+                    b.HasIndex("Name", "SizeId")
+                        .IsUnique();
+
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Mushka.Domain.Entities.Size", b =>
@@ -335,29 +334,14 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .HasColumnName("CostForItem")
                         .HasColumnType("Money");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnName("Quantity");
+
                     b.HasKey("ProductId", "SupplyId");
 
                     b.HasIndex("SupplyId");
 
                     b.ToTable("SupplyProducts");
-                });
-
-            modelBuilder.Entity("Mushka.Domain.Entities.SupplyProductSize", b =>
-                {
-                    b.Property<Guid>("ProductId");
-
-                    b.Property<Guid>("SupplyId");
-
-                    b.Property<Guid>("SizeId");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnName("Quantity");
-
-                    b.HasKey("ProductId", "SupplyId", "SizeId");
-
-                    b.HasIndex("SizeId");
-
-                    b.ToTable("SupplyProductSizes");
                 });
 
             modelBuilder.Entity("Mushka.Domain.Entities.ContactPerson", b =>
@@ -388,10 +372,9 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Mushka.Domain.Entities.Size", "Size")
+                    b.HasOne("Mushka.Domain.Entities.Size")
                         .WithMany("OrderProducts")
-                        .HasForeignKey("SizeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SizeId");
                 });
 
             modelBuilder.Entity("Mushka.Domain.Entities.PaymentCard", b =>
@@ -407,14 +390,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.HasOne("Mushka.Domain.Entities.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Mushka.Domain.Entities.ProductSize", b =>
-                {
-                    b.HasOne("Mushka.Domain.Entities.Product", "Product")
-                        .WithMany("Sizes")
-                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Mushka.Domain.Entities.Size", "Size")
@@ -441,19 +416,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.HasOne("Mushka.Domain.Entities.Supply", "Supply")
                         .WithMany("Products")
                         .HasForeignKey("SupplyId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Mushka.Domain.Entities.SupplyProductSize", b =>
-                {
-                    b.HasOne("Mushka.Domain.Entities.Size", "Size")
-                        .WithMany("SupplyProductSizes")
-                        .HasForeignKey("SizeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Mushka.Domain.Entities.SupplyProduct", "Product")
-                        .WithMany("ProductSizes")
-                        .HasForeignKey("ProductId", "SupplyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

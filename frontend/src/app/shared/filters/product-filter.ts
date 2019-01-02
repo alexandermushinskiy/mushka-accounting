@@ -8,7 +8,7 @@ export class ProductFilter extends FiltersBase {
   }
 
   filter(product: Product): boolean {
-    return this.containsSearchKey(product.code, this.searchKey)
+    return this.containsSearchKey(product.vendorCode, this.searchKey)
       || this.containsSearchKey(product.name, this.searchKey);
   }
 }

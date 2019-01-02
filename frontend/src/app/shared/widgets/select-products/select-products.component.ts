@@ -47,7 +47,7 @@ export class SelectProductsComponent implements OnInit, ControlValueAccessor {
 
   customSearchFn(term: string, item: Product) {
     term = term.toLocaleLowerCase();
-    return item.name.toLocaleLowerCase().indexOf(term) > -1 || item.code.toLocaleLowerCase() === term;
+    return item.name.toLocaleLowerCase().indexOf(term) > -1 || item.vendorCode.toLocaleLowerCase() === term;
   }
 
   clear() {

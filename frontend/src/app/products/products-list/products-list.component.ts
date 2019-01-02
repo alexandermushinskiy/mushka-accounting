@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 import { ProductsServce } from '../../core/api/products.service';
-import { ProductTablePreview } from '../shared/models/product-table-preview';
+import { ProductTableRow } from '../shared/models/product-table-row.model';
 import { availableColumns } from '../../shared/constants/available-columns.const';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { Product } from '../../shared/models/product.model';
@@ -22,7 +22,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
 
   isCollapsed = false;
   products: Product[];
-  productsRows: ProductTablePreview[];
+  productsRows: ProductTableRow[];
   loadingIndicator = false;
   total = 0;
   shown = 0;
@@ -83,7 +83,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
     });
   }
 
-  delete(row: ProductTablePreview) {
+  delete(row: ProductTableRow) {
     setTimeout(() => {
       this.productToDelete = row.id;
       this.confirmDeleteMessage = `Вы уверены, что хотите удалить выбранный товар <b>${row.name}</b>?`;
@@ -101,7 +101,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
     this.closeModal();
   }
 
-  filter(searchKey) {
+  filter(searchKey: string) {
     const productFilter = new ProductFilter(searchKey);
     const filteredProducts = this.products.filter(prod => productFilter.filter(prod));
 
@@ -172,7 +172,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
   }
 
   private updateDatatableRows(products: Product[]) {
-    this.productsRows = products.map((el, index) => new ProductTablePreview(el, index));
+    this.productsRows = products.map((el, index) => new ProductTableRow(el, index));
     this.shown = products.length;
   }
 }

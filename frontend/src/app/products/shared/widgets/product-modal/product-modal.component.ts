@@ -40,16 +40,18 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
   ngOnInit() {
     this.isEdit = !!this.productId;
 
-    this.loadSizes();
+    this.productsService.getSizes()
+      .subscribe((sizes: Size[]) => this.availableSizes = sizes);
+      
+    this.categoriesService.getAll()
+      .subscribe((categories: Category[]) => this.onCategoriesLoaded(categories));
+
     this.buildForm(new Product({}));
 
     if (this.isEdit) {
       this.productsService.getById(this.productId)
         .subscribe((product: Product) => this.buildForm(product));
     }
-
-    this.categoriesService.getAll()
-      .subscribe((categories: Category[]) => this.onCategoriesLoaded(categories));
   }
 
   private onCategoriesLoaded(categories: Category[]) {
@@ -87,22 +89,18 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
   }
 
   private buildForm(product: Product) {
-    const sizes = product.sizes
-      ? product.sizes.map(sz => sz.id)
-      : [];
-
     const category = this.getCategoryById(product.categoryId);
 
     this.productForm = this.formBuilder.group({
       name: [product.name, Validators.required],
       category: [category, Validators.required],
-      code: [product.code, Validators.required],
-      sizes: [sizes, Validators.required]
+      vendorCode: [product.vendorCode, Validators.required],
+      size: [product.size, Validators.required]
     });
   }
 
   private updateSizesValidity(isRequired: boolean) {
-    const valueCtrl = this.productForm.controls['sizes'];
+    const valueCtrl = this.productForm.controls['size'];
 
     if (isRequired) {
       valueCtrl.setValidators(Validators.required);
@@ -113,25 +111,16 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
     valueCtrl.updateValueAndValidity();
   }
 
-  private loadSizes() {
-    this.productsService.getSizes()
-      .subscribe((sizes: Size[]) => this.availableSizes = sizes);
-  }
-
   private getCategoryById(categoryId: string): Category {
     return this.categories.find(cat => cat.id === categoryId);
   }
 
   private createProductModel(productFormValue): Product {
-    const sizes = !!productFormValue.sizes
-      ? productFormValue.sizes.map((size: Size) => new ProductSize({ id: size.id }))
-      : [];
-
     return new Product({
       name: productFormValue.name,
-      code: productFormValue.code.toUpperCase(),
+      vendorCode: productFormValue.vendorCode.toUpperCase(),
       categoryId: productFormValue.category.id,
-      sizes: sizes
+      size: productFormValue.size
     });
   }
 

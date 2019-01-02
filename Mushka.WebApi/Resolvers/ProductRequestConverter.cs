@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using Mushka.Core.Extensibility.Providers;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Product;
@@ -29,8 +28,8 @@ namespace Mushka.WebApi.Resolvers
                 CategoryId = source.CategoryId,
                 CreatedOn = dateTimeProvider.GetNow(),
                 Name = source.Name,
-                Code = source.Code,
-                Sizes = source.Sizes.Select(sizeId => new ProductSize { ProductId = produvtId, SizeId = sizeId } ).ToList()
+                VendorCode = source.VendorCode,
+                SizeId = source.SizeId
             };
         }
     }

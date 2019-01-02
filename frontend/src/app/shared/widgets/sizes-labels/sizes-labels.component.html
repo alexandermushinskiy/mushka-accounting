@@ -1,6 +1,0 @@
-<span *ngFor="let productSize of productSizes" class="size-label" [ngClass]="productSize.getCssClass()">
-  {{ productSize.name }} <span class="amount">({{ productSize.quantity }})</span>
-</span>
-<span *ngIf="productSizes.length === 0">
-{{ noSizes }}
-</span>

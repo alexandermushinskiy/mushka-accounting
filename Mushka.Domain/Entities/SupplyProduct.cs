@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Mushka.Domain.Entities
 {
@@ -11,7 +10,7 @@ namespace Mushka.Domain.Entities
         public Guid ProductId { get; set; }
         public Product Product { get; set; }
 
-        public IEnumerable<SupplyProductSize> ProductSizes { get; set; }
+        public int Quantity { get; set; }
 
         public decimal CostForItem { get; set; }
     }

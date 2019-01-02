@@ -44,7 +44,7 @@ export class ProductsServce {
 
   create(product: Product): Observable<Product> {
     const requestModel = this.convertToRequestData(product);
-
+debugger;
     return this.http.post(this.endPoint, requestModel)
       .map((res: any) => this.converterService.convertToProduct(res.data))
       .catch((res: any) => throwError(res.error.messages));
@@ -71,21 +71,21 @@ export class ProductsServce {
 
 
 
-  getProducts(criteria: string): Observable<Product[]> {
-    const foundProducts = ProductsServce.fakeProducts
-      .filter(prod => prod.name.toLowerCase().includes(criteria.toLowerCase()) ||
-                      prod.code.toLowerCase().includes(criteria.toLowerCase()));
+  // getProducts(criteria: string): Observable<Product[]> {
+  //   const foundProducts = ProductsServce.fakeProducts
+  //     .filter(prod => prod.name.toLowerCase().includes(criteria.toLowerCase()) ||
+  //                     prod.code.toLowerCase().includes(criteria.toLowerCase()));
 
-    return Observable.of(foundProducts)
-      .delay(300);
-  }
+  //   return Observable.of(foundProducts)
+  //     .delay(300);
+  // }
 
   private convertToRequestData(product: Product): any {
     return {
       name: product.name,
-      code: product.code,
+      vendorCode: product.vendorCode,
       categoryId: product.categoryId,
-      sizes: product.sizes.map(sz => sz.id)
+      sizeId: product.size.id
     };
   }
 }

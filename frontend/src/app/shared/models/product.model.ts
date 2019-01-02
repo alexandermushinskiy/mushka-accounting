@@ -1,10 +1,10 @@
-import { ProductSize } from './product-size.model';
 import { Category } from './category.model';
+import { Size } from './size.model';
 
 export class Product {
   id: string;
   name: string;
-  code: string;
+  vendorCode: string;
   category: Category;
   categoryId: string;
   createdOn: string;
@@ -12,7 +12,8 @@ export class Product {
   lastDeliveryDate: string;
   lastDeliveryCount: number;
   totalCount: number;
-  sizes: ProductSize[];
+  quantity = 0;
+  size: Size;
 
   constructor(data: any) {
     Object.assign(this, data);

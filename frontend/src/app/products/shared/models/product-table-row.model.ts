@@ -1,26 +1,28 @@
-import { ProductSize } from '../../../shared/models/product-size.model';
 import { DataTablePreview } from '../../../shared/models/data-table-preview.model';
+import { Size } from '../../../shared/models/size.model';
 
-export class ProductTablePreview extends DataTablePreview {
+export class ProductTableRow extends DataTablePreview {
   name: string;
-  code: string;
+  vendorCode: string;
   createdOn: string;
   deliveriesCount: number;
   lastDeliveryDate: string;
   lastDeliveryCount: number;
   totalCount: number;
-  sizes: ProductSize[];
+  quantity: number;
+  size: Size;
 
   constructor(elem, index: number = 0) {
     super(elem, index);
 
     this.name = elem.name;
-    this.code = elem.code;
+    this.vendorCode = elem.vendorCode;
     this.createdOn = elem.createdOn;
     this.deliveriesCount = elem.deliveriesCount || 0;
     this.lastDeliveryDate = elem.lastDeliveryDate;
     this.lastDeliveryCount = elem.lastDeliveryCount;
     this.totalCount = elem.totalCount;
-    this.sizes = elem.sizes;
+    this.quantity = elem.quantity;
+    this.size = elem.size;
   }
 }

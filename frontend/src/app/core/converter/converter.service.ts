@@ -7,7 +7,7 @@ import { Product } from '../../shared/models/product.model';
 import { DatetimeService } from '../datetime/datetime.service';
 import { ProductSize } from '../../shared/models/product-size.model';
 import { Size } from '../../shared/models/size.model';
-import { Supply } from '../../delivery/shared/models/supply.model';
+import { Supply } from '../../supplies/shared/models/supply.model';
 import { PaymentCard } from '../../shared/models/payment-card.model';
 import { copyStyles } from '@angular/animations/browser/src/util';
 
@@ -36,14 +36,15 @@ export class ConverterService {
     return new Product({
       id: source.id,
       name: source.name,
-      code: source.code,
+      vendorCode: source.vendorCode,
       category: this.convertToCategory(source.category),
       categoryId: source.categoryId,
       createdOn: this.datetimeService.toString(source.createdOn),
-      sizes: this.convertToProductSizes(source.sizes),
+      size: this.convertToProductSize(source.size),
       lastDeliveryDate: !!source.lastDeliveryDate ? this.datetimeService.toString(source.lastDeliveryDate) : null,
       lastDeliveryCount: !!source.lastDeliveryCount ? source.lastDeliveryCount : 0,
-      deliveriesCount: source.deliveriesCount
+      deliveriesCount: source.deliveriesCount,
+      quantity: source.quantity
     });
   }
 

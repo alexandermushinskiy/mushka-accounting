@@ -1,14 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject, of } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
-import { Supply } from '../../delivery/shared/models/supply.model';
-import { Supplier } from '../../shared/models/supplier.model';
-import { ProductItem } from '../../delivery/shared/models/product-item.model';
-import { ServiceItem } from '../../delivery/shared/models/service-item.model';
-import { PaymentMethod } from '../../delivery/shared/enums/payment-method.enum';
-import { GuidGenerator } from '../guid-generator/guid.generator';
-import { Product } from '../../shared/models/product.model';
+import { Supply } from '../../supplies/shared/models/supply.model';
 import { ConverterService } from '../converter/converter.service';
 import { environment } from '../../../environments/environment';
 

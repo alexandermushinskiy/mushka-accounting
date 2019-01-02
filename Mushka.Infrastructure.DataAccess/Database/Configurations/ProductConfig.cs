@@ -21,10 +21,10 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .Property(product => product.Name)
                 .HasColumnName("Name")
                 .IsRequired();
-
+            
             builder
-                .Property(product => product.Code)
-                .HasColumnName("Code")
+                .Property(product => product.VendorCode)
+                .HasColumnName("VendorCode")
                 .IsRequired();
 
             builder
@@ -33,9 +33,21 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .IsRequired();
 
             builder
+                .Property(ps => ps.Quantity)
+                .HasColumnName("Quantity")
+                .HasDefaultValue(0);
+
+            builder.HasOne(product => product.Size)
+                .WithMany(size => size.Products)
+                .HasForeignKey(product => product.SizeId);
+
+            builder
                 .HasOne(prod => prod.Category)
                 .WithMany(cat => cat.Products)
                 .HasForeignKey(prod => prod.CategoryId);
+
+            builder.HasIndex(product => product.VendorCode).IsUnique();
+            builder.HasIndex(product => new { product.Name, product.SizeId }).IsUnique();
         }
     }
 }

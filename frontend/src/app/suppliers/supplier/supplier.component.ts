@@ -6,7 +6,7 @@ import { SuppliersService } from '../../core/api/suppliers.service';
 import { ContactPerson } from '../../shared/models/contact-person.model';
 import { Supplier } from '../../shared/models/supplier.model';
 import { NotificationsService } from '../../core/notifications/notifications.service';
-import { PaymentMethod } from '../../delivery/shared/enums/payment-method.enum';
+import { PaymentMethod } from '../../shared/enums/payment-method.enum';
 import { PaymentCard } from '../../shared/models/payment-card.model';
 
 @Component({

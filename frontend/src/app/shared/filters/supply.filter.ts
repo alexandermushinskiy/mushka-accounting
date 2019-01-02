@@ -1,5 +1,5 @@
 import { FiltersBase } from './filter-base';
-import { Supply } from '../../delivery/shared/models/supply.model';
+import { Supply } from '../../supplies/shared/models/supply.model';
 
 
 export class SupplyFilter extends FiltersBase {

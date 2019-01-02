@@ -30,7 +30,7 @@ namespace Mushka.Service.Services
         public async Task<ValidationResponse<IEnumerable<Supply>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<Supply> supplies = (await supplyRepository.GetAllAsync(cancellationToken))
-                .OrderByDescending(supply => supply.ReceivedDate)
+                .OrderBy(supply => supply.ReceivedDate)
                 .ToList();
 
             string message = supplies.Any()

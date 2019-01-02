@@ -10,7 +10,7 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
         {
             builder.ToTable("OrderProducts");
 
-            builder.HasKey(op => new { op.ProductId, op.OrderId, op.SizeId });
+            builder.HasKey(op => new { op.ProductId, op.OrderId });
 
             builder.HasOne(op => op.Product)
                 .WithMany(product => product.Orders)
@@ -19,11 +19,7 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
             builder.HasOne(op => op.Order)
                 .WithMany(del => del.Products)
                 .HasForeignKey(op => op.OrderId);
-
-            builder.HasOne(op => op.Size)
-                .WithMany(size => size.OrderProducts)
-                .HasForeignKey(op => op.SizeId);
-
+            
             builder.Property(op => op.Quantity)
                 .HasColumnName("Quantity");
 

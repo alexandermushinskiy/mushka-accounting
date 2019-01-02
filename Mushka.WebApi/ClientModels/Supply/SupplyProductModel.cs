@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Mushka.WebApi.ClientModels.Supply
 {
@@ -11,6 +10,10 @@ namespace Mushka.WebApi.ClientModels.Supply
         
         public decimal CostForItem { get; set; }
 
-        public IEnumerable<SupplyProductSizeModel> Sizes { get; set; }
+        public int Quantity { get; set; }
+
+        public Guid? SizeId { get; set; }
+
+        public string SizeName { get; set; }
     }
 }

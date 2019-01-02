@@ -58,15 +58,15 @@ namespace Mushka.Service.Services
                     return CreateWarningValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
                 }
 
-                var storedProductSize = await productRepository.GetProductSizeAsync(orderProduct.ProductId, orderProduct.SizeId, cancellationToken);
+                //var storedProductSize = await productRepository.GetProductSizeAsync(orderProduct.ProductId, orderProduct.SizeId, cancellationToken);
 
-                if (storedProductSize == null)
-                {
-                    return CreateWarningValidationResponse($"Size with id {orderProduct.SizeId} is not found.", ValidationStatusType.NotFound);
-                }
+                //if (storedProductSize == null)
+                //{
+                //    return CreateWarningValidationResponse($"Size with id {orderProduct.SizeId} is not found.", ValidationStatusType.NotFound);
+                //}
 
-                storedProductSize.Quantity -= orderProduct.Quantity;
-                await productRepository.UpdateProductSize(storedProductSize, cancellationToken);
+                //storedProductSize.Quantity -= orderProduct.Quantity;
+                //await productRepository.UpdateProductSize(storedProductSize, cancellationToken);
             }
 
             var addedOrder = await orderRepository.AddAsync(order, cancellationToken);

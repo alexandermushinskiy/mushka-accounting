@@ -1,19 +1,16 @@
 <ng-select #ngselect
-        bindValue="id"
-        bindLabel="name"
-        [items]="sizes"
-        [multiple]="isMultiple"
-        [closeOnSelect]="!isMultiple"
-        [placeholder]="placeholder"
-        [ngModel]="selectedIds"
-        [clearable]="canClearAll"
-        [loading]="isLoading"
-        [notFoundText]="notFoundText"
-        [disabled]="isDisabled"
-        (change)="onChange($event)">
-  <!-- <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-      <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.name}}
-  </ng-template> -->
+            bindValue="id"
+            bindLabel="name"
+            [items]="sizes"
+            [multiple]="isMultiple"
+            [closeOnSelect]="!isMultiple"
+            [placeholder]="placeholder"
+            [ngModel]="selectedId"
+            [clearable]="canClearAll"
+            [loading]="isLoading"
+            [notFoundText]="notFoundText"
+            [disabled]="isDisabled"
+            (change)="onChange($event)">
   <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
     <div *ngIf="!isMultiple">{{ item.name }}</div>
     <!-- <div *ngIf="!isMultiple && !item">{{ defaultValue }}</div> -->

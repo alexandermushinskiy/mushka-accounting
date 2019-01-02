@@ -22,24 +22,19 @@ namespace Mushka.WebApi.Resolvers
                 DeliveryCost = source.DeliveryCost,
                 DeliveryCostMethod = source.DeliveryCostMethod,
                 TotalCost = source.TotalCost,
-                ProductsAmount = source.Products.Sum(prod => prod.ProductSizes.Sum(ps => ps.Quantity)),
+                ProductsAmount = source.Products.Count,
                 Products = source.Products.Select(CreateDeliveryProductModel)
             };
 
-        private static SupplyProductModel CreateDeliveryProductModel(SupplyProduct deliveryProduct) =>
+        private static SupplyProductModel CreateDeliveryProductModel(SupplyProduct supplyProduct) =>
             new SupplyProductModel
             {
-                ProductId = deliveryProduct.ProductId,
-                ProductName = deliveryProduct.Product?.Name,
-                CostForItem = deliveryProduct.CostForItem,
-                Sizes = deliveryProduct.ProductSizes.Select(CreateDeliveryProductSizeModel).ToList()
-            };
-
-        private static SupplyProductSizeModel CreateDeliveryProductSizeModel(SupplyProductSize deliveryProductSize) =>
-            new SupplyProductSizeModel
-            {
-                SizeId = deliveryProductSize.SizeId,
-                Quantity = deliveryProductSize.Quantity
+                ProductId = supplyProduct.ProductId,
+                ProductName = supplyProduct.Product?.Name,
+                CostForItem = supplyProduct.CostForItem,
+                Quantity = supplyProduct.Quantity,
+                SizeId = supplyProduct.Product?.SizeId,
+                SizeName = supplyProduct.Product?.Size.Name
             };
     }
 }

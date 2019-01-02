@@ -8,7 +8,6 @@ namespace Mushka.Domain.Entities
     {
         public Product()
         {
-            Sizes = new List<ProductSize>();
             Supplies = new List<SupplyProduct>();
             Orders = new List<OrderProduct>();
         }
@@ -17,11 +16,11 @@ namespace Mushka.Domain.Entities
 
         public string Name { get; set; }
 
-        public string Code { get; set; }
+        public string VendorCode { get; set; }
 
         public DateTime CreatedOn { get; set; }
-        
-        public ICollection<ProductSize> Sizes { get; set; }
+
+        public int Quantity { get; set; }
 
         public ICollection<SupplyProduct> Supplies { get; set; }
 
@@ -29,5 +28,8 @@ namespace Mushka.Domain.Entities
 
         public Guid CategoryId { get; set; }
         public Category Category { get; set; }
+
+        public Guid SizeId { get; set; }
+        public Size Size { get; set; }
     }
 }

@@ -70,7 +70,7 @@ namespace Mushka.Service.Services
         public async Task<ValidationResponse<IEnumerable<Product>>> GetByCriteriaAsync(string criteria, CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<Product> products = (await productRepository.GetAsync(prod =>
-                    prod.Name.ToUpper().Contains(criteria.ToUpper()) || prod.Code.ToUpper().Contains(criteria.ToUpper()), cancellationToken))
+                    prod.Name.ToUpper().Contains(criteria.ToUpper()) || prod.VendorCode.ToUpper().Contains(criteria.ToUpper()), cancellationToken))
                 .OrderBy(product => product.Name)
                 .ToList();
 
@@ -93,9 +93,9 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Product with the name {product.Name} is already existed.");
             }
 
-            if (await productRepository.IsExistAsync(prod => prod.Code == product.Code, cancellationToken))
+            if (await productRepository.IsExistAsync(prod => prod.VendorCode == product.VendorCode, cancellationToken))
             {
-                return CreateWarningValidationResponse($"Product with the code {product.Code} is already existed.");
+                return CreateWarningValidationResponse($"Product with the vendor code {product.VendorCode} is already existed.");
             }
 
             await productRepository.AddAsync(product, cancellationToken);

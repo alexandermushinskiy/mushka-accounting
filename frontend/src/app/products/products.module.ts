@@ -7,6 +7,7 @@ import { CategoriesNavComponent } from './categories-nav/categories-nav.componen
 import { CategoryModalComponent } from './shared/widgets/category-modal/category-modal.component';
 import { ProductModalComponent } from './shared/widgets/product-modal/product-modal.component';
 import { SizesHelperServices } from './shared/services/sizes-helper.service';
+import { QuantityLabelComponent } from './shared/widgets/quantity-label/quantity-label.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { SizesHelperServices } from './shared/services/sizes-helper.service';
     ProductsListComponent,
     CategoriesNavComponent,
     CategoryModalComponent,
-    ProductModalComponent
+    ProductModalComponent,
+    QuantityLabelComponent
   ],
   exports: [ProductsListComponent]
 })

@@ -22,7 +22,12 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
 
             builder.Property(dp => dp.CostForItem)
                 .HasColumnName("CostForItem")
-                .HasColumnType("Money");
+                .HasColumnType("Money")
+                .IsRequired();
+
+            builder.Property(ps => ps.Quantity)
+                .HasColumnName("Quantity")
+                .IsRequired();
         }
     }
 }

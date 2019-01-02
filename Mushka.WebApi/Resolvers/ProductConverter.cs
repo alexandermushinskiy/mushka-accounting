@@ -16,35 +16,29 @@ namespace Mushka.WebApi.Resolvers
 
             var lastSupplyCount = lastSupply?.Products
                 .Where(del => del.ProductId == source.Id)
-                .Select(prod => prod.ProductSizes.Sum(ps => ps.Quantity))
-                .Single();
+                .Select(prod => prod.Quantity).Single();
             
             return new ProductModel
             {
                 Id = source.Id,
                 Name = source.Name,
-                Code = source.Code,
+                VendorCode = source.VendorCode,
                 CreatedOn = source.CreatedOn,
                 CategoryId = source.CategoryId,
+                Quantity = source.Quantity,
                 Category = ConvertToCategoryModel(source.Category),
                 DeliveriesCount = source.Supplies.Count,
                 LastDeliveryDate = lastSupply?.ReceivedDate,
                 LastDeliveryCount = lastSupplyCount,
-                Sizes = source.Sizes.Select(CreateProductSizeModel).ToArray()
+                Size = new SizeModel
+                {
+                    Id = source.Size.Id,
+                    Name = source.Size.Name
+                }
             };
         }
 
-        private static CategoryModel ConvertToCategoryModel(Category category)
-        {
-            return category == null ? null : new CategoryModel { Id = category.Id, Name = category.Name };
-        }
-
-        private static ProductSizeModel CreateProductSizeModel(ProductSize productSize) =>
-            new ProductSizeModel
-            {
-                Id = productSize.SizeId,
-                Name = productSize.Size.Name,
-                Quantity = productSize.Quantity
-            };
+        private static CategoryModel ConvertToCategoryModel(Category category) =>
+            category == null ? null : new CategoryModel { Id = category.Id, Name = category.Name };
     }
 }

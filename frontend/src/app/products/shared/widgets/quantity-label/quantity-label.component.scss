@@ -1,12 +1,13 @@
-@import "../../../../variables";
+@import "../../../../../variables";
 
-.size-label {
+.quantity {
   display: inline-block;
+  width: 35px;
+  text-align: center;
   vertical-align: top;
-  padding: .2rem .4rem;
+  padding: 3px 0px;
   font-weight: bold;
   font-size: 1.2rem;
-  line-height: 1.5rem;
   text-transform: uppercase;
   color: #fff;
   border-radius: $border-radius-base;
@@ -15,28 +16,10 @@
   :host-context(.data-table) & {
     margin-bottom: 0;
   }
-  .amount {
-    padding-left: 5px;
-  }
-  &-ends {
+  &-almost-empty {
     background-color: $products-size-count-ends-bg;
   }
-  &-sold {
+  &-empty {
     background-color: $products-size-count-sold-bg;
-  }
-
-  .close {
-    font-size: 1.8rem;
-    line-height: 1.4rem;
-    opacity: 1;
-    color: $white;
-    text-shadow: none;
-    font-weight: normal;
-    margin-left: 1rem;
-    cursor: pointer;
-    &:focus,
-    &:focus:active {
-      outline: none;
-    }
   }
 }

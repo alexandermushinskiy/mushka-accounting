@@ -25,14 +25,14 @@ export class SelectSizeComponent implements OnInit, ControlValueAccessor {
     }
   }
   @Input() disabledSizes: string[];
-  @Input() isMultiple = true;
+  @Input() isMultiple = false;
   @Input() canClearAll = true;
   @Input() isDisabled = false;
   @Input() notFoundText = 'Нет данных';
-  @Input() placeholder = 'Выбирете размер(ы)';
+  @Input() placeholder = 'Выбирете размер';
   @Output() onSelectedSizes = new EventEmitter<string[]>();
 
-  selectedIds: string[];
+  selectedId: string;
   sizes: SelectSize[] = [];
   isLoading = false;
 
@@ -41,20 +41,15 @@ export class SelectSizeComponent implements OnInit, ControlValueAccessor {
   ngOnInit() {
   }
 
-  onChange(selectedData: SelectSize | SelectSize[]) {
+  onChange(selectedData: SelectSize) {
     this.onChangeCallback(this.getValue(selectedData));
   }
 
-  writeValue(selectedIds: string[]) {
-    this.selectedIds = selectedIds;
-
-    if (!selectedIds) {
-      this.reset();
+  writeValue(size: ProductSize) {
+    if (!!size) {
+      this.selectedId = size.id;
     } else {
-      this.sizes
-        .filter((size: SelectSize) =>
-          selectedIds.some(id => id === size.id && this.disabledSizes.some(disabledId => disabledId === id)))
-        .forEach((school: SelectSize) => school.disabled = true);
+      this.reset();
     }
   }
 
@@ -69,16 +64,12 @@ export class SelectSizeComponent implements OnInit, ControlValueAccessor {
     this.ngselect.clearModel();
   }
 
-  private getValue(selectedData: SelectSize | SelectSize[]) {
+  private getValue(selectedData: SelectSize) {
     if (!selectedData) {
       return null;
     }
 
-    const selectedSizes = Array.isArray(selectedData)
-      ? selectedData.map(size => new Size({id: size.id, name: size.name}))
-      : [new Size({id: selectedData.id, name: selectedData.name})];
-
-    return selectedSizes.length !== 0 ? selectedSizes : null;
+    return new Size({id: selectedData.id, name: selectedData.name});
   }
 
   private onChangeCallback: any = () => {};

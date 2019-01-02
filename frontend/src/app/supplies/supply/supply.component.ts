@@ -67,11 +67,11 @@ export class SupplyComponent implements OnInit {
   }
 
   getProductSizes(product: Product): Size[] {
-    return !!product ? product.sizes : [];
+    return []; //!!product ? product.sizes : [];
   }
 
   hasProductSizes(product: Product): boolean {
-    return !!product && product.sizes.length > 0;
+    return !!product && !!product.size;
   }
 
   addProduct() {
