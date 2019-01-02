@@ -29,15 +29,6 @@
         </ng-template>
       </ngx-datatable-column>
       
-      <ngx-datatable-column name="receivedDate">
-        <ng-template ngx-datatable-header-template let-column="column">
-          <span>Дата<br>получения</span>
-        </ng-template>
-        <ng-template ngx-datatable-cell-template let-value="value">
-          <span [title]="value">{{ value }}</span>
-        </ng-template>
-      </ngx-datatable-column>
-      
       <ngx-datatable-column name="requestDate">
         <ng-template ngx-datatable-header-template let-column="column">
           <span>Дата<br>заявки</span>
@@ -47,6 +38,15 @@
         </ng-template>
       </ngx-datatable-column>
 
+      <ngx-datatable-column name="receivedDate">
+        <ng-template ngx-datatable-header-template let-column="column">
+          <span>Дата<br>получения</span>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <span [title]="value">{{ value }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      
       <ngx-datatable-column name="productsAmount">
         <ng-template ngx-datatable-header-template let-column="column">
           <span>Количество<br>товаров</span>
