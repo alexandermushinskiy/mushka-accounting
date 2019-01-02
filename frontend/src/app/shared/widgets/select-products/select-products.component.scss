@@ -4,10 +4,14 @@
 }
 
 .category {
-  text-transform: uppercase;
+  //text-transform: uppercase;
 }
 
 .title {
-  display: inline-block;
-  width: 80px;
+  display: block;text-transform: uppercase;
+  //width: 80px;
+}
+
+.product-name {
+  font-size: 14px;
 }
