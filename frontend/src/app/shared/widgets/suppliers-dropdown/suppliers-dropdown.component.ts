@@ -26,8 +26,10 @@ export class SuppliersDropdownComponent implements OnInit, ControlValueAccessor 
   ngOnInit() {
   }
 
-  writeValue(supplierId: string): void {
-    this.selectedSupplier = this.suppliers.find(sup => sup.id === supplierId);
+  writeValue(supplier: Supplier): void {
+    if (supplier) {
+      this.selectedSupplier = this.suppliers.find(sup => sup.id === supplier.id);
+    }
   }
 
   registerOnChange(fn: any) {

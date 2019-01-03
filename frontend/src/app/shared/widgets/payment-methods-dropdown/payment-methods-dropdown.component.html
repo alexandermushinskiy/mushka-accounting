@@ -1,0 +1,16 @@
+<div ngbDropdown class="dropdown">
+  <button type="button"
+          class="btn form-control"
+          [disabled]="isDisabled"
+          [ngClass]="(!value && required) ? 'required-dropdown' : ''" ngbDropdownToggle id="dropdown">
+    <span [ngClass]="{'placeholder': !selectedPaymentMethod}">
+      {{ selectedPaymentMethod ? selectedPaymentMethod.description : 'Выберите значение' }}
+    </span>
+    <i class="ico-chevron-down"></i>
+  </button>
+  <div ngbDropdownMenu aria-labelledby="dropdown" class="dropdown-max-height">
+    <button type="button" class="dropdown-item" *ngFor="let paymentMethod of paymentMethods" (click)="onMethodSelected(paymentMethod)">
+      {{ paymentMethod.description }}
+    </button>
+  </div>
+</div>

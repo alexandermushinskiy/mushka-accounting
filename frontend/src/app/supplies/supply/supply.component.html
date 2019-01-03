@@ -129,26 +129,24 @@
             <div class="col-md-12 cost">
               <span class="cost-title">Оплата:</span>
               <span class="cost-value"><mk-currency-input formControlName="cost"></mk-currency-input></span>
-              <span class="cost-payment-type"><mk-dropdown [options]="paymentMethodsList" formControlName="costMethod"></mk-dropdown></span>
+              <span class="cost-payment-type"><mk-payment-methods-dropdown formControlName="costMethod"></mk-payment-methods-dropdown></span>
             </div>
             <div class="col-md-12 cost">
               <span class="cost-title">Предоплата:</span>
               <span class="cost-value"><mk-currency-input formControlName="prepayment"></mk-currency-input></span>
               <span class="cost-payment-type">
-                <mk-dropdown formControlName="prepaymentMethod"
-                             [options]="paymentMethodsList"
-                             [required]="supplyForm.hasError('required', ['prepaymentMethod'])">
-                </mk-dropdown>
+                <mk-payment-methods-dropdown formControlName="prepaymentMethod"
+                                             [required]="supplyForm.hasError('required', ['prepaymentMethod'])">
+                </mk-payment-methods-dropdown>
               </span>
             </div>
             <div class="col-md-12 cost">
               <span class="cost-title">Доставка:</span>
               <span class="cost-value"><mk-currency-input formControlName="deliveryCost"></mk-currency-input></span>
               <span class="cost-payment-type">
-                <mk-dropdown formControlName="deliveryCostMethod"
-                             [options]="paymentMethodsList"
-                             [required]="supplyForm.hasError('required', ['deliveryCostMethod'])">
-                </mk-dropdown>
+                <mk-payment-methods-dropdown formControlName="deliveryCostMethod"
+                                             [required]="supplyForm.hasError('required', ['deliveryCostMethod'])">
+                </mk-payment-methods-dropdown>
               </span>
             </div>
             <div class="col-md-12 cost">

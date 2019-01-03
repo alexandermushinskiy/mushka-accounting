@@ -32,11 +32,6 @@ export class SupplyComponent implements OnInit {
   totalCost: number;
   suppliers: Supplier[];
 
-  paymentMethodsHash = new Map<string, PaymentMethod>()
-    .set('Наличный расчет', PaymentMethod.CASH)
-    .set('Перевод на карту', PaymentMethod.TRANSFER_TO_CARD)
-    .set('LiqPay', PaymentMethod.LIQPAY);
-  
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
@@ -58,7 +53,7 @@ export class SupplyComponent implements OnInit {
         this.getRouteParams();
 
         this.isLoading = false;
-      });    
+      });
   }
 
   private getRouteParams() {
@@ -128,7 +123,7 @@ export class SupplyComponent implements OnInit {
     this.supplyForm = this.formBuilder.group({
       requestDate: [supply.requestDate, Validators.required],
       receivedDate: [supply.receivedDate, Validators.required],
-      supplier: [supply.supplierId, Validators.required],
+      supplier: [new Supplier({id: supply.supplierId}), Validators.required],
       bankFee: [supply.bankFee],
       deliveryCost: [supply.deliveryCost],
       deliveryCostMethod: [supply.deliveryCostMethod],
@@ -213,11 +208,11 @@ export class SupplyComponent implements OnInit {
       receivedDate: formRawValue.receivedDate,
       supplierId: formRawValue.supplier.id,
       deliveryCost: formRawValue.deliveryCost,
-      deliveryCostMethod: !!formRawValue.deliveryCostMethod ? this.paymentMethodsHash.get(formRawValue.deliveryCostMethod) : null,
+      deliveryCostMethod: formRawValue.deliveryCostMethod,
       prepayment: formRawValue.prepayment,
-      prepaymentMethod: !!formRawValue.prepaymentMethod ? this.paymentMethodsHash.get(formRawValue.prepaymentMethod) : null,
+      prepaymentMethod: formRawValue.prepaymentMethod,
       cost: formRawValue.cost,
-      costMethod: this.paymentMethodsHash.get(formRawValue.costMethod),
+      costMethod: formRawValue.costMethod,
       bankFee: formRawValue.bankFee,
       totalCost: this.totalCost,
       notes: formRawValue.notes,

@@ -40,6 +40,7 @@ import { SuppliersDropdownComponent } from './widgets/suppliers-dropdown/supplie
 import { TypeaheadProductsComponent } from './widgets/typeahead-products/typeahead-products.component';
 import { SelectProductsComponent } from './widgets/select-products/select-products.component';
 import { ProgressLinearComponent } from './widgets/progress-linear/progress-linear.component';
+import { PaymentMethodsDropdownComponent } from './widgets/payment-methods-dropdown/payment-methods-dropdown.component';
 
 @NgModule({
   imports: [
@@ -86,7 +87,8 @@ import { ProgressLinearComponent } from './widgets/progress-linear/progress-line
     SuppliersDropdownComponent,
     TypeaheadProductsComponent,
     SelectProductsComponent,
-    ProgressLinearComponent
+    ProgressLinearComponent,
+    PaymentMethodsDropdownComponent
   ],
   exports: [
     /* Common modules */
@@ -128,7 +130,8 @@ import { ProgressLinearComponent } from './widgets/progress-linear/progress-line
     SuppliersDropdownComponent,
     TypeaheadProductsComponent,
     SelectProductsComponent,
-    ProgressLinearComponent
+    ProgressLinearComponent,
+    PaymentMethodsDropdownComponent
   ]
 })
 

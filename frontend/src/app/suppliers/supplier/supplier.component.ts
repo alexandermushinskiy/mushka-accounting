@@ -85,9 +85,6 @@ export class SupplierComponent implements OnInit {
       );
   }
 
-  addPaymentMethod() {
-  }
-
   private onSaveSuccess() {
     this.isLoading = false;
     this.notificationsService.success(this.title, `Поставщик был успешно ${this.isEdit ? 'изменен' : 'добавлен'}`);
