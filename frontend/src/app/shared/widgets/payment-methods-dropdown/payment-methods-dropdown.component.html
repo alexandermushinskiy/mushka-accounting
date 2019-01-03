@@ -2,7 +2,7 @@
   <button type="button"
           class="btn form-control"
           [disabled]="isDisabled"
-          [ngClass]="(!value && required) ? 'required-dropdown' : ''" ngbDropdownToggle id="dropdown">
+          [ngClass]="(!selectedPaymentMethod && required) ? 'required-dropdown' : ''" ngbDropdownToggle id="dropdown">
     <span [ngClass]="{'placeholder': !selectedPaymentMethod}">
       {{ selectedPaymentMethod ? selectedPaymentMethod.description : 'Выберите значение' }}
     </span>
