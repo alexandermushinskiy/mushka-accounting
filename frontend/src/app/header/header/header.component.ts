@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 // import { ApiCommonService } from '../../core/api/api-common.service';
@@ -21,7 +20,7 @@ import { BadgesService } from '../../core/api/badges.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent extends UnsubscriberComponent implements OnInit {
-  //@ViewChild('search') search: JumpToCsrComponent;
+  // @ViewChild('search') search: JumpToCsrComponent;
 
   isLoadingInProgress = false;
   totalUnseen: number;
@@ -64,7 +63,7 @@ export class HeaderComponent extends UnsubscriberComponent implements OnInit {
       });
   }
 
-  jumpToCsr(csrNumber: number) {
+  jumpTo(something: number) {
   }
 
   openModal(content) {
@@ -177,7 +176,7 @@ export class HeaderComponent extends UnsubscriberComponent implements OnInit {
     setTimeout(() => {
       this.router.navigate([`/ticket/${id}`]);
       this.hideLoader();
-      //this.search.clearInput();
+      // this.search.clearInput();
     }, 300);
   }
 

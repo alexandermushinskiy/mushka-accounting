@@ -248,3 +248,10 @@ textarea {
 .form-control[disabled] {
   background-color: #e9e9e9;
 }
+
+.disabled-control {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: default;
+  user-select: none;
+}

@@ -4,11 +4,11 @@
       <img alt="Mushka" class="logo-mushka" height="25" src="./assets/images/mushka-logo.svg" width="35" />
         <span class="accounting">Учет товаров и услуг</span>
     </div>
-    <mk-global-search #search (onSearch)="jumpToCsr($event)" [isLoading]="isLoadingInProgress"></mk-global-search>
+    <mk-global-search #search (onSearch)="jumpTo($event)" [isLoading]="isLoadingInProgress"></mk-global-search>
   </div>
   <div class="actions-right">
     <a class="btn btn-outline-light" aria-label="Сделка" [routerLink]="'/orders/new'">Заказ</a>
-    <a class="btn btn-outline-light" aria-label="Поступление" [routerLink]="'/deliveries/new'">Поступление</a>
+    <a class="btn btn-outline-light" aria-label="Поступление" [routerLink]="'/supplies/new'">Поступление</a>
     <mk-user-notification></mk-user-notification>
     <div class="badge-group">
       <mk-header-badge [title]="'Unrated'" [icon]="'ico-favorites'" [value]="totalUnrated"></mk-header-badge>

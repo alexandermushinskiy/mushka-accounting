@@ -41,10 +41,12 @@ import { PackagesModule } from './packages/packages.module';
 import { PartnersModule } from './partners/partners.module';
 import { LogisticsModule } from './logistics/logistics.module';
 import { SupplyModule } from './supplies/supply.module';
+import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

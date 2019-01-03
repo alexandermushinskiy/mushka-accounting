@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { OrdersComponent } from './orders/orders/orders.component';
+import { OrdersListComponent } from './orders/orders-list/orders-list.component';
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { PartnersComponent } from './partners/partners/partners.component';
 import { LogisticsComponent } from './logistics/logistics/logistics.component';
@@ -9,10 +9,17 @@ import { SuppliersListComponent } from './suppliers/suppliers-list/suppliers-lis
 import { SupplierComponent } from './suppliers/supplier/supplier.component';
 import { SuppliesListComponent } from './supplies/supplies-list/supplies-list.component';
 import { SupplyComponent } from './supplies/supply/supply.component';
+import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+import { OrderComponent } from './orders/order/order.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'orders', pathMatch: 'full' },
-  { path: 'orders', component: OrdersComponent, pathMatch: 'full' },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent, pathMatch: 'full' },
+  { path: 'orders', children: [
+    { path: '', component: OrdersListComponent, pathMatch: 'full' },
+    { path: 'new', component: OrderComponent, pathMatch: 'full' },
+    { path: ':id', component: OrderComponent, pathMatch: 'full' }
+  ]},
   { path: 'suppliers', children: [
     { path: '', component: SuppliersListComponent, pathMatch: 'full' },
     { path: 'new', component: SupplierComponent, pathMatch: 'full' },

@@ -1,4 +1,5 @@
 export enum MenuLabels {
+  DASHBOARD = 'Общая Панель',
   ORDERS = 'Заказы',
   PRODUCTS = 'Товары',
   PACKAGES = 'Упаковка',
@@ -6,15 +7,14 @@ export enum MenuLabels {
   PARTNERS = 'Партнеры',
   LOGISTICS = 'Логистика',
   SUPPLIES = 'Поступления',
-  
+
   SEARCH_CSR = 'Search CSR',
-  DASHBOARD = 'Dashboard',
   WORKLIST = 'Worklist',
   FAVORITES = 'Favorites',
   VIEWS = 'Views',
   WORKGROUPS = 'Workgroups',
   TEAM = 'Team',
   KANBAN = 'Kanban',
-  
+
   HELP = 'Help'
 }

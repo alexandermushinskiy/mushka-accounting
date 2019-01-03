@@ -3,6 +3,12 @@ import { MenuLabels } from '../enums/menu-labels.enum';
 
 export const MenuItems: MenuItem[] = [
   new MenuItem({
+    title: MenuLabels.DASHBOARD,
+    icon: 'fa-tachometer',
+    routePath: '/dashboard',
+    isEnabled: true
+  }),
+  new MenuItem({
     title: MenuLabels.ORDERS,
     icon: 'fa-shopping-cart',
     routePath: '/orders',

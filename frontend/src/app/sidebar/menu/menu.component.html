@@ -5,7 +5,7 @@
        [title]="item.title"
        [routerLink]="item.routePath"
        [queryParams]="item.queryParams"
-       [ngClass]="{'csr-disabled-control': !item.isEnabled}"
+       [ngClass]="{'disabled-control': !item.isEnabled}"
        (click)="onMenuItemSelected(item.title)">
       <i class="fa" [ngClass]="item.icon"></i>
       {{ item.title }}
