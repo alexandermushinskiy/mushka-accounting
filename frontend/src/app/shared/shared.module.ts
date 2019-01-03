@@ -39,6 +39,7 @@ import { DropdownSizesComponent } from './widgets/dropdown-sizes/dropdown-sizes.
 import { SuppliersDropdownComponent } from './widgets/suppliers-dropdown/suppliers-dropdown.component';
 import { TypeaheadProductsComponent } from './widgets/typeahead-products/typeahead-products.component';
 import { SelectProductsComponent } from './widgets/select-products/select-products.component';
+import { ProgressLinearComponent } from './widgets/progress-linear/progress-linear.component';
 
 @NgModule({
   imports: [
@@ -84,7 +85,8 @@ import { SelectProductsComponent } from './widgets/select-products/select-produc
     DropdownSizesComponent,
     SuppliersDropdownComponent,
     TypeaheadProductsComponent,
-    SelectProductsComponent
+    SelectProductsComponent,
+    ProgressLinearComponent
   ],
   exports: [
     /* Common modules */
@@ -125,7 +127,8 @@ import { SelectProductsComponent } from './widgets/select-products/select-produc
     DropdownSizesComponent,
     SuppliersDropdownComponent,
     TypeaheadProductsComponent,
-    SelectProductsComponent
+    SelectProductsComponent,
+    ProgressLinearComponent
   ]
 })
 

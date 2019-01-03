@@ -1,4 +1,6 @@
-<form *ngIf="supplyForm" class="delivery w-100" [formGroup]="supplyForm" autocomplete="off" (ngSubmit)="saveSupply()">
+<mk-progress-linear [isLoading]="!supplyForm"></mk-progress-linear>
+
+<form *ngIf="supplyForm" class="w-100" [formGroup]="supplyForm" autocomplete="off" (ngSubmit)="saveSupply()">
   
   <div class="app-page-body row flex-nowrap">
     <!-- left side -->
@@ -184,3 +186,7 @@
     </div>
   </div>
 </form>
+
+<ng-template #loading>
+  <mk-spinner class="spinner"></mk-spinner>
+</ng-template>
