@@ -10,10 +10,8 @@ export class Supplier {
   notes: string;
   contactPersons: ContactPerson[] = [];
   service: string;
-  deliveriesCount: number;
-
+  suppliesCount: number;
   paymentCards: PaymentCard[] = [];
-  //paymentConditions: string;
 
   constructor(data: any) {
     Object.assign(this, data);

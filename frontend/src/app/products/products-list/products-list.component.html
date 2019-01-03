@@ -29,7 +29,6 @@
                [footerHeight]="50"
                [rows]="productsRows"
                [columnMode]="'force'"
-               [limit]="10"
                [messages]="{ emptyMessage: 'Нет данных для отображения' }"
                [rowClass]="getRowClass"
                (activate)="onActive($event)"
@@ -40,7 +39,7 @@
             <span>Название</span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-value="value">
-            <span [title]="value" class="bold">{{ value }}</span>
+            <span [title]="value">{{ value }}</span>
           </ng-template>
         </ngx-datatable-column>
 
@@ -49,7 +48,7 @@
             <span>Артикул</span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-value="value">
-            <span [title]="value" class="bold">{{ value }}</span>
+            <span [title]="value">{{ value }}</span>
           </ng-template>
         </ngx-datatable-column>
         
@@ -58,7 +57,7 @@
             <span>Дата<br>добавления</span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-value="value">
-            <span [title]="value" class="bold">{{ value }}</span>
+            <span [title]="value">{{ value }}</span>
           </ng-template>
         </ngx-datatable-column>
 

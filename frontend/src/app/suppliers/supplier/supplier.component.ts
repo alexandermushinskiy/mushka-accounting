@@ -122,7 +122,7 @@ export class SupplierComponent implements OnInit {
       service: supplierFormValue.service,
       notes: supplierFormValue.notes,
       contactPersons: supplierFormValue.contactPersons,
-      paymentCards: supplierFormValue.paymentCards
+      paymentCards: supplierFormValue.paymentCards.filter(pc => !!pc.number && !!pc.owner)
     });
   }
 

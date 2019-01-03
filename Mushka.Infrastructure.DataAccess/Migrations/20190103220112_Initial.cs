@@ -99,7 +99,7 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     Quantity = table.Column<int>(nullable: false, defaultValue: 0),
                     CategoryId = table.Column<Guid>(nullable: false),
-                    SizeId = table.Column<Guid>(nullable: false)
+                    SizeId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -115,7 +115,7 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         column: x => x.SizeId,
                         principalTable: "Sizes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -304,7 +304,8 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 name: "IX_Products_Name_SizeId",
                 table: "Products",
                 columns: new[] { "Name", "SizeId" },
-                unique: true);
+                unique: true,
+                filter: "[SizeId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sizes_Name",

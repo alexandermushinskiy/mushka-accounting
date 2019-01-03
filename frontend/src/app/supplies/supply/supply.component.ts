@@ -84,6 +84,14 @@ export class SupplyComponent implements OnInit {
     products.removeAt(index);
   }
 
+  getProductSize(product: Product): string {
+    if (!product) {
+      return '';
+    }
+
+    return !!product.size ? product.size.name : '-';
+  }
+
   saveSupply() {
     // const t1 = this.createSupplyModel(this.supplyForm.getRawValue());
     // console.info(t1);

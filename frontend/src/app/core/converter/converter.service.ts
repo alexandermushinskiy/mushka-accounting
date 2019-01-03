@@ -41,7 +41,7 @@ export class ConverterService {
       category: this.convertToCategory(source.category),
       categoryId: source.categoryId,
       createdOn: this.datetimeService.toString(source.createdOn),
-      size: this.convertToProductSize(source.size),
+      size: !!source.size ? this.convertToProductSize(source.size) : null,
       lastDeliveryDate: !!source.lastDeliveryDate ? this.datetimeService.toString(source.lastDeliveryDate) : null,
       lastDeliveryCount: !!source.lastDeliveryCount ? source.lastDeliveryCount : 0,
       deliveriesCount: source.deliveriesCount,
@@ -85,7 +85,7 @@ export class ConverterService {
       webSite: source.webSite,
       notes: source.notes,
       service: source.service,
-      deliveriesCount: source.deliveriesCount,
+      suppliesCount: source.suppliesCount,
       contactPersons: this.convertToContactPersons(source.contactPersons),
       paymentCards: this.convertToPaymentCards(source.paymentCards)
     });

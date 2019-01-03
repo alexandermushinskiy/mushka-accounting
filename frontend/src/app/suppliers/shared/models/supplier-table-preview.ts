@@ -1,5 +1,5 @@
-import { DataTablePreview } from "../../../shared/models/data-table-preview.model";
-import { ContactPerson } from "../../../shared/models/contact-person.model";
+import { DataTablePreview } from '../../../shared/models/data-table-preview.model';
+import { ContactPerson } from '../../../shared/models/contact-person.model';
 
 export class SupplierTablePreview extends DataTablePreview {
   name: string;
@@ -10,7 +10,7 @@ export class SupplierTablePreview extends DataTablePreview {
   contactPersons: ContactPerson[];
   paymentConditions: string;
   notes: string;
-  deliveriesCount: number;
+  suppliesCount: number;
 
   constructor(elem, index: number = 0) {
     super(elem, index);
@@ -23,6 +23,6 @@ export class SupplierTablePreview extends DataTablePreview {
     this.contactPersons = elem.contactPersons;
     this.paymentConditions = elem.paymentConditions;
     this.service = elem.service;
-    this.deliveriesCount = elem.deliveriesCount;
+    this.suppliesCount = elem.suppliesCount;
   }
 }

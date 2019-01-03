@@ -85,7 +85,8 @@
                           </div>
                         <div class="col-sm-2">
                           <div class="field-group">
-                            <input type="text" class="form-control" disabled [value]="productControl.value.product?.size?.name">
+                            <input type="text" class="form-control" disabled
+                                   [value]="getProductSize(productControl.value.product)">
                           </div>
                         </div>
                         <div class="col-sm-2">

@@ -14,6 +14,6 @@ namespace Mushka.WebApi.ClientModels.Product
         [Required]
         public Guid CategoryId { get; set; }
 
-        public Guid SizeId { get; set; }
+        public Guid? SizeId { get; set; }
     }
 }

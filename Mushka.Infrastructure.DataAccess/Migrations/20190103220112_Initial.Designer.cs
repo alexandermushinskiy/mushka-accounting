@@ -10,7 +10,7 @@ using Mushka.Infrastructure.DataAccess.Database;
 namespace Mushka.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(MushkaDbContext))]
-    [Migration("20190101211513_Initial")]
+    [Migration("20190103220112_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -196,7 +196,7 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .HasColumnName("Quantity")
                         .HasDefaultValue(0);
 
-                    b.Property<Guid>("SizeId");
+                    b.Property<Guid?>("SizeId");
 
                     b.Property<string>("VendorCode")
                         .IsRequired()
@@ -212,7 +212,8 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .IsUnique();
 
                     b.HasIndex("Name", "SizeId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[SizeId] IS NOT NULL");
 
                     b.ToTable("Products");
                 });
@@ -396,8 +397,7 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
                     b.HasOne("Mushka.Domain.Entities.Size", "Size")
                         .WithMany("Products")
-                        .HasForeignKey("SizeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SizeId");
                 });
 
             modelBuilder.Entity("Mushka.Domain.Entities.Supply", b =>

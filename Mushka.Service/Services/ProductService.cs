@@ -88,10 +88,10 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Category with id {product.CategoryId} is not found.", ValidationStatusType.NotFound);
             }
 
-            if (await productRepository.IsExistAsync(prod => prod.Name == product.Name, cancellationToken))
-            {
-                return CreateWarningValidationResponse($"Product with the name {product.Name} is already existed.");
-            }
+            //if (await productRepository.IsExistAsync(prod => prod.Name == product.Name && prod.SizeId == product.SizeId, cancellationToken))
+            //{
+            //    return CreateWarningValidationResponse($"Product with the name {product.Name} is already existed.");
+            //}
 
             if (await productRepository.IsExistAsync(prod => prod.VendorCode == product.VendorCode, cancellationToken))
             {

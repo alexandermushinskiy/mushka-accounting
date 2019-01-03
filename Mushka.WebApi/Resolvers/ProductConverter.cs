@@ -17,7 +17,9 @@ namespace Mushka.WebApi.Resolvers
             var lastSupplyCount = lastSupply?.Products
                 .Where(del => del.ProductId == source.Id)
                 .Select(prod => prod.Quantity).Single();
-            
+
+            var size = source.Size == null ? null : new SizeModel { Id = source.Size.Id, Name = source.Size.Name };
+
             return new ProductModel
             {
                 Id = source.Id,
@@ -30,11 +32,7 @@ namespace Mushka.WebApi.Resolvers
                 DeliveriesCount = source.Supplies.Count,
                 LastDeliveryDate = lastSupply?.ReceivedDate,
                 LastDeliveryCount = lastSupplyCount,
-                Size = new SizeModel
-                {
-                    Id = source.Size.Id,
-                    Name = source.Size.Name
-                }
+                Size = size
             };
         }
 

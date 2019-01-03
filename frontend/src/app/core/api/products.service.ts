@@ -72,7 +72,7 @@ export class ProductsServce {
       name: product.name,
       vendorCode: product.vendorCode,
       categoryId: product.categoryId,
-      sizeId: product.size.id
+      sizeId: !!product.size ? product.size.id : null
     };
   }
 }

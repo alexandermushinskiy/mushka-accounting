@@ -17,7 +17,7 @@ VALUES
 
 -- Products
 INSERT INTO [Products] ([Id], [CategoryId], [VendorCode], [CreatedOn], [Name], [SizeId], [Quantity])
-VALUES 
+VALUES
 ('a9ab38d1-c2b2-4c50-9ab9-80335f4561f8', '88cd0f34-9d4a-4e45-be97-8899a97fb82c', N'AIR001', '2018-11-06T00:00:00.0000000', N'Airplane', 'fb8356a5-1629-4f9f-9b51-3d40e0e55f84', 39),
 ('a9ab38d1-c2b2-4c50-9ab9-80335f4561f9', '88cd0f34-9d4a-4e45-be97-8899a97fb82c', N'AIR002', '2018-11-06T00:00:00.0000000', N'Airplane', '6e519491-8fd8-45f2-992e-270b01f25971', 38),
 ('8823f027-9074-4fa9-a5ef-552a5b08ef5e', '88cd0f34-9d4a-4e45-be97-8899a97fb82c', N'FLM001', '2018-11-06T00:00:00.0000000', N'Flamingo', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 115),
@@ -79,22 +79,31 @@ VALUES
 ('304af5df-1d03-40c3-af40-9c6259898f75', '88cd0f34-9d4a-4e45-be97-8899a97fb82c', N'SWY001', '2018-11-06T00:00:00.0000000', N'Limono', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 60),
 ('304af5df-1d03-40c3-af40-9c6259898f76', '88cd0f34-9d4a-4e45-be97-8899a97fb82c', N'SWY002', '2018-11-06T00:00:00.0000000', N'Limono', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 57),
 ('297af444-055f-4b76-a3ee-fbe65b9752f6', '88cd0f34-9d4a-4e45-be97-8899a97fb82c', N'ORA001', '2018-11-06T00:00:00.0000000', N'Orange mood', 'eccef8a9-2c41-4270-9001-d0eb7e21b9e2', 132),
-('297af444-055f-4b76-a3ee-fbe65b9752f7', '88cd0f34-9d4a-4e45-be97-8899a97fb82c', N'ORA002', '2018-11-06T00:00:00.0000000', N'Orange mood', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 65);
-
+('297af444-055f-4b76-a3ee-fbe65b9752f7', '88cd0f34-9d4a-4e45-be97-8899a97fb82c', N'ORA002', '2018-11-06T00:00:00.0000000', N'Orange mood', '2dfa21ef-5eed-462f-b5e5-06ee31281ba2', 65),
+-- Business card
+('4B307570-7250-4867-B7C0-EC1DB6475D5B', 'B425D75B-2E72-45F0-A55D-3BA400051E5F', N'BCARD1', '2019-01-04', N'Визитка', NULL, 0),
+-- Post card
+('07DF9000-2680-43E7-BA2C-D4F0C48A8CB5', 'B425D75B-2E72-45F0-A55D-3BA400051E5F', N'PCARD1', '2019-01-04', N'Открытка', NULL, 0);
 
 -- Suppliers
 INSERT INTO [Suppliers] ([Id], [Name], [Address], [Email], [WebSite], [CreatedOn], [Service])
 VALUES
 ('CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', N'Нова Линия', N'Тернопольская обл., с. Чистилов', 'office@novaliniya.com.ua', 'https://novaliniya.com.ua/', GETDATE(), N'Носки')
-
 INSERT INTO [ContactPersons] ([Id], [Name], [Phones], [SupplierId])
 VALUES
 ('B3B024EB-D8FB-4F0A-B6A3-1D2CF0784617', N'Леся', '0984162095', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45'),
 ('E944B628-61FE-412D-9D5A-B9C2EA748E06', N'Степан', '0676748494', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45')
-
 INSERT INTO [PaymentCards] ([Id], [Number], [Owner], [SupplierId])
 VALUES
 ('DCC06950-941E-4D1E-A2A4-8347C287775B', '5363542600860200', N'Чубак Степан', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45')
+
+
+INSERT INTO [Suppliers] ([Id], [Name], [Address], [Email], [WebSite], [CreatedOn], [Service])
+VALUES
+('D70A24DC-BC90-414F-B79A-725920CC5470', N'ЮРГ', N'Одесса, ул. Малая Арнаутская, 39', NULL, 'www.yrg.com.ua', GETDATE(), N'Визитки')
+INSERT INTO [ContactPersons] ([Id], [Name], [Phones], [SupplierId])
+VALUES
+('36C6230B-0C40-4997-A2D5-0CC6B6D59DA1', N'Алина Вергелес', '048 734 40 52', 'D70A24DC-BC90-414F-B79A-725920CC5470')
 
 -- Supplies
 INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost])

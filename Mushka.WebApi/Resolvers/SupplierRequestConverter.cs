@@ -10,10 +10,14 @@ namespace Mushka.WebApi.Resolvers
     public class SupplierRequestConverter : ITypeConverter<SupplierRequestModel, Supplier>
     {
         private readonly IGuidProvider guidProvider;
+        private readonly IDateTimeProvider dateTimeProvider;
 
-        public SupplierRequestConverter(IGuidProvider guidProvider)
+        public SupplierRequestConverter(
+            IGuidProvider guidProvider,
+            IDateTimeProvider dateTimeProvider)
         {
             this.guidProvider = guidProvider;
+            this.dateTimeProvider = dateTimeProvider;
         }
 
         public Supplier Convert(SupplierRequestModel source, Supplier destination, ResolutionContext context)
@@ -29,6 +33,7 @@ namespace Mushka.WebApi.Resolvers
                 WebSite = source.WebSite,
                 Notes = source.Notes,
                 Service = source.Service,
+                CreatedOn = dateTimeProvider.GetNow(),
                 ContactPersons = source.ContactPersons.Select(cp => CreateContactPerson(supplierId, cp)).ToList(),
                 PaymentCards = source.PaymentCards.Select(pc => CreatePaymentCard(supplierId, pc)).ToList()
             };

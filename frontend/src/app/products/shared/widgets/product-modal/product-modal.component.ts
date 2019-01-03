@@ -95,7 +95,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       name: [product.name, Validators.required],
       category: [category, Validators.required],
       vendorCode: [product.vendorCode, Validators.required],
-      size: [product.size, Validators.required]
+      size: [product.size, !!category && category.isSizeRequired ? Validators.required : null]
     });
   }
 

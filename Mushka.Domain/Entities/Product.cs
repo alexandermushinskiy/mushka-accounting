@@ -29,7 +29,7 @@ namespace Mushka.Domain.Entities
         public Guid CategoryId { get; set; }
         public Category Category { get; set; }
 
-        public Guid SizeId { get; set; }
+        public Guid? SizeId { get; set; }
         public Size Size { get; set; }
     }
 }
