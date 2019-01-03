@@ -13,11 +13,11 @@
       (clear)="clear()">
   <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
     <div class="product-name">{{ item.name }}</div>
-    <div class="text-muted info">
+    <div class="text-muted">
       <div class="row">
         <div class="col-md-4">
           <span class="title">Категория</span>
-          <span class="category">{{ item.category.name }}</span>
+          <span>{{ item.category.name }}</span>
         </div>
         <div class="col-md-4">
           <span class="title">Артикул</span>
@@ -29,19 +29,5 @@
         </div>
       </div>
     </div>
-    <!-- <div class="text-muted info">
-      <div>
-        <span class="title">Категория:</span>
-        <span class="category">{{ item.category.name }}</span>
-      </div>
-      <div>
-        <span class="title">Артикул:</span>
-        <span>{{ item.vendorCode }}</span>
-      </div>
-      <div *ngIf="!!item.size">
-        <span class="title">Размер:</span>
-        <span>{{ item.size.name }}</span>
-      </div>
-    </div> -->
   </ng-template>
 </ng-select>
