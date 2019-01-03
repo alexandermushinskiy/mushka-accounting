@@ -12,8 +12,6 @@ export class ProductsServce {
   private readonly endPoint = `${environment.apiEndpoint}/api/v1/products`;
   private readonly categoriesEndPoint = `${environment.apiEndpoint}/api/v1/categories`;
 
-  private static fakeProducts: Product[];
-
   constructor(private http: HttpClient,
               private converterService: ConverterService) {
   }
@@ -44,7 +42,7 @@ export class ProductsServce {
 
   create(product: Product): Observable<Product> {
     const requestModel = this.convertToRequestData(product);
-debugger;
+
     return this.http.post(this.endPoint, requestModel)
       .map((res: any) => this.converterService.convertToProduct(res.data))
       .catch((res: any) => throwError(res.error.messages));
@@ -68,17 +66,6 @@ debugger;
     return this.http.delete(`${this.endPoint}/${productId}`)
       .catch((res: any) => throwError(res.error.messages));
   }
-
-
-
-  // getProducts(criteria: string): Observable<Product[]> {
-  //   const foundProducts = ProductsServce.fakeProducts
-  //     .filter(prod => prod.name.toLowerCase().includes(criteria.toLowerCase()) ||
-  //                     prod.code.toLowerCase().includes(criteria.toLowerCase()));
-
-  //   return Observable.of(foundProducts)
-  //     .delay(300);
-  // }
 
   private convertToRequestData(product: Product): any {
     return {

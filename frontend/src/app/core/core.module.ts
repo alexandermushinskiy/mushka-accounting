@@ -16,6 +16,7 @@ import { SuppliersService } from './api/suppliers.service';
 import { SuppliesService } from './api/supplies.service';
 import { ConverterService } from './converter/converter.service';
 import { DatetimeService } from './datetime/datetime.service';
+import { OrdersService } from './api/orders.service';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { DatetimeService } from './datetime/datetime.service';
     SuppliersService,
     SuppliesService,
     ConverterService,
-    DatetimeService
+    DatetimeService,
+    OrdersService
   ],
   declarations: [],
   exports: []

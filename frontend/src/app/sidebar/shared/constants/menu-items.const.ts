@@ -4,7 +4,7 @@ import { MenuLabels } from '../enums/menu-labels.enum';
 export const MenuItems: MenuItem[] = [
   new MenuItem({
     title: MenuLabels.DASHBOARD,
-    icon: 'fa-tachometer',
+    icon: 'fa-area-chart',
     routePath: '/dashboard',
     isEnabled: true
   }),

@@ -10,6 +10,7 @@ import { Size } from '../../shared/models/size.model';
 import { Supply } from '../../supplies/shared/models/supply.model';
 import { PaymentCard } from '../../shared/models/payment-card.model';
 import { SupplyProduct } from '../../supplies/shared/models/supply-product.model';
+import { Order } from '../../shared/models/order.model';
 
 @Injectable()
 export class ConverterService {
@@ -136,6 +137,16 @@ export class ConverterService {
           size: new Size({name: prod.product.size})
         }
       }))
+    });
+  }
+
+  convertToOrders(response: any[]): Order[] {
+    return response.map(res => this.convertToOrder(res));
+  }
+
+  convertToOrder(source: any): Order {
+    return new Order({
+      id: source.id
     });
   }
 

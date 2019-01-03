@@ -22,7 +22,6 @@ export class SupplierComponent implements OnInit {
   supplierId: string;
   errors: string[];
   title: string;
-  paymentMethodsList = Object.values(PaymentMethod);
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,

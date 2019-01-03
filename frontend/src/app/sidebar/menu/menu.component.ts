@@ -50,7 +50,7 @@ export class MenuComponent extends UnsubscriberComponent implements OnInit {
     this.badgesService.getUnseenTicketsTotal()
       .takeUntil(this.ngUnsubscribe$)
       .subscribe((unseenTicketsCount: number) => {
-        //this.updateBadge(MenuLabels.WORKLIST, unseenTicketsCount);
+        // this.updateBadge(MenuLabels.WORKLIST, unseenTicketsCount);
       });
   }
 
