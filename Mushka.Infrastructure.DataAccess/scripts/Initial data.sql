@@ -12,7 +12,7 @@ VALUES
 INSERT INTO [Categories] ([Id], [Name], [IsSizeRequired], [Order])
 VALUES
 ('88CD0F34-9D4A-4E45-BE97-8899A97FB82C', N'Носки', 1, 1),
-('0E7BE1DE-267C-4C0A-8EE9-ABA0A267F27A', N'Упаковка', 1, 2),
+('0E7BE1DE-267C-4C0A-8EE9-ABA0A267F27A', N'Упаковка', 0, 2),
 ('B425D75B-2E72-45F0-A55D-3BA400051E5F', N'Другое', 0, 3);
 
 -- Products
@@ -83,7 +83,9 @@ VALUES
 -- Business card
 ('4B307570-7250-4867-B7C0-EC1DB6475D5B', 'B425D75B-2E72-45F0-A55D-3BA400051E5F', N'BCARD1', '2019-01-04', N'Визитка', NULL, 0),
 -- Post card
-('07DF9000-2680-43E7-BA2C-D4F0C48A8CB5', 'B425D75B-2E72-45F0-A55D-3BA400051E5F', N'PCARD1', '2019-01-04', N'Открытка', NULL, 0);
+('07DF9000-2680-43E7-BA2C-D4F0C48A8CB5', 'B425D75B-2E72-45F0-A55D-3BA400051E5F', N'PCARD1', '2019-01-04', N'Открытка', NULL, 0),
+-- Boxes
+('A5C1CD82-3D84-4716-8ADB-F6B6B32B2D4D', '0E7BE1DE-267C-4C0A-8EE9-ABA0A267F27A', N'BOX003', '2019-01-04', N'Коробка-улыбка', NULL, 0);
 
 -- Suppliers
 -- Нова Линия
@@ -117,6 +119,18 @@ INSERT INTO [PaymentCards] ([Id], [Number], [Owner], [SupplierId])
 VALUES
 ('C14C7859-4F27-49F7-A560-7A3603D29970', '5168755532242266', N'Папаш Володомир Миронович', '2DAD45C3-4129-474B-B880-AD5221E0D1E8'),
 ('7F71AFB7-5C9B-458F-A218-7FF9CA6D09E5', '5168755420757193', N'Тиндик Ігор Миколаєвич', '2DAD45C3-4129-474B-B880-AD5221E0D1E8')
+
+-- Онищук Анна
+INSERT INTO [Suppliers] ([Id], [Name], [Address], [Email], [WebSite], [CreatedOn], [Service])
+VALUES
+('782ED63F-B588-4CD6-BB9F-4CC6EEC41321', N'Онищук Анна', N'Ровно, отделение 8', '@skysay92', NULL, GETDATE(), N'Фотосъёмка')
+INSERT INTO [ContactPersons] ([Id], [Name], [Phones], [Email], [SupplierId])
+VALUES
+('D9433ED1-175C-4CFB-BC85-E3FAA8BF96B5', N'Онищук Анна', '0507009601', NULL, '782ED63F-B588-4CD6-BB9F-4CC6EEC41321')
+INSERT INTO [PaymentCards] ([Id], [Number], [Owner], [SupplierId])
+VALUES
+('4ED181E2-4C41-4448-9C49-E4B70EB628D8', '4149497867074504', N'Онищук Анна', '782ED63F-B588-4CD6-BB9F-4CC6EEC41321')
+
 
 -- Supplies
 INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost])
