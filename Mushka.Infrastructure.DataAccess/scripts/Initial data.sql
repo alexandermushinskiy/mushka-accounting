@@ -86,6 +86,7 @@ VALUES
 ('07DF9000-2680-43E7-BA2C-D4F0C48A8CB5', 'B425D75B-2E72-45F0-A55D-3BA400051E5F', N'PCARD1', '2019-01-04', N'Открытка', NULL, 0);
 
 -- Suppliers
+-- Нова Линия
 INSERT INTO [Suppliers] ([Id], [Name], [Address], [Email], [WebSite], [CreatedOn], [Service])
 VALUES
 ('CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', N'Нова Линия', N'Тернопольская обл., с. Чистилов', 'office@novaliniya.com.ua', 'https://novaliniya.com.ua/', GETDATE(), N'Носки')
@@ -97,13 +98,25 @@ INSERT INTO [PaymentCards] ([Id], [Number], [Owner], [SupplierId])
 VALUES
 ('DCC06950-941E-4D1E-A2A4-8347C287775B', '5363542600860200', N'Чубак Степан', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45')
 
-
+-- ЮРГ
 INSERT INTO [Suppliers] ([Id], [Name], [Address], [Email], [WebSite], [CreatedOn], [Service])
 VALUES
-('D70A24DC-BC90-414F-B79A-725920CC5470', N'ЮРГ', N'Одесса, ул. Малая Арнаутская, 39', NULL, 'www.yrg.com.ua', GETDATE(), N'Визитки')
+('D70A24DC-BC90-414F-B79A-725920CC5470', N'ЮРГ', N'Одесса, ул. Малая Арнаутская, 39', NULL, 'http://yrg.com.ua/', GETDATE(), N'Визитки')
 INSERT INTO [ContactPersons] ([Id], [Name], [Phones], [SupplierId])
 VALUES
 ('36C6230B-0C40-4997-A2D5-0CC6B6D59DA1', N'Алина Вергелес', '048 734 40 52', 'D70A24DC-BC90-414F-B79A-725920CC5470')
+
+-- PrintOk
+INSERT INTO [Suppliers] ([Id], [Name], [Address], [Email], [WebSite], [CreatedOn], [Service])
+VALUES
+('2DAD45C3-4129-474B-B880-AD5221E0D1E8', N'PrintOk', N'Львов', 'vlapash@gmail.com', NULL, GETDATE(), N'Бирки, коробки-улыбка')
+INSERT INTO [ContactPersons] ([Id], [Name], [Phones], [Email], [SupplierId])
+VALUES
+('1D6F552F-E331-4ED2-A4D2-B78435DFB317', N'Владимир Папаш', '0984162095', NULL, '2DAD45C3-4129-474B-B880-AD5221E0D1E8')
+INSERT INTO [PaymentCards] ([Id], [Number], [Owner], [SupplierId])
+VALUES
+('C14C7859-4F27-49F7-A560-7A3603D29970', '5168755532242266', N'Папаш Володомир Миронович', '2DAD45C3-4129-474B-B880-AD5221E0D1E8'),
+('7F71AFB7-5C9B-458F-A218-7FF9CA6D09E5', '5168755420757193', N'Тиндик Ігор Миколаєвич', '2DAD45C3-4129-474B-B880-AD5221E0D1E8')
 
 -- Supplies
 INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost])
