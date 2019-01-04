@@ -9,6 +9,7 @@ import { OrderProduct } from '../../shared/models/order-product.model';
 import { Product } from '../../shared/models/product.model';
 import { ProductsServce } from '../../core/api/products.service';
 import { ukrRegions } from '../shared/constants/urk-regions.const';
+import { DatetimeService } from '../../core/datetime/datetime.service';
 
 @Component({
   selector: 'mk-order',
@@ -29,6 +30,7 @@ export class OrderComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
+              private datetimeService: DatetimeService,
               private ordersService: OrdersService,
               private productsService: ProductsServce,
               private notificationsService: NotificationsService) { }
@@ -74,6 +76,7 @@ export class OrderComponent implements OnInit {
       } else {
         this.buildForm(new Order({
           cost: 0,
+          orderDate: this.datetimeService.getCurrentDateInString(),
           products: [new OrderProduct({})]
         }));
       }

@@ -6,6 +6,10 @@ export class DatetimeService {
     return moment(utcDate).local().format(format);
   }
 
+  getCurrentDateInString(): string {
+    return this.toString(new Date());
+  }
+
   toString(date: Date, format = 'YYYY-MM-DD'): string {
     return moment(date).format(format);
   }

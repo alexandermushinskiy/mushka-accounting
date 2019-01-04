@@ -14,7 +14,132 @@
           <div class="row">
             <div class="col-md-12">
               
+
                 <div class="row">
+                  <div class="col-sm-5">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="fields-group-title">Данные заказа</div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="field-group">
+                          <label for="address">Дата</label>
+                          <mk-datetimepicker-wrapper formControlName="orderDate" [required]="true"></mk-datetimepicker-wrapper>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="field-group">
+                          <label for="address">Номер</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-5">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="fields-group-title">Адрес доставки</div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="field-group">
+                          <label for="address">Область</label>
+                          <mk-dropdown [options]="regions"></mk-dropdown>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="field-group">
+                          <label for="address">Населённый пункт</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+                <div class="row">
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="fields-group-title">Данные покупателя</div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <div class="field-group">
+                          <label>Имя</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="field-group">
+                          <label>Фамилия</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="field-group">
+                          <label>Телефон</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="field-group">
+                          <label>Эл. почта</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+
+              
+                <!-- <div class="row">
+                  <div class="col-md-6">
+                    <div class="fields-group-title">Данные покупателя</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2">
+                    <div class="field-group">
+                      <label for="address">Дата</label>
+                      <mk-datetimepicker-wrapper formControlName="orderDate" [required]="true"></mk-datetimepicker-wrapper>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="field-group">
+                      <label>Имя</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="field-group">
+                      <label>Фамилия</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="field-group">
+                      <label>Телефон</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="field-group">
+                      <label>Эл. почта</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                </div> -->
+
+
+                <!-- <div class="row">
                   <div class="col-md-2">
                     <div class="row">
                       <div class="col-md-12">
@@ -88,7 +213,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
 
 
                 <div class="row">
@@ -105,7 +230,7 @@
                   </div>
                   <div class="row">
                     <div class="col-md-12">
-                      <div class="form-row product-row">
+                      <div class="form-row products-titles">
                         <div class="col-sm-4">Наименование товара</div>
                         <div class="col-sm-2">Артикул/Размер</div>
                         <div class="col-sm-2">Закуп.цена</div>
