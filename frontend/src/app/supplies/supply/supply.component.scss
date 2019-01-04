@@ -114,10 +114,6 @@
 //   padding: 10px 30px;
 // }
 
-.notes {
-  width: 100%;
-}
-
 input[type="number"] {
   -moz-appearance: textfield;
   //text-align: right;
@@ -201,6 +197,10 @@ input[type="number"]:-moz-placeholder { text-align:left !important; }
 
 .notes-row {
   padding-top: 30px;
+}
+
+.notes {
+  width: 100%;
 }
 
 .list-title {
