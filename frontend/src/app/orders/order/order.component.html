@@ -25,7 +25,7 @@
                       <div class="col-md-12">
                         <div class="field-group">
                           <label for="address">Дата заказа</label>
-                          <input type="text" class="form-control">
+                          <mk-datetimepicker-wrapper formControlName="orderDate" [required]="true"></mk-datetimepicker-wrapper>
                         </div>
                       </div>
                     </div>
@@ -107,8 +107,7 @@
                     <div class="col-md-12">
                       <div class="form-row product-row">
                         <div class="col-sm-4">Наименование товара</div>
-                        <div class="col-sm-1">Артикул</div>
-                        <div class="col-sm-1">Размер</div>
+                        <div class="col-sm-2">Артикул/Размер</div>
                         <div class="col-sm-2">Закуп.цена</div>
                         <div class="col-sm-2">Цена</div>
                         <div class="col-sm-2">Количество</div>
@@ -121,14 +120,10 @@
                                                   [products]="productsList"></mk-select-products>
                             </div>
                           </div>
-                          <div class="col-sm-1">
-                              <div class="field-group">
-                                <input type="text" class="form-control" disabled [value]="productControl.value.product?.vendorCode">
-                              </div>
-                            </div>
-                          <div class="col-sm-1">
+                          <div class="col-sm-2">
                             <div class="field-group">
-                              <input type="text" class="form-control" disabled [value]="getProductSize(productControl.value.product)">
+                              <input type="text" disabled class="form-control"
+                                    [value]="getProductSizeAndVendorCode(productControl.value.product)">
                             </div>
                           </div>
                           <div class="col-sm-2">

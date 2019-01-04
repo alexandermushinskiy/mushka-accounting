@@ -41,6 +41,27 @@ export class OrderComponent implements OnInit {
       });
   }
 
+  addProduct() {
+    const products = <FormArray>this.orderForm.get('products');
+    products.push(this.createProductModel(new OrderProduct({})));
+  }
+
+  removeProduct(index: number) {
+    const products = <FormArray>this.orderForm.get('products');
+    products.removeAt(index);
+  }
+
+  getProductSizeAndVendorCode(product: Product): string {
+    if (!product) {
+      return '';
+    }
+
+    return product.vendorCode + (!!product.size ? ` / ${product.size.name}` : ' / -');
+  }
+
+  saveOrder() {
+  }
+
   private getRouteParams() {
     this.route.params.subscribe(params => {
       this.orderId = params['id'];
@@ -59,29 +80,9 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  addProduct() {
-    const products = <FormArray>this.orderForm.get('products');
-    products.push(this.createProductModel(new OrderProduct({})));
-  }
-
-  removeProduct(index: number) {
-    const products = <FormArray>this.orderForm.get('products');
-    products.removeAt(index);
-  }
-
-  getProductSize(product: Product): string {
-    if (!product) {
-      return '';
-    }
-
-    return !!product.size ? product.size.name : '-';
-  }
-
-  saveOrder() {
-  }
-
   private buildForm(order: Order) {
     this.orderForm = this.formBuilder.group({
+      orderDate: [order.orderDate, Validators.required],
       cost: [{value: order.cost, disabled: true}],
       costMethod: [order.costMethod, Validators.required],
       notes: [order.notes],
