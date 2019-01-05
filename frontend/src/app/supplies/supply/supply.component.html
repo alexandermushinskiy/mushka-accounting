@@ -58,17 +58,17 @@
               <div class="col-md-12">
                 <div class="row">
                   <div class="col-md-12">
-                    <div class="fields-group-title">Список товаров</div>
+                    <div class="fields-group-title">Список товаров ({{ supplyForm.get('products').controls.length }})</div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-row product-row">
                       <div class="col-sm-4">Наименование товара</div>
-                      <div class="col-sm-2">Артикул</div>
-                      <div class="col-sm-2">Размер</div>
+                      <div class="col-sm-2">Артикул/Размер</div>
                       <div class="col-sm-2">Цена</div>
                       <div class="col-sm-2">Количество</div>
+                      <div class="col-sm-2">Себестоимость</div>
                     </div>
                     <div formArrayName="products">
                       <div class="form-row product-row" *ngFor="let productControl of supplyForm.get('products').controls; let index=index" [formGroupName]="index">
@@ -79,14 +79,9 @@
                           </div>
                         </div>
                         <div class="col-sm-2">
-                            <div class="field-group">
-                              <input type="text" class="form-control" disabled [value]="productControl.value.product?.vendorCode">
-                            </div>
-                          </div>
-                        <div class="col-sm-2">
                           <div class="field-group">
                             <input type="text" class="form-control" disabled
-                                   [value]="getProductSize(productControl.value.product)">
+                                    [value]="getProductSizeAndVendorCode(productControl.value.product)">
                           </div>
                         </div>
                         <div class="col-sm-2">
@@ -101,11 +96,15 @@
                         <div class="col-sm-2">
                           <div class="field-group">
                             <input type="number" class="form-control" formControlName="quantity" placeholder="Количество" />
-                          </div>  
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="field-group">
+                            <input type="text" class="form-control" disabled [value]="productControl.value.costForItem + additionalCostPrice">
+                          </div>
                           <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="supplyForm.get('products').controls.length > 1">
                             <i class="ico ico-close"></i>
                           </button>
-                          {{ productControl.name }}
                         </div>
                       </div>
                     </div>

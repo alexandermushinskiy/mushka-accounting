@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -31,6 +31,7 @@ export class SupplyComponent implements OnInit {
   productsList: Product[];
   totalCost: number;
   suppliers: Supplier[];
+  additionalCostPrice = 0;
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -84,12 +85,12 @@ export class SupplyComponent implements OnInit {
     products.removeAt(index);
   }
 
-  getProductSize(product: Product): string {
+  getProductSizeAndVendorCode(product: Product): string {
     if (!product) {
       return '';
     }
 
-    return !!product.size ? product.size.name : '-';
+    return product.vendorCode + (!!product.size ? ` / ${product.size.name}` : ' / -');
   }
 
   saveSupply() {
@@ -146,6 +147,7 @@ export class SupplyComponent implements OnInit {
     });
 
     this.addFieldChangeListeners();
+    this.calculateAdditionalCostPrice();
   }
 
   private createProductModel(productItem: SupplyProduct): FormGroup {
@@ -159,15 +161,18 @@ export class SupplyComponent implements OnInit {
   private addFieldChangeListeners() {
     (this.supplyForm.get('products') as FormArray).valueChanges.subscribe((items: any[]) => {
       this.calculateProductsCost();
+      this.calculateAdditionalCostPrice();
     });
 
     this.supplyForm.controls['deliveryCost'].valueChanges.subscribe((value: number) => {
       this.calculateTotalCost();
+      this.calculateAdditionalCostPrice();
       this.updateControlValidator('deliveryCostMethod', !!value);
     });
 
     this.supplyForm.controls['bankFee'].valueChanges.subscribe(() => {
       this.calculateTotalCost();
+      this.calculateAdditionalCostPrice();
     });
 
     this.supplyForm.controls['prepayment'].valueChanges.subscribe((value: number) => {
@@ -234,5 +239,22 @@ export class SupplyComponent implements OnInit {
       quantity: formValue.quantity,
       costForItem: formValue.costForItem
     });
+  }
+  
+  private calculateAdditionalCostPrice() {
+    const deliveryCost = this.getControlValue(this.supplyForm.controls.deliveryCost);
+    const bankFee = this.getControlValue(this.supplyForm.controls.bankFee);
+    
+    const productsCount = (<FormArray>this.supplyForm.get('products'))
+      .controls.map((ctrl: FormGroup) => ctrl.controls.quantity.value)
+      .reduce((prev, cur) => {
+        return prev + (!!cur ? cur : 0);
+      });
+
+    this.additionalCostPrice = Math.round((deliveryCost + bankFee)/productsCount * 100) / 100;
+  }
+
+  private getControlValue(control: AbstractControl): number {
+    return control.value === null ? 0 : control.value;
   }
 }
