@@ -99,7 +99,7 @@ export class OrderComponent implements OnInit {
     return this.formBuilder.group({
       product: [productItem.product],
       quantity: [productItem.quantity, Validators.required],
-      costForItem: [productItem.costForItem, Validators.required]
+      unitPrice: [productItem.unitPrice, Validators.required]
     });
   }
 }

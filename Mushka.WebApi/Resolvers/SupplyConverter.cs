@@ -31,8 +31,9 @@ namespace Mushka.WebApi.Resolvers
         private static SupplyProductModel CreateDeliveryProductModel(SupplyProduct supplyProduct) =>
             new SupplyProductModel
             {
-                CostForItem = supplyProduct.CostForItem,
+                UnitPrice = supplyProduct.UnitPrice,
                 Quantity = supplyProduct.Quantity,
+                CostPrice = supplyProduct.CostPrice,
                 Product = new ProductModel
                 {
                     Id = supplyProduct.ProductId,

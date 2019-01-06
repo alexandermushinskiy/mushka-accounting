@@ -3,7 +3,7 @@ import { Product } from './product.model';
 export class OrderProduct {
   product: Product;
   quantity: number;
-  costForItem: number;
+  unitPrice: number;
 
   constructor(data: any) {
     Object.assign(this, data);

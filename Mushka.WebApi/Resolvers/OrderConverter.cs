@@ -22,7 +22,7 @@ namespace Mushka.WebApi.Resolvers
                 ProductId = orderProduct.ProductId,
                 ProductName = orderProduct.Product?.Name,
                 Quantity = orderProduct.Quantity,
-                PriceForItem = orderProduct.PriceForItem
+                UnitPrice = orderProduct.UnitPrice
             };
     }
 }

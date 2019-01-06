@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 
 import { SuppliesService } from '../../core/api/supplies.service';
 import { Supply } from '../shared/models/supply.model';
-import { PaymentMethod } from '../shared/enums/payment-method.enum';
 import { Product } from '../../shared/models/product.model';
 import { ProductsServce } from '../../core/api/products.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
@@ -31,7 +30,7 @@ export class SupplyComponent implements OnInit {
   productsList: Product[];
   totalCost: number;
   suppliers: Supplier[];
-  additionalCostPrice = 0;
+  costPriceFactor = 0;
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -147,32 +146,32 @@ export class SupplyComponent implements OnInit {
     });
 
     this.addFieldChangeListeners();
-    this.calculateAdditionalCostPrice();
+    this.calculateCostPriceFactor();
   }
 
   private createProductModel(productItem: SupplyProduct): FormGroup {
     return this.formBuilder.group({
       product: [productItem.product],
       quantity: [productItem.quantity, Validators.required],
-      costForItem: [productItem.costForItem, Validators.required]
+      unitPrice: [productItem.unitPrice, Validators.required]
     });
   }
 
   private addFieldChangeListeners() {
     (this.supplyForm.get('products') as FormArray).valueChanges.subscribe((items: any[]) => {
       this.calculateProductsCost();
-      this.calculateAdditionalCostPrice();
+      this.calculateCostPriceFactor();
     });
 
     this.supplyForm.controls['deliveryCost'].valueChanges.subscribe((value: number) => {
       this.calculateTotalCost();
-      this.calculateAdditionalCostPrice();
+      this.calculateCostPriceFactor();
       this.updateControlValidator('deliveryCostMethod', !!value);
     });
 
     this.supplyForm.controls['bankFee'].valueChanges.subscribe(() => {
       this.calculateTotalCost();
-      this.calculateAdditionalCostPrice();
+      this.calculateCostPriceFactor();
     });
 
     this.supplyForm.controls['prepayment'].valueChanges.subscribe((value: number) => {
@@ -190,8 +189,8 @@ export class SupplyComponent implements OnInit {
   private calculateProductsCost() {
     let cost = 0;
     (this.supplyForm.get('products') as FormArray).controls.forEach(control => {
-      if (!!control.value.costForItem && !!control.value.quantity) {
-        cost += control.value.costForItem * control.value.quantity;
+      if (!!control.value.unitPrice && !!control.value.quantity) {
+        cost += control.value.unitPrice * control.value.quantity;
       }
     });
 
@@ -237,11 +236,12 @@ export class SupplyComponent implements OnInit {
     return new SupplyProduct({
       productId: formValue.product.id,
       quantity: formValue.quantity,
-      costForItem: formValue.costForItem
+      unitPrice: formValue.unitPrice,
+      costPrice: formValue.unitPrice + this.costPriceFactor
     });
   }
   
-  private calculateAdditionalCostPrice() {
+  private calculateCostPriceFactor() {
     const deliveryCost = this.getControlValue(this.supplyForm.controls.deliveryCost);
     const bankFee = this.getControlValue(this.supplyForm.controls.bankFee);
     
@@ -251,7 +251,7 @@ export class SupplyComponent implements OnInit {
         return prev + (!!cur ? cur : 0);
       });
 
-    this.additionalCostPrice = Math.round((deliveryCost + bankFee)/productsCount * 100) / 100;
+    this.costPriceFactor = Math.round((deliveryCost + bankFee)/productsCount * 100) / 100;
   }
 
   private getControlValue(control: AbstractControl): number {

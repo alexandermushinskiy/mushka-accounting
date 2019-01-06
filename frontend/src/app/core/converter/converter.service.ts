@@ -129,7 +129,7 @@ export class ConverterService {
       notes: source.notes,
       products: source.products.map((prod: any) => new SupplyProduct({
         quantity: prod.quantity,
-        costForItem: prod.costForItem,
+        unitPrice: prod.unitPrice,
         product: {
           id: prod.product.id,
           name: prod.product.name,

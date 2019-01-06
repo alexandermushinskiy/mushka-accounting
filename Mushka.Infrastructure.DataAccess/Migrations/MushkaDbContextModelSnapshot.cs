@@ -128,14 +128,14 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
                     b.Property<Guid>("OrderId");
 
-                    b.Property<decimal>("PriceForItem")
-                        .HasColumnName("PriceForItem")
-                        .HasColumnType("Money");
-
                     b.Property<int>("Quantity")
                         .HasColumnName("Quantity");
 
                     b.Property<Guid?>("SizeId");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnName("UnitPrice")
+                        .HasColumnType("Money");
 
                     b.HasKey("ProductId", "OrderId");
 
@@ -331,12 +331,16 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
                     b.Property<Guid>("SupplyId");
 
-                    b.Property<decimal>("CostForItem")
-                        .HasColumnName("CostForItem")
+                    b.Property<decimal>("CostPrice")
+                        .HasColumnName("CostPrice")
                         .HasColumnType("Money");
 
                     b.Property<int>("Quantity")
                         .HasColumnName("Quantity");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnName("UnitPrice")
+                        .HasColumnType("Money");
 
                     b.HasKey("ProductId", "SupplyId");
 

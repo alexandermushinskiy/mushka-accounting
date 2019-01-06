@@ -195,7 +195,7 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     OrderId = table.Column<Guid>(nullable: false),
                     ProductId = table.Column<Guid>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    PriceForItem = table.Column<decimal>(type: "Money", nullable: false),
+                    UnitPrice = table.Column<decimal>(type: "Money", nullable: false),
                     SizeId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -228,7 +228,8 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     SupplyId = table.Column<Guid>(nullable: false),
                     ProductId = table.Column<Guid>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    CostForItem = table.Column<decimal>(type: "Money", nullable: false)
+                    UnitPrice = table.Column<decimal>(type: "Money", nullable: false),
+                    CostPrice = table.Column<decimal>(type: "Money", nullable: false)
                 },
                 constraints: table =>
                 {

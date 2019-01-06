@@ -23,8 +23,8 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
             builder.Property(op => op.Quantity)
                 .HasColumnName("Quantity");
 
-            builder.Property(op => op.PriceForItem)
-                .HasColumnName("PriceForItem")
+            builder.Property(op => op.UnitPrice)
+                .HasColumnName("UnitPrice")
                 .HasColumnType("Money");
         }
     }

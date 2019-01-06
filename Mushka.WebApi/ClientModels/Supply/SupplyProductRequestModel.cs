@@ -12,6 +12,9 @@ namespace Mushka.WebApi.ClientModels.Supply
         public int Quantity { get; set; }
 
         [RequireNonDefault]
-        public decimal CostForItem { get; set; }
+        public decimal UnitPrice { get; set; }
+
+        [RequireNonDefault]
+        public decimal CostPrice { get; set; }
     }
 }

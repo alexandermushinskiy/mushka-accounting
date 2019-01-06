@@ -20,8 +20,13 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .WithMany(del => del.Products)
                 .HasForeignKey(dp => dp.SupplyId);
 
-            builder.Property(dp => dp.CostForItem)
-                .HasColumnName("CostForItem")
+            builder.Property(dp => dp.UnitPrice)
+                .HasColumnName("UnitPrice")
+                .HasColumnType("Money")
+                .IsRequired();
+
+            builder.Property(dp => dp.CostPrice)
+                .HasColumnName("CostPrice")
                 .HasColumnType("Money")
                 .IsRequired();
 

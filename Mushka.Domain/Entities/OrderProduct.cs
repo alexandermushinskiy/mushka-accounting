@@ -12,6 +12,6 @@ namespace Mushka.Domain.Entities
         
         public int Quantity { get; set; }
 
-        public decimal PriceForItem { get; set; }
+        public decimal UnitPrice { get; set; }
     }
 }
