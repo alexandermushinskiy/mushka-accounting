@@ -81,6 +81,18 @@ namespace Mushka.Service.Services
             return CreateInfoValidationResponse(products, message);
         }
 
+        public async Task<ValidationResponse<decimal>> GetCostPriceAsync(Guid productId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var product = await productRepository.GetByIdAsync(productId, cancellationToken);
+
+            //if (product == null)
+            //{
+            //    return CreateWarningValidationResponse<decimal>($"Product with id {productId} is not found.", ValidationStatusType.NotFound);
+            //}
+
+            return CreateInfoValidationResponse(13.7m, $"Product with id {product.Id} was successfully retrieved.");
+        }
+
         public async Task<ValidationResponse<Product>> AddAsync(Product product, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (!await categoryRepository.IsExistAsync(category => category.Id == product.CategoryId, cancellationToken))
