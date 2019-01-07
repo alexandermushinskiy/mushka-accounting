@@ -10,7 +10,7 @@ using Mushka.Infrastructure.DataAccess.Database;
 namespace Mushka.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(MushkaDbContext))]
-    [Migration("20190105194254_Initial")]
+    [Migration("20190107224110_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,8 +60,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.Property<string>("LastName")
                         .IsRequired();
 
-                    b.Property<string>("MiddleName");
-
                     b.Property<string>("Phone");
 
                     b.HasKey("Id");
@@ -108,11 +106,16 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
                     b.Property<Guid>("ClientId");
 
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("Money");
+
+                    b.Property<int>("CostMethod");
+
+                    b.Property<string>("Number");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnName("OrderDate")
                         .HasColumnType("Date");
-
-                    b.Property<int>("PaymentType");
 
                     b.Property<string>("Region")
                         .IsRequired();

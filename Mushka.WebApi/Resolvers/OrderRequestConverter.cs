@@ -24,7 +24,9 @@ namespace Mushka.WebApi.Resolvers
             {
                 Id = orderId,
                 OrderDate = source.OrderDate,
-                PaymentType = source.PaymentType,
+                Number = source.Number,
+                Cost = source.Cost,
+                CostMethod = source.CostMethod,
                 Products = source.Products.Select(prod => CreateDeliveryProduct(orderId, prod)).ToList()
             };
         }

@@ -60,8 +60,42 @@ export class OrderComponent implements OnInit {
 
     return product.vendorCode + (!!product.size ? ` / ${product.size.name}` : ' / -');
   }
+  
+  onProductSelected(product: Product, elem: any) {
+    elem.value = product.name;
+  }
 
   saveOrder() {
+    // const t1 = this.createOrderModel(this.orderForm.getRawValue());
+    // console.info(t1);
+    // return;
+
+    if (this.orderForm.invalid) {
+      return;
+    }
+
+    this.isLoading = true;
+    const order = this.createOrderModel(this.orderForm.getRawValue());
+
+    (this.isEdit
+      ? this.ordersService.update(this.orderId, order)
+      : this.ordersService.create(order))
+      .subscribe(
+        () => this.onSaveSuccess(),
+        (errors: string[]) => this.onSaveFailed(errors)
+      );
+  }
+
+  private onSaveSuccess() {
+    this.isLoading = false;
+    this.notificationsService.success(this.title, `Заказ был успешно ${this.isEdit ? 'изменен' : 'добавлен'}`);
+
+    this.router.navigate(['/orders']);
+  }
+
+  private onSaveFailed(errors: string[]) {
+    this.isLoading = false;
+    this.notificationsService.danger(this.title, errors[0]);
   }
 
   private getRouteParams() {
@@ -86,13 +120,22 @@ export class OrderComponent implements OnInit {
   private buildForm(order: Order) {
     this.orderForm = this.formBuilder.group({
       orderDate: [order.orderDate, Validators.required],
+      number: [order.number, Validators.required],
       cost: [{value: order.cost, disabled: true}],
       costMethod: [order.costMethod, Validators.required],
       notes: [order.notes],
+      region: [order.region, Validators.required],
+      city: [order.city, Validators.required],
+      firstName: [order.firstName, Validators.required],
+      lastName: [order.lastName, Validators.required],
+      phone: [order.phone, Validators.required],
+      email: [order.email, Validators.required],
       products: this.formBuilder.array(
         order.products.map(param => this.createProductModel(param))
       )
     });
+
+    this.addFieldChangeListeners();
   }
 
   private createProductModel(productItem: OrderProduct): FormGroup {
@@ -100,6 +143,51 @@ export class OrderComponent implements OnInit {
       product: [productItem.product],
       quantity: [productItem.quantity, Validators.required],
       unitPrice: [productItem.unitPrice, Validators.required]
+    });
+  }
+
+  private addFieldChangeListeners() {
+    (this.orderForm.get('products') as FormArray).valueChanges.subscribe((items: any[]) => {
+      this.calculateProductsCost();
+    });
+  }
+
+  private calculateProductsCost() {
+    let cost = 0;
+    (this.orderForm.get('products') as FormArray).controls.forEach(control => {
+      if (!!control.value.unitPrice && !!control.value.quantity) {
+        cost += control.value.unitPrice * control.value.quantity;
+      }
+    });
+
+    const costCtrl = this.orderForm.get('cost');
+    costCtrl.setValue(Math.round(cost * 100) / 100, {onlySelf: true});
+    costCtrl.updateValueAndValidity();
+  }
+
+  private createOrderModel(formRawValue: any): Order {
+    return new Order({
+      id: this.orderId,
+      orderDate: formRawValue.orderDate,
+      number: formRawValue.number,
+      cost: formRawValue.cost,
+      costMethod: formRawValue.costMethod,
+      notes: formRawValue.notes,
+      region: formRawValue.region,
+      city: formRawValue.city,
+      firstName: formRawValue.firstName,
+      lastName: formRawValue.lastName,
+      phone: formRawValue.phone,
+      email: formRawValue.email,
+      products: formRawValue.products.map((prod: any) => this.createOrderProduct(prod))
+    });
+  }
+
+  private createOrderProduct(formValue: any): OrderProduct {
+    return new OrderProduct({
+      productId: formValue.product.id,
+      quantity: formValue.quantity,
+      unitPrice: formValue.unitPrice
     });
   }
 }

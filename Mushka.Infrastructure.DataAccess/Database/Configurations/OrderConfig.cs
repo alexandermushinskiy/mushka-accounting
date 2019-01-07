@@ -22,9 +22,22 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .HasColumnType("Date")
                 .IsRequired();
 
-            builder.Property(order => order.PaymentType);
-            builder.Property(order => order.City).IsRequired();
-            builder.Property(order => order.Region).IsRequired();
+            builder
+                .Property(order => order.Cost)
+                .HasColumnType("Money")
+                .IsRequired();
+
+            builder
+                .Property(order => order.CostMethod)
+                .IsRequired();
+
+            builder
+                .Property(order => order.City)
+                .IsRequired();
+
+            builder
+                .Property(order => order.Region)
+                .IsRequired();
 
             builder.HasOne(order => order.Client)
                 .WithMany(client => client.Orders)

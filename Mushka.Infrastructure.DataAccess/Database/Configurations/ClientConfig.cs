@@ -18,7 +18,6 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
 
             builder.Property(client => client.FirstName).IsRequired();
             builder.Property(client => client.LastName).IsRequired();
-            builder.Property(client => client.MiddleName);
             builder.Property(client => client.Email);
             builder.Property(client => client.Phone);
         }

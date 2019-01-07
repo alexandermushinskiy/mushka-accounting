@@ -7,11 +7,34 @@ namespace Mushka.WebApi.ClientModels.Order
 {
     public class OrderRequestModel
     {
+        public string Number { get; set; }
+
         [Required]
         public DateTime OrderDate { get; set; }
 
         [Required]
-        public OrderPaymentType PaymentType { get; set; }
+        public decimal Cost { get; set; }
+
+        [Required]
+        public PaymentMethod CostMethod { get; set; }
+
+        [Required]
+        public string Region { get; set; }
+
+        [Required]
+        public string City { get; set; }
+
+        [Required]
+        public string FirstName { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
+
+        public string Phone { get; set; }
+
+        public string Email { get; set; }
+
+        public string Notes { get; set; }
 
         [Required]
         [MinLength(1)]

@@ -13,276 +13,150 @@
         <div class="content-body">
           <div class="row">
             <div class="col-md-12">
-              
-
-                <div class="row">
-                  <div class="col-sm-5">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="fields-group-title">Данные заказа</div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="field-group">
-                          <label for="address">Дата</label>
-                          <mk-datetimepicker-wrapper formControlName="orderDate" [required]="true"></mk-datetimepicker-wrapper>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="field-group">
-                          <label for="address">Номер</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-5">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="fields-group-title">Адрес доставки</div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="field-group">
-                          <label for="address">Область</label>
-                          <mk-dropdown [options]="regions"></mk-dropdown>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="field-group">
-                          <label for="address">Населённый пункт</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                </div>
-                <div class="row">
-                  <div class="col-sm-10">
-                    <div class="row">
-                      <div class="col-sm-12">
-                        <div class="fields-group-title">Данные покупателя</div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-3">
-                        <div class="field-group">
-                          <label>Имя</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-sm-3">
-                        <div class="field-group">
-                          <label>Фамилия</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-sm-3">
-                        <div class="field-group">
-                          <label>Телефон</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-sm-3">
-                        <div class="field-group">
-                          <label>Эл. почта</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                    
-                  </div>
-                </div>
-
-              
-                <!-- <div class="row">
-                  <div class="col-md-6">
-                    <div class="fields-group-title">Данные покупателя</div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-2">
-                    <div class="field-group">
-                      <label for="address">Дата</label>
-                      <mk-datetimepicker-wrapper formControlName="orderDate" [required]="true"></mk-datetimepicker-wrapper>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="field-group">
-                      <label>Имя</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="field-group">
-                      <label>Фамилия</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="field-group">
-                      <label>Телефон</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="field-group">
-                      <label>Эл. почта</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                </div> -->
-
-
-                <!-- <div class="row">
-                  <div class="col-md-2">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="fields-group-title">Дата заказа</div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="field-group">
-                          <label for="address">Дата заказа</label>
-                          <mk-datetimepicker-wrapper formControlName="orderDate" [required]="true"></mk-datetimepicker-wrapper>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-5">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="fields-group-title">Локация</div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="field-group">
-                          <label for="address">Область</label>
-                          <mk-dropdown [options]="regions"></mk-dropdown>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="field-group">
-                          <label for="address">Населённый пункт</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-5">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="fields-group-title">Клиент</div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="field-group">
-                          <label>Имя</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="field-group">
-                          <label>Фамилия</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="field-group">
-                          <label>Телефон</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="field-group">
-                          <label>Мыло</label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
-
-
-                <div class="row">
-                  
-                  
-                </div>
-
-              <!-- <div class="row">
-                <div class="col-md-12"> -->
+              <div class="row">
+                <div class="col-sm-5">
                   <div class="row">
                     <div class="col-md-12">
-                      <div class="fields-group-title">Список товаров</div>
+                      <div class="fields-group-title">Данные заказа</div>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-row products-titles">
-                        <div class="col-sm-4">Наименование товара</div>
-                        <div class="col-sm-2">Артикул/Размер</div>
-                        <div class="col-sm-2">Закуп.цена</div>
-                        <div class="col-sm-2">Цена</div>
-                        <div class="col-sm-2">Количество</div>
+                    <div class="col-md-6">
+                      <div class="field-group">
+                        <label for="address">Дата</label>
+                        <mk-datetimepicker-wrapper formControlName="orderDate" [required]="true"></mk-datetimepicker-wrapper>
                       </div>
-                      <div formArrayName="products">
-                        <div class="form-row product-row" *ngFor="let productControl of orderForm.get('products').controls; let index=index" [formGroupName]="index">
-                          <div class="col-sm-4">
-                            <div class="field-group">
-                              <mk-select-products formControlName="product"
-                                                  [products]="productsList"></mk-select-products>
-                            </div>
-                          </div>
-                          <div class="col-sm-2">
-                            <div class="field-group">
-                              <input type="text" disabled class="form-control"
-                                    [value]="getProductSizeAndVendorCode(productControl.value.product)">
-                            </div>
-                          </div>
-                          <div class="col-sm-2">
-                            <div class="field-group">
-                              <input type="text" class="form-control" disabled>
-                            </div>
-                          </div>
-                          <div class="col-sm-2">
-                            <div class="field-group">
-                              <mk-currency-input formControlName="unitPrice"
-                                                  [placeholder]="'Цена'"
-                                                  [required]="true"
-                                                  [id]="'unitPrice-' + index">
-                              </mk-currency-input>
-                            </div>
-                          </div>
-                          <div class="col-sm-2">
-                            <div class="field-group">
-                              <input type="number" class="form-control" formControlName="quantity" placeholder="Количество" />
-                            </div>  
-                            <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="orderForm.get('products').controls.length > 1">
-                              <i class="ico ico-close"></i>
-                            </button>
-                            {{ productControl.name }}
-                          </div>
-                        </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="field-group">
+                        <label for="address">Номер</label>
+                        <input type="text" class="form-control" formControlName="number">
                       </div>
-                      <button class="btn-add" type="button" (click)="addProduct()">
-                        <i class="fa fa-plus fa-border"></i>
-                      </button>
                     </div>
                   </div>
-                <!-- </div>
-              </div> -->
+                </div>
+                <div class="col-sm-5">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="fields-group-title">Адрес доставки</div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="field-group">
+                        <label for="address">Область</label>
+                        <mk-dropdown [options]="regions" formControlName="region"></mk-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="field-group">
+                        <label for="address">Населённый пункт</label>
+                        <input type="text" class="form-control" formControlName="city">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+              <div class="row">
+                <div class="col-sm-10">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="fields-group-title">Данные покупателя</div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="field-group">
+                        <label>Имя</label>
+                        <input type="text" class="form-control" formControlName="firstName">
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="field-group">
+                        <label>Фамилия</label>
+                        <input type="text" class="form-control" formControlName="lastName">
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="field-group">
+                        <label>Телефон</label>
+                        <input type="text" class="form-control" formControlName="phone">
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="field-group">
+                        <label>Эл. почта</label>
+                        <input type="text" class="form-control" formControlName="email">
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+
+              <div class="row">
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="fields-group-title">Список товаров</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-row products-titles">
+                    <div class="col-sm-4">Наименование товара</div>
+                    <div class="col-sm-2">Артикул/Размер</div>
+                    <div class="col-sm-2">Себестоимость</div>
+                    <div class="col-sm-2">Цена</div>
+                    <div class="col-sm-2">Количество</div>
+                  </div>
+                  <div formArrayName="products">
+                    <div class="form-row product-row" *ngFor="let productControl of orderForm.get('products').controls; let index=index" [formGroupName]="index">
+                      <div class="col-sm-4">
+                        <div class="field-group">
+                          <mk-select-products formControlName="product"
+                                              [products]="productsList"
+                                              (onProductSelected)="onProductSelected($event, costPrice)"></mk-select-products>
+                        </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <div class="field-group">
+                          <input type="text" disabled class="form-control"
+                                [value]="getProductSizeAndVendorCode(productControl.value.product)">
+                        </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <div class="field-group">
+                          <input #costPrice type="text" class="form-control" disabled>
+                        </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <div class="field-group">
+                          <mk-currency-input formControlName="unitPrice"
+                                              [placeholder]="'Цена'"
+                                              [required]="true"
+                                              [id]="'unitPrice-' + index">
+                          </mk-currency-input>
+                        </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <div class="field-group">
+                          <input type="number" class="form-control" formControlName="quantity" placeholder="Количество" />
+                        </div>  
+                        <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="orderForm.get('products').controls.length > 1">
+                          <i class="ico ico-close"></i>
+                        </button>
+                        {{ productControl.name }}
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn-add" type="button" (click)="addProduct()">
+                    <i class="fa fa-plus fa-border"></i>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -309,6 +183,16 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  
+  <div class="footer">
+    <div class="footer-buttons">
+      <button class="btn btn-primary" type="submit" [disabled]="isLoading">
+        {{ isEdit ? 'Обновить заказ' : 'Создать заказ' }}
+        <div *ngIf="isLoading" class="btn--spinner"></div>
+      </button>
+      <button type="button" class="btn btn-outline" [routerLink]="['/orders']" [disabled]="isLoading">Отмена</button>
     </div>
   </div>
 </form>

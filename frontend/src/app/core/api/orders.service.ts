@@ -8,7 +8,7 @@ import { Order } from '../../shared/models/order.model';
 
 @Injectable()
 export class OrdersService {
-  private readonly endPoint = `${environment.apiEndpoint}/api/v1/products`;
+  private readonly endPoint = `${environment.apiEndpoint}/api/v1/orders`;
 
   constructor(private http: HttpClient,
               private converterService: ConverterService) {

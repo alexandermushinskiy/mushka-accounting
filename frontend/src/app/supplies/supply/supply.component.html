@@ -1,7 +1,6 @@
 <mk-progress-linear [isLoading]="!supplyForm"></mk-progress-linear>
 
 <form *ngIf="supplyForm" class="w-100" [formGroup]="supplyForm" autocomplete="off" (ngSubmit)="saveSupply()">
-  
   <div class="app-page-body row flex-nowrap">
     <!-- left side -->
     <div class="app-page-content">
@@ -174,6 +173,7 @@
       </div>
     </div>
   </div>
+
   <div class="footer">
     <div class="footer-buttons">
       <button class="btn btn-primary" type="submit" [disabled]="isLoading">

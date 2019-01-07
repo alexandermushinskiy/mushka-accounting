@@ -28,7 +28,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
-                    MiddleName = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: true)
                 },
@@ -72,8 +71,10 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    Number = table.Column<string>(nullable: true),
                     OrderDate = table.Column<DateTime>(type: "Date", nullable: false),
-                    PaymentType = table.Column<int>(nullable: false),
+                    Cost = table.Column<decimal>(type: "Money", nullable: false),
+                    CostMethod = table.Column<int>(nullable: false),
                     City = table.Column<string>(nullable: false),
                     Region = table.Column<string>(nullable: false),
                     ClientId = table.Column<Guid>(nullable: false)

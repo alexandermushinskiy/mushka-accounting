@@ -13,9 +13,13 @@ namespace Mushka.Domain.Entities
 
         public Guid Id { get; set; }
 
-        public DateTime OrderDate { get; set; }
+        public string Number { get; set; }
 
-        public OrderPaymentType PaymentType { get; set; }
+        public DateTime OrderDate { get; set; }
+        
+        public decimal Cost { get; set; }
+        
+        public PaymentMethod CostMethod { get; set; }
 
         public string City { get; set; }
 
