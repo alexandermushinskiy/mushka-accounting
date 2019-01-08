@@ -20,13 +20,9 @@ namespace Mushka.Domain.Entities
         public decimal Cost { get; set; }
         
         public PaymentMethod CostMethod { get; set; }
-
-        public string City { get; set; }
-
-        public string Region { get; set; }
-
-        public Guid ClientId { get; set; }
-        public Client Client { get; set; }
+        
+        public Guid CustomerId { get; set; }
+        public Customer Customer { get; set; }
 
         public ICollection<OrderProduct> Products { get; set; }
     }

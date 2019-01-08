@@ -7,14 +7,15 @@ export class Order {
   number: string;
   cost: number;
   costMethod: PaymentMethod;
-  notes: string;
-  products: OrderProduct[];
+  //client: Client;
   region: string;
   city: string;
   firstName: string;
   lastName: string;
   phone: string;
   email: string;
+  notes: string;
+  products: OrderProduct[];
 
   constructor(data: any) {
     Object.assign(this, data);

@@ -19,7 +19,8 @@ namespace Mushka.WebApi.Resolvers
         public Order Convert(OrderRequestModel source, Order destination, ResolutionContext context)
         {
             var orderId = guidProvider.NewGuid();
-
+            var customerId = guidProvider.NewGuid();
+            
             return new Order
             {
                 Id = orderId,
@@ -27,9 +28,22 @@ namespace Mushka.WebApi.Resolvers
                 Number = source.Number,
                 Cost = source.Cost,
                 CostMethod = source.CostMethod,
+                Customer = CreateCustomer(customerId, source),
                 Products = source.Products.Select(prod => CreateDeliveryProduct(orderId, prod)).ToList()
             };
         }
+
+        private static Customer CreateCustomer(Guid customerId, OrderRequestModel requestModel) =>
+            new Customer
+            {
+                Id = customerId,
+                FirstName = requestModel.FirstName,
+                LastName = requestModel.LastName,
+                Phone = requestModel.Phone,
+                Email = requestModel.Email,
+                Region = requestModel.Region,
+                City = requestModel.City
+            };
 
         private static OrderProduct CreateDeliveryProduct(Guid orderId, OrderProductRequestModel requestModel) =>
             new OrderProduct

@@ -44,27 +44,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Mushka.Domain.Entities.Client", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("Id");
-
-                    b.Property<string>("Email");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired();
-
-                    b.Property<string>("LastName")
-                        .IsRequired();
-
-                    b.Property<string>("Phone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Clients");
-                });
-
             modelBuilder.Entity("Mushka.Domain.Entities.ContactPerson", b =>
                 {
                     b.Property<Guid>("Id")
@@ -93,7 +72,7 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.ToTable("ContactPersons");
                 });
 
-            modelBuilder.Entity("Mushka.Domain.Entities.Order", b =>
+            modelBuilder.Entity("Mushka.Domain.Entities.Customer", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -102,25 +81,52 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.Property<string>("City")
                         .IsRequired();
 
-                    b.Property<Guid>("ClientId");
+                    b.Property<string>("Email");
 
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("Money");
+                    b.Property<string>("FirstName")
+                        .IsRequired();
 
-                    b.Property<int>("CostMethod");
+                    b.Property<string>("LastName")
+                        .IsRequired();
 
-                    b.Property<string>("Number");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnName("OrderDate")
-                        .HasColumnType("Date");
+                    b.Property<string>("Phone")
+                        .IsRequired();
 
                     b.Property<string>("Region")
                         .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("Mushka.Domain.Entities.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("Money");
+
+                    b.Property<int>("CostMethod");
+
+                    b.Property<Guid>("CustomerId");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnName("Number");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnName("OrderDate")
+                        .HasColumnType("Date");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
 
                     b.ToTable("Orders");
                 });
@@ -134,8 +140,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnName("Quantity");
 
-                    b.Property<Guid?>("SizeId");
-
                     b.Property<decimal>("UnitPrice")
                         .HasColumnName("UnitPrice")
                         .HasColumnType("Money");
@@ -143,8 +147,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.HasKey("ProductId", "OrderId");
 
                     b.HasIndex("OrderId");
-
-                    b.HasIndex("SizeId");
 
                     b.ToTable("OrderProducts");
                 });
@@ -362,9 +364,9 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
             modelBuilder.Entity("Mushka.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("Mushka.Domain.Entities.Client", "Client")
+                    b.HasOne("Mushka.Domain.Entities.Customer", "Customer")
                         .WithMany("Orders")
-                        .HasForeignKey("ClientId")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -379,10 +381,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .WithMany("Orders")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Mushka.Domain.Entities.Size")
-                        .WithMany("OrderProducts")
-                        .HasForeignKey("SizeId");
                 });
 
             modelBuilder.Entity("Mushka.Domain.Entities.PaymentCard", b =>

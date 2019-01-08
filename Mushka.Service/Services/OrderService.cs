@@ -16,15 +16,18 @@ namespace Mushka.Service.Services
     {
         private readonly IOrderRepository orderRepository;
         private readonly IProductRepository productRepository;
+        private readonly ICustomerRepository customerRepository;
 
         public OrderService(
             IOrderRepository orderRepository,
             IProductRepository productRepository,
+            ICustomerRepository customerRepository,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             this.orderRepository = orderRepository;
             this.productRepository = productRepository;
+            this.customerRepository = customerRepository;
         }
 
         public async Task<ValidationResponse<IEnumerable<Order>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -49,6 +52,13 @@ namespace Mushka.Service.Services
 
         public async Task<ValidationResponse<Order>> AddAsync(Order order, CancellationToken cancellationToken = default(CancellationToken))
         {
+            var storedCustomer = await customerRepository.GetByOrderDetails(order.Customer, cancellationToken);
+
+            if (storedCustomer == null)
+            {
+                storedCustomer = await customerRepository.AddAsync(order.Customer, cancellationToken);
+            }
+
             foreach (var orderProduct in order.Products)
             {
                 var storedProduct = await productRepository.GetByIdAsync(orderProduct.ProductId, cancellationToken);
@@ -58,17 +68,11 @@ namespace Mushka.Service.Services
                     return CreateWarningValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
                 }
 
-                //var storedProductSize = await productRepository.GetProductSizeAsync(orderProduct.ProductId, orderProduct.SizeId, cancellationToken);
-
-                //if (storedProductSize == null)
-                //{
-                //    return CreateWarningValidationResponse($"Size with id {orderProduct.SizeId} is not found.", ValidationStatusType.NotFound);
-                //}
-
-                //storedProductSize.Quantity -= orderProduct.Quantity;
-                //await productRepository.UpdateProductSize(storedProductSize, cancellationToken);
+                storedProduct.Quantity -= orderProduct.Quantity;
+                await productRepository.UpdateAsync(storedProduct, cancellationToken);
             }
 
+            order.CustomerId = storedCustomer.Id;
             var addedOrder = await orderRepository.AddAsync(order, cancellationToken);
 
             return CreateInfoValidationResponse(addedOrder, $"Order with id {addedOrder.Id} was successfully added.");

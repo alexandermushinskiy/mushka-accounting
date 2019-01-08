@@ -23,6 +23,8 @@ namespace Mushka.Infrastructure.DataAccess.Database
 
         public DbSet<Supplier> Suppliers { get; set; }
 
+        public DbSet<Customer> Customers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new SizeConfig());
@@ -35,7 +37,7 @@ namespace Mushka.Infrastructure.DataAccess.Database
             modelBuilder.ApplyConfiguration(new SupplierConfig());
             modelBuilder.ApplyConfiguration(new ContactPersonConfig());
             modelBuilder.ApplyConfiguration(new PaymentCardConfig());
-            modelBuilder.ApplyConfiguration(new ClientConfig());
+            modelBuilder.ApplyConfiguration(new CustomerConfig());
         }
 
         //private static void SeedData(ModelBuilder modelBuilder)

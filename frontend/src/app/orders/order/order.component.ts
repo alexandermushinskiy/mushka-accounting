@@ -129,7 +129,7 @@ export class OrderComponent implements OnInit {
       firstName: [order.firstName, Validators.required],
       lastName: [order.lastName, Validators.required],
       phone: [order.phone, Validators.required],
-      email: [order.email, Validators.required],
+      email: [order.email],
       products: this.formBuilder.array(
         order.products.map(param => this.createProductModel(param))
       )

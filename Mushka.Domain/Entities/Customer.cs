@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Mushka.Domain.Extensibility.Entities;
 
 namespace Mushka.Domain.Entities
 {
-    public class Client
+    public class Customer : IEntity
     {
-        public Client()
+        public Customer()
         {
             Orders = new List<Order>();
         }
@@ -19,6 +20,10 @@ namespace Mushka.Domain.Entities
         public string Email { get; set; }
 
         public string Phone { get; set; }
+
+        public string City { get; set; }
+
+        public string Region { get; set; }
 
         public ICollection<Order> Orders { get; set; }
     }

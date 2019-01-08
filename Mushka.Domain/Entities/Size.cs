@@ -9,7 +9,6 @@ namespace Mushka.Domain.Entities
         public Size()
         {
             Products = new List<Product>();
-            OrderProducts = new List<OrderProduct>();
         }
 
         public Guid Id { get; set; }
@@ -17,7 +16,5 @@ namespace Mushka.Domain.Entities
         public string Name { get; set; }
 
         public IEnumerable<Product> Products { get; set; }
-        
-        public IEnumerable<OrderProduct> OrderProducts { get; set; }
     }
 }

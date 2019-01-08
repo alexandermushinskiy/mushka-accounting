@@ -11,6 +11,8 @@ import { Supply } from '../../supplies/shared/models/supply.model';
 import { PaymentCard } from '../../shared/models/payment-card.model';
 import { SupplyProduct } from '../../supplies/shared/models/supply-product.model';
 import { Order } from '../../shared/models/order.model';
+import { OrderProduct } from '../../shared/models/order-product.model';
+import { Customer } from '../../shared/models/customer.model';
 
 @Injectable()
 export class ConverterService {
@@ -146,7 +148,43 @@ export class ConverterService {
 
   convertToOrder(source: any): Order {
     return new Order({
-      id: source.id
+      id: source.id,
+      orderDate: source.orderDate,
+      number: source.number,
+      cost: source.cost,
+      costMethod: source.costMethod,
+      region: source.region,
+      city: source.city,
+      firstName: source.firstName,
+      lastName: source.lastName,
+      phone: source.phone,
+      email: source.email,
+      notes: source.notes,
+      products: source.products.map((prod: any) => new OrderProduct({
+        quantity: prod.quantity,
+        unitPrice: prod.unitPrice,
+        product: {
+          id: prod.id,
+          name: prod.name,
+          vendorCode: prod.vendorCode
+        }
+      }))
+    });
+  }
+
+  convertToCustomers(response: any[]): Customer[] {
+    return response.map(res => this.convertToCustomer(res));
+  }
+
+  convertToCustomer(source: any): Customer {
+    return new Customer({
+      id: source.id,
+      firstName: source.firstName,
+      lastName: source.lastName,
+      phone: source.phone,
+      email: source.email,
+      region: source.region,
+      city: source.city
     });
   }
 

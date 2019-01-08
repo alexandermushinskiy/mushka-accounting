@@ -17,6 +17,11 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
             builder.HasKey(order => order.Id);
 
             builder
+                .Property(order => order.Number)
+                .HasColumnName("Number")
+                .IsRequired();
+
+            builder
                 .Property(order => order.OrderDate)
                 .HasColumnName("OrderDate")
                 .HasColumnType("Date")
@@ -31,17 +36,11 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .Property(order => order.CostMethod)
                 .IsRequired();
 
-            builder
-                .Property(order => order.City)
-                .IsRequired();
+            builder.HasOne(order => order.Customer)
+                .WithMany(customer => customer.Orders)
+                .HasForeignKey(order => order.CustomerId);
 
-            builder
-                .Property(order => order.Region)
-                .IsRequired();
-
-            builder.HasOne(order => order.Client)
-                .WithMany(client => client.Orders)
-                .HasForeignKey(order => order.ClientId);
+            builder.HasIndex(order => order.Number).IsUnique();
         }
     }
 }

@@ -22,18 +22,20 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Clients",
+                name: "Customers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: true),
-                    Phone = table.Column<string>(nullable: true)
+                    Phone = table.Column<string>(nullable: false),
+                    City = table.Column<string>(nullable: false),
+                    Region = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clients", x => x.Id);
+                    table.PrimaryKey("PK_Customers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -71,21 +73,19 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Number = table.Column<string>(nullable: true),
+                    Number = table.Column<string>(nullable: false),
                     OrderDate = table.Column<DateTime>(type: "Date", nullable: false),
                     Cost = table.Column<decimal>(type: "Money", nullable: false),
                     CostMethod = table.Column<int>(nullable: false),
-                    City = table.Column<string>(nullable: false),
-                    Region = table.Column<string>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false)
+                    CustomerId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Clients_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Clients",
+                        name: "FK_Orders_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -196,8 +196,7 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     OrderId = table.Column<Guid>(nullable: false),
                     ProductId = table.Column<Guid>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    UnitPrice = table.Column<decimal>(type: "Money", nullable: false),
-                    SizeId = table.Column<Guid>(nullable: true)
+                    UnitPrice = table.Column<decimal>(type: "Money", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -214,12 +213,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderProducts_Sizes_SizeId",
-                        column: x => x.SizeId,
-                        principalTable: "Sizes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -266,14 +259,15 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderProducts_SizeId",
-                table: "OrderProducts",
-                column: "SizeId");
+                name: "IX_Orders_CustomerId",
+                table: "Orders",
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_ClientId",
+                name: "IX_Orders_Number",
                 table: "Orders",
-                column: "ClientId");
+                column: "Number",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PaymentCards_Number",
@@ -356,7 +350,7 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 name: "Supplies");
 
             migrationBuilder.DropTable(
-                name: "Clients");
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Categories");

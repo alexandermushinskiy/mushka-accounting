@@ -2,7 +2,7 @@
 
 namespace Mushka.WebApi.ClientModels.Order
 {
-    public class OrderProductModel
+    public class ProductModel
     {
         public Guid Id { get; set; }
 
@@ -11,9 +11,5 @@ namespace Mushka.WebApi.ClientModels.Order
         public string VendorCode { get; set; }
 
         public string Size { get; set; }
-
-        public int Quantity { get; set; }
-
-        public decimal UnitPrice { get; set; }
     }
 }
