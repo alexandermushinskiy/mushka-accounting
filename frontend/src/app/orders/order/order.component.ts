@@ -62,11 +62,11 @@ export class OrderComponent implements OnInit {
   }
   
   onProductSelected(productId: string, index: number) {
-    this.productsService.getCostPrice(productId)
-      .subscribe((costPrice: number) => {
-        const productCtrl = <FormGroup>(<FormArray>this.orderForm.get('products')).at(index);
-        productCtrl.controls.costPrice.setValue(costPrice, {onlySelf: true});
-      });
+    // this.productsService.getCostPrice(productId)
+    //   .subscribe((costPrice: number) => {
+    //     const productCtrl = <FormGroup>(<FormArray>this.orderForm.get('products')).at(index);
+    //     productCtrl.controls.costPrice.setValue(costPrice, {onlySelf: true});
+    //   });
   }
 
   saveOrder() {
@@ -159,15 +159,29 @@ export class OrderComponent implements OnInit {
 
   private calculateProductsCost() {
     let cost = 0;
-    (this.orderForm.get('products') as FormArray).controls.forEach(control => {
-      if (!!control.value.unitPrice && !!control.value.quantity) {
-        cost += control.value.unitPrice * control.value.quantity;
+    (this.orderForm.get('products') as FormArray).controls.forEach((control, index) => {
+      const ctrlValue = control.value;
+      
+      if (!!ctrlValue.unitPrice && !!ctrlValue.quantity) {
+        cost += ctrlValue.unitPrice * ctrlValue.quantity;
+      }
+    
+      if (!!ctrlValue.product) {
+        this.setCostPrice(ctrlValue.product.id, !!ctrlValue.quantity ? ctrlValue.quantity : 1, index);
       }
     });
 
     const costCtrl = this.orderForm.get('cost');
     costCtrl.setValue(Math.round(cost * 100) / 100, {onlySelf: true});
     costCtrl.updateValueAndValidity();
+  }
+
+  private setCostPrice(productId: string, productsCount: number, index: number) {
+    this.productsService.getCostPrice(productId, productsCount)
+      .subscribe((costPrice: number) => {
+        const productCtrl = <FormGroup>(<FormArray>this.orderForm.get('products')).at(index);
+        productCtrl.controls.costPrice.setValue(costPrice, {onlySelf: true});
+      });
   }
 
   private createOrderModel(formRawValue: any): Order {

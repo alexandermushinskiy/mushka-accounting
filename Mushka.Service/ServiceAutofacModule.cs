@@ -1,5 +1,7 @@
 ﻿using Autofac;
+using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Extensibility.Services;
+using Mushka.Service.Providers;
 using Mushka.Service.Services;
 
 namespace Mushka.Service
@@ -13,6 +15,8 @@ namespace Mushka.Service
             builder.RegisterType<SupplyService>().As<ISupplyService>();
             builder.RegisterType<OrderService>().As<IOrderService>();
             builder.RegisterType<SupplierService>().As<ISupplierService>();
+
+            builder.RegisterType<CostPriceProvider>().As<ICostPriceProvider>();
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                     .ThenInclude(prod => prod.Product.Size)
                 .FirstOrDefaultAsync(cancellationToken);
 
-        public async Task<int> GetSoldCount(Guid productId, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public async Task<int> GetSoldProductCount(Guid productId, CancellationToken cancellationToken = default(CancellationToken)) =>
             await Context.Set<OrderProduct>()
                 .Where(sp => sp.ProductId == productId)
                 .SumAsync(sp => sp.Quantity, cancellationToken);

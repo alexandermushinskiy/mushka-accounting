@@ -62,8 +62,8 @@ export class ProductsServce {
       .catch((res: any) => throwError(res.error.messages));
   }
 
-  getCostPrice(productId: string): Observable<number> {
-    return this.http.get(`${this.endPoint}/${productId}/costprice`)
+  getCostPrice(productId: string, productsCount: number): Observable<number> {
+    return this.http.get(`${this.endPoint}/${productId}/costprice?productsCount=${productsCount}`)
       .map((res: any) => res.data.costPrice)
       .catch((res: any) => throwError(res.error.messages));
   }

@@ -8,6 +8,7 @@ using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Extensibility.Services;
 
 namespace Mushka.Service.Services
@@ -18,12 +19,14 @@ namespace Mushka.Service.Services
         private readonly ICategoryRepository categoryRepository;
         private readonly ISupplyRepository supplyRepository;
         private readonly IOrderRepository orderRepository;
+        private readonly ICostPriceProvider costPriceProvider;
 
         public ProductService(
             IProductRepository productRepository,
             ICategoryRepository categoryRepository,
             ISupplyRepository supplyRepository,
             IOrderRepository orderRepository,
+            ICostPriceProvider costPriceProvider,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
@@ -31,6 +34,7 @@ namespace Mushka.Service.Services
             this.categoryRepository = categoryRepository;
             this.supplyRepository = supplyRepository;
             this.orderRepository = orderRepository;
+            this.costPriceProvider = costPriceProvider;
         }
 
         public async Task<ValidationResponse<IEnumerable<Product>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -87,31 +91,16 @@ namespace Mushka.Service.Services
             return CreateInfoValidationResponse(products, message);
         }
 
-        public async Task<ValidationResponse<decimal>> GetCostPriceAsync(Guid productId, int count, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<ValidationResponse<decimal>> GetCostPriceAsync(Guid productId, int productsCount, CancellationToken cancellationToken = default(CancellationToken))
         {
             var product = await productRepository.GetByIdAsync(productId, cancellationToken);
-            
-            var soldCount = await orderRepository.GetSoldCount(productId, cancellationToken);
-
-            var allProductSupplies = await supplyRepository.GetByProductAsync(productId, cancellationToken);
-
-            var supplyQuantity = 0;
-            var costPrice = 0m;
-            
-            foreach (var supllyProduct in allProductSupplies.Where(prod => prod.ProductId == productId))
-            {
-                supplyQuantity = supllyProduct.Quantity + supplyQuantity;
-                if (supplyQuantity > soldCount)
-                {
-                    costPrice = supllyProduct.CostPrice;
-                    break;
-                }
-            }
 
             //if (product == null)
             //{
             //    return CreateWarningValidationResponse<decimal>($"Product with id {productId} is not found.", ValidationStatusType.NotFound);
             //}
+
+            var costPrice = await costPriceProvider.CalculateAsync(productId, productsCount, cancellationToken);
 
             return CreateInfoValidationResponse(costPrice, $"Cost price for product with id {product.Id} was successfully retrieved.");
         }
