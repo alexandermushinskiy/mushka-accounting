@@ -51,7 +51,8 @@ namespace Mushka.WebApi.Resolvers
                 OrderId = orderId,
                 ProductId = requestModel.ProductId,
                 Quantity = requestModel.Quantity,
-                UnitPrice = requestModel.UnitPrice
+                UnitPrice = requestModel.UnitPrice,
+                CostPrice = requestModel.CostPrice
             };
     }
 }

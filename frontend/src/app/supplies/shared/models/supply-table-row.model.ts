@@ -1,5 +1,5 @@
 import { DataTablePreview } from '../../../shared/models/data-table-preview.model';
-import { PaymentMethod } from '../enums/payment-method.enum';
+import { PaymentMethod } from '../../../shared/enums/payment-method.enum';
 
 export class SupplyTableRow extends DataTablePreview {
   supplierName: string;

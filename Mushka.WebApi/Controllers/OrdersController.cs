@@ -32,7 +32,16 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var deliveriesResponse = await orderService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Order>>, OrdersResponseModel>(deliveriesResponse);
+            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Order>>, OrdersListResponseModel>(deliveriesResponse);
+
+            return actionResultProvider.Get(clientResponse);
+        }
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var orderResponse = await orderService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<Order>, OrderResponseModel>(orderResponse);
 
             return actionResultProvider.Get(clientResponse);
         }

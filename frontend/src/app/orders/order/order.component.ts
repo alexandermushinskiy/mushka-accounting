@@ -61,8 +61,12 @@ export class OrderComponent implements OnInit {
     return product.vendorCode + (!!product.size ? ` / ${product.size.name}` : ' / -');
   }
   
-  onProductSelected(product: Product, elem: any) {
-    elem.value = product.name;
+  onProductSelected(productId: string, index: number) {
+    this.productsService.getCostPrice(productId)
+      .subscribe((costPrice: number) => {
+        const productCtrl = <FormGroup>(<FormArray>this.orderForm.get('products')).at(index);
+        productCtrl.controls.costPrice.setValue(costPrice, {onlySelf: true});
+      });
   }
 
   saveOrder() {
@@ -142,7 +146,8 @@ export class OrderComponent implements OnInit {
     return this.formBuilder.group({
       product: [productItem.product],
       quantity: [productItem.quantity, Validators.required],
-      unitPrice: [productItem.unitPrice, Validators.required]
+      unitPrice: [productItem.unitPrice, Validators.required],
+      costPrice: [{value: productItem.costPrice, disabled: true}]
     });
   }
 
@@ -187,7 +192,8 @@ export class OrderComponent implements OnInit {
     return new OrderProduct({
       productId: formValue.product.id,
       quantity: formValue.quantity,
-      unitPrice: formValue.unitPrice
+      unitPrice: formValue.unitPrice,
+      costPrice: formValue.costPrice
     });
   }
 }

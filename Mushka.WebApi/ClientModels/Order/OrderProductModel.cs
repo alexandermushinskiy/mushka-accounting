@@ -15,5 +15,7 @@ namespace Mushka.WebApi.ClientModels.Order
         public int Quantity { get; set; }
 
         public decimal UnitPrice { get; set; }
+
+        public decimal CostPrice { get; set; }
     }
 }

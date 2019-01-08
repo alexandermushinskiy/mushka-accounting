@@ -49,6 +49,11 @@ namespace Mushka.WebApi
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SizeResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+
+            CreateMap<ValidationResponse<decimal>, CostPriceResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] {src.ValidationResult.Message}))
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => new CostPriceModel { CostPrice = src.Result }));
             //-------------------------
 
             // Category
@@ -107,6 +112,11 @@ namespace Mushka.WebApi
 
             CreateMap<ValidationResponse<IEnumerable<Order>>, OrdersResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<OrderResponseResolver>())
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+
+            CreateMap<ValidationResponse<IEnumerable<Order>>, OrdersListResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<OrdersListResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
             //-------------------------

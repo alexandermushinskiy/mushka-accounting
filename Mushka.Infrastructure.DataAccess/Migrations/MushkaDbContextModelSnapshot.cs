@@ -137,6 +137,10 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
                     b.Property<Guid>("OrderId");
 
+                    b.Property<decimal>("CostPrice")
+                        .HasColumnName("CostPrice")
+                        .HasColumnType("Money");
+
                     b.Property<int>("Quantity")
                         .HasColumnName("Quantity");
 

@@ -20,8 +20,7 @@ export class SuppliesListComponent implements OnInit {
   loadingIndicator = false;
   total = 0;
   shown = 0;
-  
-  private supplyToDelete: SupplyTableRow;
+  supplyToDelete: SupplyTableRow;
   private modalRef: NgbModalRef;
   private readonly modalConfig: NgbModalOptions = {
     windowClass: 'supply-modal',

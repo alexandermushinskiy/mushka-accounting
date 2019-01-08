@@ -13,6 +13,7 @@ import { SupplyProduct } from '../../supplies/shared/models/supply-product.model
 import { Order } from '../../shared/models/order.model';
 import { OrderProduct } from '../../shared/models/order-product.model';
 import { Customer } from '../../shared/models/customer.model';
+import { OrderList } from '../../orders/shared/models/order-list.model';
 
 @Injectable()
 export class ConverterService {
@@ -149,7 +150,7 @@ export class ConverterService {
   convertToOrder(source: any): Order {
     return new Order({
       id: source.id,
-      orderDate: source.orderDate,
+      orderDate: this.datetimeService.toString(source.orderDate),
       number: source.number,
       cost: source.cost,
       costMethod: source.costMethod,
@@ -166,9 +167,25 @@ export class ConverterService {
         product: {
           id: prod.id,
           name: prod.name,
-          vendorCode: prod.vendorCode
+          vendorCode: prod.vendorCode,
+          size: new Size({name: prod.size})
         }
       }))
+    });
+  }
+
+  convertToOrdersList(response: any[]): OrderList[] {
+    return response.map(res => this.convertToOrderList(res));
+  }
+
+  convertToOrderList(source: any): OrderList {
+    return new OrderList({
+      id: source.id,
+      orderDate: this.datetimeService.toString(source.orderDate),
+      number: source.number,
+      cost: source.cost,
+      address: source.address,
+      customerName: source.customerName
     });
   }
 

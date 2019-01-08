@@ -33,6 +33,7 @@ namespace Mushka.WebApi.Resolvers
                 Size = orderProduct.Product?.Size?.Name,
                 Quantity = orderProduct.Quantity,
                 UnitPrice = orderProduct.UnitPrice,
+                CostPrice = orderProduct.CostPrice
             };
     }
 }

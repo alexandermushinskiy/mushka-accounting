@@ -65,11 +65,12 @@ namespace Mushka.WebApi.Controllers
         }
 
         [HttpGet("{id:guid}/costprice")]
-        public async Task<IActionResult> GetCostPrice(Guid id)
+        public async Task<IActionResult> GetCostPrice(Guid id, int count = 0)
         {
-            var costPrice = await productService.GetCostPriceAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var costPrice = await productService.GetCostPriceAsync(id, count, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<decimal>, CostPriceResponseModel>(costPrice);
 
-            return actionResultProvider.Get(costPrice);
+            return actionResultProvider.Get(clientResponse);
         }
 
         [HttpPost]

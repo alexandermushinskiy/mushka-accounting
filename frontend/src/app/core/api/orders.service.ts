@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ConverterService } from '../converter/converter.service';
 import { Order } from '../../shared/models/order.model';
+import { OrderList } from '../../orders/shared/models/order-list.model';
 
 @Injectable()
 export class OrdersService {
@@ -14,9 +15,9 @@ export class OrdersService {
               private converterService: ConverterService) {
   }
 
-  getAll(): Observable<Order[]>  {
+  getAll(): Observable<OrderList[]>  {
     return this.http.get(this.endPoint)
-      .map((res: any) => this.converterService.convertToOrders(res.data))
+      .map((res: any) => this.converterService.convertToOrdersList(res.data))
       .catch((res: any) => throwError(res.error.messages));
   }
 
@@ -35,6 +36,11 @@ export class OrdersService {
   update(orderId: string, order: Order): Observable<Order> {
     return this.http.put(`${this.endPoint}/${orderId}`, order)
       .map((res: any) => this.converterService.convertToOrder(res.data))
+      .catch((res: any) => throwError(res.error.messages));
+  }
+
+  delete(orderId: string): Observable<any> {
+    return this.http.delete(`${this.endPoint}/${orderId}`)
       .catch((res: any) => throwError(res.error.messages));
   }
 

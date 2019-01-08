@@ -49,7 +49,7 @@ namespace Mushka.Service.Services
                 ? CreateWarningValidationResponse($"Order with id {orderId} is not found.", ValidationStatusType.NotFound)
                 : CreateInfoValidationResponse(order, $"Order with id {orderId} was successfully retrieved.");
         }
-
+        
         public async Task<ValidationResponse<Order>> AddAsync(Order order, CancellationToken cancellationToken = default(CancellationToken))
         {
             var storedCustomer = await customerRepository.GetByOrderDetails(order.Customer, cancellationToken);

@@ -1,5 +1,5 @@
-import { PaymentMethod } from '../enums/payment-method.enum';
 import { SupplyProduct } from './supply-product.model';
+import { PaymentMethod } from '../../../shared/enums/payment-method.enum';
 
 export class Supply {
   id: string;

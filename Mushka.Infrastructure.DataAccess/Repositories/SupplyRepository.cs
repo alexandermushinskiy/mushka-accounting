@@ -16,25 +16,35 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         {
         }
 
-        public override async Task<IEnumerable<Supply>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return await Context.Supplies
-                .Include(del => del.Supplier)
-                .Include(del => del.Products)
-                    .ThenInclude(delProd => delProd.Product)
-                    .ThenInclude(delProd => delProd.Size)
+        public override async Task<IEnumerable<Supply>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+            await Context.Supplies
+                .Include(sup => sup.Supplier)
+                .Include(sup => sup.Products)
+                    .ThenInclude(supProd => supProd.Product)
+                    .ThenInclude(supProd => supProd.Size)
                 .ToListAsync(cancellationToken);
-        }
 
-        public override async Task<Supply> GetByIdAsync(Guid id, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return await Context.Supplies
-                .Where(del => del.Id == id)
-                .Include(del => del.Products)
-                    .ThenInclude(delProd => delProd.Product)
-                    .ThenInclude(delProd => delProd.Size)
-                .Include(del => del.Products)
+        public override async Task<Supply> GetByIdAsync(Guid id, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await Context.Supplies
+                .AsNoTracking()
+                .Where(sup => sup.Id == id)
+                .Include(sup => sup.Products)
+                    .ThenInclude(supProd => supProd.Product)
+                    .ThenInclude(supProd => supProd.Size)
+                .Include(sup => sup.Products)
                 .FirstOrDefaultAsync(cancellationToken);
-        }
+        
+        public virtual async Task<IEnumerable<SupplyProduct>> GetByProductAsync(Guid productId, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await Context.Set<SupplyProduct>()
+                .Where(sp => sp.ProductId == productId)
+                .OrderBy(sp => sp.Supply.ReceivedDate)
+                .ToListAsync(cancellationToken);
+
+
+        //dbSet
+        //    .AsNoTracking()
+        //    .Where(sup => sup.Products.Count(prod => prod.ProductId == productId) > 0)
+        //    .Include(sup => sup.Products)
+        //    .ToListAsync(cancellationToken);
     }
 }

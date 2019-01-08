@@ -13,5 +13,8 @@ namespace Mushka.WebApi.ClientModels.Order
 
         [RequireNonDefault]
         public decimal UnitPrice { get; set; }
+
+        [RequireNonDefault]
+        public decimal CostPrice { get; set; }
     }
 }

@@ -62,6 +62,12 @@ export class ProductsServce {
       .catch((res: any) => throwError(res.error.messages));
   }
 
+  getCostPrice(productId: string): Observable<number> {
+    return this.http.get(`${this.endPoint}/${productId}/costprice`)
+      .map((res: any) => res.data.costPrice)
+      .catch((res: any) => throwError(res.error.messages));
+  }
+
   delete(productId: string): Observable<any> {
     return this.http.delete(`${this.endPoint}/${productId}`)
       .catch((res: any) => throwError(res.error.messages));

@@ -16,15 +16,21 @@ namespace Mushka.Service.Services
     {
         private readonly IProductRepository productRepository;
         private readonly ICategoryRepository categoryRepository;
+        private readonly ISupplyRepository supplyRepository;
+        private readonly IOrderRepository orderRepository;
 
         public ProductService(
             IProductRepository productRepository,
             ICategoryRepository categoryRepository,
+            ISupplyRepository supplyRepository,
+            IOrderRepository orderRepository,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             this.productRepository = productRepository;
             this.categoryRepository = categoryRepository;
+            this.supplyRepository = supplyRepository;
+            this.orderRepository = orderRepository;
         }
 
         public async Task<ValidationResponse<IEnumerable<Product>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -81,16 +87,33 @@ namespace Mushka.Service.Services
             return CreateInfoValidationResponse(products, message);
         }
 
-        public async Task<ValidationResponse<decimal>> GetCostPriceAsync(Guid productId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<ValidationResponse<decimal>> GetCostPriceAsync(Guid productId, int count, CancellationToken cancellationToken = default(CancellationToken))
         {
             var product = await productRepository.GetByIdAsync(productId, cancellationToken);
+            
+            var soldCount = await orderRepository.GetSoldCount(productId, cancellationToken);
+
+            var allProductSupplies = await supplyRepository.GetByProductAsync(productId, cancellationToken);
+
+            var supplyQuantity = 0;
+            var costPrice = 0m;
+            
+            foreach (var supllyProduct in allProductSupplies.Where(prod => prod.ProductId == productId))
+            {
+                supplyQuantity = supllyProduct.Quantity + supplyQuantity;
+                if (supplyQuantity > soldCount)
+                {
+                    costPrice = supllyProduct.CostPrice;
+                    break;
+                }
+            }
 
             //if (product == null)
             //{
             //    return CreateWarningValidationResponse<decimal>($"Product with id {productId} is not found.", ValidationStatusType.NotFound);
             //}
 
-            return CreateInfoValidationResponse(13.7m, $"Product with id {product.Id} was successfully retrieved.");
+            return CreateInfoValidationResponse(costPrice, $"Cost price for product with id {product.Id} was successfully retrieved.");
         }
 
         public async Task<ValidationResponse<Product>> AddAsync(Product product, CancellationToken cancellationToken = default(CancellationToken))

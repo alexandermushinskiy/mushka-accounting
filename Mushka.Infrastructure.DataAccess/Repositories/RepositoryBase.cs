@@ -36,8 +36,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
             CancellationToken cancellationToken = default(CancellationToken)) =>
                 await dbSet.Where(predicate).AsNoTracking()
                     .AnyAsync(cancellationToken);
-
-
+        
         public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate) =>
             dbSet.Where(predicate).AsNoTracking();
 
@@ -46,7 +45,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
             await dbSet.AsNoTracking().ToArrayAsync(cancellationToken);
-
+        
         public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
         {
             dbSet.Add(entity);
