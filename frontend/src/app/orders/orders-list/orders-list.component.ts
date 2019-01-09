@@ -2,11 +2,11 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
-import { Order } from '../../shared/models/order.model';
 import { OrderTableRow } from '../shared/models/order-table-row.model';
 import { OrdersService } from '../../core/api/orders.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { OrderList } from '../shared/models/order-list.model';
+import { OrderListFilter } from '../../shared/filters/order-list.filter';
 
 @Component({
   selector: 'mk-orders',
@@ -43,6 +43,13 @@ export class OrdersListComponent implements OnInit {
     }
   }
 
+  filter(searchKey: string) {
+    const orderFilter = new OrderListFilter(searchKey);
+    const filteredSupplies = this.orders.filter(order => orderFilter.filter(order));
+
+    this.updateDatatableRows(filteredSupplies);
+  }
+  
   getRowClass(row: any) {
     return row.className;
   }
