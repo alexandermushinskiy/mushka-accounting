@@ -28,6 +28,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   title: string;
   productsList: Product[];
   regions = ukrRegions;
+  isFormSubmitted = false;
 
   private quantityTerms$ = new Subject<{index: number, quantity: number}>();
 
@@ -87,7 +88,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
     // const t1 = this.createOrderModel(this.orderForm.getRawValue());
     // console.info(t1);
     // return;
-
+    this.isFormSubmitted = true;
     if (this.orderForm.invalid) {
       return;
     }
@@ -158,7 +159,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
 
   private createProductModel(productItem: OrderProduct): FormGroup {
     return this.formBuilder.group({
-      product: [productItem.product],
+      product: [productItem.product, Validators.required],
       quantity: [productItem.quantity, [Validators.required, Validators.min(0)]],
       unitPrice: [productItem.unitPrice, Validators.required],
       costPrice: [{value: productItem.costPrice, disabled: true}]

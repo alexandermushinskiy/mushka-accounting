@@ -1,9 +1,12 @@
 @import '../../../../variables';
 
-.form-control.ng-invalid {
-  box-shadow: 1px 0 0 $orange inset;
-  &:focus{
-    box-shadow: none;
+:host(.not-valid) {
+  .input-currency input {
+    //border-color: $orange;
+    box-shadow: inset 1px 0 0 0 $orange;
+    &:focus {
+      box-shadow: none;
+    }
   }
 }
 

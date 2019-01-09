@@ -1,7 +1,19 @@
+@import '../../../../variables';
+
 .placeholder {
   color: #8A8A8A;
 }
 
 .dropdown-toggle {
   background-color: #fff;
+}
+
+:host(.not-valid) {
+  .dropdown button {
+    //border-color: $orange;
+    box-shadow: inset 1px 0 0 0 $orange;
+    &:focus {
+      box-shadow: none;
+    }
+  }
 }

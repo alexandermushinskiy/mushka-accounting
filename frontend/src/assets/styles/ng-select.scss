@@ -1,3 +1,5 @@
+@import "../../variables";
+
 .ng-select.ng-select-multiple
 .ng-select-container
 .ng-value-container
@@ -132,6 +134,10 @@
 .ng-select.ng-select-single .ng-select-container {
   height: 28px;
 }
+
+.not-valid .ng-select.ng-select-single .ng-select-container {
+    box-shadow: inset 1px 0 0 0 $orange;
+  }
 
 .ng-dropdown-panel.ng-select-bottom .ng-dropdown-panel-items .ng-option:last-child {
   border-bottom-right-radius: 0;

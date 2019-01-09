@@ -30,7 +30,10 @@
                     <div class="col-md-6">
                       <div class="field-group">
                         <label for="address">Номер</label>
-                        <input type="text" class="form-control" formControlName="number">
+                        <input type="text" class="form-control"
+                                           formControlName="number"
+                                           [ngClass]="{'not-valid': orderForm.controls.number.invalid && isFormSubmitted}">
+                        <!-- <span class="validation-tip" *ngIf="orderForm.hasError('required', ['number']) && isFormSubmitted">Обязательно</span> -->
                       </div>
                     </div>
                   </div>
@@ -45,13 +48,17 @@
                     <div class="col-md-6">
                       <div class="field-group">
                         <label for="address">Область</label>
-                        <mk-dropdown [options]="regions" formControlName="region"></mk-dropdown>
+                        <mk-dropdown formControlName="region"
+                                     [options]="regions"
+                                     [ngClass]="{'not-valid': orderForm.controls.region.invalid && isFormSubmitted}">
+                        </mk-dropdown>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="field-group">
                         <label for="address">Населённый пункт</label>
-                        <input type="text" class="form-control" formControlName="city">
+                        <input type="text" class="form-control" formControlName="city"
+                               [ngClass]="{'not-valid': orderForm.controls.city.invalid && isFormSubmitted}">
                       </div>
                     </div>
                   </div>
@@ -69,19 +76,22 @@
                     <div class="col-sm-3">
                       <div class="field-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" formControlName="firstName">
+                        <input type="text" class="form-control" formControlName="firstName"
+                               [ngClass]="{'not-valid': orderForm.controls.firstName.invalid && isFormSubmitted}">
                       </div>
                     </div>
                     <div class="col-sm-3">
                       <div class="field-group">
                         <label>Фамилия</label>
-                        <input type="text" class="form-control" formControlName="lastName">
+                        <input type="text" class="form-control" formControlName="lastName"
+                               [ngClass]="{'not-valid': orderForm.controls.lastName.invalid && isFormSubmitted}">
                       </div>
                     </div>
                     <div class="col-sm-3">
                       <div class="field-group">
                         <label>Телефон</label>
-                        <input type="text" class="form-control" formControlName="phone">
+                        <input type="text" class="form-control" formControlName="phone"
+                               [ngClass]="{'not-valid': orderForm.controls.phone.invalid && isFormSubmitted}">
                       </div>
                     </div>
                     <div class="col-sm-3">
@@ -118,6 +128,7 @@
                         <div class="field-group">
                           <mk-select-products formControlName="product"
                                               [products]="productsList"
+                                              [ngClass]="{'not-valid': productControl.controls.product.invalid && isFormSubmitted}"
                                               (onProductSelected)="onProductSelected(index)"></mk-select-products>
                         </div>
                       </div>
@@ -137,8 +148,10 @@
                           <mk-currency-input formControlName="unitPrice"
                                               [placeholder]="'Цена'"
                                               [required]="true"
-                                              [id]="'unitPrice-' + index">
+                                              [id]="'unitPrice-' + index"
+                                              [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && isFormSubmitted}">
                           </mk-currency-input>
+                          
                         </div>
                       </div>
                       <div class="col-sm-2">
@@ -175,7 +188,12 @@
             <div class="col-md-12 cost">
               <span class="cost-title">Оплата:</span>
               <span class="cost-value"><mk-currency-input formControlName="cost"></mk-currency-input></span>
-              <span class="cost-payment-type"><mk-payment-methods-dropdown formControlName="costMethod" [required]="true"></mk-payment-methods-dropdown></span>
+              <span class="cost-payment-type">
+                <mk-payment-methods-dropdown
+                              formControlName="costMethod"
+                              [ngClass]="{'not-valid': orderForm.controls.costMethod.invalid && isFormSubmitted}">
+                </mk-payment-methods-dropdown>
+              </span>
             </div>
           </div>
           <div class="row notes-row">

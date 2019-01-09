@@ -30,15 +30,25 @@ select:-webkit-autofill {
     opacity: .65;
     background-color: $input-disabled-bg;
   }
-  &.ng-invalid {
+  &.not-valid {
     box-shadow: inset 1px 0 0 0 $orange;
+    //border-color: $orange;
     &:focus {
       box-shadow: none;
     }
   }
   &.required-dropdown {
     box-shadow: inset 1px 0 0 0 $orange;
+    //border-color: $orange;
   }
+}
+
+.validation-tip {
+  opacity: 0.65;
+  font-weight: bold;
+  font-size: 13px;
+  color: $red;
+  letter-spacing: 0;
 }
 
 .form-control-sm {
