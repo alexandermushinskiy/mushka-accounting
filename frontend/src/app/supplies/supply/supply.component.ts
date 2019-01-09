@@ -31,6 +31,7 @@ export class SupplyComponent implements OnInit {
   totalCost: number;
   suppliers: Supplier[];
   costPriceFactor = 0;
+  isFormSubmitted = false;
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -56,24 +57,6 @@ export class SupplyComponent implements OnInit {
       });
   }
 
-  private getRouteParams() {
-    this.route.params.subscribe(params => {
-      this.supplyId = params['id'];
-      this.isEdit = !!this.supplyId;
-      this.title = `${this.isEdit ? 'Редактирование поступления' : 'Новое поступление'}`;
-
-      if (this.isEdit) {
-        this.suppliesService.getById(this.supplyId)
-          .subscribe((delivery: Supply) => this.buildForm(delivery));
-      } else {
-        this.buildForm(new Supply({
-          cost: 0,
-          products: [new SupplyProduct({})]
-        }));
-      }
-    });
-  }
-
   addProduct() {
     const products = <FormArray>this.supplyForm.get('products');
     products.push(this.createProductModel(new SupplyProduct({})));
@@ -96,7 +79,7 @@ export class SupplyComponent implements OnInit {
     // const t1 = this.createSupplyModel(this.supplyForm.getRawValue());
     // console.info(t1);
     // return;
-
+    this.isFormSubmitted = true;
     if (this.supplyForm.invalid) {
       return;
     }
@@ -111,6 +94,24 @@ export class SupplyComponent implements OnInit {
         () => this.onSaveSuccess(),
         (errors: string[]) => this.onSaveFailed(errors)
       );
+  }
+
+  private getRouteParams() {
+    this.route.params.subscribe(params => {
+      this.supplyId = params['id'];
+      this.isEdit = !!this.supplyId;
+      this.title = `${this.isEdit ? 'Редактирование поступления' : 'Новое поступление'}`;
+
+      if (this.isEdit) {
+        this.suppliesService.getById(this.supplyId)
+          .subscribe((delivery: Supply) => this.buildForm(delivery));
+      } else {
+        this.buildForm(new Supply({
+          cost: 0,
+          products: [new SupplyProduct({})]
+        }));
+      }
+    });
   }
 
   private onSaveSuccess() {
@@ -131,7 +132,7 @@ export class SupplyComponent implements OnInit {
     this.supplyForm = this.formBuilder.group({
       requestDate: [supply.requestDate, Validators.required],
       receivedDate: [supply.receivedDate, Validators.required],
-      supplier: [new Supplier({id: supply.supplierId}), Validators.required],
+      supplier: [!!supply.supplierId ? new Supplier({id: supply.supplierId}) : null, Validators.required],
       bankFee: [supply.bankFee],
       deliveryCost: [supply.deliveryCost],
       deliveryCostMethod: [supply.deliveryCostMethod],
@@ -151,7 +152,7 @@ export class SupplyComponent implements OnInit {
 
   private createProductModel(productItem: SupplyProduct): FormGroup {
     return this.formBuilder.group({
-      product: [productItem.product],
+      product: [productItem.product, Validators.required],
       quantity: [productItem.quantity, Validators.required],
       unitPrice: [productItem.unitPrice, Validators.required]
     });
@@ -245,6 +246,11 @@ export class SupplyComponent implements OnInit {
     const deliveryCost = this.getControlValue(this.supplyForm.controls.deliveryCost);
     const bankFee = this.getControlValue(this.supplyForm.controls.bankFee);
     
+    if (deliveryCost === 0 && bankFee === 0) {
+      this.costPriceFactor = 0;
+      return;
+    }
+
     const productsCount = (<FormArray>this.supplyForm.get('products'))
       .controls.map((ctrl: FormGroup) => ctrl.controls.quantity.value)
       .reduce((prev, cur) => {

@@ -1,0 +1,11 @@
+@import '../../../../variables';
+
+:host(.not-valid) {
+  .input-wrapper .form-control {
+    //border-color: $orange;
+    box-shadow: inset 1px 0 0 0 $orange;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}

@@ -22,6 +22,7 @@ export class SupplierComponent implements OnInit {
   supplierId: string;
   errors: string[];
   title: string;
+  isFormSubmitted = false;
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -68,6 +69,7 @@ export class SupplierComponent implements OnInit {
   }
 
   saveSupplier() {
+    this.isFormSubmitted = true;
     if (this.supplierForm.invalid) {
       return;
     }

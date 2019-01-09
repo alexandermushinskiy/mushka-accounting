@@ -24,7 +24,8 @@
                 <div class="col-md-12">
                   <div class="field-group">
                     <label for="name">Наименование</label>
-                    <input type="text" id="name" class="form-control" formControlName="name" autocomplete="off">
+                    <input type="text" id="name" class="form-control" formControlName="name"
+                                      [ngClass]="{'not-valid': supplierForm.controls.name.invalid && isFormSubmitted}">
                   </div>
                 </div>
               </div>
@@ -33,7 +34,8 @@
                 <div class="col-md-12">
                   <div class="field-group">
                     <label>Список услуг</label>
-                    <textarea class="form-control text-area-vertical" rows="3" formControlName="service"></textarea>
+                    <textarea class="form-control text-area-vertical" rows="3" formControlName="service"
+                                      [ngClass]="{'not-valid': supplierForm.controls.service.invalid && isFormSubmitted}"></textarea>
                   </div>
                 </div>
               </div>
@@ -105,12 +107,14 @@
                   <div class="form-row contact-person-row" *ngFor="let contactPersonControl of supplierForm.get('contactPersons').controls; let index=index" [formGroupName]="index">
                     <div class="col-sm-4">
                       <div class="field-group">
-                        <input type="text" class="form-control" formControlName="name" />
+                        <input type="text" class="form-control" formControlName="name"
+                                  [ngClass]="{'not-valid': contactPersonControl.controls.name.invalid && isFormSubmitted}" />
                       </div>
                     </div>
                     <div class="col-sm-4">
                       <div class="field-group">
-                        <input type="text" class="form-control" formControlName="phones" />
+                        <input type="text" class="form-control" formControlName="phones"
+                                  [ngClass]="{'not-valid': contactPersonControl.controls.phones.invalid && isFormSubmitted}" />
                       </div>
                     </div>
                     <div class="col-sm-4">

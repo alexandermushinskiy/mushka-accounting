@@ -107,10 +107,10 @@
 </div>
 
 <ng-template #confirmRemoveTmpl>
-    <mk-confirmation
-            [confirmButtonText]="'Удалить'"
-            [text]="'Вы уверены, что хотите удалить выбранную поставку от поставщика <b>' + supplyToDelete.supplierName + '</b>?'"
-            (onClose)="closeModal()"
-            (onConfirm)="confirmDelete();">
-    </mk-confirmation>
-  </ng-template>
+  <mk-confirmation
+          [confirmButtonText]="'Удалить'"
+          [text]="'Вы уверены, что хотите удалить выбранную поставку от поставщика <b>' + supplyToDelete.supplierName + '</b>?'"
+          (onClose)="closeModal()"
+          (onConfirm)="confirmDelete();">
+  </mk-confirmation>
+</ng-template>

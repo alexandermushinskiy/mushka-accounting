@@ -25,13 +25,17 @@
                   <div class="col-md-6">
                     <div class="field-group">
                       <label>Дата заявки</label>
-                      <mk-datetimepicker-wrapper formControlName="requestDate" [required]="true"></mk-datetimepicker-wrapper>
+                      <mk-datetimepicker-wrapper formControlName="requestDate"
+                                          [ngClass]="{'not-valid': supplyForm.controls.requestDate.invalid && isFormSubmitted}">
+                      </mk-datetimepicker-wrapper>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="field-group">
                       <label>Дата получения</label>
-                      <mk-datetimepicker-wrapper formControlName="receivedDate" [required]="true"></mk-datetimepicker-wrapper>
+                      <mk-datetimepicker-wrapper formControlName="receivedDate"
+                                          [ngClass]="{'not-valid': supplyForm.controls.receivedDate.invalid && isFormSubmitted}">
+                      </mk-datetimepicker-wrapper>
                     </div>
                   </div>
                 </div>
@@ -46,7 +50,10 @@
                   <div class="col-md-12">
                     <div class="field-group">
                       <label for="address">Наименование</label>
-                      <mk-suppliers-dropdown formControlName="supplier" [suppliers]="suppliers"></mk-suppliers-dropdown>
+                      <mk-suppliers-dropdown formControlName="supplier"
+                                             [suppliers]="suppliers"
+                                             [ngClass]="{'not-valid': supplyForm.controls.supplier.invalid && isFormSubmitted}">
+                      </mk-suppliers-dropdown>
                     </div>
                   </div>
                 </div>
@@ -74,7 +81,9 @@
                         <div class="col-sm-4">
                           <div class="field-group">
                             <mk-select-products formControlName="product"
-                                                [products]="productsList"></mk-select-products>
+                                                [products]="productsList"
+                                                [ngClass]="{'not-valid': productControl.controls.product.invalid && isFormSubmitted}">
+                            </mk-select-products>
                           </div>
                         </div>
                         <div class="col-sm-2">
@@ -88,18 +97,21 @@
                             <mk-currency-input formControlName="unitPrice"
                                                [placeholder]="'Цена'"
                                                [required]="true"
-                                               [id]="'unitPrice-' + index">
+                                               [id]="'unitPrice-' + index"
+                                               [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && isFormSubmitted}">
                             </mk-currency-input>
                           </div>
                         </div>
                         <div class="col-sm-2">
                           <div class="field-group">
-                            <input type="number" class="form-control" formControlName="quantity" placeholder="Количество" />
+                            <input type="number" class="form-control" formControlName="quantity" placeholder="Количество"
+                                                [ngClass]="{'not-valid': productControl.controls.quantity.invalid && isFormSubmitted}"/>
                           </div>
                         </div>
                         <div class="col-sm-2">
                           <div class="field-group">
-                            <input type="text" class="form-control" disabled [value]="productControl.value.unitPrice + costPriceFactor">
+                            <input type="text" class="form-control" disabled
+                                               value="{{ productControl.value.unitPrice + costPriceFactor }}">
                           </div>
                           <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="supplyForm.get('products').controls.length > 1">
                             <i class="ico ico-close"></i>
@@ -128,14 +140,18 @@
             <div class="col-md-12 cost">
               <span class="cost-title">Оплата:</span>
               <span class="cost-value"><mk-currency-input formControlName="cost"></mk-currency-input></span>
-              <span class="cost-payment-type"><mk-payment-methods-dropdown formControlName="costMethod"></mk-payment-methods-dropdown></span>
+              <span class="cost-payment-type">
+                <mk-payment-methods-dropdown formControlName="costMethod"
+                                  [ngClass]="{'not-valid': supplyForm.controls.costMethod.invalid && isFormSubmitted}">
+                </mk-payment-methods-dropdown>
+              </span>
             </div>
             <div class="col-md-12 cost">
               <span class="cost-title">Предоплата:</span>
               <span class="cost-value"><mk-currency-input formControlName="prepayment"></mk-currency-input></span>
               <span class="cost-payment-type">
                 <mk-payment-methods-dropdown formControlName="prepaymentMethod"
-                                             [required]="supplyForm.hasError('required', ['prepaymentMethod'])">
+                                  [ngClass]="{'not-valid': supplyForm.controls.prepaymentMethod.invalid && isFormSubmitted}">
                 </mk-payment-methods-dropdown>
               </span>
             </div>
@@ -144,7 +160,8 @@
               <span class="cost-value"><mk-currency-input formControlName="deliveryCost"></mk-currency-input></span>
               <span class="cost-payment-type">
                 <mk-payment-methods-dropdown formControlName="deliveryCostMethod"
-                                             [required]="supplyForm.hasError('required', ['deliveryCostMethod'])">
+                                  [ngClass]="{'not-valid': supplyForm.controls.deliveryCostMethod.invalid && isFormSubmitted}">
+                                  <!--[required]="supplyForm.hasError('required', ['deliveryCostMethod'])"-->
                 </mk-payment-methods-dropdown>
               </span>
             </div>
