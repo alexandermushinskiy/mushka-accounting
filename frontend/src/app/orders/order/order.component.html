@@ -148,7 +148,7 @@
                                   formControlName="quantity"
                                   placeholder="Количество"
                                   min="1"
-                                  (input)="onQuantityChanged(index)" />
+                                  (input)="onQuantityChanged(index, $event.target.value)" />
                         </div>  
                         <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="orderForm.get('products').controls.length > 1">
                           <i class="ico ico-close"></i>

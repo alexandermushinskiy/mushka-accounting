@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs/Subject';
 
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { OrdersService } from '../../core/api/orders.service';
@@ -10,13 +11,14 @@ import { Product } from '../../shared/models/product.model';
 import { ProductsServce } from '../../core/api/products.service';
 import { ukrRegions } from '../shared/constants/urk-regions.const';
 import { DatetimeService } from '../../core/datetime/datetime.service';
+import { UnsubscriberComponent } from '../../shared/hooks/unsubscriber.component';
 
 @Component({
   selector: 'mk-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss']
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent extends UnsubscriberComponent implements OnInit {
   orderForm: FormGroup;
   isEdit = false;
   isLoading = false;
@@ -27,19 +29,31 @@ export class OrderComponent implements OnInit {
   productsList: Product[];
   regions = ukrRegions;
 
+  private quantityTerms$ = new Subject<{index: number, quantity: number}>();
+
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private datetimeService: DatetimeService,
               private ordersService: OrdersService,
               private productsService: ProductsServce,
-              private notificationsService: NotificationsService) { }
+              private notificationsService: NotificationsService) {
+    super();
+  }
 
   ngOnInit() {
     this.productsService.getAll()
       .subscribe((products: Product[]) => {
         this.productsList = products;
         this.getRouteParams();
+      });
+
+    this.quantityTerms$
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .takeUntil(this.ngUnsubscribe$)
+      .subscribe((data: {index: number, quantity: number}) => {
+        this.setCostPrice(data.index);
       });
   }
 
@@ -65,8 +79,8 @@ export class OrderComponent implements OnInit {
     this.setCostPrice(index);
   }
 
-  onQuantityChanged(index: number, quantity: number) {
-    this.setCostPrice(index);
+  onQuantityChanged(index: number, quantity: any) {
+    this.quantityTerms$.next({index, quantity});
   }
 
   saveOrder() {
