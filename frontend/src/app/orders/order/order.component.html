@@ -118,7 +118,7 @@
                         <div class="field-group">
                           <mk-select-products formControlName="product"
                                               [products]="productsList"
-                                              (onProductSelected)="onProductSelected($event.id, index)"></mk-select-products>
+                                              (onProductSelected)="onProductSelected(index)"></mk-select-products>
                         </div>
                       </div>
                       <div class="col-sm-2">
@@ -143,7 +143,12 @@
                       </div>
                       <div class="col-sm-2">
                         <div class="field-group">
-                          <input type="number" class="form-control" formControlName="quantity" placeholder="Количество" />
+                          <input type="number"
+                                  class="form-control"
+                                  formControlName="quantity"
+                                  placeholder="Количество"
+                                  min="1"
+                                  (input)="onQuantityChanged(index)" />
                         </div>  
                         <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="orderForm.get('products').controls.length > 1">
                           <i class="ico ico-close"></i>

@@ -43,8 +43,8 @@ export class SelectProductsComponent implements OnInit, ControlValueAccessor {
   }
 
   onChange(product: Product) {
-    this.onProductSelected.emit(product);
     this.onChangeCallback(product);
+    this.onProductSelected.emit(product);
   }
 
   customSearchFn(term: string, item: Product) {

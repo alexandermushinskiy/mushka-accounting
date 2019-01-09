@@ -45,7 +45,7 @@ export class OrderComponent implements OnInit {
 
   addProduct() {
     const products = <FormArray>this.orderForm.get('products');
-    products.push(this.createProductModel(new OrderProduct({})));
+    products.push(this.createProductModel(new OrderProduct({ quantity: 1 })));
   }
 
   removeProduct(index: number) {
@@ -60,13 +60,13 @@ export class OrderComponent implements OnInit {
 
     return product.vendorCode + (!!product.size ? ` / ${product.size.name}` : ' / -');
   }
-  
-  onProductSelected(productId: string, index: number) {
-    // this.productsService.getCostPrice(productId)
-    //   .subscribe((costPrice: number) => {
-    //     const productCtrl = <FormGroup>(<FormArray>this.orderForm.get('products')).at(index);
-    //     productCtrl.controls.costPrice.setValue(costPrice, {onlySelf: true});
-    //   });
+
+  onProductSelected(index: number) {
+    this.setCostPrice(index);
+  }
+
+  onQuantityChanged(index: number, quantity: number) {
+    this.setCostPrice(index);
   }
 
   saveOrder() {
@@ -115,7 +115,7 @@ export class OrderComponent implements OnInit {
         this.buildForm(new Order({
           cost: 0,
           orderDate: this.datetimeService.getCurrentDateInString(),
-          products: [new OrderProduct({})]
+          products: [new OrderProduct({ quantity: 1 })]
         }));
       }
     });
@@ -145,7 +145,7 @@ export class OrderComponent implements OnInit {
   private createProductModel(productItem: OrderProduct): FormGroup {
     return this.formBuilder.group({
       product: [productItem.product],
-      quantity: [productItem.quantity, Validators.required],
+      quantity: [productItem.quantity, [Validators.required, Validators.min(0)]],
       unitPrice: [productItem.unitPrice, Validators.required],
       costPrice: [{value: productItem.costPrice, disabled: true}]
     });
@@ -161,27 +161,15 @@ export class OrderComponent implements OnInit {
     let cost = 0;
     (this.orderForm.get('products') as FormArray).controls.forEach((control, index) => {
       const ctrlValue = control.value;
-      
+
       if (!!ctrlValue.unitPrice && !!ctrlValue.quantity) {
         cost += ctrlValue.unitPrice * ctrlValue.quantity;
-      }
-    
-      if (!!ctrlValue.product) {
-        this.setCostPrice(ctrlValue.product.id, !!ctrlValue.quantity ? ctrlValue.quantity : 1, index);
       }
     });
 
     const costCtrl = this.orderForm.get('cost');
     costCtrl.setValue(Math.round(cost * 100) / 100, {onlySelf: true});
     costCtrl.updateValueAndValidity();
-  }
-
-  private setCostPrice(productId: string, productsCount: number, index: number) {
-    this.productsService.getCostPrice(productId, productsCount)
-      .subscribe((costPrice: number) => {
-        const productCtrl = <FormGroup>(<FormArray>this.orderForm.get('products')).at(index);
-        productCtrl.controls.costPrice.setValue(costPrice, {onlySelf: true});
-      });
   }
 
   private createOrderModel(formRawValue: any): Order {
@@ -209,5 +197,19 @@ export class OrderComponent implements OnInit {
       unitPrice: formValue.unitPrice,
       costPrice: formValue.costPrice
     });
+  }
+
+  private setCostPrice(index: number) {
+    const productCtrl = <FormGroup>(<FormArray>this.orderForm.get('products')).at(index);
+
+    if (!!productCtrl.value.product && !!productCtrl.value.quantity) {
+      const productId = productCtrl.value.product.id;
+      const quantity = !!productCtrl.value.quantity ? productCtrl.value.quantity : 1;
+
+      this.productsService.getCostPrice(productId, quantity)
+        .subscribe((costPrice: number) => {
+          productCtrl.controls.costPrice.setValue(costPrice, {onlySelf: true});
+        });
+    }
   }
 }
