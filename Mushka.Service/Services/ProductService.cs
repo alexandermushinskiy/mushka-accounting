@@ -50,9 +50,11 @@ namespace Mushka.Service.Services
             return CreateInfoValidationResponse(products, message);
         }
 
-        public async Task<ValidationResponse<IEnumerable<Product>>> GetInStockAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<ValidationResponse<IEnumerable<Product>>> GetInStockAsync(bool inStock, CancellationToken cancellationToken = default(CancellationToken))
         {
-            IEnumerable<Product> products = (await productRepository.GetAsync(prod => prod.Quantity > 0, cancellationToken))
+            IEnumerable<Product> products = (inStock 
+                    ? await productRepository.GetAsync(prod => prod.Quantity > 0, cancellationToken)
+                    : await productRepository.GetAllAsync(cancellationToken))
                 .OrderBy(product => product.Name)
                 .ToList();
 

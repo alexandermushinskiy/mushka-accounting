@@ -16,7 +16,7 @@ import { SelectProduct } from '../../models/select-product.model';
 })
 export class SelectProductsComponent implements OnInit, ControlValueAccessor {
   @Input() products: SelectProduct[];
-  @Input() notFoundText = 'Нет данных';
+  @Input() notFoundText = 'Товар не найден';
   @Input() placeholder = 'Выберете товар';
   @Input() canClearAll = true;
   @Output() onProductSelected = new EventEmitter<SelectProduct>();

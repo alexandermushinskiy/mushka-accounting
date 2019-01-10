@@ -38,9 +38,9 @@ namespace Mushka.WebApi.Controllers
         }
 
         [HttpGet("instock")]
-        public async Task<IActionResult> GetInStock()
+        public async Task<IActionResult> GetInStock(bool inStock)
         {
-            var products = await productService.GetInStockAsync(cancellationTokenSourceProvider.Get().Token);
+            var products = await productService.GetInStockAsync(inStock, cancellationTokenSourceProvider.Get().Token);
             var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Product>>, SelectProductsResponseModel>(products);
 
             return actionResultProvider.Get(clientResponse);

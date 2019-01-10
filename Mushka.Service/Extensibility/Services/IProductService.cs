@@ -13,7 +13,7 @@ namespace Mushka.Service.Extensibility.Services
 
         Task<ValidationResponse<IEnumerable<Product>>> GetByCriteriaAsync(string criteria, CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<ValidationResponse<IEnumerable<Product>>> GetInStockAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<ValidationResponse<IEnumerable<Product>>> GetInStockAsync(bool inStock, CancellationToken cancellationToken = default(CancellationToken));
 
         Task<ValidationResponse<IEnumerable<Size>>> GetSizesAsync(CancellationToken cancellationToken = default(CancellationToken));
 

@@ -86,7 +86,8 @@ VALUES
 ('07DF9000-2680-43E7-BA2C-D4F0C48A8CB5', 'B425D75B-2E72-45F0-A55D-3BA400051E5F', N'PCARD1', '2019-01-04', N'Открытка', NULL, 1500),
 -- Boxes
 ('A5C1CD82-3D84-4716-8ADB-F6B6B32B2D4D', '0E7BE1DE-267C-4C0A-8EE9-ABA0A267F27A', N'BOX003', '2019-01-04', N'Коробка-улыбка', NULL, 100),
-('A6BBAD88-3820-4972-8AE9-FC931A62A1E7', '0E7BE1DE-267C-4C0A-8EE9-ABA0A267F27A', N'PCKG01', '2019-01-09', N'Пакет', NULL, 500);
+('A5C1CD82-3D84-4716-8ADB-F6B6B32B2D4D', '0E7BE1DE-267C-4C0A-8EE9-ABA0A267F27A', N'BOX003', '2019-01-04', N'Коробка-улыбка', NULL, 100),
+('CA5038BF-017F-4431-AB59-903E57E10923', '0E7BE1DE-267C-4C0A-8EE9-ABA0A267F27A', N'BNK001', '2019-01-04', N'Банка 250 мл', NULL, 0);
 
 -- Suppliers
 -- Нова Линия
@@ -107,7 +108,7 @@ VALUES
 ('D70A24DC-BC90-414F-B79A-725920CC5470', N'ЮРГ', N'Одесса, ул. Малая Арнаутская, 39', NULL, 'http://yrg.com.ua/', GETDATE(), N'Визитки, пакеты')
 INSERT INTO [ContactPersons] ([Id], [Name], [Phones], [SupplierId])
 VALUES
-('36C6230B-0C40-4997-A2D5-0CC6B6D59DA1', N'Алина Вергелес', '048 734 40 52', 'D70A24DC-BC90-414F-B79A-725920CC5470')
+('36C6230B-0C40-4997-A2D5-0CC6B6D59DA1', N'Алина Вергелес', '0487344052', 'D70A24DC-BC90-414F-B79A-725920CC5470')
 
 -- PrintOk
 INSERT INTO [Suppliers] ([Id], [Name], [Address], [Email], [WebSite], [CreatedOn], [Service])
@@ -142,6 +143,24 @@ VALUES
 INSERT INTO [PaymentCards] ([Id], [Number], [Owner], [SupplierId])
 VALUES
 ('DAFE233F-22B2-4D75-AA4F-FF4CDFE0EF6A', '5168742219637877', N'Марина Бондарева', '298EA086-08A2-4D10-8335-C77C2334720B')
+
+-- Пласт ЧП
+INSERT INTO [Suppliers] ([Id], [Name], [Address], [Email], [WebSite], [CreatedOn], [Service], [Notes])
+VALUES
+('53A029C9-FF2B-4F1E-A16B-99EDD66AF620', N'Пласт ЧП', N'Киев', NULL,
+	'https://kiev.flagma.ua/pishchevaya-banka-s-kryshkoy-plastikovaya-o3030502.html',
+	GETDATE(),
+	N'Банки 250 мл',
+	'банки с крышкой 250 мл
+	50 штук - 7 грн
+	100 штук - 6 грн 
+	270 штук - 4.9 грн')
+INSERT INTO [ContactPersons] ([Id], [Name], [Phones], [Email], [SupplierId])
+VALUES
+('FD1641B0-09D9-4643-A501-AC9D52562FA9', N'Елена', '0509878868', NULL, '53A029C9-FF2B-4F1E-A16B-99EDD66AF620')
+INSERT INTO [PaymentCards] ([Id], [Number], [Owner], [SupplierId])
+VALUES
+('D0FFFD52-028E-4B23-AA58-29E13842E70F', '4149625810703486', N'Куприян Оксана Павловна ', '53A029C9-FF2B-4F1E-A16B-99EDD66AF620')
 
 -- Supplies
 INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes])
