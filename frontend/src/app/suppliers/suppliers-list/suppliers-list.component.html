@@ -14,7 +14,8 @@
                   [headerHeight]="40"
                   [rowHeight]="40"
                   [rows]="supplierRows"
-                  [columnMode]="'force'">
+                  [columnMode]="'force'"
+                  (activate)="onActive($event)">
 
       <ngx-datatable-column name="name">
         <ng-template ngx-datatable-header-template>
@@ -70,6 +71,15 @@
         </ng-template>
       </ngx-datatable-column>
 
+      <ngx-datatable-column [width]="80" [canAutoResize]="false" [resizeable]="false">
+        <ng-template ngx-datatable-cell-template let-expanded="expanded" let-row="row" let-rowIndex="rowIndex">
+          <span class="buttons">
+            <a class="grid-edit edit" [routerLink]="[row.id]"></a>
+            <a class="grid-remove" (click)="delete(row.id)"></a>
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+
       <ngx-datatable-column [width]="70" [canAutoResize]="false" [resizeable]="false">
         <ng-template ngx-datatable-cell-template let-expanded="expanded" let-row="row" let-rowIndex="rowIndex">
           <div class="more" (click)="toggleExpandRow(row, rowIndex)">
@@ -77,25 +87,21 @@
           </div>
         </ng-template>
       </ngx-datatable-column>
-      
+
       <ngx-datatable-row-detail [rowHeight]="'auto'" #myDetailRow>
         <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
           <div class="row-details-wrapper">
             <div class="details-column" [style.width.px]="contactsWidth">
-              <span class="column-title">Контакты:</span><br>
+              <span class="column-title">Контакты:</span>
               <span class="column-data">
                 <span *ngFor="let contactPerson of row.contactPersons">
                   <div class="contact-person">
                     <b>{{ contactPerson.name }}</b><br>
-                    <span><span class="contact-person-data">тел:</span> {{ contactPerson.phones }}</span><br>
-                    <span><span class="contact-person-data">міло:</span> {{ !!contactPerson.email ? contactPerson.email : '-' }}</span><br>
+                    <span> {{ contactPerson.phones }}</span><br>
+                    <span>{{ !!contactPerson.email ? contactPerson.email : '' }}</span><br>
                   </div>
                 </span>
               </span>
-            </div>
-            <div class="details-column" >
-              <a class="edit" [routerLink]="[row.id]">Редактировать</a>
-              <a class="remove" (click)="delete(row.id)">Удалить</a>
             </div>
           </div>
         </ng-template>

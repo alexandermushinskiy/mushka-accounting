@@ -93,10 +93,10 @@ VALUES
 INSERT INTO [Suppliers] ([Id], [Name], [Address], [Email], [WebSite], [CreatedOn], [Service])
 VALUES
 ('CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', N'Нова Линия', N'Тернопольская обл., с. Чистилов', 'office@novaliniya.com.ua', 'https://novaliniya.com.ua/', GETDATE(), N'Носки')
-INSERT INTO [ContactPersons] ([Id], [Name], [Phones], [SupplierId])
+INSERT INTO [ContactPersons] ([Id], [Name], [Phones], [Email], [SupplierId])
 VALUES
-('B3B024EB-D8FB-4F0A-B6A3-1D2CF0784617', N'Леся', '0984162095', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45'),
-('E944B628-61FE-412D-9D5A-B9C2EA748E06', N'Степан', '0676748494', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45')
+('B3B024EB-D8FB-4F0A-B6A3-1D2CF0784617', N'Леся', '0984162095', 'fs.kamin@gmail.com', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45'),
+('E944B628-61FE-412D-9D5A-B9C2EA748E06', N'Степан', '0676748494', NULL, 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45')
 INSERT INTO [PaymentCards] ([Id], [Number], [Owner], [SupplierId])
 VALUES
 ('DCC06950-941E-4D1E-A2A4-8347C287775B', '5363542600860200', N'Чубак Степан', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45')
@@ -135,7 +135,7 @@ VALUES
 -- Kraft package
 INSERT INTO [Suppliers] ([Id], [Name], [Address], [Email], [WebSite], [CreatedOn], [Service])
 VALUES
-('298EA086-08A2-4D10-8335-C77C2334720B', N'Марина Бондарева', N'Киев', NULL, NULL, GETDATE(), N'Пакеты')
+('298EA086-08A2-4D10-8335-C77C2334720B', N'Kraft Package', N'Киев', NULL, NULL, GETDATE(), N'Пакеты')
 INSERT INTO [ContactPersons] ([Id], [Name], [Phones], [Email], [SupplierId])
 VALUES
 ('DE08C990-C491-41EE-9700-EFA10E5C9E8A', N'Марина Бондарева', '0507009601', NULL, '298EA086-08A2-4D10-8335-C77C2334720B')

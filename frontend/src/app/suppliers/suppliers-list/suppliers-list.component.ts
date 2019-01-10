@@ -41,11 +41,17 @@ export class SuppliersListComponent implements OnInit {
     this.loadSuppliers();
   }
 
+  onActive(event: any) {
+    if (event.type === 'click') {
+      event.cellElement.blur();
+    }
+  }
+
   toggleExpandRow(row, index) {
     row.index = index;
 
-    this.contactsWidth = this.getColumnWidth('name') + this.getColumnWidth('service') +
-                         this.getColumnWidth('address') + this.getColumnWidth('email');
+    // this.contactsWidth = this.getColumnWidth('name') + this.getColumnWidth('service') +
+    //                      this.getColumnWidth('address') + this.getColumnWidth('email');
 
     this.datatable.rowDetail.toggleExpandRow(row);
   }
@@ -55,8 +61,10 @@ export class SuppliersListComponent implements OnInit {
   }
 
   delete(supplierId: string) {
-    this.supplierToDelete = supplierId;
-    this.modalRef = this.modalService.open(this.confirmRemoveTmpl, this.modalConfig);
+    setTimeout(() => {
+      this.supplierToDelete = supplierId;
+      this.modalRef = this.modalService.open(this.confirmRemoveTmpl, this.modalConfig);
+    });
   }
 
   confirmDelete() {
