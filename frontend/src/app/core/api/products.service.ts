@@ -6,6 +6,7 @@ import { Product } from '../../shared/models/product.model';
 import { environment } from '../../../environments/environment';
 import { ConverterService } from '../converter/converter.service';
 import { Size } from '../../shared/models/size.model';
+import { SelectProduct } from '../../shared/models/select-product.model';
 
 @Injectable()
 export class ProductsServce {
@@ -19,6 +20,12 @@ export class ProductsServce {
   getAll(): Observable<Product[]>  {
     return this.http.get(this.endPoint)
       .map((res: any) => this.converterService.convertToProducts(res.data))
+      .catch((res: any) => throwError(res.error.messages));
+  }
+
+  getAllForSelect(): Observable<SelectProduct[]> {
+    return this.http.get(`${this.endPoint}/select`)
+      .map((res: any) => this.converterService.convertToSelectProducts(res.data))
       .catch((res: any) => throwError(res.error.messages));
   }
 

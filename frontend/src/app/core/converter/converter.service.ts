@@ -14,6 +14,7 @@ import { Order } from '../../shared/models/order.model';
 import { OrderProduct } from '../../shared/models/order-product.model';
 import { Customer } from '../../shared/models/customer.model';
 import { OrderList } from '../../orders/shared/models/order-list.model';
+import { SelectProduct } from '../../shared/models/select-product.model';
 
 @Injectable()
 export class ConverterService {
@@ -30,6 +31,17 @@ export class ConverterService {
       name: source.name,
       isSizeRequired: source.isSizeRequired
     });
+  }
+
+  convertToSelectProducts(response: any[]): SelectProduct[] {
+    return response.map(res => new SelectProduct({
+        id: res.id,
+        name: res.name,
+        vendorCode: res.vendorCode,
+        categoryName: res.categoryName,
+        sizeName: res.sizeName
+      })
+    );
   }
 
   convertToProducts(response: any[]): Product[] {
@@ -164,6 +176,7 @@ export class ConverterService {
       products: source.products.map((prod: any) => new OrderProduct({
         quantity: prod.quantity,
         unitPrice: prod.unitPrice,
+        costPrice: prod.costPrice,
         product: {
           id: prod.id,
           name: prod.name,

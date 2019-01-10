@@ -7,11 +7,11 @@ import { NotificationsService } from '../../core/notifications/notifications.ser
 import { OrdersService } from '../../core/api/orders.service';
 import { Order } from '../../shared/models/order.model';
 import { OrderProduct } from '../../shared/models/order-product.model';
-import { Product } from '../../shared/models/product.model';
 import { ProductsServce } from '../../core/api/products.service';
 import { ukrRegions } from '../shared/constants/urk-regions.const';
 import { DatetimeService } from '../../core/datetime/datetime.service';
 import { UnsubscriberComponent } from '../../shared/hooks/unsubscriber.component';
+import { SelectProduct } from '../../shared/models/select-product.model';
 
 @Component({
   selector: 'mk-order',
@@ -26,7 +26,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   orderId: string;
   errors: string[];
   title: string;
-  productsList: Product[];
+  productsList: SelectProduct[];
   regions = ukrRegions;
   isFormSubmitted = false;
 
@@ -43,8 +43,8 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.productsService.getAll()
-      .subscribe((products: Product[]) => {
+    this.productsService.getAllForSelect()
+      .subscribe((products: SelectProduct[]) => {
         this.productsList = products;
         this.getRouteParams();
       });
@@ -60,7 +60,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
 
   addProduct() {
     const products = <FormArray>this.orderForm.get('products');
-    products.push(this.createProductModel(new OrderProduct({ quantity: 1 })));
+    products.push(this.createProductFormGroup(new OrderProduct({ quantity: 1 })));
   }
 
   removeProduct(index: number) {
@@ -68,12 +68,12 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
     products.removeAt(index);
   }
 
-  getProductSizeAndVendorCode(product: Product): string {
+  getProductSizeAndVendorCode(product: SelectProduct): string {
     if (!product) {
       return '';
     }
 
-    return product.vendorCode + (!!product.size ? ` / ${product.size.name}` : ' / -');
+    return product.vendorCode + (!!product.sizeName ? ` / ${product.sizeName}` : ' / -');
   }
 
   onProductSelected(index: number) {
@@ -150,19 +150,19 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
       phone: [order.phone, Validators.required],
       email: [order.email],
       products: this.formBuilder.array(
-        order.products.map(param => this.createProductModel(param))
+        order.products.map(param => this.createProductFormGroup(param))
       )
     });
 
     this.addFieldChangeListeners();
   }
 
-  private createProductModel(productItem: OrderProduct): FormGroup {
+  private createProductFormGroup(orderProduct: OrderProduct): FormGroup {
     return this.formBuilder.group({
-      product: [productItem.product, Validators.required],
-      quantity: [productItem.quantity, [Validators.required, Validators.min(0)]],
-      unitPrice: [productItem.unitPrice, Validators.required],
-      costPrice: [{value: productItem.costPrice, disabled: true}]
+      product: [orderProduct.product, Validators.required],
+      quantity: [orderProduct.quantity, [Validators.required, Validators.min(0)]],
+      unitPrice: [orderProduct.unitPrice, Validators.required],
+      costPrice: [{value: orderProduct.costPrice, disabled: true}]
     });
   }
 

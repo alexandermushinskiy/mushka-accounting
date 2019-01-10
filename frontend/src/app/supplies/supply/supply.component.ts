@@ -5,13 +5,13 @@ import { Observable } from 'rxjs';
 
 import { SuppliesService } from '../../core/api/supplies.service';
 import { Supply } from '../shared/models/supply.model';
-import { Product } from '../../shared/models/product.model';
 import { ProductsServce } from '../../core/api/products.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { SupplyProduct } from '../shared/models/supply-product.model';
 import { paymentMethods } from '../shared/constants/payment-methods.const';
 import { SuppliersService } from '../../core/api/suppliers.service';
 import { Supplier } from '../../shared/models/supplier.model';
+import { SelectProduct } from '../../shared/models/select-product.model';
 
 @Component({
   selector: 'mk-supply',
@@ -27,7 +27,7 @@ export class SupplyComponent implements OnInit {
   errors: string[];
   title: string;
   paymentMethodsList = paymentMethods;
-  productsList: Product[];
+  productsList: SelectProduct[];
   totalCost: number;
   suppliers: Supplier[];
   costPriceFactor = 0;
@@ -46,7 +46,7 @@ export class SupplyComponent implements OnInit {
 
     Observable.forkJoin(
       this.suppliersService.getAll(),
-      this.productsService.getAll()
+      this.productsService.getAllForSelect()
       ).subscribe(([suppliers, products]) => {
         this.suppliers = suppliers;
         this.productsList = products;
@@ -59,7 +59,7 @@ export class SupplyComponent implements OnInit {
 
   addProduct() {
     const products = <FormArray>this.supplyForm.get('products');
-    products.push(this.createProductModel(new SupplyProduct({})));
+    products.push(this.createProductFormGroup(new SupplyProduct({})));
   }
 
   removeProduct(index: number) {
@@ -67,12 +67,12 @@ export class SupplyComponent implements OnInit {
     products.removeAt(index);
   }
 
-  getProductSizeAndVendorCode(product: Product): string {
+  getProductSizeAndVendorCode(product: SelectProduct): string {
     if (!product) {
       return '';
     }
 
-    return product.vendorCode + (!!product.size ? ` / ${product.size.name}` : ' / -');
+    return product.vendorCode + (!!product.sizeName ? ` / ${product.sizeName}` : ' / -');
   }
 
   saveSupply() {
@@ -142,7 +142,7 @@ export class SupplyComponent implements OnInit {
       costMethod: [supply.costMethod, Validators.required],
       notes: [supply.notes],
       products: this.formBuilder.array(
-        supply.products.map(param => this.createProductModel(param))
+        supply.products.map(param => this.createProductFormGroup(param))
       )
     });
 
@@ -150,7 +150,7 @@ export class SupplyComponent implements OnInit {
     this.calculateCostPriceFactor();
   }
 
-  private createProductModel(productItem: SupplyProduct): FormGroup {
+  private createProductFormGroup(productItem: SupplyProduct): FormGroup {
     return this.formBuilder.group({
       product: [productItem.product, Validators.required],
       quantity: [productItem.quantity, Validators.required],
@@ -241,11 +241,11 @@ export class SupplyComponent implements OnInit {
       costPrice: formValue.unitPrice + this.costPriceFactor
     });
   }
-  
+
   private calculateCostPriceFactor() {
     const deliveryCost = this.getControlValue(this.supplyForm.controls.deliveryCost);
     const bankFee = this.getControlValue(this.supplyForm.controls.bankFee);
-    
+
     if (deliveryCost === 0 && bankFee === 0) {
       this.costPriceFactor = 0;
       return;
@@ -257,7 +257,7 @@ export class SupplyComponent implements OnInit {
         return prev + (!!cur ? cur : 0);
       });
 
-    this.costPriceFactor = Math.round((deliveryCost + bankFee)/productsCount * 100) / 100;
+    this.costPriceFactor = Math.round((deliveryCost + bankFee) / productsCount * 100) / 100;
   }
 
   private getControlValue(control: AbstractControl): number {
