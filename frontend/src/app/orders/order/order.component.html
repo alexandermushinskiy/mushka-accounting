@@ -129,7 +129,8 @@
                           <mk-select-products formControlName="product"
                                               [products]="productsList"
                                               [ngClass]="{'not-valid': productControl.controls.product.invalid && isFormSubmitted}"
-                                              (onProductSelected)="onProductSelected(index)"></mk-select-products>
+                                              (onProductSelected)="onProductSelected($event, index)">
+                          </mk-select-products>
                         </div>
                       </div>
                       <div class="col-sm-2">
@@ -151,7 +152,6 @@
                                               [id]="'unitPrice-' + index"
                                               [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && isFormSubmitted}">
                           </mk-currency-input>
-                          
                         </div>
                       </div>
                       <div class="col-sm-2">
@@ -160,8 +160,11 @@
                                   class="form-control"
                                   formControlName="quantity"
                                   placeholder="Количество"
-                                  min="1"
+                                  [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && isFormSubmitted}"
                                   (input)="onQuantityChanged(index, $event.target.value)" />
+                          <span class="validation-tip" *ngIf="productControl.hasError('max', ['quantity']) && isFormSubmitted">
+                            В наличие {{ productControl.value.product.quantity }}
+                          </span>
                         </div>  
                         <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="orderForm.get('products').controls.length > 1">
                           <i class="ico ico-close"></i>

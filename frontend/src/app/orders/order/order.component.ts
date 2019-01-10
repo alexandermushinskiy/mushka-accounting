@@ -43,7 +43,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.productsService.getAllForSelect()
+    this.productsService.getInStock()
       .subscribe((products: SelectProduct[]) => {
         this.productsList = products;
         this.getRouteParams();
@@ -76,8 +76,8 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
     return product.vendorCode + (!!product.sizeName ? ` / ${product.sizeName}` : ' / -');
   }
 
-  onProductSelected(index: number) {
-    this.setCostPrice(index);
+  onProductSelected(product: SelectProduct, index: number) {
+    this.setCostPrice(index, product.quantity);
   }
 
   onQuantityChanged(index: number, quantity: any) {
@@ -214,12 +214,22 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
     });
   }
 
-  private setCostPrice(index: number) {
+  private setCostPrice(index: number, maxQuantity: number | null = null) {
     const productCtrl = <FormGroup>(<FormArray>this.orderForm.get('products')).at(index);
+    const ctrlValue = productCtrl.value;
 
-    if (!!productCtrl.value.product && !!productCtrl.value.quantity) {
-      const productId = productCtrl.value.product.id;
-      const quantity = !!productCtrl.value.quantity ? productCtrl.value.quantity : 1;
+    if (!ctrlValue.product) {
+      return;
+    }
+
+    if (!!maxQuantity) {
+      productCtrl.controls.quantity.setValidators([Validators.max(maxQuantity)]);
+      productCtrl.controls.quantity.updateValueAndValidity();
+    }
+
+    if (!!ctrlValue.quantity) {
+      const productId = ctrlValue.product.id;
+      const quantity = !!ctrlValue.quantity ? ctrlValue.quantity : 1;
 
       this.productsService.getCostPrice(productId, quantity)
         .subscribe((costPrice: number) => {

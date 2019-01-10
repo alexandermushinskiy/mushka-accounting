@@ -10,6 +10,8 @@ namespace Mushka.WebApi.ClientModels.Product
 
         public string VendorCode { get; set; }
 
+        public int Quantity { get; set; }
+
         public string CategoryName { get; set; }
 
         public string SizeName { get; set; }

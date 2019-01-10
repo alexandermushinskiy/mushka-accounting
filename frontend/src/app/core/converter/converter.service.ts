@@ -38,6 +38,7 @@ export class ConverterService {
         id: res.id,
         name: res.name,
         vendorCode: res.vendorCode,
+        quantity: res.quantity,
         categoryName: res.categoryName,
         sizeName: res.sizeName
       })

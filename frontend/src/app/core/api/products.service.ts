@@ -23,8 +23,8 @@ export class ProductsServce {
       .catch((res: any) => throwError(res.error.messages));
   }
 
-  getAllForSelect(): Observable<SelectProduct[]> {
-    return this.http.get(`${this.endPoint}/select`)
+  getInStock(): Observable<SelectProduct[]> {
+    return this.http.get(`${this.endPoint}/instock`)
       .map((res: any) => this.converterService.convertToSelectProducts(res.data))
       .catch((res: any) => throwError(res.error.messages));
   }
