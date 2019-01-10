@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@ang
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Product } from '../../models/product.model';
+import { SelectProduct } from '../../models/select-product.model';
 
 @Component({
   selector: 'mk-select-products',
@@ -14,11 +15,11 @@ import { Product } from '../../models/product.model';
   }]
 })
 export class SelectProductsComponent implements OnInit, ControlValueAccessor {
-  @Input() products: Product;
+  @Input() products: SelectProduct[];
   @Input() notFoundText = 'Нет данных';
   @Input() placeholder = 'Выберете товар';
   @Input() canClearAll = true;
-  @Output() onProductSelected = new EventEmitter<Product>();
+  @Output() onProductSelected = new EventEmitter<SelectProduct>();
   @Output() onClear = new EventEmitter<any>();
 
   selectedId: string;
@@ -42,12 +43,12 @@ export class SelectProductsComponent implements OnInit, ControlValueAccessor {
   registerOnTouched() {
   }
 
-  onChange(product: Product) {
+  onChange(product: SelectProduct) {
     this.onChangeCallback(product);
     this.onProductSelected.emit(product);
   }
 
-  customSearchFn(term: string, item: Product) {
+  customSearchFn(term: string, item: SelectProduct) {
     term = term.toLocaleLowerCase();
     return item.name.toLocaleLowerCase().includes(term) || item.vendorCode.toLocaleLowerCase().includes(term);
   }

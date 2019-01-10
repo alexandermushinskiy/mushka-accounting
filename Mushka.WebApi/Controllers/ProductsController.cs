@@ -37,6 +37,15 @@ namespace Mushka.WebApi.Controllers
             return actionResultProvider.Get(clientResponse);
         }
 
+        [HttpGet("select")]
+        public async Task<IActionResult> GetAllForSelect()
+        {
+            var products = await productService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Product>>, SelectProductsResponseModel>(products);
+
+            return actionResultProvider.Get(clientResponse);
+        }
+
         [HttpGet("~/api/v1/categories/{categoryId:guid}/products")]
         public async Task<IActionResult> GetByCategoryId(Guid categoryId)
         {
