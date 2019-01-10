@@ -128,6 +128,7 @@
                         <div class="field-group">
                           <mk-select-products formControlName="product"
                                               [products]="productsList"
+                                              [canClearAll]="false"
                                               [ngClass]="{'not-valid': productControl.controls.product.invalid && isFormSubmitted}"
                                               (onProductSelected)="onProductSelected($event, index)">
                           </mk-select-products>
