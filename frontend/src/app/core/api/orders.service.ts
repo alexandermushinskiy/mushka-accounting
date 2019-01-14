@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 import { ConverterService } from '../converter/converter.service';
 import { Order } from '../../shared/models/order.model';
 import { OrderList } from '../../orders/shared/models/order-list.model';
-import { OrderProduct } from 'src/app/shared/models/order-product.model';
+import { OrderProduct } from '../../shared/models/order-product.model';
 
 @Injectable()
 export class OrdersService {
