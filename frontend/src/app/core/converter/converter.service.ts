@@ -15,6 +15,7 @@ import { OrderProduct } from '../../shared/models/order-product.model';
 import { Customer } from '../../shared/models/customer.model';
 import { OrderList } from '../../orders/shared/models/order-list.model';
 import { SelectProduct } from '../../shared/models/select-product.model';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class ConverterService {
@@ -174,18 +175,22 @@ export class ConverterService {
       phone: source.phone,
       email: source.email,
       notes: source.notes,
-      products: source.products.map((prod: any) => new OrderProduct({
-        quantity: prod.quantity,
-        unitPrice: prod.unitPrice,
-        costPrice: prod.costPrice,
-        product: {
-          id: prod.id,
-          name: prod.name,
-          vendorCode: prod.vendorCode,
-          size: new Size({name: prod.size})
-        }
-      }))
+      products: this.convertToOrderProducts(source.products)
     });
+  }
+
+  convertToOrderProducts(response: any[]): OrderProduct[] {
+    return response.map((prod: any) => new OrderProduct({
+      quantity: prod.quantity,
+      unitPrice: prod.unitPrice,
+      costPrice: prod.costPrice,
+      product: {
+        id: prod.id,
+        name: prod.name,
+        vendorCode: prod.vendorCode,
+        size: new Size({name: prod.size})
+      }
+    }));
   }
 
   convertToOrdersList(response: any[]): OrderList[] {

@@ -8,6 +8,7 @@ using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Extensibility.Services;
 
 namespace Mushka.Service.Services
@@ -17,17 +18,20 @@ namespace Mushka.Service.Services
         private readonly IOrderRepository orderRepository;
         private readonly IProductRepository productRepository;
         private readonly ICustomerRepository customerRepository;
+        private readonly ICostPriceProvider costPriceProvider;
 
         public OrderService(
             IOrderRepository orderRepository,
             IProductRepository productRepository,
             ICustomerRepository customerRepository,
+            ICostPriceProvider costPriceProvider,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             this.orderRepository = orderRepository;
             this.productRepository = productRepository;
             this.customerRepository = customerRepository;
+            this.costPriceProvider = costPriceProvider;
         }
 
         public async Task<ValidationResponse<IEnumerable<Order>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -93,6 +97,27 @@ namespace Mushka.Service.Services
             var isValid = !await orderRepository.IsExistAsync(order => order.Number == orderNumber, cancellationToken);
 
             return CreateInfoValidationResponse(isValid, $"Order number {orderNumber} is {(isValid ? "" : "not ")}valid.");
+        }
+
+        public async Task<ValidationResponse<IEnumerable<OrderProduct>>> GetDefaultProducts(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            List<Guid> productIds = new List<Guid> {
+                Guid.Parse("4B307570-7250-4867-B7C0-EC1DB6475D5B"), // визитка
+                Guid.Parse("07DF9000-2680-43E7-BA2C-D4F0C48A8CB5"), // открытка
+                Guid.Parse("A6BBAD88-3820-4972-8AE9-FC931A62A1E7")  // пакет
+            };
+
+            var products = (await productRepository.GetAsync(prod => productIds.Contains(prod.Id) && prod.Quantity > 0, cancellationToken))
+                .Select(async prod => new OrderProduct
+                {
+                    ProductId = prod.Id,
+                    Product = prod,
+                    Quantity = 1,
+                    CostPrice = await costPriceProvider.CalculateAsync(prod.Id, prod.Quantity, cancellationToken)
+                })
+                .Select(x => x.Result);
+
+            return CreateInfoValidationResponse(products, "Default products were successfully retrieved.");
         }
     }
 }

@@ -37,6 +37,15 @@ namespace Mushka.WebApi.Controllers
             return actionResultProvider.Get(clientResponse);
         }
 
+        [HttpGet("default-products")]
+        public async Task<IActionResult> GetDefaultProducts()
+        {
+            var productsResponse = await orderService.GetDefaultProducts(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<OrderProduct>>, OrderProductsResponseModel>(productsResponse);
+
+            return actionResultProvider.Get(clientResponse);
+        }
+
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
