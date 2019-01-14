@@ -87,5 +87,12 @@ namespace Mushka.Service.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task<ValidationResponse<bool>> IsNumberExistAsync(string orderNumber, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var isValid = !await orderRepository.IsExistAsync(order => order.Number == orderNumber, cancellationToken);
+
+            return CreateInfoValidationResponse(isValid, $"Order number {orderNumber} is {(isValid ? "" : "not ")}valid.");
+        }
     }
 }

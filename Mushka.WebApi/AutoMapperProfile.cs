@@ -30,6 +30,11 @@ namespace Mushka.WebApi
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }))
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status));
 
+            CreateMap<ValidationResponse<bool>, ValidationResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => new ValidationRModel(src.Result)))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }))
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status));
+
             // Products
             CreateMap<ProductRequestModel, Product>().ConvertUsing<ProductRequestConverter>();
 

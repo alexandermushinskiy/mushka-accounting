@@ -65,5 +65,14 @@ namespace Mushka.WebApi.Controllers
 
             return actionResultProvider.Get(clientResponse);
         }
+
+        [HttpGet("validate-number/{number}")]
+        public async Task<IActionResult> ValidateOrderNumber(string number)
+        {
+            var isExist = await orderService.IsNumberExistAsync(number, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<bool>, ValidationResponseModel>(isExist);
+
+            return actionResultProvider.Get(clientResponse);
+        }
     }
 }
