@@ -10,7 +10,7 @@ export class DatetimeService {
     return this.toString(new Date());
   }
 
-  toString(date: Date, format = 'YYYY-MM-DD'): string {
-    return moment(date).format(format);
+  toString(date: Date, format = 'DD MMM YYYY'): string {
+    return moment(date).locale('ru').format(format);
   }
 }
