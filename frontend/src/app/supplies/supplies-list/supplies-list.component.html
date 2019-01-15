@@ -10,15 +10,14 @@
   </div>
   <div class="list-page-body">
     <ngx-datatable #datatable
-                  class="material fullscreen"
+                  class="material striped fullscreen"
                   [loadingIndicator]="loadingIndicator"
                   [headerHeight]="40"
                   [rowHeight]="40"
+                  [footerHeight]="50"
                   [rows]="supplyRows"
                   [columnMode]="'force'"
-                  [limit]="10"
                   [messages]="{ emptyMessage: 'Нет данных для отображения' }"
-                  [rowClass]="getRowClass"
                   [sorts]="sorts"
                   (activate)="onActive($event)"
                   (sort)="onTableSort(supplyRows, $event)">
@@ -104,6 +103,18 @@
         </ng-template>
       </ngx-datatable-column>
     
+      <ngx-datatable-footer class="p-0">
+        <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize" let-curPage="curPage" class="p-0">
+          <mk-datatable-footer [loadingIndicator]="loadingIndicator"
+                                [datatable]="datatable"
+                                [total]="total"
+                                [curPage]="curPage"
+                                [rowCount]="rowCount"
+                                [pageSize]="pageSize"
+                                [itemsName]="'Поставок'">
+          </mk-datatable-footer>
+        </ng-template>
+      </ngx-datatable-footer>
     </ngx-datatable>
   </div>
 </div>

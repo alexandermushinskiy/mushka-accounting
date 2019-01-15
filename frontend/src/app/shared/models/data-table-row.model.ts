@@ -1,4 +1,4 @@
-export abstract class DataTablePreview {
+export abstract class DataTableRow {
   index: number;
   id: string;
   className: string;

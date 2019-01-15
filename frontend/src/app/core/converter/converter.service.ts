@@ -40,8 +40,8 @@ export class ConverterService {
         name: res.name,
         vendorCode: res.vendorCode,
         quantity: res.quantity,
-        categoryName: res.categoryName,
-        sizeName: res.sizeName
+        category: new Category({name: res.categoryName}),
+        size: !!res.sizeName ? new Size({name: res.sizeName}) : null
       })
     );
   }
@@ -151,7 +151,7 @@ export class ConverterService {
           id: prod.product.id,
           name: prod.product.name,
           vendorCode: prod.product.vendorCode,
-          size: new Size({name: prod.product.size})
+          size: !!prod.product.sizeName ? new Size({name: prod.product.sizeName}) : null
         }
       }))
     });
@@ -180,15 +180,15 @@ export class ConverterService {
   }
 
   convertToOrderProducts(response: any[]): OrderProduct[] {
-    return response.map((prod: any) => new OrderProduct({
-      quantity: prod.quantity,
-      unitPrice: prod.unitPrice,
-      costPrice: prod.costPrice,
+    return response.map((orderProduct: any) => new OrderProduct({
+      quantity: orderProduct.quantity,
+      unitPrice: orderProduct.unitPrice,
+      costPrice: orderProduct.costPrice,
       product: {
-        id: prod.id,
-        name: prod.name,
-        vendorCode: prod.vendorCode,
-        size: new Size({name: prod.size})
+        id: orderProduct.id,
+        name: orderProduct.name,
+        vendorCode: orderProduct.vendorCode,
+        size: !!orderProduct.sizeName ? new Size({name: orderProduct.sizeName}) : null
       }
     }));
   }

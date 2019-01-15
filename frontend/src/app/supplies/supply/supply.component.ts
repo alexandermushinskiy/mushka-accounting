@@ -72,7 +72,7 @@ export class SupplyComponent implements OnInit {
       return '';
     }
 
-    return product.vendorCode + (!!product.sizeName ? ` / ${product.sizeName}` : ' / -');
+    return `${product.vendorCode} / ${(!!product.size ? `${product.size.name}` : '-')}`;
   }
 
   saveSupply() {

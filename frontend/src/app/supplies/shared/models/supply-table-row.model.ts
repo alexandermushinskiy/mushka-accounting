@@ -1,7 +1,7 @@
-import { DataTablePreview } from '../../../shared/models/data-table-preview.model';
+import { DataTableRow } from '../../../shared/models/data-table-row.model';
 import { PaymentMethod } from '../../../shared/enums/payment-method.enum';
 
-export class SupplyTableRow extends DataTablePreview {
+export class SupplyTableRow extends DataTableRow {
   supplierName: string;
   requestDate: string;
   receivedDate: string;

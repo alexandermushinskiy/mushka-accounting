@@ -1,7 +1,7 @@
-import { DataTablePreview } from '../../../shared/models/data-table-preview.model';
+import { DataTableRow } from '../../../shared/models/data-table-row.model';
 import { ContactPerson } from '../../../shared/models/contact-person.model';
 
-export class SupplierTablePreview extends DataTablePreview {
+export class SupplierTablePreview extends DataTableRow {
   name: string;
   address: string;
   email: string;

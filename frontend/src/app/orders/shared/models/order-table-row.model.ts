@@ -1,7 +1,7 @@
-import { DataTablePreview } from '../../../shared/models/data-table-preview.model';
+import { DataTableRow } from '../../../shared/models/data-table-row.model';
 import { OrderList } from './order-list.model';
 
-export class OrderTableRow extends DataTablePreview {
+export class OrderTableRow extends DataTableRow {
   number: string;
   orderDate: string;
   cost: number;

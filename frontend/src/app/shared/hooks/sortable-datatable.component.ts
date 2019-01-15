@@ -1,4 +1,4 @@
-import { DataTablePreview } from '../models/data-table-preview.model';
+import { DataTableRow } from '../models/data-table-row.model';
 import { UnsubscriberComponent } from './unsubscriber.component';
 
 export abstract class SortableDatatableComponent extends UnsubscriberComponent {
@@ -26,8 +26,8 @@ export abstract class SortableDatatableComponent extends UnsubscriberComponent {
     return this.sorts.find(el => el.prop === property).dir;
   }
 
-  private updateColumnsStatus(rows: DataTablePreview[] = []) {
-    const updatedColumns = rows.map((el: DataTablePreview, index) => {
+  private updateColumnsStatus(rows: DataTableRow[] = []) {
+    const updatedColumns = rows.map((el: DataTableRow, index) => {
       return Object.assign(el, {
         className: (rows.length === 1)
           ? el.className

@@ -51,10 +51,6 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
     }
   }
 
-  getRowClass(row: any) {
-    return row.className;
-  }
-
   addSupply() {
     this.router.navigate(['supplies/new']);
   }

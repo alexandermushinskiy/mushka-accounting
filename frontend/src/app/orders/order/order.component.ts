@@ -73,7 +73,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
       return '';
     }
 
-    return product.vendorCode + (!!product.sizeName ? ` / ${product.sizeName}` : ' / -');
+    return product.vendorCode + (!!product.size ? ` / ${product.size.name}` : ' / -');
   }
 
   onProductSelected(product: SelectProduct, index: number) {

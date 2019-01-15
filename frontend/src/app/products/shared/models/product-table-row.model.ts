@@ -1,7 +1,7 @@
-import { DataTablePreview } from '../../../shared/models/data-table-preview.model';
+import { DataTableRow } from '../../../shared/models/data-table-row.model';
 import { Size } from '../../../shared/models/size.model';
 
-export class ProductTableRow extends DataTablePreview {
+export class ProductTableRow extends DataTableRow {
   name: string;
   vendorCode: string;
   createdOn: string;

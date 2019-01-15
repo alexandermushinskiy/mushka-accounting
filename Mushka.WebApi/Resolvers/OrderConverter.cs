@@ -33,7 +33,7 @@ namespace Mushka.WebApi.Resolvers
                 Id = orderProduct.ProductId,
                 Name = orderProduct.Product?.Name,
                 VendorCode = orderProduct.Product?.VendorCode,
-                Size = orderProduct.Product?.Size?.Name,
+                SizeName = orderProduct.Product?.Size?.Name,
                 Quantity = orderProduct.Quantity,
                 UnitPrice = orderProduct.UnitPrice,
                 CostPrice = orderProduct.CostPrice

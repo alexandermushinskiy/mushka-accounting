@@ -39,7 +39,7 @@ namespace Mushka.WebApi.Resolvers
                     Id = supplyProduct.ProductId,
                     Name = supplyProduct.Product?.Name,
                     VendorCode = supplyProduct.Product?.VendorCode,
-                    Size = supplyProduct.Product?.Size?.Name
+                    SizeName = supplyProduct.Product?.Size?.Name
                 }
             };
     }

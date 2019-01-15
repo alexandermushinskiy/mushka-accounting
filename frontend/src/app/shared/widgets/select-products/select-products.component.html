@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col-md-4">
           <span class="title">Категория</span>
-          <span>{{ item.categoryName }}</span>
+          <span>{{ item.category.name }}</span>
         </div>
         <div class="col-md-4">
           <span class="title">Артикул</span>
@@ -25,7 +25,7 @@
         </div>
         <div class="col-md-4">
           <span class="title">Размер</span>
-          <span>{{ !!item.sizeName ? item.sizeName : '-' }}</span>
+          <span>{{ !!item.size ? item.size.name : '-' }}</span>
         </div>
       </div>
     </div>
