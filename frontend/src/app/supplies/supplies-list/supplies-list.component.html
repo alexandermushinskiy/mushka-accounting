@@ -19,20 +19,22 @@
                   [limit]="10"
                   [messages]="{ emptyMessage: 'Нет данных для отображения' }"
                   [rowClass]="getRowClass"
-                  (activate)="onActive($event)">
+                  [sorts]="sorts"
+                  (activate)="onActive($event)"
+                  (sort)="onTableSort(supplyRows, $event)">
 
-      <ngx-datatable-column name="supplierName">
-        <ng-template ngx-datatable-header-template let-column="column">
-          <span>Поставщик</span>
+      <ngx-datatable-column name="supplierName" [sortable]="true">
+        <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
+          <span (click)="sort($event)">Имя<br>поставщика</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
           <span [title]="value" class="bold">{{ value }}</span>
         </ng-template>
       </ngx-datatable-column>
       
-      <ngx-datatable-column name="requestDate">
-        <ng-template ngx-datatable-header-template let-column="column">
-          <span>Дата<br>заявки</span>
+      <ngx-datatable-column name="requestDate" [sortable]="true">
+        <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
+          <span (click)="sort($event)">Дата<br>заявки</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
           <span [title]="value">{{ value }}</span>

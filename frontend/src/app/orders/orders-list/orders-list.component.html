@@ -17,13 +17,15 @@
                   [rows]="orderRows"
                   [columnMode]="'force'"
                   [limit]="10"
+                  [sorts]="sorts"
                   [messages]="{ emptyMessage: 'Нет данных для отображения' }"
                   [rowClass]="getRowClass"
-                  (activate)="onActive($event)">
+                  (activate)="onActive($event)"
+                  (sort)="onTableSort(orderRows, $event)">
 
-      <ngx-datatable-column name="orderDate">
-        <ng-template ngx-datatable-header-template let-column="column">
-          <span>Дата<br>заказа</span>
+      <ngx-datatable-column name="orderDate" [sortable]="true">
+        <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
+          <span (click)="sort($event)">Дата<br>заказа</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
           <span [title]="value">{{ value }}</span>

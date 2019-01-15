@@ -3,7 +3,7 @@ import { UnsubscriberComponent } from './unsubscriber.component';
 
 export abstract class SortableDatatableComponent extends UnsubscriberComponent {
   defaultSortDirection = 'asc';
-  sorts: { dir: string, prop: string }[] = [{ prop: 'createdOn', dir: this.defaultSortDirection }];
+  sorts: { dir: string, prop: string }[] = [{ prop: 'name', dir: this.defaultSortDirection }];
 
   onTableSort(dataRows: any, { sorts }, rows?: any[]) {
     const { dir, prop } = sorts[0];

@@ -7,13 +7,14 @@ import { Supply } from '../shared/models/supply.model';
 import { SupplyTableRow } from '../shared/models/supply-table-row.model';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { SupplyFilter } from '../../shared/filters/supply.filter';
+import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatable.component';
 
 @Component({
   selector: 'mk-supplies-list',
   templateUrl: './supplies-list.component.html',
   styleUrls: ['./supplies-list.component.scss']
 })
-export class SuppliesListComponent implements OnInit {
+export class SuppliesListComponent extends SortableDatatableComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
   supplies: Supply[];
   supplyRows: SupplyTableRow[];
@@ -31,7 +32,14 @@ export class SuppliesListComponent implements OnInit {
   constructor(private router: Router,
               private modalService: NgbModal,
               private suppliesService: SuppliesService,
-              private notificationsService: NotificationsService) { }
+              private notificationsService: NotificationsService) {
+    super();
+
+    this.sorts = [
+      { prop: 'supplierName', dir: this.defaultSortDirection },
+      { prop: 'requestDate', dir: null }
+    ];
+  }
 
   ngOnInit() {
     this.loadSupplies();

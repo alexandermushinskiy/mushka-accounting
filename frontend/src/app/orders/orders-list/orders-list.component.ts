@@ -7,13 +7,14 @@ import { OrdersService } from '../../core/api/orders.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { OrderList } from '../shared/models/order-list.model';
 import { OrderListFilter } from '../../shared/filters/order-list.filter';
+import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatable.component';
 
 @Component({
   selector: 'mk-orders',
   templateUrl: './orders-list.component.html',
   styleUrls: ['./orders-list.component.scss']
 })
-export class OrdersListComponent implements OnInit {
+export class OrdersListComponent extends SortableDatatableComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
   orders: OrderList[];
   orderRows: OrderTableRow[];
@@ -31,7 +32,11 @@ export class OrdersListComponent implements OnInit {
   constructor(private router: Router,
               private modalService: NgbModal,
               private ordersService: OrdersService,
-              private notificationsService: NotificationsService) { }
+              private notificationsService: NotificationsService) {
+    super();
+
+    this.sorts = [{ prop: 'orderDate', dir: this.defaultSortDirection }];
+  }
 
   ngOnInit() {
     this.loadOrders();
