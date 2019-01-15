@@ -127,11 +127,14 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
         this.ordersService.getById(this.orderId)
           .subscribe((order: Order) => this.buildForm(order));
       } else {
-        this.buildForm(new Order({
-          cost: 0,
-          orderDate: this.datetimeService.getCurrentDateInString(),
-          products: [new OrderProduct({ quantity: 1 })]
-        }));
+        this.ordersService.getDefaultProducts()
+          .subscribe((products: OrderProduct[]) => {
+            this.buildForm(new Order({
+              cost: 0,
+              orderDate: this.datetimeService.getCurrentDateInString(),
+              products: products
+            }));
+          })
       }
     });
   }

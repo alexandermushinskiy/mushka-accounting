@@ -37,6 +37,15 @@ namespace Mushka.WebApi.Controllers
             return actionResultProvider.Get(clientResponse);
         }
 
+        [HttpGet("default-products")]
+        public async Task<IActionResult> GetDefaultProducts()
+        {
+            var productsResponse = await orderService.GetDefaultProducts(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<OrderProduct>>, OrderProductsResponseModel>(productsResponse);
+
+            return actionResultProvider.Get(clientResponse);
+        }
+
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -62,6 +71,15 @@ namespace Mushka.WebApi.Controllers
         {
             var orderResponse = await orderService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
             var clientResponse = mapper.Map<ValidationResponse<Order>, DeleteResponseModel>(orderResponse);
+
+            return actionResultProvider.Get(clientResponse);
+        }
+
+        [HttpGet("validate-number/{number}")]
+        public async Task<IActionResult> ValidateOrderNumber(string number)
+        {
+            var isExist = await orderService.IsNumberExistAsync(number, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<bool>, ValidationResponseModel>(isExist);
 
             return actionResultProvider.Get(clientResponse);
         }

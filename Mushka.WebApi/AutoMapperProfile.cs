@@ -30,6 +30,11 @@ namespace Mushka.WebApi
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }))
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status));
 
+            CreateMap<ValidationResponse<bool>, ValidationResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => new ValidationRModel(src.Result)))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }))
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status));
+
             // Products
             CreateMap<ProductRequestModel, Product>().ConvertUsing<ProductRequestConverter>();
 
@@ -109,7 +114,8 @@ namespace Mushka.WebApi
             // Order
             CreateMap<OrderRequestModel, Order>().ConvertUsing<OrderRequestConverter>();
             CreateMap<Order, OrderModel>().ConvertUsing<OrderConverter>();
-            
+            CreateMap<OrderProduct, OrderProductModel>().ConvertUsing<OrderConverter>();
+
             CreateMap<ValidationResponse<Order>, OrderResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<OrderResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
@@ -122,6 +128,11 @@ namespace Mushka.WebApi
 
             CreateMap<ValidationResponse<IEnumerable<Order>>, OrdersListResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<OrdersListResponseResolver>())
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+
+            CreateMap<ValidationResponse<IEnumerable<OrderProduct>>, OrderProductsResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<OrderProductResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
             //-------------------------

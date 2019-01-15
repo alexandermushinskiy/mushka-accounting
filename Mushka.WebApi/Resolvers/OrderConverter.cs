@@ -5,7 +5,7 @@ using Mushka.WebApi.ClientModels.Order;
 
 namespace Mushka.WebApi.Resolvers
 {
-    public class OrderConverter : ITypeConverter<Order, OrderModel>
+    public class OrderConverter : ITypeConverter<Order, OrderModel>, ITypeConverter<OrderProduct, OrderProductModel>
     {
         public OrderModel Convert(Order source, OrderModel destination, ResolutionContext context) =>
             new OrderModel
@@ -23,6 +23,9 @@ namespace Mushka.WebApi.Resolvers
                 City = source.Customer.City,
                 Products = source.Products.Select(CreateOrderProductModel)
             };
+
+        public OrderProductModel Convert(OrderProduct source, OrderProductModel destination, ResolutionContext context) =>
+            CreateOrderProductModel(source);
 
         private static OrderProductModel CreateOrderProductModel(OrderProduct orderProduct) =>
             new OrderProductModel

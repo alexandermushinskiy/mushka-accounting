@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { ConverterService } from '../converter/converter.service';
 import { Order } from '../../shared/models/order.model';
 import { OrderList } from '../../orders/shared/models/order-list.model';
+import { OrderProduct } from '../../shared/models/order-product.model';
 
 @Injectable()
 export class OrdersService {
@@ -25,6 +26,12 @@ export class OrdersService {
     return this.http.get(`${this.endPoint}/${productId}`)
       .map((res: any) => this.converterService.convertToOrder(res.data))
       .catch((res: any) => throwError(res.error.messages));
+  }
+
+  getDefaultProducts(): Observable<OrderProduct[]> {
+    return this.http.get(`${this.endPoint}/default-products`)
+    .map((res: any) => this.converterService.convertToOrderProducts(res.data))
+    .catch((res: any) => throwError(res.error.messages));
   }
 
   create(order: Order): Observable<Order> {
