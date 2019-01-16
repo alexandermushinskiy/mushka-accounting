@@ -102,7 +102,6 @@ namespace Mushka.Service.Services
         public async Task<ValidationResponse<IEnumerable<OrderProduct>>> GetDefaultProducts(CancellationToken cancellationToken = default(CancellationToken))
         {
             List<Guid> productIds = new List<Guid> {
-                Guid.Parse("4B307570-7250-4867-B7C0-EC1DB6475D5B"), // визитка
                 Guid.Parse("07DF9000-2680-43E7-BA2C-D4F0C48A8CB5"), // открытка
                 Guid.Parse("A6BBAD88-3820-4972-8AE9-FC931A62A1E7")  // пакет
             };

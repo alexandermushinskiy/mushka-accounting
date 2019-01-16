@@ -29,6 +29,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   productsList: SelectProduct[];
   regions = ukrRegions;
   isFormSubmitted = false;
+  profit: number;
 
   private quantityTerms$ = new Subject<{index: number, quantity: number}>();
 
@@ -140,6 +141,8 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   }
 
   private buildForm(order: Order) {
+    this.profit = !!order.profit ? order.profit : 0;
+
     this.orderForm = this.formBuilder.group({
       orderDate: [order.orderDate, Validators.required],
       number: [order.number, Validators.required],
@@ -158,6 +161,8 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
     });
 
     this.addFieldChangeListeners();
+    this.calculateProductsCost();
+    this.calculateProfit();
   }
 
   private createProductFormGroup(orderProduct: OrderProduct): FormGroup {
@@ -172,15 +177,17 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   private addFieldChangeListeners() {
     (this.orderForm.get('products') as FormArray).valueChanges.subscribe((items: any[]) => {
       this.calculateProductsCost();
+      this.calculateProfit();
     });
   }
 
   private calculateProductsCost() {
     let cost = 0;
-    (this.orderForm.get('products') as FormArray).controls.forEach((control, index) => {
-      const ctrlValue = control.value;
 
-      if (!!ctrlValue.unitPrice && !!ctrlValue.quantity) {
+    (this.orderForm.get('products') as FormArray).controls.forEach((control, index) => {
+      const ctrlValue = (<FormGroup>control).getRawValue();
+      
+      if (!!control.value.quantity) {
         cost += ctrlValue.unitPrice * ctrlValue.quantity;
       }
     });
@@ -190,10 +197,26 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
     costCtrl.updateValueAndValidity();
   }
 
+  private calculateProfit() {
+    let profit = 0;
+
+    (this.orderForm.get('products') as FormArray).controls.forEach((control) => {
+      const ctrlValue = (<FormGroup>control).getRawValue();
+      
+      const unitPrice = !!ctrlValue.unitPrice ? ctrlValue.unitPrice : 0;
+      const costPrice = !!ctrlValue.costPrice ? ctrlValue.costPrice : 0;
+      const quantity = !!ctrlValue.quantity ? ctrlValue.quantity : 0;
+
+      profit += (unitPrice - costPrice) * quantity;
+    });
+
+    this.profit = profit;
+  }
+
   private createOrderModel(formRawValue: any): Order {
     return new Order({
       id: this.orderId,
-      orderDate: formRawValue.orderDate,
+      orderDate: this.datetimeService.convertFromToFormat(formRawValue.orderDate),
       number: formRawValue.number,
       cost: formRawValue.cost,
       costMethod: formRawValue.costMethod,

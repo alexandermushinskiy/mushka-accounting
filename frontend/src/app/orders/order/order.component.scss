@@ -138,6 +138,29 @@ input[type="number"]:-moz-placeholder { text-align:left !important; }
   }
 }
 
+.profit {
+  padding-top: 5px;
+  font-size: 18px;
+  font-weight: bold;
+
+  &:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 15px;
+    right: 15px;
+    height: 2px;
+    background-color: #E2E4E6;
+    bottom: 10px;
+    z-index: -1;
+  }
+
+  &-title  {
+    display: inline-block;
+    width: 100px;
+  }
+}
+
 .notes-row {
   padding-top: 30px;
 }

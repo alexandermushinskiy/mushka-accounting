@@ -200,7 +200,7 @@ export class ConverterService {
   convertToOrderList(source: any): OrderList {
     return new OrderList({
       id: source.id,
-      orderDate: this.datetimeService.toString(source.orderDate),
+      orderDate: this.datetimeService.toString(source.orderDate, 'DD MMM YYYY'),
       number: source.number,
       cost: source.cost,
       address: source.address,
