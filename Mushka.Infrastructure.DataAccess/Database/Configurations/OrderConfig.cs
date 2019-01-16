@@ -36,6 +36,11 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .Property(order => order.CostMethod)
                 .IsRequired();
 
+            builder
+                .Property(order => order.Profit)
+                .HasColumnType("Money")
+                .IsRequired();
+
             builder.HasOne(order => order.Customer)
                 .WithMany(customer => customer.Orders)
                 .HasForeignKey(order => order.CustomerId);

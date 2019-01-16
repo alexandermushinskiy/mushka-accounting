@@ -21,6 +21,8 @@ namespace Mushka.Domain.Entities
         
         public PaymentMethod CostMethod { get; set; }
         
+        public decimal Profit { get; set; }
+
         public Guid CustomerId { get; set; }
         public Customer Customer { get; set; }
 

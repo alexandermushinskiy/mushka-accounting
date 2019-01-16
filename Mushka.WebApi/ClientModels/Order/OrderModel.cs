@@ -16,6 +16,8 @@ namespace Mushka.WebApi.ClientModels.Order
 
         public PaymentMethod CostMethod { get; set; }
         
+        public decimal Profit { get; set; }
+
         public string Region { get; set; }
         
         public string City { get; set; }
