@@ -135,7 +135,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
               orderDate: this.datetimeService.getCurrentDateInString(),
               products: products
             }));
-          })
+          });
       }
     });
   }
@@ -186,7 +186,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
 
     (this.orderForm.get('products') as FormArray).controls.forEach((control, index) => {
       const ctrlValue = (<FormGroup>control).getRawValue();
-      
+
       if (!!control.value.quantity) {
         cost += ctrlValue.unitPrice * ctrlValue.quantity;
       }
@@ -202,7 +202,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
 
     (this.orderForm.get('products') as FormArray).controls.forEach((control) => {
       const ctrlValue = (<FormGroup>control).getRawValue();
-      
+
       const unitPrice = !!ctrlValue.unitPrice ? ctrlValue.unitPrice : 0;
       const costPrice = !!ctrlValue.costPrice ? ctrlValue.costPrice : 0;
       const quantity = !!ctrlValue.quantity ? ctrlValue.quantity : 0;
@@ -220,6 +220,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
       number: formRawValue.number,
       cost: formRawValue.cost,
       costMethod: formRawValue.costMethod,
+      profit: this.profit,
       notes: formRawValue.notes,
       region: formRawValue.region,
       city: formRawValue.city,

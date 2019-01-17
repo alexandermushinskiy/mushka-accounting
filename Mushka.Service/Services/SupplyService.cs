@@ -84,13 +84,18 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Supply with id {supplyId} is not found.", ValidationStatusType.NotFound);
             }
 
-            //foreach (var deliveryProduct in delivery.Products)
-            //{
-            //    var storedProductSize = await productRepository.GetProductSizeAsync(deliveryProduct.ProductId, deliveryProduct.SizeId, cancellationToken);
-            //    storedProductSize.Quantity -= deliveryProduct.Quantity;
+            foreach (var supplyProduct in supply.Products)
+            {
+                var storedProduct = await productRepository.GetByIdAsync(supplyProduct.ProductId, cancellationToken);
 
-            //    await productRepository.UpdateProductSize(storedProductSize, cancellationToken);
-            //}
+                if (storedProduct == null)
+                {
+                    return CreateWarningValidationResponse($"Product with id {supplyProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                }
+
+                storedProduct.Quantity -= supplyProduct.Quantity;
+                await productRepository.UpdateAsync(storedProduct, cancellationToken);
+            }
 
             await supplyRepository.DeleteAsync(supply, cancellationToken);
 

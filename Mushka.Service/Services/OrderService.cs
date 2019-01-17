@@ -87,9 +87,31 @@ namespace Mushka.Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<ValidationResponse<Order>> DeleteAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<ValidationResponse<Order>> DeleteAsync(Guid orderId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            var order = await orderRepository.GetByIdAsync(orderId, cancellationToken);
+
+            if (order == null)
+            {
+                return CreateWarningValidationResponse($"Order with id {orderId} is not found.", ValidationStatusType.NotFound);
+            }
+
+            foreach (var orderProduct in order.Products)
+            {
+                var storedProduct = await productRepository.GetByIdAsync(orderProduct.ProductId, cancellationToken);
+
+                if (storedProduct == null)
+                {
+                    return CreateWarningValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                }
+
+                storedProduct.Quantity += orderProduct.Quantity;
+                await productRepository.UpdateAsync(storedProduct, cancellationToken);
+            }
+
+            await orderRepository.DeleteAsync(order, cancellationToken);
+
+            return CreateInfoValidationResponse(order, $"Order with id {order.Id} was successfully deleted.");
         }
 
         public async Task<ValidationResponse<bool>> IsNumberExistAsync(string orderNumber, CancellationToken cancellationToken = default(CancellationToken))
