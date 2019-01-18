@@ -29,6 +29,7 @@ namespace Mushka.WebApi.Resolvers
                 Cost = source.Cost,
                 CostMethod = source.CostMethod,
                 Profit = source.Profit,
+                Notes = source.Notes,
                 Customer = CreateCustomer(customerId, source),
                 Products = source.Products.Select(prod => CreateDeliveryProduct(orderId, prod)).ToList()
             };

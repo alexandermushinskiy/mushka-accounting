@@ -23,6 +23,8 @@ namespace Mushka.Domain.Entities
         
         public decimal Profit { get; set; }
 
+        public string Notes { get; set; }
+
         public Guid CustomerId { get; set; }
         public Customer Customer { get; set; }
 

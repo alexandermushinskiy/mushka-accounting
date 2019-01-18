@@ -30,7 +30,7 @@ namespace Mushka.Service.Services
                 .OrderBy(supp => supp.Name)
                 .ToList();
 
-            string message = suppliers.Any()
+            var message = suppliers.Any()
                 ? "Suppliers were successfully retrieved."
                 : "No suppliers found.";
 
@@ -39,7 +39,7 @@ namespace Mushka.Service.Services
 
         public async Task<ValidationResponse<Supplier>> GetByIdAsync(Guid supplierId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Supplier supplier = await supplierRepository.GetByIdAsync(supplierId, cancellationToken);
+            var supplier = await supplierRepository.GetByIdAsync(supplierId, cancellationToken);
 
             return supplier == null
                 ? CreateWarningValidationResponse($"Supplier with id {supplierId} is not found.", ValidationStatusType.NotFound)
@@ -53,14 +53,14 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Supplier with name {supplier.Name} is already exist.");
             }
             
-            Supplier addedSupplier = await supplierRepository.AddAsync(supplier, cancellationToken);
+            var addedSupplier = await supplierRepository.AddAsync(supplier, cancellationToken);
 
             return CreateInfoValidationResponse(addedSupplier, $"Supplier with id {supplier.Id} was successfully created.");
         }
 
         public async Task<ValidationResponse<Supplier>> UpdateAsync(Supplier supplier, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Supplier supplierToUpdate = await supplierRepository.GetByIdAsync(supplier.Id, cancellationToken);
+            var supplierToUpdate = await supplierRepository.GetByIdAsync(supplier.Id, cancellationToken);
 
             if (supplierToUpdate == null)
             {
@@ -72,14 +72,14 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Supplier with name {supplier.Name} is already exist.");
             }
 
-            Supplier updatedSupplier = await supplierRepository.UpdateAsync(supplier, cancellationToken);
+            var updatedSupplier = await supplierRepository.UpdateAsync(supplier, cancellationToken);
 
             return CreateInfoValidationResponse(updatedSupplier, $"Supplier with id {supplier.Id} was successfully updated.");
         }
 
         public async Task<ValidationResponse<Supplier>> DeleteAsync(Guid supplierId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Supplier supplier = await supplierRepository.GetByIdAsync(supplierId, cancellationToken);
+            var supplier = await supplierRepository.GetByIdAsync(supplierId, cancellationToken);
 
             if (supplier == null)
             {

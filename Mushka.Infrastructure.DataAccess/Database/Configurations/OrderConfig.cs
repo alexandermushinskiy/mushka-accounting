@@ -29,17 +29,23 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
 
             builder
                 .Property(order => order.Cost)
+                .HasColumnName("Cost")
                 .HasColumnType("Money")
                 .IsRequired();
 
             builder
                 .Property(order => order.CostMethod)
+                .HasColumnName("CostMethod")
                 .IsRequired();
 
             builder
                 .Property(order => order.Profit)
                 .HasColumnType("Money")
                 .IsRequired();
+
+            builder
+                .Property(order => order.Notes)
+                .HasColumnName("Notes");
 
             builder.HasOne(order => order.Customer)
                 .WithMany(customer => customer.Orders)

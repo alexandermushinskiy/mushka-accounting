@@ -38,7 +38,7 @@ namespace Mushka.Service.Services
         {
             IEnumerable<Order> orders = (await orderRepository.GetAllAsync(cancellationToken)).ToList();
 
-            string message = orders.Any()
+            var message = orders.Any()
                 ? "Orders were successfully retrieved."
                 : "No orders found.";
 
@@ -82,9 +82,40 @@ namespace Mushka.Service.Services
             return CreateInfoValidationResponse(addedOrder, $"Order with id {addedOrder.Id} was successfully added.");
         }
 
-        public Task<ValidationResponse<Order>> UpdateAsync(Order category, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<ValidationResponse<Order>> UpdateAsync(Order order, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            var storedOrder = await orderRepository.GetByIdAsync(order.Id, cancellationToken);
+
+            if (storedOrder == null)
+            {
+                return CreateWarningValidationResponse($"Order with id {order.Id} is not found.", ValidationStatusType.NotFound);
+            }
+
+            foreach (var orderProduct in order.Products)
+            {
+                var storedProduct = await productRepository.GetByIdAsync(orderProduct.ProductId, cancellationToken);
+
+                if (storedProduct == null)
+                {
+                    return CreateWarningValidationResponse($"Order with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                }
+
+                var storedOrderQuantity = storedOrder.Products
+                    .FirstOrDefault(p => p.ProductId == storedProduct.Id)?.Quantity ?? 0;
+
+                if (storedOrderQuantity != orderProduct.Quantity)
+                {
+                    storedProduct.Quantity = storedProduct.Quantity + storedOrderQuantity - orderProduct.Quantity;
+                    await productRepository.UpdateAsync(storedProduct, cancellationToken);
+                }
+            }
+
+            order.Customer.Id = storedOrder.Customer.Id;
+            order.CustomerId = storedOrder.CustomerId;
+
+            var updatedOrder = await orderRepository.UpdateAsync(order, cancellationToken);
+
+            return CreateInfoValidationResponse(updatedOrder, $"Order with id {order.Id} was successfully updated.");
         }
 
         public async Task<ValidationResponse<Order>> DeleteAsync(Guid orderId, CancellationToken cancellationToken = default(CancellationToken))
