@@ -13,19 +13,19 @@ namespace Mushka.Service.Services
         {
         }
 
-        protected ValidationResponse<TEntity> GetAndLogWarningValidationResponse(
-            string message,
-            ValidationStatusType validationStatus = ValidationStatusType.BadOperation)
-        {
-            return GetAndLogWarningValidationResponse<TEntity>(message, validationStatus);
-        }
+        //protected ValidationResponse<TEntity> GetAndLogWarningValidationResponse(
+        //    string message,
+        //    ValidationStatusType validationStatus = ValidationStatusType.BadOperation)
+        //{
+        //    return GetAndLogWarningValidationResponse<TEntity>(message, validationStatus);
+        //}
 
-        protected virtual ValidationResponse<IEnumerable<TEntity>> GetAndLogWarningValidationResponses(
-            string message,
-            ValidationStatusType validationStatus = ValidationStatusType.BadOperation)
-        {
-            return GetAndLogWarningValidationResponses<TEntity>(message, validationStatus);
-        }
+        //protected virtual ValidationResponse<IEnumerable<TEntity>> GetAndLogWarningValidationResponses(
+        //    string message,
+        //    ValidationStatusType validationStatus = ValidationStatusType.BadOperation)
+        //{
+        //    return GetAndLogWarningValidationResponses<TEntity>(message, validationStatus);
+        //}
 
         protected ValidationResponse<TEntity> CreateInfoValidationResponse(TEntity entity, string message)
         {
@@ -39,12 +39,12 @@ namespace Mushka.Service.Services
             return CreateWarningValidationResponse<TEntity>(message, validationStatus);
         }
 
-        protected ValidationResponse<IEnumerable<TEntity>> CreateWarningValidationResponses(
-            string message,
-            ValidationStatusType validationStatus = ValidationStatusType.BadOperation)
-        {
-            return CreateWarningValidationResponses<TEntity>(message, validationStatus);
-        }
+        //protected ValidationResponse<IEnumerable<TEntity>> CreateWarningValidationResponses(
+        //    string message,
+        //    ValidationStatusType validationStatus = ValidationStatusType.BadOperation)
+        //{
+        //    return CreateWarningValidationResponses<TEntity>(message, validationStatus);
+        //}
     }
 
     internal abstract class ServiceBase
@@ -56,33 +56,33 @@ namespace Mushka.Service.Services
             Logger = loggerFactory.CreateLogger(GetType().Name);
         }
 
-        protected virtual ValidationResponse<TResult> GetAndLogInfoValidationResponse<TResult>(TResult resultData, string message)
-        {
-            Logger.LogInfo(message);
-            return new ValidationResponse<TResult>(resultData, ValidationResult.CreateInfo(message));
-        }
+        //protected virtual ValidationResponse<TResult> GetAndLogInfoValidationResponse<TResult>(TResult resultData, string message)
+        //{
+        //    Logger.LogInfo(message);
+        //    return new ValidationResponse<TResult>(resultData, ValidationResult.CreateInfo(message));
+        //}
 
-        protected virtual ValidationResponse<IEnumerable<TResult>> GetAndLogInfoValidationResponses<TResult>(IEnumerable<TResult> results, string message)
-        {
-            Logger.LogInfo(message);
-            return new ValidationResponse<IEnumerable<TResult>>(results, ValidationResult.CreateInfo(message));
-        }
+        //protected virtual ValidationResponse<IEnumerable<TResult>> GetAndLogInfoValidationResponses<TResult>(IEnumerable<TResult> results, string message)
+        //{
+        //    Logger.LogInfo(message);
+        //    return new ValidationResponse<IEnumerable<TResult>>(results, ValidationResult.CreateInfo(message));
+        //}
 
-        protected virtual ValidationResponse<TResult> GetAndLogWarningValidationResponse<TResult>(
-            string message,
-            ValidationStatusType validationStatus = ValidationStatusType.BadOperation) where TResult : class
-        {
-            Logger.LogWarning(message);
-            return CreateWarningValidationResponse<TResult>(message, validationStatus);
-        }
+        //protected virtual ValidationResponse<TResult> GetAndLogWarningValidationResponse<TResult>(
+        //    string message,
+        //    ValidationStatusType validationStatus = ValidationStatusType.BadOperation) where TResult : class
+        //{
+        //    Logger.LogWarning(message);
+        //    return CreateWarningValidationResponse<TResult>(message, validationStatus);
+        //}
 
-        protected virtual ValidationResponse<IEnumerable<TResult>> GetAndLogWarningValidationResponses<TResult>(
-            string message,
-            ValidationStatusType validationStatus = ValidationStatusType.BadOperation)
-        {
-            Logger.LogWarning(message);
-            return CreateWarningValidationResponses<TResult>(message, validationStatus);
-        }
+        //protected virtual ValidationResponse<IEnumerable<TResult>> GetAndLogWarningValidationResponses<TResult>(
+        //    string message,
+        //    ValidationStatusType validationStatus = ValidationStatusType.BadOperation)
+        //{
+        //    Logger.LogWarning(message);
+        //    return CreateWarningValidationResponses<TResult>(message, validationStatus);
+        //}
 
         protected ValidationResponse<TResult> CreateInfoValidationResponse<TResult>(TResult result, string message)
         {
@@ -96,11 +96,11 @@ namespace Mushka.Service.Services
             return new ValidationResponse<TResult>(null, ValidationResult.CreateWarning(message, validationStatus));
         }
 
-        protected ValidationResponse<IEnumerable<TResult>> CreateWarningValidationResponses<TResult>(
-            string message,
-            ValidationStatusType validationStatus = ValidationStatusType.BadOperation)
-        {
-            return new ValidationResponse<IEnumerable<TResult>>(null, ValidationResult.CreateWarning(message, validationStatus));
-        }
+        //protected ValidationResponse<IEnumerable<TResult>> CreateWarningValidationResponses<TResult>(
+        //    string message,
+        //    ValidationStatusType validationStatus = ValidationStatusType.BadOperation)
+        //{
+        //    return new ValidationResponse<IEnumerable<TResult>>(null, ValidationResult.CreateWarning(message, validationStatus));
+        //}
     }
 }

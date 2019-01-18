@@ -61,7 +61,7 @@ namespace Mushka.Service.Services
             var addedCategory = categoryRepository.Add(category);
             await storage.SaveAsync(cancellationToken);
 
-            return CreateInfoValidationResponse(addedCategory, $"Category with id {category.Id} was successfully created.");
+            return CreateInfoValidationResponse(addedCategory, $"Category with id {category.Id} was successfully added.");
         }
 
         public async Task<ValidationResponse<Category>> UpdateAsync(Category category, CancellationToken cancellationToken = default(CancellationToken))
@@ -73,7 +73,7 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Category with id {category.Id} is not found.", ValidationStatusType.NotFound);
             }
 
-            if (categoryRepository.Get(cat => cat.Id != category.Id && cat.Name == category.Name).Any())
+            if (await categoryRepository.IsExistAsync(cat => cat.Id != category.Id && cat.Name == category.Name, cancellationToken))
             {
                 return CreateWarningValidationResponse($"Category with name {category.Name} is already exist.");
             }

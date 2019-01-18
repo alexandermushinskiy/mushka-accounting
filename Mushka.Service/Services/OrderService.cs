@@ -73,6 +73,11 @@ namespace Mushka.Service.Services
                     return CreateWarningValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
                 }
 
+                if (storedProduct.Quantity < orderProduct.Quantity)
+                {
+                    return CreateWarningValidationResponse($"Product with id {orderProduct.ProductId} is not enough in stock.");
+                }
+
                 storedProduct.Quantity -= orderProduct.Quantity;
                 productRepository.Update(storedProduct);
             }
@@ -100,7 +105,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateWarningValidationResponse($"Order with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return CreateWarningValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
                 }
 
                 var storedOrderQuantity = storedOrder.Products
