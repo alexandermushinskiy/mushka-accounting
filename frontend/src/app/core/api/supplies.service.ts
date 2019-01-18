@@ -33,9 +33,7 @@ export class SuppliesService {
   }
 
   update(supplyId: string, supply: Supply): Observable<Supply> {
-    const requestModel = this.convertToRequestData(supply);
-
-    return this.http.put(`${this.endPoint}/${supplyId}`, requestModel)
+    return this.http.put(`${this.endPoint}/${supplyId}`, supply)
       .map((res: any) => this.converterService.convertToSupply(res.data))
       .catch((res: any) => throwError(res.error.messages));
   }

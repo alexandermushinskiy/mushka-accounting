@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Mushka.Domain.Comparers;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Infrastructure.DataAccess.Database;
@@ -40,11 +41,28 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 .OrderBy(sp => sp.Supply.ReceivedDate)
                 .ToListAsync(cancellationToken);
 
+        public override async Task<Supply> UpdateAsync(Supply supply, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var storedSupply = await GetByIdAsync(supply.Id, cancellationToken);
 
-        //dbSet
-        //    .AsNoTracking()
-        //    .Where(sup => sup.Products.Count(prod => prod.ProductId == productId) > 0)
-        //    .Include(sup => sup.Products)
-        //    .ToListAsync(cancellationToken);
+            supply.Products
+                .ToList()
+                .ForEach(sp =>
+                {
+                    Context.Entry(sp).State = storedSupply.Products.Any(spc => spc.ProductId == sp.ProductId)
+                            ? EntityState.Modified
+                            : EntityState.Added;
+                });
+
+            storedSupply.Products
+                .Except(supply.Products, new SupplyProductComparer())
+                .ToList()
+                .ForEach(sp => Context.Entry(sp).State = EntityState.Deleted);
+
+            Context.Supplies.Update(supply);
+            await Context.SaveChangesAsync(cancellationToken);
+
+            return supply;
+        }
     }
 }

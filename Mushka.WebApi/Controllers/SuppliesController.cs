@@ -57,6 +57,18 @@ namespace Mushka.WebApi.Controllers
             return actionResultProvider.Get(clientResponse);
         }
 
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Put(Guid id, [FromBody]SupplyRequestModel supplyRequest)
+        {
+            var supply = mapper.Map<SupplyRequestModel, Supply>(supplyRequest);
+            supply.Id = id;
+
+            var supplyResponse = await supplyService.UpdateAsync(supply, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<Supply>, SupplyResponseModel>(supplyResponse);
+
+            return actionResultProvider.Get(clientResponse);
+        }
+
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {

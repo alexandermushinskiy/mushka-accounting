@@ -70,14 +70,42 @@ namespace Mushka.Service.Services
             return CreateInfoValidationResponse(addedSupply, $"Supply with id {addedSupply.Id} was successfully added.");
         }
 
-        public Task<ValidationResponse<Supply>> UpdateAsync(Supply supply, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<ValidationResponse<Supply>> UpdateAsync(Supply supply, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            var storedSupply = await supplyRepository.GetByIdAsync(supply.Id, cancellationToken);
+
+            if (storedSupply == null)
+            {
+                return CreateWarningValidationResponse($"Supply with id {supply.Id} is not found.", ValidationStatusType.NotFound);
+            }
+
+            foreach (var supplyProduct in supply.Products)
+            {
+                var storedProduct = await productRepository.GetByIdAsync(supplyProduct.ProductId, cancellationToken);
+
+                if (storedProduct == null)
+                {
+                    return CreateWarningValidationResponse($"Product with id {supplyProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                }
+
+                var storedSupplyQuantity = storedSupply.Products
+                    .FirstOrDefault(p => p.ProductId == storedProduct.Id)?.Quantity ?? 0;
+
+                if (storedSupplyQuantity != supplyProduct.Quantity)
+                {
+                    storedProduct.Quantity = storedProduct.Quantity - storedSupplyQuantity + supplyProduct.Quantity;
+                    await productRepository.UpdateAsync(storedProduct, cancellationToken);
+                }
+            }
+
+            var updatedSupply = await supplyRepository.UpdateAsync(supply, cancellationToken);
+
+            return CreateInfoValidationResponse(updatedSupply, $"Supply with id {supply.Id} was successfully updated.");
         }
 
         public async Task<ValidationResponse<Supply>> DeleteAsync(Guid supplyId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Supply supply = await supplyRepository.GetByIdAsync(supplyId, cancellationToken);
+            var supply = await supplyRepository.GetByIdAsync(supplyId, cancellationToken);
 
             if (supply == null)
             {
