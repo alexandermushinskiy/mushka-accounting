@@ -36,9 +36,13 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 .FirstOrDefaultAsync(cancellationToken);
         }
 
-        public override async Task<Supplier> UpdateAsync(Supplier supplier, CancellationToken cancellationToken = default(CancellationToken))
+        public override Supplier Update(Supplier supplier)
         {
-            var storedSupplier = await GetByIdAsync(supplier.Id, cancellationToken);
+            var storedSupplier = Context.Suppliers
+                .AsNoTracking()
+                .Include(sup => sup.ContactPersons)
+                .Include(sup => sup.PaymentCards)
+                .Single(entity => entity.Id == supplier.Id);
             
             supplier.ContactPersons
                 .ToList()
@@ -59,7 +63,6 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 .ForEach(dpc => Context.Entry(dpc).State = EntityState.Deleted);
 
             Context.Suppliers.Update(supplier);
-            await Context.SaveChangesAsync(cancellationToken);
 
             return supplier;
         }

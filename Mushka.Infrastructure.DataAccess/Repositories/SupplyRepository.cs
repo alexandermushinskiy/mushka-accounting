@@ -41,9 +41,12 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 .OrderBy(sp => sp.Supply.ReceivedDate)
                 .ToListAsync(cancellationToken);
 
-        public override async Task<Supply> UpdateAsync(Supply supply, CancellationToken cancellationToken = default(CancellationToken))
+        public override Supply Update(Supply supply)
         {
-            var storedSupply = await GetByIdAsync(supply.Id, cancellationToken);
+            var storedSupply = Context.Supplies
+                .AsNoTracking()
+                .Include(sup => sup.Products)
+                .Single(sup => sup.Id == supply.Id);
 
             supply.Products
                 .ToList()
@@ -60,7 +63,6 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 .ForEach(sp => Context.Entry(sp).State = EntityState.Deleted);
 
             Context.Supplies.Update(supply);
-            await Context.SaveChangesAsync(cancellationToken);
 
             return supply;
         }

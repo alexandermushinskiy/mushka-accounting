@@ -15,23 +15,24 @@ namespace Mushka.Service.Services
 {
     internal class OrderService : ServiceBase<Order>, IOrderService
     {
+        private readonly IStorage storage;
         private readonly IOrderRepository orderRepository;
         private readonly IProductRepository productRepository;
         private readonly ICustomerRepository customerRepository;
         private readonly ICostPriceProvider costPriceProvider;
 
         public OrderService(
-            IOrderRepository orderRepository,
-            IProductRepository productRepository,
-            ICustomerRepository customerRepository,
+            IStorage storage,
             ICostPriceProvider costPriceProvider,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            this.orderRepository = orderRepository;
-            this.productRepository = productRepository;
-            this.customerRepository = customerRepository;
+            this.storage = storage;
             this.costPriceProvider = costPriceProvider;
+
+            orderRepository = storage.GetRepository<IOrderRepository>();
+            productRepository = storage.GetRepository<IProductRepository>();
+            customerRepository = storage.GetRepository<ICustomerRepository>();
         }
 
         public async Task<ValidationResponse<IEnumerable<Order>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -60,7 +61,7 @@ namespace Mushka.Service.Services
 
             if (storedCustomer == null)
             {
-                storedCustomer = await customerRepository.AddAsync(order.Customer, cancellationToken);
+                storedCustomer = customerRepository.Add(order.Customer);
             }
 
             foreach (var orderProduct in order.Products)
@@ -73,11 +74,13 @@ namespace Mushka.Service.Services
                 }
 
                 storedProduct.Quantity -= orderProduct.Quantity;
-                await productRepository.UpdateAsync(storedProduct, cancellationToken);
+                productRepository.Update(storedProduct);
             }
 
             order.CustomerId = storedCustomer.Id;
-            var addedOrder = await orderRepository.AddAsync(order, cancellationToken);
+            var addedOrder = orderRepository.Add(order);
+            
+            await storage.SaveAsync(cancellationToken);
 
             return CreateInfoValidationResponse(addedOrder, $"Order with id {addedOrder.Id} was successfully added.");
         }
@@ -106,14 +109,15 @@ namespace Mushka.Service.Services
                 if (storedOrderQuantity != orderProduct.Quantity)
                 {
                     storedProduct.Quantity = storedProduct.Quantity + storedOrderQuantity - orderProduct.Quantity;
-                    await productRepository.UpdateAsync(storedProduct, cancellationToken);
+                    productRepository.Update(storedProduct);
                 }
             }
 
             order.Customer.Id = storedOrder.Customer.Id;
             order.CustomerId = storedOrder.CustomerId;
 
-            var updatedOrder = await orderRepository.UpdateAsync(order, cancellationToken);
+            var updatedOrder = orderRepository.Update(order);
+            await storage.SaveAsync(cancellationToken);
 
             return CreateInfoValidationResponse(updatedOrder, $"Order with id {order.Id} was successfully updated.");
         }
@@ -137,10 +141,11 @@ namespace Mushka.Service.Services
                 }
 
                 storedProduct.Quantity += orderProduct.Quantity;
-                await productRepository.UpdateAsync(storedProduct, cancellationToken);
+                productRepository.Update(storedProduct);
             }
 
-            await orderRepository.DeleteAsync(order, cancellationToken);
+            orderRepository.Delete(order);
+            await storage.SaveAsync(cancellationToken);
 
             return CreateInfoValidationResponse(order, $"Order with id {order.Id} was successfully deleted.");
         }

@@ -55,24 +55,8 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                     .ThenInclude(del => del.Supply)
                 .ToListAsync(cancellationToken);
         }
-
-        //public async Task<ProductSize> GetProductSizeAsync(Guid productId, Guid sizeId, CancellationToken cancellationToken)
-        //{
-        //    return await Context.ProductSizes
-        //        .AsNoTracking()
-        //        .FirstOrDefaultAsync(prod => prod.ProductId == productId && prod.SizeId == sizeId, cancellationToken);
-        //}
-
-        //public async Task<ProductSize> UpdateProductSize(ProductSize productSize, CancellationToken cancellationToken)
-        //{
-        //    Context.Entry(productSize).State = EntityState.Modified;
-        //    await Context.SaveChangesAsync(cancellationToken);
-        //    return productSize;
-        //}
-
-        public async Task<IEnumerable<Size>> GetSizesAsync(CancellationToken cancellationToken)
-        {
-            return await Context.Sizes.AsNoTracking().ToListAsync(cancellationToken);
-        }
+        
+        public async Task<IEnumerable<Size>> GetSizesAsync(CancellationToken cancellationToken) =>
+            await Context.Sizes.AsNoTracking().ToListAsync(cancellationToken);
     }
 }

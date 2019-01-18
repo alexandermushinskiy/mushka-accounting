@@ -46,24 +46,21 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
             await dbSet.AsNoTracking().ToArrayAsync(cancellationToken);
         
-        public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual TEntity Add(TEntity entity)
         {
             dbSet.Add(entity);
-            await Context.SaveChangesAsync(cancellationToken);
             return entity;
         }
 
-        public virtual async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual TEntity Update(TEntity entity)
         {
-            Context.Entry(entity).State = EntityState.Modified;
-            await Context.SaveChangesAsync(cancellationToken);
+            dbSet.Update(entity);
             return entity;
         }
 
-        public virtual async Task<TEntity> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual TEntity Delete(TEntity entity)
         {
             dbSet.Remove(entity);
-            await Context.SaveChangesAsync(cancellationToken);
             return entity;
         }
     }

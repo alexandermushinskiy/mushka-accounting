@@ -14,14 +14,17 @@ namespace Mushka.Service.Services
 {
     internal class SupplierService : ServiceBase<Supplier>, ISupplierService
     {
+        private readonly IStorage storage;
         private readonly ISupplierRepository supplierRepository;
 
         public SupplierService(
-            ISupplierRepository supplierRepository,
+            IStorage storage,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            this.supplierRepository = supplierRepository;
+            this.storage = storage;
+            
+            supplierRepository = storage.GetRepository<ISupplierRepository>();
         }
 
         public async Task<ValidationResponse<IEnumerable<Supplier>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -53,7 +56,8 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Supplier with name {supplier.Name} is already exist.");
             }
             
-            var addedSupplier = await supplierRepository.AddAsync(supplier, cancellationToken);
+            var addedSupplier = supplierRepository.Add(supplier);
+            await storage.SaveAsync(cancellationToken);
 
             return CreateInfoValidationResponse(addedSupplier, $"Supplier with id {supplier.Id} was successfully created.");
         }
@@ -72,7 +76,8 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Supplier with name {supplier.Name} is already exist.");
             }
 
-            var updatedSupplier = await supplierRepository.UpdateAsync(supplier, cancellationToken);
+            var updatedSupplier = supplierRepository.Update(supplier);
+            await storage.SaveAsync(cancellationToken);
 
             return CreateInfoValidationResponse(updatedSupplier, $"Supplier with id {supplier.Id} was successfully updated.");
         }
@@ -86,7 +91,8 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Supplier with id {supplierId} is not found.", ValidationStatusType.NotFound);
             }
 
-            await supplierRepository.DeleteAsync(supplier, cancellationToken);
+            supplierRepository.Delete(supplier);
+            await storage.SaveAsync(cancellationToken);
 
             return CreateInfoValidationResponse(supplier, $"Supplier with id {supplier.Id} was successfully deleted.");
         }

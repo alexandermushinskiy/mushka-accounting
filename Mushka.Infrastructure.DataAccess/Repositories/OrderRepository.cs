@@ -25,7 +25,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
 
         public override async Task<Order> GetByIdAsync(Guid id, CancellationToken cancellationToken = default(CancellationToken)) =>
             await Context.Orders
-                .Where(del => del.Id == id)
+                .Where(order => order.Id == id)
                 .AsNoTracking()
                 .Include(order => order.Customer)
                 .Include(order => order.Products)
@@ -36,10 +36,14 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
             await Context.Set<OrderProduct>()
                 .Where(sp => sp.ProductId == productId)
                 .SumAsync(sp => sp.Quantity, cancellationToken);
-
-        public override async Task<Order> UpdateAsync(Order order, CancellationToken cancellationToken = default(CancellationToken))
+        
+        public override Order Update(Order order)
         {
-            var storedOrder = await GetByIdAsync(order.Id, cancellationToken);
+            var storedOrder = dbSet
+                .AsNoTracking()
+                .Include(o => o.Products)
+                .Include(o => o.Customer)
+                .Single(o => o.Id == order.Id);
 
             order.Products
                 .ToList()
@@ -56,7 +60,6 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 .ForEach(sp => Context.Entry(sp).State = EntityState.Deleted);
 
             Context.Orders.Update(order);
-            await Context.SaveChangesAsync(cancellationToken);
 
             return order;
         }

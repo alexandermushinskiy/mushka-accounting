@@ -14,17 +14,19 @@ namespace Mushka.Service.Services
 {
     internal class SupplyService : ServiceBase<Supply>, ISupplyService
     {
+        private readonly IStorage storage;
         private readonly ISupplyRepository supplyRepository;
         private readonly IProductRepository productRepository;
 
         public SupplyService(
-            ISupplyRepository supplyRepository,
-            IProductRepository productRepository,
+            IStorage storage,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            this.supplyRepository = supplyRepository;
-            this.productRepository = productRepository;
+            this.storage = storage;
+
+            supplyRepository = storage.GetRepository<ISupplyRepository>();
+            productRepository = storage.GetRepository<IProductRepository>();
         }
 
         public async Task<ValidationResponse<IEnumerable<Supply>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -34,7 +36,7 @@ namespace Mushka.Service.Services
                 .ThenBy(supply => supply.RequestDate)
                 .ToList();
 
-            string message = supplies.Any()
+            var message = supplies.Any()
                 ? "Supplies were successfully retrieved."
                 : "No supplies found.";
 
@@ -62,11 +64,12 @@ namespace Mushka.Service.Services
                 }
                 
                 storedProduct.Quantity += supplyProduct.Quantity;
-                await productRepository.UpdateAsync(storedProduct, cancellationToken);
+                productRepository.Update(storedProduct);
             }
 
-            var addedSupply = await supplyRepository.AddAsync(supply, cancellationToken);
-            
+            var addedSupply = supplyRepository.Add(supply);
+            await storage.SaveAsync(cancellationToken);
+
             return CreateInfoValidationResponse(addedSupply, $"Supply with id {addedSupply.Id} was successfully added.");
         }
 
@@ -94,11 +97,12 @@ namespace Mushka.Service.Services
                 if (storedSupplyQuantity != supplyProduct.Quantity)
                 {
                     storedProduct.Quantity = storedProduct.Quantity - storedSupplyQuantity + supplyProduct.Quantity;
-                    await productRepository.UpdateAsync(storedProduct, cancellationToken);
+                    productRepository.Update(storedProduct);
                 }
             }
 
-            var updatedSupply = await supplyRepository.UpdateAsync(supply, cancellationToken);
+            var updatedSupply = supplyRepository.Update(supply);
+            await storage.SaveAsync(cancellationToken);
 
             return CreateInfoValidationResponse(updatedSupply, $"Supply with id {supply.Id} was successfully updated.");
         }
@@ -122,10 +126,11 @@ namespace Mushka.Service.Services
                 }
 
                 storedProduct.Quantity -= supplyProduct.Quantity;
-                await productRepository.UpdateAsync(storedProduct, cancellationToken);
+                productRepository.Update(storedProduct);
             }
 
-            await supplyRepository.DeleteAsync(supply, cancellationToken);
+            supplyRepository.Delete(supply);
+            await storage.SaveAsync(cancellationToken);
 
             return CreateInfoValidationResponse(supply, $"Supply with id {supplyId} was successfully deleted.");
         }

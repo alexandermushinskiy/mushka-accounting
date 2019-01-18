@@ -15,26 +15,22 @@ namespace Mushka.Service.Services
 {
     internal class ProductService : ServiceBase<Product>, IProductService
     {
+        private readonly IStorage storage;
         private readonly IProductRepository productRepository;
         private readonly ICategoryRepository categoryRepository;
-        private readonly ISupplyRepository supplyRepository;
-        private readonly IOrderRepository orderRepository;
         private readonly ICostPriceProvider costPriceProvider;
 
         public ProductService(
-            IProductRepository productRepository,
-            ICategoryRepository categoryRepository,
-            ISupplyRepository supplyRepository,
-            IOrderRepository orderRepository,
+            IStorage storage,
             ICostPriceProvider costPriceProvider,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            this.productRepository = productRepository;
-            this.categoryRepository = categoryRepository;
-            this.supplyRepository = supplyRepository;
-            this.orderRepository = orderRepository;
+            this.storage = storage;
             this.costPriceProvider = costPriceProvider;
+
+            productRepository = storage.GetRepository<IProductRepository>();
+            categoryRepository = storage.GetRepository<ICategoryRepository>();
         }
 
         public async Task<ValidationResponse<IEnumerable<Product>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -43,7 +39,7 @@ namespace Mushka.Service.Services
                 .OrderBy(product => product.Name)
                 .ToList();
 
-            string message = products.Any()
+            var message = products.Any()
                 ? "Products were successfully retrieved."
                 : "No products found.";
 
@@ -58,7 +54,7 @@ namespace Mushka.Service.Services
                 .OrderBy(product => product.Name)
                 .ToList();
 
-            string message = products.Any()
+            var message = products.Any()
                 ? "Products in stock were successfully retrieved."
                 : "No products found in stock.";
 
@@ -137,7 +133,9 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Product with the vendor code {product.VendorCode} is already existed.");
             }
 
-            await productRepository.AddAsync(product, cancellationToken);
+            productRepository.Add(product);
+            await storage.SaveAsync(cancellationToken);
+
             var addedProduct = await productRepository.GetByIdAsync(product.Id, cancellationToken);
 
             return CreateInfoValidationResponse(addedProduct, $"Product with id {product.Id} was successfully created.");
@@ -157,7 +155,8 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Product with the name {product.Name} is already exist.");
             }
 
-            await productRepository.UpdateAsync(product, cancellationToken);
+            productRepository.Update(product);
+            await storage.SaveAsync(cancellationToken);
             var updatedProduct = await productRepository.GetByIdAsync(product.Id, cancellationToken);
 
             return CreateInfoValidationResponse(updatedProduct, $"Product with id {product.Id} was successfully updated.");
@@ -172,7 +171,8 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Product with id {productId} is not found.", ValidationStatusType.NotFound);
             }
 
-            await productRepository.DeleteAsync(product, cancellationToken);
+            productRepository.Delete(product);
+            await storage.SaveAsync(cancellationToken);
 
             return CreateInfoValidationResponse(product, $"Product with id {product.Id} was successfully deleted.");
         }

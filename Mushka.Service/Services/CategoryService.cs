@@ -14,17 +14,19 @@ namespace Mushka.Service.Services
 {
     internal class CategoryService : ServiceBase<Category>, ICategoryService
     {
+        private readonly IStorage storage;
         private readonly ICategoryRepository categoryRepository;
         private readonly IProductRepository productRepository;
 
         public CategoryService(
-            ICategoryRepository categoryRepository,
-            IProductRepository productRepository,
+            IStorage storage,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            this.categoryRepository = categoryRepository;
-            this.productRepository = productRepository;
+            this.storage = storage;
+
+            categoryRepository = storage.GetRepository<ICategoryRepository>();
+            productRepository = storage.GetRepository<IProductRepository>();
         }
 
         public async Task<ValidationResponse<IEnumerable<Category>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -56,7 +58,8 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Category with name {category.Name} is already exist.");
             }
             
-            var addedCategory = await categoryRepository.AddAsync(category, cancellationToken);
+            var addedCategory = categoryRepository.Add(category);
+            await storage.SaveAsync(cancellationToken);
 
             return CreateInfoValidationResponse(addedCategory, $"Category with id {category.Id} was successfully created.");
         }
@@ -77,7 +80,8 @@ namespace Mushka.Service.Services
 
             category.Order = categoryToUpdate.Order;
 
-            var updatedCategory = await categoryRepository.UpdateAsync(category, cancellationToken);
+            var updatedCategory = categoryRepository.Update(category);
+            await storage.SaveAsync(cancellationToken);
 
             return CreateInfoValidationResponse(updatedCategory, $"Category with id {category.Id} was successfully updated.");
         }
@@ -96,7 +100,8 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Category with id {categoryId} contains products.");
             }
 
-            await categoryRepository.DeleteAsync(category, cancellationToken);
+            categoryRepository.Delete(category);
+            await storage.SaveAsync(cancellationToken);
 
             return CreateInfoValidationResponse(category, $"Category with id {category.Id} was successfully deleted.");
         }
