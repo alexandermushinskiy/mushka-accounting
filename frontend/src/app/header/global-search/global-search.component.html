@@ -1,5 +1,5 @@
 <form (ngSubmit)="handleSearch(searchField.value)">
-  <input #searchField csrNumField required
+  <input #searchField csrNumField required autocomplete="off"
          maxlength="14"
          minlength="6"
          [disabled]="isLoading"

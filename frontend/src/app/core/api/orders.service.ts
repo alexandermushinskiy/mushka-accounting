@@ -30,8 +30,8 @@ export class OrdersService {
 
   getDefaultProducts(): Observable<OrderProduct[]> {
     return this.http.get(`${this.endPoint}/default-products`)
-    .map((res: any) => this.converterService.convertToOrderProducts(res.data))
-    .catch((res: any) => throwError(res.error.messages));
+      .map((res: any) => this.converterService.convertToOrderProducts(res.data))
+      .catch((res: any) => throwError(res.error.messages));
   }
 
   create(order: Order): Observable<Order> {
@@ -51,4 +51,10 @@ export class OrdersService {
       .catch((res: any) => throwError(res.error.messages));
   }
 
+  validateOrderNumber(number: string ): Observable<boolean> {
+    return this.http.get(`${this.endPoint}/validate-number/${number}`)
+      .delay(1000)
+      .map((res: any) => res.data.isValid)
+      .catch((res: any) => throwError(res.error.messages));
+  }
 }

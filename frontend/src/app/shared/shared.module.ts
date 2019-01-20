@@ -132,6 +132,8 @@ import { PaymentMethodsDropdownComponent } from './widgets/payment-methods-dropd
     SelectProductsComponent,
     ProgressLinearComponent,
     PaymentMethodsDropdownComponent
+  ],
+  providers: [
   ]
 })
 

@@ -32,8 +32,12 @@
                         <label for="address">Номер</label>
                         <input type="text" class="form-control"
                                            formControlName="number"
-                                           [ngClass]="{'not-valid': orderForm.controls.number.invalid && isFormSubmitted}">
+                                           [ngClass]="{'not-valid': orderForm.controls.number.invalid && isFormSubmitted}"
+                                           (blur)="onNumberChange($event.target.value)">
+                        <mk-spinner class="validate-order-number" [isLoading]="isNumberValidating"></mk-spinner>
                         <!-- <span class="validation-tip" *ngIf="orderForm.hasError('required', ['number']) && isFormSubmitted">Обязательно</span> -->
+                        <!-- <span class="validation-tip" *ngIf="!isOrderNumberValid">Номер уже существует</span> -->
+                        <span class="validation-tip" *ngIf="!orderForm.hasError('required', ['number']) && orderForm.hasError('notUnique', ['number'])">Номер уже существует</span>
                       </div>
                     </div>
                   </div>

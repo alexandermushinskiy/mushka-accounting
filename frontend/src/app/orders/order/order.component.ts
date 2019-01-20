@@ -12,6 +12,7 @@ import { ukrRegions } from '../shared/constants/urk-regions.const';
 import { DatetimeService } from '../../core/datetime/datetime.service';
 import { UnsubscriberComponent } from '../../shared/hooks/unsubscriber.component';
 import { SelectProduct } from '../../shared/models/select-product.model';
+import { uniqueOrderNumber } from '../../shared/validators/order-number.validator';
 
 @Component({
   selector: 'mk-order',
@@ -30,6 +31,8 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   regions = ukrRegions;
   isFormSubmitted = false;
   profit: number;
+  isOrderNumberValid = true;
+  isNumberValidating = false;
 
   private quantityTerms$ = new Subject<{index: number, quantity: number}>();
 
@@ -83,6 +86,24 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
 
   onQuantityChanged(index: number, quantity: any) {
     this.quantityTerms$.next({index, quantity});
+  }
+  
+  onNumberChange(orderNumber: string) {
+    if (!orderNumber && orderNumber.trim().length === 0) {
+      return;
+    }
+
+    this.isNumberValidating = true;
+    this.ordersService.validateOrderNumber(orderNumber)
+      .subscribe((isValid: boolean) => {
+        this.isOrderNumberValid = isValid;
+        this.isNumberValidating = false;
+
+        var numberCtrl = this.orderForm.controls.number;
+
+        numberCtrl.setValidators(isValid ? [Validators.required] : [Validators.required, uniqueOrderNumber]);
+        numberCtrl.updateValueAndValidity({onlySelf: true, emitEvent: false});
+      });
   }
 
   saveOrder() {
