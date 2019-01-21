@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Mushka.Core.Validation;
+using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
 
 namespace Mushka.Service.Extensibility.Services
@@ -17,6 +18,6 @@ namespace Mushka.Service.Extensibility.Services
 
         Task<ValidationResponse<IEnumerable<Size>>> GetSizesAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<ValidationResponse<decimal>> GetCostPriceAsync(Guid productId, int count, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ValidationResponse<ProductCostPrice>> GetCostPriceAsync(Guid productId, int count, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

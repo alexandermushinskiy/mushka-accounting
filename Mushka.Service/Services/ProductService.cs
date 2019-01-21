@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Mushka.Core.Extensibility.Logging;
 using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
+using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Service.Extensibility.Providers;
@@ -102,18 +103,18 @@ namespace Mushka.Service.Services
             return CreateInfoValidationResponse(products, message);
         }
 
-        public async Task<ValidationResponse<decimal>> GetCostPriceAsync(Guid productId, int productsCount, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<ValidationResponse<ProductCostPrice>> GetCostPriceAsync(Guid productId, int productsCount, CancellationToken cancellationToken = default(CancellationToken))
         {
             var product = await productRepository.GetByIdAsync(productId, cancellationToken);
 
-            //if (product == null)
-            //{
-            //    return CreateWarningValidationResponse<decimal>($"Product with id {productId} is not found.", ValidationStatusType.NotFound);
-            //}
+            if (product == null)
+            {
+                return CreateWarningValidationResponse<ProductCostPrice>($"Product with id {productId} is not found.", ValidationStatusType.NotFound);
+            }
 
             var costPrice = await costPriceProvider.CalculateAsync(productId, productsCount, cancellationToken);
 
-            return CreateInfoValidationResponse(costPrice, $"Cost price for product with id {product.Id} was successfully retrieved.");
+            return CreateInfoValidationResponse(new ProductCostPrice(costPrice), $"Cost price for product with id {product.Id} was successfully retrieved.");
         }
 
         public async Task<ValidationResponse<Product>> AddAsync(Product product, CancellationToken cancellationToken = default(CancellationToken))
@@ -122,12 +123,7 @@ namespace Mushka.Service.Services
             {
                 return CreateWarningValidationResponse($"Category with id {product.CategoryId} is not found.", ValidationStatusType.NotFound);
             }
-
-            //if (await productRepository.IsExistAsync(prod => prod.Name == product.Name && prod.SizeId == product.SizeId, cancellationToken))
-            //{
-            //    return CreateWarningValidationResponse($"Product with the name {product.Name} is already existed.");
-            //}
-
+            
             if (await productRepository.IsExistAsync(prod => prod.VendorCode == product.VendorCode, cancellationToken))
             {
                 return CreateWarningValidationResponse($"Product with the vendor code {product.VendorCode} is already existed.");
@@ -138,7 +134,7 @@ namespace Mushka.Service.Services
 
             var addedProduct = await productRepository.GetByIdAsync(product.Id, cancellationToken);
 
-            return CreateInfoValidationResponse(addedProduct, $"Product with id {product.Id} was successfully created.");
+            return CreateInfoValidationResponse(addedProduct, $"Product with id {product.Id} was successfully added.");
         }
 
         public async Task<ValidationResponse<Product>> UpdateAsync(Product product, CancellationToken cancellationToken = default(CancellationToken))
@@ -150,9 +146,9 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Product with id {product.Id} is not found.", ValidationStatusType.NotFound);
             }
 
-            if (productRepository.Get(prod => prod.Id != product.Id && prod.Name == product.Name).Any())
+            if (await productRepository.IsExistAsync(prod => prod.Id != product.Id && prod.VendorCode == product.VendorCode, cancellationToken))
             {
-                return CreateWarningValidationResponse($"Product with the name {product.Name} is already exist.");
+                return CreateWarningValidationResponse($"Product with the vendor code {product.VendorCode} is already existed.");
             }
 
             productRepository.Update(product);

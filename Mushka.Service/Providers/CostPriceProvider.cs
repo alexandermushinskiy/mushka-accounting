@@ -29,9 +29,9 @@ namespace Mushka.Service.Providers
             var supplyQuantity = 0;
             var costPricesList = new List<decimal>(productsCount);
 
-            foreach (var supllyProduct in allProductSupplies.Where(prod => prod.ProductId == productId))
+            foreach (var supplyProduct in allProductSupplies.Where(prod => prod.ProductId == productId))
             {
-                supplyQuantity = supllyProduct.Quantity + supplyQuantity;
+                supplyQuantity = supplyProduct.Quantity + supplyQuantity;
                 var restProductInSupply = supplyQuantity - soldProductCount;
 
                 if (restProductInSupply < 0)
@@ -41,14 +41,14 @@ namespace Mushka.Service.Providers
 
                 if (restProductInSupply >= productsCount)
                 {
-                    costPricesList.AddRange(Enumerable.Repeat(supllyProduct.CostPrice, productsCount));
+                    costPricesList.AddRange(Enumerable.Repeat(supplyProduct.CostPrice, productsCount));
                     break;
                 }
 
                 if (restProductInSupply < productsCount)
                 {
                     productsCount = productsCount - restProductInSupply;
-                    costPricesList.AddRange(Enumerable.Repeat(supllyProduct.CostPrice, productsCount));
+                    costPricesList.AddRange(Enumerable.Repeat(supplyProduct.CostPrice, productsCount));
                 }
             }
 

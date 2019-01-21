@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Mushka.Core.Extensibility.Providers;
 using Mushka.Core.Validation;
+using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
 using Mushka.Service.Extensibility.Services;
 using Mushka.WebApi.ClientModels;
@@ -74,10 +75,10 @@ namespace Mushka.WebApi.Controllers
         }
 
         [HttpGet("{id:guid}/costprice")]
-        public async Task<IActionResult> GetCostPrice(Guid id, int productsCount = 0)
+        public async Task<IActionResult> GetCostPrice(Guid id, int productsCount = 1)
         {
             var costPrice = await productService.GetCostPriceAsync(id, productsCount, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<decimal>, CostPriceResponseModel>(costPrice);
+            var clientResponse = mapper.Map<ValidationResponse<ProductCostPrice>, CostPriceResponseModel>(costPrice);
 
             return actionResultProvider.Get(clientResponse);
         }
