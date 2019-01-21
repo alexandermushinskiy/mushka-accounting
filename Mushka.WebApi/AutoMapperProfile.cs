@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
+using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Category;
@@ -60,10 +61,10 @@ namespace Mushka.WebApi
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
 
-            CreateMap<ValidationResponse<decimal>, CostPriceResponseModel>()
+            CreateMap<ValidationResponse<ProductCostPrice>, CostPriceResponseModel>()
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] {src.ValidationResult.Message}))
-                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => new CostPriceModel { CostPrice = src.Result }));
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => new CostPriceModel { CostPrice = src.Result.CostPrice }));
             //-------------------------
 
             // Category
