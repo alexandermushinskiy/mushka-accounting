@@ -27,6 +27,7 @@ export class DatatableHeaderComponent implements OnInit {
   @Output() onCollapseMenu = new EventEmitter<any>();
   @Output() onExportAllToCSV = new EventEmitter<string>();
   @Output() onExportFilteredToCSV = new EventEmitter<string>();
+  @Output() onImport = new EventEmitter();
   @Output() onReload = new EventEmitter();
   @Output() onFilterReset = new EventEmitter();
   @Output() onQuickFilterReset = new EventEmitter();
@@ -55,6 +56,10 @@ export class DatatableHeaderComponent implements OnInit {
 
   exportFilteredToCSV() {
     this.onExportFilteredToCSV.emit(`${this.title}_filter_${this.currentFilter}`);
+  }
+
+  inport() {
+    this.onImport.emit();
   }
 
   reloadTickets() {

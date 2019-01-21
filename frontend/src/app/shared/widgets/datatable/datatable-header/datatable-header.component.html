@@ -39,7 +39,16 @@
 
         <div ngbDropdown placement="bottom-right">
           <button class="btn btn-icon" ngbDropdownToggle id="export-csv">
-            <i class="fa fa-download" title="Export to CSV" aria-hidden="true"></i>
+            <i class="fa fa-upload" title="Импорт данных" aria-hidden="true"></i>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="export-csv">
+            <button class="dropdown-item" (click)="import()">Импорт данных</button>
+          </div>
+        </div>
+
+        <div ngbDropdown placement="bottom-right">
+          <button class="btn btn-icon" ngbDropdownToggle id="export-csv">
+            <i class="fa fa-download" title="Экспорт в CSV" aria-hidden="true"></i>
           </button>
           <div ngbDropdownMenu aria-labelledby="export-csv">
             <button class="dropdown-item" (click)="exportAllToCSV()">Экспорт всех данных в CSV</button>

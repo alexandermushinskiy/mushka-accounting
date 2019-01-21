@@ -1,7 +1,7 @@
 import { DataTableRow } from '../../../shared/models/data-table-row.model';
 import { ContactPerson } from '../../../shared/models/contact-person.model';
 
-export class SupplierTablePreview extends DataTableRow {
+export class SupplierTableRow extends DataTableRow {
   name: string;
   address: string;
   email: string;

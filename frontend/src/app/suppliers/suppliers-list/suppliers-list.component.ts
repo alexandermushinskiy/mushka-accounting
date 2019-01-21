@@ -5,7 +5,7 @@ import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstr
 
 import { SuppliersService } from '../../core/api/suppliers.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
-import { SupplierTablePreview } from '../shared/models/supplier-table-preview';
+import { SupplierTableRow } from '../shared/models/supplier-table-preview';
 import { Supplier } from '../../shared/models/supplier.model';
 import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatable.component';
 
@@ -20,7 +20,7 @@ export class SuppliersListComponent extends SortableDatatableComponent implement
 
   loadingIndicator = true;
   isModalLoading = false;
-  supplierRows: SupplierTablePreview[];
+  supplierRows: SupplierTableRow[];
   total = 0;
   shown = 0;
   contactsWidth: number;
@@ -52,7 +52,7 @@ export class SuppliersListComponent extends SortableDatatableComponent implement
     }
   }
 
-  toggleExpandRow(row, index) {
+  toggleExpandRow(row: SupplierTableRow, index: number) {
     row.index = index;
 
     // this.contactsWidth = this.getColumnWidth('name') + this.getColumnWidth('service') +
@@ -89,6 +89,10 @@ export class SuppliersListComponent extends SortableDatatableComponent implement
     }
   }
 
+  import() {
+
+  }
+
   private onDeleteSuccess() {
     this.notificationsService.success('Успех', `Поставщик успешно удален из системы.`);
     this.supplierToDelete = null;
@@ -112,7 +116,7 @@ export class SuppliersListComponent extends SortableDatatableComponent implement
   }
 
   private onLoadSuccess(suppliers: Supplier[]) {
-    this.supplierRows = suppliers.map((el, index) => new SupplierTablePreview(el, index));
+    this.supplierRows = suppliers.map((el, index) => new SupplierTableRow(el, index));
     this.total = suppliers.length;
     this.loadingIndicator = false;
   }
