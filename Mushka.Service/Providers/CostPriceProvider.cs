@@ -34,7 +34,7 @@ namespace Mushka.Service.Providers
                 supplyQuantity = supplyProduct.Quantity + supplyQuantity;
                 var restProductInSupply = supplyQuantity - soldProductCount;
 
-                if (restProductInSupply < 0)
+                if (restProductInSupply <= 0)
                 {
                     continue;
                 }

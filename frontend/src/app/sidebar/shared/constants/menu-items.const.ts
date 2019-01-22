@@ -47,6 +47,24 @@ export const MenuItems: MenuItem[] = [
     isEnabled: true,
   }),
   new MenuItem({
+    title: MenuLabels.GIFTS,
+    icon: 'fa-gift',
+    routePath: '/gifts',
+    isEnabled: true,
+  }),
+  new MenuItem({
+    title: MenuLabels.EXHIBITIONS,
+    icon: 'fa-id-badge',
+    routePath: '/gifts',
+    isEnabled: true,
+  }),
+  new MenuItem({
+    title: MenuLabels.COSTS,
+    icon: 'fa-money',
+    routePath: '/costs',
+    isEnabled: true,
+  }),
+  new MenuItem({
     title: MenuLabels.HELP,
     icon: 'ico-help',
     routePath: '/help',

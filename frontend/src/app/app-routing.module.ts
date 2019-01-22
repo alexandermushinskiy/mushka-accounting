@@ -11,6 +11,8 @@ import { SuppliesListComponent } from './supplies/supplies-list/supplies-list.co
 import { SupplyComponent } from './supplies/supply/supply.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { OrderComponent } from './orders/order/order.component';
+import { CostsListComponent } from './costs/costs-list/costs-list.component';
+import { GiftsListComponent } from './gifts/gifts-list/gifts-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -32,7 +34,9 @@ const routes: Routes = [
     { path: '', component: SuppliesListComponent, pathMatch: 'full' },
     { path: 'new', component: SupplyComponent, pathMatch: 'full' },
     { path: ':id', component: SupplyComponent, pathMatch: 'full' }
-  ]}
+  ]},
+  { path: 'costs', component: CostsListComponent, pathMatch: 'full' },
+  { path: 'gifts', component: GiftsListComponent, pathMatch: 'full' },
 ];
 
 @NgModule({
