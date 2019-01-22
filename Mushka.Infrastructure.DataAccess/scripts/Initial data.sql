@@ -1,4 +1,4 @@
-﻿USE [Mushka]
+﻿USE [Mushka-Test]
 
 -- Sizes
 INSERT INTO [Sizes] ([Id], [Name])

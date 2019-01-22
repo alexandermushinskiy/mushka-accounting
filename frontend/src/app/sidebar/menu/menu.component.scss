@@ -61,10 +61,17 @@
   }
   .fa {
     font-size: 2.1rem;
+    width: 20px;
     margin-right: $padding-base;
   }
   .ico-views {
     font-size: 1.8rem;
+  }
+  .fa-id-badge {
+    padding-left: 3px;
+  }
+  .fa-gift {
+    padding-left: 2px;
   }
   .badge {
     position: absolute;
