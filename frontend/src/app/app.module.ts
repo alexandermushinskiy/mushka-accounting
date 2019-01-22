@@ -41,12 +41,13 @@ import { PackagesModule } from './packages/packages.module';
 import { PartnersModule } from './partners/partners.module';
 import { LogisticsModule } from './logistics/logistics.module';
 import { SupplyModule } from './supplies/supply.module';
-import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+import { GiftsModule } from './gifts/gifts.module';
+import { CostsModule } from './costs/costs.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    DashboardComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +64,9 @@ import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
     PartnersModule,
     LogisticsModule,
     SupplyModule,
+    GiftsModule,
+    CostsModule,
+    DashboardModule,
     NgxWebstorageModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
