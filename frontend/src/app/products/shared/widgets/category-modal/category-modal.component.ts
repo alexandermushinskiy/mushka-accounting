@@ -26,7 +26,7 @@ export class CategoryModalComponent implements OnInit {
     this.isEdit = !!this.category;
     this.title = `${this.isEdit ? 'Редактирование' : 'Добавление'} категории`;
 
-    this.buildForm(this.isEdit ? this.category : new Category({}));
+    this.buildForm(this.isEdit ? this.category : new Category({ isSizeRequired : false }));
   }
 
   close() {
@@ -35,7 +35,7 @@ export class CategoryModalComponent implements OnInit {
 
   save() {
     const categoryFormValue = this.categoryForm.value;
-
+    
     if (this.isEdit) {
       this.category.name = categoryFormValue.name;
       this.category.isSizeRequired = categoryFormValue.isSizeRequired;
