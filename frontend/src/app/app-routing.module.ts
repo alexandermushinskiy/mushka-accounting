@@ -13,6 +13,7 @@ import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { OrderComponent } from './orders/order/order.component';
 import { CostsListComponent } from './costs/costs-list/costs-list.component';
 import { GiftsListComponent } from './gifts/gifts-list/gifts-list.component';
+import { ExhibitionsListComponent } from './exhibitions/exhibitions-list/exhibitions-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -37,6 +38,7 @@ const routes: Routes = [
   ]},
   { path: 'costs', component: CostsListComponent, pathMatch: 'full' },
   { path: 'gifts', component: GiftsListComponent, pathMatch: 'full' },
+  { path: 'exhibitions', component: ExhibitionsListComponent, pathMatch: 'full' }
 ];
 
 @NgModule({

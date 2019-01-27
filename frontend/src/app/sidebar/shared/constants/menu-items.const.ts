@@ -55,7 +55,7 @@ export const MenuItems: MenuItem[] = [
   new MenuItem({
     title: MenuLabels.EXHIBITIONS,
     icon: 'fa-id-badge',
-    routePath: '/gifts',
+    routePath: '/exhibitions',
     isEnabled: true,
   }),
   new MenuItem({

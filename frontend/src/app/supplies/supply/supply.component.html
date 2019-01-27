@@ -139,7 +139,9 @@
           <div class="row">
             <div class="col-md-12 cost">
               <span class="cost-title">Оплата:</span>
-              <span class="cost-value"><mk-currency-input formControlName="cost"></mk-currency-input></span>
+              <span class="cost-value">
+                <mk-currency-input formControlName="cost" [placeholder]="'Сумма'"></mk-currency-input>
+              </span>
               <span class="cost-payment-type">
                 <mk-payment-methods-dropdown formControlName="costMethod"
                                   [ngClass]="{'not-valid': supplyForm.controls.costMethod.invalid && isFormSubmitted}">
@@ -148,7 +150,9 @@
             </div>
             <div class="col-md-12 cost">
               <span class="cost-title">Предоплата:</span>
-              <span class="cost-value"><mk-currency-input formControlName="prepayment"></mk-currency-input></span>
+              <span class="cost-value">
+                <mk-currency-input formControlName="prepayment" [placeholder]="'Сумма'"></mk-currency-input>
+              </span>
               <span class="cost-payment-type">
                 <mk-payment-methods-dropdown formControlName="prepaymentMethod"
                                   [ngClass]="{'not-valid': supplyForm.controls.prepaymentMethod.invalid && isFormSubmitted}">
@@ -157,7 +161,9 @@
             </div>
             <div class="col-md-12 cost">
               <span class="cost-title">Доставка:</span>
-              <span class="cost-value"><mk-currency-input formControlName="deliveryCost"></mk-currency-input></span>
+              <span class="cost-value">
+                <mk-currency-input formControlName="deliveryCost" [placeholder]="'Сумма'"></mk-currency-input>
+              </span>
               <span class="cost-payment-type">
                 <mk-payment-methods-dropdown formControlName="deliveryCostMethod"
                                   [ngClass]="{'not-valid': supplyForm.controls.deliveryCostMethod.invalid && isFormSubmitted}">
@@ -167,7 +173,9 @@
             </div>
             <div class="col-md-12 cost">
               <span class="cost-title">Комиссия:</span>
-              <span class="cost-value"><mk-currency-input formControlName="bankFee"></mk-currency-input></span>
+              <span class="cost-value">
+                <mk-currency-input formControlName="bankFee" [placeholder]="'Сумма'"></mk-currency-input>
+              </span>
             </div>
           </div>
           <div class="row">
