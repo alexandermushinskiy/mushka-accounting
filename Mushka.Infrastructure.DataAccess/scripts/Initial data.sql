@@ -177,11 +177,11 @@ VALUES
 
 
 -- Supplies
-INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes])
+INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes], [Description])
 VALUES
-('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 222.0, 41319.0, 2, '2018-04-05', '2018-02-13', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', 940.0, 1, 42481, NULL),
-('32c74ef3-adfd-4723-a319-9b8984d1b7fb', 90.0, 16500.0, 2, '2018-06-01', '2018-05-03', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', 90.0, 1, 16680, NULL),
-('b2d8b13b-aa82-4820-ba85-e23501869c3a', 110.0, 39720.0, 2, '2018-09-26', '2018-08-26', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', 810.0, 1, 40640, NULL);
+('4e50f00d-4fd9-4dfe-8d56-18a2399dd7b6', 222.0, 41319.0, 2, '2018-04-05', '2018-02-13', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', 940.0, 1, 42481, NULL, N'Носки'),
+('32c74ef3-adfd-4723-a319-9b8984d1b7fb', 90.0, 16500.0, 2, '2018-06-01', '2018-05-03', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', 90.0, 1, 16680, NULL, N'Носки'),
+('b2d8b13b-aa82-4820-ba85-e23501869c3a', 110.0, 39720.0, 2, '2018-09-26', '2018-08-26', 'CF2052B1-39AD-4D88-9DB8-0D17E7A81D45', 810.0, 1, 40640, NULL, N'Носки');
 
 -- Supply Products
 
@@ -251,81 +251,81 @@ VALUES
 ('b2d8b13b-aa82-4820-ba85-e23501869c3a', 'e536c61e-c2c5-41ec-9205-660726baa18c', 25.35, 122, 25.87);
 
 -- Пакет - Поставка №1
-INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes])
+INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes], [Description])
 VALUES
-('B540E527-F2B3-477C-8B59-CC5FF33DD4BC', 10.0, 1085.0, 2, '2018-03-22', '2018-03-09', '298EA086-08A2-4D10-8335-C77C2334720B', 63.00, 1, 1158.00, NULL)
+('B540E527-F2B3-477C-8B59-CC5FF33DD4BC', 10.0, 1085.0, 2, '2018-03-22', '2018-03-09', '298EA086-08A2-4D10-8335-C77C2334720B', 63.00, 1, 1158.00, NULL, N'Пакеты')
 
 INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [UnitPrice], [Quantity], [CostPrice])
 VALUES
 ('B540E527-F2B3-477C-8B59-CC5FF33DD4BC', 'A6BBAD88-3820-4972-8AE9-FC931A62A1E7', 2.02, 500, 2.17)
 
 -- Пакет - Поставка №2
-INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes])
+INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes], [Description])
 VALUES
-('97BD514D-FC2E-4990-8FAB-A37040216B94', NULL, 2520.0, 2, '2019-01-10', '2018-12-17', '298EA086-08A2-4D10-8335-C77C2334720B', 90.00, 1, 2610.00, NULL)
+('97BD514D-FC2E-4990-8FAB-A37040216B94', NULL, 2520.0, 2, '2019-01-10', '2018-12-17', '298EA086-08A2-4D10-8335-C77C2334720B', 90.00, 1, 2610.00, NULL, N'Пакеты')
 
 INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [UnitPrice], [Quantity], [CostPrice])
 VALUES
 ('97BD514D-FC2E-4990-8FAB-A37040216B94', 'A6BBAD88-3820-4972-8AE9-FC931A62A1E7', 2.52, 1000, 2.61)
 
 -- Открытка - Поставка №1
-INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes])
+INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes], [Description])
 VALUES
-('813B6E05-5C1F-472E-9CBD-F3A1AD965254', 10.0, 990.0, 2, '2018-04-04', '2018-03-27', 'D70A24DC-BC90-414F-B79A-725920CC5470', NULL, NULL, 1000.00, N'1500 штук за 980 грн + 10 грн комисия')
+('813B6E05-5C1F-472E-9CBD-F3A1AD965254', 10.0, 990.0, 2, '2018-04-04', '2018-03-27', 'D70A24DC-BC90-414F-B79A-725920CC5470', NULL, NULL, 1000.00, N'1500 штук за 980 грн + 10 грн комисия', N'Открытка')
 
 INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [UnitPrice], [Quantity], [CostPrice])
 VALUES
 ('813B6E05-5C1F-472E-9CBD-F3A1AD965254', '07DF9000-2680-43E7-BA2C-D4F0C48A8CB5', 0.66, 1500, 0.67)
 
 -- Коробка-улыбка - Поставка №1
-INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes])
+INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes], [Description])
 VALUES
-('798A3A48-4BD7-41E0-8DCC-7F01F73ECDFA', 16.0, 2190.0, 2, '2018-03-02', '2018-02-15', '2DAD45C3-4129-474B-B880-AD5221E0D1E8', 50.00, 1, 2256.00, NULL)
+('798A3A48-4BD7-41E0-8DCC-7F01F73ECDFA', 16.0, 2190.0, 2, '2018-03-02', '2018-02-15', '2DAD45C3-4129-474B-B880-AD5221E0D1E8', 50.00, 1, 2256.00, NULL, N'Коробка-улыбка')
 
 INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [UnitPrice], [Quantity], [CostPrice])
 VALUES
 ('798A3A48-4BD7-41E0-8DCC-7F01F73ECDFA', 'A5C1CD82-3D84-4716-8ADB-F6B6B32B2D4D', 21.90, 100, 22.56);
 
 -- Бирки - Поставка #1
-INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes])
+INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes], [Description])
 VALUES
-('989F39EA-10FF-4D48-BD4A-37CDD9C9FDA1', NULL, 1840.00, 2, '2018-08-17', '2018-08-15', '2DAD45C3-4129-474B-B880-AD5221E0D1E8', 50.00, 1, 1890.00, NULL);
+('989F39EA-10FF-4D48-BD4A-37CDD9C9FDA1', NULL, 1840.00, 2, '2018-08-17', '2018-08-15', '2DAD45C3-4129-474B-B880-AD5221E0D1E8', 50.00, 1, 1890.00, NULL, N'Бирки');
 
 INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [UnitPrice], [Quantity], [CostPrice])
 VALUES
 ('989F39EA-10FF-4D48-BD4A-37CDD9C9FDA1', 'F98C64C0-44D6-4930-A644-27F1A2041207', 0.92, 2000, 0.95)
 
 -- Бирки - Поставка #2
-INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes])
+INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes], [Description])
 VALUES
-('8C10BE10-0998-4B64-9E76-496EFB42F01A', NULL, 2100.00, 2, '2018-11-17', '2018-11-13', '2DAD45C3-4129-474B-B880-AD5221E0D1E8', 65.00, 1, 1890.00, '4 размера по 500 штук');
+('8C10BE10-0998-4B64-9E76-496EFB42F01A', NULL, 2100.00, 2, '2018-11-17', '2018-11-13', '2DAD45C3-4129-474B-B880-AD5221E0D1E8', 65.00, 1, 1890.00, '4 размера по 500 штук', N'Бирки');
 
 INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [UnitPrice], [Quantity], [CostPrice])
 VALUES
 ('8C10BE10-0998-4B64-9E76-496EFB42F01A', 'F98C64C0-44D6-4930-A644-27F1A2041207', 1.05, 2000, 1.08)
 
 -- Бирки - Поставка #3
-INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes])
+INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes], [Description])
 VALUES
-('A56FBF14-EC74-43D0-9414-4F2AD0E3B859', 11.00, 1241.00, 2, '2018-03-03', '2018-02-27', '2DAD45C3-4129-474B-B880-AD5221E0D1E8', 103.00, 1, 1355.00, NULL);
+('A56FBF14-EC74-43D0-9414-4F2AD0E3B859', 11.00, 1241.00, 2, '2018-03-03', '2018-02-27', '2DAD45C3-4129-474B-B880-AD5221E0D1E8', 103.00, 1, 1355.00, NULL, N'Бирки');
 
 INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [UnitPrice], [Quantity], [CostPrice])
 VALUES
 ('A56FBF14-EC74-43D0-9414-4F2AD0E3B859', 'F98C64C0-44D6-4930-A644-27F1A2041207', 0.73, 1700, 0.80)
 
 -- Бирки - Поставка #4
-INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes])
+INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes], [Description])
 VALUES
-('05BCE638-59EB-47A5-B4B4-4F3BF56FD468', 11.00, 1200.00, 2, '2018-03-31', '2018-03-29', '2DAD45C3-4129-474B-B880-AD5221E0D1E8', 40.00, 1, 1251.00, NULL);
+('05BCE638-59EB-47A5-B4B4-4F3BF56FD468', 11.00, 1200.00, 2, '2018-03-31', '2018-03-29', '2DAD45C3-4129-474B-B880-AD5221E0D1E8', 40.00, 1, 1251.00, NULL, N'Бирки');
 
 INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [UnitPrice], [Quantity], [CostPrice])
 VALUES
 ('05BCE638-59EB-47A5-B4B4-4F3BF56FD468', 'F98C64C0-44D6-4930-A644-27F1A2041207', 1.20, 1000, 1.25)
 
 -- Визитка - Поставка
-INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes])
+INSERT INTO [Supplies] ([Id], [BankFee], [Cost], [CostMethod], [ReceivedDate], [RequestDate], [SupplierId], [DeliveryCost], [DeliveryCostMethod], [TotalCost], [Notes], [Description])
 VALUES
-('B135D788-732D-4E10-8855-6A97AB26F16F', NULL, 208.00, 2, '2018-02-23', '2018-02-19', '6CD81E93-CAE3-412E-A116-51BDA3FA691D', 70.00, 1, 278.00, NULL);
+('B135D788-732D-4E10-8855-6A97AB26F16F', NULL, 208.00, 2, '2018-02-23', '2018-02-19', '6CD81E93-CAE3-412E-A116-51BDA3FA691D', 70.00, 1, 278.00, NULL, N'Визитки');
 
 INSERT INTO [SupplyProducts] ([SupplyId], [ProductId], [UnitPrice], [Quantity], [CostPrice])
 VALUES
