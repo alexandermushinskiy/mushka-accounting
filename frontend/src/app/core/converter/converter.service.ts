@@ -15,7 +15,6 @@ import { OrderProduct } from '../../shared/models/order-product.model';
 import { Customer } from '../../shared/models/customer.model';
 import { OrderList } from '../../orders/shared/models/order-list.model';
 import { SelectProduct } from '../../shared/models/select-product.model';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class ConverterService {
@@ -57,9 +56,9 @@ export class ConverterService {
       vendorCode: source.vendorCode,
       category: this.convertToCategory(source.category),
       categoryId: source.categoryId,
-      createdOn: this.datetimeService.toString(source.createdOn),
+      createdOn: this.datetimeService.toString(source.createdOn, 'DD MMM YYYY'),
       size: !!source.size ? this.convertToProductSize(source.size) : null,
-      lastDeliveryDate: !!source.lastDeliveryDate ? this.datetimeService.toString(source.lastDeliveryDate) : null,
+      lastDeliveryDate: !!source.lastDeliveryDate ? this.datetimeService.toString(source.lastDeliveryDate, 'DD MMM YYYY') : null,
       lastDeliveryCount: !!source.lastDeliveryCount ? source.lastDeliveryCount : 0,
       deliveriesCount: source.deliveriesCount,
       quantity: source.quantity
