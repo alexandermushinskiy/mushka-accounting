@@ -13,7 +13,7 @@ export const MenuItems: MenuItem[] = [
     icon: 'fa-shopping-cart',
     routePath: '/orders',
     isEnabled: true,
-    badges: 13
+    badges: 0
   }),
   new MenuItem({
     title: MenuLabels.PRODUCTS,

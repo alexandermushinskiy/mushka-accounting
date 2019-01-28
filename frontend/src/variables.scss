@@ -395,7 +395,7 @@ $global-search-submit-color:                transparentize($gray, .1);
 $global-search-submit-color-disabled:       $blue;
 
 //Main menu
-$menu-padding:                   $padding-base ($padding-base - 1) $padding-base $padding-base*2;
+$menu-padding:                   $padding-base ($padding-base - 1) $padding-base $padding-base;
 $menu-link-color:                $text-color;
 $menu-link-hover-color:          $blue;
 
