@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mushka.Infrastructure.DataA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mushka.WebApi", "Mushka.WebApi\Mushka.WebApi.csproj", "{30228CBD-1CFB-46EF-829E-A4FBB42F3683}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mushka.Tests", "Mushka.Tests\Mushka.Tests.csproj", "{C23360D0-AA52-4559-80BD-2F2FB894ECB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mushka.Tests", "Mushka.Tests\Mushka.Tests.csproj", "{C23360D0-AA52-4559-80BD-2F2FB894ECB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mushka.Infrastructure.Excel", "Mushka.Infrastructure.Excel\Mushka.Infrastructure.Excel.csproj", "{98F0DDCE-50B0-472C-BFC5-E56DB50FE593}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{C23360D0-AA52-4559-80BD-2F2FB894ECB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C23360D0-AA52-4559-80BD-2F2FB894ECB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C23360D0-AA52-4559-80BD-2F2FB894ECB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98F0DDCE-50B0-472C-BFC5-E56DB50FE593}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98F0DDCE-50B0-472C-BFC5-E56DB50FE593}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98F0DDCE-50B0-472C-BFC5-E56DB50FE593}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98F0DDCE-50B0-472C-BFC5-E56DB50FE593}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

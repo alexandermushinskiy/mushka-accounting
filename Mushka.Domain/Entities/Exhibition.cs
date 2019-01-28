@@ -16,7 +16,7 @@ namespace Mushka.Domain.Entities
 
         public string City { get; set; }
 
-        public decimal Cost { get; set; }
+        public decimal ParticipationCost { get; set; }
 
         public string Notes { get; set; }
 

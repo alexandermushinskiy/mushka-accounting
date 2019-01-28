@@ -18,3 +18,5 @@ Mushka.Tests/bin
 .vs/
 *.bak
 /Mushka.WebApi/*.user
+/Mushka.Infrastructure.Excel/obj
+/Mushka.Infrastructure.Excel/bin
