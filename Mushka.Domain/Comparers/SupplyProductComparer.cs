@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Mushka.Core;
 using Mushka.Domain.Entities;
 
 namespace Mushka.Domain.Comparers
@@ -12,11 +13,7 @@ namespace Mushka.Domain.Comparers
 
         public int GetHashCode(SupplyProduct obj)
         {
-            int hashCode = 17;
-            hashCode = hashCode * 23 + obj.ProductId.GetHashCode();
-            hashCode = hashCode * 23 + obj.SupplyId.GetHashCode();
-
-            return hashCode;
+            return HashCodeGenerator.GetFromValues(new { obj.ProductId, obj.SupplyId });
         }
     }
 }

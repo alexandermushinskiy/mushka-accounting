@@ -24,7 +24,7 @@ export class ToggleComponent implements OnInit, ControlValueAccessor {
     this.onChangeCallback(isChecked);
   }
 
-  writeValue(isChecked: any): void {
+  writeValue(isChecked: boolean): void {
     this.isChecked = isChecked;
   }
 

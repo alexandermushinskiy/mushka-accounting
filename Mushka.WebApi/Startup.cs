@@ -23,9 +23,16 @@ namespace Mushka.WebApi
         public const string BearerAuthorizationHeaderKey = "Bearer";
         public const string ContentDispositionHeaderKey = "Content-Disposition";
 
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            Console.WriteLine("EnvironmentName: " + env.EnvironmentName);
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }

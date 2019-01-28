@@ -56,8 +56,8 @@ input[type="number"]:-moz-placeholder { text-align:left !important; }
   z-index: 2;
 
   @media (min-width: $desktop) {
-    min-width: 450px;
-    width: 450px;
+    min-width: 410px;
+    width: 410px;
   }
 
   .aside-body {
@@ -94,7 +94,7 @@ input[type="number"]:-moz-placeholder { text-align:left !important; }
   }
 
   @media (min-width: $desktop) {
-    right: 450px;
+    right: 410px;
   }
 }
 
@@ -128,13 +128,13 @@ input[type="number"]:-moz-placeholder { text-align:left !important; }
 
   &-value {
     display: inline-block;
-    width: 100px;
+    width: 70px;
     margin-right: 10px;
   }
   
   &-payment-type {
     display: inline-block;
-    width: 160px;
+    width: 145px;
   }
 }
 

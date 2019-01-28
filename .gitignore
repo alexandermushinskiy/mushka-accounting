@@ -17,3 +17,4 @@ Mushka.Tests/bin
 *.user
 .vs/
 *.bak
+/Mushka.WebApi/*.user
