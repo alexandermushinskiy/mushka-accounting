@@ -62,7 +62,7 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
 
     this.updateDatatableRows(filteredSupplies);
   }
-  
+
   delete(supply: SupplyTableRow) {
     setTimeout(() => {
       this.supplyToDelete = supply;
@@ -85,7 +85,7 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
     if (this.modalRef) {
       this.modalRef.close();
     }
-  }  
+  }
 
   private onDeleteSuccess() {
     this.notificationsService.success('Успех', `Поставка успешно удален из системы.`);
@@ -121,7 +121,7 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
     this.loadingIndicator = false;
     this.notificationsService.danger('Ошибка', 'Невозможно загрузить все поставки');
   }
-  
+
   private updateDatatableRows(supplies: Supply[]) {
     this.supplyRows = supplies.map((el, index) => new SupplyTableRow(el, index));
     this.shown = supplies.length;

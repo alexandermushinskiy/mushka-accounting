@@ -62,7 +62,9 @@
                   <div class="col-md-6">
                     <div class="field-group">
                       <label for="address">Описание</label>
-                      <input type="text" class="form-control" formControlName="description">
+                      <input type="text" class="form-control"
+                                         formControlName="description"
+                                         [ngClass]="{'not-valid': supplyForm.controls.description.invalid && isFormSubmitted}">
                     </div>
                   </div>
                 </div>

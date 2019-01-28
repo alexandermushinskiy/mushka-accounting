@@ -133,7 +133,7 @@ export class SupplyComponent implements OnInit {
       requestDate: [supply.requestDate, Validators.required],
       receivedDate: [supply.receivedDate, Validators.required],
       supplier: [!!supply.supplierId ? new Supplier({id: supply.supplierId}) : null, Validators.required],
-      description: [supply.description],
+      description: [supply.description, Validators.required],
       bankFee: [supply.bankFee],
       deliveryCost: [supply.deliveryCost],
       deliveryCostMethod: [supply.deliveryCostMethod],

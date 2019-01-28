@@ -18,7 +18,8 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
 
             builder
                 .Property(del => del.Description)
-                .HasMaxLength(255);
+                .HasMaxLength(255)
+                .IsRequired();
 
             builder
                 .Property(del => del.RequestDate)

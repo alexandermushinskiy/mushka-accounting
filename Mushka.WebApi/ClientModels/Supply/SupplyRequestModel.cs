@@ -15,6 +15,7 @@ namespace Mushka.WebApi.ClientModels.Supply
         [Required]
         public DateTime ReceivedDate { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
         public decimal? Prepayment { get; set; }

@@ -16,6 +16,7 @@ import { Supplier } from '../../../shared/models/supplier.model';
 export class SuppliersDropdownComponent implements OnInit, ControlValueAccessor {
   @Input() isRequired = false;
   @Input() isDisabled = false;
+  @Input() placeholder = 'Выберите поставщика';
   @Input() suppliers: Supplier[];
   @Output() onSupplierSelected = new EventEmitter<Supplier>();
 
