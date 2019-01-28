@@ -39,7 +39,7 @@
           <span [title]="value" class="bold">{{ value }}</span>
         </ng-template>
       </ngx-datatable-column>
-      
+<!--       
       <ngx-datatable-column name="requestDate" [sortable]="true">
         <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
           <span (click)="sort($event)">Дата<br>заявки</span>
@@ -47,11 +47,11 @@
         <ng-template ngx-datatable-cell-template let-value="value">
           <span [title]="value">{{ value }}</span>
         </ng-template>
-      </ngx-datatable-column>
+      </ngx-datatable-column> -->
 
-      <ngx-datatable-column name="receivedDate">
-        <ng-template ngx-datatable-header-template let-column="column">
-          <span>Дата<br>получения</span>
+      <ngx-datatable-column name="receivedDate" [sortable]="true">
+        <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
+          <span (click)="sort($event)">Дата<br>получения</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
           <span [title]="value">{{ value }}</span>
@@ -75,7 +75,7 @@
           <span [title]="value">{{ value | mkCurrency }}</span>
         </ng-template>
       </ngx-datatable-column>
-
+<!-- 
       <ngx-datatable-column name="deliveryCost">
         <ng-template ngx-datatable-header-template let-column="column">
           <span>Стоимость<br>доставки</span>
@@ -93,7 +93,7 @@
           <span [title]="value">{{ value | mkCurrency }}</span>
         </ng-template>
       </ngx-datatable-column>
-      
+       -->
       <ngx-datatable-column name="totalCost">
         <ng-template ngx-datatable-header-template let-column="column">
           <span>Общая<br>стоимость</span>
