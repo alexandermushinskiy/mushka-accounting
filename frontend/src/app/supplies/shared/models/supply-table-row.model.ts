@@ -11,6 +11,7 @@ export class SupplyTableRow extends DataTableRow {
   bankFee: number;
   totalCost: number;
   productsAmount: number;
+  description: string;
 
   constructor(elem, index: number = 0) {
     super(elem, index);
@@ -24,5 +25,6 @@ export class SupplyTableRow extends DataTableRow {
     this.cost = elem.cost;
     this.totalCost = elem.totalCost;
     this.productsAmount = elem.productsAmount;
+    this.description = elem.description;
   }
 }

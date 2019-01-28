@@ -26,6 +26,7 @@ namespace Mushka.WebApi.Resolvers
                 SupplierId = source.SupplierId,
                 RequestDate = source.RequestDate,
                 ReceivedDate = source.ReceivedDate,
+                Description = source.Description,
                 Cost = source.Cost,
                 CostMethod = source.CostMethod,
                 DeliveryCost = source.DeliveryCost,

@@ -18,6 +18,7 @@ export class PaymentMethodsDropdownComponent implements OnInit, ControlValueAcce
   @Input() required: boolean;
   @Input() isDisabled = false;
   @Input() defaultValue: string;
+  @Input() placeholder = 'Выберите';
   @Output() onPaymentMethodSelected = new EventEmitter<PaymentMethod>();
 
   selectedPaymentMethod: { id: PaymentMethod, description: string };

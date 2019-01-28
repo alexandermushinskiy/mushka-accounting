@@ -37,7 +37,8 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
 
     this.sorts = [
       { prop: 'supplierName', dir: this.defaultSortDirection },
-      { prop: 'requestDate', dir: null }
+      { prop: 'requestDate', dir: null },
+      { prop: 'description', dir: null }
     ];
   }
 

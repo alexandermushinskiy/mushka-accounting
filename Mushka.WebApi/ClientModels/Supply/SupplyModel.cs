@@ -14,6 +14,8 @@ namespace Mushka.WebApi.ClientModels.Supply
         
         public decimal Cost { get; set; }
 
+        public string Description { get; set; }
+
         public PaymentMethod CostMethod { get; set; }
 
         public decimal? Prepayment { get; set; }

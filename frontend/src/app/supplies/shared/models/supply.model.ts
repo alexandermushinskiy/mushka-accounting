@@ -5,6 +5,7 @@ export class Supply {
   id: string;
   supplierId: string;
   supplierName: string;
+  description: string;
   requestDate: string;
   receivedDate: string;
   cost: number;

@@ -13,6 +13,8 @@ namespace Mushka.Domain.Entities
 
         public Guid Id { get; set; }
 
+        public string Description { get; set; }
+
         public DateTime RequestDate { get; set; }
 
         public DateTime ReceivedDate { get; set; }

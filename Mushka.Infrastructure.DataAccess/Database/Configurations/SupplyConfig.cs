@@ -17,6 +17,10 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
             builder.HasKey(del => del.Id);
 
             builder
+                .Property(del => del.Description)
+                .HasMaxLength(255);
+
+            builder
                 .Property(del => del.RequestDate)
                 .HasColumnName("RequestDate")
                 .HasColumnType("Date")

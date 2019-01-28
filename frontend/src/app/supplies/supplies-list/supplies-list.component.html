@@ -22,6 +22,15 @@
                   (activate)="onActive($event)"
                   (sort)="onTableSort(supplyRows, $event)">
 
+      <ngx-datatable-column name="description" [sortable]="true">
+        <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
+          <span (click)="sort($event)">Описание</span>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <span [title]="value">{{ value }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
       <ngx-datatable-column name="supplierName" [sortable]="true">
         <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
           <span (click)="sort($event)">Имя<br>поставщика</span>

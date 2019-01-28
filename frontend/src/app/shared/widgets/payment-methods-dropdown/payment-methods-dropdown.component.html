@@ -4,7 +4,7 @@
           [disabled]="isDisabled"
           [ngClass]="(!selectedPaymentMethod && required) ? 'required-dropdown' : ''" ngbDropdownToggle id="dropdown">
     <span [ngClass]="{'placeholder': !selectedPaymentMethod}">
-      {{ selectedPaymentMethod ? selectedPaymentMethod.description : 'Выберите значение' }}
+      {{ selectedPaymentMethod ? selectedPaymentMethod.description : placeholder }}
     </span>
     <i class="ico-chevron-down"></i>
   </button>

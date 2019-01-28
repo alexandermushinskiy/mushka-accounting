@@ -132,6 +132,7 @@ export class ConverterService {
       id: source.id,
       supplierId: source.supplierId,
       supplierName: source.supplierName,
+      description: source.description,
       requestDate: this.datetimeService.toString(source.requestDate),
       receivedDate: this.datetimeService.toString(source.receivedDate),
       prepayment: source.prepayment,
