@@ -77,6 +77,8 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     OrderDate = table.Column<DateTime>(type: "Date", nullable: false),
                     Cost = table.Column<decimal>(type: "Money", nullable: false),
                     CostMethod = table.Column<int>(nullable: false),
+                    Profit = table.Column<decimal>(type: "Money", nullable: false),
+                    Notes = table.Column<string>(nullable: true),
                     CustomerId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
@@ -165,6 +167,7 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    Description = table.Column<string>(maxLength: 255, nullable: false),
                     RequestDate = table.Column<DateTime>(type: "Date", nullable: false),
                     ReceivedDate = table.Column<DateTime>(type: "Date", nullable: false),
                     Cost = table.Column<decimal>(type: "Money", nullable: false),
