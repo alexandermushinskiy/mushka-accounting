@@ -25,7 +25,8 @@ export class PaymentMethodsDropdownComponent implements OnInit, ControlValueAcce
   paymentMethods = [
     { id: PaymentMethod.CASH, description: 'Наличный расчет' },
     { id: PaymentMethod.TRANSFER_TO_CARD, description: 'Перевод на карту' },
-    { id: PaymentMethod.LIQPAY, description: 'LiqPay' }
+    { id: PaymentMethod.LIQPAY, description: 'LiqPay' },
+    { id: PaymentMethod.SETTLEMENT_ACCOUNT, description: 'Расчетный счет' }
   ];
 
   constructor() { }
