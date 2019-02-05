@@ -1,14 +1,20 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, forwardRef } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { UnsubscriberComponent } from '../../hooks/unsubscriber.component';
 
 @Component({
   selector: 'mk-delayed-input',
   templateUrl: './delayed-input.component.html',
-  styleUrls: ['./delayed-input.component.scss']
+  styleUrls: ['./delayed-input.component.scss'],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => DelayedInputComponent),
+    multi: true
+  }]
 })
-export class DelayedInputComponent extends UnsubscriberComponent implements OnInit {
+export class DelayedInputComponent extends UnsubscriberComponent implements OnInit, ControlValueAccessor {
   @Input() type = 'number';
   @Input() disabled = false;
   @Input() placeholder = '';
@@ -27,6 +33,7 @@ export class DelayedInputComponent extends UnsubscriberComponent implements OnIn
   }
 
   valueChanged(value: string) {
+    this.onChangeCallback(value);
     this.inputTerms$.next(value);
   }
 
@@ -34,4 +41,21 @@ export class DelayedInputComponent extends UnsubscriberComponent implements OnIn
     this.inputElementRef.nativeElement.value = '';
     this.valueChanged('');
   }
+  
+  writeValue(value: any): void {
+    this.defaultValue = value;
+  }
+
+  registerOnChange(fn: any) {
+    this.onChangeCallback = fn;
+  }
+
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
+
+  registerOnTouched() {
+  }
+  
+  private onChangeCallback: any = () => {};
 }

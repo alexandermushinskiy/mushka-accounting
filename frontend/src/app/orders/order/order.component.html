@@ -30,10 +30,11 @@
                     <div class="col-md-6">
                       <div class="field-group">
                         <label for="address">Номер</label>
-                        <input type="text" class="form-control"
-                                           formControlName="number"
-                                           [ngClass]="{'not-valid': orderForm.controls.number.invalid && isFormSubmitted}"
-                                           (blur)="onNumberChange($event.target.value)">
+                        <mk-delayed-input formControlName="number"
+                                          [type]="text"
+                                          [ngClass]="{'not-valid': orderForm.controls.number.invalid && isFormSubmitted}"
+                                          (onInput)="onNumberChanged($event)">
+                        </mk-delayed-input>
                         <mk-spinner class="validate-order-number" [isLoading]="isNumberValidating"></mk-spinner>
                         <!-- <span class="validation-tip" *ngIf="orderForm.hasError('required', ['number']) && isFormSubmitted">Обязательно</span> -->
                         <!-- <span class="validation-tip" *ngIf="!isOrderNumberValid">Номер уже существует</span> -->

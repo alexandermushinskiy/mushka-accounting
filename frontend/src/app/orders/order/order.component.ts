@@ -89,7 +89,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
     this.quantityTerms$.next({index, quantity});
   }
   
-  onNumberChange(orderNumber: string) {
+  onNumberChanged(orderNumber: string) {
     if (!orderNumber && orderNumber.trim().length === 0) {
       return;
     }
