@@ -171,7 +171,7 @@
                             В наличие {{ productControl.value.product.quantity }}
                           </span>
                         </div>  
-                        <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="orderForm.get('products').controls.length > 1">
+                        <button class="btn-remove" title="Удалить" type="button" (click)="removeProduct(index)" *ngIf="orderForm.get('products').controls.length > 1">
                           <i class="ico ico-close"></i>
                         </button>
                       </div>

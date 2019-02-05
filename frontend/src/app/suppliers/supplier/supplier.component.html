@@ -121,7 +121,7 @@
                       <div class="field-group email-input">
                         <input type="text" class="form-control" formControlName="email" />
                       </div>
-                      <button class="btn-remove" title="Remove" type="button" (click)="removeContactPerson(index)" *ngIf="supplierForm.get('contactPersons').controls.length > 1">
+                      <button class="btn-remove" title="Удалить" type="button" (click)="removeContactPerson(index)" *ngIf="supplierForm.get('contactPersons').controls.length > 1">
                         <i class="ico ico-close"></i>
                       </button>
                     </div>
@@ -157,7 +157,7 @@
                       <div class="field-group">
                         <input type="text" class="form-control" formControlName="owner" />
                       </div>
-                      <button class="btn-remove" title="Remove" type="button" (click)="removePaymentCard(index)" *ngIf="supplierForm.get('paymentCards').controls.length > 1">
+                      <button class="btn-remove" title="Удалить" type="button" (click)="removePaymentCard(index)" *ngIf="supplierForm.get('paymentCards').controls.length > 1">
                         <i class="ico ico-close"></i>
                       </button>
                     </div>

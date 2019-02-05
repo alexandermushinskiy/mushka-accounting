@@ -124,7 +124,7 @@
                             <input type="text" class="form-control" disabled
                                                value="{{ productControl.value.unitPrice + costPriceFactor }}">
                           </div>
-                          <button class="btn-remove" title="Remove" type="button" (click)="removeProduct(index)" *ngIf="supplyForm.get('products').controls.length > 1">
+                          <button class="btn-remove" title="Удалить" type="button" (click)="removeProduct(index)" *ngIf="supplyForm.get('products').controls.length > 1">
                             <i class="ico ico-close"></i>
                           </button>
                         </div>

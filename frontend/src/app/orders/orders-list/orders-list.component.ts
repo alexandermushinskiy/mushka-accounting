@@ -55,10 +55,6 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
     this.updateDatatableRows(filteredSupplies);
   }
   
-  getRowClass(row: any) {
-    return row.className;
-  }
-
   addOrder() {
     this.router.navigate(['orders/new']);
   }

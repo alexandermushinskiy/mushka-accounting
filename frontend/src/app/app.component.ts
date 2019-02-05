@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { AppLoaderService } from './core/app-loader/app-loader.service';
 import { SidebarMenuStateService } from './core/sidebar-menu-state/sidebar-menu-state.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'mk-root',
@@ -14,7 +16,9 @@ export class AppComponent implements OnInit {
   isCollapsed: boolean;
 
   constructor(private appLoaderService: AppLoaderService,
-              private sidebarMenuStateService: SidebarMenuStateService,) {
+              private sidebarMenuStateService: SidebarMenuStateService,
+              private titleService: Title) {
+    this.titleService.setTitle(environment.production ? 'Mushka Admin' : 'Mushka Admin / Test');
   }
 
   ngOnInit() {

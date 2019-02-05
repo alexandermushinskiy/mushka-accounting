@@ -237,7 +237,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   private createOrderModel(formRawValue: any): Order {
     return new Order({
       id: this.orderId,
-      orderDate: this.datetimeService.convertFromToFormat(formRawValue.orderDate),
+      orderDate: formRawValue.orderDate,
       number: formRawValue.number,
       cost: formRawValue.cost,
       costMethod: formRawValue.costMethod,
