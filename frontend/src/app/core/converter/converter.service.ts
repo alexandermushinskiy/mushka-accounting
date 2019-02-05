@@ -168,6 +168,7 @@ export class ConverterService {
       number: source.number,
       cost: source.cost,
       costMethod: source.costMethod,
+      discount: source.discount,
       region: source.region,
       city: source.city,
       firstName: source.firstName,

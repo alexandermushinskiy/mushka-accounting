@@ -39,6 +39,10 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .IsRequired();
 
             builder
+                .Property(order => order.Discount)
+                .HasColumnName("Discount");
+
+            builder
                 .Property(order => order.Profit)
                 .HasColumnType("Money")
                 .IsRequired();

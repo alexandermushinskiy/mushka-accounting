@@ -31,6 +31,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   regions = ukrRegions;
   isFormSubmitted = false;
   profit: number;
+  discount: number;
   isOrderNumberValid = true;
   isNumberValidating = false;
 
@@ -106,6 +107,13 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
       });
   }
 
+  onDiscountChanged(discount: number) {
+    this.discount = !!discount ? discount : 0;
+
+    this.calculateProductsCost();
+    this.calculateProfit();
+  }
+
   saveOrder() {
     // const t1 = this.createOrderModel(this.orderForm.getRawValue());
     // console.info(t1);
@@ -163,6 +171,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
 
   private buildForm(order: Order) {
     this.profit = !!order.profit ? order.profit : 0;
+    this.discount = !!order.discount ? order.discount : 0;
 
     this.orderForm = this.formBuilder.group({
       orderDate: [order.orderDate, Validators.required],
@@ -213,8 +222,10 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
       }
     });
 
+    const resultCost = cost - this.calculateDiscount(cost);
+
     const costCtrl = this.orderForm.get('cost');
-    costCtrl.setValue(Math.round(cost * 100) / 100, {onlySelf: true});
+    costCtrl.setValue(Math.round(resultCost * 100) / 100, { onlySelf: true });
     costCtrl.updateValueAndValidity();
   }
 
@@ -228,7 +239,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
       const costPrice = !!ctrlValue.costPrice ? ctrlValue.costPrice : 0;
       const quantity = !!ctrlValue.quantity ? ctrlValue.quantity : 0;
 
-      profit += (unitPrice - costPrice) * quantity;
+      profit += (unitPrice - costPrice - this.calculateDiscount(unitPrice)) * quantity;
     });
 
     this.profit = profit;
@@ -241,6 +252,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
       number: formRawValue.number,
       cost: formRawValue.cost,
       costMethod: formRawValue.costMethod,
+      discount: this.discount,
       profit: this.profit,
       notes: formRawValue.notes,
       region: formRawValue.region,
@@ -284,5 +296,13 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
           productCtrl.controls.costPrice.setValue(costPrice, {onlySelf: true});
         });
     }
+  }
+  
+  private calculateDiscount(cost: number): number {
+    if (this.discount === 0) {
+      return 0;
+    }
+
+    return (cost / 100) * this.discount;
   }
 }

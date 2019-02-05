@@ -35,7 +35,7 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
               private notificationsService: NotificationsService) {
     super();
 
-    this.sorts = [{ prop: 'orderDate', dir: this.defaultSortDirection }];
+    this.sorts = [{ prop: 'orderDate', dir: 'desc' }];
   }
 
   ngOnInit() {

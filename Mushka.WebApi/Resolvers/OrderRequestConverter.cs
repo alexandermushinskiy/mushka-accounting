@@ -28,6 +28,7 @@ namespace Mushka.WebApi.Resolvers
                 Number = source.Number,
                 Cost = source.Cost,
                 CostMethod = source.CostMethod,
+                Discount = source.Discount == 0 ? null : source.Discount,
                 Profit = source.Profit,
                 Notes = source.Notes,
                 Customer = CreateCustomer(customerId, source),

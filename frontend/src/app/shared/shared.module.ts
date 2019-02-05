@@ -41,6 +41,7 @@ import { TypeaheadProductsComponent } from './widgets/typeahead-products/typeahe
 import { SelectProductsComponent } from './widgets/select-products/select-products.component';
 import { ProgressLinearComponent } from './widgets/progress-linear/progress-linear.component';
 import { PaymentMethodsDropdownComponent } from './widgets/payment-methods-dropdown/payment-methods-dropdown.component';
+import { DelayedInputComponent } from './widgets/delayed-input/delayed-input.component';
 
 @NgModule({
   imports: [
@@ -88,7 +89,8 @@ import { PaymentMethodsDropdownComponent } from './widgets/payment-methods-dropd
     TypeaheadProductsComponent,
     SelectProductsComponent,
     ProgressLinearComponent,
-    PaymentMethodsDropdownComponent
+    PaymentMethodsDropdownComponent,
+    DelayedInputComponent
   ],
   exports: [
     /* Common modules */
@@ -131,7 +133,8 @@ import { PaymentMethodsDropdownComponent } from './widgets/payment-methods-dropd
     TypeaheadProductsComponent,
     SelectProductsComponent,
     ProgressLinearComponent,
-    PaymentMethodsDropdownComponent
+    PaymentMethodsDropdownComponent,
+    DelayedInputComponent
   ],
   providers: [
   ]

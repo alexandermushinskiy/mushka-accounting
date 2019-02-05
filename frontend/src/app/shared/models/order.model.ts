@@ -7,6 +7,7 @@ export class Order {
   number: string;
   cost: number;
   costMethod: PaymentMethod;
+  discount: number;
   profit: number;
   //client: Client;
   region: string;
