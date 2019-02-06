@@ -4,6 +4,7 @@ import { Size } from '../../../shared/models/size.model';
 export class ProductTableRow extends DataTableRow {
   name: string;
   vendorCode: string;
+  recommendedPrice: number;
   createdOn: string;
   deliveriesCount: number;
   lastDeliveryDate: string;
@@ -17,6 +18,7 @@ export class ProductTableRow extends DataTableRow {
 
     this.name = elem.name;
     this.vendorCode = elem.vendorCode;
+    this.recommendedPrice = elem.recommendedPrice;
     this.createdOn = elem.createdOn;
     this.deliveriesCount = elem.deliveriesCount || 0;
     this.lastDeliveryDate = elem.lastDeliveryDate;

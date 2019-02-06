@@ -102,6 +102,15 @@
           </ng-template>
         </ngx-datatable-column>
 
+        <ngx-datatable-column name="recommendedPrice" [width]="80">
+          <ng-template ngx-datatable-header-template>
+            <span>Реком.<br>цена</span>
+          </ng-template>
+          <ng-template ngx-datatable-cell-template let-value="value">
+            <span>{{ !!value ? (value | mkCurrency) : '-' }}</span>
+          </ng-template>
+        </ngx-datatable-column>
+  
         <ngx-datatable-column [width]="80" [canAutoResize]="false" [resizeable]="false">
           <ng-template ngx-datatable-cell-template let-expanded="expanded" let-row="row" let-rowIndex="rowIndex">
             <span class="buttons">
