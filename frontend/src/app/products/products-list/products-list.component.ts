@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { LocalStorage } from 'ngx-webstorage';
 
 import { ProductsServce } from '../../core/api/products.service';
 import { ProductTableRow } from '../shared/models/product-table-row.model';
@@ -20,7 +21,7 @@ import { ProductQuickFilter } from '../../shared/filters/product-quick-filter';
 export class ProductsListComponent extends SortableDatatableComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
 
-  isCollapsed = false;
+  @LocalStorage('collapsed_products_sidebar', false) isCollapsed: boolean;
   products: Product[];
   productsRows: ProductTableRow[];
   loadingIndicator = false;
