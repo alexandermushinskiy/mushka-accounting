@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class CurrencyPipe implements PipeTransform {
   options = {
     allowNegative: true,
-    decimal: ',',
+    decimal: '.',
     precision: 2,
     prefix: '',
     suffix: '',
