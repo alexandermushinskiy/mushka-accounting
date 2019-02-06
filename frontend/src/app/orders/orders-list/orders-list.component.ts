@@ -18,7 +18,7 @@ import { LocalStorage } from 'ngx-webstorage';
 export class OrdersListComponent extends SortableDatatableComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
 
-  @LocalStorage('orders_list_state', { searchKey: '' }) ordersListState: { searchKey: string };
+  @LocalStorage('orders_search_key', '') ordersSearchKey: string;
 
   orders: OrderList[];
   orderRows: OrderTableRow[];
@@ -57,7 +57,7 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
   }
 
   filter(searchKey: string) {
-    this.ordersListState.searchKey = searchKey;
+    this.ordersSearchKey = searchKey;
 
     const orderFilter = new OrderListFilter(searchKey);
     const filteredSupplies = this.orders.filter(order => orderFilter.filter(order));
@@ -119,8 +119,8 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
     this.orders = orders;
     this.total = orders.length;
 
-    if (this.ordersListState.searchKey) {
-      this.filter(this.ordersListState.searchKey);
+    if (this.ordersSearchKey) {
+      this.filter(this.ordersSearchKey);
     } else {
       this.updateDatatableRows(orders);
     }
