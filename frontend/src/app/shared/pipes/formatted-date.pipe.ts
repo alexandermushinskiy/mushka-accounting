@@ -2,11 +2,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 import * as moment from 'moment';
 
 @Pipe({
-  name: 'formatDate'
+  name: 'formattedDate'
 })
-export class FormatDatePipe implements PipeTransform {
+export class FormattedDatePipe implements PipeTransform {
   transform(value: string): string {
     moment.locale('ru');
-    return moment(value).format('MMM D, YYYY');
+    return moment(value).format('DD MMM YYYY');
   }
 }

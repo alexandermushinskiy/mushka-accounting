@@ -21,6 +21,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
             await Context.Orders
                 .AsNoTracking()
                 .Include(order => order.Customer)
+                .Include(order => order.Products)
                 .ToListAsync(cancellationToken);
 
         public override async Task<Order> GetByIdAsync(Guid id, CancellationToken cancellationToken = default(CancellationToken)) =>

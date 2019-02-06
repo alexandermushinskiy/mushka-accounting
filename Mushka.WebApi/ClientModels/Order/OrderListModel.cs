@@ -15,5 +15,7 @@ namespace Mushka.WebApi.ClientModels.Order
         public string Address { get; set; }
 
         public string CustomerName { get; set; }
+
+        public int ProductsCount { get; set; }
     }
 }

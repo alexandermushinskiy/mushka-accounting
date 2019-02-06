@@ -27,22 +27,31 @@
           <span (click)="sort($event)">Дата<br>заказа</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
-          <span [title]="value">{{ value }}</span>
+          <span [title]="value">{{ value | formattedDate}}</span>
         </ng-template>
       </ngx-datatable-column>
 
       <ngx-datatable-column name="number">
         <ng-template ngx-datatable-header-template let-column="column">
-          <span>Номер</span>
+          <span>Номер<br>заказа</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
           <span [title]="value">{{ value }}</span>
         </ng-template>
       </ngx-datatable-column>
       
-      <ngx-datatable-column name="customerName">
-        <ng-template ngx-datatable-header-template let-column="column">
-          <span>Имя<br>покупателя</span>
+      <ngx-datatable-column name="productsCount" [sortable]="true">
+        <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
+          <span (click)="sort($event)">Количество<br>Товаров</span>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <span [title]="value">{{ value }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      
+      <ngx-datatable-column name="customerName" [sortable]="true">
+        <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
+          <span (click)="sort($event)">Имя<br>покупателя</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
           <span [title]="value">{{ value }}</span>

@@ -7,6 +7,7 @@ export class OrderTableRow extends DataTableRow {
   cost: number;
   address: string;
   customerName: string;
+  productsCount: number;
 
   constructor(elem: OrderList, index: number = 0) {
     super(elem, index);
@@ -16,5 +17,6 @@ export class OrderTableRow extends DataTableRow {
     this.address = elem.address;
     this.customerName = elem.customerName;
     this.cost = elem.cost;
+    this.productsCount = elem.productsCount;
   }
 }

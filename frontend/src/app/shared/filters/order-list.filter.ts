@@ -7,6 +7,7 @@ export class OrderListFilter extends FiltersBase {
   }
   
   filter(order: OrderList): boolean {
-    return this.containsSearchKey(order.customerName, this.searchKey);
+    return this.containsSearchKey(order.customerName, this.searchKey)
+      || this.containsSearchKey(order.number, this.searchKey);
   }
 }

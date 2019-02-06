@@ -56,9 +56,9 @@ export class ConverterService {
       vendorCode: source.vendorCode,
       category: this.convertToCategory(source.category),
       categoryId: source.categoryId,
-      createdOn: this.datetimeService.toString(source.createdOn, 'DD MMM YYYY'),
+      createdOn: this.datetimeService.toString(source.createdOn),
       size: !!source.size ? this.convertToProductSize(source.size) : null,
-      lastDeliveryDate: !!source.lastDeliveryDate ? this.datetimeService.toString(source.lastDeliveryDate, 'DD MMM YYYY') : null,
+      lastDeliveryDate: !!source.lastDeliveryDate ? this.datetimeService.toString(source.lastDeliveryDate) : null,
       lastDeliveryCount: !!source.lastDeliveryCount ? source.lastDeliveryCount : 0,
       deliveriesCount: source.deliveriesCount,
       quantity: source.quantity
@@ -201,11 +201,12 @@ export class ConverterService {
   convertToOrderList(source: any): OrderList {
     return new OrderList({
       id: source.id,
-      orderDate: this.datetimeService.toString(source.orderDate, 'DD MMM YYYY'),
+      orderDate: this.datetimeService.toString(source.orderDate),
       number: source.number,
       cost: source.cost,
       address: source.address,
-      customerName: source.customerName
+      customerName: source.customerName,
+      productsCount: source.productsCount
     });
   }
 

@@ -19,7 +19,7 @@ import { PopoverDirective } from './directives/popover.directive';
 import { ClosePopoverOnClickOutsideDirective } from './directives/close-popover-on-click-outside.directive';
 import { DashIfEmptyPipe } from './pipes/dash-if-empty.pipe';
 import { CurrencyPipe } from './pipes/currency.pipe';
-import { FormatDatePipe } from './pipes/format-data.pipe';
+import { FormattedDatePipe } from './pipes/formatted-date.pipe';
 import { DatatableHeaderComponent } from './widgets/datatable/datatable-header/datatable-header.component';
 import { DatetimepickerComponent } from './widgets/datetimepicker/datetimepicker.component';
 import { CurrencyInputComponent } from './widgets/currency-input/currency-input.component';
@@ -70,7 +70,7 @@ import { DelayedInputComponent } from './widgets/delayed-input/delayed-input.com
     ClickOutsideDirective,
     DashIfEmptyPipe,
     CurrencyPipe,
-    FormatDatePipe,
+    FormattedDatePipe,
     NumberPipe,
     DatatableHeaderComponent,
     DatetimepickerComponent,
@@ -108,7 +108,7 @@ import { DelayedInputComponent } from './widgets/delayed-input/delayed-input.com
     /* Pipes */
     DashIfEmptyPipe,
     CurrencyPipe,
-    FormatDatePipe,
+    FormattedDatePipe,
     NumberPipe,
     /* Components */
     LoadingScreenComponent,

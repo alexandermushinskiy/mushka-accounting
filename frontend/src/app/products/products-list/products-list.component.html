@@ -57,7 +57,7 @@
             <span>Дата<br>добавления</span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-value="value">
-            <span [title]="value">{{ value }}</span>
+            <span [title]="value">{{ value | formattedDate }}</span>
           </ng-template>
         </ngx-datatable-column>
 
@@ -85,7 +85,7 @@
           </ng-template>
           <ng-template ngx-datatable-cell-template let-row="row">
             <span *ngIf="row.deliveriesCount > 0; else noDeliveries">
-              {{ row.lastDeliveryDate }} <span class="last-delivery-count">(<b>{{ row.lastDeliveryCount }}</b>)</span>
+              {{ row.lastDeliveryDate | formattedDate }} <span class="last-delivery-count">(<b>{{ row.lastDeliveryCount }}</b>)</span>
             </span>
             <ng-template #noDeliveries>
               <span>{{ row.defaultValue }}</span>
