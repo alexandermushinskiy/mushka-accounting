@@ -38,6 +38,7 @@ export class ConverterService {
         id: res.id,
         name: res.name,
         vendorCode: res.vendorCode,
+        recommendedPrice: res.recommendedPrice,
         quantity: res.quantity,
         category: new Category({name: res.categoryName}),
         size: !!res.sizeName ? new Size({name: res.sizeName}) : null
@@ -54,6 +55,7 @@ export class ConverterService {
       id: source.id,
       name: source.name,
       vendorCode: source.vendorCode,
+      recommendedPrice: source.recommendedPrice,
       category: this.convertToCategory(source.category),
       categoryId: source.categoryId,
       createdOn: this.datetimeService.toString(source.createdOn),

@@ -151,6 +151,8 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Product with the vendor code {product.VendorCode} is already existed.");
             }
 
+            product.Quantity = productToUpdate.Quantity;
+
             productRepository.Update(product);
             await storage.SaveAsync(cancellationToken);
             var updatedProduct = await productRepository.GetByIdAsync(product.Id, cancellationToken);

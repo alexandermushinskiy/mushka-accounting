@@ -20,6 +20,7 @@ namespace Mushka.WebApi.Resolvers
                 Id = product.Id,
                 Name = product.Name,
                 VendorCode = product.VendorCode,
+                RecommendedPrice = product.RecommendedPrice,
                 Quantity = product.Quantity,
                 CategoryName = product.Category.Name,
                 SizeName = product.Size?.Name

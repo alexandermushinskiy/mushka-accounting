@@ -29,6 +29,7 @@ namespace Mushka.WebApi.Resolvers
                 CreatedOn = dateTimeProvider.GetNow(),
                 Name = source.Name,
                 VendorCode = source.VendorCode,
+                RecommendedPrice = source.RecommendedPrice,
                 SizeId = source.SizeId
             };
         }

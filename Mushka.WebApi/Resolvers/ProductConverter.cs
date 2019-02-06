@@ -25,6 +25,7 @@ namespace Mushka.WebApi.Resolvers
                 Id = source.Id,
                 Name = source.Name,
                 VendorCode = source.VendorCode,
+                RecommendedPrice = source.RecommendedPrice,
                 CreatedOn = source.CreatedOn,
                 CategoryId = source.CategoryId,
                 Quantity = source.Quantity,

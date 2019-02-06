@@ -5,6 +5,7 @@ export class SelectProduct {
   id: string;
   name: string;
   vendorCode: string;
+  recommendedPrice: number;
   quantity: number;
   category: Category;
   size: Size;

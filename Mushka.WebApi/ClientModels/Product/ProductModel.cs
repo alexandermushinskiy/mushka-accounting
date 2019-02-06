@@ -10,6 +10,8 @@ namespace Mushka.WebApi.ClientModels.Product
 
         public string VendorCode { get; set; }
 
+        public decimal? RecommendedPrice { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         public int Quantity { get; set; }

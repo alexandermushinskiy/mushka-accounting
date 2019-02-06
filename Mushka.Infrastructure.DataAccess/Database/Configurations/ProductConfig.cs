@@ -28,6 +28,11 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .IsRequired();
 
             builder
+                .Property(product => product.RecommendedPrice)
+                .HasColumnName("RecommendedPrice")
+                .HasColumnType("Money");
+
+            builder
                 .Property(product => product.CreatedOn)
                 .HasColumnName("CreatedOn")
                 .IsRequired();

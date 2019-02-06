@@ -83,6 +83,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
 
   onProductSelected(product: SelectProduct, index: number) {
     this.setCostPrice(index, product.quantity);
+    this.setRecommendedPrice(index, product.recommendedPrice);
   }
 
   onQuantityChanged(index: number, quantity: any) {
@@ -293,8 +294,15 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
 
       this.productsService.getCostPrice(productId, quantity)
         .subscribe((costPrice: number) => {
-          productCtrl.controls.costPrice.setValue(costPrice, {onlySelf: true});
+          productCtrl.controls.costPrice.setValue(costPrice, { onlySelf: true });
         });
+    }
+  }
+
+  private setRecommendedPrice(index: number, recommendedPrice: number) {
+    if (!!recommendedPrice) {
+      const productCtrl = <FormGroup>(<FormArray>this.orderForm.get('products')).at(index);
+      productCtrl.controls.unitPrice.setValue(recommendedPrice, { onlySelf: true });
     }
   }
   

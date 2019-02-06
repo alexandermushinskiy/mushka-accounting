@@ -5,6 +5,7 @@ export class Product {
   id: string;
   name: string;
   vendorCode: string;
+  recommendedPrice: number;
   category: Category;
   categoryId: string;
   createdOn: string;

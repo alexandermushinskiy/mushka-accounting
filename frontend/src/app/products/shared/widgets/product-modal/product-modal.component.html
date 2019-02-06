@@ -6,6 +6,7 @@
     </button>
   </div>
   <div class="modal-body">
+    <mk-progress-linear [isLoading]="isLoading"></mk-progress-linear>
     <div class="product-name">
       <div class="form-group">
         <label for="name" class="text-muted">Наименование</label>
@@ -23,19 +24,25 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-5">
-        <div class="field-group">
-          <label for="nacodeme" class="text-muted">Артикул</label>
-          <input type="text" id="vendorCode" class="form-control code" formControlName="vendorCode" autocomplete="off">
-        </div>
-      </div>
-    </div>
     <div class="row" *ngIf="!!productForm.value.category && productForm.value.category.isSizeRequired">
       <div class="col">
         <div class="field-group">
           <label for="nacodeme" class="text-muted">Размер</label>
           <mk-select-size class="form-control" formControlName="size" [isMultiple]="false" [availableSizes]="availableSizes"></mk-select-size>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="field-group">
+          <label for="nacodeme" class="text-muted">Артикул</label>
+          <input type="text" id="vendorCode" class="form-control code" formControlName="vendorCode" autocomplete="off">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="field-group">
+          <label for="nacodeme" class="text-muted">Реком. цена</label>
+          <mk-currency-input formControlName="recommendedPrice" [placeholder]="''"></mk-currency-input>
         </div>
       </div>
     </div>

@@ -11,6 +11,8 @@ namespace Mushka.WebApi.ClientModels.Product
         [Required]
         public string VendorCode { get; set; }
 
+        public decimal? RecommendedPrice { get; set; }
+
         [Required]
         public Guid CategoryId { get; set; }
 

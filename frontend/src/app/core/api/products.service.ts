@@ -84,6 +84,7 @@ export class ProductsServce {
     return {
       name: product.name,
       vendorCode: product.vendorCode,
+      recommendedPrice: product.recommendedPrice,
       categoryId: product.categoryId,
       sizeId: !!product.size ? product.size.id : null
     };
