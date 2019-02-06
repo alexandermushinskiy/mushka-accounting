@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Category } from '../../../../shared/models/category.model';
-import { SizesHelperServices } from '../../services/sizes-helper.service';
 
 @Component({
   selector: 'mk-category-modal',
