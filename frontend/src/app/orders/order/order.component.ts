@@ -111,7 +111,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   onDiscountChanged(discount: number) {
     this.discount = !!discount ? discount : 0;
 
-    this.calculateProductsCost();
+    this.calculateTotalCost();
     this.calculateProfit();
   }
 
@@ -192,7 +192,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
     });
 
     this.addFieldChangeListeners();
-    this.calculateProductsCost();
+    this.calculateTotalCost();
     this.calculateProfit();
   }
 
@@ -201,18 +201,18 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
       product: [orderProduct.product, Validators.required],
       quantity: [orderProduct.quantity, [Validators.required, Validators.min(0)]],
       unitPrice: [orderProduct.unitPrice, Validators.required],
-      costPrice: [{value: orderProduct.costPrice, disabled: true}]
+      costPrice: [{ value: orderProduct.costPrice, disabled: true }]
     });
   }
 
   private addFieldChangeListeners() {
     (this.orderForm.get('products') as FormArray).valueChanges.subscribe((items: any[]) => {
-      this.calculateProductsCost();
+      this.calculateTotalCost();
       this.calculateProfit();
     });
   }
 
-  private calculateProductsCost() {
+  private calculateTotalCost() {
     let cost = 0;
 
     (this.orderForm.get('products') as FormArray).controls.forEach((control, index) => {
@@ -294,7 +294,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
 
       this.productsService.getCostPrice(productId, quantity)
         .subscribe((costPrice: number) => {
-          productCtrl.controls.costPrice.setValue(costPrice, { onlySelf: true });
+          productCtrl.controls.costPrice.setValue(costPrice);
         });
     }
   }
@@ -302,7 +302,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   private setRecommendedPrice(index: number, recommendedPrice: number) {
     if (!!recommendedPrice) {
       const productCtrl = <FormGroup>(<FormArray>this.orderForm.get('products')).at(index);
-      productCtrl.controls.unitPrice.setValue(recommendedPrice, { onlySelf: true });
+      productCtrl.controls.unitPrice.setValue(recommendedPrice);
     }
   }
   
