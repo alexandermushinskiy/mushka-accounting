@@ -23,7 +23,7 @@
             <i class="ico ico-close" aria-hidden="true" title="Reset filters"></i>
           </button>
         </div>
-        <mk-search-form (onSearch)="filter($event)"></mk-search-form>
+        <mk-search-form [defaultValue]="filterKey" (onSearch)="filter($event)"></mk-search-form>
       </div>
       <div class="btn-set" *ngIf="showOptions">
 

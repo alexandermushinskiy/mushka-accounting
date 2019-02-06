@@ -21,6 +21,7 @@ export class DatatableHeaderComponent implements OnInit {
   @Input() showActions = true;
   @Input() title = '';
   @Input() quickFilters: QuickFilter[];
+  @Input() filterKey = '';
 
   @Output() onFilter = new EventEmitter<string>();
   @Output() onQuickFilter = new EventEmitter<QuickFilter>();

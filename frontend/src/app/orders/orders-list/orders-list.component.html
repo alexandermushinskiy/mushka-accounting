@@ -4,6 +4,7 @@
                   [title]="'Заказы'"
                   [total]="total"
                   [shown]="shown"
+                  [filterKey]="ordersListState.searchKey"
                   (onAddItem)="addOrder()"
                   (onFilter)="filter($event)">
     </mk-datatable-header>

@@ -8,6 +8,7 @@ import { NotificationsService } from '../../core/notifications/notifications.ser
 import { OrderList } from '../shared/models/order-list.model';
 import { OrderListFilter } from '../../shared/filters/order-list.filter';
 import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatable.component';
+import { LocalStorage } from 'ngx-webstorage';
 
 @Component({
   selector: 'mk-orders',
@@ -16,6 +17,9 @@ import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatabl
 })
 export class OrdersListComponent extends SortableDatatableComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
+
+  @LocalStorage('orders_list_state', { searchKey: '' }) ordersListState: { searchKey: string };
+
   orders: OrderList[];
   orderRows: OrderTableRow[];
   loadingIndicator = false;
@@ -53,6 +57,8 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
   }
 
   filter(searchKey: string) {
+    this.ordersListState.searchKey = searchKey;
+
     const orderFilter = new OrderListFilter(searchKey);
     const filteredSupplies = this.orders.filter(order => orderFilter.filter(order));
 
@@ -108,11 +114,16 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
         () => this.onLoadError()
       );
   }
-  
+
   private onLoadSuccess(orders: OrderList[]) {
     this.orders = orders;
     this.total = orders.length;
-    this.updateDatatableRows(orders);
+
+    if (this.ordersListState.searchKey) {
+      this.filter(this.ordersListState.searchKey);
+    } else {
+      this.updateDatatableRows(orders);
+    }
 
     this.loadingIndicator = false;
   }
