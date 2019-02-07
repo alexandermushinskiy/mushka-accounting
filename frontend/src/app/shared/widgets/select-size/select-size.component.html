@@ -15,8 +15,7 @@
     <div *ngIf="!isMultiple">{{ item.name }}</div>
     <!-- <div *ngIf="!isMultiple && !item">{{ defaultValue }}</div> -->
     <div *ngIf="isMultiple">
-      <mk-checkbox id="item-{{index}}" [checked]="item$.selected"></mk-checkbox>
-      {{ item.name }}
+      <mk-checkbox id="item-{{index}}" [checked]="item$.selected" [text]="item.name"></mk-checkbox>
     </div>
   </ng-template>
 </ng-select>

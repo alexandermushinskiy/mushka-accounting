@@ -23,7 +23,8 @@ namespace Mushka.WebApi.Resolvers
                 Cost = order.Cost,
                 Address = $"{order.Customer.Region}, {order.Customer.City}",
                 CustomerName = $"{order.Customer.FirstName} {order.Customer.LastName}",
-                ProductsCount = order.Products.Sum(p => p.Quantity)
+                ProductsCount = order.Products.Sum(p => p.Quantity),
+                IsWholesale = order.IsWholesale
             });
         }
     }

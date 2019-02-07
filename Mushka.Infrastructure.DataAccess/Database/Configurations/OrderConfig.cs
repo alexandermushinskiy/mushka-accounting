@@ -48,6 +48,11 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .IsRequired();
 
             builder
+                .Property(order => order.IsWholesale)
+                .HasDefaultValue(false)
+                .IsRequired();
+
+            builder
                 .Property(order => order.Notes)
                 .HasColumnName("Notes");
 

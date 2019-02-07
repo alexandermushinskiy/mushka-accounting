@@ -177,6 +177,7 @@ export class ConverterService {
       lastName: source.lastName,
       phone: source.phone,
       email: source.email,
+      isWholesale: source.isWholesale,
       notes: source.notes,
       products: this.convertToOrderProducts(source.products)
     });
@@ -208,7 +209,8 @@ export class ConverterService {
       cost: source.cost,
       address: source.address,
       customerName: source.customerName,
-      productsCount: source.productsCount
+      productsCount: source.productsCount,
+      isWholesale: source.isWholesale
     });
   }
 

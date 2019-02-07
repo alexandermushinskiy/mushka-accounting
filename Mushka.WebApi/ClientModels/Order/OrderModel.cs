@@ -32,6 +32,8 @@ namespace Mushka.WebApi.ClientModels.Order
 
         public string Email { get; set; }
 
+        public bool IsWholesale { get; set; }
+
         public string Notes { get; set; }
 
         public IEnumerable<OrderProductModel> Products { get; set; }

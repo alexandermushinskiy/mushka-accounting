@@ -25,6 +25,8 @@ namespace Mushka.Domain.Entities
 
         public decimal Profit { get; set; }
 
+        public bool IsWholesale { get; set; }
+
         public string Notes { get; set; }
 
         public Guid CustomerId { get; set; }

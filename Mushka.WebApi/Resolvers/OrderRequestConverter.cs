@@ -30,6 +30,7 @@ namespace Mushka.WebApi.Resolvers
                 CostMethod = source.CostMethod,
                 Discount = source.Discount == 0 ? null : source.Discount,
                 Profit = source.Profit,
+                IsWholesale = source.IsWholesale,
                 Notes = source.Notes,
                 Customer = CreateCustomer(customerId, source),
                 Products = source.Products.Select(prod => CreateDeliveryProduct(orderId, prod)).ToList()

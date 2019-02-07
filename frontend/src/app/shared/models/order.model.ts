@@ -17,6 +17,7 @@ export class Order {
   phone: string;
   email: string;
   notes: string;
+  isWholesale: boolean;
   products: OrderProduct[];
 
   constructor(data: any) {

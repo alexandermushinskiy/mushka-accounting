@@ -17,5 +17,7 @@ namespace Mushka.WebApi.ClientModels.Order
         public string CustomerName { get; set; }
 
         public int ProductsCount { get; set; }
+
+        public bool IsWholesale { get; set; }
     }
 }
