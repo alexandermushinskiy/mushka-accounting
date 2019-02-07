@@ -139,6 +139,10 @@ export class ProductsListComponent extends SortableDatatableComponent implements
 
   toggleCollapseMode() {
     this.isCollapsed = !this.isCollapsed;
+    
+    setTimeout(() => { 
+      window.dispatchEvent(new Event('resize'));
+    }, 100);
   }
 
   getRowClass(row: any) {
