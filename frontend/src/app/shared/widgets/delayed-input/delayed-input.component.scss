@@ -1,3 +1,15 @@
+@import '../../../../variables';
+
+:host(.not-valid) {
+  .input-group input {
+    //border-color: $orange;
+    box-shadow: inset 1px 0 0 0 $orange;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+
 input[type="number"] {
   -moz-appearance: textfield;
   //text-align: right;

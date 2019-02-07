@@ -17,8 +17,9 @@ import { UnsubscriberComponent } from '../../hooks/unsubscriber.component';
 export class DelayedInputComponent extends UnsubscriberComponent implements OnInit, ControlValueAccessor {
   @Input() type = 'number';
   @Input() disabled = false;
+  @Input() required = false;
   @Input() placeholder = '';
-  @Input() defaultValue = '';
+  @Input() value = '';
   @Output() onInput = new EventEmitter<string>();
   @ViewChild('inputBox') inputElementRef: ElementRef;
 
@@ -43,7 +44,7 @@ export class DelayedInputComponent extends UnsubscriberComponent implements OnIn
   }
   
   writeValue(value: any): void {
-    this.defaultValue = value;
+    this.value = value;
   }
 
   registerOnChange(fn: any) {

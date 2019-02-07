@@ -32,6 +32,7 @@
                         <label for="address">Номер</label>
                         <mk-delayed-input formControlName="number"
                                           [type]="text"
+                                          [required]="true"
                                           [ngClass]="{'not-valid': orderForm.controls.number.invalid && isFormSubmitted}"
                                           (onInput)="onNumberChanged($event)">
                         </mk-delayed-input>
@@ -206,7 +207,7 @@
             <div class="col-md-12 cost">
               <span class="cost-title">Скидка, %:</span>
               <span class="cost-value">
-                <mk-delayed-input [defaultValue]="discount"
+                <mk-delayed-input [value]="discount"
                                   (onInput)="onDiscountChanged($event)">
                 </mk-delayed-input>
               </span>

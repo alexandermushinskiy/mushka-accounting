@@ -3,7 +3,8 @@
          class="form-control"
          [attr.type]="type"
          [disabled]="disabled"
-         [value]="defaultValue"
+         [required]="required"
+         [ngModel]="value"
          [attr.placeholder]="placeholder"
          (keyup)="valueChanged(inputBox.value)" />
 </div>
