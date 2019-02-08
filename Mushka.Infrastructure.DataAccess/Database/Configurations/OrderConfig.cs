@@ -49,7 +49,6 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
 
             builder
                 .Property(order => order.IsWholesale)
-                .HasDefaultValue(false)
                 .IsRequired();
 
             builder
