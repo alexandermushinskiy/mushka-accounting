@@ -76,6 +76,13 @@
   }
 }
 
+.date-range-modal {
+  .modal-dialog {
+    max-width: 800px;
+    max-height: 300px;
+  }
+}
+
 //general reset for ngb-alert
 .alert {
   .close {

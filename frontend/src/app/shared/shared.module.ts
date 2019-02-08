@@ -8,6 +8,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { NgxMaskModule } from 'ngx-mask';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { LoadingScreenComponent } from './widgets/loading-screen/loading-screen.component';
 import { SpinnerComponent } from './widgets/spinner/spinner.component';
@@ -42,6 +43,8 @@ import { SelectProductsComponent } from './widgets/select-products/select-produc
 import { ProgressLinearComponent } from './widgets/progress-linear/progress-linear.component';
 import { PaymentMethodsDropdownComponent } from './widgets/payment-methods-dropdown/payment-methods-dropdown.component';
 import { DelayedInputComponent } from './widgets/delayed-input/delayed-input.component';
+import { OrderQuickFilter } from './filters/order-quick-filter';
+import { DateRageModalComponent } from './widgets/daterage-modal/daterage-modal.component';
 
 @NgModule({
   imports: [
@@ -54,7 +57,8 @@ import { DelayedInputComponent } from './widgets/delayed-input/delayed-input.com
     NgSelectModule,
     NgbModule.forRoot(),
     TypeaheadModule.forRoot(),
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    BsDatepickerModule.forRoot()
     // NgxMyDatePickerModule.forRoot()
   ],
   declarations: [
@@ -90,7 +94,8 @@ import { DelayedInputComponent } from './widgets/delayed-input/delayed-input.com
     SelectProductsComponent,
     ProgressLinearComponent,
     PaymentMethodsDropdownComponent,
-    DelayedInputComponent
+    DelayedInputComponent,
+    DateRageModalComponent
   ],
   exports: [
     /* Common modules */
@@ -100,6 +105,7 @@ import { DelayedInputComponent } from './widgets/delayed-input/delayed-input.com
     RouterModule,
     NgxDatatableModule,
     NgxMaskModule,
+    BsDatepickerModule,
     /* Directives */
     PopoverDirective,
     ClosePopoverOnClickOutsideDirective,
@@ -134,9 +140,11 @@ import { DelayedInputComponent } from './widgets/delayed-input/delayed-input.com
     SelectProductsComponent,
     ProgressLinearComponent,
     PaymentMethodsDropdownComponent,
-    DelayedInputComponent
+    DelayedInputComponent,
+    DateRageModalComponent
   ],
   providers: [
+    OrderQuickFilter
   ]
 })
 

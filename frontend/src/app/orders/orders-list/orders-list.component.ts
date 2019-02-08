@@ -9,6 +9,8 @@ import { OrderList } from '../shared/models/order-list.model';
 import { OrderListFilter } from '../../shared/filters/order-list.filter';
 import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatable.component';
 import { LocalStorage } from 'ngx-webstorage';
+import { QuickFilter } from '../../shared/filters/quick-filter';
+import { OrderQuickFilter } from '../../shared/filters/order-quick-filter';
 
 @Component({
   selector: 'mk-orders',
@@ -17,6 +19,7 @@ import { LocalStorage } from 'ngx-webstorage';
 })
 export class OrdersListComponent extends SortableDatatableComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
+  @ViewChild('dateRange') dateRangeTmpl: ElementRef;
 
   @LocalStorage('orders_search_key', '') ordersSearchKey: string;
 
@@ -26,9 +29,16 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
   total = 0;
   shown = 0;
   orderToDelete: OrderTableRow;
+  orderFilters: QuickFilter[];
+
   private modalRef: NgbModalRef;
   private readonly modalConfig: NgbModalOptions = {
     windowClass: 'order-modal',
+    backdrop: 'static',
+    size: 'sm'
+  };
+  private readonly dateRangModalConfig: NgbModalOptions = {
+    windowClass: 'date-range-modal',
     backdrop: 'static',
     size: 'sm'
   };
@@ -36,6 +46,7 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
   constructor(private router: Router,
               private modalService: NgbModal,
               private ordersService: OrdersService,
+              private orderQuickFilter: OrderQuickFilter,
               private notificationsService: NotificationsService) {
     super();
 
@@ -48,6 +59,8 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
 
   ngOnInit() {
     this.loadOrders();
+
+    this.orderFilters = this.orderQuickFilter.getFilters();
   }
 
   onActive(event: any) {
@@ -64,7 +77,24 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
 
     this.updateDatatableRows(filteredSupplies);
   }
-  
+
+  quickFilter(filter: QuickFilter) {
+    if (filter.filterFunc === this.orderQuickFilter.filterCustomRange) {
+      this.modalRef = this.modalService.open(this.dateRangeTmpl, this.dateRangModalConfig);
+    } else {
+      const filteredOrders = this.orders.filter(order => filter.filterFunc(order, '2019-02-05', '2019-02-08'));
+      this.updateDatatableRows(filteredOrders);
+    }
+  }
+
+  applyDateRange() {
+    this.closeModal();
+  }
+
+  resetQuickFilter() {
+    this.updateDatatableRows(this.orders);
+  }
+
   addOrder() {
     this.router.navigate(['orders/new']);
   }
@@ -91,7 +121,7 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
     if (this.modalRef) {
       this.modalRef.close();
     }
-  }  
+  }
 
   private onDeleteSuccess() {
     this.notificationsService.success('Успех', `Заказ успешно удален из системы.`);
@@ -132,7 +162,7 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
     this.loadingIndicator = false;
     this.notificationsService.danger('Ошибка', 'Невозможно загрузить все заказы');
   }
-  
+
   private updateDatatableRows(orders: OrderList[]) {
     this.orderRows = orders.map((el, index) => new OrderTableRow(el, index));
     this.shown = orders.length;

@@ -5,8 +5,11 @@
                   [total]="total"
                   [shown]="shown"
                   [filterKey]="ordersSearchKey"
+                  [quickFilters]="orderFilters"
                   (onAddItem)="addOrder()"
-                  (onFilter)="filter($event)">
+                  (onFilter)="filter($event)"
+                  (onQuickFilter)="quickFilter($event)"
+                  (onQuickFilterReset)="resetQuickFilter()">
     </mk-datatable-header>
   </div>
   <div class="list-page-body">
@@ -100,4 +103,11 @@
           (onClose)="closeModal()"
           (onConfirm)="confirmDelete();">
   </mk-confirmation>
+</ng-template>
+
+<ng-template #dateRange>
+  <mk-daterage-modal
+              (onApply)="applyDateRange($event)"
+              (onClose)="closeModal()">
+  </mk-daterage-modal>
 </ng-template>

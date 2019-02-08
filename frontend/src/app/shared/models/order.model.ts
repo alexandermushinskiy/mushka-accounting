@@ -9,7 +9,6 @@ export class Order {
   costMethod: PaymentMethod;
   discount: number;
   profit: number;
-  //client: Client;
   region: string;
   city: string;
   firstName: string;
