@@ -34,7 +34,8 @@ const routes: Routes = [
   { path: 'supplies', children: [
     { path: '', component: SuppliesListComponent, pathMatch: 'full' },
     { path: 'new', component: SupplyComponent, pathMatch: 'full' },
-    { path: ':id', component: SupplyComponent, pathMatch: 'full' }
+    { path: ':id', component: SupplyComponent, pathMatch: 'full' },
+    //{ path: ':id/clone', component: SupplyComponent, pathMatch: 'full' }
   ]},
   { path: 'costs', component: CostsListComponent, pathMatch: 'full' },
   { path: 'gifts', component: GiftsListComponent, pathMatch: 'full' },

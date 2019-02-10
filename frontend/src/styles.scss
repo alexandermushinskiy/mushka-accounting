@@ -255,3 +255,16 @@ textarea {
   cursor: default;
   user-select: none;
 }
+
+.grid-buttons {
+  a {
+    padding-right: 10px;
+    color: #000000;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      color: #0082F0;;
+    }
+  }
+}

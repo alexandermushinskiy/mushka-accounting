@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 
 import { SuppliesService } from '../../core/api/supplies.service';
 import { Supply } from '../shared/models/supply.model';
@@ -97,13 +97,23 @@ export class SupplyComponent implements OnInit {
   }
 
   private getRouteParams() {
-    this.route.params.subscribe(params => {
-      this.supplyId = params['id'];
-      this.isEdit = !!this.supplyId;
-      this.title = `${this.isEdit ? 'Редактирование поступления' : 'Новое поступление'}`;
+
+    combineLatest(
+      this.route.queryParams,
+      this.route.params
+    ).subscribe(([queryParams, params]) => {
+      const supplyId = params['id'];
+      const isCloning = !!queryParams.clone;
+      this.isEdit = !!supplyId && !queryParams.clone;
 
       if (this.isEdit) {
-        this.suppliesService.getById(this.supplyId)
+        this.supplyId = supplyId;
+      }
+
+      this.title = `${this.isEdit ? 'Редактирование поступления' : 'Новое поступление'}`;
+
+      if (this.isEdit || isCloning) {
+        this.suppliesService.getById(supplyId)
           .subscribe((delivery: Supply) => this.buildForm(delivery));
       } else {
         this.buildForm(new Supply({
