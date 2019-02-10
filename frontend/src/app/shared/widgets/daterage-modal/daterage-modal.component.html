@@ -5,14 +5,8 @@
   </button>
 </div>
 <div class="modal-body">
-  <div class="category-name">
-    <div class="field-group">
-      
-      <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
-      </ngb-datepicker>
-
-    </div>
-  </div>
+  <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
+  </ngb-datepicker>
 </div>
 <div class="modal-footer">
   <button class="btn btn-light btn-cancel" type="button" (click)="close()">Отмена</button>

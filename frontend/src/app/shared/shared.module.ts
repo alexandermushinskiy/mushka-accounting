@@ -8,7 +8,6 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { NgxMaskModule } from 'ngx-mask';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { LoadingScreenComponent } from './widgets/loading-screen/loading-screen.component';
 import { SpinnerComponent } from './widgets/spinner/spinner.component';
@@ -57,8 +56,7 @@ import { DateRageModalComponent } from './widgets/daterage-modal/daterage-modal.
     NgSelectModule,
     NgbModule.forRoot(),
     TypeaheadModule.forRoot(),
-    NgxMaskModule.forRoot(),
-    BsDatepickerModule.forRoot()
+    NgxMaskModule.forRoot()
     // NgxMyDatePickerModule.forRoot()
   ],
   declarations: [
@@ -105,7 +103,6 @@ import { DateRageModalComponent } from './widgets/daterage-modal/daterage-modal.
     RouterModule,
     NgxDatatableModule,
     NgxMaskModule,
-    BsDatepickerModule,
     /* Directives */
     PopoverDirective,
     ClosePopoverOnClickOutsideDirective,

@@ -1,11 +1,14 @@
 import { Component, OnInit, Input, Output, ViewChild, ElementRef, EventEmitter, HostListener } from '@angular/core';
-import { NgbDateStruct, NgbTimeStruct, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbTimeStruct, NgbDatepicker, NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
+
+import { I18n, CustomDatepickerI18n } from '../../../../assets/i18n/datepicker-i18n';
 
 @Component({
   selector: 'mk-datetimepicker',
   templateUrl: './datetimepicker.component.html',
-  styleUrls: ['./datetimepicker.component.scss']
+  styleUrls: ['./datetimepicker.component.scss'],
+  providers: [I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }]
 })
 export class DatetimepickerComponent implements OnInit {
   @ViewChild('outsideContent') outsideContent: ElementRef;

@@ -11,6 +11,7 @@ import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatabl
 import { LocalStorage } from 'ngx-webstorage';
 import { QuickFilter } from '../../shared/filters/quick-filter';
 import { OrderQuickFilter } from '../../shared/filters/order-quick-filter';
+import { DateRange } from '../../shared/models/data-range.mode';
 
 @Component({
   selector: 'mk-orders',
@@ -82,12 +83,15 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
     if (filter.filterFunc === this.orderQuickFilter.filterCustomRange) {
       this.modalRef = this.modalService.open(this.dateRangeTmpl, this.dateRangModalConfig);
     } else {
-      const filteredOrders = this.orders.filter(order => filter.filterFunc(order, '2019-02-05', '2019-02-08'));
+      const filteredOrders = this.orders.filter(order => filter.filterFunc(order));
       this.updateDatatableRows(filteredOrders);
     }
   }
 
-  applyDateRange() {
+  applyDateRange(dateRange: DateRange) {
+    const filteredOrders = this.orders.filter(order => this.orderQuickFilter.filterCustomRange(order, dateRange));
+    this.updateDatatableRows(filteredOrders);
+
     this.closeModal();
   }
 

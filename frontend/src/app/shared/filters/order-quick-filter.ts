@@ -2,6 +2,8 @@ import * as moment from 'moment';
 
 import { QuickFilter } from './quick-filter';
 import { Order } from '../models/order.model';
+import { DateRange } from '../models/data-range.mode';
+import { OrderList } from '../../orders/shared/models/order-list.model';
 
 export class OrderQuickFilter {
   getFilters(): QuickFilter[] {
@@ -17,17 +19,17 @@ export class OrderQuickFilter {
     ];
   }
 
-  filterToday(order: Order): boolean {
+  filterToday(order: OrderList): boolean {
     const today = moment().format('YYYY-MM-DD');
     return moment(order.orderDate).format('YYYY-MM-DD') === today;
   }
 
-  filterYesterday(order: Order): boolean {
+  filterYesterday(order: OrderList): boolean {
     const yesterday = moment().subtract(1, 'day').format('YYYY-MM-DD');
     return moment(order.orderDate).format('YYYY-MM-DD') === yesterday;
   }
 
-  filterLastWeek(order: Order): boolean {
+  filterLastWeek(order: OrderList): boolean {
     const lastWeek = moment().subtract(1, 'weeks');
     const startOfWeek = lastWeek.startOf('isoWeek').format('YYYY-MM-DD');
     const endOfWeek = lastWeek.endOf('isoWeek').format('YYYY-MM-DD');
@@ -35,14 +37,14 @@ export class OrderQuickFilter {
     return order.orderDate >= startOfWeek && order.orderDate <= endOfWeek;
   }
 
-  filterCurrentWeek(order: Order): boolean {
+  filterCurrentWeek(order: OrderList): boolean {
     const startOfWeek = moment().startOf('isoWeek').format('YYYY-MM-DD');
     const endOfWeek = moment().endOf('isoWeek').format('YYYY-MM-DD');
 
     return order.orderDate >= startOfWeek && order.orderDate <= endOfWeek;
   }
 
-  filterLastMonth(order: Order): boolean {
+  filterLastMonth(order: OrderList): boolean {
     const lastMonth = moment().subtract(1, 'month');
     const startOfMonth = lastMonth.startOf('month').format('YYYY-MM-DD');
     const endOfMonth = lastMonth.endOf('month').format('YYYY-MM-DD');
@@ -50,14 +52,14 @@ export class OrderQuickFilter {
     return order.orderDate >= startOfMonth && order.orderDate <= endOfMonth;
   }
 
-  filterCurrentMonth(order: Order): boolean {
+  filterCurrentMonth(order: OrderList): boolean {
     const startOfMonth = moment().startOf('month').format('YYYY-MM-DD');
     const endOfMonth = moment().endOf('month').format('YYYY-MM-DD');
 
     return order.orderDate >= startOfMonth && order.orderDate <= endOfMonth;
   }
 
-  filterCurrentQuarter(order: Order): boolean {
+  filterCurrentQuarter(order: OrderList): boolean {
     const currentQuarter = moment().startOf('quarter');
     const startOfQuarter = currentQuarter.format('YYYY-MM-DD');
     const endOfQuarter = currentQuarter.format('YYYY-MM-DD');
@@ -65,7 +67,11 @@ export class OrderQuickFilter {
     return order.orderDate >= startOfQuarter && order.orderDate <= endOfQuarter;
   }
 
-  filterCustomRange(order: Order, fromDate: string, dateTo: string): boolean {
-    return order.orderDate >= fromDate && order.orderDate <= dateTo;
+  filterCustomRange(order: OrderList, dateRange: DateRange): boolean {
+    if (!dateRange.toDate) {
+      return order.orderDate === dateRange.fromDate;
+    }
+
+    return order.orderDate >= dateRange.fromDate && order.orderDate <= dateRange.toDate;
   }
 }

@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 export class DatetimeService {
   // parseDate(date: string, format = 'YYYY-MM-DD HH:mm'): string {
@@ -6,7 +7,7 @@ export class DatetimeService {
   //   return moment(utcDate).local().format(format);
   // }
 
-  convertTorFormat(date: string, format = 'DD MMM YYYY'): string {
+  convertToFormat(date: string, format = 'DD MMM YYYY'): string {
     return moment(date).locale('ru').format(format);
   }
 
@@ -20,5 +21,14 @@ export class DatetimeService {
 
   convertFromToFormat(date: string, inputFormat = 'DD MMM YYYY', outputFormat = 'YYYY-MM-DD'): string {
     return moment(date, inputFormat).locale('ru').format(outputFormat);
+  }
+
+  convertNgbDateToDate(ngbDate: NgbDate): string {
+    if (!ngbDate) {
+      return null;
+    }
+
+    const date = new Date(ngbDate.year, ngbDate.month-1, ngbDate.day);
+    return this.toString(date);
   }
 }

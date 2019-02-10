@@ -2,8 +2,8 @@
   text-align: center;
   padding: 0.185rem 0.25rem;
   display: inline-block;
-  height: 2rem;
-  width: 2rem;
+  height: 40px;
+  width: 40px;
 }
 
 .custom-day.focused {
@@ -17,4 +17,9 @@
 
 .custom-day.faded {
   background-color: rgba(2, 117, 216, 0.5);
+}
+
+.modal-body {
+  padding-top: 0;
+  text-align: center;
 }
