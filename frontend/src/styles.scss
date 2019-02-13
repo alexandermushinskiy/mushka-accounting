@@ -257,6 +257,11 @@ textarea {
 }
 
 .grid-buttons {
+  > :first-child {
+    position: relative;
+    top: 1px;
+  }
+
   a {
     padding-right: 10px;
     color: #000000;
@@ -265,6 +270,21 @@ textarea {
 
     &:hover {
       color: #0082F0;;
-    }
+    }    
   }
 }
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  //text-align: right;
+}
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+  margin: 0;
+  //text-align: right;
+}
+
+input[type="number"]::-webkit-input-placeholder { text-align:left  !important; }
+/* mozilla solution */
+input[type="number"]:-moz-placeholder { text-align:left !important; }

@@ -24,6 +24,7 @@ export class DatetimepickerComponent implements OnInit {
   @Input() disabled: boolean;
   @Input() dateFormat = 'YYYY-MM-DD HH:mm:ss';
   @Input() isNow = false;
+  @Input() hasConfirm = false;
 
   @Input() seconds = false;
   @Input() meridian = false;
@@ -85,6 +86,9 @@ export class DatetimepickerComponent implements OnInit {
   }
 
   dayChanged() {
+    if (!this.hasConfirm) {
+      this.confirm();
+    }
   }
 
   close() {

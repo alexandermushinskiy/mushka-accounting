@@ -28,6 +28,8 @@ namespace Mushka.Domain.Entities
 
         public ICollection<OrderProduct> Orders { get; set; }
 
+        public ICollection<ExhibitionProduct> Exhibitions { get; set; }
+
         public Guid CategoryId { get; set; }
         public Category Category { get; set; }
 

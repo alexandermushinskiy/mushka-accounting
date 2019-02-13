@@ -15,6 +15,9 @@ import { OrderProduct } from '../../shared/models/order-product.model';
 import { Customer } from '../../shared/models/customer.model';
 import { OrderList } from '../../orders/shared/models/order-list.model';
 import { SelectProduct } from '../../shared/models/select-product.model';
+import { Exhibition } from '../../shared/models/exhibition.model';
+import { ExhibitionProduct } from '../../shared/models/exhibition-product.model';
+import { ExhibitionList } from '../../exhibitions/shared/models/exhibition-list.model';
 
 @Injectable()
 export class ConverterService {
@@ -227,6 +230,56 @@ export class ConverterService {
       email: source.email,
       region: source.region,
       city: source.city
+    });
+  }
+
+  convertToExhibitions(response: any[]): Exhibition[] {
+    return response.map(res => this.convertToExhibition(res));
+  }
+
+  convertToExhibition(source: any): Exhibition {
+    return new Exhibition({
+      id: source.id,
+      name: source.name,
+      fromDate: this.datetimeService.toString(source.fromDate),
+      toDate: this.datetimeService.toString(source.toDate),
+      city: source.city,
+      participationCost: source.participationCost,
+      participationCostMethod: source.participationCostMethod,
+      notes: source.notes,
+      profit: source.profit,
+      products: this.convertToExhibitionProducts(source.products)
+    });
+  }
+
+  convertToExhibitionProducts(response: any[]): ExhibitionProduct[] {
+    return response.map((exhibitionProduct: any) => new ExhibitionProduct({
+      quantity: exhibitionProduct.quantity,
+      unitPrice: exhibitionProduct.unitPrice,
+      costPrice: exhibitionProduct.costPrice,
+      product: {
+        id: exhibitionProduct.id,
+        name: exhibitionProduct.name,
+        vendorCode: exhibitionProduct.vendorCode,
+        size: !!exhibitionProduct.sizeName ? new Size({name: exhibitionProduct.sizeName}) : null
+      }
+    }));
+  }
+  
+  convertToExhibitionsList(response: any[]): ExhibitionList[] {
+    return response.map(res => this.convertToExhibitionList(res));
+  }
+
+  convertToExhibitionList(source: any): ExhibitionList {
+    return new ExhibitionList({
+      id: source.id,
+      name: source.name,
+      fromDate: this.datetimeService.toString(source.fromDate),
+      toDate: this.datetimeService.toString(source.toDate),
+      city: source.city,
+      participationCost: source.participationCost,
+      profit: source.profit,
+      productsCount: source.productsCount
     });
   }
 

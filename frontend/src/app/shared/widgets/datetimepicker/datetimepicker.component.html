@@ -27,7 +27,7 @@
                     [meridian]="meridian"
                     [spinners]="showTimeArrows"
                     [seconds]="seconds"></ngb-timepicker>
-    <div class="mk-datetimepicker-footer" data-toggle="buttons">
+    <div class="mk-datetimepicker-footer" data-toggle="buttons" *ngIf="hasConfirm">
       <span class="btn btn-light btn-cancel" (click)="close()">Закрыть</span>
       <span class="btn btn-primary btn-submit" (click)="confirm()">Принять</span>
     </div>

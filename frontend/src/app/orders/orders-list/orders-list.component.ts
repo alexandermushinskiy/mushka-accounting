@@ -103,9 +103,9 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
     this.router.navigate(['orders/new']);
   }
 
-  delete(supply: OrderTableRow) {
+  delete(order: OrderTableRow) {
     setTimeout(() => {
-      this.orderToDelete = supply;
+      this.orderToDelete = order;
       this.modalRef = this.modalService.open(this.confirmRemoveTmpl, this.modalConfig);
     });
   }

@@ -33,7 +33,7 @@ namespace Mushka.WebApi.Resolvers
                 IsWholesale = source.IsWholesale,
                 Notes = source.Notes,
                 Customer = CreateCustomer(customerId, source),
-                Products = source.Products.Select(prod => CreateDeliveryProduct(orderId, prod)).ToList()
+                Products = source.Products.Select(prod => CreateOrderProduct(orderId, prod)).ToList()
             };
         }
 
@@ -49,7 +49,7 @@ namespace Mushka.WebApi.Resolvers
                 City = requestModel.City
             };
 
-        private static OrderProduct CreateDeliveryProduct(Guid orderId, OrderProductRequestModel requestModel) =>
+        private static OrderProduct CreateOrderProduct(Guid orderId, OrderProductRequestModel requestModel) =>
             new OrderProduct
             {
                 OrderId = orderId,

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mushka.Domain.Entities;
+using Mushka.WebApi.Filters;
 
 namespace Mushka.WebApi.ClientModels.Order
 {
@@ -9,18 +10,18 @@ namespace Mushka.WebApi.ClientModels.Order
     {
         public string Number { get; set; }
 
-        [Required]
+        [RequireNonDefault]
         public DateTime OrderDate { get; set; }
 
-        [Required]
+        [RequireNonDefault]
         public decimal Cost { get; set; }
 
-        [Required]
+        [RequireNonDefault]
         public PaymentMethod CostMethod { get; set; }
 
         public int? Discount { get; set; }
 
-        [Required]
+        [RequireNonDefault]
         public decimal Profit { get; set; }
 
         [Required]

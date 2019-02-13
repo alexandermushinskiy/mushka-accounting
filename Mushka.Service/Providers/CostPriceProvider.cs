@@ -52,7 +52,7 @@ namespace Mushka.Service.Providers
                 }
             }
 
-            return costPricesList.Sum() / costPricesList.Count;
+            return Math.Round(costPricesList.Sum() / costPricesList.Count, 2);
         }
     }
 }

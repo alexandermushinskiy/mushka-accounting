@@ -14,6 +14,7 @@ import { OrderComponent } from './orders/order/order.component';
 import { CostsListComponent } from './costs/costs-list/costs-list.component';
 import { GiftsListComponent } from './gifts/gifts-list/gifts-list.component';
 import { ExhibitionsListComponent } from './exhibitions/exhibitions-list/exhibitions-list.component';
+import { ExhibitionComponent } from './exhibitions/exhibition/exhibition.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -34,12 +35,15 @@ const routes: Routes = [
   { path: 'supplies', children: [
     { path: '', component: SuppliesListComponent, pathMatch: 'full' },
     { path: 'new', component: SupplyComponent, pathMatch: 'full' },
-    { path: ':id', component: SupplyComponent, pathMatch: 'full' },
-    //{ path: ':id/clone', component: SupplyComponent, pathMatch: 'full' }
+    { path: ':id', component: SupplyComponent, pathMatch: 'full' }
   ]},
   { path: 'costs', component: CostsListComponent, pathMatch: 'full' },
   { path: 'gifts', component: GiftsListComponent, pathMatch: 'full' },
-  { path: 'exhibitions', component: ExhibitionsListComponent, pathMatch: 'full' }
+  { path: 'exhibitions', children: [
+    { path: '', component: ExhibitionsListComponent, pathMatch: 'full' },
+    { path: 'new', component: ExhibitionComponent, pathMatch: 'full' },
+    { path: ':id', component: ExhibitionComponent, pathMatch: 'full' }
+  ]}
 ];
 
 @NgModule({

@@ -23,7 +23,6 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   orderForm: FormGroup;
   isEdit = false;
   isLoading = false;
-  isSubmitted = false;
   orderId: string;
   errors: string[];
   title: string;

@@ -7,6 +7,7 @@ using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Category;
+using Mushka.WebApi.ClientModels.Exhibition;
 using Mushka.WebApi.ClientModels.Order;
 using Mushka.WebApi.ClientModels.Product;
 using Mushka.WebApi.ClientModels.Supplier;
@@ -138,18 +139,31 @@ namespace Mushka.WebApi
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
             //-------------------------
 
-            //CreateMap<ValidationResponse<IEnumerable<Supplier>>, SuppliersResponseModel>()
-            //    .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
-            //    .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => src.ValidationResults));
+            // Exhibition
+            CreateMap<ExhibitionRequestModel, Exhibition>().ConvertUsing<ExhibitionRequestConverter>();
+            CreateMap<Exhibition, ExhibitionModel>().ConvertUsing<ExhibitionConverter>();
+            CreateMap<ExhibitionProduct, ExhibitionProductModel>().ConvertUsing<ExhibitionConverter>();
 
-            //CreateMap<ValidationResponse<Supplier>, SupplierResponseModel>()
-            //    .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
-            //    .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => src.ValidationResults));
+            CreateMap<ValidationResponse<Exhibition>, ExhibitionResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ExhibitionResponseResolver>())
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
 
-            //CreateMap<SupplierRequestModel, Supplier>()
-            //    .ForMember(dest => dest.Id, opt => opt.Ignore())
-            //    .ForMember(dest => dest.CreatedOn, opt => opt.Ignore())
-            //    .ForMember(dest => dest.Deliveries, opt => opt.Ignore());
+            CreateMap<ValidationResponse<IEnumerable<Exhibition>>, ExhibitionsResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ExhibitionResponseResolver>())
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+
+            CreateMap<ValidationResponse<IEnumerable<Exhibition>>, ExhibitionsListResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ExhibitionsListResponseResolver>())
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+
+            CreateMap<ValidationResponse<IEnumerable<ExhibitionProduct>>, ExhibitionProductsResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ExhibitionProductResponseResolver>())
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+            //-------------------------
         }
     }
 }

@@ -47,9 +47,9 @@ export class CurrencyInputComponent implements OnInit, ControlValueAccessor {
   blur() {
     if (this.value) {
       this.onBlur.emit(this.value);
-    } else {
+    } /*else {
       this.value = null;
-    }
+    }*/
   }
 
   private onChangeCallback: any = () => {};
