@@ -127,8 +127,8 @@ export class ExhibitionComponent extends UnsubscriberComponent implements OnInit
       notes: formRawValue.notes,
       participationCost: formRawValue.participationCost,
       participationCostMethod: formRawValue.participationCostMethod,
-      accommodationСost: formRawValue.accommodationСost,
-      accommodationСostMethod: formRawValue.accommodationСostMethod,
+      accommodationCost: formRawValue.accommodationCost,
+      accommodationCostMethod: formRawValue.accommodationCostMethod,
       fareCost: formRawValue.fareCost,
       fareCostMethod: formRawValue.fareCostMethod,
       products: formRawValue.products.map((prod: any) => this.createExhibitionProduct(prod))
@@ -175,10 +175,10 @@ export class ExhibitionComponent extends UnsubscriberComponent implements OnInit
       city: [exhibition.city, Validators.required],
       participationCost: [exhibition.participationCost, Validators.required],
       participationCostMethod: [exhibition.participationCostMethod, Validators.required],
-      accommodationCost: [],
-      accommodationCostMethod: [],
-      fareCost: [],
-      fareCostMethod: [],
+      accommodationCost: [exhibition.accommodationCost],
+      accommodationCostMethod: [exhibition.accommodationCostMethod],
+      fareCost: [exhibition.fareCost],
+      fareCostMethod: [exhibition.fareCostMethod],
       notes: [exhibition.notes],
       products: this.formBuilder.array(
         exhibition.products.map(param => this.createProductFormGroup(param))

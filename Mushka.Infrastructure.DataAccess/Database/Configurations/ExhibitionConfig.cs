@@ -19,11 +19,13 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
             builder
                 .Property(exh => exh.Name)
                 .HasColumnName("Name")
+                .HasMaxLength(255)
                 .IsRequired();
 
             builder
                 .Property(exh => exh.City)
                 .HasColumnName("City")
+                .HasMaxLength(255)
                 .IsRequired();
 
             builder

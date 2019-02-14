@@ -12,12 +12,16 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 255, nullable: false),
                     FromDate = table.Column<DateTime>(type: "Date", nullable: false),
                     ToDate = table.Column<DateTime>(type: "Date", nullable: false),
-                    City = table.Column<string>(nullable: false),
+                    City = table.Column<string>(maxLength: 255, nullable: false),
                     ParticipationCost = table.Column<decimal>(type: "Money", nullable: false),
                     ParticipationCostMethod = table.Column<int>(nullable: false),
+                    AccommodationCost = table.Column<decimal>(type: "Money", nullable: true),
+                    AccommodationCostMethod = table.Column<int>(nullable: true),
+                    FareCost = table.Column<decimal>(type: "Money", nullable: true),
+                    FareCostMethod = table.Column<int>(nullable: true),
                     Notes = table.Column<string>(nullable: true),
                     Profit = table.Column<decimal>(type: "Money", nullable: false)
                 },

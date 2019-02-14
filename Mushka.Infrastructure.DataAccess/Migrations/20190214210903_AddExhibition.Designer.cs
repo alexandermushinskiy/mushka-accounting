@@ -10,7 +10,7 @@ using Mushka.Infrastructure.DataAccess.Database;
 namespace Mushka.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(MushkaDbContext))]
-    [Migration("20190212182231_AddExhibition")]
+    [Migration("20190214210903_AddExhibition")]
     partial class AddExhibition
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,9 +108,24 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("Id");
 
+                    b.Property<decimal?>("AccommodationCost")
+                        .HasColumnName("AccommodationCost")
+                        .HasColumnType("Money");
+
+                    b.Property<int?>("AccommodationCostMethod")
+                        .HasColumnName("AccommodationCostMethod");
+
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnName("City");
+                        .HasColumnName("City")
+                        .HasMaxLength(255);
+
+                    b.Property<decimal?>("FareCost")
+                        .HasColumnName("FareCost")
+                        .HasColumnType("Money");
+
+                    b.Property<int?>("FareCostMethod")
+                        .HasColumnName("FareCostMethod");
 
                     b.Property<DateTime>("FromDate")
                         .HasColumnName("FromDate")
@@ -118,7 +133,8 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnName("Name");
+                        .HasColumnName("Name")
+                        .HasMaxLength(255);
 
                     b.Property<string>("Notes")
                         .HasColumnName("Notes");

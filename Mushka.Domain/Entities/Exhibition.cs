@@ -25,13 +25,13 @@ namespace Mushka.Domain.Entities
         
         public PaymentMethod ParticipationCostMethod { get; set; }
 
-        public decimal AccommodationCost { get; set; }
+        public decimal? AccommodationCost { get; set; }
 
-        public PaymentMethod AccommodationCostMethod { get; set; }
+        public PaymentMethod? AccommodationCostMethod { get; set; }
 
-        public decimal FareCost { get; set; }
+        public decimal? FareCost { get; set; }
 
-        public PaymentMethod FareCostMethod { get; set; }
+        public PaymentMethod? FareCostMethod { get; set; }
 
         public string Notes { get; set; }
 
