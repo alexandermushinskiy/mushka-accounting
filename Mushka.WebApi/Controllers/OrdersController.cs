@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Mushka.Core.Extensibility.Providers;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
+using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Extensibility.Services;
 using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Order;
@@ -17,15 +18,18 @@ namespace Mushka.WebApi.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService orderService;
+        private readonly IDefaultProductsProvider defaultProductsProvider;
 
         public OrdersController(
             IOrderService orderService,
+            IDefaultProductsProvider defaultProductsProvider,
             ICancellationTokenSourceProvider cancellationTokenSourceProvider,
             IActionResultProvider actionResultProvider,
             IMapper mapper)
             : base(cancellationTokenSourceProvider, actionResultProvider, mapper)
         {
             this.orderService = orderService;
+            this.defaultProductsProvider = defaultProductsProvider;
         }
 
         [HttpGet]
@@ -40,7 +44,7 @@ namespace Mushka.WebApi.Controllers
         [HttpGet("default-products")]
         public async Task<IActionResult> GetDefaultProducts()
         {
-            var productsResponse = await orderService.GetDefaultProducts(cancellationTokenSourceProvider.Get().Token);
+            var productsResponse = await defaultProductsProvider.GetOrderDefaultProducts(cancellationTokenSourceProvider.Get().Token);
             var clientResponse = mapper.Map<ValidationResponse<IEnumerable<OrderProduct>>, OrderProductsResponseModel>(productsResponse);
 
             return actionResultProvider.Get(clientResponse);

@@ -8,7 +8,6 @@ using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
-using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Extensibility.Services;
 
 namespace Mushka.Service.Services
@@ -18,16 +17,13 @@ namespace Mushka.Service.Services
         private readonly IStorage storage;
         private readonly IExhibitionRepository exhibitionRepository;
         private readonly IProductRepository productRepository;
-        private readonly ICostPriceProvider costPriceProvider;
 
         public ExhibitionService(
             IStorage storage,
-            ICostPriceProvider costPriceProvider,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             this.storage = storage;
-            this.costPriceProvider = costPriceProvider;
 
             exhibitionRepository = storage.GetRepository<IExhibitionRepository>();
             productRepository = storage.GetRepository<IProductRepository>();
@@ -51,26 +47,6 @@ namespace Mushka.Service.Services
             return exhibition == null
                 ? CreateWarningValidationResponse($"Exhibition with id {exhibitionId} is not found.", ValidationStatusType.NotFound)
                 : CreateInfoValidationResponse(exhibition, $"Exhibition with id {exhibitionId} was successfully retrieved.");
-        }
-
-        public async Task<ValidationResponse<IEnumerable<ExhibitionProduct>>> GetDefaultProducts(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            List<Guid> productIds = new List<Guid> {
-                Guid.Parse("07DF9000-2680-43E7-BA2C-D4F0C48A8CB5"), // открытка
-                Guid.Parse("A6BBAD88-3820-4972-8AE9-FC931A62A1E7")  // пакет
-            };
-
-            var products = (await productRepository.GetAsync(prod => productIds.Contains(prod.Id) && prod.Quantity > 0, cancellationToken))
-                .Select(async prod => new ExhibitionProduct
-                {
-                    ProductId = prod.Id,
-                    Product = prod,
-                    Quantity = 1,
-                    CostPrice = await costPriceProvider.CalculateAsync(prod.Id, prod.Quantity, cancellationToken)
-                })
-                .Select(x => x.Result);
-
-            return CreateInfoValidationResponse(products, "Default products were successfully retrieved.");
         }
 
         public async Task<ValidationResponse<Exhibition>> AddAsync(Exhibition exhibition, CancellationToken cancellationToken = default(CancellationToken))

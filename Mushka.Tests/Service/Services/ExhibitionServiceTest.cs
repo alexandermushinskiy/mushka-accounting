@@ -10,7 +10,6 @@ using Mushka.Core.Extensibility.Logging;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
-using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Services;
 using Mushka.Tests.Common;
 using Xunit;
@@ -39,14 +38,12 @@ namespace Mushka.Tests.Service.Services
         private static readonly string ProductNotEnoughMessage = $"Product with id {ProductId} is not enough in stock.";
 
         private readonly Mock<IStorage> storageMock;
-        private readonly Mock<ICostPriceProvider> costPriceProviderMock;
         private readonly Mock<IExhibitionRepository> exhibitionRepositoryMock;
         private readonly Mock<IProductRepository> productRepositoryMock;
         private readonly ExhibitionService exhibitionService;
 
         public ExhibitionServiceTest()
         {
-            costPriceProviderMock = MockRepository.Create<ICostPriceProvider>();
             productRepositoryMock = MockRepository.Create<IProductRepository>();
             exhibitionRepositoryMock = MockRepository.Create<IExhibitionRepository>();
 
@@ -62,7 +59,6 @@ namespace Mushka.Tests.Service.Services
 
             exhibitionService = new ExhibitionService(
                 storageMock.Object,
-                costPriceProviderMock.Object,
                 loggerFactory);
         }
 

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Mushka.Core.Extensibility.Providers;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
+using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Extensibility.Services;
 using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Exhibition;
@@ -17,15 +18,18 @@ namespace Mushka.WebApi.Controllers
     public class ExhibitionsController : ControllerBase
     {
         private readonly IExhibitionService exhibitionService;
+        private readonly IDefaultProductsProvider defaultProductsProvider;
 
         public ExhibitionsController(
             IExhibitionService exhibitionService,
+            IDefaultProductsProvider defaultProductsProvider,
             ICancellationTokenSourceProvider cancellationTokenSourceProvider,
             IActionResultProvider actionResultProvider,
             IMapper mapper)
             : base(cancellationTokenSourceProvider, actionResultProvider, mapper)
         {
             this.exhibitionService = exhibitionService;
+            this.defaultProductsProvider = defaultProductsProvider;
         }
 
         [HttpGet]
@@ -49,7 +53,7 @@ namespace Mushka.WebApi.Controllers
         [HttpGet("default-products")]
         public async Task<IActionResult> GetDefaultProducts()
         {
-            var productsResponse = await exhibitionService.GetDefaultProducts(cancellationTokenSourceProvider.Get().Token);
+            var productsResponse = await defaultProductsProvider.GetExhibitionProducts(cancellationTokenSourceProvider.Get().Token);
             var clientResponse = mapper.Map<ValidationResponse<IEnumerable<ExhibitionProduct>>, ExhibitionProductsResponseModel>(productsResponse);
 
             return actionResultProvider.Get(clientResponse);
