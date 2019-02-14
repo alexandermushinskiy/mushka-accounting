@@ -29,6 +29,10 @@ namespace Mushka.WebApi.Resolvers
                 City = source.City,
                 ParticipationCost = source.ParticipationCost,
                 ParticipationCostMethod = source.ParticipationCostMethod,
+                AccommodationCost = source.AccommodationCost,
+                AccommodationCostMethod = source.AccommodationCostMethod,
+                FareCost = source.FareCost,
+                FareCostMethod = source.FareCostMethod,
                 Profit = source.Profit,
                 Notes = source.Notes,
                 Products = source.Products.Select(prod => CreateExhibitionProduct(exhibitionId, prod)).ToList()

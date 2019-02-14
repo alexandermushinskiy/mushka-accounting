@@ -9,14 +9,13 @@ export class Exhibition {
   city: string;
   participationCost: number;
   participationCostMethod: PaymentMethod;
+  accommodationCost: number;
+  accommodationCostMethod: PaymentMethod;
+  fareCost: number;
+  fareCostMethod: PaymentMethod;
   notes: string;
   profit: number;
   products: ExhibitionProduct[];
-
-  accommodationСost: number;
-  accommodationСostMethod: PaymentMethod;
-  fareCost: number;
-  fareCostMethod: PaymentMethod;
 
   constructor(data: any) {
     Object.assign(this, data);

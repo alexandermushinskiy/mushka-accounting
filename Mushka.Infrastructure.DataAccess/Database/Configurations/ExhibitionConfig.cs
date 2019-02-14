@@ -50,6 +50,24 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .IsRequired();
 
             builder
+                .Property(exh => exh.AccommodationCost)
+                .HasColumnName("AccommodationCost")
+                .HasColumnType("Money");
+
+            builder
+                .Property(exh => exh.AccommodationCostMethod)
+                .HasColumnName("AccommodationCostMethod");
+
+            builder
+                .Property(exh => exh.FareCost)
+                .HasColumnName("FareCost")
+                .HasColumnType("Money");
+
+            builder
+                .Property(exh => exh.FareCostMethod)
+                .HasColumnName("FareCostMethod");
+
+            builder
                 .Property(exh => exh.Profit)
                 .HasColumnName("Profit")
                 .HasColumnType("Money")

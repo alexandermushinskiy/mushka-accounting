@@ -246,6 +246,10 @@ export class ConverterService {
       city: source.city,
       participationCost: source.participationCost,
       participationCostMethod: source.participationCostMethod,
+      accommodationCost: source.accommodationCost,
+      accommodationCostMethod: source.accommodationCostMethod,
+      fareCost: source.fareCost,
+      fareCostMethod: source.fareCostMethod,
       notes: source.notes,
       profit: source.profit,
       products: this.convertToExhibitionProducts(source.products)
