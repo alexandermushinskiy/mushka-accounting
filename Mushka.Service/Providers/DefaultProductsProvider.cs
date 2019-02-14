@@ -9,8 +9,9 @@ using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Entities;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Service.Extensibility.Providers;
+using Mushka.Service.Services;
 
-namespace Mushka.Service.Services
+namespace Mushka.Service.Providers
 {
     internal class DefaultProductsProvider : ServiceBase, IDefaultProductsProvider
     {
