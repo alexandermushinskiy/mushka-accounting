@@ -10,6 +10,7 @@ import { SelectProduct } from '../../shared/models/select-product.model';
 import { ProductsServce } from '../../core/api/products.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { UnsubscriberComponent } from '../../shared/hooks/unsubscriber.component';
+import { DatetimeService } from '../../core/datetime/datetime.service';
 
 @Component({
   selector: 'mk-exhibition',
@@ -34,6 +35,7 @@ export class ExhibitionComponent extends UnsubscriberComponent implements OnInit
               private router: Router,
               private productsService: ProductsServce,
               private exhibitionsService: ExhibitionsService,
+              private datetimeService: DatetimeService,
               private notificationsService: NotificationsService) {
     super();
   }
@@ -80,7 +82,7 @@ export class ExhibitionComponent extends UnsubscriberComponent implements OnInit
   onQuantityChanged(index: number, quantity: any) {
     this.quantityTerms$.next({index, quantity});
   }
-  
+
   saveExhibition() {
     // const t1 = this.createExhibitionModel(this.exhibitionForm.getRawValue());
     // console.info(t1);
@@ -195,7 +197,7 @@ export class ExhibitionComponent extends UnsubscriberComponent implements OnInit
       costPrice: [{ value: exhibitionProduct.costPrice, disabled: true }]
     });
   }
-  
+
   private addFieldChangeListeners() {
     (this.exhibitionForm.get('products') as FormArray).valueChanges.subscribe((items: any[]) => {
       this.calculateProfit();
@@ -204,15 +206,31 @@ export class ExhibitionComponent extends UnsubscriberComponent implements OnInit
     this.exhibitionForm.controls['participationCost'].valueChanges.subscribe((value: number) => {
       this.calculateProfit();
     });
-    
+
     this.exhibitionForm.controls['accommodationCost'].valueChanges.subscribe((value: number) => {
       this.calculateProfit();
       this.updateControlValidator('accommodationCostMethod', !!value);
     });
-    
+
     this.exhibitionForm.controls['fareCost'].valueChanges.subscribe((value: number) => {
       this.calculateProfit();
       this.updateControlValidator('fareCostMethod', !!value);
+    });
+
+    this.exhibitionForm.controls['fromDate'].valueChanges.subscribe((fromDate: string) => {
+      const toDateCtrl = this.exhibitionForm.controls['toDate'];
+
+      if (!!toDateCtrl.value && !this.datetimeService.isDateRangeCorrect(fromDate, toDateCtrl.value)) {
+        toDateCtrl.setValue(fromDate, { onlySelf: true });
+      }
+    });
+
+    this.exhibitionForm.controls['toDate'].valueChanges.subscribe((toDate: string) => {
+      const fromDateCtrl = this.exhibitionForm.controls['fromDate'];
+
+      if (!!fromDateCtrl.value && !this.datetimeService.isDateRangeCorrect(fromDateCtrl.value, toDate)) {
+        fromDateCtrl.setValue(toDate, { onlySelf: true });
+      }
     });
   }
 
@@ -281,5 +299,4 @@ export class ExhibitionComponent extends UnsubscriberComponent implements OnInit
       productCtrl.controls.unitPrice.setValue(recommendedPrice);
     }
   }
-  
 }

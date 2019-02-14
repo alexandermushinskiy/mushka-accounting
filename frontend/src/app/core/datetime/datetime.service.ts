@@ -28,7 +28,11 @@ export class DatetimeService {
       return null;
     }
 
-    const date = new Date(ngbDate.year, ngbDate.month-1, ngbDate.day);
+    const date = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day);
     return this.toString(date);
+  }
+
+  isDateRangeCorrect(fromDate: string, toDate: string): boolean {
+    return moment(fromDate) <= moment(toDate);
   }
 }

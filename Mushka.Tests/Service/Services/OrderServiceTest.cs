@@ -120,14 +120,14 @@ namespace Mushka.Tests.Service.Services
 
         [Category(CategoryName)]
         [Fact(DisplayName = GetByIdAsyncMethodName)]
-        public async Task GetByIdAsyncCategoryNotFoundTest()
+        public async Task GetByIdAsyncOrderNotFoundTest()
         {
             orderRepositoryMock
                 .SetupAsync(repo => repo.GetByIdAsync(OrderId, default(CancellationToken)), null);
 
             var actual = await orderService.GetByIdAsync(OrderId);
 
-            var expected = CreateWarningValidationResponse<Category>(OrderNotFoundMessage, ValidationStatusType.NotFound);
+            var expected = CreateWarningValidationResponse<Order>(OrderNotFoundMessage, ValidationStatusType.NotFound);
             actual.Should().BeEquivalentTo(expected);
         }
 

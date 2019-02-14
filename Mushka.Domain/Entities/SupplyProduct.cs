@@ -1,8 +1,9 @@
 ﻿using System;
+using Mushka.Domain.Extensibility.Entities;
 
 namespace Mushka.Domain.Entities
 {
-    public class SupplyProduct
+    public class SupplyProduct : IEntityProduct
     {
         public Guid SupplyId { get; set; }
         public Supply Supply { get; set; }

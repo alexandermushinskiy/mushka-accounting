@@ -1,8 +1,9 @@
 ﻿using System;
+using Mushka.Domain.Extensibility.Entities;
 
 namespace Mushka.Domain.Entities
 {
-    public class ExhibitionProduct
+    public class ExhibitionProduct : IEntityProduct
     {
         public Guid ExhibitionId { get; set; }
         public Exhibition Exhibition { get; set; }
