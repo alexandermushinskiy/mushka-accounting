@@ -74,9 +74,9 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
     this.ordersSearchKey = searchKey;
 
     const orderFilter = new OrderListFilter(searchKey);
-    const filteredSupplies = this.orders.filter(order => orderFilter.filter(order));
+    const filteredOrders = this.orders.filter(order => orderFilter.filter(order));
 
-    this.updateDatatableRows(filteredSupplies);
+    this.updateDatatableRows(filteredOrders);
   }
 
   quickFilter(filter: QuickFilter) {

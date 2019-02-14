@@ -1,12 +1,14 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { LocalStorage } from 'ngx-webstorage';
 
 import { ExhibitionTableRow } from '../shared/models/exhibition-table-row.model';
 import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatable.component';
 import { ExhibitionsService } from '../../core/api/exhibitions.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { ExhibitionList } from '../shared/models/exhibition-list.model';
+import { ExhibitionListFilter } from '../../shared/filters/exhibition-list.filter';
 
 @Component({
   selector: 'mk-exhibitions-list',
@@ -15,6 +17,8 @@ import { ExhibitionList } from '../shared/models/exhibition-list.model';
 })
 export class ExhibitionsListComponent extends SortableDatatableComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
+  @LocalStorage('exhibitions_search_key', '') exhibitionsSearchKey: string;
+  
   exhibitions: ExhibitionList[];
   exhibitionRows: ExhibitionTableRow[];
   loadingIndicator = false;
@@ -49,6 +53,15 @@ export class ExhibitionsListComponent extends SortableDatatableComponent impleme
     if (event.type === 'click') {
       event.cellElement.blur();
     }
+  }
+
+  filter(searchKey: string) {
+    this.exhibitionsSearchKey = searchKey;
+
+    const exhibitionFilter = new ExhibitionListFilter(searchKey);
+    const filteredExhibitions = this.exhibitions.filter(exhibition => exhibitionFilter.filter(exhibition));
+
+    this.updateDatatableRows(filteredExhibitions);
   }
 
   addExhibition() {
