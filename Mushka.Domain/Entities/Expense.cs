@@ -17,4 +17,12 @@ namespace Mushka.Domain.Entities
 
         public string Notes { get; set; }
     }
+
+    public enum ExpenseCategory
+    {
+        Advertising = 1,
+        Equipment = 2,
+        Photography = 3,
+        DesignCreation = 4
+    }
 }
