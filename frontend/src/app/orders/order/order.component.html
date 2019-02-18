@@ -51,7 +51,16 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-6">
+                    <div [ngClass]="orderForm.controls.country.value === 'Украина' ? 'col-md-4' : 'col-md-6'">
+                      <div class="field-group">
+                        <label for="address">Страна</label>
+                        <mk-dropdown formControlName="country"
+                                      [options]="countries"
+                                      [ngClass]="{'not-valid': orderForm.controls.country.invalid && isFormSubmitted}">
+                        </mk-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-md-4" *ngIf="orderForm.controls.country.value === 'Украина'">
                       <div class="field-group">
                         <label for="address">Область</label>
                         <mk-dropdown formControlName="region"
@@ -60,7 +69,7 @@
                         </mk-dropdown>
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div [ngClass]="orderForm.controls.country.value === 'Украина' ? 'col-md-4' : 'col-md-6'">
                       <div class="field-group">
                         <label for="address">Населённый пункт</label>
                         <input type="text" class="form-control" formControlName="city"

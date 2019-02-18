@@ -13,6 +13,7 @@ import { DatetimeService } from '../../core/datetime/datetime.service';
 import { UnsubscriberComponent } from '../../shared/hooks/unsubscriber.component';
 import { SelectProduct } from '../../shared/models/select-product.model';
 import { uniqueOrderNumber } from '../../shared/validators/order-number.validator';
+import { countries } from '../shared/constants/countries.const';
 
 @Component({
   selector: 'mk-order',
@@ -28,6 +29,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   title: string;
   productsList: SelectProduct[];
   regions = ukrRegions;
+  countries = countries;
   isFormSubmitted = false;
   profit: number;
   discount: number;
@@ -161,6 +163,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
           .subscribe((products: OrderProduct[]) => {
             this.buildForm(new Order({
               cost: 0,
+              country: 'Украина',
               orderDate: this.datetimeService.getCurrentDateInString(),
               products: products
             }));
@@ -180,6 +183,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
       costMethod: [order.costMethod, Validators.required],
       isWholesale: [order.isWholesale],
       notes: [order.notes],
+      country: [order.country, Validators.required],
       region: [order.region, Validators.required],
       city: [order.city, Validators.required],
       firstName: [order.firstName, Validators.required],

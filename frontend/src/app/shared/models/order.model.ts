@@ -9,6 +9,7 @@ export class Order {
   costMethod: PaymentMethod;
   discount: number;
   profit: number;
+  country: string;
   region: string;
   city: string;
   firstName: string;
