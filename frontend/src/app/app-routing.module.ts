@@ -11,10 +11,11 @@ import { SuppliesListComponent } from './supplies/supplies-list/supplies-list.co
 import { SupplyComponent } from './supplies/supply/supply.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { OrderComponent } from './orders/order/order.component';
-import { CostsListComponent } from './costs/costs-list/costs-list.component';
+import { ExpensesListComponent } from './expenses/expenses-list/expenses-list.component';
 import { GiftsListComponent } from './gifts/gifts-list/gifts-list.component';
 import { ExhibitionsListComponent } from './exhibitions/exhibitions-list/exhibitions-list.component';
 import { ExhibitionComponent } from './exhibitions/exhibition/exhibition.component';
+import { ExpenseComponent } from './expenses/expense/expense.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -37,7 +38,11 @@ const routes: Routes = [
     { path: 'new', component: SupplyComponent, pathMatch: 'full' },
     { path: ':id', component: SupplyComponent, pathMatch: 'full' }
   ]},
-  { path: 'costs', component: CostsListComponent, pathMatch: 'full' },
+  { path: 'expenses', children: [
+    { path: '', component: ExpensesListComponent, pathMatch: 'full' },
+    { path: 'new', component: ExpenseComponent, pathMatch: 'full' },
+    { path: ':id', component: ExpenseComponent, pathMatch: 'full' }
+  ] },
   { path: 'gifts', component: GiftsListComponent, pathMatch: 'full' },
   { path: 'exhibitions', children: [
     { path: '', component: ExhibitionsListComponent, pathMatch: 'full' },

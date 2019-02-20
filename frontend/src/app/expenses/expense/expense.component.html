@@ -1,0 +1,17 @@
+<mk-progress-linear [isLoading]="!expenseForm"></mk-progress-linear>
+
+<div class="page-container">
+  <form *ngIf="expenseForm" [formGroup]="expenseForm" (ngSubmit)="saveExpense()">
+
+    <div class="row">
+      <div class="app-page-description">
+        <mk-back-arrow></mk-back-arrow>
+        <h1 class="app-page-title">{{ title }}</h1>
+      </div>
+    </div>
+
+    <div class="content-body">
+
+    </div>
+  </form>
+</div>

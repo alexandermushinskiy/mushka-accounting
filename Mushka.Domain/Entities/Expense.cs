@@ -9,6 +9,8 @@ namespace Mushka.Domain.Entities
 
         public DateTime CreatedOn { get; set; }
 
+        public ExpenseCategory Category { get; set; }
+
         public decimal Cost { get; set; }
 
         public PaymentMethod CostMethod { get; set; }
@@ -23,6 +25,8 @@ namespace Mushka.Domain.Entities
         Advertising = 1,
         Equipment = 2,
         Photography = 3,
-        DesignCreation = 4
+        Design = 4,
+        WebSite = 5,
+        Polygraphy = 6
     }
 }

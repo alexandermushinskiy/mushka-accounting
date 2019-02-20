@@ -18,6 +18,7 @@ import { SelectProduct } from '../../shared/models/select-product.model';
 import { Exhibition } from '../../shared/models/exhibition.model';
 import { ExhibitionProduct } from '../../shared/models/exhibition-product.model';
 import { ExhibitionList } from '../../exhibitions/shared/models/exhibition-list.model';
+import { Expense } from '../../shared/models/expense.model';
 
 @Injectable()
 export class ConverterService {
@@ -284,6 +285,17 @@ export class ConverterService {
       participationCost: source.participationCost,
       profit: source.profit,
       productsCount: source.productsCount
+    });
+  }
+
+  convertToExpenses(response: any[]): Expense[] {
+    return response.map(res => this.convertToExpense(res));
+  }
+
+  convertToExpense(source: any): Expense {
+    return new Expense({
+      id: source.id,
+      createdOn: source.createdOn
     });
   }
 
