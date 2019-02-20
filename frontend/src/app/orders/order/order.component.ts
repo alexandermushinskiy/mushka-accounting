@@ -33,6 +33,12 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   discount: number;
   isOrderNumberValid = true;
   isNumberValidating = false;
+  setsList = [
+    { id: '111', name: 'Legendary' },
+    { id: '222', name: 'Strip' },
+    { id: '333', name: 'White' },
+    { id: '444', name: 'Carry' }
+  ];
 
   private quantityTerms$ = new Subject<{index: number, quantity: number}>();
 
@@ -112,6 +118,10 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
 
     this.calculateTotalCost();
     this.calculateProfit();
+  }
+
+  onSetSelect(set: { id: string, name: string }) {
+    console.info(set);
   }
 
   saveOrder() {
