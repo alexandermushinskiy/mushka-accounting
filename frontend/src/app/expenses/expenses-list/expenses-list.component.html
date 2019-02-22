@@ -4,7 +4,6 @@
                   [title]="'Расходы'"
                   [total]="total"
                   [shown]="shown"
-                  (onImport) ="import()"
                   (onAddItem)="addExpense()">
     </mk-datatable-header>
   </div>
@@ -19,14 +18,14 @@
                    [sorts]="sorts"
                    [messages]="{ emptyMessage: 'Нет данных для отображения' }"
                    (activate)="onActive($event)"
-                   (sort)="onTableSort(supplierRows, $event)">
+                   (sort)="onTableSort(expenseRows, $event)">
 
       <ngx-datatable-column name="createdOn" [sortable]="true">
         <ng-template ngx-datatable-header-template let-sort="sortFn">
           <span (click)="sort($event)">Дата</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
-          <span [title]="value">{{ value | formattedDate}}</span>
+          <span [title]="value">{{ value | formattedDate }}</span>
         </ng-template>
       </ngx-datatable-column>
               
@@ -70,7 +69,7 @@
         <ng-template ngx-datatable-cell-template let-expanded="expanded" let-row="row" let-rowIndex="rowIndex">
           <span class="grid-buttons">
             <a [routerLink]="[row.id]"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-            <a [routerLink]="" (click)="delete(row.id)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+            <a [routerLink]="" (click)="delete(row)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
           </span>
         </ng-template>
       </ngx-datatable-column>
@@ -82,7 +81,7 @@
 <ng-template #confirmRemoveTmpl>
   <mk-confirmation
             [confirmButtonText]="'Удалить'"
-            [text]="'Вы уверены, что хотите удалить выбранные расходы?'"
+            [text]="'Вы уверены, что хотите удалить расходы за ' + (expenseToDelete.createdOn | formattedDate) + '?'"
             (onClose)="closeModal()"
             (onConfirm)="confirmDelete();">
   </mk-confirmation>

@@ -10,9 +10,9 @@
   </button>
   <div ngbDropdownMenu aria-labelledby="dropdown" class="dropdown-max-height">
     <button type="button" class="dropdown-item" *ngFor="let supplier of suppliers" (click)="onOptionSelected(supplier)">
-      {{ supplier.name }}
+      <span class="supplier-name">{{ supplier.name }}</span>
       <br/>
-      <small class="text-muted">{{ supplier.address }}</small>
+      <span class="text-muted">{{ supplier.address }}</span>
     </button>
   </div>
 </div>

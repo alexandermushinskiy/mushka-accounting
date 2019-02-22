@@ -23,8 +23,8 @@ export class ExpensesListComponent extends SortableDatatableComponent implements
   expenseRows: ExpenseTableRow[];
   total = 0;
   shown = 0;
+  expenseToDelete: ExpenseTableRow;
 
-  private expenseToDelete: string;
   private modalRef: NgbModalRef;
   private readonly modalConfig: NgbModalOptions = {
     windowClass: 'expense-modal',
@@ -60,9 +60,9 @@ export class ExpensesListComponent extends SortableDatatableComponent implements
     this.router.navigate(['expenses/new']);
   }
 
-  delete(expenseId: string) {
+  delete(expense: ExpenseTableRow) {
     setTimeout(() => {
-      this.expenseToDelete = expenseId;
+      this.expenseToDelete = expense;
       this.modalRef = this.modalService.open(this.confirmRemoveTmpl, this.modalConfig);
     });
   }
@@ -71,7 +71,7 @@ export class ExpensesListComponent extends SortableDatatableComponent implements
     this.loadingIndicator = true;
     this.closeModal();
 
-    this.expensesService.delete(this.expenseToDelete)
+    this.expensesService.delete(this.expenseToDelete.id)
       .subscribe(
         () => this.onDeleteSuccess(),
         (error: string) => this.onDeleteFailed(error)
