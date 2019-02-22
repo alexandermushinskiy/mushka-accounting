@@ -21,3 +21,10 @@
 .supplier-name {
   font-size: 14px;
 }
+
+.selected {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

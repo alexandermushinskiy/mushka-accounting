@@ -5,7 +5,9 @@
           [disabled]="isDisabled"
           [ngClass]="(!selectedSupplier && isRequired) ? 'required-dropdown' : ''"
           ngbDropdownToggle>
-    <span [ngClass]="{'placeholder': !selectedSupplier}">{{ selectedSupplier ? selectedSupplier.name : placeholder }}</span>
+    <span class="selected" [ngClass]="{'placeholder': !selectedSupplier}">
+      {{ selectedSupplier ? selectedSupplier.name : placeholder }}
+    </span>
     <i class="ico-chevron-down"></i>
   </button>
   <div ngbDropdownMenu aria-labelledby="dropdown" class="dropdown-max-height">
