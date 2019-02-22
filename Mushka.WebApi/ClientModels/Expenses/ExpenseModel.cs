@@ -1,9 +1,9 @@
 ﻿using System;
-using Mushka.Domain.Extensibility.Entities;
+using Mushka.Domain.Entities;
 
-namespace Mushka.Domain.Entities
+namespace Mushka.WebApi.ClientModels.Expenses
 {
-    public class Expense : IEntity
+    public class ExpenseModel
     {
         public Guid Id { get; set; }
 
@@ -17,8 +17,8 @@ namespace Mushka.Domain.Entities
 
         public PaymentMethod CostMethod { get; set; }
 
-        public string SupplierName { get; set; }
-
         public string Notes { get; set; }
+
+        public string SupplierName { get; set; }
     }
 }

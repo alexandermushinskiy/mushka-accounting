@@ -27,6 +27,8 @@ namespace Mushka.Infrastructure.DataAccess.Database
 
         public DbSet<Exhibition> Exhibitions { get; set; }
 
+        public DbSet<Expense> Expenses { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new SizeConfig());
@@ -42,26 +44,7 @@ namespace Mushka.Infrastructure.DataAccess.Database
             modelBuilder.ApplyConfiguration(new CustomerConfig());
             modelBuilder.ApplyConfiguration(new ExhibitionConfig());
             modelBuilder.ApplyConfiguration(new ExhibitionProductConfig());
+            modelBuilder.ApplyConfiguration(new ExpenseConfig());
         }
-
-        //private static void SeedData(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Category>().HasData(
-        //        new { Id = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C"), Name = "Носки" },
-        //        new { Id = Guid.Parse("0E7BE1DE-267C-4C0A-8EE9-ABA0A267F27A"), Name = "Упаковка" },
-        //        new { Id = Guid.Parse("B425D75B-2E72-45F0-A55D-3BA400051E5F"), Name = "Другое" }
-        //    );
-
-        //    modelBuilder.Entity<Size>().HasData(
-        //        new { Id = Guid.Parse("ECCEF8A9-2C41-4270-9001-D0EB7E21B9E2"), Name = "36-39" },
-        //        new { Id = Guid.Parse("2DFA21EF-5EED-462F-B5E5-06EE31281BA2"), Name = "41-45" },
-        //        new { Id = Guid.Parse("FB8356A5-1629-4F9F-9B51-3D40E0E55F84"), Name = "39-42" },
-        //        new { Id = Guid.Parse("6E519491-8FD8-45F2-992E-270B01F25971"), Name = "43-46" }
-        //    );
-
-        //    //modelBuilder.HasProducts();
-        //    //modelBuilder.HasDeliveries();
-        //    //modelBuilder.HasSuppliers();
-        //}
     }
 }

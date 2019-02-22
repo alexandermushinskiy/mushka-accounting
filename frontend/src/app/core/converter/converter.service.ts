@@ -295,7 +295,13 @@ export class ConverterService {
   convertToExpense(source: any): Expense {
     return new Expense({
       id: source.id,
-      createdOn: source.createdOn
+      createdOn: source.createdOn,
+      cost: source.cost,
+      costMethod: source.costMethod,
+      category: source.category,
+      purpose: source.purpose,
+      supplierName: source.supplierName,
+      notes: source.notes
     });
   }
 

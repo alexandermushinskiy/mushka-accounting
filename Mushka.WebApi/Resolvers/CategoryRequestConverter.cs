@@ -5,11 +5,11 @@ using Mushka.WebApi.ClientModels.Category;
 
 namespace Mushka.WebApi.Resolvers
 {
-    public class CategoryRequestResolver : ITypeConverter<CategoryRequestModel, Category>
+    public class CategoryRequestConverter : ITypeConverter<CategoryRequestModel, Category>
     {
         private readonly IGuidProvider guidProvider;
 
-        public CategoryRequestResolver(IGuidProvider guidProvider)
+        public CategoryRequestConverter(IGuidProvider guidProvider)
         {
             this.guidProvider = guidProvider;
         }

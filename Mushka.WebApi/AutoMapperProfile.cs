@@ -8,6 +8,7 @@ using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Category;
 using Mushka.WebApi.ClientModels.Exhibition;
+using Mushka.WebApi.ClientModels.Expenses;
 using Mushka.WebApi.ClientModels.Order;
 using Mushka.WebApi.ClientModels.Product;
 using Mushka.WebApi.ClientModels.Supplier;
@@ -70,7 +71,7 @@ namespace Mushka.WebApi
 
             // Category
             CreateMap<Category, CategoryModel>().ConvertUsing<CategoryConverter>();
-            CreateMap<CategoryRequestModel, Category>().ConvertUsing<CategoryRequestResolver>();
+            CreateMap<CategoryRequestModel, Category>().ConvertUsing<CategoryRequestConverter>();
 
             CreateMap<ValidationResponse<Category>, CategoryResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<CategoryResponseResolver>())
@@ -161,6 +162,21 @@ namespace Mushka.WebApi
 
             CreateMap<ValidationResponse<IEnumerable<ExhibitionProduct>>, ExhibitionProductsResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ExhibitionProductResponseResolver>())
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+            //-------------------------
+
+            // Expenses
+            CreateMap<ExpenseRequestModel, Expense>().ConvertUsing<ExpenseRequestConverter>();
+            CreateMap<Expense, ExpenseModel>().ConvertUsing<ExpenseConverter>();
+            
+            CreateMap<ValidationResponse<Expense>, ExpenseResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ExpenseResponseResolver>())
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+
+            CreateMap<ValidationResponse<IEnumerable<Expense>>, ExpensesResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ExpenseResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
             //-------------------------

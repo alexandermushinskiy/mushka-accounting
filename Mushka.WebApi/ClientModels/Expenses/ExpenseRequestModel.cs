@@ -1,22 +1,28 @@
 ﻿using System;
-using Mushka.Domain.Extensibility.Entities;
+using System.ComponentModel.DataAnnotations;
+using Mushka.Domain.Entities;
+using Mushka.WebApi.Filters;
 
-namespace Mushka.Domain.Entities
+namespace Mushka.WebApi.ClientModels.Expenses
 {
-    public class Expense : IEntity
+    public class ExpenseRequestModel
     {
-        public Guid Id { get; set; }
-
+        [RequireNonDefault]
         public DateTime CreatedOn { get; set; }
 
+        [RequireNonDefault]
         public ExpenseCategory Category { get; set; }
 
+        [Required]
         public string Purpose { get; set; }
 
+        [RequireNonDefault]
         public decimal Cost { get; set; }
 
+        [RequireNonDefault]
         public PaymentMethod CostMethod { get; set; }
 
+        [Required]
         public string SupplierName { get; set; }
 
         public string Notes { get; set; }
