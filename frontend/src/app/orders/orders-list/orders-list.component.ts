@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import * as FileSaver from 'file-saver';
 
 import { OrderTableRow } from '../shared/models/order-table-row.model';
 import { OrdersService } from '../../core/api/orders.service';
@@ -12,6 +13,7 @@ import { LocalStorage } from 'ngx-webstorage';
 import { QuickFilter } from '../../shared/filters/quick-filter';
 import { OrderQuickFilter } from '../../shared/filters/order-quick-filter';
 import { DateRange } from '../../shared/models/data-range.mode';
+import { DatetimeService } from '../../core/datetime/datetime.service';
 
 @Component({
   selector: 'mk-orders',
@@ -46,6 +48,7 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
 
   constructor(private router: Router,
               private modalService: NgbModal,
+              private dateTimeService: DatetimeService,
               private ordersService: OrdersService,
               private orderQuickFilter: OrderQuickFilter,
               private notificationsService: NotificationsService) {
@@ -95,8 +98,26 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
     this.closeModal();
   }
 
-  resetQuickFilter() {
+  resetFilters() {
     this.updateDatatableRows(this.orders);
+  }
+  
+  onExportAllToCSV(fileSuffix: string) {
+    this.loadingIndicator = true;
+    this.ordersService.export(this.orders.map(ord => ord.id))
+      .subscribe(
+        (file: Blob) => this.onExportSuccess(file),
+        (error: string) => this.onExportFailed(error)
+      );
+  }
+
+  onExportFilteredToCSV(fileSuffix: string) {
+    this.loadingIndicator = true;
+    this.ordersService.export(this.orderRows.map(ord => ord.id))
+      .subscribe(
+        (file: Blob) => this.onExportSuccess(file),
+        (error: string) => this.onExportFailed(error)
+      );
   }
 
   addOrder() {
@@ -171,4 +192,20 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
     this.orderRows = orders.map((el, index) => new OrderTableRow(el, index));
     this.shown = orders.length;
   }
+  
+  private onExportSuccess(file: Blob) {
+    FileSaver.saveAs(file, this.generateFileName(), file.type);
+    this.loadingIndicator = false;
+  }
+
+  private onExportFailed(error: string) {
+    // this.errors = [ error ];
+    this.loadingIndicator = false;
+  }
+
+  private generateFileName(): string {
+    const postfix = this.dateTimeService.toString(new Date(), 'YYYY-MM-DD-HH-mm');
+    return `mushka_export_orders-${postfix}.xlsx`;
+  }
+
 }

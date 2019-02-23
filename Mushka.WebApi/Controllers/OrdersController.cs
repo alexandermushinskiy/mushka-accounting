@@ -99,5 +99,24 @@ namespace Mushka.WebApi.Controllers
 
             return actionResultProvider.Get(clientResponse);
         }
+
+        [HttpPost("export")]
+        public async Task<IActionResult> Export([FromBody] ExportRequestModel exportRequestModel)
+        {
+            var exportValidationResponse = await orderService.ExportAsync(
+                exportRequestModel.Title,
+                exportRequestModel.OrderIds,
+                cancellationTokenSourceProvider.Get().Token);
+
+            if (exportValidationResponse.IsValid)
+            {
+                return File(
+                    exportValidationResponse.Result.FileContent,
+                    exportValidationResponse.Result.ContentType,
+                    exportValidationResponse.Result.Name);
+            }
+
+            return actionResultProvider.GetFailedResult(exportValidationResponse);
+        }
     }
 }

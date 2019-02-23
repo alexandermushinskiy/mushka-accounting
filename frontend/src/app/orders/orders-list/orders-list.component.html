@@ -9,7 +9,10 @@
                   (onAddItem)="addOrder()"
                   (onFilter)="filter($event)"
                   (onQuickFilter)="quickFilter($event)"
-                  (onQuickFilterReset)="resetQuickFilter()">
+                  (onQuickFilterReset)="resetFilters()"
+                  (onFilterReset)="resetFilters()"
+                  (onExportAllToCSV)="onExportAllToCSV($event)"
+                  (onExportFilteredToCSV)="onExportFilteredToCSV($event)">
     </mk-datatable-header>
   </div>
   <div class="list-page-body">

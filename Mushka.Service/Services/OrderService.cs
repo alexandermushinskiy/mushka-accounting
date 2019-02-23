@@ -8,23 +8,31 @@ using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Service.Extensibility.Dto;
+using Mushka.Service.Extensibility.ExternalApps;
 using Mushka.Service.Extensibility.Services;
 
 namespace Mushka.Service.Services
 {
     internal class OrderService : ServiceBase<Order>, IOrderService
     {
+        private const string ExportContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        private const string ExportFileName = "mushka_export_orders.xlsx";
+
         private readonly IStorage storage;
         private readonly IOrderRepository orderRepository;
         private readonly IProductRepository productRepository;
         private readonly ICustomerRepository customerRepository;
+        private readonly IExcelService excelService;
 
         public OrderService(
             IStorage storage,
+            IExcelService excelService,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             this.storage = storage;
+            this.excelService = excelService;
 
             orderRepository = storage.GetRepository<IOrderRepository>();
             productRepository = storage.GetRepository<IProductRepository>();
@@ -158,6 +166,16 @@ namespace Mushka.Service.Services
             var isValid = !await orderRepository.IsExistAsync(order => order.Number == orderNumber, cancellationToken);
 
             return CreateInfoValidationResponse(isValid, $"Order number {orderNumber} is {(isValid ? "" : "not ")}valid.");
+        }
+
+        public async Task<ValidationResponse<ExportedFile>> ExportAsync(string title, IEnumerable<Guid> orderIds, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var orders = (await orderRepository.GetForExportAsync(order => orderIds.Contains(order.Id), cancellationToken));
+
+            var fileContent = excelService.ExportOrders(title, orders);
+            var exportedFile = new ExportedFile(ExportFileName, ExportContentType, fileContent);
+
+            return CreateInfoValidationResponse(exportedFile, "The orders was exported successfully.");
         }
     }
 }

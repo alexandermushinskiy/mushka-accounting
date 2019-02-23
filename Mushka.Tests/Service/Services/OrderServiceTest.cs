@@ -11,6 +11,7 @@ using Mushka.Core.Extensibility.Logging;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Service.Extensibility.ExternalApps;
 using Mushka.Service.Services;
 using Mushka.Tests.Common;
 using Xunit;
@@ -47,6 +48,7 @@ namespace Mushka.Tests.Service.Services
         private readonly Mock<IOrderRepository> orderRepositoryMock;
         private readonly Mock<IProductRepository> productRepositoryMock;
         private readonly Mock<ICustomerRepository> customerRepositoryMock;
+        private readonly Mock<IExcelService> excelServiceMock;
         private readonly OrderService orderService;
 
         public OrderServiceTest()
@@ -54,6 +56,7 @@ namespace Mushka.Tests.Service.Services
             productRepositoryMock = MockRepository.Create<IProductRepository>();
             customerRepositoryMock = MockRepository.Create<ICustomerRepository>();
             orderRepositoryMock = MockRepository.Create<IOrderRepository>();
+            excelServiceMock = MockRepository.Create<IExcelService>();
 
             var loggerFactory = MockRepository
                 .Create<ILoggerFactory>()
@@ -68,6 +71,7 @@ namespace Mushka.Tests.Service.Services
 
             orderService = new OrderService(
                 storageMock.Object,
+                excelServiceMock.Object,
                 loggerFactory);
         }
 
