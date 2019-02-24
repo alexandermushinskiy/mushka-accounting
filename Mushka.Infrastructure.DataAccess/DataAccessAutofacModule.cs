@@ -17,6 +17,7 @@ namespace Mushka.Infrastructure.DataAccess
             builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
             builder.RegisterType<ExhibitionRepository>().As<IExhibitionRepository>();
             builder.RegisterType<ExpenseRepository>().As<IExpenseRepository>();
+            builder.RegisterType<AnalyticsRepository>().As<IAnalyticsRepository>();
 
             builder.RegisterType<Storage>().As<IStorage>();
         }

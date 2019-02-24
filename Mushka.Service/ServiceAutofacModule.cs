@@ -17,6 +17,7 @@ namespace Mushka.Service
             builder.RegisterType<SupplierService>().As<ISupplierService>();
             builder.RegisterType<ExhibitionService>().As<IExhibitionService>();
             builder.RegisterType<ExpenseService>().As<IExpenseService>();
+            builder.RegisterType<AnalyticsService>().As<IAnalyticsService>();
 
             builder.RegisterType<CostPriceProvider>().As<ICostPriceProvider>();
             builder.RegisterType<DefaultProductsProvider>().As<IDefaultProductsProvider>();

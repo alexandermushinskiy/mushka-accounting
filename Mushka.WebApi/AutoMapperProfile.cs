@@ -6,6 +6,7 @@ using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels;
+using Mushka.WebApi.ClientModels.Analytics;
 using Mushka.WebApi.ClientModels.Category;
 using Mushka.WebApi.ClientModels.Exhibition;
 using Mushka.WebApi.ClientModels.Expenses;
@@ -179,6 +180,14 @@ namespace Mushka.WebApi
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ExpenseResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+            //-------------------------
+
+            // Analytics
+            CreateMap<ValidationResponse<IEnumerable<PopularProduct>>, PopluarProductsResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+
             //-------------------------
         }
     }

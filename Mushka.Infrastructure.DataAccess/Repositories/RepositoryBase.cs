@@ -11,20 +11,26 @@ using Mushka.Infrastructure.DataAccess.Database;
 
 namespace Mushka.Infrastructure.DataAccess.Repositories
 {
-    public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
-        where TEntity : class, IEntity
+    public abstract class RepositoryBase : IRepositoryBase
     {
-        protected readonly DbSet<TEntity> dbSet;
+        protected MushkaDbContext Context { get; }
 
         protected RepositoryBase(MushkaDbContext context)
         {
             Context = context;
+        }
+    }
 
+    public abstract class RepositoryBase<TEntity> : RepositoryBase, IRepositoryBase<TEntity>
+        where TEntity : class, IEntity
+    {
+        protected readonly DbSet<TEntity> dbSet;
+        
+        protected RepositoryBase(MushkaDbContext context) : base(context)
+        {
             dbSet = context.Set<TEntity>();
         }
-
-        protected MushkaDbContext Context { get; }
-
+        
         public virtual async Task<IEnumerable<TEntity>> GetAsync(
             Expression<Func<TEntity, bool>> predicate,
             CancellationToken cancellationToken = default(CancellationToken)) =>
