@@ -3,13 +3,19 @@
           class="btn form-control"
           [disabled]="isDisabled"
           [ngClass]="(!value && required) ? 'required-dropdown' : ''" ngbDropdownToggle id="dropdown">
-    <span [ngClass]="{'placeholder': !value}">{{ value ? value : (defaultValue ? defaultValue : 'Выберите значение') }}</span>
+    
+    <span [ngClass]="{'placeholder': !value}">
+      {{ value ? (isComplex ? value[textField] : value) : (defaultValue ? defaultValue : 'Выберите значение') }}
+    </span>
     <i class="ico-chevron-down"></i>
   </button>
   <div ngbDropdownMenu aria-labelledby="dropdown" class="dropdown-max-height">
     <button type="button" class="dropdown-item" *ngIf="!value && defaultValue">{{ defaultValue }}</button>
+    
     <button type="button" class="dropdown-item" *ngFor="let option of options" (click)="onOptionSelect(option)">
-      {{ option }}
+      <span>
+        {{ isComplex ? option[textField] : option }}
+      </span>
     </button>
   </div>
 </div>

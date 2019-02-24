@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         public OrderRepository(MushkaDbContext context) : base(context)
         {
         }
-
+        
         public override async Task<IEnumerable<Order>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
             await Context.Orders
                 .AsNoTracking()
@@ -37,7 +38,17 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
             await Context.Set<OrderProduct>()
                 .Where(sp => sp.ProductId == productId)
                 .SumAsync(sp => sp.Quantity, cancellationToken);
-        
+
+        public async Task<IEnumerable<Order>> GetForExportAsync(Expression<Func<Order, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await Context.Orders
+                .Where(predicate)
+                .AsNoTracking()
+                .Include(order => order.Products)
+                    .ThenInclude(prod => prod.Product.Size)
+                .ToListAsync(cancellationToken);
+        }
+
         public override Order Update(Order order)
         {
             var storedOrder = dbSet

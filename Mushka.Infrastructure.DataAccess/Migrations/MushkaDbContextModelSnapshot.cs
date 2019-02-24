@@ -181,6 +181,44 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.ToTable("ExhibitionProducts");
                 });
 
+            modelBuilder.Entity("Mushka.Domain.Entities.Expense", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
+
+                    b.Property<int>("Category")
+                        .HasColumnName("Category");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnName("Cost")
+                        .HasColumnType("Money");
+
+                    b.Property<int>("CostMethod")
+                        .HasColumnName("CostMethod");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnName("CreatedOn")
+                        .HasColumnType("Date");
+
+                    b.Property<string>("Notes")
+                        .HasColumnName("Notes");
+
+                    b.Property<string>("Purpose")
+                        .IsRequired()
+                        .HasColumnName("Purpose")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("SupplierName")
+                        .IsRequired()
+                        .HasColumnName("SupplierName")
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Expenses");
+                });
+
             modelBuilder.Entity("Mushka.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")

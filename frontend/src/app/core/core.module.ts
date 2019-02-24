@@ -18,6 +18,7 @@ import { ConverterService } from './converter/converter.service';
 import { DatetimeService } from './datetime/datetime.service';
 import { OrdersService } from './api/orders.service';
 import { ExhibitionsService } from './api/exhibitions.service';
+import { ExpensesService } from './api/expenses.service';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { ExhibitionsService } from './api/exhibitions.service';
     ConverterService,
     DatetimeService,
     OrdersService,
-    ExhibitionsService
+    ExhibitionsService,
+    ExpensesService
   ],
   declarations: [],
   exports: []

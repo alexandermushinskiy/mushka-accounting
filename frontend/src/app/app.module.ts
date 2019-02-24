@@ -42,7 +42,7 @@ import { PartnersModule } from './partners/partners.module';
 import { LogisticsModule } from './logistics/logistics.module';
 import { SupplyModule } from './supplies/supply.module';
 import { GiftsModule } from './gifts/gifts.module';
-import { CostsModule } from './costs/costs.module';
+import { ExpensesModule } from './expenses/expenses.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ExhibitionsModule } from './exhibitions/exhibitions.module';
 
@@ -66,7 +66,7 @@ import { ExhibitionsModule } from './exhibitions/exhibitions.module';
     LogisticsModule,
     SupplyModule,
     GiftsModule,
-    CostsModule,
+    ExpensesModule,
     DashboardModule,
     ExhibitionsModule,
     NgxWebstorageModule.forRoot(),

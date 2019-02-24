@@ -12,14 +12,20 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   }]
 })
 export class DropdownComponent implements OnInit, ControlValueAccessor {
-  @Input() options: string[];
+  @Input() options: any[];
+  @Input() dataField: string;
+  @Input() textField: string;
   @Input() initialValue: string;
   @Input() required: boolean;
   @Input() isDisabled = false;
   @Input() defaultValue: string;
-  @Output() onSelectedValue = new EventEmitter<string>();
+  @Output() onSelectedValue = new EventEmitter<any>();
 
-  value: string;
+  value: any;
+
+  get isComplex(): boolean {
+    return !!this.dataField && !!this.textField;
+  }
 
   constructor() { }
 
@@ -30,7 +36,7 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(value: any): void {
-    this.value = value;
+    this.value = this.isComplex ? this.options.find(opt => opt.id === value) : value;
   }
 
   registerOnChange(fn: any) {
@@ -49,6 +55,13 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
 
     this.onChangeCallback(option);
     this.onSelectedValue.emit(option);
+  }
+
+  onObjectSelect(object: any) {
+    this.value = object;
+
+    this.onChangeCallback(object);
+    this.onSelectedValue.emit(object);
   }
 
   private onChangeCallback: any = () => {};

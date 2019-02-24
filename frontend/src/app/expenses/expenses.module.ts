@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
-import { CostsListComponent } from './costs-list/costs-list.component';
+import { ExpensesListComponent } from './expenses-list/expenses-list.component';
+import { ExpenseComponent } from './expense/expense.component';
 
 @NgModule({
   imports: [
@@ -10,8 +11,9 @@ import { CostsListComponent } from './costs-list/costs-list.component';
     ReactiveFormsModule
   ],
   declarations: [
-    CostsListComponent
+    ExpensesListComponent,
+    ExpenseComponent
   ],
   exports: []
 })
-export class CostsModule { }
+export class ExpensesModule { }

@@ -9,11 +9,15 @@ namespace Mushka.Domain.Entities
 
         public DateTime CreatedOn { get; set; }
 
+        public ExpenseCategory Category { get; set; }
+
+        public string Purpose { get; set; }
+
         public decimal Cost { get; set; }
 
         public PaymentMethod CostMethod { get; set; }
 
-        public string Reason { get; set; }
+        public string SupplierName { get; set; }
 
         public string Notes { get; set; }
     }

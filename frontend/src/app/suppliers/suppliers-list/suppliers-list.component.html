@@ -17,6 +17,7 @@
                   [rows]="supplierRows"
                   [columnMode]="'force'"
                   [sorts]="sorts"
+                  [messages]="{ emptyMessage: 'Нет данных для отображения' }"
                   (activate)="onActive($event)"
                   (sort)="onTableSort(supplierRows, $event)">
 

@@ -59,9 +59,9 @@ export const MenuItems: MenuItem[] = [
     isEnabled: true,
   }),
   new MenuItem({
-    title: MenuLabels.COSTS,
+    title: MenuLabels.EXPENSES,
     icon: 'fa-money',
-    routePath: '/costs',
+    routePath: '/expenses',
     isEnabled: true,
   }),
   new MenuItem({

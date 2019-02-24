@@ -1,21 +1,21 @@
 import * as moment from 'moment';
 
 import { QuickFilter } from './quick-filter';
-import { Order } from '../models/order.model';
 import { DateRange } from '../models/data-range.mode';
 import { OrderList } from '../../orders/shared/models/order-list.model';
+import { timeFrames } from '../constants/time-frame.const';
 
 export class OrderQuickFilter {
   getFilters(): QuickFilter[] {
     return [
-      new QuickFilter(this.filterToday, 'Сегодня'),
-      new QuickFilter(this.filterYesterday, 'Вчера'),
-      new QuickFilter(this.filterLastWeek, 'Прошлая неделя'),
-      new QuickFilter(this.filterCurrentWeek, 'Текущая неделя'),
-      new QuickFilter(this.filterLastMonth, 'Прошлый месяц'),
-      new QuickFilter(this.filterCurrentMonth, 'Текущий месяц'),
-      new QuickFilter(this.filterCurrentQuarter, 'Текущий квартал'),
-      new QuickFilter(this.filterCustomRange, 'Ввести диапазон')
+      new QuickFilter(this.filterToday, timeFrames.today),
+      new QuickFilter(this.filterYesterday, timeFrames.yesterday),
+      new QuickFilter(this.filterLastWeek, timeFrames.lastWeek),
+      new QuickFilter(this.filterCurrentWeek, timeFrames.currentWeek),
+      new QuickFilter(this.filterLastMonth, timeFrames.lastMonth),
+      new QuickFilter(this.filterCurrentMonth, timeFrames.currentMonth),
+      new QuickFilter(this.filterCurrentQuarter, timeFrames.currentQurter),
+      new QuickFilter(this.filterCustomRange, timeFrames.range)
     ];
   }
 

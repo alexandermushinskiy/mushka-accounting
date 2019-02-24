@@ -16,5 +16,15 @@ namespace Mushka.Infrastructure.DataAccess.Extensions
 
             return source;
         }
+
+        public static IQueryable<T> IncludeMultiple<T>(this IQueryable<T> source, params string[] includes) where T : class
+        {
+            if (includes != null)
+            {
+                source = includes.Aggregate(source, (current, include) => current.Include(include));
+            }
+
+            return source;
+        }
     }
 }

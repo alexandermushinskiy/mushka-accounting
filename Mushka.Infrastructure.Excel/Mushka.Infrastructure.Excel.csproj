@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="templates\export_orders_template.xlsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="templates\export_orders_template.xlsx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.1" />
     <PackageReference Include="EPPlus" Version="4.5.3" />
   </ItemGroup>
@@ -12,10 +20,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Mushka.Domain\Mushka.Domain.csproj" />
     <ProjectReference Include="..\Mushka.Service\Mushka.Service.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Templates\" />
   </ItemGroup>
 
 </Project>
