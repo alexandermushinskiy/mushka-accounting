@@ -17,6 +17,16 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         {
         }
 
+        public async Task<Balance> GetBalance(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var profit = await Context.Orders.SumAsync(order => order.Profit, cancellationToken);
+
+            var supplyExpenses = await Context.Supplies.SumAsync(supply => supply.TotalCost, cancellationToken);
+            var expenses = await Context.Expenses.SumAsync(expense => expense.Cost, cancellationToken);
+
+            return new Balance(supplyExpenses + expenses, profit);
+        }
+
         public async Task<IEnumerable<PopularProduct>> GetPopularProducts(int topCount, CancellationToken cancellationToken = default(CancellationToken))
         {
             var result = await Context.Set<OrderProduct>()
@@ -30,6 +40,18 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
 
             return result
                 .Select(res => new PopularProduct(res.Product.Name, res.Product.Size.Name, res.Product.VendorCode, res.Count));
+        }
+
+        public async Task<IEnumerable<PopularCity>> GetPopularCities(int topCount, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var result = await Context.Orders
+                .GroupBy(op => op.Customer.City)
+                .Select(res => new { City = res.Key, Count = res.Count() })
+                .OrderByDescending(res => res.Count)
+                .Take(topCount)
+                .ToListAsync(cancellationToken);
+
+            return result.Select(res => new PopularCity(res.City, res.Count));
         }
     }
 }

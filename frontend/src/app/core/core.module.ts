@@ -19,6 +19,7 @@ import { DatetimeService } from './datetime/datetime.service';
 import { OrdersService } from './api/orders.service';
 import { ExhibitionsService } from './api/exhibitions.service';
 import { ExpensesService } from './api/expenses.service';
+import { AnalyticsService } from './api/analytics.service';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { ExpensesService } from './api/expenses.service';
     DatetimeService,
     OrdersService,
     ExhibitionsService,
-    ExpensesService
+    ExpensesService,
+    AnalyticsService
   ],
   declarations: [],
   exports: []

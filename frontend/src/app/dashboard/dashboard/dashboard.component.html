@@ -3,83 +3,98 @@
     <div class="col-md-4 col-sm-6 col-xs-12">
       <div class="d-panel">
         <div class="d-title">
-          <h2>Что-то тут</h2>
+          <h2>Баланс вложений</h2>
         </div>
         <div class="d-content">
-          <div style="display: block">
-            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-              [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 col-sm-6 col-xs-12">
-      <div class="d-panel">
-        <div class="d-title">
-          <h2>Что-то тут</h2>
-        </div>
-        <div class="d-content">
-          <div style="display: block">
-            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-              [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 col-sm-6 col-xs-12">
-      <div class="d-panel">
-        <div class="d-title">
-          <h2>Что-то тут</h2>
-        </div>
-        <div class="d-content">
-          <div style="display: block">
-            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-              [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 col-sm-6 col-xs-12">
-      <div class="d-panel">
-        <div class="d-title">
-          <h2>Что-то тут</h2>
-        </div>
-        <div class="d-content">
-          <div style="display: block">
-            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-              [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 col-sm-6 col-xs-12">
-      <div class="d-panel">
-        <div class="d-title">
-          <h2>Что-то тут</h2>
-        </div>
-        <div class="d-content">
-          <div style="display: block">
-            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-              [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 col-sm-6 col-xs-12">
-      <div class="d-panel">
-        <div class="d-title">
-          <h2>Что-то тут</h2>
-        </div>
-        <div class="d-content">
-          <div style="display: block">
+          <div *ngIf="balanceData">
             <canvas baseChart
-                    [datasets]="lineChartData"
-                    [labels]="lineChartLabels"
-                    [options]="lineChartOptions"
-                    [colors]="lineChartColors"
-                    [legend]="lineChartLegend"
-                    [chartType]="lineChartType"></canvas>
+                    [data]="balanceData"
+                    [labels]="balanceLabels"
+                    [colors]="balanceColor"
+                    [options]="balanceOptions"
+                    [legend]="true"
+                    [chartType]="'pie'"></canvas>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="d-panel">
+        <div class="d-title">
+          <h2>Популярные модели</h2>
+        </div>
+        <div class="d-content">
+          <canvas baseChart
+                  [datasets]="popularProductsData"
+                  [labels]="popularProductsLabels"
+                  [options]="lineChartOptions"
+                  [colors]="popularProductsColor"
+                  [legend]="false"
+                  [chartType]="'horizontalBar'"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="d-panel">
+        <div class="d-title">
+          <h2>Заказы по городам</h2>
+        </div>
+        <div class="d-content">
+          <canvas baseChart
+                  [datasets]="popularCitiesData"
+                  [labels]="popularCitiesLabels"
+                  [options]="lineChartOptions"
+                  [colors]="popularCitiesColor"
+                  [legend]="false"
+                  [chartType]="'horizontalBar'"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="d-panel">
+        <div class="d-title">
+          <h2>Что-то тут</h2>
+        </div>
+        <div class="d-content">
+          <canvas baseChart
+                  [datasets]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [options]="lineChartOptions"
+                  [colors]="lineChartColors"
+                  [legend]="lineChartLegend"
+                  [chartType]="'line'"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="d-panel">
+        <div class="d-title">
+          <h2>Что-то тут</h2>
+        </div>
+        <div class="d-content">
+          <canvas baseChart
+                  [datasets]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [options]="lineChartOptions"
+                  [colors]="lineChartColors"
+                  [legend]="lineChartLegend"
+                  [chartType]="'line'"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="d-panel">
+        <div class="d-title">
+          <h2>Что-то тут</h2>
+        </div>
+        <div class="d-content">
+          <canvas baseChart
+                  [datasets]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [options]="lineChartOptions"
+                  [colors]="lineChartColors"
+                  [legend]="lineChartLegend"
+                  [chartType]="'line'"></canvas>
         </div>
       </div>
     </div>
