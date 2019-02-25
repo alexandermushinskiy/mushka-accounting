@@ -53,5 +53,18 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
 
             return result.Select(res => new PopularCity(res.City, res.Count));
         }
+
+        public async Task<IEnumerable<OrdersCount>> GetOrdersCount(DateTime limitDate, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var result = await Context.Orders
+                .Where(order => order.OrderDate > limitDate)
+                .GroupBy(order => new { order.OrderDate.Year, order.OrderDate.Month })
+                .Select(res => new { OrderDate = res.Key, Count = res.Count() })
+                .ToListAsync(cancellationToken);
+
+            return result
+                .Select(res => new OrdersCount(new DateTime(res.OrderDate.Year, res.OrderDate.Month, 1), res.Count))
+                .OrderBy(res => res.CreatedOn);
+        }
     }
 }

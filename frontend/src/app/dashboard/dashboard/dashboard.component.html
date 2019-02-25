@@ -52,21 +52,29 @@
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
       <div class="d-panel">
-        <div class="d-title">
-          <h2>Что-то тут</h2>
+        <div class="d-title orders">
+          <h2>Количество заказов</h2>
+          <div>
+            <mk-dropdown class="options"
+                         [options]="periods"
+                         [ngModel]="defaultPeriod"
+                         [dataField]="'period'"
+                         [textField]="'desc'"
+                         (onSelectedValue)="onPeriodSelected($event.period)"></mk-dropdown>
+          </div>
         </div>
         <div class="d-content">
           <canvas baseChart
-                  [datasets]="lineChartData"
-                  [labels]="lineChartLabels"
+                  [datasets]="ordersData"
+                  [labels]="ordersLabels"
                   [options]="lineChartOptions"
-                  [colors]="lineChartColors"
-                  [legend]="lineChartLegend"
+                  [colors]="ordersColor"
+                  [legend]="false"
                   [chartType]="'line'"></canvas>
         </div>
       </div>
     </div>
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <!-- <div class="col-md-4 col-sm-6 col-xs-12">
       <div class="d-panel">
         <div class="d-title">
           <h2>Что-то тут</h2>
@@ -97,6 +105,6 @@
                   [chartType]="'line'"></canvas>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

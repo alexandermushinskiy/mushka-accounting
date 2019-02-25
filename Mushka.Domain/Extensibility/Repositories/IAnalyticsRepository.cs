@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Mushka.Domain.Dto;
@@ -12,5 +13,7 @@ namespace Mushka.Domain.Extensibility.Repositories
         Task<IEnumerable<PopularProduct>> GetPopularProducts(int topCount, CancellationToken cancellationToken = default(CancellationToken));
 
         Task<IEnumerable<PopularCity>> GetPopularCities(int topCount, CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<IEnumerable<OrdersCount>> GetOrdersCount(DateTime limitDate, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

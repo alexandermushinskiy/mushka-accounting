@@ -35,4 +35,12 @@ export class DatetimeService {
   isDateRangeCorrect(fromDate: string, toDate: string): boolean {
     return moment(fromDate) <= moment(toDate);
   }
+
+  getMonthName(date: string): string {
+    return this.capitalized(moment(date).locale('ru').format('MMM \'YY'));
+  }
+
+  private capitalized(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 }

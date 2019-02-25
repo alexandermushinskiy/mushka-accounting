@@ -4,6 +4,8 @@ import { AnalyticsService } from '../../core/api/analytics.service';
 import { PopularProduct } from '../shared/models/popular-product.model';
 import { PopularCity } from '../shared/models/popular-city.model';
 import { Balance } from '../shared/models/balance.model';
+import { OrdersCount } from '../shared/models/orders-count.model';
+import { DatetimeService } from '../../core/datetime/datetime.service';
 
 @Component({
   selector: 'mk-dashboard',
@@ -11,6 +13,12 @@ import { Balance } from '../shared/models/balance.model';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+
+  defaultPeriod = 3;//{ period: 3, desc: '3 месяца' };
+  periods = [
+    { period: 3, desc: '3 месяца' },
+    { period: 6, desc: '6 месяцев' },
+    { period: 12, desc: '12 месяцев' }];
 
   balanceData: Array<any> = [0, 0];
   balanceLabels: Array<string> = ['Потратили', 'Получили'];
@@ -31,10 +39,21 @@ export class DashboardComponent implements OnInit {
     backgroundColor: 'rgb(134,199,243)'
   }];
  
-  popularCitiesData: Array<any> = [{ data: [], label: ''}];
+  popularCitiesData: Array<any> = [{ data: [], label: '' }];
   popularCitiesLabels: Array<any> = [];
   popularCitiesColor: Array<any> = [{
     backgroundColor: 'rgb(255,127,14)'
+  }];
+
+  ordersData: Array<any> = [{ data: [], label: '' }];
+  ordersLabels: Array<string> = [];
+  ordersColor: Array<any> = [{
+    backgroundColor: 'rgba(255,127,14,0.2)',
+    borderColor: 'rgba(255,127,14,1)',
+    pointBackgroundColor: 'rgba(255,127,14,1)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgba(255,127,14,0.8)'
   }];
 
   public lineChartData:Array<any> = [
@@ -66,12 +85,18 @@ export class DashboardComponent implements OnInit {
   public lineChartLegend: boolean = true;
   public lineChartType: string = 'line';
 
-  constructor(private analyticsService: AnalyticsService) { }
+  constructor(private analyticsService: AnalyticsService,
+              private datetimeService: DatetimeService) { }
 
   ngOnInit() {
     this.loadBalance();
     this.loadPopularProducts();
     this.loadPopularCities();
+    this.loadOrdersCount(this.defaultPeriod);
+  }
+
+  onPeriodSelected(period: number) {
+    this.loadOrdersCount(period);
   }
 
   private loadBalance() {
@@ -94,6 +119,14 @@ export class DashboardComponent implements OnInit {
       .subscribe((res: PopularCity[]) => {
         this.popularCitiesLabels = res.map(pc => pc.city);
         this.popularCitiesData[0].data = res.map(pc => pc.quantity);
+      });
+  }
+
+  private loadOrdersCount(period: number) {
+    this.analyticsService.getOrdersCount(period)
+      .subscribe((res: OrdersCount[]) => {
+        this.ordersLabels = res.map(pc => this.datetimeService.getMonthName(pc.createdOn));
+        this.ordersData[0].data = res.map(pc => pc.quantity);
       });
   }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Mushka.Core.Extensibility.Logging;
@@ -41,6 +42,15 @@ namespace Mushka.Service.Services
             var balance = await analyticsRepository.GetBalance(cancellationToken);
 
             return CreateInfoValidationResponse(balance, "Balance was retrived successfully.");
+        }
+
+        public async Task<ValidationResponse<IEnumerable<OrdersCount>>> GetOrdersCount(int periodInMonth, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var limitDate = DateTime.Now.AddMonths(-periodInMonth + 1);
+
+            var ordersCount = await analyticsRepository.GetOrdersCount(new DateTime(limitDate.Year, limitDate.Month, 1), cancellationToken);
+
+            return CreateInfoValidationResponse(ordersCount, "Orders count were retrived successfully.");
         }
     }
 }
