@@ -14,6 +14,10 @@
   .d-title {
     border-bottom: 2px solid #E6E9ED;
     padding: 1px 5px 6px;
+
+    span {
+      font-size: 21px;
+    }
   }
   
   .d-content {
@@ -47,7 +51,5 @@
   .options {
     width: 100px;
     display: inline-block;
-    position: relative;
-    top:4px;
   }
 }
