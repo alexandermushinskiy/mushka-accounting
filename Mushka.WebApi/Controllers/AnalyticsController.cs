@@ -44,6 +44,15 @@ namespace Mushka.WebApi.Controllers
             return actionResultProvider.Get(clientResponse);
         }
 
+        [HttpGet("unpopular/products")]
+        public async Task<IActionResult> GetUnpopularProducts()
+        {
+            var unpopularProducts = await analyticsService.GetUnpopularProducts(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<PopularProduct>>, PopularProductsResponseModel>(unpopularProducts);
+
+            return actionResultProvider.Get(clientResponse);
+        }
+
         [HttpGet("popular/cities")]
         public async Task<IActionResult> GetPopularCities()
         {

@@ -14,14 +14,14 @@ import { DatetimeService } from '../../core/datetime/datetime.service';
 })
 export class DashboardComponent implements OnInit {
 
-  defaultPeriod = 3;//{ period: 3, desc: '3 месяца' };
+  defaultPeriod = 12;
   periods = [
     { period: 3, desc: '3 месяца' },
     { period: 6, desc: '6 месяцев' },
     { period: 12, desc: '12 месяцев' }];
 
   balanceData: Array<any> = [0, 0];
-  balanceLabels: Array<string> = ['Потратили', 'Получили'];
+  balanceLabels: Array<string> = ['Потратили', 'Заработали'];
   balanceColor: Array<any> = [
     { backgroundColor: [ 'rgb(255,127,14)', 'rgb(134,199,243)'] }
   ];
@@ -39,10 +39,17 @@ export class DashboardComponent implements OnInit {
     backgroundColor: 'rgb(134,199,243)'
   }];
  
+  unpopularProductsData: Array<any> = [{ data: [], label: '' }];
+  unpopularProductsLabels: Array<any> = [];
+  unpopularProductsColor: Array<any> = [{
+    backgroundColor: 'rgba(255,120,149,0.6)'
+  }];
+ 
   popularCitiesData: Array<any> = [{ data: [], label: '' }];
   popularCitiesLabels: Array<any> = [];
   popularCitiesColor: Array<any> = [{
-    backgroundColor: 'rgb(255,127,14)'
+    backgroundColor: 'rgba(163,116,255,0.5)',
+    borderColor: 'rgba(163,116,255,1)'
   }];
 
   ordersData: Array<any> = [{ data: [], label: '' }];
@@ -82,8 +89,6 @@ export class DashboardComponent implements OnInit {
       pointHoverBorderColor: 'rgba(77,83,96,1)'
     }
   ];
-  public lineChartLegend: boolean = true;
-  public lineChartType: string = 'line';
 
   constructor(private analyticsService: AnalyticsService,
               private datetimeService: DatetimeService) { }
@@ -91,6 +96,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.loadBalance();
     this.loadPopularProducts();
+    this.loadUnpopularProducts();
     this.loadPopularCities();
     this.loadOrdersCount(this.defaultPeriod);
   }
@@ -111,6 +117,14 @@ export class DashboardComponent implements OnInit {
       .subscribe((res: PopularProduct[]) => {
         this.popularProductsLabels = res.map(pp => `${pp.name} (${pp.sizeName})`);
         this.popularProductsData[0].data = res.map(pp => pp.quantity);
+      });
+  }
+
+  private loadUnpopularProducts() {
+    this.analyticsService.getUnpopularProducts()
+      .subscribe((res: PopularProduct[]) => {
+        this.unpopularProductsLabels = res.map(pp => `${pp.name} (${pp.sizeName})`);
+        this.unpopularProductsData[0].data = res.map(pp => pp.quantity);
       });
   }
   

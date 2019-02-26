@@ -10,8 +10,8 @@ namespace Mushka.Domain.Extensibility.Repositories
     {
         Task<Balance> GetBalance(CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<IEnumerable<PopularProduct>> GetPopularProducts(int topCount, CancellationToken cancellationToken = default(CancellationToken));
-
+        Task<IEnumerable<PopularProduct>> GetProductsByPopularity(int topCount, Popularity popularity, CancellationToken cancellationToken = default(CancellationToken));
+        
         Task<IEnumerable<PopularCity>> GetPopularCities(int topCount, CancellationToken cancellationToken = default(CancellationToken));
 
         Task<IEnumerable<OrdersCount>> GetOrdersCount(DateTime limitDate, CancellationToken cancellationToken = default(CancellationToken));

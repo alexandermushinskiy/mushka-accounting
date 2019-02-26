@@ -1,4 +1,4 @@
-<div style="padding: 10px 20px 0;">
+<div class="charts-conteiner">
   <div class="row">
     <div class="col-md-4 col-sm-6 col-xs-12">
       <div class="d-panel">
@@ -37,6 +37,25 @@
     <div class="col-md-4 col-sm-6 col-xs-12">
       <div class="d-panel">
         <div class="d-title">
+          <span>Непопулярные модели</span>
+        </div>
+        <div class="d-content">
+          <canvas baseChart
+                  [datasets]="unpopularProductsData"
+                  [labels]="unpopularProductsLabels"
+                  [options]="lineChartOptions"
+                  [colors]="unpopularProductsColor"
+                  [legend]="false"
+                  [chartType]="'horizontalBar'"></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-12 indent"></div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="d-panel">
+        <div class="d-title">
           <span>Заказы по городам</span>
         </div>
         <div class="d-content">
@@ -50,9 +69,9 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 col-sm-6 col-xs-12">
-      <div class="d-panel">
-        <div class="d-title orders">
+    <div class="col-md-4 col-sm-6 col-xs-12 orders">
+      <div class="d-panel orders-panel">
+        <div class="d-title">
           <span>Количество заказов</span>
           <div>
             <mk-dropdown class="options"
@@ -74,6 +93,7 @@
         </div>
       </div>
     </div>
+    
     <!-- <div class="col-md-4 col-sm-6 col-xs-12">
       <div class="d-panel">
         <div class="d-title">
@@ -85,23 +105,7 @@
                   [labels]="lineChartLabels"
                   [options]="lineChartOptions"
                   [colors]="lineChartColors"
-                  [legend]="lineChartLegend"
-                  [chartType]="'line'"></canvas>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 col-sm-6 col-xs-12">
-      <div class="d-panel">
-        <div class="d-title">
-          <h2>Что-то тут</h2>
-        </div>
-        <div class="d-content">
-          <canvas baseChart
-                  [datasets]="lineChartData"
-                  [labels]="lineChartLabels"
-                  [options]="lineChartOptions"
-                  [colors]="lineChartColors"
-                  [legend]="lineChartLegend"
+                  [legend]="true"
                   [chartType]="'line'"></canvas>
         </div>
       </div>

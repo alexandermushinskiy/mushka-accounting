@@ -31,6 +31,12 @@ export class AnalyticsService {
       .catch((res: any) => throwError(res.error.messages));
   }
 
+  getUnpopularProducts(): Observable<PopularProduct[]> {
+    return this.http.get(`${this.endPoint}/unpopular/products`)
+      .map((res: any) => this.convertToPopularProducts(res.data))
+      .catch((res: any) => throwError(res.error.messages));
+  }
+
   getPopularCities(): Observable<PopularCity[]> {
     return this.http.get(`${this.endPoint}/popular/cities`)
       .map((res: any) => this.convertToPopularCities(res.data))

@@ -1,3 +1,7 @@
+.charts-conteiner {
+  padding: 15px 25px 0;
+}
+
 .d-panel {
   width: 100%;
   padding: 10px 17px;
@@ -14,6 +18,7 @@
   .d-title {
     border-bottom: 2px solid #E6E9ED;
     padding: 1px 5px 6px;
+    height: 40px;
 
     span {
       font-size: 21px;
@@ -38,18 +43,26 @@
 }
 
 .orders {
-  height: 48px;
+  //padding-top: 10px;
 
-  h2 {
-    float:left
+  &-panel {
+    .d-title div {
+      float:right
+    }
+  
+    .options {
+      width: 100px;
+      display: inline-block;
+    }
   }
+}
 
-  div {
-    float:right
-  }
+.indent {
+  height: 5px;
+}
 
-  .options {
-    width: 100px;
-    display: inline-block;
-  }
+.col-sm-6,
+.col-md-4 {
+  padding-right: 5px;
+  padding-left: 5px;
 }

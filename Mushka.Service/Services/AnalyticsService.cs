@@ -25,9 +25,16 @@ namespace Mushka.Service.Services
 
         public async Task<ValidationResponse<IEnumerable<PopularProduct>>> GetPopularProducts(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var popularProducts = await analyticsRepository.GetPopularProducts(DefaultTopCount, cancellationToken);
+            var popularProducts = await analyticsRepository.GetProductsByPopularity(DefaultTopCount, Popularity.Popular, cancellationToken);
 
             return CreateInfoValidationResponse(popularProducts, "Popular products were retrived successfully.");
+        }
+
+        public async Task<ValidationResponse<IEnumerable<PopularProduct>>> GetUnpopularProducts(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var popularProducts = await analyticsRepository.GetProductsByPopularity(DefaultTopCount, Popularity.Unpopular, cancellationToken);
+
+            return CreateInfoValidationResponse(popularProducts, "Unpopular products were retrived successfully.");
         }
 
         public async Task<ValidationResponse<IEnumerable<PopularCity>>> GetPopularCities(CancellationToken cancellationToken = default(CancellationToken))
