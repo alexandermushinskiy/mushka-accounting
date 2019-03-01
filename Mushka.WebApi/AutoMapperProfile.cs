@@ -183,11 +183,30 @@ namespace Mushka.WebApi
             //-------------------------
 
             // Analytics
-            CreateMap<ValidationResponse<IEnumerable<PopularProduct>>, PopluarProductsResponseModel>()
+            CreateMap<ValidationResponse<Balance>, BalanceResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
 
+            CreateMap<ValidationResponse<IEnumerable<PopularProduct>>, PopularProductsResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+
+            CreateMap<ValidationResponse<IEnumerable<PopularCity>>, PopularCitiesResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+
+            CreateMap<ValidationResponse<IEnumerable<OrdersCount>>, OrdersCountResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+
+            CreateMap<ValidationResponse<IEnumerable<SoldProductsCount>>, SoldProductsCountResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
             //-------------------------
         }
     }

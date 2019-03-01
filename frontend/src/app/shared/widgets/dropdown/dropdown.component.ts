@@ -34,9 +34,11 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
       this.value = this.initialValue;
     }
   }
-
+  
   writeValue(value: any): void {
-    this.value = this.isComplex ? this.options.find(opt => opt.id === value) : value;
+    if (value) {
+      this.value = this.isComplex ? this.options.find(opt => opt[this.dataField] === value) : value;
+    }
   }
 
   registerOnChange(fn: any) {

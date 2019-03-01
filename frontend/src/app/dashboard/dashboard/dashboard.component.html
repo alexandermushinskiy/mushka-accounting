@@ -1,3 +1,114 @@
-<p>
-  dashboard works!
-</p>
+<div class="charts-conteiner">
+  <div class="row">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="d-panel">
+        <div class="d-title">
+          <span>Баланс вложений</span>
+        </div>
+        <div class="d-content">
+          <div *ngIf="balanceData">
+            <canvas baseChart
+                    [data]="balanceData"
+                    [labels]="balanceLabels"
+                    [colors]="balanceColor"
+                    [options]="balanceOptions"
+                    [legend]="true"
+                    [chartType]="'pie'"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="d-panel">
+        <div class="d-title">
+          <span>Популярные модели</span>
+        </div>
+        <div class="d-content">
+          <canvas baseChart
+                  [datasets]="popularProductsData"
+                  [labels]="popularProductsLabels"
+                  [options]="defaultChartOptions"
+                  [colors]="popularProductsColor"
+                  [legend]="false"
+                  [chartType]="'horizontalBar'"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="d-panel">
+        <div class="d-title">
+          <span>Непопулярные модели</span>
+        </div>
+        <div class="d-content">
+          <canvas baseChart
+                  [datasets]="unpopularProductsData"
+                  [labels]="unpopularProductsLabels"
+                  [options]="defaultChartOptions"
+                  [colors]="unpopularProductsColor"
+                  [legend]="false"
+                  [chartType]="'horizontalBar'"></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-12 indent"></div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="d-panel">
+        <div class="d-title">
+          <span>Заказы по городам</span>
+        </div>
+        <div class="d-content">
+          <canvas baseChart
+                  [datasets]="popularCitiesData"
+                  [labels]="popularCitiesLabels"
+                  [options]="defaultChartOptions"
+                  [colors]="popularCitiesColor"
+                  [legend]="false"
+                  [chartType]="'horizontalBar'"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12 orders">
+      <div class="d-panel orders-panel">
+        <div class="d-title">
+          <span>Количество заказов</span>
+          <div>
+            <mk-dropdown class="options"
+                         [options]="periods"
+                         [ngModel]="defaultPeriod"
+                         [dataField]="'period'"
+                         [textField]="'desc'"
+                         (onSelectedValue)="onPeriodSelected($event.period)"></mk-dropdown>
+          </div>
+        </div>
+        <div class="d-content">
+          <canvas baseChart
+                  [datasets]="ordersData"
+                  [labels]="ordersLabels"
+                  [options]="defaultChartOptions"
+                  [colors]="ordersColor"
+                  [legend]="false"
+                  [chartType]="'line'"></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="d-panel">
+        <div class="d-title">
+          <span>Количество проданных носков</span>
+        </div>
+        <div class="d-content">
+          <canvas baseChart
+                  [datasets]="soldProductsData"
+                  [labels]="soldProductsLabels"
+                  [options]="defaultChartOptions"
+                  [colors]="soldProductsColor"
+                  [legend]="false"
+                  [chartType]="'bar'"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
