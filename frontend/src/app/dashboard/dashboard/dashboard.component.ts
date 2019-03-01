@@ -39,9 +39,11 @@ export class DashboardComponent implements OnInit {
 
   balanceData: Array<any> = [0, 0];
   balanceLabels: Array<string> = ['Потратили', 'Заработали'];
-  balanceColor: Array<any> = [
-    { backgroundColor: [ 'rgb(255,127,14)', 'rgb(134,199,243)'] }
-  ];
+  balanceColor: Array<any> = [{
+      backgroundColor: ['rgba(255,127,14,0.5)', 'rgba(134,199,243,0.5)'],
+      borderColor: ['rgba(255,127,14,1)', 'rgba(134,199,243,1)'],
+      borderWidth: 1
+  }];
   balanceOptions: any = {
     responsive: true,
     legend: {
@@ -53,20 +55,25 @@ export class DashboardComponent implements OnInit {
   popularProductsData: Array<any> = [{ data: [], label: '' }];
   popularProductsLabels: Array<any> = [];
   popularProductsColor: Array<any> = [{
-    backgroundColor: 'rgb(134,199,243)'
+    backgroundColor: 'rgb(134,199,243,0.5)',
+    borderColor: 'rgba(134,199,243,1)',
+    borderWidth: 1
   }];
  
   unpopularProductsData: Array<any> = [{ data: [], label: '' }];
   unpopularProductsLabels: Array<any> = [];
   unpopularProductsColor: Array<any> = [{
-    backgroundColor: 'rgba(255,120,149,0.6)'
+    backgroundColor: 'rgba(255,120,149,0.5)',
+    borderColor: 'rgba(255,120,149,1)',
+    borderWidth: 1
   }];
  
   popularCitiesData: Array<any> = [{ data: [], label: '' }];
   popularCitiesLabels: Array<any> = [];
   popularCitiesColor: Array<any> = [{
     backgroundColor: 'rgba(163,116,255,0.5)',
-    borderColor: 'rgba(163,116,255,1)'
+    borderColor: 'rgba(163,116,255,1)',
+    borderWidth: 1
   }];
 
   ordersData: Array<any> = [{ data: [], label: '' }];
@@ -83,8 +90,9 @@ export class DashboardComponent implements OnInit {
   soldProductsData: Array<any> = [{ data: [], label: '' }];
   soldProductsLabels: Array<string> = [];
   soldProductsColor: Array<any> = [{
-    backgroundColor: 'rgba(165,223,223,0.8)',
-    borderColor: 'rgba(165,223,223,1)'
+    backgroundColor: 'rgba(165,223,223,0.5)',
+    borderColor: 'rgba(165,223,223,1)',
+    borderWidth: 1
   }];
 
   constructor(private analyticsService: AnalyticsService,
