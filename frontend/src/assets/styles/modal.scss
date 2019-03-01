@@ -117,3 +117,10 @@
     text-transform: uppercase;
   }
 }
+
+.products-modal {
+  .modal-dialog {
+    max-width: 500px;
+    max-height: 300px;
+  }
+}

@@ -27,7 +27,7 @@ export class SelectSizeComponent implements OnInit, ControlValueAccessor {
   @Input() disabledSizes: string[];
   @Input() isMultiple = false;
   @Input() canClearAll = true;
-  @Input() isDisabled = false;
+  @Input() disabled = false;
   @Input() notFoundText = 'Нет данных';
   @Input() placeholder = 'Выбирете размер';
   @Output() onSelectedSizes = new EventEmitter<string[]>();
@@ -58,6 +58,10 @@ export class SelectSizeComponent implements OnInit, ControlValueAccessor {
   }
 
   registerOnTouched() {
+  }
+  
+  setDisabledState(disabled: boolean) {
+    this.disabled = disabled;
   }
 
   private reset() {

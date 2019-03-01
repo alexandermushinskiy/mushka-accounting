@@ -15,7 +15,18 @@ export class Product {
   totalCount: number;
   quantity = 0;
   size: Size;
+  subproducts: Subproduct[];
 
+  constructor(data: any) {
+    Object.assign(this, data);
+  }
+}
+
+export class Subproduct {
+  productId: string;
+  product: Product;
+  quantity: number;
+  
   constructor(data: any) {
     Object.assign(this, data);
   }
