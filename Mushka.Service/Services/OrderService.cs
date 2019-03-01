@@ -184,12 +184,12 @@ namespace Mushka.Service.Services
 
         public async Task<ValidationResponse<ExportedFile>> ExportAsync(string title, IEnumerable<Guid> orderIds, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var orders = (await orderRepository.GetForExportAsync(order => orderIds.Contains(order.Id), cancellationToken));
+            var orders = await orderRepository.GetForExportAsync(order => orderIds.Contains(order.Id), cancellationToken);
 
             var fileContent = excelService.ExportOrders(title, orders);
             var exportedFile = new ExportedFile(ExportFileName, ExportContentType, fileContent);
 
-            return CreateInfoValidationResponse(exportedFile, "The orders was exported successfully.");
+            return CreateInfoValidationResponse(exportedFile, "The orders were exported successfully.");
         }
     }
 }

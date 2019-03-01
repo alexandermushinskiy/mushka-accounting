@@ -58,5 +58,16 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         
         public async Task<IEnumerable<Size>> GetSizesAsync(CancellationToken cancellationToken) =>
             await Context.Sizes.AsNoTracking().ToListAsync(cancellationToken);
+
+        public async Task<IEnumerable<Product>> GetForExportAsync(Expression<Func<Product, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await Context.Products
+                .AsNoTracking()
+                .Where(predicate)
+                .Include(prod => prod.Size)
+                .Include(prod => prod.Supplies)
+                .Include(prod => prod.Orders)
+                .ToListAsync(cancellationToken);
+        }
     }
 }

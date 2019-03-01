@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { LocalStorage } from 'ngx-webstorage';
+import * as FileSaver from 'file-saver';
 
 import { ProductsServce } from '../../core/api/products.service';
 import { ProductTableRow } from '../shared/models/product-table-row.model';
@@ -12,6 +13,7 @@ import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatabl
 import { ProductFilter } from '../../shared/filters/product-filter';
 import { QuickFilter } from '../../shared/filters/quick-filter';
 import { ProductQuickFilter } from '../../shared/filters/product-quick-filter';
+import { DatetimeService } from '../../core/datetime/datetime.service';
 
 @Component({
   selector: 'mk-products-list',
@@ -46,6 +48,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
 
   constructor(private modalService: NgbModal,
               private productsService: ProductsServce,
+              private dateTimeService: DatetimeService,
               private notificationsService: NotificationsService) {
     super();
   }
@@ -130,6 +133,14 @@ export class ProductsListComponent extends SortableDatatableComponent implements
     }
   }
 
+  onExportAllToCSV(fileSuffix: string) {
+    this.export(this.products.map(ord => ord.id));
+  }
+
+  onExportFilteredToCSV(fileSuffix: string) {
+    this.export(this.productsRows.map(ord => ord.id));
+  }
+
   closeModal() {
     this.modalRef.close();
 
@@ -179,5 +190,29 @@ export class ProductsListComponent extends SortableDatatableComponent implements
   private updateDatatableRows(products: Product[]) {
     this.productsRows = products.map((el, index) => new ProductTableRow(el, index));
     this.shown = products.length;
+  }
+  
+  private export(productIds: string[]) {
+    this.loadingIndicator = true;
+    this.productsService.export(this.selectedCategory.id, productIds)
+      .subscribe(
+        (file: Blob) => this.onExportSuccess(file),
+        (error: string) => this.onExportFailed(error)
+      );
+  }
+  
+  private onExportSuccess(file: Blob) {
+    FileSaver.saveAs(file, this.generateFileName(), file.type);
+    this.loadingIndicator = false;
+  }
+
+  private onExportFailed(error: string) {
+    // this.errors = [ error ];
+    this.loadingIndicator = false;
+  }
+  
+  private generateFileName(): string {
+    const postfix = this.dateTimeService.toString(new Date(), 'YYYY-MM-DD-HH-mm');
+    return `mushka_export_orders-${postfix}.xlsx`;
   }
 }

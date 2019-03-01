@@ -80,6 +80,16 @@ export class ProductsServce {
       .catch((res: any) => throwError(res.error.messages));
   }
 
+  export(categoryId: string, productIds: string[]): Observable<Blob> {
+    const requestBody = {
+      categoryId: categoryId,
+      productIds: productIds
+    };
+    return this.http.post(`${this.endPoint}/export`, requestBody, { responseType: 'blob', observe: 'response' })
+      .map((res: any) => res.body)
+      .catch((res: any) => throwError(res.error.messages));
+  }
+
   private convertToRequestData(product: Product): any {
     return {
       name: product.name,

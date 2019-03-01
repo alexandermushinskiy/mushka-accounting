@@ -12,7 +12,9 @@
                     (onAddItem)="addProduct(content)"
                     (onFilter)="filter($event)"
                     (onQuickFilter)="quickFilter($event)"
-                    (onQuickFilterReset)="resetQuickFilter()">
+                    (onQuickFilterReset)="resetQuickFilter()"
+                    (onExportAllToCSV)="onExportAllToCSV($event)"
+                    (onExportFilteredToCSV)="onExportFilteredToCSV($event)">
     </mk-datatable-header>
   </div>
   <div class="appbody">
