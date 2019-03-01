@@ -9,6 +9,7 @@ import { PopularCity } from '../../dashboard/shared/models/popular-city.model';
 import { Balance } from '../../dashboard/shared/models/balance.model';
 import { OrdersCount } from '../../dashboard/shared/models/orders-count.model';
 import { DatetimeService } from '../datetime/datetime.service';
+import { SoldProductsCount } from '../../dashboard/shared/models/sold-products-count.model';
 
 @Injectable()
 export class AnalyticsService {
@@ -45,7 +46,13 @@ export class AnalyticsService {
 
   getOrdersCount(period: number): Observable<OrdersCount[]> {
     return this.http.get(`${this.endPoint}/orders?period=${period}`)
-      .map((res: any) => this.convertOrdersCount(res.data))
+      .map((res: any) => this.convertToOrdersCount(res.data))
+      .catch((res: any) => throwError(res.error.messages));
+  }
+
+  getSoldProductsCount(period: number): Observable<SoldProductsCount[]> {
+    return this.http.get(`${this.endPoint}/sold-products?period=${period}`)
+      .map((res: any) => this.convertToSoldProductsCount(res.data))
       .catch((res: any) => throwError(res.error.messages));
   }
 
@@ -72,8 +79,15 @@ export class AnalyticsService {
     }));
   }
 
-  private convertOrdersCount(response: any[]): OrdersCount[] {
+  private convertToOrdersCount(response: any[]): OrdersCount[] {
     return response.map(res => new OrdersCount({
+      createdOn: this.datetimeService.toString(res.createdOn),
+      quantity: res.quantity
+    }));
+  }
+    
+  private convertToSoldProductsCount(response: any[]): SoldProductsCount[] {
+    return response.map(res => new SoldProductsCount({
       createdOn: this.datetimeService.toString(res.createdOn),
       quantity: res.quantity
     }));

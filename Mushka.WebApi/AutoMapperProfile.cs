@@ -202,6 +202,11 @@ namespace Mushka.WebApi
                 .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+
+            CreateMap<ValidationResponse<IEnumerable<SoldProductsCount>>, SoldProductsCountResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
             //-------------------------
         }
     }

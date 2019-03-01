@@ -6,6 +6,7 @@ import { PopularCity } from '../shared/models/popular-city.model';
 import { Balance } from '../shared/models/balance.model';
 import { OrdersCount } from '../shared/models/orders-count.model';
 import { DatetimeService } from '../../core/datetime/datetime.service';
+import { SoldProductsCount } from '../shared/models/sold-products-count.model';
 
 @Component({
   selector: 'mk-dashboard',
@@ -13,8 +14,11 @@ import { DatetimeService } from '../../core/datetime/datetime.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
+  defaultChartOptions: any = {
+    responsive: true
+  };
   defaultPeriod = 12;
+
   periods = [
     { period: 3, desc: '3 месяца' },
     { period: 6, desc: '6 месяцев' },
@@ -63,32 +67,12 @@ export class DashboardComponent implements OnInit {
     pointHoverBorderColor: 'rgba(255,127,14,0.8)'
   }];
 
-  public lineChartData:Array<any> = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
-  ];
-  public lineChartLabels:Array<any> = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль'];
-  public lineChartOptions:any = {
-    responsive: true
-  };
-  public lineChartColors:Array<any> = [
-    { // grey
-      backgroundColor: 'rgba(99,123,217,0.2)',
-      borderColor: 'rgba(99,123,217,1)',
-      pointBackgroundColor: 'rgba(99,123,217,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(99,123,217,0.8)'
-    },
-    { // dark grey
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
-    }
-  ];
+  soldProductsData: Array<any> = [{ data: [], label: '' }];
+  soldProductsLabels: Array<string> = [];
+  soldProductsColor: Array<any> = [{
+    backgroundColor: 'rgba(165,223,223,0.8)',
+    borderColor: 'rgba(165,223,223,1)'
+  }];
 
   constructor(private analyticsService: AnalyticsService,
               private datetimeService: DatetimeService) { }
@@ -99,6 +83,7 @@ export class DashboardComponent implements OnInit {
     this.loadUnpopularProducts();
     this.loadPopularCities();
     this.loadOrdersCount(this.defaultPeriod);
+    this.loadSoldProductsCount(this.defaultPeriod);
   }
 
   onPeriodSelected(period: number) {
@@ -141,6 +126,14 @@ export class DashboardComponent implements OnInit {
       .subscribe((res: OrdersCount[]) => {
         this.ordersLabels = res.map(pc => this.datetimeService.getMonthName(pc.createdOn));
         this.ordersData[0].data = res.map(pc => pc.quantity);
+      });
+  }
+
+  private loadSoldProductsCount(period: number) {
+    this.analyticsService.getSoldProductsCount(period)
+      .subscribe((res: SoldProductsCount[]) => {
+        this.soldProductsLabels = res.map(pc => this.datetimeService.getMonthName(pc.createdOn));
+        this.soldProductsData[0].data = res.map(pc => pc.quantity);
       });
   }
 }

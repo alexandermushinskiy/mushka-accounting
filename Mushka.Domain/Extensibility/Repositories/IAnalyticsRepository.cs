@@ -15,5 +15,7 @@ namespace Mushka.Domain.Extensibility.Repositories
         Task<IEnumerable<PopularCity>> GetPopularCities(int topCount, CancellationToken cancellationToken = default(CancellationToken));
 
         Task<IEnumerable<OrdersCount>> GetOrdersCount(DateTime limitDate, CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<IEnumerable<SoldProductsCount>> GetSoldProductsCount(DateTime limitDate, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

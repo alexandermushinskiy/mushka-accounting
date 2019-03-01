@@ -27,7 +27,7 @@
           <canvas baseChart
                   [datasets]="popularProductsData"
                   [labels]="popularProductsLabels"
-                  [options]="lineChartOptions"
+                  [options]="defaultChartOptions"
                   [colors]="popularProductsColor"
                   [legend]="false"
                   [chartType]="'horizontalBar'"></canvas>
@@ -43,7 +43,7 @@
           <canvas baseChart
                   [datasets]="unpopularProductsData"
                   [labels]="unpopularProductsLabels"
-                  [options]="lineChartOptions"
+                  [options]="defaultChartOptions"
                   [colors]="unpopularProductsColor"
                   [legend]="false"
                   [chartType]="'horizontalBar'"></canvas>
@@ -62,7 +62,7 @@
           <canvas baseChart
                   [datasets]="popularCitiesData"
                   [labels]="popularCitiesLabels"
-                  [options]="lineChartOptions"
+                  [options]="defaultChartOptions"
                   [colors]="popularCitiesColor"
                   [legend]="false"
                   [chartType]="'horizontalBar'"></canvas>
@@ -86,7 +86,7 @@
           <canvas baseChart
                   [datasets]="ordersData"
                   [labels]="ordersLabels"
-                  [options]="lineChartOptions"
+                  [options]="defaultChartOptions"
                   [colors]="ordersColor"
                   [legend]="false"
                   [chartType]="'line'"></canvas>
@@ -94,21 +94,21 @@
       </div>
     </div>
     
-    <!-- <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-md-4 col-sm-6 col-xs-12">
       <div class="d-panel">
         <div class="d-title">
-          <h2>Что-то тут</h2>
+          <span>Количество проданных носков</span>
         </div>
         <div class="d-content">
           <canvas baseChart
-                  [datasets]="lineChartData"
-                  [labels]="lineChartLabels"
-                  [options]="lineChartOptions"
-                  [colors]="lineChartColors"
-                  [legend]="true"
-                  [chartType]="'line'"></canvas>
+                  [datasets]="soldProductsData"
+                  [labels]="soldProductsLabels"
+                  [options]="defaultChartOptions"
+                  [colors]="soldProductsColor"
+                  [legend]="false"
+                  [chartType]="'bar'"></canvas>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </div>

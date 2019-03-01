@@ -70,5 +70,14 @@ namespace Mushka.WebApi.Controllers
 
             return actionResultProvider.Get(clientResponse);
         }
+
+        [HttpGet("sold-products")]
+        public async Task<IActionResult> GetSoldProducts(int period)
+        {
+            var soldProductsCounts = await analyticsService.GetSoldProductsCount(period, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<SoldProductsCount>>, SoldProductsCountResponseModel>(soldProductsCounts);
+
+            return actionResultProvider.Get(clientResponse);
+        }
     }
 }
