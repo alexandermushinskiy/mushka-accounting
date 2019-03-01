@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { UnsubscriberComponent } from '../../../../shared/hooks/unsubscriber.component';
@@ -8,6 +8,7 @@ import { Category } from '../../../../shared/models/category.model';
 import { ProductsServce } from '../../../../core/api/products.service';
 import { CategoriesService } from '../../../../core/api/categories.service';
 import { Size } from '../../../../shared/models/size.model';
+import { SelectProduct } from '../../../../shared/models/select-product.model';
 
 @Component({
   selector: 'mk-product-modal',
@@ -27,6 +28,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
   availableSizes: Size[] = [];
   categories: Category[] = [];
   errors: string[];
+  productsList: SelectProduct[];
 
   private get categoryFormGroup(): FormGroup {
     return <FormGroup>this.productForm.get('category');
@@ -40,14 +42,16 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
 
   ngOnInit() {
     this.isEdit = !!this.productId;
-    this.isLoading = true
+    this.isLoading = true;
     this.buildForm(new Product({}));
 
     Observable.forkJoin(
+      this.productsService.getInStock(),
       this.isEdit ? this.productsService.getById(this.productId) : Observable.of(null),
       this.productsService.getSizes(),
       this.categoriesService.getAll()
-    ).subscribe(([product, sizes, categories]) => {
+    ).subscribe(([productsList, product, sizes, categories]) => {
+      this.productsList = productsList;
       this.availableSizes = sizes;
       this.onCategoriesLoaded(categories);
 
@@ -57,6 +61,16 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
 
       this.isLoading = false;
     });
+  }
+
+  addSubproduct() {
+    const products = <FormArray>this.productForm.get('subproducts');
+    products.push(this.createSubproductFormGroup());
+  }
+
+  removeSubproduct(index: number) {
+    const products = <FormArray>this.productForm.get('subproducts');
+    products.removeAt(index);
   }
 
   private onCategoriesLoaded(categories: Category[]) {
@@ -101,7 +115,17 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       category: [category, Validators.required],
       vendorCode: [product.vendorCode, Validators.required],
       recommendedPrice: [product.recommendedPrice],
-      size: [product.size, !!category && category.isSizeRequired ? Validators.required : null]
+      size: [product.size, !!category && category.isSizeRequired ? Validators.required : null],
+      subproducts: this.formBuilder.array(
+        [this.createSubproductFormGroup()]
+      )
+    });
+  }
+
+  private createSubproductFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      name: [null, Validators.required],
+      vendorCode: [null, Validators.required]
     });
   }
 

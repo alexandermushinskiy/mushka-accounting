@@ -46,6 +46,43 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="text-muted" style="margin-top: 10px; margin-bottom: 10px;">Состоит из</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row products-titles">
+          <div class="col-sm-8">Наименование товара</div>
+          <div class="col-sm-4">Артикул/Размер</div>
+        </div>
+        <div formArrayName="subproducts">
+          <div class="row product-row" *ngFor="let subproductControl of productForm.get('subproducts').controls; let index=index" [formGroupName]="index">
+            <div class="col-sm-8">
+              <div class="field-group">
+                <mk-select-products
+                                    [products]="productsList"
+                                    [canClearAll]="false"
+                                    (onProductSelected)="onSubproductSelected($event, index)">
+                </mk-select-products>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="field-group">
+                <input type="text" class="form-control" >
+              </div>
+              <button class="btn-remove" title="Удалить" type="button" (click)="removeSubproduct(index)" *ngIf="productForm.get('subproducts').controls.length > 1">
+                <i class="ico ico-close"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <button class="btn-add" type="button" (click)="addSubproduct()">
+          <i class="fa fa-plus fa-border"></i>
+        </button>
+      </div>
+    </div>
   </div>
   <div class="modal-footer">
     <button class="btn btn-light btn-cancel" type="button" (click)="close()">Отмена</button>

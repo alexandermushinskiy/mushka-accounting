@@ -67,3 +67,38 @@
     }
   }
 }
+
+.products-titles {
+  padding-bottom: 5px;
+  padding-right: 25px;
+}
+
+.product-row,
+.products-titles {
+  .field-group {
+    margin-top: 0px;
+    margin-bottom: 10px;
+  }
+
+  .col-sm-8 {
+    padding-right: 5px;
+  }
+
+  .col-sm-4 {
+    padding-left: 5px;
+  }
+}
+
+.product-row {
+  padding-right: 25px;
+}
+
+.btn-remove {
+  position: absolute;
+  right: -8px;
+    top: 3px;
+  color: $text-muted;
+  .ico-close {
+    font-size: 1rem;
+  }
+}

@@ -88,7 +88,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   onQuantityChanged(index: number, quantity: any) {
     this.quantityTerms$.next({index, quantity});
   }
-  
+
   onNumberChanged(orderNumber: string) {
     if (!orderNumber && orderNumber.trim().length === 0) {
       return;
@@ -100,7 +100,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
         this.isOrderNumberValid = isValid;
         this.isNumberValidating = false;
 
-        var numberCtrl = this.orderForm.controls.number;
+        const numberCtrl = this.orderForm.controls.number;
 
         numberCtrl.setValidators(isValid ? [Validators.required] : [Validators.required, uniqueOrderNumber]);
         numberCtrl.updateValueAndValidity({onlySelf: true, emitEvent: false});
@@ -306,7 +306,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
       productCtrl.controls.unitPrice.setValue(recommendedPrice);
     }
   }
-  
+
   private calculateDiscount(cost: number): number {
     if (this.discount === 0) {
       return 0;

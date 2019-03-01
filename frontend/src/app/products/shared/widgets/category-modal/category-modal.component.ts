@@ -51,7 +51,8 @@ export class CategoryModalComponent implements OnInit {
   private buildForm(category: Category) {
     this.categoryForm = this.formBuilder.group({
       name: [category.name, Validators.required],
-      isSizeRequired: [category.isSizeRequired]
+      isSizeRequired: [category.isSizeRequired],
+      isMain: []
     });
   }
 }
