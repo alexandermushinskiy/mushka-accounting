@@ -15,14 +15,27 @@ import { SoldProductsCount } from '../shared/models/sold-products-count.model';
 })
 export class DashboardComponent implements OnInit {
   defaultChartOptions: any = {
-    responsive: true
+    responsive: true,
+    scales: {
+      // yAxes: [{
+      //   ticks: {
+      //     beginAtZero: true
+      //   }
+      // }],
+      xAxes: [{
+        ticks: {
+          autoSkip: false
+        }
+      }]
+    }
   };
   defaultPeriod = 12;
 
   periods = [
     { period: 3, desc: '3 месяца' },
     { period: 6, desc: '6 месяцев' },
-    { period: 12, desc: '12 месяцев' }];
+    { period: 12, desc: '12 месяцев' }
+  ];
 
   balanceData: Array<any> = [0, 0];
   balanceLabels: Array<string> = ['Потратили', 'Заработали'];
