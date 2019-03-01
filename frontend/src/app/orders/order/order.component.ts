@@ -47,7 +47,7 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.productsService.getInStock()
+    this.productsService.getSelect()
       .subscribe((products: SelectProduct[]) => {
         this.productsList = products;
         this.getRouteParams();

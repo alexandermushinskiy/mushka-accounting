@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Mushka.Core.Extensibility.Logging;
 using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
+using Mushka.Domain.Comparers;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Service.Extensibility.Dto;
@@ -123,6 +124,19 @@ namespace Mushka.Service.Services
                     productRepository.Update(storedProduct);
                 }
             }
+            
+            foreach (var removedProduct in storedOrder.Products.Except(order.Products, new OrderProductComparer()))
+            {
+                var storedProduct = await productRepository.GetByIdAsync(removedProduct.ProductId, cancellationToken);
+
+                if (storedProduct == null)
+                {
+                    return CreateWarningValidationResponse($"Product with id {removedProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                }
+
+                storedProduct.Quantity += removedProduct.Quantity;
+                productRepository.Update(storedProduct);
+            }
 
             order.Customer.Id = storedOrder.Customer.Id;
             order.CustomerId = storedOrder.CustomerId;
@@ -132,7 +146,7 @@ namespace Mushka.Service.Services
 
             return CreateInfoValidationResponse(updatedOrder, $"Order with id {order.Id} was successfully updated.");
         }
-
+        
         public async Task<ValidationResponse<Order>> DeleteAsync(Guid orderId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var order = await orderRepository.GetByIdAsync(orderId, cancellationToken);

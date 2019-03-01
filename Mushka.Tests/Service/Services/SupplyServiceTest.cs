@@ -30,6 +30,7 @@ namespace Mushka.Tests.Service.Services
         private const string SupplierName = "Supplier";
         private static readonly Guid SupplyId = Guid.Parse("00000000000000000000000000000001");
         private static readonly Guid ProductId = Guid.Parse("00000000000000000000000000000002");
+        private static readonly Guid OtherProductId = Guid.Parse("00000000000000000000000000000004");
         private static readonly string SupplyRetrievedMessage = $"Supply with id {SupplyId} was successfully retrieved.";
         private static readonly string SupplyDeletedMessage = $"Supply with id {SupplyId} was successfully deleted.";
         private static readonly string SupplyNotFoundMessage = $"Supply with id {SupplyId} is not found.";
@@ -215,6 +216,39 @@ namespace Mushka.Tests.Service.Services
             var expected = CreateWarningValidationResponse<Product>(ProductNotFoundMessage, ValidationStatusType.NotFound);
             actual.Should().BeEquivalentTo(expected);
         }
+        
+        [Category(CategoryName)]
+        [Fact(DisplayName = UpdateAsyncMethodName + "Supply has new product")]
+        public async Task UpdateAsyncSupplyNewAnotherProductTest()
+        {
+            var supply = CreateSupply(new[] { CreateSupplyProduct(SupplyId, ProductId, 5) });
+            var storedSupply = CreateSupply(new[] { CreateSupplyProduct(SupplyId, OtherProductId, 7) });
+            var updatedSupply = CreateSupply(new[] { CreateSupplyProduct(SupplyId, ProductId, 5) });
+            var otherProduct = CreateProduct(OtherProductId, 22);
+            var product = CreateProduct(ProductId, 33);
+            const int ExpectedReturnedProductQuantity = 15;
+            const int ExpectedSuppliedProductQuantity = 38;
+
+            supplyRepositoryMock
+                .SetupAsync(repo => repo.GetByIdAsync(SupplyId, default(CancellationToken)), storedSupply)
+                .Setup(repo => repo.Update(It.Is<Supply>(ord => ord.Id == SupplyId)), updatedSupply);
+
+            productRepositoryMock
+                .SetupAsync(repo => repo.GetByIdAsync(OtherProductId, default(CancellationToken)), otherProduct)
+                .SetupAsync(repo => repo.GetByIdAsync(ProductId, default(CancellationToken)), product)
+                .Setup(repo => repo.Update(It.Is<Product>(prod => prod.Id == ProductId && prod.Quantity == ExpectedSuppliedProductQuantity)),
+                    It.Is<Product>(prod => prod.Id == ProductId && prod.Quantity == ExpectedSuppliedProductQuantity))
+                .Setup(repo => repo.Update(It.Is<Product>(prod => prod.Id == OtherProductId && prod.Quantity == ExpectedReturnedProductQuantity)),
+                    It.Is<Product>(prod => prod.Id == OtherProductId && prod.Quantity == ExpectedReturnedProductQuantity));
+
+            storageMock
+                .Setup(s => s.SaveAsync(default(CancellationToken)), Task.CompletedTask);
+
+            var actual = await supplyService.UpdateAsync(supply);
+
+            var expected = CreateValidValidationResponse(updatedSupply, SupplyUpdatedMessage);
+            actual.Should().BeEquivalentTo(expected);
+        }
 
         [Category(CategoryName)]
         [Fact(DisplayName = DeleteAsyncMethodName)]
@@ -292,10 +326,25 @@ namespace Mushka.Tests.Service.Services
                 Quantity = quantity
             };
 
+        private static SupplyProduct CreateSupplyProduct(Guid supplyId, Guid productId, int quantity) =>
+            new SupplyProduct
+            {
+                SupplyId = supplyId,
+                ProductId = productId,
+                Quantity = quantity
+            };
+
         private static Product CreateProduct(int quantity) =>
             new Product
             {
                 Id = ProductId,
+                Quantity = quantity
+            };
+
+        private static Product CreateProduct(Guid productId, int quantity) =>
+            new Product
+            {
+                Id = productId,
                 Quantity = quantity
             };
     }

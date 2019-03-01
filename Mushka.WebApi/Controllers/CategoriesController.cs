@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Mushka.Core.Extensibility.Providers;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
+using Mushka.Domain.Extensibility.Entities;
 using Mushka.Service.Extensibility.Services;
 using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Category;
@@ -60,8 +61,7 @@ namespace Mushka.WebApi.Controllers
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Put(Guid id, [FromBody]CategoryRequestModel categoryRequest)
         {
-            var category = mapper.Map<CategoryRequestModel, Category>(categoryRequest);
-            category.Id = id;
+            var category = mapper.Map<CategoryRequestModel, Category>(categoryRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var categoryResponse = await categoryService.UpdateAsync(category, cancellationTokenSourceProvider.Get().Token);
             var clientResponse = mapper.Map<ValidationResponse<Category>, CategoryResponseModel>(categoryResponse);

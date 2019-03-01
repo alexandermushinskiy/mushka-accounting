@@ -2,6 +2,7 @@
 using Mushka.Core.Extensibility.Providers;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Category;
+using Mushka.WebApi.Extensions;
 
 namespace Mushka.WebApi.Resolvers
 {
@@ -18,7 +19,7 @@ namespace Mushka.WebApi.Resolvers
         {
             return new Category
             {
-                Id = guidProvider.NewGuid(),
+                Id = context.GetId() ?? guidProvider.NewGuid(),
                 Name = source.Name,
                 IsSizeRequired = source.IsSizeRequired
             };

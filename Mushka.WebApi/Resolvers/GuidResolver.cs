@@ -1,8 +1,8 @@
 ﻿using System;
 using AutoMapper;
-using Mushka.Accounting.WebApi.Extensions;
 using Mushka.Core.Extensibility.Providers;
 using Mushka.Domain.Extensibility.Entities;
+using Mushka.WebApi.Extensions;
 
 namespace Mushka.WebApi.Resolvers
 {

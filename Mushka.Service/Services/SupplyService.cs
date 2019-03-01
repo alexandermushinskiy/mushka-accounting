@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Mushka.Core.Extensibility.Logging;
 using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
+using Mushka.Domain.Comparers;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Service.Extensibility.Services;
@@ -99,6 +100,19 @@ namespace Mushka.Service.Services
                     storedProduct.Quantity = storedProduct.Quantity - storedSupplyQuantity + supplyProduct.Quantity;
                     productRepository.Update(storedProduct);
                 }
+            }
+
+            foreach (var removedProduct in storedSupply.Products.Except(supply.Products, new SupplyProductComparer()))
+            {
+                var storedProduct = await productRepository.GetByIdAsync(removedProduct.ProductId, cancellationToken);
+
+                if (storedProduct == null)
+                {
+                    return CreateWarningValidationResponse($"Product with id {removedProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                }
+
+                storedProduct.Quantity -= removedProduct.Quantity;
+                productRepository.Update(storedProduct);
             }
 
             var updatedSupply = supplyRepository.Update(supply);
