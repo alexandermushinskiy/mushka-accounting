@@ -31,6 +31,19 @@ export class DashboardComponent implements OnInit {
   };
   defaultPeriod = 12;
 
+
+  popularityCHartOptions: any = {
+    responsive: true,
+    scales: {
+      xAxes: [{
+        ticks: {
+          suggestedMin: 15,
+          autoSkip: false
+        }
+      }]
+    }
+  };
+
   periods = [
     { period: 3, desc: '3 месяца' },
     { period: 6, desc: '6 месяцев' },
