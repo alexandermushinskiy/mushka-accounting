@@ -9,7 +9,7 @@ import { SelectProduct } from '../../../../shared/models/select-product.model';
   styleUrls: ['./filters-modal.component.scss']
 })
 export class FiltersModalComponent implements OnInit {
-  @Input() title = 'Список товаров';
+  @Input() title = 'Фильтрация по товарам';
   @Output() onApply = new EventEmitter<string[]>();
   @Output() onClose = new EventEmitter<void>();
   

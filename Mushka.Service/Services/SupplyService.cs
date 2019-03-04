@@ -194,12 +194,25 @@ namespace Mushka.Service.Services
                     .ThenBy(supply => supply.RequestDate)
                     .ToList();
 
-            var products = await productRepository.GetAsync(prod => productIds.Contains(prod.Id), cancellationToken);
+            var productIdsList = productIds.ToList();
+            if (productIdsList.Count == 0)
+            {
+                productIdsList = supplies.SelectMany(sup => sup.Products)
+                    .Select(supProd => supProd.ProductId)
+                    .ToList();
+            }
+
+            var products = (productIdsList.Count == 0
+                ? await productRepository.GetAllAsync(cancellationToken)
+                : await productRepository.GetAsync(prod => productIdsList.Contains(prod.Id), cancellationToken))
+                    .OrderBy(prod => prod.Name)
+                    .ThenBy(prod => prod.VendorCode)
+                    .ToList();
             
             var fileContent = supplyExcelService.ExportSupplies(supplies, products);
             var exportedFile = new ExportedFile(ExportFileName, ExportContentType, fileContent);
 
-            return CreateInfoValidationResponse(exportedFile, "The orders were exported successfully.");
+            return CreateInfoValidationResponse(exportedFile, "The supplies with products were exported successfully.");
         }
     }
 }

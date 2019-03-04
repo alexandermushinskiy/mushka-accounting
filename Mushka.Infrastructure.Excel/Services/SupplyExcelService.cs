@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using Mushka.Domain.Entities;
@@ -16,6 +17,7 @@ namespace Mushka.Infrastructure.Excel.Services
         public Stream ExportSupplies(IEnumerable<Supply> supplies, IEnumerable<Product> products)
         {
             var suppliesList = supplies.ToList();
+            var productsList = products.ToList();
 
             var template = GetTemplate(ExportSupplyProductsTemplateName);
 
@@ -24,25 +26,33 @@ namespace Mushka.Infrastructure.Excel.Services
                 var worksheet = excelPackage.Workbook.Worksheets[0];
 
                 var rowIndex = StartRowIndex;
-                SetHeader(worksheet, rowIndex - 1);
-                foreach (var product in products)
+                var productIndex = 0;
+                foreach (var product in productsList)
                 {
-                    var productIndex = rowIndex;
+                    var productRowIndex = rowIndex;
+                    var productSupplies = suppliesList.Where(sup => sup.Products.Any(prod => prod.ProductId == product.Id)).ToList();
                     var order = 1;
-                    foreach (var supply in suppliesList.Where(sup => sup.Products.Any(prod => prod.ProductId == product.Id)))
+                    foreach (var supply in productSupplies)
                     {
                         var supplyProduct = supply.Products.Single(prod => prod.ProductId == product.Id);
 
-                        worksheet.Cells[rowIndex, 2].Value = order;
-                        worksheet.Cells[rowIndex, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                        worksheet.Cells[rowIndex, 3].Value = supply.Supplier.Name;
-                        worksheet.Cells[rowIndex, 4].Value = supply.ReceivedDate;
-                        worksheet.Cells[rowIndex, 4].Style.Numberformat.Format = "dd.mm.yyyy";
-                        worksheet.Cells[rowIndex, 5].Value = supplyProduct.UnitPrice;
-                        worksheet.Cells[rowIndex, 5].Style.Numberformat.Format = CurrencyFormat;
-                        worksheet.Cells[rowIndex, 6].Value = supplyProduct.Quantity;
-                        worksheet.Cells[rowIndex, 7].Value = supplyProduct.UnitPrice * supplyProduct.Quantity;
-                        worksheet.Cells[rowIndex, 7].Style.Numberformat.Format = CurrencyFormat;
+                        worksheet.Cells[rowIndex, 3].Value = order;
+                        worksheet.Cells[rowIndex, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Cells[rowIndex, 3].Style.VerticalAlignment = ExcelVerticalAlignment.Top;
+                        worksheet.Cells[rowIndex, 4].Value = supply.Supplier.Name;
+                        worksheet.Cells[rowIndex, 4].Style.WrapText = true;
+                        worksheet.Cells[rowIndex, 4].Style.VerticalAlignment = ExcelVerticalAlignment.Top;
+                        worksheet.Cells[rowIndex, 5].Value = supply.ReceivedDate;
+                        worksheet.Cells[rowIndex, 5].Style.VerticalAlignment = ExcelVerticalAlignment.Top;
+                        worksheet.Cells[rowIndex, 5].Style.Numberformat.Format = "dd.mm.yyyy";
+                        worksheet.Cells[rowIndex, 6].Value = supplyProduct.UnitPrice;
+                        worksheet.Cells[rowIndex, 6].Style.Numberformat.Format = CurrencyFormat;
+                        worksheet.Cells[rowIndex, 6].Style.VerticalAlignment = ExcelVerticalAlignment.Top;
+                        worksheet.Cells[rowIndex, 7].Value = supplyProduct.Quantity;
+                        worksheet.Cells[rowIndex, 7].Style.VerticalAlignment = ExcelVerticalAlignment.Top;
+                        worksheet.Cells[rowIndex, 8].Value = supplyProduct.UnitPrice * supplyProduct.Quantity;
+                        worksheet.Cells[rowIndex, 8].Style.Numberformat.Format = CurrencyFormat;
+                        worksheet.Cells[rowIndex, 8].Style.VerticalAlignment = ExcelVerticalAlignment.Top;
 
                         rowIndex++;
                         order++;
@@ -58,45 +68,43 @@ namespace Mushka.Infrastructure.Excel.Services
                     //    range.Style.Border.BorderAround(ExcelBorderStyle.Thin);
                     //}
 
-                    using (var range = worksheet.Cells[productIndex, 1, rowIndex - 1, 1])
+                    using (var range = worksheet.Cells[productRowIndex, 1, rowIndex - 1, 1])
                     {
                         range.Merge = true;
-                        range.Value = product.Name + "\r" + product.VendorCode + ( product.Size != null ? $"\r{product.Size.Name}" : "" );
+                        range.Value = product.Name + (product.Size != null ? $" ({product.Size.Name})" : "");
                         range.Style.WrapText = true;
                         range.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                         range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     }
 
-                    using (var range = worksheet.Cells[rowIndex - 1, 1, rowIndex - 1, 7])
+                    using (var range = worksheet.Cells[productRowIndex, 2, rowIndex - 1, 2])
+                    {
+                        range.Merge = true;
+                        range.Value = product.VendorCode;
+                        range.Style.WrapText = true;
+                        range.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                        range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    }
+                    
+                    // set separator between products
+                    using (var range = worksheet.Cells[rowIndex - 1, 1, rowIndex - 1, 8])
                     {
                         range.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
                     }
 
-                    //rowIndex++;
+                    if (productsList.Count > 1 && productIndex % 2 == 0)
+                    {
+                        using (var range = worksheet.Cells[productRowIndex, 1, rowIndex - 1, 8])
+                        {
+                            range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            range.Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml("#DDEBF7"));
+                        }
+                    }
+
+                    productIndex++;
                 }
 
                 return new MemoryStream(excelPackage.GetAsByteArray());
-            }
-        }
-
-        private void SetHeader(ExcelWorksheet worksheet, int rowIndex)
-        {
-            worksheet.Cells[rowIndex, 1].Value = "Товар";
-            worksheet.Cells[rowIndex, 2].Value = "№";
-            worksheet.Cells[rowIndex, 3].Value = "Поставщик";
-            worksheet.Cells[rowIndex, 4].Value = "Дата\r\nпоступления";
-            worksheet.Cells[rowIndex, 4].Style.WrapText = true;
-            worksheet.Cells[rowIndex, 5].Value = "Цена\r\nза единицу";
-            worksheet.Cells[rowIndex, 5].Style.WrapText = true;
-            worksheet.Cells[rowIndex, 6].Value = "Количество\r\nв поставке";
-            worksheet.Cells[rowIndex, 6].Style.WrapText = true;
-            worksheet.Cells[rowIndex, 7].Value = "На сумму";
-
-            using (var range = worksheet.Cells[rowIndex, 1, rowIndex, 7])
-            {
-                range.Style.Border.BorderAround(ExcelBorderStyle.Thin);
-                range.Style.Border.Bottom.Style = ExcelBorderStyle.Double;
-                range.Style.Font.Size = 12;
             }
         }
     }
