@@ -101,7 +101,7 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
   resetFilters() {
     this.updateDatatableRows(this.orders);
   }
-  
+
   onExportAllToCSV(fileSuffix: string) {
     this.loadingIndicator = true;
     this.ordersService.export(this.orders.map(ord => ord.id))
@@ -192,7 +192,7 @@ export class OrdersListComponent extends SortableDatatableComponent implements O
     this.orderRows = orders.map((el, index) => new OrderTableRow(el, index));
     this.shown = orders.length;
   }
-  
+
   private onExportSuccess(file: Blob) {
     FileSaver.saveAs(file, this.generateFileName(), file.type);
     this.loadingIndicator = false;

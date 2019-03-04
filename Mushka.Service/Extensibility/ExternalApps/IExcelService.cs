@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Mushka.Domain.Entities;
 
@@ -9,7 +10,5 @@ namespace Mushka.Service.Extensibility.ExternalApps
         Stream ExportOrders(string title, IEnumerable<Order> orders);
 
         Stream ExportProducts(string title, IEnumerable<Product> products);
-
-        Stream ExporSupplies(string title, IEnumerable<Supply> supplies);
     }
 }

@@ -12,6 +12,6 @@ namespace Mushka.Service.Extensibility.Services
     {
         Task<ValidationResponse<IEnumerable<Supply>>> GetByProductsAsync(IEnumerable<Guid> productIds, CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<ValidationResponse<ExportedFile>> ExportAsync(string title, IEnumerable<Guid> supplyIds, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ValidationResponse<ExportedFile>> ExportAsync(IEnumerable<Guid> supplyIds, IEnumerable<Guid> productIds, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

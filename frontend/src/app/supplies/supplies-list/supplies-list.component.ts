@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModalRef, NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as FileSaver from 'file-saver';
 
 import { SuppliesService } from '../../core/api/supplies.service';
-import { Supply } from '../shared/models/supply.model';
 import { SupplyTableRow } from '../shared/models/supply-table-row.model';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { SupplyFilter } from '../../shared/filters/supply.filter';
@@ -11,6 +11,7 @@ import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatabl
 import { QuickFilter } from '../../shared/filters/quick-filter';
 import { SupplyQuickFilter } from '../../shared/filters/supply-quick.filter';
 import { SupplyList } from '../shared/models/supply-list.model';
+import { DatetimeService } from '../../core/datetime/datetime.service';
 
 @Component({
   selector: 'mk-supplies-list',
@@ -27,6 +28,7 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
   shown = 0;
   supplyToDelete: SupplyTableRow;
   supplyFilters: QuickFilter[];
+  filteredProducts: string[] = [];
 
   private modalRef: NgbModalRef;
   private readonly modalConfig: NgbModalOptions = {
@@ -44,6 +46,7 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
               private modalService: NgbModal,
               private suppliesService: SuppliesService,
               private supplyQuickFilter: SupplyQuickFilter,
+              private dateTimeService: DatetimeService,
               private notificationsService: NotificationsService) {
     super();
 
@@ -56,7 +59,7 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
 
   ngOnInit() {
     this.loadSupplies();
-    
+
     this.supplyFilters = this.supplyQuickFilter.getFilters();
   }
 
@@ -82,6 +85,7 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
   }
 
   applyQuickFilter(selectedProducts: string[]) {
+    this.filteredProducts = selectedProducts;
     this.loadingIndicator = true;
     this.closeModal();
 
@@ -95,9 +99,10 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
   }
 
   resetFilters() {
+    this.filteredProducts = [];
     this.updateDatatableRows(this.supplies);
   }
-  
+
   delete(supply: SupplyTableRow) {
     setTimeout(() => {
       this.supplyToDelete = supply;
@@ -120,6 +125,24 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
     if (this.modalRef) {
       this.modalRef.close();
     }
+  }
+
+  onExportAllToCSV(fileSuffix: string) {
+    this.loadingIndicator = true;
+    this.suppliesService.export(this.supplies.map(sup => sup.id))
+      .subscribe(
+        (file: Blob) => this.onExportSuccess(file),
+        (error: string) => this.onExportFailed(error)
+      );
+  }
+
+  onExportFilteredToCSV(fileSuffix: string) {
+    this.loadingIndicator = true;
+    this.suppliesService.export(this.supplyRows.map(sup => sup.id), this.filteredProducts)
+      .subscribe(
+        (file: Blob) => this.onExportSuccess(file),
+        (error: string) => this.onExportFailed(error)
+      );
   }
 
   private onDeleteSuccess() {
@@ -160,5 +183,20 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
   private updateDatatableRows(supplies: SupplyList[]) {
     this.supplyRows = supplies.map((el, index) => new SupplyTableRow(el, index));
     this.shown = supplies.length;
+  }
+
+  private onExportSuccess(file: Blob) {
+    FileSaver.saveAs(file, this.generateFileName(), file.type);
+    this.loadingIndicator = false;
+  }
+
+  private onExportFailed(error: string) {
+    // this.errors = [ error ];
+    this.loadingIndicator = false;
+  }
+
+  private generateFileName(): string {
+    const postfix = this.dateTimeService.toString(new Date(), 'YYYY-MM-DD-HH-mm');
+    return `mushka_export_orders-${postfix}.xlsx`;
   }
 }

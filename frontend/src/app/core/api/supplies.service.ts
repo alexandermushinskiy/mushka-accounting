@@ -53,11 +53,13 @@ export class SuppliesService {
       .catch((res: any) => throwError(res.error.messages));
   }
 
-  private convertToRequestData(supply: Supply): any {
-    return {
-      supplierId: supply.supplierId,
-      requestDate: supply.requestDate,
-      receivedDate: supply.receivedDate,
+  export(supplyIds: string[], productIds: string[] = []): Observable<Blob> {
+    const requestBody = {
+      supplyIds: supplyIds,
+      productIds: productIds
     };
+    return this.http.post(`${this.endPoint}/export`, requestBody, { responseType: 'blob', observe: 'response' })
+      .map((res: any) => res.body)
+      .catch((res: any) => throwError(res.error.messages));
   }
 }

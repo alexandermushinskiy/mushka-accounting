@@ -9,6 +9,7 @@ namespace Mushka.Infrastructure.Excel
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<ExcelService>().As<IExcelService>();
+            builder.RegisterType<SupplyExcelService>().As<ISupplyExcelService>();
         }
     }
 }

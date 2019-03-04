@@ -42,14 +42,14 @@ namespace Mushka.Tests.Service.Services
         private readonly Mock<IStorage> storageMock;
         private readonly Mock<IProductRepository> productRepositoryMock;
         private readonly Mock<ISupplyRepository> supplyRepositoryMock;
-        private readonly Mock<IExcelService> excelServiceMock;
+        private readonly Mock<ISupplyExcelService> supplyExcelServiceMock;
         private readonly SupplyService supplyService;
 
         public SupplyServiceTest()
         {
             supplyRepositoryMock = MockRepository.Create<ISupplyRepository>();
             productRepositoryMock = MockRepository.Create<IProductRepository>();
-            excelServiceMock = MockRepository.Create<IExcelService>();
+            supplyExcelServiceMock = MockRepository.Create<ISupplyExcelService>();
 
             var loggerFactory = MockRepository
                 .Create<ILoggerFactory>()
@@ -63,7 +63,7 @@ namespace Mushka.Tests.Service.Services
 
             supplyService = new SupplyService(
                 storageMock.Object,
-                excelServiceMock.Object,
+                supplyExcelServiceMock.Object,
                 loggerFactory);
         }
 

@@ -23,16 +23,16 @@ namespace Mushka.Service.Services
         private readonly IStorage storage;
         private readonly ISupplyRepository supplyRepository;
         private readonly IProductRepository productRepository;
-        private readonly IExcelService excelService;
+        private readonly ISupplyExcelService supplyExcelService;
 
         public SupplyService(
             IStorage storage,
-            IExcelService excelService,
+            ISupplyExcelService supplyExcelService,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             this.storage = storage;
-            this.excelService = excelService;
+            this.supplyExcelService = supplyExcelService;
 
             supplyRepository = storage.GetRepository<ISupplyRepository>();
             productRepository = storage.GetRepository<IProductRepository>();
@@ -180,7 +180,7 @@ namespace Mushka.Service.Services
             return CreateInfoValidationResponse(supply, $"Supply with id {supplyId} was successfully deleted.");
         }
         
-        public async Task<ValidationResponse<ExportedFile>> ExportAsync(string title, IEnumerable<Guid> supplyIds, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<ValidationResponse<ExportedFile>> ExportAsync(IEnumerable<Guid> supplyIds, IEnumerable<Guid> productIds, CancellationToken cancellationToken = default(CancellationToken))
         {
             var includes = new[]
             {
@@ -190,11 +190,13 @@ namespace Mushka.Service.Services
 
             IEnumerable<Supply> supplies =
                 (await supplyRepository.GetAsync(sup => supplyIds.Contains(sup.Id), includes, cancellationToken))
-                .OrderBy(supply => supply.Supplier.Name)
-                .ThenBy(supply => supply.RequestDate)
-                .ToList();
+                    .OrderBy(supply => supply.Supplier.Name)
+                    .ThenBy(supply => supply.RequestDate)
+                    .ToList();
+
+            var products = await productRepository.GetAsync(prod => productIds.Contains(prod.Id), cancellationToken);
             
-            var fileContent = excelService.ExporSupplies(title, supplies);
+            var fileContent = supplyExcelService.ExportSupplies(supplies, products);
             var exportedFile = new ExportedFile(ExportFileName, ExportContentType, fileContent);
 
             return CreateInfoValidationResponse(exportedFile, "The orders were exported successfully.");

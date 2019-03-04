@@ -91,8 +91,8 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> Export([FromBody] ExportRequestModel exportRequestModel)
         {
             var exportValidationResponse = await supplyService.ExportAsync(
-                exportRequestModel.Title,
                 exportRequestModel.SupplyIds,
+                exportRequestModel.ProductIds,
                 cancellationTokenSourceProvider.Get().Token);
 
             if (exportValidationResponse.IsValid)
