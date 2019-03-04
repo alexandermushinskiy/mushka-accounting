@@ -6,24 +6,33 @@ using System.Threading.Tasks;
 using Mushka.Core.Extensibility.Logging;
 using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
+using Mushka.Domain.Comparers;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Service.Extensibility.Dto;
+using Mushka.Service.Extensibility.ExternalApps;
 using Mushka.Service.Extensibility.Services;
 
 namespace Mushka.Service.Services
 {
     internal class SupplyService : ServiceBase<Supply>, ISupplyService
     {
+        private const string ExportContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        private const string ExportFileName = "mushka_export_supply_products.xlsx";
+
         private readonly IStorage storage;
         private readonly ISupplyRepository supplyRepository;
         private readonly IProductRepository productRepository;
+        private readonly ISupplyExcelService supplyExcelService;
 
         public SupplyService(
             IStorage storage,
+            ISupplyExcelService supplyExcelService,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             this.storage = storage;
+            this.supplyExcelService = supplyExcelService;
 
             supplyRepository = storage.GetRepository<ISupplyRepository>();
             productRepository = storage.GetRepository<IProductRepository>();
@@ -35,6 +44,29 @@ namespace Mushka.Service.Services
                 .OrderBy(supply => supply.Supplier.Name)
                 .ThenBy(supply => supply.RequestDate)
                 .ToList();
+
+            var message = supplies.Any()
+                ? "Supplies were successfully retrieved."
+                : "No supplies found.";
+
+            return CreateInfoValidationResponse(supplies, message);
+        }
+
+        public async Task<ValidationResponse<IEnumerable<Supply>>> GetByProductsAsync(IEnumerable<Guid> productIds, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var productIdsList = productIds.ToList();
+
+            var includes = new []
+            {
+                nameof(Supply.Supplier),
+                nameof(Supply.Products)
+            };
+
+            IEnumerable<Supply> supplies = 
+                (await supplyRepository.GetAsync(sup => sup.Products.Any(prod => productIdsList.Contains(prod.ProductId)), includes, cancellationToken))
+                    .OrderBy(supply => supply.Supplier.Name)
+                    .ThenBy(supply => supply.RequestDate)
+                    .ToList();
 
             var message = supplies.Any()
                 ? "Supplies were successfully retrieved."
@@ -101,6 +133,19 @@ namespace Mushka.Service.Services
                 }
             }
 
+            foreach (var removedProduct in storedSupply.Products.Except(supply.Products, new SupplyProductComparer()))
+            {
+                var storedProduct = await productRepository.GetByIdAsync(removedProduct.ProductId, cancellationToken);
+
+                if (storedProduct == null)
+                {
+                    return CreateWarningValidationResponse($"Product with id {removedProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                }
+
+                storedProduct.Quantity -= removedProduct.Quantity;
+                productRepository.Update(storedProduct);
+            }
+
             var updatedSupply = supplyRepository.Update(supply);
             await storage.SaveAsync(cancellationToken);
 
@@ -133,6 +178,41 @@ namespace Mushka.Service.Services
             await storage.SaveAsync(cancellationToken);
 
             return CreateInfoValidationResponse(supply, $"Supply with id {supplyId} was successfully deleted.");
+        }
+        
+        public async Task<ValidationResponse<ExportedFile>> ExportAsync(IEnumerable<Guid> supplyIds, IEnumerable<Guid> productIds, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var includes = new[]
+            {
+                nameof(Supply.Supplier),
+                nameof(Supply.Products)
+            };
+
+            IEnumerable<Supply> supplies =
+                (await supplyRepository.GetAsync(sup => supplyIds.Contains(sup.Id), includes, cancellationToken))
+                    .OrderBy(supply => supply.Supplier.Name)
+                    .ThenBy(supply => supply.RequestDate)
+                    .ToList();
+
+            var productIdsList = productIds.ToList();
+            if (productIdsList.Count == 0)
+            {
+                productIdsList = supplies.SelectMany(sup => sup.Products)
+                    .Select(supProd => supProd.ProductId)
+                    .ToList();
+            }
+
+            var products = (productIdsList.Count == 0
+                ? await productRepository.GetAllAsync(cancellationToken)
+                : await productRepository.GetAsync(prod => productIdsList.Contains(prod.Id), cancellationToken))
+                    .OrderBy(prod => prod.Name)
+                    .ThenBy(prod => prod.VendorCode)
+                    .ToList();
+            
+            var fileContent = supplyExcelService.ExportSupplies(supplies, products);
+            var exportedFile = new ExportedFile(ExportFileName, ExportContentType, fileContent);
+
+            return CreateInfoValidationResponse(exportedFile, "The supplies with products were exported successfully.");
         }
     }
 }

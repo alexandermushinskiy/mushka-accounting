@@ -85,7 +85,7 @@ namespace Mushka.WebApi
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
             //-------------------------
 
-            // Delivery
+            // Supply
             CreateMap<SupplyRequestModel, Supply>().ConvertUsing<SupplyRequestConverter>();
             CreateMap<Supply, SupplyModel>().ConvertUsing<SupplyConverter>();
 
@@ -94,8 +94,13 @@ namespace Mushka.WebApi
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
 
-            CreateMap<ValidationResponse<IEnumerable<Supply>>, SuppliesResponseModel>()
-                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SupplyResponseResolver>())
+            //CreateMap<ValidationResponse<IEnumerable<Supply>>, SuppliesResponseModel>()
+            //    .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SupplyResponseResolver>())
+            //    .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+            //    .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+
+            CreateMap<ValidationResponse<IEnumerable<Supply>>, SuppliesListResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SuppliesListResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
             //-------------------------

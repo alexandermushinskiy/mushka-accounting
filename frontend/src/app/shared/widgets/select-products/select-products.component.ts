@@ -19,6 +19,7 @@ export class SelectProductsComponent implements OnInit, ControlValueAccessor {
   @Input() notFoundText = 'Товар не найден';
   @Input() placeholder = 'Выберете товар';
   @Input() canClearAll = true;
+  @Input() isMultiple = false;
   @Output() onProductSelected = new EventEmitter<SelectProduct>();
   @Output() onClear = new EventEmitter<any>();
 

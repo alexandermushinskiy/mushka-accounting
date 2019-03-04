@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Mushka.Core.Extensibility.Providers;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
+using Mushka.Domain.Extensibility.Entities;
 using Mushka.Service.Extensibility.Services;
 using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Expenses;
@@ -60,8 +61,7 @@ namespace Mushka.WebApi.Controllers
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Put(Guid id, [FromBody]ExpenseRequestModel expenseRequest)
         {
-            var expense = mapper.Map<ExpenseRequestModel, Expense>(expenseRequest);
-            expense.Id = id;
+            var expense = mapper.Map<ExpenseRequestModel, Expense>(expenseRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var expenseResponse = await expenseService.UpdateAsync(expense, cancellationTokenSourceProvider.Get().Token);
             var clientResponse = mapper.Map<ValidationResponse<Expense>, ExpenseResponseModel>(expenseResponse);

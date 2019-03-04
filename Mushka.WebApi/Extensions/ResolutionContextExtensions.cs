@@ -2,7 +2,7 @@
 using AutoMapper;
 using Mushka.Domain.Extensibility.Entities;
 
-namespace Mushka.Accounting.WebApi.Extensions
+namespace Mushka.WebApi.Extensions
 {
     public static class ResolutionContextExtensions
     {

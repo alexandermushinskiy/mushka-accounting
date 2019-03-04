@@ -46,7 +46,7 @@ export class SupplyComponent implements OnInit {
 
     Observable.forkJoin(
       this.suppliersService.getAll(),
-      this.productsService.getInStock(false)
+      this.productsService.getSelect()
       ).subscribe(([suppliers, products]) => {
         this.suppliers = suppliers;
         this.productsList = products;

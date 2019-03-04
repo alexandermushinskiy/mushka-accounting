@@ -14,6 +14,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
     internal class AnalyticsRepository : RepositoryBase, IAnalyticsRepository
     {
         private static readonly Guid SocksCategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C");
+        private const int PopularityMinSoldCount = 15;
 
         public AnalyticsRepository(MushkaDbContext context) : base(context)
         {
@@ -35,15 +36,16 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 .Where(op => op.Product.CategoryId == SocksCategoryId)
                 .Include(op => op.Product.Size)
                 .GroupBy(op => op.Product)
-                .Select(res => new { Product = res.Key, Count = res.Count() });
+                .Select(res => new { Product = res.Key, SoldQuantity = res.Sum(x => x.Quantity) })
+                .Where(res => res.SoldQuantity > PopularityMinSoldCount);
 
-            query = popularity == Popularity.Popular ? query.OrderByDescending(res => res.Count) : query.OrderBy(res => res.Count);
+            query = popularity == Popularity.Popular ? query.OrderByDescending(res => res.SoldQuantity) : query.OrderBy(res => res.SoldQuantity);
             
             var result = await query.Take(topCount)
                 .ToListAsync(cancellationToken);
 
             return result
-                .Select(res => new PopularProduct(res.Product.Name, res.Product.Size.Name, res.Product.VendorCode, res.Count));
+                .Select(res => new PopularProduct(res.Product.Name, res.Product.Size.Name, res.Product.VendorCode, res.SoldQuantity));
         }
 
         public async Task<IEnumerable<PopularCity>> GetPopularCities(int topCount, CancellationToken cancellationToken = default(CancellationToken))

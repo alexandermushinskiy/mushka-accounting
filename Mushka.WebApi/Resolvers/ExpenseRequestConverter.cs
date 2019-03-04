@@ -2,6 +2,7 @@
 using Mushka.Core.Extensibility.Providers;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Expenses;
+using Mushka.WebApi.Extensions;
 
 namespace Mushka.WebApi.Resolvers
 {
@@ -17,7 +18,7 @@ namespace Mushka.WebApi.Resolvers
         public Expense Convert(ExpenseRequestModel source, Expense destination, ResolutionContext context) =>
             new Expense
             {
-                Id = guidProvider.NewGuid(),
+                Id = context.GetId() ?? guidProvider.NewGuid(),
                 CreatedOn = source.CreatedOn,
                 Cost = source.Cost,
                 CostMethod = source.CostMethod,

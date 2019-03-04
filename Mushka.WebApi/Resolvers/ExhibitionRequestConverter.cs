@@ -4,6 +4,7 @@ using AutoMapper;
 using Mushka.Core.Extensibility.Providers;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Exhibition;
+using Mushka.WebApi.Extensions;
 
 namespace Mushka.WebApi.Resolvers
 {
@@ -18,7 +19,7 @@ namespace Mushka.WebApi.Resolvers
 
         public Exhibition Convert(ExhibitionRequestModel source, Exhibition destination, ResolutionContext context)
         {
-            var exhibitionId = guidProvider.NewGuid();
+            var exhibitionId = context.GetId() ?? guidProvider.NewGuid();
 
             return new Exhibition
             {

@@ -4,6 +4,7 @@ using AutoMapper;
 using Mushka.Core.Extensibility.Providers;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Order;
+using Mushka.WebApi.Extensions;
 
 namespace Mushka.WebApi.Resolvers
 {
@@ -18,7 +19,7 @@ namespace Mushka.WebApi.Resolvers
 
         public Order Convert(OrderRequestModel source, Order destination, ResolutionContext context)
         {
-            var orderId = guidProvider.NewGuid();
+            var orderId = context.GetId() ?? guidProvider.NewGuid();
             var customerId = guidProvider.NewGuid();
             
             return new Order

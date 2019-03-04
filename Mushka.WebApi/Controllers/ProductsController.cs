@@ -7,6 +7,7 @@ using Mushka.Core.Extensibility.Providers;
 using Mushka.Core.Validation;
 using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
+using Mushka.Domain.Extensibility.Entities;
 using Mushka.Service.Extensibility.Services;
 using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Product;
@@ -38,8 +39,8 @@ namespace Mushka.WebApi.Controllers
             return actionResultProvider.Get(clientResponse);
         }
 
-        [HttpGet("instock")]
-        public async Task<IActionResult> GetInStock(bool inStock)
+        [HttpGet("select")]
+        public async Task<IActionResult> GetSelectProducts(bool inStock)
         {
             var products = await productService.GetInStockAsync(inStock, cancellationTokenSourceProvider.Get().Token);
             var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Product>>, SelectProductsResponseModel>(products);
@@ -97,8 +98,7 @@ namespace Mushka.WebApi.Controllers
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Put(Guid id, [FromBody]ProductRequestModel productRequest)
         {
-            var product = mapper.Map<ProductRequestModel, Product>(productRequest);
-            product.Id = id;
+            var product = mapper.Map<ProductRequestModel, Product>(productRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var productResponse = await productService.UpdateAsync(product, cancellationTokenSourceProvider.Get().Token);
             var clientResponse = mapper.Map<ValidationResponse<Product>, ProductResponseModel>(productResponse);
@@ -122,6 +122,25 @@ namespace Mushka.WebApi.Controllers
             var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Size>>, SizesResponseModel>(sizes);
 
             return actionResultProvider.Get(clientResponse);
+        }
+
+        [HttpPost("export")]
+        public async Task<IActionResult> Export([FromBody] ExportRequestModel exportRequestModel)
+        {
+            var exportValidationResponse = await productService.ExportAsync(
+                exportRequestModel.Title,
+                exportRequestModel.ProductIds,
+                cancellationTokenSourceProvider.Get().Token);
+
+            if (exportValidationResponse.IsValid)
+            {
+                return File(
+                    exportValidationResponse.Result.FileContent,
+                    exportValidationResponse.Result.ContentType,
+                    exportValidationResponse.Result.Name);
+            }
+
+            return actionResultProvider.GetFailedResult(exportValidationResponse);
         }
     }
 }

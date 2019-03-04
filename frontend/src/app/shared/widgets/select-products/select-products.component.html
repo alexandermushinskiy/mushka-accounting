@@ -1,19 +1,28 @@
 <ng-select
+      #select
       bindValue="id"
-      bindLabel="name"
+      [bindLabel]="isMultiple ? 'nameWithVendorCode' : 'name'"
       [items]="products"
-      [closeOnSelect]="true"
       [placeholder]="placeholder"
       [ngModel]="selectedId"
       [clearable]="canClearAll"
       [loading]="isLoading"
       [searchFn]="customSearchFn"
       [notFoundText]="notFoundText"
+      [multiple]="isMultiple"
+      [closeOnSelect]="!isMultiple"
       (change)="onChange($event)"
       (clear)="clear()">
+  <!-- <ng-template ng-header-tmp>
+    Custom header
+  </ng-template> -->
   <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-    <div class="product-name">{{ item.name }}</div>
-    <div class="text-muted">
+    <div *ngIf="!isMultiple; else multiple" class="product-name">{{ item.name }}</div>
+    <ng-template #multiple>
+      <mk-checkbox id="item-{{index}}" [checked]="item$.selected" [text]="item.name"></mk-checkbox>
+    </ng-template>
+
+    <div class="text-muted" [ngClass]="{'multiple': isMultiple}">
       <div class="row">
         <div class="col-md-4">
           <span class="title">Категория</span>
@@ -30,4 +39,8 @@
       </div>
     </div>
   </ng-template>
+  <ng-template ng-footer-tmp *ngIf="isMultiple">
+    <button class="btn btn-primary btn-close" type="button" (click)="select.close()">Закрыть</button>
+  </ng-template>
 </ng-select>
+

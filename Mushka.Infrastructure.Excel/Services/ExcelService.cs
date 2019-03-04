@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Mushka.Domain.Entities;
+using Mushka.Infrastructure.Excel.Extensions;
 using Mushka.Service.Extensibility.ExternalApps;
 using OfficeOpenXml;
-using OfficeOpenXml.FormulaParsing;
 using OfficeOpenXml.Style;
 
 namespace Mushka.Infrastructure.Excel.Services
 {
-    internal class ExcelService : IExcelService
+    internal class ExcelService : ExcelServiceBase, IExcelService
     {
         private const string ExportOrdersTemplateName = "Mushka.Infrastructure.Excel.templates.export_orders_template.xlsx";
-        private const int StartRowIndex = 8;
-        private const string CurrencyFormat = "### ### ##0.00";
-        private static readonly Guid SocksCategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C");
+        private const string ExportProductsTemplateName = "Mushka.Infrastructure.Excel.templates.export_products_template.xlsx";
 
         public Stream ExportOrders(string title, IEnumerable<Order> orders)
         {
@@ -31,9 +28,7 @@ namespace Mushka.Infrastructure.Excel.Services
                 var ordersTo = ordersList.Max(ord => ord.OrderDate).ToString("dd.MM.yyyy");
 
                 // set title
-                worksheet.Cells["B2"].Value = $"Список проданных товаров за период с {ordersFrom} по {ordersTo}";
-                worksheet.Cells["B2"].Style.Font.Size = 14;
-                worksheet.Cells["B2"].Style.Font.Bold = true;
+                worksheet.SetTitle($"Список проданных товаров за период с {ordersFrom} по {ordersTo}");
 
                 var orderProducts = ordersList
                     .SelectMany(order => order.Products)
@@ -55,7 +50,6 @@ namespace Mushka.Infrastructure.Excel.Services
                 var rowIndex = StartRowIndex;
                 var total = 0;
                 var totalCost = 0M;
-                var index = 1;
                 foreach (var orderProduct in orderProducts)
                 {
                     worksheet.Cells[rowIndex, 1].Value = rowIndex - StartRowIndex + 1;
@@ -96,7 +90,60 @@ namespace Mushka.Infrastructure.Excel.Services
             }
         }
 
-        private static Stream GetTemplate(string templateName) =>
-            Assembly.GetExecutingAssembly().GetManifestResourceStream(templateName);
+        public Stream ExportProducts(string title, IEnumerable<Product> products)
+        {
+            var template = GetTemplate(ExportProductsTemplateName);
+
+            using (var excelPackage = new ExcelPackage(template))
+            {
+                var worksheet = excelPackage.Workbook.Worksheets[0];
+                worksheet.SetTitle("Список товаров - сверка остатка");
+                
+                var productsList = products
+                    .Select(prod => new
+                    {
+                        prod.Name,
+                        prod.VendorCode,
+                        SizeName = prod.Size.Name,
+                        Sold = prod.Orders.Sum(ord => ord.Quantity),
+                        Received = prod.Supplies.Sum(sup => sup.Quantity),
+                        Balance = prod.Quantity
+                    })
+                    .OrderBy(prod => prod.Name)
+                    .ToList();
+
+                worksheet.Cells["C4"].Value = productsList.Count;
+                worksheet.Cells["C4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                var rowIndex = StartRowIndex;
+                foreach (var product in productsList)
+                {
+                    worksheet.Cells[rowIndex, 1].Value = rowIndex - StartRowIndex + 1;
+                    worksheet.Cells[rowIndex, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[rowIndex, 2].Value = product.Name;
+                    worksheet.Cells[rowIndex, 3].Value = product.VendorCode;
+                    worksheet.Cells[rowIndex, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[rowIndex, 4].Value = product.SizeName;
+                    worksheet.Cells[rowIndex, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[rowIndex, 5].Value = product.Received;
+                    worksheet.Cells[rowIndex, 6].Value = product.Sold;
+                    worksheet.Cells[rowIndex, 7].Value = product.Balance;
+
+                    if (product.Balance != product.Received - product.Sold)
+                    {
+                        worksheet.Cells[rowIndex, 8].Value = product.Received - product.Sold;
+                        using (ExcelRange range = worksheet.Cells[rowIndex, 1, rowIndex, 7])
+                        {
+                            range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            range.Style.Fill.BackgroundColor.SetColor(Color.Red);
+                        }
+                    }
+
+                    rowIndex++;
+                }
+
+                return new MemoryStream(excelPackage.GetAsByteArray());
+            }
+        }
     }
 }

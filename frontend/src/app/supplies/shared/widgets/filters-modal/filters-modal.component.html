@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ title }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <i class="ico ico-close"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <mk-select-products [products]="productsList"
+                      [canClearAll]="true"
+                      [isMultiple]="true"
+                      [(ngModel)]="selectedProducts">
+  </mk-select-products>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-light btn-cancel" type="button" (click)="close()">Отмена</button>
+  <button class="btn btn-primary" type="button" (click)="apply()">Применить</button>
+</div>

@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { Supply } from '../../supplies/shared/models/supply.model';
 import { ConverterService } from '../converter/converter.service';
 import { environment } from '../../../environments/environment';
+import { SupplyList } from '../../supplies/shared/models/supply-list.model';
 
 @Injectable()
 export class SuppliesService {
@@ -14,9 +15,18 @@ export class SuppliesService {
               private converterService: ConverterService) {
   }
 
-  getAll(): Observable<Supply[]> {
+  getAll(): Observable<SupplyList[]> {
     return this.http.get(this.endPoint)
-      .map((res: any) => this.converterService.convertToSupplies(res.data))
+      .map((res: any) => this.converterService.convertToSuppliesList(res.data))
+      .catch((res: any) => throwError(res.error.messages));
+  }
+
+  getFiltered(productIds: string[]): Observable<SupplyList[]> {
+    const requestBody = {
+      productIds: productIds
+    };
+    return this.http.post(`${this.endPoint}/filter`, requestBody)
+      .map((res: any) => this.converterService.convertToSuppliesList(res.data))
       .catch((res: any) => throwError(res.error.messages));
   }
 
@@ -43,11 +53,13 @@ export class SuppliesService {
       .catch((res: any) => throwError(res.error.messages));
   }
 
-  private convertToRequestData(supply: Supply): any {
-    return {
-      supplierId: supply.supplierId,
-      requestDate: supply.requestDate,
-      receivedDate: supply.receivedDate,
+  export(supplyIds: string[], productIds: string[] = []): Observable<Blob> {
+    const requestBody = {
+      supplyIds: supplyIds,
+      productIds: productIds
     };
+    return this.http.post(`${this.endPoint}/export`, requestBody, { responseType: 'blob', observe: 'response' })
+      .map((res: any) => res.body)
+      .catch((res: any) => throwError(res.error.messages));
   }
 }

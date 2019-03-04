@@ -4,6 +4,7 @@ using AutoMapper;
 using Mushka.Core.Extensibility.Providers;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Supplier;
+using Mushka.WebApi.Extensions;
 
 namespace Mushka.WebApi.Resolvers
 {
@@ -22,7 +23,7 @@ namespace Mushka.WebApi.Resolvers
 
         public Supplier Convert(SupplierRequestModel source, Supplier destination, ResolutionContext context)
         {
-            var supplierId = guidProvider.NewGuid();
+            var supplierId = context.GetId() ?? guidProvider.NewGuid();
 
             return new Supplier
             {

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Mushka.Core.Extensibility.Providers;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
+using Mushka.Domain.Extensibility.Entities;
 using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Extensibility.Services;
 using Mushka.WebApi.ClientModels;
@@ -73,8 +74,7 @@ namespace Mushka.WebApi.Controllers
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Put(Guid id, [FromBody]OrderRequestModel orderRequest)
         {
-            var order = mapper.Map<OrderRequestModel, Order>(orderRequest);
-            order.Id = id;
+            var order = mapper.Map<OrderRequestModel, Order>(orderRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var orderResponse = await orderService.UpdateAsync(order, cancellationTokenSourceProvider.Get().Token);
             var clientResponse = mapper.Map<ValidationResponse<Order>, OrderResponseModel>(orderResponse);

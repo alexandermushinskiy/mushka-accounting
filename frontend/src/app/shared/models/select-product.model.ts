@@ -10,6 +10,11 @@ export class SelectProduct {
   category: Category;
   size: Size;
 
+
+  get nameWithVendorCode(): string {
+    return `${this.name} (${this.vendorCode})`;
+  }
+
   constructor(data: any) {
     Object.assign(this, data);
   }

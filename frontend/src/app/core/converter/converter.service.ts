@@ -19,6 +19,7 @@ import { Exhibition } from '../../shared/models/exhibition.model';
 import { ExhibitionProduct } from '../../shared/models/exhibition-product.model';
 import { ExhibitionList } from '../../exhibitions/shared/models/exhibition-list.model';
 import { Expense } from '../../shared/models/expense.model';
+import { SupplyList } from '../../supplies/shared/models/supply-list.model';
 
 @Injectable()
 export class ConverterService {
@@ -125,6 +126,22 @@ export class ConverterService {
       email: source.email,
       position: source.position,
       city: source.city
+    });
+  }
+
+  convertToSuppliesList(response: any[]): SupplyList[] {
+    return response.map(res => this.convertToSupplyList(res));
+  }
+
+  convertToSupplyList(source: any): SupplyList {
+    return new SupplyList({
+      id: source.id,
+      supplierName: source.supplierName,
+      description: source.description,
+      receivedDate: this.datetimeService.toString(source.receivedDate),
+      cost: source.cost,
+      totalCost: source.totalCost,
+      productsAmount: source.productsAmount,
     });
   }
 

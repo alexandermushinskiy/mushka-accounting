@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Mushka.Core.Extensibility.Providers;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
+using Mushka.Domain.Extensibility.Entities;
 using Mushka.Service.Extensibility.Services;
 using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Supply;
@@ -32,7 +33,16 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var suppliesResponse = await supplyService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Supply>>, SuppliesResponseModel>(suppliesResponse);
+            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Supply>>, SuppliesListResponseModel>(suppliesResponse);
+
+            return actionResultProvider.Get(clientResponse);
+        }
+
+        [HttpPost("filter")]
+        public async Task<IActionResult> GetFiltered([FromBody]FiltersRequestModel filtersRequest)
+        {
+            var suppliesResponse = await supplyService.GetByProductsAsync(filtersRequest.ProductIds, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Supply>>, SuppliesListResponseModel>(suppliesResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -60,8 +70,7 @@ namespace Mushka.WebApi.Controllers
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Put(Guid id, [FromBody]SupplyRequestModel supplyRequest)
         {
-            var supply = mapper.Map<SupplyRequestModel, Supply>(supplyRequest);
-            supply.Id = id;
+            var supply = mapper.Map<SupplyRequestModel, Supply>(supplyRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var supplyResponse = await supplyService.UpdateAsync(supply, cancellationTokenSourceProvider.Get().Token);
             var clientResponse = mapper.Map<ValidationResponse<Supply>, SupplyResponseModel>(supplyResponse);
@@ -76,6 +85,25 @@ namespace Mushka.WebApi.Controllers
             var clientResponse = mapper.Map<ValidationResponse<Supply>, DeleteResponseModel>(supplyResponse);
 
             return actionResultProvider.Get(clientResponse);
+        }
+
+        [HttpPost("export")]
+        public async Task<IActionResult> Export([FromBody] ExportRequestModel exportRequestModel)
+        {
+            var exportValidationResponse = await supplyService.ExportAsync(
+                exportRequestModel.SupplyIds,
+                exportRequestModel.ProductIds,
+                cancellationTokenSourceProvider.Get().Token);
+
+            if (exportValidationResponse.IsValid)
+            {
+                return File(
+                    exportValidationResponse.Result.FileContent,
+                    exportValidationResponse.Result.ContentType,
+                    exportValidationResponse.Result.Name);
+            }
+
+            return actionResultProvider.GetFailedResult(exportValidationResponse);
         }
     }
 }

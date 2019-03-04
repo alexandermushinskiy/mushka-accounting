@@ -42,8 +42,9 @@ import { SelectProductsComponent } from './widgets/select-products/select-produc
 import { ProgressLinearComponent } from './widgets/progress-linear/progress-linear.component';
 import { PaymentMethodsDropdownComponent } from './widgets/payment-methods-dropdown/payment-methods-dropdown.component';
 import { DelayedInputComponent } from './widgets/delayed-input/delayed-input.component';
-import { OrderQuickFilter } from './filters/order-quick-filter';
+import { OrderQuickFilter } from './filters/order-quick.filter';
 import { DateRageModalComponent } from './widgets/daterage-modal/daterage-modal.component';
+import { SupplyQuickFilter } from './filters/supply-quick.filter';
 
 @NgModule({
   imports: [
@@ -141,7 +142,8 @@ import { DateRageModalComponent } from './widgets/daterage-modal/daterage-modal.
     DateRageModalComponent
   ],
   providers: [
-    OrderQuickFilter
+    OrderQuickFilter,
+    SupplyQuickFilter
   ]
 })
 

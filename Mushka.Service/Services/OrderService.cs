@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Mushka.Core.Extensibility.Logging;
 using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
+using Mushka.Domain.Comparers;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Service.Extensibility.Dto;
@@ -123,6 +124,19 @@ namespace Mushka.Service.Services
                     productRepository.Update(storedProduct);
                 }
             }
+            
+            foreach (var removedProduct in storedOrder.Products.Except(order.Products, new OrderProductComparer()))
+            {
+                var storedProduct = await productRepository.GetByIdAsync(removedProduct.ProductId, cancellationToken);
+
+                if (storedProduct == null)
+                {
+                    return CreateWarningValidationResponse($"Product with id {removedProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                }
+
+                storedProduct.Quantity += removedProduct.Quantity;
+                productRepository.Update(storedProduct);
+            }
 
             order.Customer.Id = storedOrder.Customer.Id;
             order.CustomerId = storedOrder.CustomerId;
@@ -132,7 +146,7 @@ namespace Mushka.Service.Services
 
             return CreateInfoValidationResponse(updatedOrder, $"Order with id {order.Id} was successfully updated.");
         }
-
+        
         public async Task<ValidationResponse<Order>> DeleteAsync(Guid orderId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var order = await orderRepository.GetByIdAsync(orderId, cancellationToken);
@@ -170,12 +184,12 @@ namespace Mushka.Service.Services
 
         public async Task<ValidationResponse<ExportedFile>> ExportAsync(string title, IEnumerable<Guid> orderIds, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var orders = (await orderRepository.GetForExportAsync(order => orderIds.Contains(order.Id), cancellationToken));
+            var orders = await orderRepository.GetForExportAsync(order => orderIds.Contains(order.Id), cancellationToken);
 
             var fileContent = excelService.ExportOrders(title, orders);
             var exportedFile = new ExportedFile(ExportFileName, ExportContentType, fileContent);
 
-            return CreateInfoValidationResponse(exportedFile, "The orders was exported successfully.");
+            return CreateInfoValidationResponse(exportedFile, "The orders were exported successfully.");
         }
     }
 }

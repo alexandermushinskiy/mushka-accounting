@@ -6,10 +6,14 @@
 
   <ItemGroup>
     <None Remove="templates\export_orders_template.xlsx" />
+    <None Remove="templates\export_products_template.xlsx" />
+    <None Remove="templates\export_supply_products_template.xlsx" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="templates\export_orders_template.xlsx" />
+    <EmbeddedResource Include="templates\export_products_template.xlsx" />
+    <EmbeddedResource Include="templates\export_supply_products_template.xlsx" />
   </ItemGroup>
 
   <ItemGroup>
