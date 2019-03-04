@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using Mushka.Domain.Comparers;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Infrastructure.DataAccess.Database;
+using Mushka.Infrastructure.DataAccess.Extensions;
 
 namespace Mushka.Infrastructure.DataAccess.Repositories
 {
@@ -24,6 +26,17 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                     .ThenInclude(supProd => supProd.Product)
                     .ThenInclude(supProd => supProd.Size)
                 .ToListAsync(cancellationToken);
+
+
+        public virtual async Task<IEnumerable<Supply>> GetAsync(
+            Expression<Func<Supply, bool>> predicate,
+            string[] includes,
+            CancellationToken cancellationToken = default(CancellationToken)) =>
+            await dbSet.Where(predicate)
+                .IncludeMultiple(includes)
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+
 
         public override async Task<Supply> GetByIdAsync(Guid id, CancellationToken cancellationToken = default(CancellationToken)) =>
             await Context.Supplies

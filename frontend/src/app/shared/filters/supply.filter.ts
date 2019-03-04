@@ -1,5 +1,5 @@
 import { FiltersBase } from './filter-base';
-import { Supply } from '../../supplies/shared/models/supply.model';
+import { SupplyList } from '../../supplies/shared/models/supply-list.model';
 
 export class SupplyFilter extends FiltersBase {
 
@@ -7,7 +7,7 @@ export class SupplyFilter extends FiltersBase {
     super();
   }
 
-  filter(supply: Supply): boolean {
+  filter(supply: SupplyList): boolean {
     return this.containsSearchKey(supply.supplierName, this.searchKey);
   }
 }

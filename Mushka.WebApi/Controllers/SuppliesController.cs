@@ -33,7 +33,16 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var suppliesResponse = await supplyService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Supply>>, SuppliesResponseModel>(suppliesResponse);
+            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Supply>>, SuppliesListResponseModel>(suppliesResponse);
+
+            return actionResultProvider.Get(clientResponse);
+        }
+
+        [HttpPost("filter")]
+        public async Task<IActionResult> GetFiltered([FromBody]FiltersRequestModel filtersRequest)
+        {
+            var suppliesResponse = await supplyService.GetByProductsAsync(filtersRequest.ProductIds, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Supply>>, SuppliesListResponseModel>(suppliesResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -76,6 +85,25 @@ namespace Mushka.WebApi.Controllers
             var clientResponse = mapper.Map<ValidationResponse<Supply>, DeleteResponseModel>(supplyResponse);
 
             return actionResultProvider.Get(clientResponse);
+        }
+
+        [HttpPost("export")]
+        public async Task<IActionResult> Export([FromBody] ExportRequestModel exportRequestModel)
+        {
+            var exportValidationResponse = await supplyService.ExportAsync(
+                exportRequestModel.Title,
+                exportRequestModel.SupplyIds,
+                cancellationTokenSourceProvider.Get().Token);
+
+            if (exportValidationResponse.IsValid)
+            {
+                return File(
+                    exportValidationResponse.Result.FileContent,
+                    exportValidationResponse.Result.ContentType,
+                    exportValidationResponse.Result.Name);
+            }
+
+            return actionResultProvider.GetFailedResult(exportValidationResponse);
         }
     }
 }

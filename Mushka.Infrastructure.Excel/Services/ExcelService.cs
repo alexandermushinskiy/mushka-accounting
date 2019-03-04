@@ -16,6 +16,7 @@ namespace Mushka.Infrastructure.Excel.Services
     {
         private const string ExportOrdersTemplateName = "Mushka.Infrastructure.Excel.templates.export_orders_template.xlsx";
         private const string ExportProductsTemplateName = "Mushka.Infrastructure.Excel.templates.export_products_template.xlsx";
+        private const string ExportSupplyProductsTemplateName = "Mushka.Infrastructure.Excel.templates.export_supply_products_template.xlsx";
         private const int StartRowIndex = 8;
         private const string CurrencyFormat = "### ### ##0.00";
         private static readonly Guid SocksCategoryId = Guid.Parse("88CD0F34-9D4A-4E45-BE97-8899A97FB82C");
@@ -149,6 +150,25 @@ namespace Mushka.Infrastructure.Excel.Services
 
                 return new MemoryStream(excelPackage.GetAsByteArray());
             }
+        }
+
+        public Stream ExporSupplies(string title, IEnumerable<Supply> supplies)
+        {
+            var suppliesList = supplies.ToList();
+            var template = GetTemplate(ExportSupplyProductsTemplateName);
+
+            using (var excelPackage = new ExcelPackage(template))
+            {
+                var worksheet = excelPackage.Workbook.Worksheets[0];
+                worksheet.SetTitle("Список поступлений товаров");
+
+                var rowIndex = StartRowIndex;
+                foreach (var supply in suppliesList)
+                {
+                }
+            }
+
+            throw new NotImplementedException();
         }
 
         private static Stream GetTemplate(string templateName) =>

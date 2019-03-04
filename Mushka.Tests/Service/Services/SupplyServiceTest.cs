@@ -10,6 +10,7 @@ using Mushka.Core.Extensibility.Logging;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Service.Extensibility.ExternalApps;
 using Mushka.Service.Services;
 using Mushka.Tests.Common;
 using Xunit;
@@ -41,12 +42,14 @@ namespace Mushka.Tests.Service.Services
         private readonly Mock<IStorage> storageMock;
         private readonly Mock<IProductRepository> productRepositoryMock;
         private readonly Mock<ISupplyRepository> supplyRepositoryMock;
+        private readonly Mock<IExcelService> excelServiceMock;
         private readonly SupplyService supplyService;
 
         public SupplyServiceTest()
         {
             supplyRepositoryMock = MockRepository.Create<ISupplyRepository>();
             productRepositoryMock = MockRepository.Create<IProductRepository>();
+            excelServiceMock = MockRepository.Create<IExcelService>();
 
             var loggerFactory = MockRepository
                 .Create<ILoggerFactory>()
@@ -58,7 +61,10 @@ namespace Mushka.Tests.Service.Services
                 .Setup(str => str.GetRepository<IProductRepository>(), productRepositoryMock.Object)
                 .Setup(str => str.GetRepository<ISupplyRepository>(), supplyRepositoryMock.Object);
 
-            supplyService = new SupplyService(storageMock.Object, loggerFactory);
+            supplyService = new SupplyService(
+                storageMock.Object,
+                excelServiceMock.Object,
+                loggerFactory);
         }
 
         [Category(CategoryName)]

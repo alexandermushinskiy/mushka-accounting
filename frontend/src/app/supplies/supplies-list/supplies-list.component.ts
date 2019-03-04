@@ -8,6 +8,9 @@ import { SupplyTableRow } from '../shared/models/supply-table-row.model';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { SupplyFilter } from '../../shared/filters/supply.filter';
 import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatable.component';
+import { QuickFilter } from '../../shared/filters/quick-filter';
+import { SupplyQuickFilter } from '../../shared/filters/supply-quick.filter';
+import { SupplyList } from '../shared/models/supply-list.model';
 
 @Component({
   selector: 'mk-supplies-list',
@@ -16,15 +19,23 @@ import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatabl
 })
 export class SuppliesListComponent extends SortableDatatableComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
-  supplies: Supply[];
+  @ViewChild('filters') filtersTmpl: ElementRef;
+  supplies: SupplyList[];
   supplyRows: SupplyTableRow[];
   loadingIndicator = false;
   total = 0;
   shown = 0;
   supplyToDelete: SupplyTableRow;
+  supplyFilters: QuickFilter[];
+
   private modalRef: NgbModalRef;
   private readonly modalConfig: NgbModalOptions = {
     windowClass: 'supply-modal',
+    backdrop: 'static',
+    size: 'sm'
+  };
+  private readonly filtersModalConfig: NgbModalOptions = {
+    windowClass: 'supply-filters-modal',
     backdrop: 'static',
     size: 'sm'
   };
@@ -32,6 +43,7 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
   constructor(private router: Router,
               private modalService: NgbModal,
               private suppliesService: SuppliesService,
+              private supplyQuickFilter: SupplyQuickFilter,
               private notificationsService: NotificationsService) {
     super();
 
@@ -44,6 +56,8 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
 
   ngOnInit() {
     this.loadSupplies();
+    
+    this.supplyFilters = this.supplyQuickFilter.getFilters();
   }
 
   onActive(event: any) {
@@ -63,6 +77,27 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
     this.updateDatatableRows(filteredSupplies);
   }
 
+  quickFilter(filter: QuickFilter) {
+    this.modalRef = this.modalService.open(this.filtersTmpl, this.filtersModalConfig);
+  }
+
+  applyQuickFilter(selectedProducts: string[]) {
+    this.loadingIndicator = true;
+    this.closeModal();
+
+    this.suppliesService.getFiltered(selectedProducts)
+      .subscribe(
+        (filteredSupplies: SupplyList[]) => {
+          this.updateDatatableRows(filteredSupplies);
+          this.loadingIndicator = false;
+        },
+        () => this.onLoadError());
+  }
+
+  resetFilters() {
+    this.updateDatatableRows(this.supplies);
+  }
+  
   delete(supply: SupplyTableRow) {
     setTimeout(() => {
       this.supplyToDelete = supply;
@@ -104,12 +139,12 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
 
     this.suppliesService.getAll()
       .subscribe(
-        (res: Supply[]) => this.onLoadSuccess(res),
+        (res: SupplyList[]) => this.onLoadSuccess(res),
         () => this.onLoadError()
       );
   }
 
-  private onLoadSuccess(supplies: Supply[]) {
+  private onLoadSuccess(supplies: SupplyList[]) {
     this.supplies = supplies;
     this.total = supplies.length;
     this.updateDatatableRows(supplies);
@@ -122,7 +157,7 @@ export class SuppliesListComponent extends SortableDatatableComponent implements
     this.notificationsService.danger('Ошибка', 'Невозможно загрузить все поставки');
   }
 
-  private updateDatatableRows(supplies: Supply[]) {
+  private updateDatatableRows(supplies: SupplyList[]) {
     this.supplyRows = supplies.map((el, index) => new SupplyTableRow(el, index));
     this.shown = supplies.length;
   }

@@ -4,8 +4,12 @@
                   [title]="'Поставки'"
                   [total]="total"
                   [shown]="shown"
+                  [quickFilters]="supplyFilters"
                   (onAddItem)="addSupply()"
-                  (onFilter)="filter($event)">
+                  (onFilter)="filter($event)"
+                  (onQuickFilter)="quickFilter($event)"
+                  (onQuickFilterReset)="resetFilters()"
+                  (onFilterReset)="resetFilters()">
     </mk-datatable-header>
   </div>
   <div class="list-page-body">
@@ -136,4 +140,11 @@
           (onClose)="closeModal()"
           (onConfirm)="confirmDelete();">
   </mk-confirmation>
+</ng-template>
+
+<ng-template #filters>
+  <mk-filters-modal
+              (onApply)="applyQuickFilter($event)"
+              (onClose)="closeModal()">
+  </mk-filters-modal>
 </ng-template>

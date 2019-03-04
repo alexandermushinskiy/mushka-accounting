@@ -11,7 +11,7 @@ import { OrderListFilter } from '../../shared/filters/order-list.filter';
 import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatable.component';
 import { LocalStorage } from 'ngx-webstorage';
 import { QuickFilter } from '../../shared/filters/quick-filter';
-import { OrderQuickFilter } from '../../shared/filters/order-quick-filter';
+import { OrderQuickFilter } from '../../shared/filters/order-quick.filter';
 import { DateRange } from '../../shared/models/data-range.mode';
 import { DatetimeService } from '../../core/datetime/datetime.service';
 

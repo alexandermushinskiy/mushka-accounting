@@ -70,6 +70,13 @@
 // .ng-input {
 //   display: none;
 // }
+.ng-select.ng-select-multiple
+.ng-select-container
+.ng-value-container
+.ng-value {
+  position: relative;
+  top: 3px;
+}
 
 .ng-select.ng-select-multiple
 .ng-select-container
@@ -142,4 +149,8 @@
 .ng-dropdown-panel.ng-select-bottom .ng-dropdown-panel-items .ng-option:last-child {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
+}
+
+.ng-dropdown-panel .ng-dropdown-footer {
+  padding: 0;
 }
