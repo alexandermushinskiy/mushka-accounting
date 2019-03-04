@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -15,7 +14,6 @@ namespace Mushka.Infrastructure.Excel.Services
     {
         private const string ExportOrdersTemplateName = "Mushka.Infrastructure.Excel.templates.export_orders_template.xlsx";
         private const string ExportProductsTemplateName = "Mushka.Infrastructure.Excel.templates.export_products_template.xlsx";
-        private const string ExportSupplyProductsTemplateName = "Mushka.Infrastructure.Excel.templates.export_supply_products_template.xlsx";
 
         public Stream ExportOrders(string title, IEnumerable<Order> orders)
         {

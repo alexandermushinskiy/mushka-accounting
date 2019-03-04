@@ -3,9 +3,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using Mushka.Domain.Entities;
+using Mushka.Infrastructure.Excel.Extensions;
 using Mushka.Service.Extensibility.ExternalApps;
 using OfficeOpenXml;
-using OfficeOpenXml.FormulaParsing;
 using OfficeOpenXml.Style;
 
 namespace Mushka.Infrastructure.Excel.Services
@@ -58,33 +58,8 @@ namespace Mushka.Infrastructure.Excel.Services
                         order++;
                     }
 
-                    //worksheet.Cells[rowIndex, 6].Formula = $"SUM(F{productIndex}:F{rowIndex})";
-                    //worksheet.Cells[rowIndex, 6].Calculate(new ExcelCalculationOption { AllowCirculareReferences = true });
-                    //worksheet.Cells[rowIndex, 7].Formula = $"SUM(G{productIndex}:G{rowIndex})";
-                    //worksheet.Cells[rowIndex, 7].Calculate(new ExcelCalculationOption { AllowCirculareReferences = true });
-
-                    //using ( var range = worksheet.Cells[rowIndex, 6, rowIndex, 7] )
-                    //{
-                    //    range.Style.Border.BorderAround(ExcelBorderStyle.Thin);
-                    //}
-
-                    using (var range = worksheet.Cells[productRowIndex, 1, rowIndex - 1, 1])
-                    {
-                        range.Merge = true;
-                        range.Value = product.Name + (product.Size != null ? $" ({product.Size.Name})" : "");
-                        range.Style.WrapText = true;
-                        range.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                        range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    }
-
-                    using (var range = worksheet.Cells[productRowIndex, 2, rowIndex - 1, 2])
-                    {
-                        range.Merge = true;
-                        range.Value = product.VendorCode;
-                        range.Style.WrapText = true;
-                        range.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                        range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    }
+                    worksheet.MergeRange(productRowIndex, 1, rowIndex - 1, 1, product.Name + (product.Size != null ? $" ({product.Size.Name})" : ""));
+                    worksheet.MergeRange(productRowIndex, 2, rowIndex - 1, 2, product.VendorCode);
                     
                     // set separator between products
                     using (var range = worksheet.Cells[rowIndex - 1, 1, rowIndex - 1, 8])
