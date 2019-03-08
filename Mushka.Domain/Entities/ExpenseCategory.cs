@@ -8,6 +8,7 @@
         Design = 4,
         WebSite = 5,
         Polygraphy = 6,
-        Promo = 7
+        Promo = 7,
+        Other = 101
     }
 }

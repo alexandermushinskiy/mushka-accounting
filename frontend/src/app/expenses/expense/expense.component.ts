@@ -28,7 +28,8 @@ export class ExpenseComponent implements OnInit {
     { id: ExpenseCategory.DESIGN, description: 'Дизайн' },
     { id: ExpenseCategory.WEBSITE, description: 'Веб сайт' },
     { id: ExpenseCategory.POLYGRAPHY, description: 'Полиграфия' },
-    { id: ExpenseCategory.PROMO, description: 'Промо' }
+    { id: ExpenseCategory.PROMO, description: 'Промо' },
+    { id: ExpenseCategory.OTHER, description: 'Другое' }
   ];
 
   constructor(private formBuilder: FormBuilder,

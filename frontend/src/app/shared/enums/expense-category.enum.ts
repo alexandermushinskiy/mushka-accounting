@@ -5,5 +5,6 @@ export enum ExpenseCategory {
   DESIGN = 4,
   WEBSITE = 5,
   POLYGRAPHY = 6,
-  PROMO = 7
+  PROMO = 7,
+  OTHER = 101
 }
