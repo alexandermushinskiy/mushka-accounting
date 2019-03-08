@@ -17,7 +17,7 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
   @Input() textField: string;
   @Input() initialValue: string;
   @Input() required: boolean;
-  @Input() isDisabled = false;
+  @Input() disabled = false;
   @Input() defaultValue: string;
   @Output() onSelectedValue = new EventEmitter<any>();
 
@@ -38,6 +38,10 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
   writeValue(value: any): void {
     if (value) {
       this.value = this.isComplex ? this.options.find(opt => opt[this.dataField] === value) : value;
+      
+      setTimeout(() => {
+        this.onChangeCallback(this.value);
+      }, 100);
     }
   }
 
@@ -45,25 +49,18 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
     this.onChangeCallback = fn;
   }
 
-  setDisabledState(isDisabled: boolean) {
-    this.isDisabled = isDisabled;
+  setDisabledState(disabled: boolean) {
+    this.disabled = disabled;
   }
 
   registerOnTouched() {
   }
 
-  onOptionSelect(option: string) {
+  onOptionSelect(option: any) {
     this.value = option;
 
     this.onChangeCallback(option);
     this.onSelectedValue.emit(option);
-  }
-
-  onObjectSelect(object: any) {
-    this.value = object;
-
-    this.onChangeCallback(object);
-    this.onSelectedValue.emit(object);
   }
 
   private onChangeCallback: any = () => {};

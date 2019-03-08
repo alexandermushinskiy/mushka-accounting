@@ -1,7 +1,7 @@
 <div ngbDropdown class="dropdown">
   <button type="button"
           class="btn form-control"
-          [disabled]="isDisabled"
+          [disabled]="disabled"
           [ngClass]="(!value && required) ? 'required-dropdown' : ''" ngbDropdownToggle id="dropdown">
     
     <span [ngClass]="{'placeholder': !value}">

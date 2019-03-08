@@ -312,7 +312,7 @@ export class ConverterService {
   convertToExpense(source: any): Expense {
     return new Expense({
       id: source.id,
-      createdOn: source.createdOn,
+      createdOn: this.datetimeService.toString(source.createdOn),
       cost: source.cost,
       costMethod: source.costMethod,
       category: source.category,
