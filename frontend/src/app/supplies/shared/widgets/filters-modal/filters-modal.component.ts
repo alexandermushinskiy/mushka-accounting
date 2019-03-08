@@ -15,6 +15,7 @@ export class FiltersModalComponent implements OnInit {
   
   selectedProducts: SelectProduct[] = [];
   productsList: SelectProduct[];
+  isError = false;
 
   constructor(private productsService: ProductsServce) { }
 
@@ -26,7 +27,12 @@ export class FiltersModalComponent implements OnInit {
   }
 
   apply() {
-    this.onApply.emit(this.selectedProducts.map(prod => prod.id));
+    if (this.selectedProducts.length === 0) {
+      this.isError = true;
+    } else {
+      this.isError = false;
+      this.onApply.emit(this.selectedProducts.map(prod => prod.id));
+    }
   }
 
   close() {

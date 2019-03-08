@@ -10,6 +10,7 @@
                       [isMultiple]="true"
                       [(ngModel)]="selectedProducts">
   </mk-select-products>
+  <span *ngIf="isError" class="validation-tip">Заполните поле и повторите попытку</span>
 </div>
 <div class="modal-footer">
   <button class="btn btn-light btn-cancel" type="button" (click)="close()">Отмена</button>

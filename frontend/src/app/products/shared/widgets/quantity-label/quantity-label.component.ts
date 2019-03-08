@@ -17,7 +17,7 @@ export class QuantityLabelComponent implements OnInit {
     if (this.quantity === 0 ) {
       return 'quantity-empty';
     }
-    return this.quantity > 10
+    return this.quantity > 15
       ? 'quantity'
       : 'quantity-almost-empty';
   }
