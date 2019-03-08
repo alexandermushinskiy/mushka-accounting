@@ -1,5 +1,6 @@
 import { PaymentMethod } from '../enums/payment-method.enum';
 import { ExpenseCategory } from '../enums/expense-category.enum';
+import { expenceCategory } from '../constants/expence-category.const';
 
 export class Expense {
   id: string;
@@ -18,25 +19,28 @@ export class Expense {
   getCategoryDescription(): string {
     switch(this.category) {
       case ExpenseCategory.ADVERTISING:
-        return 'Реклама';
+        return expenceCategory.advertising;
       
       case ExpenseCategory.EQUIPMENT:
-        return 'Оборудование';
+        return expenceCategory.equipment;
 
       case ExpenseCategory.PHOTOGRAPHY:
-        return 'Фото';
+        return expenceCategory.photography;
     
       case ExpenseCategory.DESIGN:
-        return 'Дизайн';
+        return expenceCategory.design;
 
       case ExpenseCategory.WEBSITE:
-        return 'Веб сайт';
+        return expenceCategory.website;
 
       case ExpenseCategory.POLYGRAPHY:
-        return 'Полиграфия';
+        return expenceCategory.polygraphy;
       
       case ExpenseCategory.PROMO:
-        return 'Промо';
+        return expenceCategory.promo;
+
+      case ExpenseCategory.OTHER:
+        return expenceCategory.other;
 
       default:
         return 'Unknown category';

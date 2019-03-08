@@ -7,6 +7,7 @@ import { ExpensesService } from '../../core/api/expenses.service';
 import { Expense } from '../../shared/models/expense.model';
 import { ExpenseCategory } from '../../shared/enums/expense-category.enum';
 import { DatetimeService } from '../../core/datetime/datetime.service';
+import { expenceCategory } from '../../shared/constants/expence-category.const';
 
 @Component({
   selector: 'mk-expense',
@@ -22,14 +23,14 @@ export class ExpenseComponent implements OnInit {
   isFormSubmitted = false;
   selectedcategory: { id: ExpenseCategory, description: string };
   categories = [
-    { id: ExpenseCategory.ADVERTISING, description: 'Реклама' },
-    { id: ExpenseCategory.EQUIPMENT, description: 'Оборудование' },
-    { id: ExpenseCategory.PHOTOGRAPHY, description: 'Фото' },
-    { id: ExpenseCategory.DESIGN, description: 'Дизайн' },
-    { id: ExpenseCategory.WEBSITE, description: 'Веб сайт' },
-    { id: ExpenseCategory.POLYGRAPHY, description: 'Полиграфия' },
-    { id: ExpenseCategory.PROMO, description: 'Промо' },
-    { id: ExpenseCategory.OTHER, description: 'Другое' }
+    { id: ExpenseCategory.ADVERTISING, description: expenceCategory.advertising },
+    { id: ExpenseCategory.EQUIPMENT, description: expenceCategory.equipment },
+    { id: ExpenseCategory.PHOTOGRAPHY, description: expenceCategory.photography },
+    { id: ExpenseCategory.DESIGN, description: expenceCategory.design },
+    { id: ExpenseCategory.WEBSITE, description: expenceCategory.website },
+    { id: ExpenseCategory.POLYGRAPHY, description: expenceCategory.polygraphy },
+    { id: ExpenseCategory.PROMO, description: expenceCategory.promo },
+    { id: ExpenseCategory.OTHER, description: expenceCategory.other }
   ];
 
   constructor(private formBuilder: FormBuilder,
