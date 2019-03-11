@@ -1,5 +1,5 @@
 import { DataTableRow } from '../../../shared/models/data-table-row.model';
-import { Size } from '../../../shared/models/size.model';
+import { ProductList } from '../../../shared/models/product-list.model';
 
 export class ProductTableRow extends DataTableRow {
   name: string;
@@ -11,9 +11,9 @@ export class ProductTableRow extends DataTableRow {
   lastDeliveryCount: number;
   totalCount: number;
   quantity: number;
-  size: Size;
+  sizeName: string;
 
-  constructor(elem, index: number = 0) {
+  constructor(elem: ProductList, index: number = 0) {
     super(elem, index);
 
     this.name = elem.name;
@@ -25,6 +25,6 @@ export class ProductTableRow extends DataTableRow {
     this.lastDeliveryCount = elem.lastDeliveryCount;
     this.totalCount = elem.totalCount;
     this.quantity = elem.quantity;
-    this.size = elem.size;
+    this.sizeName = elem.sizeName;
   }
 }

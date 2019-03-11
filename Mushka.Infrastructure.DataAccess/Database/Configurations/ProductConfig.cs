@@ -42,7 +42,8 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .HasColumnName("Quantity")
                 .HasDefaultValue(0);
 
-            builder.HasOne(product => product.Size)
+            builder
+                .HasOne(product => product.Size)
                 .WithMany(size => size.Products)
                 .HasForeignKey(product => product.SizeId);
 

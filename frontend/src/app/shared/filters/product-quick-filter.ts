@@ -1,16 +1,16 @@
-import { Product } from '../models/product.model';
 import { QuickFilter } from './quick-filter';
+import { ProductList } from '../models/product-list.model';
 
 export class ProductQuickFilter {
-  filterFinished(product: Product): boolean {
+  filterFinished(product: ProductList): boolean {
     return product.quantity === 0;
   }
 
-  filterAlmostFinished(product: Product): boolean {
+  filterAlmostFinished(product: ProductList): boolean {
     return product.quantity > 0 && product.quantity < 10;
   }
 
-  filterWithoutDeliveries(product: Product): boolean {
+  filterWithoutDeliveries(product: ProductList): boolean {
     return product.deliveriesCount === 0;
   }
 

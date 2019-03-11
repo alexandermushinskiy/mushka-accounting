@@ -9,12 +9,17 @@ export class Product {
   category: Category;
   categoryId: string;
   createdOn: string;
-  deliveriesCount: number;
-  lastDeliveryDate: string;
-  lastDeliveryCount: number;
-  totalCount: number;
-  quantity = 0;
   size: Size;
+  subProducts: SubProduct[];
+
+  constructor(data: any) {
+    Object.assign(this, data);
+  }
+}
+
+export class SubProduct {
+  productId: string;
+  quantity: number;
 
   constructor(data: any) {
     Object.assign(this, data);

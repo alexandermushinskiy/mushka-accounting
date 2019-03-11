@@ -9,7 +9,7 @@
             [clearable]="canClearAll"
             [loading]="isLoading"
             [notFoundText]="notFoundText"
-            [disabled]="isDisabled"
+            [disabled]="disabled"
             (change)="onChange($event)">
   <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
     <div *ngIf="!isMultiple">{{ item.name }}</div>

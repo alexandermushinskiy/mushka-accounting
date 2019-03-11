@@ -19,3 +19,13 @@ export class SelectProduct {
     Object.assign(this, data);
   }
 }
+
+export class Subproduct {
+  id: string;
+  name: string;
+  vendorCode: string;
+
+  constructor(data: any) {
+    Object.assign(this, data);
+  }
+}

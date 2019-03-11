@@ -7,15 +7,23 @@
   </div>
   <div class="modal-body">
     <mk-progress-linear [isLoading]="isLoading"></mk-progress-linear>
-    <div class="product-name">
-      <div class="form-group">
-        <label for="name" class="text-muted">Наименование</label>
-        <input type="text" id="name" class="form-control" formControlName="name" autocomplete="off">
+    <div class="product-name row">
+      <div class="col-sm-8 col-name">
+        <div class="field-group">
+          <label for="name" class="text-muted">Наименование</label>
+          <input type="text" id="name" class="form-control" formControlName="name" autocomplete="off">
+        </div>
+      </div>
+      <div class="col-sm-4 col-vendor-code">
+        <div class="field-group">
+          <label for="nacodeme" class="text-muted">Артикул</label>
+          <input type="text" id="vendorCode" class="form-control code" formControlName="vendorCode" autocomplete="off">
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
+    <div class="row modal-row">
+      <div class="col-sm-4">
+        <div class="field-group">
           <label for="nacodeme" class="text-muted">Категория</label>
           <select class="form-control custom-select" formControlName="category"
                     (change)="onCategoryChanged(productForm.value.category)">
@@ -23,33 +31,75 @@
           </select>
         </div>
       </div>
-    </div>
-    <div class="row" *ngIf="!!productForm.value.category && productForm.value.category.isSizeRequired">
-      <div class="col">
-        <div class="field-group">
+      <div class="col-sm-4">
+        <div class="field-group" [ngClass]="{'disabled': !productForm.value.category || !productForm.value.category.isSizeRequired}">
           <label for="nacodeme" class="text-muted">Размер</label>
-          <mk-select-size class="form-control" formControlName="size" [isMultiple]="false" [availableSizes]="availableSizes"></mk-select-size>
+          <mk-select-size class="form-control"
+                          formControlName="size"
+                          [isMultiple]="false"
+                          [canClearAll]="false"
+                          [availableSizes]="availableSizes"></mk-select-size>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="field-group">
-          <label for="nacodeme" class="text-muted">Артикул</label>
-          <input type="text" id="vendorCode" class="form-control code" formControlName="vendorCode" autocomplete="off">
-        </div>
-      </div>
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <div class="field-group">
           <label for="nacodeme" class="text-muted">Реком. цена</label>
           <mk-currency-input formControlName="recommendedPrice" [placeholder]="''"></mk-currency-input>
         </div>
       </div>
     </div>
+    <!-- <div class="row">
+      <div class="col-md-12">
+        <div class="text-muted" style="margin-top: 10px; margin-bottom: 10px;">
+          <mk-checkbox formControlName="hasSubproducts" [text]="'Состоит из'"></mk-checkbox>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="productForm.get('hasSubproducts').value">
+      <div class="col-md-12">
+        <div class="row products-titles text-muted" [ngClass]="{'p-right-25': productForm.get('subproducts').controls.length > 1}">
+          <div class="col-sm-7">Наименование товара</div>
+          <div class="col-sm-3">Артикул/Размер</div>
+          <div class="col-sm-2">Кол-во</div>
+        </div>
+        <div formArrayName="subproducts">
+          <div class="row product-row" [formGroupName]="index"
+                                       [ngClass]="{'p-right-25': productForm.get('subproducts').controls.length > 1}"
+                                       *ngFor="let subproductControl of productForm.get('subproducts').controls; let index=index">
+            <div class="col-sm-7">
+              <div class="field-group">
+                <mk-select-products formControlName="product"
+                                    [products]="productsList"
+                                    [canClearAll]="false"
+                                    (onProductSelected)="onSubproductSelected($event, index)">
+                </mk-select-products>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="field-group">
+                <input type="text" class="form-control" disabled
+                       [value]="getProductSizeAndVendorCode(subproductControl.value.product)">
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="field-group">
+                <input type="number" class="form-control" formControlName="quantity" placeholder="Количество">
+              </div>
+              <button class="btn-remove" title="Удалить" type="button" (click)="removeSubproduct(index)" *ngIf="productForm.get('subproducts').controls.length > 1">
+                <i class="ico ico-close"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <button class="btn-add" type="button" (click)="addSubproduct()">
+          <i class="fa fa-plus fa-border"></i>
+        </button>
+      </div>
+    </div> -->
   </div>
   <div class="modal-footer">
     <button class="btn btn-light btn-cancel" type="button" (click)="close()">Отмена</button>
-    <button class="btn btn-primary" type="button" (click)="save()" [disabled]="productForm.invalid">
+    <button class="btn btn-primary" type="button" (click)="save()">
       <mk-spinner [isLoading]="isSaving"></mk-spinner>
       Сохранить</button>
   </div>

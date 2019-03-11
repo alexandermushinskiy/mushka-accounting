@@ -14,11 +14,18 @@
     </div>
     <div class="row">
       <div class="col">
-    <div class="field-group w-50">
-      <mk-toggle formControlName="isSizeRequired" [label]="'Требуются размеры'"></mk-toggle>
+        <div class="field-group w-50">
+          <mk-toggle formControlName="isMain" [label]="'Сопутствующие товары'"></mk-toggle>
+        </div>
+      </div>
     </div>
-  </div>
-  </div>
+    <div class="row">
+      <div class="col">
+        <div class="field-group w-50">
+          <mk-toggle formControlName="isSizeRequired" [label]="'Требуются размеры'"></mk-toggle>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="modal-footer">
     <button class="btn btn-light btn-cancel" type="button" (click)="close()">Отмена</button>

@@ -22,16 +22,16 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
             CancellationToken cancellationToken = default(CancellationToken)) =>
             await dbSet.Where(predicate)
                 .AsNoTracking()
-                .Include(p => p.Category)
-                .Include(p => p.Size)
+                .Include(prod => prod.Category)
+                .Include(prod => prod.Size)
                 .ToListAsync(cancellationToken);
 
         public override async Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Context.Products
                 .AsNoTracking()
-                .Include(p => p.Category)
-                .Include(p => p.Size)
+                .Include(prod => prod.Category)
+                .Include(prod => prod.Size)
                 .ToListAsync(cancellationToken);
         }
 
@@ -39,7 +39,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         {
             return await Context.Products
                 .AsNoTracking()
-                .Include(p => p.Category)
+                .Include(prod => prod.Category)
                 .Include(prod => prod.Size)
                 .FirstOrDefaultAsync(prod => prod.Id == id, cancellationToken);
         }
@@ -49,7 +49,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
             return await Context.Products
                 .AsNoTracking()
                 .Where(prod => prod.CategoryId == categoryId)
-                .Include(p => p.Category)
+                .Include(prod => prod.Category)
                 .Include(prod => prod.Size)
                 .Include(prod => prod.Supplies)
                     .ThenInclude(del => del.Supply)

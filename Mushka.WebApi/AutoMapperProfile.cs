@@ -41,16 +41,16 @@ namespace Mushka.WebApi
 
             // Products
             CreateMap<ProductRequestModel, Product>().ConvertUsing<ProductRequestConverter>();
-
             CreateMap<Product, ProductModel>().ConvertUsing<ProductConverter>();
+            CreateMap<Product, ProductListModel>().ConvertUsing<ProductListConverter>();
 
             CreateMap<ValidationResponse<Product>, ProductResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ProductResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
-
-            CreateMap<ValidationResponse<IEnumerable<Product>>, ProductsResponseModel>()
-                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ProductResponseResolver>())
+            
+            CreateMap<ValidationResponse<IEnumerable<Product>>, ProductListResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ProductListResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
 
