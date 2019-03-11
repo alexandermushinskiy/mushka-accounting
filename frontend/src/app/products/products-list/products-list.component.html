@@ -63,12 +63,12 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="size" [width]="80" *ngIf="selectedCategory?.isSizeRequired">
+        <ngx-datatable-column name="sizeName" [width]="80" *ngIf="selectedCategory?.isSizeRequired">
           <ng-template ngx-datatable-header-template>
             <span>Размер</span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-value="value">
-            <span>{{ value.name }}</span>
+            <span>{{ value }}</span>
           </ng-template>
         </ngx-datatable-column>
 

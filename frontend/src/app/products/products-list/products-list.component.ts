@@ -10,10 +10,11 @@ import { NotificationsService } from '../../core/notifications/notifications.ser
 import { Product } from '../../shared/models/product.model';
 import { Category } from '../../shared/models/category.model';
 import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatable.component';
-import { ProductFilter } from '../../shared/filters/product-filter';
+import { ProductListFilter } from '../../shared/filters/product-list.filter';
 import { QuickFilter } from '../../shared/filters/quick-filter';
 import { ProductQuickFilter } from '../../shared/filters/product-quick-filter';
 import { DatetimeService } from '../../core/datetime/datetime.service';
+import { ProductList } from '../../shared/models/product-list.model';
 
 @Component({
   selector: 'mk-products-list',
@@ -24,7 +25,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
   @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
 
   @LocalStorage('collapsed_products_sidebar', false) isCollapsed: boolean;
-  products: Product[];
+  products: ProductList[];
   productsRows: ProductTableRow[];
   loadingIndicator = false;
   total = 0;
@@ -106,7 +107,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
   }
 
   filter(searchKey: string) {
-    const productFilter = new ProductFilter(searchKey);
+    const productFilter = new ProductListFilter(searchKey);
     const filteredProducts = this.products.filter(prod => productFilter.filter(prod));
 
     this.updateDatatableRows(filteredProducts);
@@ -173,12 +174,12 @@ export class ProductsListComponent extends SortableDatatableComponent implements
     this.loadingIndicator = true;
 
     this.productsService.getByCategory(categoryId)
-      .subscribe((products: Product[]) => {
+      .subscribe((products: ProductList[]) => {
         this.onLoadProductsSuccess(products);
       });
   }
 
-  private onLoadProductsSuccess(products: Product[]) {
+  private onLoadProductsSuccess(products: ProductList[]) {
     this.products = products;
     this.total = products.length;
     this.updateDatatableRows(products);
@@ -187,11 +188,11 @@ export class ProductsListComponent extends SortableDatatableComponent implements
     this.loadingIndicator = false;
   }
 
-  private updateDatatableRows(products: Product[]) {
+  private updateDatatableRows(products: ProductList[]) {
     this.productsRows = products.map((el, index) => new ProductTableRow(el, index));
     this.shown = products.length;
   }
-  
+
   private export(productIds: string[]) {
     this.loadingIndicator = true;
     this.productsService.export(this.selectedCategory.id, productIds)
@@ -200,7 +201,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
         (error: string) => this.onExportFailed(error)
       );
   }
-  
+
   private onExportSuccess(file: Blob) {
     FileSaver.saveAs(file, this.generateFileName(), file.type);
     this.loadingIndicator = false;
@@ -210,7 +211,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
     // this.errors = [ error ];
     this.loadingIndicator = false;
   }
-  
+
   private generateFileName(): string {
     const postfix = this.dateTimeService.toString(new Date(), 'YYYY-MM-DD-HH-mm');
     return `mushka_export_orders-${postfix}.xlsx`;

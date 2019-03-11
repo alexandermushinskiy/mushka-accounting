@@ -36,7 +36,11 @@
       <div class="col-sm-4">
         <div class="field-group" [ngClass]="{'disabled': !productForm.value.category || !productForm.value.category.isSizeRequired}">
           <label for="nacodeme" class="text-muted">Размер</label>
-          <mk-select-size class="form-control" formControlName="size" [isMultiple]="false" [availableSizes]="availableSizes"></mk-select-size>
+          <mk-select-size class="form-control"
+                          formControlName="size"
+                          [isMultiple]="false"
+                          [canClearAll]="false"
+                          [availableSizes]="availableSizes"></mk-select-size>
         </div>
       </div>
       <div class="col-sm-4">

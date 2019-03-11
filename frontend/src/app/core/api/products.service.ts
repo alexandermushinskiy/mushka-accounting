@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { ConverterService } from '../converter/converter.service';
 import { Size } from '../../shared/models/size.model';
 import { SelectProduct } from '../../shared/models/select-product.model';
+import { ProductList } from '../../shared/models/product-list.model';
 
 @Injectable()
 export class ProductsServce {
@@ -17,33 +18,21 @@ export class ProductsServce {
               private converterService: ConverterService) {
   }
 
-  getAll(): Observable<Product[]>  {
-    return this.http.get(this.endPoint)
-      .map((res: any) => this.converterService.convertToProducts(res.data))
-      .catch((res: any) => throwError(res.error.messages));
-  }
-
   getSelect(): Observable<SelectProduct[]> {
     return this.http.get(`${this.endPoint}/select`)
       .map((res: any) => this.converterService.convertToSelectProducts(res.data))
       .catch((res: any) => throwError(res.error.messages));
   }
 
-  getByCategory(categoryId: string): Observable<Product[]> {
+  getByCategory(categoryId: string): Observable<ProductList[]> {
     return this.http.get(`${this.categoriesEndPoint}/${categoryId}/products`)
-      .map((res: any) => this.converterService.convertToProducts(res.data))
+      .map((res: any) => this.converterService.convertToProductsList(res.data))
       .catch((res: any) => throwError(res.error.messages));
   }
 
   getById(productId: string): Observable<Product> {
     return this.http.get(`${this.endPoint}/${productId}`)
       .map((res: any) => this.converterService.convertToProduct(res.data))
-      .catch((res: any) => throwError(res.error.messages));
-  }
-
-  getByCriteria(criteria: string): Observable<Product[]> {
-    return this.http.get(`${this.endPoint}/criteria/${criteria}`)
-      .map((res: any) => this.converterService.convertToProducts(res.data))
       .catch((res: any) => throwError(res.error.messages));
   }
 
@@ -96,7 +85,8 @@ export class ProductsServce {
       vendorCode: product.vendorCode,
       recommendedPrice: product.recommendedPrice,
       categoryId: product.categoryId,
-      sizeId: !!product.size ? product.size.id : null
+      sizeId: !!product.size ? product.size.id : null,
+      subProducts: product.subProducts
     };
   }
 }

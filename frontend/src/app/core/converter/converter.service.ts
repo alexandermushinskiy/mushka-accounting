@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Supplier } from '../../shared/models/supplier.model';
 import { ContactPerson } from '../../shared/models/contact-person.model';
 import { Category } from '../../shared/models/category.model';
-import { Product } from '../../shared/models/product.model';
+import { Product, SubProduct } from '../../shared/models/product.model';
 import { DatetimeService } from '../datetime/datetime.service';
 import { ProductSize } from '../../shared/models/product-size.model';
 import { Size } from '../../shared/models/size.model';
@@ -20,6 +20,7 @@ import { ExhibitionProduct } from '../../shared/models/exhibition-product.model'
 import { ExhibitionList } from '../../exhibitions/shared/models/exhibition-list.model';
 import { Expense } from '../../shared/models/expense.model';
 import { SupplyList } from '../../supplies/shared/models/supply-list.model';
+import { ProductList } from '../../shared/models/product-list.model';
 
 @Injectable()
 export class ConverterService {
@@ -51,6 +52,25 @@ export class ConverterService {
     );
   }
 
+  convertToProductsList(response: any[]): ProductList[] {
+    return response.map(res => this.convertToProductList(res));
+  }
+
+  convertToProductList(source: any): ProductList {
+    return new ProductList({
+      id: source.id,
+      name: source.name,
+      vendorCode: source.vendorCode,
+      recommendedPrice: source.recommendedPrice,
+      createdOn: this.datetimeService.toString(source.createdOn),
+      sizeName: source.sizeName,
+      lastDeliveryDate: !!source.lastDeliveryDate ? this.datetimeService.toString(source.lastDeliveryDate) : null,
+      lastDeliveryCount: !!source.lastDeliveryCount ? source.lastDeliveryCount : 0,
+      deliveriesCount: source.deliveriesCount,
+      quantity: source.quantity
+    });
+  }
+
   convertToProducts(response: any[]): Product[] {
     return response.map(res => this.convertToProduct(res));
   }
@@ -65,10 +85,7 @@ export class ConverterService {
       categoryId: source.categoryId,
       createdOn: this.datetimeService.toString(source.createdOn),
       size: !!source.size ? this.convertToProductSize(source.size) : null,
-      lastDeliveryDate: !!source.lastDeliveryDate ? this.datetimeService.toString(source.lastDeliveryDate) : null,
-      lastDeliveryCount: !!source.lastDeliveryCount ? source.lastDeliveryCount : 0,
-      deliveriesCount: source.deliveriesCount,
-      quantity: source.quantity
+      subProducts: source.subProducts.map(res => new SubProduct({ productId: res.productId, quantity: res.quantity }))
     });
   }
 
@@ -287,7 +304,7 @@ export class ConverterService {
       }
     }));
   }
-  
+
   convertToExhibitionsList(response: any[]): ExhibitionList[] {
     return response.map(res => this.convertToExhibitionList(res));
   }

@@ -1,13 +1,13 @@
 import { FiltersBase } from './filter-base';
-import { Product } from '../models/product.model';
+import { ProductList } from '../models/product-list.model';
 
-export class ProductFilter extends FiltersBase {
+export class ProductListFilter extends FiltersBase {
 
   constructor(private searchKey: string) {
     super();
   }
 
-  filter(product: Product): boolean {
+  filter(product: ProductList): boolean {
     return this.containsSearchKey(product.vendorCode, this.searchKey)
       || this.containsSearchKey(product.name, this.searchKey);
   }

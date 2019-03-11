@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { UnsubscriberComponent } from '../../../../shared/hooks/unsubscriber.component';
-import { Product, Subproduct } from '../../../../shared/models/product.model';
+import { Product, SubProduct } from '../../../../shared/models/product.model';
 import { Category } from '../../../../shared/models/category.model';
 import { ProductsServce } from '../../../../core/api/products.service';
 import { CategoriesService } from '../../../../core/api/categories.service';
@@ -43,10 +43,10 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
   ngOnInit() {
     this.isEdit = !!this.productId;
     this.isLoading = true;
-    this.buildForm(new Product({ subproducts: [new Subproduct({ quantity: 1 })] }));
+    this.buildForm(new Product({ subProducts: [new SubProduct({ quantity: 1 })] }));
 
     Observable.forkJoin(
-      this.productsService.getInStock(),
+      this.productsService.getSelect(),
       this.isEdit ? this.productsService.getById(this.productId) : Observable.of(null),
       this.productsService.getSizes(),
       this.categoriesService.getAll()
@@ -65,7 +65,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
 
   addSubproduct() {
     const products = <FormArray>this.productForm.get('subproducts');
-    products.push(this.createSubproductFormGroup(new Subproduct({ quantity: 1 })));
+    products.push(this.createSubproductFormGroup(new SubProduct({ quantity: 1 })));
   }
 
   removeSubproduct(index: number) {
@@ -94,9 +94,9 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
   }
 
   save() {
-    const t1 = this.createProductModel(this.productForm.getRawValue());
-    console.info(t1);
-    return;
+    // const t1 = this.createProductModel(this.productForm.getRawValue());
+    // console.info(t1);
+    // return;
     if (this.productForm.invalid || (this.productForm.errors && this.productForm.errors.length > 0)) {
       return;
     }
@@ -132,16 +132,16 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       vendorCode: [product.vendorCode, Validators.required],
       recommendedPrice: [product.recommendedPrice],
       size: [{value: product.size, disabled: isSizeRequired}, isSizeRequired ? Validators.required : null],
-      hasSubproducts: [false],
+      hasSubproducts: [product.subProducts.length > 0],
       subproducts: this.formBuilder.array(
-        product.subproducts.map((subprod: Subproduct) => this.createSubproductFormGroup(subprod))
+        product.subProducts.map((subprod: SubProduct) => this.createSubproductFormGroup(subprod))
       )
     });
   }
 
-  private createSubproductFormGroup(subproduct: Subproduct): FormGroup {
+  private createSubproductFormGroup(subproduct: SubProduct): FormGroup {
     return this.formBuilder.group({
-      product: [subproduct.product, Validators.required],
+      product: [new SelectProduct({id: subproduct.productId}), Validators.required],
       quantity: [subproduct.quantity, [Validators.required, Validators.min(0)]]
     });
   }
@@ -170,7 +170,15 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       vendorCode: formRawValue.vendorCode.toUpperCase(),
       recommendedPrice: formRawValue.recommendedPrice,
       categoryId: formRawValue.category.id,
-      size: formRawValue.size
+      size: formRawValue.size,
+      subProducts: formRawValue.subproducts.map(subProd => this.createSubProduct(subProd))
+    });
+  }
+
+  private createSubProduct(formValue: any): SubProduct {
+    return new SubProduct({
+      productId: formValue.product.id,
+      quantity: formValue.quantity
     });
   }
 

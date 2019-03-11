@@ -12,7 +12,6 @@ import { NgxMaskModule } from 'ngx-mask';
 import { LoadingScreenComponent } from './widgets/loading-screen/loading-screen.component';
 import { SpinnerComponent } from './widgets/spinner/spinner.component';
 import { SearchFormComponent } from './widgets/search-form/search-form.component';
-import { SizeLabelComponent } from './widgets/size-label/size-label.component';
 import { OptionsComponent } from './widgets/options/options.component';
 import { PopoverComponent } from './widgets/popover/popover.component';
 import { PopoverDirective } from './directives/popover.directive';
@@ -37,7 +36,6 @@ import { NumberPipe } from './pipes/number.pipe';
 import { DatetimepickerWrapperComponent } from './widgets/datetimepicker-wrapper/datetimepicker-wrapper.component';
 import { DropdownSizesComponent } from './widgets/dropdown-sizes/dropdown-sizes.component';
 import { SuppliersDropdownComponent } from './widgets/suppliers-dropdown/suppliers-dropdown.component';
-import { TypeaheadProductsComponent } from './widgets/typeahead-products/typeahead-products.component';
 import { SelectProductsComponent } from './widgets/select-products/select-products.component';
 import { ProgressLinearComponent } from './widgets/progress-linear/progress-linear.component';
 import { PaymentMethodsDropdownComponent } from './widgets/payment-methods-dropdown/payment-methods-dropdown.component';
@@ -64,7 +62,6 @@ import { SupplyQuickFilter } from './filters/supply-quick.filter';
     LoadingScreenComponent,
     SpinnerComponent,
     SearchFormComponent,
-    SizeLabelComponent,
     OptionsComponent,
     PopoverComponent,
     PopoverDirective,
@@ -89,7 +86,6 @@ import { SupplyQuickFilter } from './filters/supply-quick.filter';
     DatetimepickerWrapperComponent,
     DropdownSizesComponent,
     SuppliersDropdownComponent,
-    TypeaheadProductsComponent,
     SelectProductsComponent,
     ProgressLinearComponent,
     PaymentMethodsDropdownComponent,
@@ -118,7 +114,6 @@ import { SupplyQuickFilter } from './filters/supply-quick.filter';
     LoadingScreenComponent,
     SpinnerComponent,
     SearchFormComponent,
-    SizeLabelComponent,
     OptionsComponent,
     DatatableHeaderComponent,
     DatetimepickerComponent,
@@ -134,7 +129,6 @@ import { SupplyQuickFilter } from './filters/supply-quick.filter';
     DatetimepickerWrapperComponent,
     DropdownSizesComponent,
     SuppliersDropdownComponent,
-    TypeaheadProductsComponent,
     SelectProductsComponent,
     ProgressLinearComponent,
     PaymentMethodsDropdownComponent,
