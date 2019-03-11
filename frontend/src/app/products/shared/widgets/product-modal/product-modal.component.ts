@@ -63,15 +63,15 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
     });
   }
 
-  addSubproduct() {
-    const products = <FormArray>this.productForm.get('subproducts');
-    products.push(this.createSubproductFormGroup(new SubProduct({ quantity: 1 })));
-  }
+  // addSubproduct() {
+  //   const products = <FormArray>this.productForm.get('subproducts');
+  //   products.push(this.createSubproductFormGroup(new SubProduct({ quantity: 1 })));
+  // }
 
-  removeSubproduct(index: number) {
-    const products = <FormArray>this.productForm.get('subproducts');
-    products.removeAt(index);
-  }
+  // removeSubproduct(index: number) {
+  //   const products = <FormArray>this.productForm.get('subproducts');
+  //   products.removeAt(index);
+  // }
 
   getProductSizeAndVendorCode(product: SelectProduct): string {
     if (!product) {
@@ -132,19 +132,19 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       vendorCode: [product.vendorCode, Validators.required],
       recommendedPrice: [product.recommendedPrice],
       size: [{value: product.size, disabled: isSizeRequired}, isSizeRequired ? Validators.required : null],
-      hasSubproducts: [product.subProducts.length > 0],
-      subproducts: this.formBuilder.array(
-        product.subProducts.map((subprod: SubProduct) => this.createSubproductFormGroup(subprod))
-      )
+      // hasSubproducts: [product.subProducts.length > 0],
+      // subproducts: this.formBuilder.array(
+      //   product.subProducts.map((subprod: SubProduct) => this.createSubproductFormGroup(subprod))
+      // )
     });
   }
 
-  private createSubproductFormGroup(subproduct: SubProduct): FormGroup {
-    return this.formBuilder.group({
-      product: [new SelectProduct({id: subproduct.productId}), Validators.required],
-      quantity: [subproduct.quantity, [Validators.required, Validators.min(0)]]
-    });
-  }
+  // private createSubproductFormGroup(subproduct: SubProduct): FormGroup {
+  //   return this.formBuilder.group({
+  //     product: [new SelectProduct({id: subproduct.productId}), Validators.required],
+  //     quantity: [subproduct.quantity, [Validators.required, Validators.min(0)]]
+  //   });
+  // }
 
   private updateSizesValidity(isRequired: boolean) {
     const valueCtrl = this.productForm.controls['size'];
@@ -171,16 +171,16 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       recommendedPrice: formRawValue.recommendedPrice,
       categoryId: formRawValue.category.id,
       size: formRawValue.size,
-      subProducts: formRawValue.subproducts.map(subProd => this.createSubProduct(subProd))
+      //subProducts: formRawValue.subproducts.map(subProd => this.createSubProduct(subProd))
     });
   }
 
-  private createSubProduct(formValue: any): SubProduct {
-    return new SubProduct({
-      productId: formValue.product.id,
-      quantity: formValue.quantity
-    });
-  }
+  // private createSubProduct(formValue: any): SubProduct {
+  //   return new SubProduct({
+  //     productId: formValue.product.id,
+  //     quantity: formValue.quantity
+  //   });
+  // }
 
   private onSaveError(errors: string[]) {
     this.isSaving = false;

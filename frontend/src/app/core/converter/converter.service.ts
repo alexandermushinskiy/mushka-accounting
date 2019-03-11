@@ -84,8 +84,7 @@ export class ConverterService {
       category: this.convertToCategory(source.category),
       categoryId: source.categoryId,
       createdOn: this.datetimeService.toString(source.createdOn),
-      size: !!source.size ? this.convertToProductSize(source.size) : null,
-      subProducts: source.subProducts.map(res => new SubProduct({ productId: res.productId, quantity: res.quantity }))
+      size: !!source.size ? this.convertToProductSize(source.size) : null
     });
   }
 

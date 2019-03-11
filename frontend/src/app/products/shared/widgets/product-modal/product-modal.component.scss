@@ -117,3 +117,11 @@
   > :not(:first-child) { padding-left: 10px; }
   > :not(:last-child) { padding-right: 10px; }
 }
+
+.col-name {
+  padding-right: 10px;
+}
+
+.col-vendor-code {
+  padding-left: 10px;
+}
