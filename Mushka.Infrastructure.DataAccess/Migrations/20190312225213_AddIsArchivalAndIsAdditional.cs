@@ -2,19 +2,19 @@
 
 namespace Mushka.Infrastructure.DataAccess.Migrations
 {
-    public partial class AddIsAdditionalAndIsArchivalToProduct : Migration
+    public partial class AddIsArchivalAndIsAdditional : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
-                name: "IsAdditional",
+                name: "IsArchival",
                 table: "Products",
                 nullable: false,
                 defaultValue: false);
 
             migrationBuilder.AddColumn<bool>(
-                name: "IsArchival",
-                table: "Products",
+                name: "IsAdditional",
+                table: "Categories",
                 nullable: false,
                 defaultValue: false);
         }
@@ -22,12 +22,12 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsAdditional",
+                name: "IsArchival",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "IsArchival",
-                table: "Products");
+                name: "IsAdditional",
+                table: "Categories");
         }
     }
 }

@@ -35,7 +35,8 @@ export class ConverterService {
     return new Category({
       id: source.id,
       name: source.name,
-      isSizeRequired: source.isSizeRequired
+      isSizeRequired: source.isSizeRequired,
+      isAdditional: source.isAdditional
     });
   }
 
@@ -47,7 +48,8 @@ export class ConverterService {
         recommendedPrice: res.recommendedPrice,
         quantity: res.quantity,
         category: new Category({name: res.categoryName}),
-        size: !!res.sizeName ? new Size({name: res.sizeName}) : null
+        size: !!res.sizeName ? new Size({name: res.sizeName}) : null,
+        disabled: res.isArchival
       })
     );
   }
@@ -85,7 +87,6 @@ export class ConverterService {
       categoryId: source.categoryId,
       createdOn: this.datetimeService.toString(source.createdOn),
       size: !!source.size ? this.convertToProductSize(source.size) : null,
-      isAdditional: source.isAdditional,
       isArchival: source.isArchival
     });
   }

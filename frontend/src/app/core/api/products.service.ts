@@ -86,7 +86,6 @@ export class ProductsServce {
       recommendedPrice: product.recommendedPrice,
       categoryId: product.categoryId,
       sizeId: !!product.size ? product.size.id : null,
-      isAdditional: product.isAdditional,
       isArchival: product.isArchival
     };
   }

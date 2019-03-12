@@ -23,7 +23,8 @@ namespace Mushka.WebApi.Resolvers
                 RecommendedPrice = product.RecommendedPrice,
                 Quantity = product.Quantity,
                 CategoryName = product.Category.Name,
-                SizeName = product.Size?.Name
+                SizeName = product.Size?.Name,
+                IsArchival = product.IsArchival
             });
         }
     }

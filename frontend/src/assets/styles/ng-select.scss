@@ -154,3 +154,7 @@
 .ng-dropdown-panel .ng-dropdown-footer {
   padding: 0;
 }
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-disabled {
+  cursor: not-allowed;
+}

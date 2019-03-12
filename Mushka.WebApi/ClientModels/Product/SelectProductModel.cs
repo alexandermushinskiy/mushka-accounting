@@ -17,5 +17,7 @@ namespace Mushka.WebApi.ClientModels.Product
         public string CategoryName { get; set; }
 
         public string SizeName { get; set; }
+        
+        public bool IsArchival { get; set; }
     }
 }

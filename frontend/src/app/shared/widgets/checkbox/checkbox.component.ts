@@ -13,6 +13,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class CheckboxComponent implements OnInit, ControlValueAccessor {
   @Input() checked: boolean;
+  @Input() disabled = false;
   @Input() text: string;
   @Output() onChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -34,6 +35,10 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
 
   registerOnChange(fn: any) {
     this.onChangeCallback = fn;
+  }
+
+  setDisabledState(disabled: boolean) {
+    this.disabled = disabled;
   }
 
   registerOnTouched() {

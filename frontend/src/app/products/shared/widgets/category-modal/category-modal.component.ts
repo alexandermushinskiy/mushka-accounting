@@ -25,7 +25,7 @@ export class CategoryModalComponent implements OnInit {
     this.isEdit = !!this.category;
     this.title = `${this.isEdit ? 'Редактирование' : 'Добавление'} категории`;
 
-    this.buildForm(this.isEdit ? this.category : new Category({ isSizeRequired : false }));
+    this.buildForm(this.isEdit ? this.category : new Category({}));
   }
 
   close() {
@@ -38,10 +38,12 @@ export class CategoryModalComponent implements OnInit {
     if (this.isEdit) {
       this.category.name = categoryFormValue.name;
       this.category.isSizeRequired = categoryFormValue.isSizeRequired;
+      this.category.isAdditional = categoryFormValue.isAdditional;
     } else {
       this.category = new Category({
         name: categoryFormValue.name,
-        isSizeRequired: categoryFormValue.isSizeRequired
+        isSizeRequired: categoryFormValue.isSizeRequired,
+        isAdditional: categoryFormValue.isAdditional
       });
     }
 
@@ -51,8 +53,8 @@ export class CategoryModalComponent implements OnInit {
   private buildForm(category: Category) {
     this.categoryForm = this.formBuilder.group({
       name: [category.name, Validators.required],
-      isSizeRequired: [category.isSizeRequired],
-      isMain: []
+      isSizeRequired: [!!category.isSizeRequired],
+      isAdditional: [!!category.isAdditional]
     });
   }
 }

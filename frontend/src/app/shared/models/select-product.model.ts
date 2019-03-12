@@ -9,7 +9,7 @@ export class SelectProduct {
   quantity: number;
   category: Category;
   size: Size;
-
+  disabled: boolean;
 
   get nameWithVendorCode(): string {
     return `${this.name} (${this.vendorCode})`;

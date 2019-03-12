@@ -62,7 +62,7 @@ namespace Mushka.Service.Services
                 return CreateWarningValidationResponse($"Order with id {orderId} is not found.", ValidationStatusType.NotFound);
             }
 
-            order.Products = order.Products.OrderByDescending(p => p.Product.IsAdditional).ToList();
+            order.Products = order.Products.OrderByDescending(p => p.Product.Category.IsAdditional).ToList();
             return CreateInfoValidationResponse(order, $"Order with id {orderId} was successfully retrieved.");
         }
         

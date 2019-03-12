@@ -11,7 +11,8 @@ namespace Mushka.WebApi.Resolvers
             {
                 Id = source.Id,
                 Name = source.Name,
-                IsSizeRequired = source.IsSizeRequired
+                IsSizeRequired = source.IsSizeRequired,
+                IsAdditional = source.IsAdditional
             };
     }
 }

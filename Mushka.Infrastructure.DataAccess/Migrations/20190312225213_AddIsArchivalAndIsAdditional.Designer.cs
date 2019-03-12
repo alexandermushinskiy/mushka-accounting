@@ -10,8 +10,8 @@ using Mushka.Infrastructure.DataAccess.Database;
 namespace Mushka.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(MushkaDbContext))]
-    [Migration("20190311222340_AddIsAdditionalAndIsArchivalToProduct")]
-    partial class AddIsAdditionalAndIsArchivalToProduct
+    [Migration("20190312225213_AddIsArchivalAndIsAdditional")]
+    partial class AddIsArchivalAndIsAdditional
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,6 +26,9 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("Id");
+
+                    b.Property<bool>("IsAdditional")
+                        .HasColumnName("IsAdditional");
 
                     b.Property<bool>("IsSizeRequired");
 
@@ -327,9 +330,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnName("CreatedOn");
-
-                    b.Property<bool>("IsAdditional")
-                        .HasColumnName("IsAdditional");
 
                     b.Property<bool>("IsArchival")
                         .HasColumnName("IsArchival");

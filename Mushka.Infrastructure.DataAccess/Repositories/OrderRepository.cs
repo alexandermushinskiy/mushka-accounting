@@ -32,6 +32,8 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 .Include(order => order.Customer)
                 .Include(order => order.Products)
                     .ThenInclude(prod => prod.Product.Size)
+                .Include(order => order.Products)
+                    .ThenInclude(prod => prod.Product.Category)
                 .FirstOrDefaultAsync(cancellationToken);
 
         public async Task<int> GetSoldProductCount(Guid productId, CancellationToken cancellationToken = default(CancellationToken)) =>

@@ -28,6 +28,10 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .HasDefaultValue(100)
                 .IsRequired();
 
+            builder
+                .Property(category => category.IsAdditional)
+                .HasColumnName("IsAdditional");
+
             builder.HasIndex(category => category.Name).IsUnique();
         }
     }

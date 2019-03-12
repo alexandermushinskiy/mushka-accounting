@@ -20,7 +20,6 @@ namespace Mushka.WebApi.Resolvers
                 CategoryId = source.CategoryId,
                 Category = ConvertToCategoryModel(source.Category),
                 Size = size,
-                IsAdditional = source.IsAdditional,
                 IsArchival = source.IsArchival
             };
         }

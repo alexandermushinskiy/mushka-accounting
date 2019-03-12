@@ -21,7 +21,8 @@ namespace Mushka.WebApi.Resolvers
             {
                 Id = context.GetId() ?? guidProvider.NewGuid(),
                 Name = source.Name,
-                IsSizeRequired = source.IsSizeRequired
+                IsSizeRequired = source.IsSizeRequired,
+                IsAdditional = source.IsAdditional
             };
         }
     }

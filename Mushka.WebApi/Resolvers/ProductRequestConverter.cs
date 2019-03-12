@@ -32,7 +32,6 @@ namespace Mushka.WebApi.Resolvers
                 VendorCode = source.VendorCode,
                 RecommendedPrice = source.RecommendedPrice,
                 SizeId = source.SizeId,
-                IsAdditional = source.IsAdditional,
                 IsArchival = source.IsArchival
             };
         }

@@ -127,7 +127,6 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       vendorCode: [product.vendorCode, Validators.required],
       recommendedPrice: [product.recommendedPrice],
       size: [{value: product.size, disabled: !isSizeRequired}, isSizeRequired ? Validators.required : null],
-      isAdditional: [!!product.isAdditional],
       isArchival: [!!product.isArchival]
     });
 
@@ -170,7 +169,6 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       recommendedPrice: formRawValue.recommendedPrice,
       categoryId: formRawValue.category.id,
       size: formRawValue.size,
-      isAdditional: formRawValue.isAdditional,
       isArchival: formRawValue.isArchival
       //subProducts: formRawValue.subproducts.map(subProd => this.createSubProduct(subProd))
     });

@@ -20,8 +20,6 @@ namespace Mushka.WebApi.ClientModels.Product
 
         public SizeModel Size { get; set; }
 
-        public bool IsAdditional { get; set; }
-
         public bool IsArchival { get; set; }
     }
 }

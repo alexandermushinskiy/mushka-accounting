@@ -25,6 +25,9 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("Id");
 
+                    b.Property<bool>("IsAdditional")
+                        .HasColumnName("IsAdditional");
+
                     b.Property<bool>("IsSizeRequired");
 
                     b.Property<string>("Name")
@@ -325,9 +328,6 @@ namespace Mushka.Infrastructure.DataAccess.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnName("CreatedOn");
-
-                    b.Property<bool>("IsAdditional")
-                        .HasColumnName("IsAdditional");
 
                     b.Property<bool>("IsArchival")
                         .HasColumnName("IsArchival");
