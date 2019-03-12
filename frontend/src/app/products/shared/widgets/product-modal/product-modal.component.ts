@@ -43,15 +43,15 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
   ngOnInit() {
     this.isEdit = !!this.productId;
     this.isLoading = true;
-    this.buildForm(new Product({ subProducts: [new SubProduct({ quantity: 1 })] }));
+    this.buildForm(new Product({}));
 
     Observable.forkJoin(
-      this.productsService.getSelect(),
+      //this.productsService.getSelect(),
       this.isEdit ? this.productsService.getById(this.productId) : Observable.of(null),
       this.productsService.getSizes(),
       this.categoriesService.getAll()
-    ).subscribe(([productsList, product, sizes, categories]) => {
-      this.productsList = productsList;
+    ).subscribe(([/*productsList,*/ product, sizes, categories]) => {
+      //this.productsList = productsList;
       this.availableSizes = sizes;
       this.onCategoriesLoaded(categories);
 
@@ -73,17 +73,17 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
   //   products.removeAt(index);
   // }
 
-  getProductSizeAndVendorCode(product: SelectProduct): string {
-    if (!product) {
-      return '';
-    }
+  // getProductSizeAndVendorCode(product: SelectProduct): string {
+  //   if (!product) {
+  //     return '';
+  //   }
 
-    return product.vendorCode + (!!product.size ? ` / ${product.size.name}` : ' / -');
-  }
+  //   return product.vendorCode + (!!product.size ? ` / ${product.size.name}` : ' / -');
+  // }
 
-  onSubproductSelected(product: SelectProduct, index: number) {
+  // onSubproductSelected(product: SelectProduct, index: number) {
 
-  }
+  // }
 
   private onCategoriesLoaded(categories: Category[]) {
     this.categories = categories;
@@ -117,11 +117,6 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
     this.onClose.emit();
   }
 
-  onCategoryChanged(category: Category) {
-    this.categoryFormGroup.setValue(category);
-    this.updateSizesValidity(category.isSizeRequired);
-  }
-
   private buildForm(product: Product) {
     const category = this.getCategoryById(product.categoryId);
     const isSizeRequired = !!category && category.isSizeRequired;
@@ -131,33 +126,37 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       category: [category, Validators.required],
       vendorCode: [product.vendorCode, Validators.required],
       recommendedPrice: [product.recommendedPrice],
-      size: [{value: product.size, disabled: isSizeRequired}, isSizeRequired ? Validators.required : null],
-      // hasSubproducts: [product.subProducts.length > 0],
-      // subproducts: this.formBuilder.array(
-      //   product.subProducts.map((subprod: SubProduct) => this.createSubproductFormGroup(subprod))
-      // )
+      size: [{value: product.size, disabled: !isSizeRequired}, isSizeRequired ? Validators.required : null],
+      isAdditional: [!!product.isAdditional],
+      isArchival: [!!product.isArchival]
+    });
+
+    this.addFieldChangeListeners();
+  }
+
+  private addFieldChangeListeners() {
+    this.productForm.controls['category'].valueChanges.subscribe((category: Category) => {
+      this.updateSizesValidity(category.isSizeRequired);
     });
   }
 
-  // private createSubproductFormGroup(subproduct: SubProduct): FormGroup {
-  //   return this.formBuilder.group({
-  //     product: [new SelectProduct({id: subproduct.productId}), Validators.required],
-  //     quantity: [subproduct.quantity, [Validators.required, Validators.min(0)]]
-  //   });
-  // }
+  clearSize() {
+    this.productForm.controls['size'].setValue(null);
+  }
 
   private updateSizesValidity(isRequired: boolean) {
-    const valueCtrl = this.productForm.controls['size'];
+    const sizeCtrl = this.productForm.controls['size'];
 
     if (isRequired) {
-      valueCtrl.setValidators(Validators.required);
-      valueCtrl.enable();
+      sizeCtrl.setValidators(Validators.required);
+      sizeCtrl.enable();
     } else {
-      valueCtrl.clearValidators();
-      valueCtrl.disable();
+      sizeCtrl.setValue(null);
+      sizeCtrl.clearValidators();
+      sizeCtrl.disable();
     }
 
-    valueCtrl.updateValueAndValidity();
+    sizeCtrl.updateValueAndValidity();
   }
 
   private getCategoryById(categoryId: string): Category {
@@ -171,6 +170,8 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       recommendedPrice: formRawValue.recommendedPrice,
       categoryId: formRawValue.category.id,
       size: formRawValue.size,
+      isAdditional: formRawValue.isAdditional,
+      isArchival: formRawValue.isArchival
       //subProducts: formRawValue.subproducts.map(subProd => this.createSubProduct(subProd))
     });
   }

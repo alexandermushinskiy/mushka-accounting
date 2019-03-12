@@ -24,6 +24,10 @@ namespace Mushka.Domain.Entities
 
         public int Quantity { get; set; }
 
+        public bool IsAdditional { get; set; }
+
+        public bool IsArchival { get; set; }
+
         public Guid CategoryId { get; set; }
         public Category Category { get; set; }
 

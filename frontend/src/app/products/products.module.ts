@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { SharedModule } from '../shared/shared.module';
 import { ProductsListComponent } from './products-list/products-list.component';
@@ -7,11 +8,13 @@ import { CategoriesNavComponent } from './categories-nav/categories-nav.componen
 import { CategoryModalComponent } from './shared/widgets/category-modal/category-modal.component';
 import { ProductModalComponent } from './shared/widgets/product-modal/product-modal.component';
 import { QuantityLabelComponent } from './shared/widgets/quantity-label/quantity-label.component';
+import { SelectCategoryComponent } from './shared/widgets/select-category/select-category.component';
 
 @NgModule({
   imports: [
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelectModule
   ],
   providers: [
   ],
@@ -20,7 +23,8 @@ import { QuantityLabelComponent } from './shared/widgets/quantity-label/quantity
     CategoriesNavComponent,
     CategoryModalComponent,
     ProductModalComponent,
-    QuantityLabelComponent
+    QuantityLabelComponent,
+    SelectCategoryComponent
   ],
   exports: [ProductsListComponent]
 })

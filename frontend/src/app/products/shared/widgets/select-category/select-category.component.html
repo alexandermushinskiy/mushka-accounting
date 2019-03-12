@@ -1,0 +1,14 @@
+<ng-select #ngselect
+            bindValue="id"
+            bindLabel="name"
+            placeholder="Выберете"
+            [items]="categories"
+            [closeOnSelect]="true"
+            [clearable]="false"
+            [disabled]="disabled"
+            [ngModel]="selectedId"
+            (change)="onChange($event)">
+  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+    <div>{{ item.name }}</div>
+  </ng-template>
+</ng-select>

@@ -21,14 +21,11 @@
         </div>
       </div>
     </div>
-    <div class="row modal-row">
+    <div class="row category-row">
       <div class="col-sm-4">
         <div class="field-group">
           <label for="nacodeme" class="text-muted">Категория</label>
-          <select class="form-control custom-select" formControlName="category"
-                    (change)="onCategoryChanged(productForm.value.category)">
-            <option *ngFor="let category of categories" [ngValue]="category">{{ category.name }}</option>
-          </select>
+          <mk-select-category formControlName="category" [categories]="categories"></mk-select-category>
         </div>
       </div>
       <div class="col-sm-4">
@@ -48,6 +45,21 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="field-group">
+          <mk-toggle class="toggle" formControlName="isAdditional" [label]="'Вспомогательный'"></mk-toggle>
+          <mk-toggle class="toggle" formControlName="isArchival" [label]="'В архиве'"></mk-toggle>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-sm-6">
+        <div class="field-group">
+          <mk-toggle formControlName="isArchival" [label]="'В архиве'"></mk-toggle>
+        </div>
+      </div>
+    </div> -->
     <!-- <div class="row">
       <div class="col-md-12">
         <div class="text-muted" style="margin-top: 10px; margin-bottom: 10px;">

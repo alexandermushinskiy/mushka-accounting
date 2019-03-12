@@ -84,7 +84,9 @@ export class ConverterService {
       category: this.convertToCategory(source.category),
       categoryId: source.categoryId,
       createdOn: this.datetimeService.toString(source.createdOn),
-      size: !!source.size ? this.convertToProductSize(source.size) : null
+      size: !!source.size ? this.convertToProductSize(source.size) : null,
+      isAdditional: source.isAdditional,
+      isArchival: source.isArchival
     });
   }
 

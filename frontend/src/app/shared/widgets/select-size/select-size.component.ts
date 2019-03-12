@@ -29,7 +29,7 @@ export class SelectSizeComponent implements OnInit, ControlValueAccessor {
   @Input() canClearAll = true;
   @Input() disabled = false;
   @Input() notFoundText = 'Нет данных';
-  @Input() placeholder = 'Выбирете размер';
+  @Input() placeholder = 'Выберете размер';
   @Output() onSelectedSizes = new EventEmitter<string[]>();
 
   selectedId: string;
@@ -66,6 +66,7 @@ export class SelectSizeComponent implements OnInit, ControlValueAccessor {
 
   private reset() {
     this.ngselect.clearModel();
+    this.ngselect.writeValue(null);
   }
 
   private getValue(selectedData: SelectSize) {

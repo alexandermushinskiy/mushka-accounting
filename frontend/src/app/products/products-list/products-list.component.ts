@@ -127,7 +127,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
     this.closeModal();
     this.notificationsService.success('Успех', `Товар \"${product.name}\" был успешно сохранён.`);
 
-    if (this.selectedCategory.id !== product.category.id) {
+    if (this.selectedCategory.id !== product.categoryId) {
       this.onCategotySelected(product.category);
     } else {
       this.loadProducts(this.selectedCategory.id);

@@ -10,6 +10,8 @@ export class Product {
   categoryId: string;
   createdOn: string;
   size: Size;
+  isAdditional: boolean;
+  isArchival: boolean;
   subProducts: SubProduct[];
 
   constructor(data: any) {

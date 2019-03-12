@@ -57,9 +57,13 @@ namespace Mushka.Service.Services
         {
             var order = await orderRepository.GetByIdAsync(orderId, cancellationToken);
 
-            return order == null
-                ? CreateWarningValidationResponse($"Order with id {orderId} is not found.", ValidationStatusType.NotFound)
-                : CreateInfoValidationResponse(order, $"Order with id {orderId} was successfully retrieved.");
+            if (order == null)
+            {
+                return CreateWarningValidationResponse($"Order with id {orderId} is not found.", ValidationStatusType.NotFound);
+            }
+
+            order.Products = order.Products.OrderByDescending(p => p.Product.IsAdditional).ToList();
+            return CreateInfoValidationResponse(order, $"Order with id {orderId} was successfully retrieved.");
         }
         
         public async Task<ValidationResponse<Order>> AddAsync(Order order, CancellationToken cancellationToken = default(CancellationToken))

@@ -43,6 +43,14 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .HasDefaultValue(0);
 
             builder
+                .Property(ps => ps.IsAdditional)
+                .HasColumnName("IsAdditional");
+
+            builder
+                .Property(ps => ps.IsArchival)
+                .HasColumnName("IsArchival");
+
+            builder
                 .HasOne(product => product.Size)
                 .WithMany(size => size.Products)
                 .HasForeignKey(product => product.SizeId);

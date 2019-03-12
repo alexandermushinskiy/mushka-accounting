@@ -17,5 +17,9 @@ namespace Mushka.WebApi.ClientModels.Product
         public Guid CategoryId { get; set; }
 
         public Guid? SizeId { get; set; }
+
+        public bool IsAdditional { get; set; }
+
+        public bool IsArchival { get; set; }
     }
 }

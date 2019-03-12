@@ -425,7 +425,8 @@ namespace Mushka.Tests.Service.Services
             {
                 OrderId = OrderId,
                 ProductId = ProductId,
-                Quantity = quantity
+                Quantity = quantity,
+                Product = CreateProduct(100)
             };
 
         private static OrderProduct CreateOrderProduct(Guid orderId, Guid productId, int quantity) =>
