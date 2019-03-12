@@ -29,6 +29,7 @@ namespace Mushka.Tests.Service.Services
         private const string NoExhibitionsFoundMessage = "No exhibitions found.";
         private static readonly Guid ExhibitionId = Guid.Parse("00000000000000000000000000000001");
         private static readonly Guid ProductId = Guid.Parse("00000000000000000000000000000002");
+        private static readonly Guid OtherProductId = Guid.Parse("00000000000000000000000000000003");
         private static readonly string ExhibitionRetrievedMessage = $"Exhibition with id {ExhibitionId} was successfully retrieved.";
         private static readonly string ExhibitionDeletedMessage = $"Exhibition with id {ExhibitionId} was successfully deleted.";
         private static readonly string ExhibitionNotFoundMessage = $"Exhibition with id {ExhibitionId} is not found.";
@@ -218,7 +219,7 @@ namespace Mushka.Tests.Service.Services
         }
 
         [Category(CategoryName)]
-        [Fact(DisplayName = UpdateAsyncMethodName + "Order product is not found")]
+        [Fact(DisplayName = UpdateAsyncMethodName + "Exhibition product is not found")]
         public async Task UpdateAsyncOrderProductNotFoundTest()
         {
             var exhibition = CreateExhibition(new[] { CreateExhibitionProduct(5) });
@@ -232,6 +233,39 @@ namespace Mushka.Tests.Service.Services
             var actual = await exhibitionService.UpdateAsync(exhibition);
 
             var expected = CreateWarningValidationResponse<Product>(ProductNotFoundMessage, ValidationStatusType.NotFound);
+            actual.Should().BeEquivalentTo(expected);
+        }
+
+        [Category(CategoryName)]
+        [Fact(DisplayName = UpdateAsyncMethodName + "Exhibition has new product")]
+        public async Task UpdateAsyncOrderHasAnotherProductTest()
+        {
+            var exhibition = CreateExhibition(new[] { CreateExhibitionProduct(ExhibitionId, ProductId, 5) });
+            var storedExhibition = CreateExhibition(new[] { CreateExhibitionProduct(ExhibitionId, OtherProductId, 7) });
+            var updatedExhibition = CreateExhibition(new[] { CreateExhibitionProduct(ExhibitionId, ProductId, 5) });
+            var otherProduct = CreateProduct(OtherProductId, 22);
+            var product = CreateProduct(ProductId, 33);
+            const int ExpectedReturnedProductQuantity = 29;
+            const int ExpectedSoldProductQuantity = 28;
+
+            exhibitionRepositoryMock
+                .SetupAsync(repo => repo.GetByIdAsync(ExhibitionId, default(CancellationToken)), storedExhibition)
+                .Setup(repo => repo.Update(It.Is<Exhibition>(exh => exh.Id == ExhibitionId)), updatedExhibition);
+
+            productRepositoryMock
+                .SetupAsync(repo => repo.GetByIdAsync(OtherProductId, default(CancellationToken)), otherProduct)
+                .SetupAsync(repo => repo.GetByIdAsync(ProductId, default(CancellationToken)), product)
+                .Setup(repo => repo.Update(It.Is<Product>(prod => prod.Id == ProductId && prod.Quantity == ExpectedSoldProductQuantity)),
+                    It.Is<Product>(prod => prod.Id == ProductId && prod.Quantity == ExpectedSoldProductQuantity))
+                .Setup(repo => repo.Update(It.Is<Product>(prod => prod.Id == OtherProductId && prod.Quantity == ExpectedReturnedProductQuantity)),
+                    It.Is<Product>(prod => prod.Id == OtherProductId && prod.Quantity == ExpectedReturnedProductQuantity));
+
+            storageMock
+                .Setup(s => s.SaveAsync(default(CancellationToken)), Task.CompletedTask);
+
+            var actual = await exhibitionService.UpdateAsync(exhibition);
+
+            var expected = CreateValidValidationResponse(updatedExhibition, ExhibitionUpdatedMessage);
             actual.Should().BeEquivalentTo(expected);
         }
 
@@ -299,7 +333,6 @@ namespace Mushka.Tests.Service.Services
                 Products = exhibitionProducts
             };
 
-
         private static ExhibitionProduct CreateExhibitionProduct(int quantity) =>
             new ExhibitionProduct
             {
@@ -308,10 +341,25 @@ namespace Mushka.Tests.Service.Services
                 Quantity = quantity
             };
 
+        private static ExhibitionProduct CreateExhibitionProduct(Guid exhibitionId, Guid productId, int quantity) =>
+            new ExhibitionProduct
+            {
+                ExhibitionId = exhibitionId,
+                ProductId = productId,
+                Quantity = quantity
+            };
+
         private static Product CreateProduct(int quantity) =>
             new Product
             {
                 Id = ProductId,
+                Quantity = quantity
+            };
+        
+        private static Product CreateProduct(Guid productId, int quantity) =>
+            new Product
+            {
+                Id = productId,
                 Quantity = quantity
             };
     }
