@@ -24,7 +24,7 @@
     </mk-categories-nav>
     <div class="appcontent">
       <ngx-datatable #datatable
-               class="material fullscreen"
+               class="material striped fullscreen"
                [loadingIndicator]="loadingIndicator"
                [headerHeight]="40"
                [rowHeight]="40"
@@ -33,7 +33,6 @@
                [columnMode]="'force'"
                [sorts]="sorts"
                [messages]="{ emptyMessage: 'Нет данных для отображения' }"
-               [rowClass]="getRowClass"
                (activate)="onActive($event)"
                (sort)="onTableSort(productsRows, $event)">
                
