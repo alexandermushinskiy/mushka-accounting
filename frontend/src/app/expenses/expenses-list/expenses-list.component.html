@@ -13,6 +13,7 @@
                    [loadingIndicator]="loadingIndicator"
                    [headerHeight]="40"
                    [rowHeight]="40"
+                   [footerHeight]="50"
                    [rows]="expenseRows"
                    [columnMode]="'force'"
                    [sorts]="sorts"
@@ -74,6 +75,18 @@
         </ng-template>
       </ngx-datatable-column>
       
+      <ngx-datatable-footer class="p-0">
+        <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize" let-curPage="curPage" class="p-0">
+          <mk-datatable-footer [loadingIndicator]="loadingIndicator"
+                                [datatable]="datatable"
+                                [total]="total"
+                                [curPage]="curPage"
+                                [rowCount]="rowCount"
+                                [pageSize]="pageSize"
+                                [itemsName]="'Расходов'">
+          </mk-datatable-footer>
+        </ng-template>
+      </ngx-datatable-footer>
     </ngx-datatable>
   </div>
 </div>

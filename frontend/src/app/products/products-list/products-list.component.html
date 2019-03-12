@@ -31,32 +31,33 @@
                [footerHeight]="50"
                [rows]="productsRows"
                [columnMode]="'force'"
+               [sorts]="sorts"
                [messages]="{ emptyMessage: 'Нет данных для отображения' }"
                [rowClass]="getRowClass"
                (activate)="onActive($event)"
                (sort)="onTableSort(productsRows, $event)">
                
-        <ngx-datatable-column name="name">
-          <ng-template ngx-datatable-header-template>
-            <span>Название</span>
+        <ngx-datatable-column name="name" [sortable]="true">
+          <ng-template ngx-datatable-header-template let-sort="sortFn">
+            <span (click)="sort($event)">Название</span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-value="value">
             <span [title]="value">{{ value }}</span>
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="vendorCode">
-          <ng-template ngx-datatable-header-template>
-            <span>Артикул</span>
+        <ngx-datatable-column name="vendorCode" [sortable]="true">
+          <ng-template ngx-datatable-header-template let-sort="sortFn">
+            <span (click)="sort($event)">Артикул</span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-value="value">
             <span [title]="value">{{ value }}</span>
           </ng-template>
         </ngx-datatable-column>
         
-        <ngx-datatable-column name="createdOn" [width]="120">
-          <ng-template ngx-datatable-header-template>
-            <span>Дата<br>добавления</span>
+        <ngx-datatable-column name="createdOn" [width]="120" [sortable]="true">
+          <ng-template ngx-datatable-header-template let-sort="sortFn">
+            <span (click)="sort($event)">Дата<br>добавления</span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-value="value">
             <span [title]="value">{{ value | formattedDate }}</span>
@@ -72,9 +73,9 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="quantity" [width]="80">
-          <ng-template ngx-datatable-header-template>
-            <span>Наличие</span>
+        <ngx-datatable-column name="quantity" [width]="80" [sortable]="true">
+          <ng-template ngx-datatable-header-template let-sort="sortFn">
+            <span (click)="sort($event)">Наличие</span>
           </ng-template>
           <ng-template ngx-datatable-cell-template let-value="value">
             <mk-quantity-label [quantity]="value"></mk-quantity-label>

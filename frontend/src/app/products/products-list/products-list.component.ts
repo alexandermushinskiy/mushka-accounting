@@ -52,6 +52,13 @@ export class ProductsListComponent extends SortableDatatableComponent implements
               private dateTimeService: DatetimeService,
               private notificationsService: NotificationsService) {
     super();
+    
+    this.sorts = [
+      { prop: 'name', dir: 'asc' },
+      { prop: 'vendorCode', dir: null },
+      { prop: 'createdOn', dir: null },
+      { prop: 'quantity', dir: null }
+    ];
   }
 
   ngOnInit() {
