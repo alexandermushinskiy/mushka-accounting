@@ -31,8 +31,7 @@ export class DashboardComponent implements OnInit {
   };
   defaultPeriod = 12;
 
-
-  popularityCHartOptions: any = {
+  popularityChartOptions: any = {
     responsive: true,
     scales: {
       xAxes: [{
