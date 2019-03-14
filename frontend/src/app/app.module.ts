@@ -45,6 +45,7 @@ import { GiftsModule } from './gifts/gifts.module';
 import { ExpensesModule } from './expenses/expenses.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ExhibitionsModule } from './exhibitions/exhibitions.module';
+import { CorporateOrdersModule } from './corporate-orders/corporate-orders.module';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { ExhibitionsModule } from './exhibitions/exhibitions.module';
     ExpensesModule,
     DashboardModule,
     ExhibitionsModule,
+    CorporateOrdersModule,
     NgxWebstorageModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',

@@ -16,6 +16,8 @@ import { GiftsListComponent } from './gifts/gifts-list/gifts-list.component';
 import { ExhibitionsListComponent } from './exhibitions/exhibitions-list/exhibitions-list.component';
 import { ExhibitionComponent } from './exhibitions/exhibition/exhibition.component';
 import { ExpenseComponent } from './expenses/expense/expense.component';
+import { CorporateOrdersListComponent } from './corporate-orders/corporate-orders-list/corporate-orders-list.component';
+import { CorporateOrderComponent } from './corporate-orders/corporate-order/corporate-order.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -24,6 +26,11 @@ const routes: Routes = [
     { path: '', component: OrdersListComponent, pathMatch: 'full' },
     { path: 'new', component: OrderComponent, pathMatch: 'full' },
     { path: ':id', component: OrderComponent, pathMatch: 'full' }
+  ]},
+  { path: 'corporate-orders', children: [
+    { path: '', component: CorporateOrdersListComponent, pathMatch: 'full' },
+    { path: 'new', component: CorporateOrderComponent, pathMatch: 'full' },
+    { path: ':id', component: CorporateOrderComponent, pathMatch: 'full' }
   ]},
   { path: 'suppliers', children: [
     { path: '', component: SuppliersListComponent, pathMatch: 'full' },

@@ -1,0 +1,100 @@
+<div class="list-page">
+  <div class="list-page-header">
+    <mk-datatable-header
+                  [title]="'Корпоративные заказы'"
+                  [total]="total"
+                  [shown]="shown"
+                  [filterKey]="ordersSearchKey"
+                  [quickFilters]="orderFilters"
+                  (onAddItem)="addOrder()"
+                  (onFilter)="filter($event)"
+                  (onQuickFilter)="quickFilter($event)"
+                  (onQuickFilterReset)="resetFilters()"
+                  (onFilterReset)="resetFilters()"
+                  (onExportAllToCSV)="onExportAllToCSV($event)"
+                  (onExportFilteredToCSV)="onExportFilteredToCSV($event)">
+    </mk-datatable-header>
+  </div>
+  <div class="list-page-body">
+    <ngx-datatable #datatable
+                    class="material striped fullscreen"
+                    [loadingIndicator]="loadingIndicator"
+                    [headerHeight]="40"
+                    [rowHeight]="40"
+                    [footerHeight]="50"
+                    [rows]="orderRows"
+                    [columnMode]="'force'"
+                    [sorts]="sorts"
+                    [messages]="{ emptyMessage: 'Нет данных для отображения' }"
+                    (activate)="onActive($event)"
+                    (sort)="onTableSort(orderRows, $event)">
+
+      <ngx-datatable-column name="createdOn" [sortable]="true">
+        <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
+          <span (click)="sort($event)">Дата<br>заказа</span>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <span [title]="value">{{ value | formattedDate}}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      
+      <ngx-datatable-column name="number">
+        <ng-template ngx-datatable-header-template let-column="column">
+          <span>Номер<br>заказа</span>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <span [title]="value">{{ value }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      
+      <ngx-datatable-column name="companyName" [sortable]="true">
+        <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
+          <span (click)="sort($event)">Имя<br>компании</span>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <span [title]="value">{{ value }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      
+      <ngx-datatable-column name="address">
+        <ng-template ngx-datatable-header-template let-column="column">
+          <span>Адрес<br>доставки</span>
+        </ng-template>
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <span [title]="value">{{ value }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      
+      <ngx-datatable-column [width]="80" [canAutoResize]="false" [resizeable]="false">
+        <ng-template ngx-datatable-cell-template let-expanded="expanded" let-row="row" let-rowIndex="rowIndex">
+          <span class="grid-buttons">
+            <a [routerLink]="[row.id]"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+            <a [routerLink]="" (click)="delete(row)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+      
+      <ngx-datatable-footer class="p-0">
+        <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize" let-curPage="curPage" class="p-0">
+          <mk-datatable-footer [loadingIndicator]="loadingIndicator"
+                               [datatable]="datatable"
+                               [total]="total"
+                               [curPage]="curPage"
+                               [rowCount]="rowCount"
+                               [pageSize]="pageSize"
+                               [itemsName]="'Корпоративных заказов'">
+          </mk-datatable-footer>
+        </ng-template>
+      </ngx-datatable-footer>
+    </ngx-datatable>
+  </div>
+</div>
+
+<ng-template #confirmRemoveTmpl>
+  <mk-confirmation
+          [confirmButtonText]="'Удалить'"
+          [text]="'Вы уверены, что хотите удалить выбранный корпоративный заказ <br>от <b>' + orderToDelete.createdOn + '</b>?'"
+          (onClose)="closeModal()"
+          (onConfirm)="confirmDelete();">
+  </mk-confirmation>
+</ng-template>

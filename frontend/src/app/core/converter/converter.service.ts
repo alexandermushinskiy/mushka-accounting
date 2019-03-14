@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Supplier } from '../../shared/models/supplier.model';
 import { ContactPerson } from '../../shared/models/contact-person.model';
 import { Category } from '../../shared/models/category.model';
-import { Product, SubProduct } from '../../shared/models/product.model';
+import { Product } from '../../shared/models/product.model';
 import { DatetimeService } from '../datetime/datetime.service';
 import { ProductSize } from '../../shared/models/product-size.model';
 import { Size } from '../../shared/models/size.model';
@@ -21,6 +21,9 @@ import { ExhibitionList } from '../../exhibitions/shared/models/exhibition-list.
 import { Expense } from '../../shared/models/expense.model';
 import { SupplyList } from '../../supplies/shared/models/supply-list.model';
 import { ProductList } from '../../shared/models/product-list.model';
+import { CorporateOrderList } from '../../corporate-orders/shared/models/corporate-order-list.model';
+import { CorporateOrder } from '../../corporate-orders/shared/models/corporate-order.model';
+import { CorporateOrderProduct } from '../../corporate-orders/shared/models/corporate-order-product.model';
 
 @Injectable()
 export class ConverterService {
@@ -267,6 +270,48 @@ export class ConverterService {
       email: source.email,
       region: source.region,
       city: source.city
+    });
+  }
+
+  convertToCorporateOrdersList(response: any[]): CorporateOrderList[] {
+    return response.map(res => {
+      return new CorporateOrderList({
+        id: res.id,
+        number: res.number,
+        createdOn: res.createdOn,
+        address: res.address,
+        companyName: res.companyName,
+      });
+    });
+  }
+
+  convertToCorporateOrder(source: any): CorporateOrder {
+    return new CorporateOrder({
+      id: source.id,
+      createdOn: source.createdOn,
+      number: source.number,
+      cost: source.cost,
+      costMethod: source.costMethod,
+      prepayment: source.prepayment,
+      prepaymentMethod: source.prepaymentMethod,
+      deliveryCost: source.deliveryCost,
+      deliveryCostMethod: source.deliveryCostMethod,
+      tax: source.tax,
+      profit: source.profit,
+      contactPerson: source.contactPerson,
+      phone: source.phone,
+      email: source.email,
+      notes: source.notes,
+      region: source.region,
+      city: source.city,
+      copanyName: source.copanyName,
+      products: source.products.map(prod => new CorporateOrderProduct({
+        id: prod.id,
+        name: prod.name,
+        quantity: prod.quantity,
+        unitPrice: prod.unitPrice,
+        costPrice: prod.costPrice
+      }))
     });
   }
 

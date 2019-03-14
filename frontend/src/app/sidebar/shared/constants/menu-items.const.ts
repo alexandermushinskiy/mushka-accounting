@@ -16,6 +16,12 @@ export const MenuItems: MenuItem[] = [
     badges: 0
   }),
   new MenuItem({
+    title: MenuLabels.CORPORATE_ORDERS,
+    icon: 'fa-building-o',
+    routePath: '/corporate-orders',
+    isEnabled: true,
+  }),
+  new MenuItem({
     title: MenuLabels.PRODUCTS,
     icon: 'fa-shopping-bag',
     routePath: '/products',

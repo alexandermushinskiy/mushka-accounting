@@ -12,13 +12,5 @@ export enum MenuLabels {
   GIFTS = 'Подарки',
   EXHIBITIONS = 'Выставки',
 
-  SEARCH_CSR = 'Search CSR',
-  WORKLIST = 'Worklist',
-  FAVORITES = 'Favorites',
-  VIEWS = 'Views',
-  WORKGROUPS = 'Workgroups',
-  TEAM = 'Team',
-  KANBAN = 'Kanban',
-
   HELP = 'Help'
 }

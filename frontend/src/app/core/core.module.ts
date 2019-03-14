@@ -20,6 +20,7 @@ import { OrdersService } from './api/orders.service';
 import { ExhibitionsService } from './api/exhibitions.service';
 import { ExpensesService } from './api/expenses.service';
 import { AnalyticsService } from './api/analytics.service';
+import { CorporateOrdersService } from './api/corporate-orders.service';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { AnalyticsService } from './api/analytics.service';
     ConverterService,
     DatetimeService,
     OrdersService,
+    CorporateOrdersService,
     ExhibitionsService,
     ExpensesService,
     AnalyticsService

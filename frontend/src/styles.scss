@@ -288,3 +288,7 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"]::-webkit-input-placeholder { text-align:left  !important; }
 /* mozilla solution */
 input[type="number"]:-moz-placeholder { text-align:left !important; }
+
+.p-right-25 {
+  padding-right: 25px;
+}

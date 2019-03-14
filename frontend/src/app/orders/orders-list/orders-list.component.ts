@@ -23,7 +23,6 @@ import { DatetimeService } from '../../core/datetime/datetime.service';
 export class OrdersListComponent extends SortableDatatableComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
   @ViewChild('dateRange') dateRangeTmpl: ElementRef;
-
   @LocalStorage('orders_search_key', '') ordersSearchKey: string;
 
   orders: OrderList[];

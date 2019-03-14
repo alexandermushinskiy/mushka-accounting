@@ -24,7 +24,7 @@
                     <div class="col-md-6">
                       <div class="field-group">
                         <label for="address">Дата</label>
-                        <mk-datetimepicker-wrapper formControlName="orderDate" [required]="true"></mk-datetimepicker-wrapper>
+                        <mk-datetimepicker-wrapper formControlName="createdOn" [required]="true"></mk-datetimepicker-wrapper>
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -36,9 +36,7 @@
                                           [ngClass]="{'not-valid': orderForm.controls.number.invalid && isFormSubmitted}"
                                           (onInput)="onNumberChanged($event)">
                         </mk-delayed-input>
-                        <mk-spinner class="validate-order-number" [isLoading]="isNumberValidating"></mk-spinner>
-                        <!-- <span class="validation-tip" *ngIf="orderForm.hasError('required', ['number']) && isFormSubmitted">Обязательно</span> -->
-                        <!-- <span class="validation-tip" *ngIf="!isOrderNumberValid">Номер уже существует</span> -->
+                        <mk-spinner class="validate-order-number" [isLoading]="isOrderNumberValidating"></mk-spinner>
                         <span class="validation-tip" *ngIf="!orderForm.hasError('required', ['number']) && orderForm.hasError('notUnique', ['number'])">Номер уже существует</span>
                       </div>
                     </div>
@@ -75,22 +73,22 @@
                 <div class="col-sm-12">
                   <div class="row">
                     <div class="col-sm-12">
-                      <div class="fields-group-title">Данные покупателя</div>
+                      <div class="fields-group-title">Данные заказчика</div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-sm-3">
                       <div class="field-group">
-                        <label>Имя</label>
-                        <input type="text" class="form-control" formControlName="firstName"
-                               [ngClass]="{'not-valid': orderForm.controls.firstName.invalid && isFormSubmitted}">
+                        <label>Имя компании</label>
+                        <input type="text" class="form-control" formControlName="companyName"
+                               [ngClass]="{'not-valid': orderForm.controls.companyName.invalid && isFormSubmitted}">
                       </div>
                     </div>
                     <div class="col-sm-3">
                       <div class="field-group">
-                        <label>Фамилия</label>
-                        <input type="text" class="form-control" formControlName="lastName"
-                               [ngClass]="{'not-valid': orderForm.controls.lastName.invalid && isFormSubmitted}">
+                        <label>Контактное лицо</label>
+                        <input type="text" class="form-control" formControlName="contactPerson"
+                               [ngClass]="{'not-valid': orderForm.controls.contactPerson.invalid && isFormSubmitted}">
                       </div>
                     </div>
                     <div class="col-sm-3">
@@ -122,63 +120,64 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-row products-titles" [ngClass]="{'p-right-25': orderForm.get('products').controls.length > 1}">
-                    <div class="col-sm-4">Наименование товара</div>
-                    <div class="col-sm-2">Артикул/Размер</div>
-                    <div class="col-sm-2">Себестоимость</div>
-                    <div class="col-sm-2">Цена</div>
-                    <div class="col-sm-2">Количество</div>
+                    <div class="col-sm-5">Наименование товара</div>
+                    <div class="col-sm-7">
+                      <div class="form-row">
+                        <div class="col-sm-4">Себестоимость</div>
+                        <div class="col-sm-4">Цена</div>
+                        <div class="col-sm-4">Количество</div>
+                      </div>
+                    </div>
                   </div>
                   <div formArrayName="products">
-                    <div class="form-row product-row" [formGroupName]="index"
-                                    *ngFor="let productControl of orderForm.get('products').controls; let index=index"
-                                    [ngClass]="{'p-right-25': orderForm.get('products').controls.length > 1}">
-                      <div class="col-sm-4">
+                    <div class="form-row" [formGroupName]="index"
+                                          *ngFor="let productControl of orderForm.get('products').controls; let index=index" 
+                                          [ngClass]="{'p-right-25': orderForm.get('products').controls.length > 1}">
+                      <div class="col-sm-5">
                         <div class="field-group">
-                          <mk-select-products formControlName="product"
-                                              [products]="productsList"
-                                              [canClearAll]="false"
-                                              [ngClass]="{'not-valid': productControl.controls.product.invalid && isFormSubmitted}"
-                                              (onProductSelected)="onProductSelected($event, index)">
-                          </mk-select-products>
+                          <input type="text"
+                                 class="form-control"
+                                 formControlName="name"
+                                 [required]="true"
+                                 [ngClass]="{'not-valid': productControl.controls.name.invalid && isFormSubmitted}">
                         </div>
                       </div>
-                      <div class="col-sm-2">
-                        <div class="field-group">
-                          <input type="text" class="form-control" disabled
-                                [value]="getProductSizeAndVendorCode(productControl.value.product)">
+                      <div class="col-sm-7">
+                        <div class="form-row">
+                          <div class="col-sm-4">
+                            <div class="field-group">
+                              <mk-currency-input formControlName="costPrice"
+                                                 [required]="true"
+                                                 [ngClass]="{'not-valid': productControl.controls.costPrice.invalid && isFormSubmitted}">
+                              </mk-currency-input>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="field-group">
+                              <mk-currency-input formControlName="unitPrice"
+                                                  [required]="true"
+                                                  [id]="'unitPrice-' + index"
+                                                  [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && isFormSubmitted}">
+                              </mk-currency-input>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="field-group">
+                              <input type="number"
+                                      class="form-control"
+                                      formControlName="quantity"
+                                      [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && isFormSubmitted}" />
+                              <span class="validation-tip" *ngIf="productControl.hasError('max', ['quantity']) && isFormSubmitted">
+                                В наличие {{ productControl.value.product.quantity }}
+                              </span>
+                            </div>  
+                            <button class="btn-remove" title="Удалить" type="button" (click)="removeProduct(index)" *ngIf="orderForm.get('products').controls.length > 1">
+                              <i class="ico ico-close"></i>
+                            </button>
+                          </div>
                         </div>
                       </div>
-                      <div class="col-sm-2">
-                        <div class="field-group">
-                          <input type="text" class="form-control" formControlName="costPrice">
-                        </div>
-                      </div>
-                      <div class="col-sm-2">
-                        <div class="field-group">
-                          <mk-currency-input formControlName="unitPrice"
-                                              [placeholder]="'Цена'"
-                                              [required]="true"
-                                              [id]="'unitPrice-' + index"
-                                              [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && isFormSubmitted}">
-                          </mk-currency-input>
-                        </div>
-                      </div>
-                      <div class="col-sm-2">
-                        <div class="field-group">
-                          <input type="number"
-                                  class="form-control"
-                                  formControlName="quantity"
-                                  placeholder="Количество"
-                                  [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && isFormSubmitted}"
-                                  (input)="onQuantityChanged(index, $event.target.value)" />
-                          <span class="validation-tip" *ngIf="productControl.hasError('max', ['quantity']) && isFormSubmitted">
-                            В наличие {{ productControl.value.product.quantity }}
-                          </span>
-                        </div>  
-                        <button class="btn-remove" title="Удалить" type="button" (click)="removeProduct(index)" *ngIf="orderForm.get('products').controls.length > 1">
-                          <i class="ico ico-close"></i>
-                        </button>
-                      </div>
+
                     </div>
                   </div>
                   <button class="btn-add" type="button" (click)="addProduct()">
@@ -207,11 +206,31 @@
               </span>
             </div>
             <div class="col-md-12 cost">
-              <span class="cost-title">Скидка, %:</span>
+              <span class="cost-title">Предоплата:</span>
               <span class="cost-value">
-                <mk-delayed-input [value]="discount"
-                                  (onInput)="onDiscountChanged($event)">
-                </mk-delayed-input>
+                <mk-currency-input formControlName="prepayment" [placeholder]="'Сумма'"></mk-currency-input>
+              </span>
+              <span class="cost-payment-type">
+                <mk-payment-methods-dropdown formControlName="prepaymentMethod"
+                                  [ngClass]="{'not-valid': orderForm.controls.prepaymentMethod.invalid && isFormSubmitted}">
+                </mk-payment-methods-dropdown>
+              </span>
+            </div>
+            <div class="col-md-12 cost">
+              <span class="cost-title">Доставка:</span>
+              <span class="cost-value">
+                <mk-currency-input formControlName="deliveryCost" [placeholder]="'Сумма'"></mk-currency-input>
+              </span>
+              <span class="cost-payment-type">
+                <mk-payment-methods-dropdown formControlName="deliveryCostMethod"
+                                  [ngClass]="{'not-valid': orderForm.controls.deliveryCostMethod.invalid && isFormSubmitted}">
+                </mk-payment-methods-dropdown>
+              </span>
+            </div>
+            <div class="col-md-12 cost">
+              <span class="cost-title">Налог, %:</span>
+              <span class="cost-value">
+                <input type="number" class="form-control" formControlName="tax">
               </span>
             </div>
           </div>
@@ -229,18 +248,13 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="field-group">
-                <mk-checkbox formControlName="isWholesale" [text]="'Оптовый заказ'"></mk-checkbox>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </div>
     </div>
+
   </div>
-  
+
   <div class="footer">
     <div class="footer-buttons">
       <button class="btn btn-primary" type="submit" [disabled]="isLoading">
