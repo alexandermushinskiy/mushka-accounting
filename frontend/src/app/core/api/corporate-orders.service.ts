@@ -16,7 +16,6 @@ export class CorporateOrdersService {
   }
   
   getAll(): Observable<CorporateOrderList[]>  {
-    return Observable.of([]);
     return this.http.get(this.endPoint)
       .map((res: any) => this.converterService.convertToCorporateOrdersList(res.data))
       .catch((res: any) => throwError(res.error.messages));
@@ -46,7 +45,6 @@ export class CorporateOrdersService {
   }
   
   validateOrderNumber(number: string ): Observable<boolean> {
-    return Observable.of(true).delay(3000);
     return this.http.get(`${this.endPoint}/validate-number/${number}`)
       .delay(1000)
       .map((res: any) => res.data.isValid)

@@ -59,6 +59,9 @@
       color: $menu-link-hover-color;
     }
   }
+  .title {
+    display: inline-block;
+  }
   .fa {
     font-size: 2.1rem;
     width: 20px;
@@ -67,11 +70,14 @@
   .ico-views {
     font-size: 1.8rem;
   }
-  .fa-id-badge {
-    padding-left: 3px;
+  .fa-id-badge,
+  .fa-gift,
+  .fa-building-o {
+    padding-left: 4px;
   }
-  .fa-gift {
-    padding-left: 2px;
+  .fa-id-badge:before {
+    width: 20px;
+    display: block;
   }
   .badge {
     position: absolute;

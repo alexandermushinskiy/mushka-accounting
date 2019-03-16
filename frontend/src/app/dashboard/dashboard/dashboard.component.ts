@@ -49,8 +49,8 @@ export class DashboardComponent implements OnInit {
     { period: 12, desc: '12 месяцев' }
   ];
 
-  balanceData: Array<any> = [0, 0];
-  balanceLabels: Array<string> = ['Потратили', 'Заработали'];
+  balanceData: Array<any> = [];
+  balanceLabels: Array<string> = [];
   balanceColor: Array<any> = [{
       backgroundColor: ['rgba(255,127,14,0.5)', 'rgba(134,199,243,0.5)'],
       borderColor: ['rgba(255,127,14,1)', 'rgba(134,199,243,1)'],
@@ -58,6 +58,9 @@ export class DashboardComponent implements OnInit {
   }];
   balanceOptions: any = {
     responsive: true,
+    tooltips: {
+      enabled: false
+    },
     legend: {
       display: true,
       position: 'right'
@@ -127,6 +130,8 @@ export class DashboardComponent implements OnInit {
     this.analyticsService.getBalance()
       .subscribe((res: Balance) => {
         this.balanceData = [res.expense, res.profit];
+        this.balanceLabels[0] = `Потратили\t\t\t: ${this.addThousandsSeparator(res.expense)}`;
+        this.balanceLabels[1] = `Заработали\t: ${this.addThousandsSeparator(res.profit)}`;
       });
   }
 
@@ -168,5 +173,9 @@ export class DashboardComponent implements OnInit {
         this.soldProductsLabels = res.map(pc => this.datetimeService.getMonthName(pc.createdOn));
         this.soldProductsData[0].data = res.map(pc => pc.quantity);
       });
+  }
+
+  private addThousandsSeparator(value: number): string {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   }
 }

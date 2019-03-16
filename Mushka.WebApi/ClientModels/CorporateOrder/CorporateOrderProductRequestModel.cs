@@ -1,13 +1,13 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations;
 using Mushka.WebApi.Filters;
 
-namespace Mushka.WebApi.ClientModels.Order
+namespace Mushka.WebApi.ClientModels.CorporateOrder
 {
-    public class OrderProductRequestModel
+    public class CorporateOrderProductRequestModel
     {
-        [RequireNonDefault]
-        public Guid ProductId { get; set; }
-        
+        [Required]
+        public string Name { get; set; }
+
         [RequireNonDefault]
         public int Quantity { get; set; }
 

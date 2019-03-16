@@ -278,7 +278,7 @@ export class ConverterService {
       return new CorporateOrderList({
         id: res.id,
         number: res.number,
-        createdOn: res.createdOn,
+        createdOn: this.datetimeService.toString(res.createdOn),
         address: res.address,
         companyName: res.companyName,
       });
@@ -288,7 +288,7 @@ export class ConverterService {
   convertToCorporateOrder(source: any): CorporateOrder {
     return new CorporateOrder({
       id: source.id,
-      createdOn: source.createdOn,
+      createdOn: this.datetimeService.toString(source.createdOn),
       number: source.number,
       cost: source.cost,
       costMethod: source.costMethod,
@@ -298,13 +298,13 @@ export class ConverterService {
       deliveryCostMethod: source.deliveryCostMethod,
       tax: source.tax,
       profit: source.profit,
+      companyName: source.companyName,
       contactPerson: source.contactPerson,
       phone: source.phone,
       email: source.email,
       notes: source.notes,
       region: source.region,
       city: source.city,
-      copanyName: source.copanyName,
       products: source.products.map(prod => new CorporateOrderProduct({
         id: prod.id,
         name: prod.name,

@@ -7,8 +7,8 @@
        [queryParams]="item.queryParams"
        [ngClass]="{'disabled-control': !item.isEnabled}"
        (click)="onMenuItemSelected(item.title)">
-      <i class="fa" [ngClass]="item.icon"></i>
-      {{ item.title }}
+      <i class="icon fa" [ngClass]="item.icon"></i>
+      <span class="title">{{ item.title }}</span>
       <span *ngIf="item.badges > 0" class="badge">{{ item.badges }}</span>
     </a>
   </span>

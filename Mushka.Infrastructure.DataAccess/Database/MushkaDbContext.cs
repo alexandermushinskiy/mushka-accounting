@@ -21,6 +21,8 @@ namespace Mushka.Infrastructure.DataAccess.Database
 
         public DbSet<Order> Orders { get; set; }
 
+        public DbSet<CorporateOrder> CorporateOrders { get; set; }
+
         public DbSet<Supplier> Suppliers { get; set; }
 
         public DbSet<Customer> Customers { get; set; }
@@ -45,6 +47,8 @@ namespace Mushka.Infrastructure.DataAccess.Database
             modelBuilder.ApplyConfiguration(new ExhibitionConfig());
             modelBuilder.ApplyConfiguration(new ExhibitionProductConfig());
             modelBuilder.ApplyConfiguration(new ExpenseConfig());
+            modelBuilder.ApplyConfiguration(new CorporateOrderConfig());
+            modelBuilder.ApplyConfiguration(new CorporateOrderProductConfig());
         }
     }
 }

@@ -2,11 +2,11 @@
 {
     public class Balance
     {
-        public decimal Expense { get; }
+        public int Expense { get; }
 
-        public decimal Profit { get; }
+        public int Profit { get; }
 
-        public Balance(decimal expense, decimal profit)
+        public Balance(int expense, int profit)
         {
             Expense = expense;
             Profit = profit;

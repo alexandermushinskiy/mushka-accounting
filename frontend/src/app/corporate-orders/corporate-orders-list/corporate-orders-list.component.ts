@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbModalRef, NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { LocalStorage } from 'ngx-webstorage';
 
 import { CorporateOrdersService } from '../../core/api/corporate-orders.service';
 import { CorporateOrderTableRow } from '../shared/models/corporate-order-table-row.model';
 import { CorporateOrderList } from '../shared/models/corporate-order-list.model';
 import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatable.component';
 import { NotificationsService } from '../../core/notifications/notifications.service';
+import { CorporateOrderListFilter } from '../../shared/filters/corporate-order-list.filter';
 
 @Component({
   selector: 'mk-corporate-orders-list',
@@ -15,6 +17,7 @@ import { NotificationsService } from '../../core/notifications/notifications.ser
 })
 export class CorporateOrdersListComponent extends SortableDatatableComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
+  @LocalStorage('corporate_orders_search_key', '') ordersSearchKey: string;
   
   orders: CorporateOrderList[];
   orderRows: CorporateOrderTableRow[];
@@ -50,6 +53,19 @@ export class CorporateOrdersListComponent extends SortableDatatableComponent imp
     if (event.type === 'click') {
       event.cellElement.blur();
     }
+  }
+
+  filter(searchKey: string) {
+    this.ordersSearchKey = searchKey;
+
+    const orderFilter = new CorporateOrderListFilter(searchKey);
+    const filteredOrders = this.orders.filter(order => orderFilter.filter(order));
+
+    this.updateDatatableRows(filteredOrders);
+  }
+
+  resetFilters() {
+    this.updateDatatableRows(this.orders);
   }
 
   addOrder() {

@@ -4,15 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.Filters;
 
-namespace Mushka.WebApi.ClientModels.Order
+namespace Mushka.WebApi.ClientModels.CorporateOrder
 {
-    public class OrderRequestModel
+    public class CorporateOrderRequestModel
     {
+        [RequireNonDefault]
+        public DateTime CreatedOn { get; set; }
+
         [Required]
         public string Number { get; set; }
-
-        [RequireNonDefault]
-        public DateTime OrderDate { get; set; }
 
         [RequireNonDefault]
         public decimal Cost { get; set; }
@@ -20,7 +20,15 @@ namespace Mushka.WebApi.ClientModels.Order
         [RequireNonDefault]
         public PaymentMethod CostMethod { get; set; }
 
-        public int? Discount { get; set; }
+        public decimal? Prepayment { get; set; }
+
+        public PaymentMethod? PrepaymentMethod { get; set; }
+
+        public decimal? DeliveryCost { get; set; }
+
+        public PaymentMethod? DeliveryCostMethod { get; set; }
+
+        public int Tax { get; set; }
 
         [RequireNonDefault]
         public decimal Profit { get; set; }
@@ -32,21 +40,20 @@ namespace Mushka.WebApi.ClientModels.Order
         public string City { get; set; }
 
         [Required]
-        public string FirstName { get; set; }
+        public string CompanyName { get; set; }
 
         [Required]
-        public string LastName { get; set; }
+        public string ContactPerson { get; set; }
 
+        [Required]
         public string Phone { get; set; }
 
         public string Email { get; set; }
-
-        public bool IsWholesale { get; set; }
 
         public string Notes { get; set; }
 
         [Required]
         [MinLength(1)]
-        public IEnumerable<OrderProductRequestModel> Products { get; set; }
+        public IEnumerable<CorporateOrderProductRequestModel> Products { get; set; }
     }
 }

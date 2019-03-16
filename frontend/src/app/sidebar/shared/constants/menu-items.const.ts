@@ -19,14 +19,13 @@ export const MenuItems: MenuItem[] = [
     title: MenuLabels.CORPORATE_ORDERS,
     icon: 'fa-building-o',
     routePath: '/corporate-orders',
-    isEnabled: true,
+    isEnabled: true
   }),
   new MenuItem({
     title: MenuLabels.PRODUCTS,
     icon: 'fa-shopping-bag',
     routePath: '/products',
-    isEnabled: true,
-    isExternal: true,
+    isEnabled: true
   }),
   new MenuItem({
     title: MenuLabels.SUPPLIES,

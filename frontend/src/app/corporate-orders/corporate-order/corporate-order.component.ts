@@ -124,6 +124,8 @@ export class CorporateOrderComponent extends UnsubscriberComponent implements On
   }
 
   private buildForm(order: CorporateOrder) {
+    this.profit = !!order.profit ? order.profit : 0;
+
     this.orderForm = this.formBuilder.group({
       number: [order.number, Validators.required],
       createdOn: [order.createdOn, Validators.required],
@@ -201,6 +203,11 @@ export class CorporateOrderComponent extends UnsubscriberComponent implements On
       number: formRawValue.number,
       cost: formRawValue.cost,
       costMethod: formRawValue.costMethod,
+      prepayment: formRawValue.prepayment,
+      prepaymentMethod: formRawValue.prepaymentMethod,
+      deliveryCost: formRawValue.deliveryCost,
+      deliveryCostMethod: formRawValue.deliveryCostMethod,
+      tax: formRawValue.tax,
       notes: formRawValue.notes,
       region: formRawValue.region,
       city: formRawValue.city,

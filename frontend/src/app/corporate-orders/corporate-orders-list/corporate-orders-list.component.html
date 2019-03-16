@@ -5,14 +5,9 @@
                   [total]="total"
                   [shown]="shown"
                   [filterKey]="ordersSearchKey"
-                  [quickFilters]="orderFilters"
                   (onAddItem)="addOrder()"
                   (onFilter)="filter($event)"
-                  (onQuickFilter)="quickFilter($event)"
-                  (onQuickFilterReset)="resetFilters()"
-                  (onFilterReset)="resetFilters()"
-                  (onExportAllToCSV)="onExportAllToCSV($event)"
-                  (onExportFilteredToCSV)="onExportFilteredToCSV($event)">
+                  (onFilterReset)="resetFilters()">
     </mk-datatable-header>
   </div>
   <div class="list-page-body">
@@ -34,7 +29,7 @@
           <span (click)="sort($event)">Дата<br>заказа</span>
         </ng-template>
         <ng-template ngx-datatable-cell-template let-value="value">
-          <span [title]="value">{{ value | formattedDate}}</span>
+          <span [title]="value">{{ value | formattedDate }}</span>
         </ng-template>
       </ngx-datatable-column>
       
@@ -93,7 +88,7 @@
 <ng-template #confirmRemoveTmpl>
   <mk-confirmation
           [confirmButtonText]="'Удалить'"
-          [text]="'Вы уверены, что хотите удалить выбранный корпоративный заказ <br>от <b>' + orderToDelete.createdOn + '</b>?'"
+          [text]="'Вы уверены, что хотите удалить выбранный корпоративный заказ от <b>' + orderToDelete.createdOn + '</b>?'"
           (onClose)="closeModal()"
           (onConfirm)="confirmDelete();">
   </mk-confirmation>

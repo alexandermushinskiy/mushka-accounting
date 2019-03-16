@@ -22,12 +22,13 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
 
         public async Task<Balance> GetBalance(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var profit = await Context.Orders.SumAsync(order => order.Profit, cancellationToken);
+            var ordersProfit = await Context.Orders.SumAsync(order => order.Profit, cancellationToken);
+            var corporateOrdersProfit = await Context.CorporateOrders.SumAsync(order => order.Profit, cancellationToken);
 
             var supplyExpenses = await Context.Supplies.SumAsync(supply => supply.TotalCost, cancellationToken);
             var expenses = await Context.Expenses.SumAsync(expense => expense.Cost, cancellationToken);
 
-            return new Balance(supplyExpenses + expenses, profit);
+            return new Balance(Convert.ToInt32(supplyExpenses + expenses), Convert.ToInt32(ordersProfit + corporateOrdersProfit));
         }
 
         public async Task<IEnumerable<PopularProduct>> GetProductsByPopularity(int topCount, Popularity popularity, CancellationToken cancellationToken = default(CancellationToken))
