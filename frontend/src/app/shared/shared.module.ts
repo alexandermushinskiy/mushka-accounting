@@ -43,6 +43,7 @@ import { DelayedInputComponent } from './widgets/delayed-input/delayed-input.com
 import { OrderQuickFilter } from './filters/order-quick.filter';
 import { DateRageModalComponent } from './widgets/daterage-modal/daterage-modal.component';
 import { SupplyQuickFilter } from './filters/supply-quick.filter';
+import { HandleUnsavedDataGuard } from './guards/handle-unsaved-data.guard';
 
 @NgModule({
   imports: [
@@ -137,7 +138,8 @@ import { SupplyQuickFilter } from './filters/supply-quick.filter';
   ],
   providers: [
     OrderQuickFilter,
-    SupplyQuickFilter
+    SupplyQuickFilter,
+    HandleUnsavedDataGuard
   ]
 })
 

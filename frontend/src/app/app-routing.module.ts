@@ -18,13 +18,14 @@ import { ExhibitionComponent } from './exhibitions/exhibition/exhibition.compone
 import { ExpenseComponent } from './expenses/expense/expense.component';
 import { CorporateOrdersListComponent } from './corporate-orders/corporate-orders-list/corporate-orders-list.component';
 import { CorporateOrderComponent } from './corporate-orders/corporate-order/corporate-order.component';
+import { HandleUnsavedDataGuard } from './shared/guards/handle-unsaved-data.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent, pathMatch: 'full' },
   { path: 'orders', children: [
     { path: '', component: OrdersListComponent, pathMatch: 'full' },
-    { path: 'new', component: OrderComponent, pathMatch: 'full' },
+    { path: 'new', component: OrderComponent, pathMatch: 'full', canDeactivate: [HandleUnsavedDataGuard] },
     { path: ':id', component: OrderComponent, pathMatch: 'full' }
   ]},
   { path: 'corporate-orders', children: [

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormArray, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 
@@ -10,16 +10,18 @@ import { OrderProduct } from '../../shared/models/order-product.model';
 import { ProductsServce } from '../../core/api/products.service';
 import { ukrRegions } from '../shared/constants/urk-regions.const';
 import { DatetimeService } from '../../core/datetime/datetime.service';
-import { UnsubscriberComponent } from '../../shared/hooks/unsubscriber.component';
 import { SelectProduct } from '../../shared/models/select-product.model';
 import { uniqueOrderNumber } from '../../shared/validators/order-number.validator';
+import { ComponentCanDeactivate } from '../../shared/hooks/component-can-deactivate.component';
 
 @Component({
   selector: 'mk-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss']
 })
-export class OrderComponent extends UnsubscriberComponent implements OnInit {
+export class OrderComponent extends ComponentCanDeactivate implements OnInit {
+  @ViewChild('ngForm') ngForm: NgForm;
+
   orderForm: FormGroup;
   isEdit = false;
   isLoading = false;
@@ -28,7 +30,6 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   title: string;
   productsList: SelectProduct[];
   regions = ukrRegions;
-  isFormSubmitted = false;
   profit: number;
   discount: number;
   isOrderNumberValid = true;
@@ -60,6 +61,10 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
       .subscribe((data: {index: number, quantity: number}) => {
         this.setCostPrice(data.index);
       });
+  }
+
+  canDeactivate(): boolean {
+    return this.ngForm.submitted || !this.ngForm.dirty;
   }
 
   addProduct() {
@@ -118,7 +123,6 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
     // const t1 = this.createOrderModel(this.orderForm.getRawValue());
     // console.info(t1);
     // return;
-    this.isFormSubmitted = true;
     if (this.orderForm.invalid) {
       return;
     }
