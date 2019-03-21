@@ -19,7 +19,7 @@ namespace Mushka.WebApi.Resolvers
                 PrepaymentMethod = source.PrepaymentMethod,
                 DeliveryCost = source.DeliveryCost,
                 DeliveryCostMethod = source.DeliveryCostMethod,
-                Tax = source.Tax ?? 0,
+                Tax = source.Tax,
                 Profit = source.Profit,
                 Notes = source.Notes,
                 CompanyName = source.CompanyName,
