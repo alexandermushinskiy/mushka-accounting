@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Mushka.Domain.Entities;
@@ -21,6 +23,14 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 cust.LastName == customer.LastName &&
                 cust.Region == customer.Region &&
                 cust.City == customer.City, cancellationToken);
+        }
+
+        public async Task<IEnumerable<Customer>> GetByName(string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await dbSet
+                .Where(cus => cus.FirstName.StartsWith(name) || cus.LastName.StartsWith(name))
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
         }
     }
 }
