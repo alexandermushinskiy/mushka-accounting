@@ -12,6 +12,7 @@ using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Service.Extensibility.ExternalApps;
+using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Services;
 using Mushka.Tests.Common;
 using Xunit;
@@ -50,6 +51,7 @@ namespace Mushka.Tests.Service.Services
         private readonly Mock<IProductRepository> productRepositoryMock;
         private readonly Mock<ICustomerRepository> customerRepositoryMock;
         private readonly Mock<IExcelService> excelServiceMock;
+        private readonly Mock<IOrderCustomerProvider> orderCustomerProviderMock;
         private readonly OrderService orderService;
 
         public OrderServiceTest()
@@ -58,6 +60,7 @@ namespace Mushka.Tests.Service.Services
             customerRepositoryMock = MockRepository.Create<ICustomerRepository>();
             orderRepositoryMock = MockRepository.Create<IOrderRepository>();
             excelServiceMock = MockRepository.Create<IExcelService>();
+            orderCustomerProviderMock = MockRepository.Create<IOrderCustomerProvider>();
 
             var loggerFactory = MockRepository
                 .Create<ILoggerFactory>()
@@ -73,6 +76,7 @@ namespace Mushka.Tests.Service.Services
             orderService = new OrderService(
                 storageMock.Object,
                 excelServiceMock.Object,
+                orderCustomerProviderMock.Object,
                 loggerFactory);
         }
 
@@ -141,7 +145,7 @@ namespace Mushka.Tests.Service.Services
             const int ExpectedQuantity = 10;
 
             customerRepositoryMock
-                .SetupAsync(repo => repo.GetByOrderDetails(order.Customer, default(CancellationToken)), CreateCustomer());
+                .SetupAsync(repo => repo.GetByOrderDetailsAsync(order.Customer, default(CancellationToken)), CreateCustomer());
 
             orderRepositoryMock
                 .Setup(repo => repo.Add(order), order);
@@ -169,7 +173,7 @@ namespace Mushka.Tests.Service.Services
             const int ExpectedQuantity = 10;
 
             customerRepositoryMock
-                .SetupAsync(repo => repo.GetByOrderDetails(order.Customer, default(CancellationToken)), null)
+                .SetupAsync(repo => repo.GetByOrderDetailsAsync(order.Customer, default(CancellationToken)), null)
                 .Setup(repo => repo.Add(order.Customer), CreateCustomer());
 
             orderRepositoryMock
@@ -196,7 +200,7 @@ namespace Mushka.Tests.Service.Services
             var order = CreateOrder(new[] { CreateOrderProduct(5) });
             
             customerRepositoryMock
-                .SetupAsync(repo => repo.GetByOrderDetails(order.Customer, default(CancellationToken)), CreateCustomer());
+                .SetupAsync(repo => repo.GetByOrderDetailsAsync(order.Customer, default(CancellationToken)), CreateCustomer());
             
             productRepositoryMock
                 .SetupAsync(repo => repo.GetByIdAsync(ProductId, default(CancellationToken)), null);
@@ -215,7 +219,7 @@ namespace Mushka.Tests.Service.Services
             var product = CreateProduct(5);
 
             customerRepositoryMock
-                .SetupAsync(repo => repo.GetByOrderDetails(order.Customer, default(CancellationToken)), CreateCustomer());
+                .SetupAsync(repo => repo.GetByOrderDetailsAsync(order.Customer, default(CancellationToken)), CreateCustomer());
 
             productRepositoryMock
                 .SetupAsync(repo => repo.GetByIdAsync(ProductId, default(CancellationToken)), product);
@@ -441,7 +445,8 @@ namespace Mushka.Tests.Service.Services
             new Product
             {
                 Id = ProductId,
-                Quantity = quantity
+                Quantity = quantity,
+                Category = new Category()
             };
 
         private static Product CreateProduct(Guid productId, int quantity) =>

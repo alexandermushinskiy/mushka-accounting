@@ -23,6 +23,7 @@ namespace Mushka.Service
 
             builder.RegisterType<CostPriceProvider>().As<ICostPriceProvider>();
             builder.RegisterType<DefaultProductsProvider>().As<IDefaultProductsProvider>();
+            builder.RegisterType<OrderCustomerProvider>().As<IOrderCustomerProvider>();
         }
     }
 }

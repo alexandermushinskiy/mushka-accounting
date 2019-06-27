@@ -4,7 +4,7 @@ using Mushka.Domain.Extensibility.Entities;
 
 namespace Mushka.Domain.Entities
 {
-    public class Customer : IEntity
+    public class Customer : IEntity, IEquatable<Customer>
     {
         public Customer()
         {
@@ -26,5 +26,16 @@ namespace Mushka.Domain.Entities
         public string Region { get; set; }
 
         public ICollection<Order> Orders { get; set; }
+
+        public string FullName => $"{FirstName} {LastName}";
+
+        public bool Equals(Customer other)
+        {
+            return FirstName == other.FirstName &&
+                   LastName == other.LastName &&
+                   Phone == other.Phone &&
+                   Region == other.Region &&
+                   City == other.City;
+        }
     }
 }

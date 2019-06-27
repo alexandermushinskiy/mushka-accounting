@@ -21,6 +21,7 @@ import { ExhibitionsService } from './api/exhibitions.service';
 import { ExpensesService } from './api/expenses.service';
 import { AnalyticsService } from './api/analytics.service';
 import { CorporateOrdersService } from './api/corporate-orders.service';
+import { CustomersService } from './api/customers.service';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { CorporateOrdersService } from './api/corporate-orders.service';
     CorporateOrdersService,
     ExhibitionsService,
     ExpensesService,
-    AnalyticsService
+    AnalyticsService,
+    CustomersService
   ],
   declarations: [],
   exports: []

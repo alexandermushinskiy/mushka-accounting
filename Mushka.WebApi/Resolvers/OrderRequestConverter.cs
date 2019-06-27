@@ -20,8 +20,9 @@ namespace Mushka.WebApi.Resolvers
         public Order Convert(OrderRequestModel source, Order destination, ResolutionContext context)
         {
             var orderId = context.GetId() ?? guidProvider.NewGuid();
-            var customerId = guidProvider.NewGuid();
-            
+            var customerId = source.Customer.Id ?? guidProvider.NewGuid();
+            //var customerId = guidProvider.NewGuid();
+
             return new Order
             {
                 Id = orderId,
@@ -42,10 +43,10 @@ namespace Mushka.WebApi.Resolvers
             new Customer
             {
                 Id = customerId,
-                FirstName = requestModel.FirstName,
-                LastName = requestModel.LastName,
-                Phone = requestModel.Phone,
-                Email = requestModel.Email,
+                FirstName = requestModel.Customer.FirstName,
+                LastName = requestModel.Customer.LastName,
+                Phone = requestModel.Customer.Phone,
+                Email = requestModel.Customer.Email,
                 Region = requestModel.Region,
                 City = requestModel.City
             };

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
+import { Subject, Observable, of } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, tap, switchMap, filter } from 'rxjs/operators';
 
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { OrdersService } from '../../core/api/orders.service';
@@ -13,6 +14,8 @@ import { DatetimeService } from '../../core/datetime/datetime.service';
 import { UnsubscriberComponent } from '../../shared/hooks/unsubscriber.component';
 import { SelectProduct } from '../../shared/models/select-product.model';
 import { uniqueOrderNumber } from '../../shared/validators/order-number.validator';
+import { CustomersService } from '../../core/api/customers.service';
+import { Customer } from '../../shared/models/customer.model';
 
 @Component({
   selector: 'mk-order',
@@ -33,8 +36,14 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
   discount: number;
   isOrderNumberValid = true;
   isNumberValidating = false;
+  searching = false;
+  customerModel: any;
 
   private quantityTerms$ = new Subject<{index: number, quantity: number}>();
+
+  private get customerId(): string {
+    return !!this.orderForm.value.customer ? this.orderForm.value.customer.id : null;
+  }
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -42,8 +51,37 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
               private datetimeService: DatetimeService,
               private ordersService: OrdersService,
               private productsService: ProductsServce,
+              private customersService: CustomersService,
               private notificationsService: NotificationsService) {
     super();
+  }
+
+  searchName = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => this.searching = true),
+      filter((term: string) => term.length >= 3),
+      switchMap((term: string) => {
+        return this.customersService.getByName(term)
+          .map(res => res.filter(cust => cust.id !== this.customerId))
+          .pipe(
+            catchError(() => {
+              return of([]);
+            }))
+          }
+      ),
+      tap(() => this.searching = false)
+    );
+
+  selectCustomer($event: any) {
+    $event.preventDefault();
+    const customer = $event.item;
+    this.setCustomerFormValue('id', customer.id);
+    this.setCustomerFormValue('firstName', customer.firstName);
+    this.setCustomerFormValue('lastName', customer.lastName);
+    this.setCustomerFormValue('phone', customer.phone);
+    this.setCustomerFormValue('email', customer.email);
   }
 
   ngOnInit() {
@@ -182,18 +220,29 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
       notes: [order.notes],
       region: [order.region, Validators.required],
       city: [order.city, Validators.required],
-      firstName: [order.firstName, Validators.required],
-      lastName: [order.lastName, Validators.required],
-      phone: [order.phone, Validators.required],
-      email: [order.email],
+      // firstName: [!!order.customer ? order.customer.firstName : null, Validators.required],
+      // lastName: [!!order.customer ? order.customer.lastName : null, Validators.required],
+      // phone: [!!order.customer ? order.customer.phone : null, Validators.required],
+      // email: [!!order.customer ? order.customer.email : null],
+      customer: this.createCustomerFrmGroup(order.customer),
       products: this.formBuilder.array(
         order.products.map(param => this.createProductFormGroup(param))
       )
     });
-
+    
     this.addFieldChangeListeners();
     this.calculateTotalCost();
     this.calculateProfit();
+  }
+
+  private createCustomerFrmGroup(customer: Customer): FormGroup {
+    return this.formBuilder.group({
+      id: [!!customer ? customer.id : null],
+      firstName: [!!customer ? customer.firstName : null, Validators.required],
+      lastName: [!!customer ? customer.lastName : null, Validators.required],
+      phone: [!!customer ? customer.phone : null, Validators.required],
+      email: [!!customer ? customer.email : null]
+    });
   }
 
   private createProductFormGroup(orderProduct: OrderProduct): FormGroup {
@@ -259,11 +308,22 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
       isWholesale: !!formRawValue.isWholesale,
       region: formRawValue.region,
       city: formRawValue.city,
-      firstName: formRawValue.firstName,
-      lastName: formRawValue.lastName,
-      phone: formRawValue.phone,
-      email: formRawValue.email,
+      // firstName: formRawValue.firstName,
+      // lastName: formRawValue.lastName,
+      // phone: formRawValue.phone,
+      // email: formRawValue.email,
+      customer: this.createCustomer(formRawValue.customer),
       products: formRawValue.products.map((prod: any) => this.createOrderProduct(prod))
+    });
+  }
+
+  private createCustomer(formValue: any): Customer {
+    return new Customer({
+      id: formValue.id,
+      firstName: formValue.firstName,
+      lastName: formValue.lastName,
+      phone: formValue.phone,
+      email: formValue.email
     });
   }
 
@@ -313,5 +373,11 @@ export class OrderComponent extends UnsubscriberComponent implements OnInit {
     }
 
     return (cost / 100) * this.discount;
+  }
+  
+  private setCustomerFormValue(controlName: string, value: string) {
+    const ctrl = this.orderForm.controls.customer.get(controlName);
+    ctrl.setValue(value, { onlySelf: true });
+    ctrl.updateValueAndValidity();
   }
 }

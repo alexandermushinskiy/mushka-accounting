@@ -216,12 +216,13 @@ export class ConverterService {
       discount: source.discount,
       region: source.region,
       city: source.city,
-      firstName: source.firstName,
-      lastName: source.lastName,
-      phone: source.phone,
-      email: source.email,
+      // firstName: source.firstName,
+      // lastName: source.lastName,
+      // phone: source.phone,
+      // email: source.email,
       isWholesale: source.isWholesale,
       notes: source.notes,
+      customer: this.convertToCustomer(source.customer),
       products: this.convertToOrderProducts(source.products)
     });
   }
@@ -268,8 +269,8 @@ export class ConverterService {
       lastName: source.lastName,
       phone: source.phone,
       email: source.email,
-      region: source.region,
-      city: source.city
+      // region: source.region,
+      // city: source.city
     });
   }
 

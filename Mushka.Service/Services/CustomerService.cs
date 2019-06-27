@@ -23,7 +23,7 @@ namespace Mushka.Service.Services
 
         public async Task<ValidationResponse<IEnumerable<Customer>>> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var customers = (await customerRepository.GetByName(name, cancellationToken)).ToList();
+            var customers = (await customerRepository.GetByNameAsync(name, cancellationToken)).ToList();
             
             var message = customers.Count > 0
                 ? "Customers were successfully retrieved."

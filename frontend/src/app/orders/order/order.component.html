@@ -78,26 +78,36 @@
                       <div class="fields-group-title">Данные покупателя</div>
                     </div>
                   </div>
-                  <div class="row">
+                  <div class="row" formGroupName="customer">
                     <div class="col-sm-3">
                       <div class="field-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" formControlName="firstName"
-                               [ngClass]="{'not-valid': orderForm.controls.firstName.invalid && isFormSubmitted}">
+                        <input type="text" class="form-control" 
+                                           formControlName="firstName"
+                                           [ngbTypeahead]="searchName"
+                                           [focusFirst]="false"
+                                           [resultTemplate]="customerTemplate"
+                                           [ngClass]="{'not-valid': orderForm.controls.customer.controls.firstName.invalid && isFormSubmitted}"
+                                           (selectItem)="selectCustomer($event)">
                       </div>
                     </div>
                     <div class="col-sm-3">
                       <div class="field-group">
                         <label>Фамилия</label>
-                        <input type="text" class="form-control" formControlName="lastName"
-                               [ngClass]="{'not-valid': orderForm.controls.lastName.invalid && isFormSubmitted}">
+                        <input type="text" class="form-control"
+                                           formControlName="lastName"
+                                           [ngbTypeahead]="searchName"
+                                           [focusFirst]="false"
+                                           [resultTemplate]="customerTemplate"
+                                           [ngClass]="{'not-valid': orderForm.controls.customer.controls.lastName.invalid && isFormSubmitted}"
+                                           (selectItem)="selectCustomer($event)">
                       </div>
                     </div>
                     <div class="col-sm-3">
                       <div class="field-group">
                         <label>Телефон</label>
                         <input type="text" class="form-control" formControlName="phone"
-                               [ngClass]="{'not-valid': orderForm.controls.phone.invalid && isFormSubmitted}">
+                               [ngClass]="{'not-valid': orderForm.controls.customer.controls.phone.invalid && isFormSubmitted}">
                       </div>
                     </div>
                     <div class="col-sm-3">
@@ -251,3 +261,7 @@
     </div>
   </div>
 </form>
+
+<ng-template #customerTemplate let-r="result" let-t="term">
+  <ngb-highlight [result]="r.nameWithPhone" [term]="t"></ngb-highlight>
+</ng-template>
