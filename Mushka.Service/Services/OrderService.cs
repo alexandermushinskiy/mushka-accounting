@@ -156,11 +156,7 @@ namespace Mushka.Service.Services
             var updatedOrder = orderRepository.Update(order);
             await storage.SaveAsync(cancellationToken);
 
-            //if (oldCustomerId != order.CustomerId)
-            //{
-            //    await customerRepository.GetByIdAsync(oldCustomerId, cancellationToken);
-            //    await storage.SaveAsync(cancellationToken);
-            //}
+            await TryDeleteCustomerWithoutOrders(storedOrder.CustomerId, order.CustomerId, cancellationToken);
 
             return CreateInfoValidationResponse(updatedOrder, $"Order with id {order.Id} was successfully updated.");
         }
@@ -216,66 +212,18 @@ namespace Mushka.Service.Services
             return CreateInfoValidationResponse(exportedFile, "The orders were exported successfully.");
         }
 
-        private void ClearEmptyCustomers()
+        private async Task TryDeleteCustomerWithoutOrders(Guid oldCustomerId, Guid updatedCustomerId, CancellationToken cancellationToken)
         {
-
-        }
-
-        private async Task<ValidationResponse<Customer>> GetCustomerForExistingOrder(Guid storedCustomerId, Customer customer, CancellationToken cancellationToken)
-        {
-            var storedCustomer = await customerRepository.GetByIdAsync(storedCustomerId, cancellationToken);
-            var samePhoneCustomer = await customerRepository.GetByPhoneAsync(customer.Phone, cancellationToken);
-
-            if (samePhoneCustomer == null)
+            if (oldCustomerId == updatedCustomerId)
             {
-                string message;
-
-                if (storedCustomer.Orders.Count == 1)
-                {
-                    customer.Id = storedCustomerId;
-                    message = $"Existing customer {customer.FullName} was updated";
-                }
-                else
-                {
-                    // customer.Id = guidProvider.NewGuid();
-                    customerRepository.Add(customer);
-                    message = $"New customer {customer.FullName} was added";
-                }
-
-                return CreateInfoValidationResponse(customer, message);
+                return;
             }
 
-            // old customer
-            if (storedCustomer.Id == samePhoneCustomer.Id)
+            var oldCustomer = await customerRepository.GetByIdAsync(oldCustomerId, cancellationToken);
+            if (oldCustomer.Orders.Count == 0)
             {
-                // if Orders.Count > 1 and first name or last name was changed
-                if (storedCustomer.Orders.Count > 1 && (storedCustomer.FirstName != customer.FirstName ||
-                                                        storedCustomer.LastName != customer.LastName))
-                {
-                    return CreateWarningValidationResponse<Customer>($"Phone number {customer.Phone} is already used for the customer {storedCustomer.FullName}");
-                }
-
-                customer.Id = storedCustomerId;
-                customerRepository.Update(customer);
-                return CreateInfoValidationResponse(customer, $"Existing customer {customer.FullName} was added");
-            }
-            else // other existing customer
-            {
-                if (samePhoneCustomer.FirstName == customer.FirstName && samePhoneCustomer.LastName == customer.LastName)
-                {
-                    //if (storedCustomer.Orders.Count == 1)
-                    //{
-                    //    storedCustomer.Orders = null;
-                    //    customerRepository.Delete(storedCustomer);
-                    //}
-
-                    customer.Id = samePhoneCustomer.Id;
-                    return CreateInfoValidationResponse(customer, $"Other existing customer {samePhoneCustomer.FullName} was added");
-                }
-                else
-                {
-                    return CreateWarningValidationResponse<Customer>($"Phone number {customer.Phone} is already used for the customer {samePhoneCustomer.FullName}");
-                }
+                customerRepository.Delete(oldCustomer);
+                await storage.SaveAsync(cancellationToken);
             }
         }
     }

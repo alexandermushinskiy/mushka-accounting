@@ -48,29 +48,6 @@ namespace Mushka.Service.Providers
             return CreateWarningValidationResponse<Customer>($"Phone number {customer.Phone} is already used for the customer {storedCustomer.FullName}.");
         }
 
-        private static bool IsCustomerValid(Customer storedCustomer, Customer samePhoneCustomer, Customer inputCustomer)
-        {
-            // 1. if the same (old) customer, which has more than one order and first name or last name was changed
-            if (storedCustomer.Id == samePhoneCustomer.Id)
-            {
-                if (storedCustomer.Orders.Count > 1 && IsCustomerNamesNotEqual(samePhoneCustomer, inputCustomer))
-                {
-                    return false;
-                }
-            }
-
-            // 2. if other existing customer, but first name/last name differ
-            if (storedCustomer.Id != samePhoneCustomer.Id)
-            {
-                if (IsCustomerNamesNotEqual(samePhoneCustomer, inputCustomer))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
         public async Task<ValidationResponse<Customer>> GetCustomerForExistingOrderAsync(
             Guid storedCustomerId,
             Customer inputCustomer,
@@ -104,29 +81,31 @@ namespace Mushka.Service.Providers
             }
             
             return CreateInfoValidationResponse(inputCustomer, $"Customer with name {inputCustomer.FullName} is used.");
-
-
-
-
-
-            //// old customer
-            //if (storedCustomer.Id == samePhoneCustomer.Id)
-            //{
-            //    customer.Id = storedCustomerId;
-            //    return CreateInfoValidationResponse(customer, $"Existing customer {customer.FullName} was added.");
-            //}
-            //else // other existing customer
-            //{
-            //    //if (storedCustomer.Orders.Count == 1)
-            //    //{
-            //    //    customerRepository.Delete(storedCustomer);
-            //    //}
-
-            //    customer.Id = samePhoneCustomer.Id;
-            //    return CreateInfoValidationResponse(customer, $"Other existing customer {samePhoneCustomer.FullName} was added.");
-            //}
         }
-        
+
+        private static bool IsCustomerValid(Customer storedCustomer, Customer samePhoneCustomer, Customer inputCustomer)
+        {
+            // 1. if the same (old) customer, which has more than one order and first name or last name was changed
+            if (storedCustomer.Id == samePhoneCustomer.Id)
+            {
+                if (storedCustomer.Orders.Count > 1 && IsCustomerNamesNotEqual(samePhoneCustomer, inputCustomer))
+                {
+                    return false;
+                }
+            }
+
+            // 2. if other existing customer, but first name/last name differ
+            if (storedCustomer.Id != samePhoneCustomer.Id)
+            {
+                if (IsCustomerNamesNotEqual(samePhoneCustomer, inputCustomer))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         private static bool IsCustomerNamesNotEqual(Customer customer1, Customer customer2) =>
             customer1.FirstName != customer2.FirstName || customer1.LastName != customer2.LastName;
     }
