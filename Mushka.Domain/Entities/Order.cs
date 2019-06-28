@@ -29,6 +29,10 @@ namespace Mushka.Domain.Entities
 
         public string Notes { get; set; }
 
+        public string City { get; set; }
+
+        public string Region { get; set; }
+
         public Guid CustomerId { get; set; }
         public Customer Customer { get; set; }
 

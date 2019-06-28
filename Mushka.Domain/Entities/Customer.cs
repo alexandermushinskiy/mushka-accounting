@@ -20,11 +20,7 @@ namespace Mushka.Domain.Entities
         public string Email { get; set; }
 
         public string Phone { get; set; }
-
-        public string City { get; set; }
-
-        public string Region { get; set; }
-
+        
         public ICollection<Order> Orders { get; set; }
 
         public string FullName => $"{FirstName} {LastName}";
@@ -33,9 +29,7 @@ namespace Mushka.Domain.Entities
         {
             return FirstName == other.FirstName &&
                    LastName == other.LastName &&
-                   Phone == other.Phone &&
-                   Region == other.Region &&
-                   City == other.City;
+                   Phone == other.Phone;
         }
     }
 }

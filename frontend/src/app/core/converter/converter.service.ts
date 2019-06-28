@@ -216,10 +216,6 @@ export class ConverterService {
       discount: source.discount,
       region: source.region,
       city: source.city,
-      // firstName: source.firstName,
-      // lastName: source.lastName,
-      // phone: source.phone,
-      // email: source.email,
       isWholesale: source.isWholesale,
       notes: source.notes,
       customer: this.convertToCustomer(source.customer),
@@ -268,9 +264,7 @@ export class ConverterService {
       firstName: source.firstName,
       lastName: source.lastName,
       phone: source.phone,
-      email: source.email,
-      // region: source.region,
-      // city: source.city
+      email: source.email
     });
   }
 

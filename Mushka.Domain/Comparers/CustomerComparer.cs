@@ -10,9 +10,7 @@ namespace Mushka.Domain.Comparers
         {
             return x.FirstName == y.FirstName &&
                 x.LastName == y.LastName &&
-                x.Phone == y.Phone &&
-                x.Region == y.Region &&
-                x.City == y.City;
+                x.Phone == y.Phone;
         }
 
         public int GetHashCode(Customer obj)
@@ -21,9 +19,7 @@ namespace Mushka.Domain.Comparers
             {
                 obj.FirstName,
                 obj.LastName,
-                obj.Phone,
-                obj.Region,
-                obj.City
+                obj.Phone
             });
         }
     }

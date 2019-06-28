@@ -29,9 +29,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
             return dbSet.FirstOrDefaultAsync(cust =>
                 cust.FirstName == customer.FirstName &&
                 cust.LastName == customer.LastName &&
-                cust.Phone == customer.Phone &&
-                cust.Region == customer.Region &&
-                cust.City == customer.City, cancellationToken);
+                cust.Phone == customer.Phone, cancellationToken);
         }
 
         public async Task<IEnumerable<Customer>> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))

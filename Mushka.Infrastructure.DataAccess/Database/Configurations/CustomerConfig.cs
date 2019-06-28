@@ -30,14 +30,6 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
             builder
                 .Property(client => client.Phone)
                 .IsRequired();
-
-            builder
-                .Property(order => order.City)
-                .IsRequired();
-
-            builder
-                .Property(order => order.Region)
-                .IsRequired();
         }
     }
 }

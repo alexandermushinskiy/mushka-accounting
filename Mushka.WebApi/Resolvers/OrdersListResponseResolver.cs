@@ -21,7 +21,7 @@ namespace Mushka.WebApi.Resolvers
                 OrderDate = order.OrderDate,
                 Number = order.Number,
                 Cost = order.Cost,
-                Address = $"{order.Customer.Region}, {order.Customer.City}",
+                Address = $"{order.Region}, {order.City}",
                 CustomerName = $"{order.Customer.FirstName} {order.Customer.LastName}",
                 ProductsCount = order.Products.Sum(p => p.Quantity),
                 IsWholesale = order.IsWholesale

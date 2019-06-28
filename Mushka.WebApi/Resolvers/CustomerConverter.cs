@@ -12,8 +12,6 @@ namespace Mushka.WebApi.Resolvers
                 Id = source.Id,
                 FirstName = source.FirstName,
                 LastName = source.LastName,
-                City = source.City,
-                Region = source.Region,
                 Phone = source.Phone,
                 Email = source.Email
             };

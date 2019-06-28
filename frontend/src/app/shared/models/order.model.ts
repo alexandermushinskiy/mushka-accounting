@@ -12,10 +12,6 @@ export class Order {
   profit: number;
   region: string;
   city: string;
-  // firstName: string;
-  // lastName: string;
-  // phone: string;
-  // email: string;
   notes: string;
   isWholesale: boolean;
   products: OrderProduct[];

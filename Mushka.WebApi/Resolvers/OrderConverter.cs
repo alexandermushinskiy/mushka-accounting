@@ -19,8 +19,8 @@ namespace Mushka.WebApi.Resolvers
                 Profit = source.Profit,
                 IsWholesale = source.IsWholesale,
                 Notes = source.Notes,
-                Region = source.Customer.Region,
-                City = source.Customer.City,
+                Region = source.Region,
+                City = source.City,
                 Customer = CreateCustomerModel(source.Customer),
                 Products = source.Products.Select(CreateOrderProductModel)
             };
@@ -37,7 +37,6 @@ namespace Mushka.WebApi.Resolvers
                 Phone = customer.Phone,
                 Email = customer.Email,
             };
-        
 
         private static OrderProductModel CreateOrderProductModel(OrderProduct orderProduct) =>
             new OrderProductModel

@@ -52,7 +52,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         public async Task<IEnumerable<PopularCity>> GetPopularCities(int topCount, CancellationToken cancellationToken = default(CancellationToken))
         {
             var result = await Context.Orders
-                .GroupBy(op => op.Customer.City)
+                .GroupBy(op => op.City)
                 .Select(res => new { City = res.Key, Count = res.Count() })
                 .OrderByDescending(res => res.Count)
                 .Take(topCount)
