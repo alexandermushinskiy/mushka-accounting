@@ -1,6 +1,6 @@
 <mk-progress-linear [isLoading]="!orderForm || isLoading"></mk-progress-linear>
 
-<form *ngIf="orderForm" class="w-100" [formGroup]="orderForm" autocomplete="off" (ngSubmit)="saveOrder()">
+<form *ngIf="orderForm" #ngForm="ngForm" class="w-100" [formGroup]="orderForm" autocomplete="off" (ngSubmit)="saveOrder()">
   <div class="app-page-body row flex-nowrap">
     <!-- left side -->
     <div class="app-page-content">

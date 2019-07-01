@@ -44,8 +44,13 @@ import { OrderQuickFilter } from './filters/order-quick.filter';
 import { DateRageModalComponent } from './widgets/daterage-modal/daterage-modal.component';
 import { SupplyQuickFilter } from './filters/supply-quick.filter';
 import { HandleUnsavedDataGuard } from './guards/handle-unsaved-data.guard';
+import { ConfirmLeaveComponent } from './widgets/confirm-leave/confirm-leave.component';
+import { ModalModule } from 'ngx-bootstrap';
 
 @NgModule({
+  entryComponents: [
+    ConfirmLeaveComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -56,7 +61,8 @@ import { HandleUnsavedDataGuard } from './guards/handle-unsaved-data.guard';
     NgSelectModule,
     NgbModule.forRoot(),
     TypeaheadModule.forRoot(),
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    ModalModule.forRoot()
     // NgxMyDatePickerModule.forRoot()
   ],
   declarations: [
@@ -91,7 +97,8 @@ import { HandleUnsavedDataGuard } from './guards/handle-unsaved-data.guard';
     ProgressLinearComponent,
     PaymentMethodsDropdownComponent,
     DelayedInputComponent,
-    DateRageModalComponent
+    DateRageModalComponent,
+    ConfirmLeaveComponent
   ],
   exports: [
     /* Common modules */
@@ -134,7 +141,8 @@ import { HandleUnsavedDataGuard } from './guards/handle-unsaved-data.guard';
     ProgressLinearComponent,
     PaymentMethodsDropdownComponent,
     DelayedInputComponent,
-    DateRageModalComponent
+    DateRageModalComponent,
+    ConfirmLeaveComponent
   ],
   providers: [
     OrderQuickFilter,
