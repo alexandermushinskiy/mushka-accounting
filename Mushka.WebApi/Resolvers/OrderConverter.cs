@@ -19,17 +19,24 @@ namespace Mushka.WebApi.Resolvers
                 Profit = source.Profit,
                 IsWholesale = source.IsWholesale,
                 Notes = source.Notes,
-                FirstName = source.Customer.FirstName,
-                LastName = source.Customer.LastName,
-                Phone = source.Customer.Phone,
-                Email = source.Customer.Email,
-                Region = source.Customer.Region,
-                City = source.Customer.City,
+                Region = source.Region,
+                City = source.City,
+                Customer = CreateCustomerModel(source.Customer),
                 Products = source.Products.Select(CreateOrderProductModel)
             };
 
         public OrderProductModel Convert(OrderProduct source, OrderProductModel destination, ResolutionContext context) =>
             CreateOrderProductModel(source);
+
+        private static OrderCustomerModel CreateCustomerModel(Customer customer) =>
+            new OrderCustomerModel
+            {
+                Id = customer.Id,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                Phone = customer.Phone,
+                Email = customer.Email,
+            };
 
         private static OrderProductModel CreateOrderProductModel(OrderProduct orderProduct) =>
             new OrderProductModel

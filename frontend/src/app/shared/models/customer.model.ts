@@ -4,8 +4,14 @@ export class Customer {
   lastName: string;
   phone: string;
   email: string;
-  region: string;
-  city: string;
+
+  get name(): string {
+    return `${this.firstName} ${this.lastName}`;
+  }
+
+  get nameWithPhone(): string {
+    return `${this.firstName} ${this.lastName} (${this.phone})`;
+  }
 
   constructor(data: any) {
     Object.assign(this, data);

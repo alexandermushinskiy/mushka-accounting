@@ -28,7 +28,7 @@ namespace Mushka.WebApi.ClientModels.CorporateOrder
 
         public PaymentMethod? DeliveryCostMethod { get; set; }
 
-        public int Tax { get; set; }
+        public int? Tax { get; set; }
 
         [RequireNonDefault]
         public decimal Profit { get; set; }

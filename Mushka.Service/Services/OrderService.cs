@@ -11,6 +11,7 @@ using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Service.Extensibility.Dto;
 using Mushka.Service.Extensibility.ExternalApps;
+using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Extensibility.Services;
 
 namespace Mushka.Service.Services
@@ -25,15 +26,18 @@ namespace Mushka.Service.Services
         private readonly IProductRepository productRepository;
         private readonly ICustomerRepository customerRepository;
         private readonly IExcelService excelService;
+        private readonly IOrderCustomerProvider orderCustomerProvider;
 
         public OrderService(
             IStorage storage,
             IExcelService excelService,
+            IOrderCustomerProvider orderCustomerProvider,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             this.storage = storage;
             this.excelService = excelService;
+            this.orderCustomerProvider = orderCustomerProvider;
 
             orderRepository = storage.GetRepository<IOrderRepository>();
             productRepository = storage.GetRepository<IProductRepository>();
@@ -65,15 +69,16 @@ namespace Mushka.Service.Services
             order.Products = order.Products.OrderByDescending(p => p.Product.Category.IsAdditional).ToList();
             return CreateInfoValidationResponse(order, $"Order with id {orderId} was successfully retrieved.");
         }
-        
+
         public async Task<ValidationResponse<Order>> AddAsync(Order order, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var storedCustomer = await customerRepository.GetByOrderDetails(order.Customer, cancellationToken);
-
-            if (storedCustomer == null)
+            var customerValidationResponse = await orderCustomerProvider.GetCustomerForNewOrderAsync(order.Customer, cancellationToken);
+            if (!customerValidationResponse.IsValid)
             {
-                storedCustomer = customerRepository.Add(order.Customer);
+                return CreateWarningValidationResponse(customerValidationResponse.ValidationResult.Message);
             }
+            
+            order.CustomerId = customerValidationResponse.Result.Id;
 
             foreach (var orderProduct in order.Products)
             {
@@ -93,11 +98,9 @@ namespace Mushka.Service.Services
                 productRepository.Update(storedProduct);
             }
 
-            order.CustomerId = storedCustomer.Id;
-            var addedOrder = orderRepository.Add(order);
-            
+              var addedOrder = orderRepository.Add(order);
             await storage.SaveAsync(cancellationToken);
-
+            
             return CreateInfoValidationResponse(addedOrder, $"Order with id {addedOrder.Id} was successfully added.");
         }
 
@@ -109,6 +112,14 @@ namespace Mushka.Service.Services
             {
                 return CreateWarningValidationResponse($"Order with id {order.Id} is not found.", ValidationStatusType.NotFound);
             }
+
+            var customerValidationResponse = await orderCustomerProvider.GetCustomerForExistingOrderAsync(storedOrder.CustomerId, order.Customer, cancellationToken);
+            if (!customerValidationResponse.IsValid)
+            {
+                return CreateWarningValidationResponse(customerValidationResponse.ValidationResult.Message);
+            }
+            
+            order.CustomerId = customerValidationResponse.Result.Id;
 
             foreach (var orderProduct in order.Products)
             {
@@ -128,7 +139,7 @@ namespace Mushka.Service.Services
                     productRepository.Update(storedProduct);
                 }
             }
-            
+
             foreach (var removedProduct in storedOrder.Products.Except(order.Products, new OrderProductComparer()))
             {
                 var storedProduct = await productRepository.GetByIdAsync(removedProduct.ProductId, cancellationToken);
@@ -141,16 +152,15 @@ namespace Mushka.Service.Services
                 storedProduct.Quantity += removedProduct.Quantity;
                 productRepository.Update(storedProduct);
             }
-
-            order.Customer.Id = storedOrder.Customer.Id;
-            order.CustomerId = storedOrder.CustomerId;
-
+            
             var updatedOrder = orderRepository.Update(order);
             await storage.SaveAsync(cancellationToken);
 
+            await TryDeleteCustomerWithoutOrders(storedOrder.CustomerId, order.CustomerId, cancellationToken);
+
             return CreateInfoValidationResponse(updatedOrder, $"Order with id {order.Id} was successfully updated.");
         }
-        
+
         public async Task<ValidationResponse<Order>> DeleteAsync(Guid orderId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var order = await orderRepository.GetByIdAsync(orderId, cancellationToken);
@@ -158,6 +168,12 @@ namespace Mushka.Service.Services
             if (order == null)
             {
                 return CreateWarningValidationResponse($"Order with id {orderId} is not found.", ValidationStatusType.NotFound);
+            }
+
+            var storedCustomer = await customerRepository.GetByPhoneAsync(order.Customer.Phone, cancellationToken);
+            if (await customerRepository.GetOrdersCountAsync(order.CustomerId, cancellationToken) == 1)
+            {
+                customerRepository.Delete(storedCustomer);
             }
 
             foreach (var orderProduct in order.Products)
@@ -194,6 +210,21 @@ namespace Mushka.Service.Services
             var exportedFile = new ExportedFile(ExportFileName, ExportContentType, fileContent);
 
             return CreateInfoValidationResponse(exportedFile, "The orders were exported successfully.");
+        }
+
+        private async Task TryDeleteCustomerWithoutOrders(Guid oldCustomerId, Guid updatedCustomerId, CancellationToken cancellationToken)
+        {
+            if (oldCustomerId == updatedCustomerId)
+            {
+                return;
+            }
+
+            var oldCustomer = await customerRepository.GetByIdAsync(oldCustomerId, cancellationToken);
+            if (oldCustomer.Orders.Count == 0)
+            {
+                customerRepository.Delete(oldCustomer);
+                await storage.SaveAsync(cancellationToken);
+            }
         }
     }
 }

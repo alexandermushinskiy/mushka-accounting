@@ -51,12 +51,21 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 .ToListAsync(cancellationToken);
         }
 
+        public override Order Add(Order order)
+        {
+            Context.Entry(order.Customer).State = Context.Customers.Any(cust => cust.Phone == order.Customer.Phone)
+                ? EntityState.Modified
+                : EntityState.Added;
+            
+            return base.Add(order);
+        }
+
         public override Order Update(Order order)
         {
             var storedOrder = dbSet
                 .AsNoTracking()
                 .Include(o => o.Products)
-                .Include(o => o.Customer)
+                //.Include(o => o.Customer)
                 .Single(o => o.Id == order.Id);
 
             order.Products

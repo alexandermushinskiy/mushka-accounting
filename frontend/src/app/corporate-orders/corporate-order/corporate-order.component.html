@@ -270,7 +270,7 @@
         {{ isEdit ? 'Обновить заказ' : 'Создать заказ' }}
         <div *ngIf="isLoading" class="btn--spinner"></div>
       </button>
-      <button type="button" class="btn btn-outline" [routerLink]="['/orders']" [disabled]="isLoading">Отмена</button>
+      <button type="button" class="btn btn-outline" [routerLink]="['/corporate-orders']" [disabled]="isLoading">Отмена</button>
     </div>
   </div>
 </form>

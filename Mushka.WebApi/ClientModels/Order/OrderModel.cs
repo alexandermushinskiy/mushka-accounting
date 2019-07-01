@@ -24,17 +24,19 @@ namespace Mushka.WebApi.ClientModels.Order
         
         public string City { get; set; }
         
-        public string FirstName { get; set; }
+        //public string FirstName { get; set; }
         
-        public string LastName { get; set; }
+        //public string LastName { get; set; }
 
-        public string Phone { get; set; }
+        //public string Phone { get; set; }
 
-        public string Email { get; set; }
+        //public string Email { get; set; }
 
         public bool IsWholesale { get; set; }
 
         public string Notes { get; set; }
+
+        public OrderCustomerModel Customer { get; set; }
 
         public IEnumerable<OrderProductModel> Products { get; set; }
     }

@@ -55,6 +55,14 @@ namespace Mushka.Infrastructure.DataAccess.Database.Configurations
                 .Property(order => order.Notes)
                 .HasColumnName("Notes");
 
+            builder
+                .Property(order => order.City)
+                .IsRequired();
+
+            builder
+                .Property(order => order.Region)
+                .IsRequired();
+
             builder.HasOne(order => order.Customer)
                 .WithMany(customer => customer.Orders)
                 .HasForeignKey(order => order.CustomerId);

@@ -1,5 +1,6 @@
 import { OrderProduct } from './order-product.model';
 import { PaymentMethod } from '../enums/payment-method.enum';
+import { Customer } from './customer.model';
 
 export class Order {
   id: string;
@@ -11,13 +12,10 @@ export class Order {
   profit: number;
   region: string;
   city: string;
-  firstName: string;
-  lastName: string;
-  phone: string;
-  email: string;
   notes: string;
   isWholesale: boolean;
   products: OrderProduct[];
+  customer: Customer;
 
   constructor(data: any) {
     Object.assign(this, data);
