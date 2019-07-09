@@ -3,7 +3,8 @@ import { HostListener } from '@angular/core';
 import { UnsubscriberComponent } from './unsubscriber.component';
 
 export abstract class ComponentCanDeactivate extends UnsubscriberComponent {
-  abstract canDeactivate(): boolean;
+  abstract hasUnsavedData(): boolean;
+  isSaved = false;
 
   constructor() {
     super();
@@ -11,8 +12,8 @@ export abstract class ComponentCanDeactivate extends UnsubscriberComponent {
 
   @HostListener('window:beforeunload', ['$event'])
     unloadNotification($event: any) {
-      if (!this.canDeactivate()) {
+      if (this.hasUnsavedData()) {
         $event.returnValue = true;
-      }
+      }   
     }
 }

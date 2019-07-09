@@ -33,11 +33,11 @@
                         <mk-delayed-input formControlName="number"
                                           [type]="text"
                                           [required]="true"
-                                          [ngClass]="{'not-valid': orderForm.controls.number.invalid && isFormSubmitted}"
+                                          [ngClass]="{'not-valid': orderForm.controls.number.invalid && ngForm.submitted}"
                                           (onInput)="onNumberChanged($event)">
                         </mk-delayed-input>
                         <mk-spinner class="validate-order-number" [isLoading]="isNumberValidating"></mk-spinner>
-                        <!-- <span class="validation-tip" *ngIf="orderForm.hasError('required', ['number']) && isFormSubmitted">Обязательно</span> -->
+                        <!-- <span class="validation-tip" *ngIf="orderForm.hasError('required', ['number']) && ngForm.submitted">Обязательно</span> -->
                         <!-- <span class="validation-tip" *ngIf="!isOrderNumberValid">Номер уже существует</span> -->
                         <span class="validation-tip" *ngIf="!orderForm.hasError('required', ['number']) && orderForm.hasError('notUnique', ['number'])">Номер уже существует</span>
                       </div>
@@ -56,7 +56,7 @@
                         <label for="address">Область</label>
                         <mk-dropdown formControlName="region"
                                      [options]="regions"
-                                     [ngClass]="{'not-valid': orderForm.controls.region.invalid && isFormSubmitted}">
+                                     [ngClass]="{'not-valid': orderForm.controls.region.invalid && ngForm.submitted}">
                         </mk-dropdown>
                       </div>
                     </div>
@@ -64,7 +64,7 @@
                       <div class="field-group">
                         <label for="address">Населённый пункт</label>
                         <input type="text" class="form-control" formControlName="city"
-                               [ngClass]="{'not-valid': orderForm.controls.city.invalid && isFormSubmitted}">
+                               [ngClass]="{'not-valid': orderForm.controls.city.invalid && ngForm.submitted}">
                       </div>
                     </div>
                   </div>
@@ -87,7 +87,7 @@
                                            [ngbTypeahead]="searchName"
                                            [focusFirst]="false"
                                            [resultTemplate]="customerTemplate"
-                                           [ngClass]="{'not-valid': orderForm.controls.customer.controls.firstName.invalid && isFormSubmitted}"
+                                           [ngClass]="{'not-valid': orderForm.controls.customer.controls.firstName.invalid && ngForm.submitted}"
                                            (selectItem)="selectCustomer($event)">
                       </div>
                     </div>
@@ -99,7 +99,7 @@
                                            [ngbTypeahead]="searchName"
                                            [focusFirst]="false"
                                            [resultTemplate]="customerTemplate"
-                                           [ngClass]="{'not-valid': orderForm.controls.customer.controls.lastName.invalid && isFormSubmitted}"
+                                           [ngClass]="{'not-valid': orderForm.controls.customer.controls.lastName.invalid && ngForm.submitted}"
                                            (selectItem)="selectCustomer($event)">
                       </div>
                     </div>
@@ -107,7 +107,7 @@
                       <div class="field-group">
                         <label>Телефон</label>
                         <input type="text" class="form-control" formControlName="phone"
-                               [ngClass]="{'not-valid': orderForm.controls.customer.controls.phone.invalid && isFormSubmitted}">
+                               [ngClass]="{'not-valid': orderForm.controls.customer.controls.phone.invalid && ngForm.submitted}">
                       </div>
                     </div>
                     <div class="col-sm-3">
@@ -147,7 +147,7 @@
                           <mk-select-products formControlName="product"
                                               [products]="productsList"
                                               [canClearAll]="false"
-                                              [ngClass]="{'not-valid': productControl.controls.product.invalid && isFormSubmitted}"
+                                              [ngClass]="{'not-valid': productControl.controls.product.invalid && ngForm.submitted}"
                                               (onProductSelected)="onProductSelected($event, index)">
                           </mk-select-products>
                         </div>
@@ -169,7 +169,7 @@
                                               [placeholder]="'Цена'"
                                               [required]="true"
                                               [id]="'unitPrice-' + index"
-                                              [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && isFormSubmitted}">
+                                              [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && ngForm.submitted}">
                           </mk-currency-input>
                         </div>
                       </div>
@@ -179,9 +179,9 @@
                                   class="form-control"
                                   formControlName="quantity"
                                   placeholder="Количество"
-                                  [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && isFormSubmitted}"
+                                  [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && ngForm.submitted}"
                                   (input)="onQuantityChanged(index, $event.target.value)" />
-                          <span class="validation-tip" *ngIf="productControl.hasError('max', ['quantity']) && isFormSubmitted">
+                          <span class="validation-tip" *ngIf="productControl.hasError('max', ['quantity']) && ngForm.submitted">
                             В наличие {{ productControl.value.product.quantity }}
                           </span>
                         </div>  
@@ -212,7 +212,7 @@
               <span class="cost-payment-type">
                 <mk-payment-methods-dropdown
                               formControlName="costMethod"
-                              [ngClass]="{'not-valid': orderForm.controls.costMethod.invalid && isFormSubmitted}">
+                              [ngClass]="{'not-valid': orderForm.controls.costMethod.invalid && ngForm.submitted}">
                 </mk-payment-methods-dropdown>
               </span>
             </div>

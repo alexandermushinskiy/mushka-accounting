@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CorporateOrdersService } from '../../core/api/corporate-orders.service';
@@ -9,14 +9,16 @@ import { DatetimeService } from '../../core/datetime/datetime.service';
 import { CorporateOrderProduct } from '../shared/models/corporate-order-product.model';
 import { ukrRegions } from '../../orders/shared/constants/urk-regions.const';
 import { uniqueOrderNumber } from '../../shared/validators/order-number.validator';
-import { UnsubscriberComponent } from '../../shared/hooks/unsubscriber.component';
+import { ComponentCanDeactivate } from '../../shared/hooks/component-can-deactivate.component';
 
 @Component({
   selector: 'mk-corporate-order',
   templateUrl: './corporate-order.component.html',
   styleUrls: ['./corporate-order.component.scss']
 })
-export class CorporateOrderComponent extends UnsubscriberComponent implements OnInit {
+export class CorporateOrderComponent extends ComponentCanDeactivate implements OnInit {
+  @ViewChild('ngForm') ngForm: NgForm;
+  
   orderForm: FormGroup;
   isEdit = false;
   isLoading = false;
@@ -24,10 +26,10 @@ export class CorporateOrderComponent extends UnsubscriberComponent implements On
   profit = 0;
   errors: string[];
   title: string;
-  isFormSubmitted = false;
   isOrderNumberValidating = false;
   isOrderNumberValid = true;
   regions = ukrRegions;
+  private initialOrder: {};
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -59,6 +61,13 @@ export class CorporateOrderComponent extends UnsubscriberComponent implements On
         this.onNumberChanged(orderNumber);
       }
     });
+  }
+
+  hasUnsavedData(): boolean {
+    if (!this.isSaved) {
+      const currentOrder = this.orderForm.getRawValue();
+      return JSON.stringify(this.initialOrder) !== JSON.stringify(currentOrder);
+    }
   }
 
   addProduct() {
@@ -94,7 +103,7 @@ export class CorporateOrderComponent extends UnsubscriberComponent implements On
     // const t1 = this.createOrderModel(this.orderForm.getRawValue());
     // console.info(t1);
     // return;
-    this.isFormSubmitted = true;
+
     if (this.orderForm.invalid) {
       return;
     }
@@ -113,6 +122,7 @@ export class CorporateOrderComponent extends UnsubscriberComponent implements On
 
   private onSaveSuccess() {
     this.isLoading = false;
+    this.isSaved = true;
     this.notificationsService.success(this.title, `Корпоративный заказ был успешно ${this.isEdit ? 'изменен' : 'добавлен'}`);
 
     this.router.navigate(['/corporate-orders']);
@@ -149,6 +159,8 @@ export class CorporateOrderComponent extends UnsubscriberComponent implements On
     });
 
     this.addFieldChangeListeners();
+
+    this.initialOrder = this.orderForm.getRawValue();
   }
 
   private createProductFormGroup(product: CorporateOrderProduct): FormGroup {

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Observable, of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, tap, switchMap, filter } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged,   tap, switchMap, filter } from 'rxjs/operators';
 
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { OrdersService } from '../../core/api/orders.service';
@@ -39,8 +39,9 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
   isNumberValidating = false;
   searching = false;
   customerModel: any;
-
-  private quantityTerms$ = new Subject<{index: number, quantity: number}>();
+  private initialOrder: {};
+  
+  private quantityTerms$ = new Subject<{ index: number, quantity: number }>();
 
   private get customerId(): string {
     return !!this.orderForm.value.customer ? this.orderForm.value.customer.id : null;
@@ -84,7 +85,7 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
     this.setCustomerFormValue('phone', customer.phone);
     this.setCustomerFormValue('email', customer.email);
   }
-
+  
   ngOnInit() {
     this.productsService.getSelect()
       .subscribe((products: SelectProduct[]) => {
@@ -100,9 +101,12 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
         this.setCostPrice(data.index);
       });
   }
-
-  canDeactivate(): boolean {
-    return this.ngForm.submitted || !this.ngForm.dirty;
+  
+  hasUnsavedData(): boolean {
+    if (!this.isSaved) {
+      const currentOrder = this.orderForm.getRawValue();
+      return JSON.stringify(this.initialOrder) !== JSON.stringify(currentOrder);
+    }
   }
 
   addProduct() {
@@ -161,6 +165,7 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
     // const t1 = this.createOrderModel(this.orderForm.getRawValue());
     // console.info(t1);
     // return;
+
     if (this.orderForm.invalid) {
       return;
     }
@@ -179,6 +184,7 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
 
   private onSaveSuccess() {
     this.isLoading = false;
+    this.isSaved = true;
     this.notificationsService.success(this.title, `Заказ был успешно ${this.isEdit ? 'изменен' : 'добавлен'}`);
 
     this.router.navigate(['/orders']);
@@ -224,10 +230,6 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
       notes: [order.notes],
       region: [order.region, Validators.required],
       city: [order.city, Validators.required],
-      // firstName: [!!order.customer ? order.customer.firstName : null, Validators.required],
-      // lastName: [!!order.customer ? order.customer.lastName : null, Validators.required],
-      // phone: [!!order.customer ? order.customer.phone : null, Validators.required],
-      // email: [!!order.customer ? order.customer.email : null],
       customer: this.createCustomerFrmGroup(order.customer),
       products: this.formBuilder.array(
         order.products.map(param => this.createProductFormGroup(param))
@@ -237,6 +239,8 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
     this.addFieldChangeListeners();
     this.calculateTotalCost();
     this.calculateProfit();
+
+    this.initialOrder = this.orderForm.getRawValue();
   }
 
   private createCustomerFrmGroup(customer: Customer): FormGroup {
@@ -312,10 +316,6 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
       isWholesale: !!formRawValue.isWholesale,
       region: formRawValue.region,
       city: formRawValue.city,
-      // firstName: formRawValue.firstName,
-      // lastName: formRawValue.lastName,
-      // phone: formRawValue.phone,
-      // email: formRawValue.email,
       customer: this.createCustomer(formRawValue.customer),
       products: formRawValue.products.map((prod: any) => this.createOrderProduct(prod))
     });

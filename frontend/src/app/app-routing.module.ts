@@ -26,12 +26,12 @@ const routes: Routes = [
   { path: 'orders', children: [
     { path: '', component: OrdersListComponent, pathMatch: 'full' },
     { path: 'new', component: OrderComponent, pathMatch: 'full', canDeactivate: [HandleUnsavedDataGuard] },
-    { path: ':id', component: OrderComponent, pathMatch: 'full' }
+    { path: ':id', component: OrderComponent, pathMatch: 'full', canDeactivate: [HandleUnsavedDataGuard] }
   ]},
   { path: 'corporate-orders', children: [
     { path: '', component: CorporateOrdersListComponent, pathMatch: 'full' },
-    { path: 'new', component: CorporateOrderComponent, pathMatch: 'full' },
-    { path: ':id', component: CorporateOrderComponent, pathMatch: 'full' }
+    { path: 'new', component: CorporateOrderComponent, pathMatch: 'full', canDeactivate: [HandleUnsavedDataGuard] },
+    { path: ':id', component: CorporateOrderComponent, pathMatch: 'full', canDeactivate: [HandleUnsavedDataGuard] }
   ]},
   { path: 'suppliers', children: [
     { path: '', component: SuppliersListComponent, pathMatch: 'full' },
