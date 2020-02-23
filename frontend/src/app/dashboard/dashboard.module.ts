@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-// import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { ChartsModule } from 'ng2-charts';
 
 import { SharedModule } from '../shared/shared.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -9,13 +9,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   imports: [
     SharedModule,
     ReactiveFormsModule,
-    // ChartsModule
+    ChartsModule
   ],
   declarations: [
     DashboardComponent
   ],
   exports: [
-    // ChartsModule
+    ChartsModule
   ]
 })
 export class DashboardModule { }
