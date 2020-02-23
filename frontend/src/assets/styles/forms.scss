@@ -144,7 +144,7 @@ select:-webkit-autofill {
     &:not(:disabled):active ~.custom-control-label:before,
     &:not(:disabled):checked ~.custom-control-label:before {
       @extend .fa;
-      @extend .fa-remove;
+      //@extend .fa-remove;
       top: -.1rem;
       text-align: center;
       background-image: none;

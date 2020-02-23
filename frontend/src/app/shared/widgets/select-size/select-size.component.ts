@@ -17,7 +17,7 @@ import { Size } from '../../models/size.model';
   }]
 })
 export class SelectSizeComponent implements OnInit, ControlValueAccessor {
-  @ViewChild('ngselect') ngselect: NgSelectComponent;
+  @ViewChild('ngselect', { static: false }) ngselect: NgSelectComponent;
   @Input() set availableSizes(source: ProductSize[]) {
     if (source) {
       this.isLoading = false;
@@ -59,7 +59,7 @@ export class SelectSizeComponent implements OnInit, ControlValueAccessor {
 
   registerOnTouched() {
   }
-  
+
   setDisabledState(disabled: boolean) {
     this.disabled = disabled;
   }

@@ -22,7 +22,7 @@ import { ProductList } from '../../shared/models/product-list.model';
   styleUrls: ['./products-list.component.scss']
 })
 export class ProductsListComponent extends SortableDatatableComponent implements OnInit {
-  @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
+  @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
 
   @LocalStorage('collapsed_products_sidebar', false) isCollapsed: boolean;
   products: ProductList[];
@@ -52,7 +52,7 @@ export class ProductsListComponent extends SortableDatatableComponent implements
               private dateTimeService: DatetimeService,
               private notificationsService: NotificationsService) {
     super();
-    
+
     this.sorts = [
       { prop: 'name', dir: 'asc' },
       { prop: 'vendorCode', dir: null },

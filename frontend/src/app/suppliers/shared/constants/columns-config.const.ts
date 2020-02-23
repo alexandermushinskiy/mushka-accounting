@@ -65,4 +65,4 @@ export const columnsConfig: { [name: string]: DatatableColumn } = {
     cellTemplateName: 'servicesCol',
     predefinedValues: false
   }
-}
+};

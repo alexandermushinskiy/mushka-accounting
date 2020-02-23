@@ -21,8 +21,8 @@ import { DatetimeService } from '../../core/datetime/datetime.service';
   styleUrls: ['./orders-list.component.scss']
 })
 export class OrdersListComponent extends SortableDatatableComponent implements OnInit {
-  @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
-  @ViewChild('dateRange') dateRangeTmpl: ElementRef;
+  @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
+  @ViewChild('dateRange', { static: false }) dateRangeTmpl: ElementRef;
   @LocalStorage('orders_search_key', '') ordersSearchKey: string;
 
   orders: OrderList[];

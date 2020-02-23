@@ -9,13 +9,13 @@ import { NotificationsService } from '../../core/notifications/notifications.ser
 })
 export class GlobalSearchComponent {
   @Input() isLoading = false;
-  @Output() onSearch = new EventEmitter();
-  @ViewChild('searchField') searchField: ElementRef;
+  @Output() onSearch = new EventEmitter<string>();
+  @ViewChild('searchField', { static: false }) searchField: ElementRef;
 
   constructor(private notificationsService: NotificationsService) {
   }
 
-  handleSearch(value) {
+  handleSearch(value: string) {
     this.onSearch.emit(value);
   }
 

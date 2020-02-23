@@ -6,7 +6,7 @@ export class SupplyList {
   cost: number;
   totalCost: number;
   productsAmount: number;
-  
+
   constructor(data: any) {
     Object.assign(this, data);
   }

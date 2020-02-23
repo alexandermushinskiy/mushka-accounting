@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 import { ConverterService } from '../converter/converter.service';
 import { environment } from '../../../environments/environment';
@@ -15,8 +16,8 @@ export class CustomersService {
   }
 
   getByName(name: string): Observable<Customer[]> {
-    return this.http.get(`${this.endPoint}/filter?name=${name}`)
-      .map((res: any) => this.converterService.convertToCustomers(res.data))
-      .catch((res: any) => throwError(res.error.messages));
+    return this.http.get(`${this.endPoint}/filter?name=${name}`).pipe(
+      map((res: any) => this.converterService.convertToCustomers(res.data)),
+      catchError((res: any) => throwError(res.error.messages)));
   }
 }

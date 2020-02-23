@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit {
     borderColor: 'rgba(134,199,243,1)',
     borderWidth: 1
   }];
- 
+
   unpopularProductsData: Array<any> = [{ data: [], label: '' }];
   unpopularProductsLabels: Array<any> = [];
   unpopularProductsColor: Array<any> = [{
@@ -82,7 +82,7 @@ export class DashboardComponent implements OnInit {
     borderColor: 'rgba(255,120,149,1)',
     borderWidth: 1
   }];
- 
+
   popularCitiesData: Array<any> = [{ data: [], label: '' }];
   popularCitiesLabels: Array<any> = [];
   popularCitiesColor: Array<any> = [{
@@ -150,7 +150,7 @@ export class DashboardComponent implements OnInit {
         this.unpopularProductsData[0].data = res.map(pp => pp.quantity);
       });
   }
-  
+
   private loadPopularCities() {
     this.analyticsService.getPopularCities()
       .subscribe((res: PopularCity[]) => {
@@ -176,6 +176,6 @@ export class DashboardComponent implements OnInit {
   }
 
   private addThousandsSeparator(value: number): string {
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
 }

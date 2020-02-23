@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { UserNotification } from '../../shared/models/user-notification.model';
 import { UserNotificationType } from '../../shared/enums/user-notification-type.enum';

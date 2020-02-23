@@ -15,9 +15,9 @@ import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatabl
   styleUrls: ['./expenses-list.component.scss']
 })
 export class ExpensesListComponent extends SortableDatatableComponent implements OnInit {
-  @ViewChild('datatable') datatable: DatatableComponent;
-  @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
-  
+  @ViewChild('datatable', { static: false }) datatable: DatatableComponent;
+  @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
+
   loadingIndicator = true;
   isModalLoading = false;
   expenseRows: ExpenseTableRow[];
@@ -31,7 +31,7 @@ export class ExpensesListComponent extends SortableDatatableComponent implements
     backdrop: 'static',
     size: 'sm'
   };
-  
+
   constructor(private router: Router,
               private modalService: NgbModal,
               private expensesService: ExpensesService,
@@ -105,7 +105,7 @@ export class ExpensesListComponent extends SortableDatatableComponent implements
         () => this.onLoadError()
       );
   }
-  
+
   private onLoadSuccess(expenses: Expense[]) {
     this.expenseRows = expenses.map((el, index) => new ExpenseTableRow(el, index));
     this.total = expenses.length;

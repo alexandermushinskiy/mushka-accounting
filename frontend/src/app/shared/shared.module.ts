@@ -59,7 +59,7 @@ import { ModalModule } from 'ngx-bootstrap';
     NgxDatatableModule,
     CurrencyMaskModule,
     NgSelectModule,
-    NgbModule.forRoot(),
+    NgbModule,
     TypeaheadModule.forRoot(),
     NgxMaskModule.forRoot(),
     ModalModule.forRoot()

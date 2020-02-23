@@ -7,7 +7,7 @@ export class ExhibitionList {
   participationCost: number;
   profit: number;
   productsCount: number;
-  
+
   constructor(data: any) {
     Object.assign(this, data);
   }

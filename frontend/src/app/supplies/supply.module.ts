@@ -22,4 +22,5 @@ import { FiltersModalComponent } from './shared/widgets/filters-modal/filters-mo
   ],
   exports: [SupplyComponent]
 })
-export class SupplyModule { }
+export class SupplyModule {
+}

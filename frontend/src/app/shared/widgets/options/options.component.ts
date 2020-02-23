@@ -9,7 +9,7 @@ import { UnsubscriberComponent } from '../../hooks/unsubscriber.component';
   styleUrls: ['./options.component.scss']
 })
 export class OptionsComponent extends UnsubscriberComponent implements OnInit, OnDestroy {
-  @ViewChild(SearchFormComponent) searchFormComponent: SearchFormComponent;
+  @ViewChild(SearchFormComponent, { static: false }) searchFormComponent: SearchFormComponent;
   @Input() showSortingMenu = false;
   @Input() showSelectAll = false;
   @Input() showFilter = false;

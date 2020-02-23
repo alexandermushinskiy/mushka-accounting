@@ -46,6 +46,6 @@ export class SelectCategoryComponent implements OnInit, ControlValueAccessor {
 
   registerOnTouched() {
   }
-  
+
   private onChangeCallback: any = () => {};
 }

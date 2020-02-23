@@ -28,7 +28,7 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
     this.onChangeCallback(this.checked);
     this.onChange.emit(this.checked);
   }
-  
+
   writeValue(checked: any): void {
     this.checked = !!checked;
   }
@@ -43,6 +43,6 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
 
   registerOnTouched() {
   }
-  
+
   private onChangeCallback: any = () => {};
 }

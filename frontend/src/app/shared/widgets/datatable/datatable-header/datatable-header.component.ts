@@ -9,7 +9,7 @@ import { QuickFilter } from '../../../../shared/filters/quick-filter';
   styleUrls: ['./datatable-header.component.scss']
 })
 export class DatatableHeaderComponent implements OnInit {
-  @ViewChild(SearchFormComponent) searchForm: SearchFormComponent;
+  @ViewChild(SearchFormComponent, { static: false }) searchForm: SearchFormComponent;
   @Input() isCollapsed: false;
   @Input() total: number;
   @Input() availableColumns: string[];

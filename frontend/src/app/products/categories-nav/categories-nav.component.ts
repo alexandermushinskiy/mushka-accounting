@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { NgbModalRef, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 import { UnsubscriberComponent } from '../../shared/hooks/unsubscriber.component';
 import { Category } from '../../shared/models/category.model';
@@ -13,7 +14,7 @@ import { NotificationsService } from '../../core/notifications/notifications.ser
   styleUrls: ['./categories-nav.component.scss']
 })
 export class CategoriesNavComponent extends UnsubscriberComponent implements OnInit {
-  @ViewChild('confirmDeleteModalCategory') confirmDeleteModalCategory: ElementRef;
+  @ViewChild('confirmDeleteModalCategory', { static: false }) confirmDeleteModalCategory: ElementRef;
   @Input() selectedCategory: Category;
   @Output() onCategorySelected = new EventEmitter<Category>();
   @Output() onEditCategory = new EventEmitter<Category>();
@@ -47,10 +48,10 @@ export class CategoriesNavComponent extends UnsubscriberComponent implements OnI
   ngOnInit() {
     this.loadCategories();
 
-    this.delayedLoad$
-      .debounceTime(100)
-      .takeUntil(this.ngUnsubscribe$)
-      .subscribe((res) => this.keywords = res);
+    this.delayedLoad$.pipe(
+      debounceTime(100),
+      takeUntil(this.ngUnsubscribe$))
+        .subscribe((res) => this.keywords = res);
   }
 
   create(content) {

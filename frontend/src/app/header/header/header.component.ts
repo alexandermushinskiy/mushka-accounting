@@ -8,6 +8,7 @@ import { NotificationsService } from '../../core/notifications/notifications.ser
 // import { RatingService } from '../../core/api/rating.service';
 import { UnsubscriberComponent } from '../../shared/hooks/unsubscriber.component';
 import { BadgesService } from '../../core/api/badges.service';
+import { takeUntil } from 'rxjs/operators';
 // import { CsrRating } from '../../ticket/shared/models/csr/csr-rating.model';
 // import { stateStorageServiceKeys } from '../../shared/constants/state-storage-service-keys.const';
 // import { StateStorageService } from '../../core/state-storage/state-storage.service';
@@ -43,24 +44,24 @@ export class HeaderComponent extends UnsubscriberComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.badgesService.getUnratedTicketsTotal()
-      .takeUntil(this.ngUnsubscribe$)
-      .subscribe(res => {
-        this.totalUnrated = res;
-        this.getUnratedTicketsList();
-      });
+    this.badgesService.getUnratedTicketsTotal().pipe(
+      takeUntil(this.ngUnsubscribe$))
+        .subscribe(res => {
+          this.totalUnrated = res;
+          this.getUnratedTicketsList();
+        });
 
-    this.badgesService.getUnassignedTicketsTotal()
-      .takeUntil(this.ngUnsubscribe$)
-      .subscribe(res => {
-        this.totalUnassigned = res;
-      });
+    this.badgesService.getUnassignedTicketsTotal().pipe(
+      takeUntil(this.ngUnsubscribe$))
+        .subscribe(res => {
+          this.totalUnassigned = res;
+        });
 
-    this.badgesService.getUnseenTicketsTotal()
-      .takeUntil(this.ngUnsubscribe$)
-      .subscribe(res => {
-        this.totalUnseen = res;
-      });
+    this.badgesService.getUnseenTicketsTotal().pipe(
+      takeUntil(this.ngUnsubscribe$))
+        .subscribe(res => {
+          this.totalUnseen = res;
+        });
   }
 
   jumpTo(something: number) {

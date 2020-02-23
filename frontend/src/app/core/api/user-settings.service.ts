@@ -1,8 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { ColumnConfiguration } from '../../shared/models/column-configuration.model';
 import { columnsConfig } from '../../products/shared/constants/columns-config.const';
@@ -11,11 +7,11 @@ import { columnsConfig } from '../../products/shared/constants/columns-config.co
 export class UserSettingsService {
 
   private readonly defaultColumnWidth = 100;
-  
+
   getDefaultUserSettings(availableColumns: string[]): ColumnConfiguration[] {
     return availableColumns.map(el => this.getColumn(el));
   }
-  
+
   // changeColumnsSort(columnName: string, order: string) {
   //   this.availableColumnsConfiguration.forEach(c => c.sort = {});
   //   const column = this.availableColumnsConfiguration.find(el => el.name === columnName);

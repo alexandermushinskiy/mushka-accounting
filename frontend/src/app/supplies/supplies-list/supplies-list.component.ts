@@ -19,8 +19,8 @@ import { DatetimeService } from '../../core/datetime/datetime.service';
   styleUrls: ['./supplies-list.component.scss']
 })
 export class SuppliesListComponent extends SortableDatatableComponent implements OnInit {
-  @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
-  @ViewChild('filters') filtersTmpl: ElementRef;
+  @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
+  @ViewChild('filters', { static: false }) filtersTmpl: ElementRef;
   supplies: SupplyList[];
   supplyRows: SupplyTableRow[];
   loadingIndicator = false;

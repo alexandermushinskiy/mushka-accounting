@@ -374,36 +374,36 @@ a.badge {
 }
 
 //attachment icons types
-.file-icon {
-  @extend .fa;
-  @extend .fa-file-o;
-  font-size: 24px;
-  color: $text-color;
-  .file-archive & {
-    @extend .fa-file-archive-o;
-  }
-  .file-code & {
-    @extend .fa-file-code-o;
-  }
-  .file-excel & {
-    @extend .fa-file-excel-o;
-  }
-  .file-img & {
-    @extend .fa-file-image-o;
-  }
-  .file-pdf & {
-    @extend .fa-file-pdf-o;
-  }
-  .file-ppt & {
-    @extend .fa-file-powerpoint-o;
-  }
-  .file-video & {
-    @extend .fa-file-video-o;
-  }
-  .file-word & {
-    @extend .fa-file-word-o;
-  }
-}
+// .file-icon {
+//   @extend .fa;
+//   @extend .fa-file-o;
+//   font-size: 24px;
+//   color: $text-color;
+//   .file-archive & {
+//     @extend .fa-file-archive-o;
+//   }
+//   .file-code & {
+//     @extend .fa-file-code-o;
+//   }
+//   .file-excel & {
+//     @extend .fa-file-excel-o;
+//   }
+//   .file-img & {
+//     @extend .fa-file-image-o;
+//   }
+//   .file-pdf & {
+//     @extend .fa-file-pdf-o;
+//   }
+//   .file-ppt & {
+//     @extend .fa-file-powerpoint-o;
+//   }
+//   .file-video & {
+//     @extend .fa-file-video-o;
+//   }
+//   .file-word & {
+//     @extend .fa-file-word-o;
+//   }
+// }
 
 //task status
 @mixin task-status-variant($color) {

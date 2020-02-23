@@ -11,22 +11,22 @@ export class Expense {
   purpose: string;
   supplierName: string;
   notes: string;
-  
+
   constructor(data: any) {
     Object.assign(this, data);
   }
 
   getCategoryDescription(): string {
-    switch(this.category) {
+    switch (this.category) {
       case ExpenseCategory.ADVERTISING:
         return expenceCategory.advertising;
-      
+
       case ExpenseCategory.EQUIPMENT:
         return expenceCategory.equipment;
 
       case ExpenseCategory.PHOTOGRAPHY:
         return expenceCategory.photography;
-    
+
       case ExpenseCategory.DESIGN:
         return expenceCategory.design;
 
@@ -35,7 +35,7 @@ export class Expense {
 
       case ExpenseCategory.POLYGRAPHY:
         return expenceCategory.polygraphy;
-      
+
       case ExpenseCategory.PROMO:
         return expenceCategory.promo;
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { takeUntil, debounceTime } from 'rxjs/operators';
 
 import { ExhibitionsService } from '../../core/api/exhibitions.service';
 import { Exhibition } from '../../shared/models/exhibition.model';
@@ -47,13 +48,12 @@ export class ExhibitionComponent extends UnsubscriberComponent implements OnInit
         this.getRouteParams();
       });
 
-    this.quantityTerms$
-      .debounceTime(300)
-      .distinctUntilChanged()
-      .takeUntil(this.ngUnsubscribe$)
-      .subscribe((data: {index: number, quantity: number}) => {
-        this.setCostPrice(data.index);
-      });
+    this.quantityTerms$.pipe(
+      takeUntil(this.ngUnsubscribe$),
+      debounceTime(300))
+        .subscribe((data: {index: number, quantity: number}) => {
+          this.setCostPrice(data.index);
+        });
   }
 
   addProduct() {

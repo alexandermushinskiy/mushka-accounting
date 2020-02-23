@@ -12,7 +12,7 @@ export class FiltersModalComponent implements OnInit {
   @Input() title = 'Фильтрация по товарам';
   @Output() onApply = new EventEmitter<string[]>();
   @Output() onClose = new EventEmitter<void>();
-  
+
   selectedProducts: SelectProduct[] = [];
   productsList: SelectProduct[];
   isError = false;
