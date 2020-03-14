@@ -1,0 +1,93 @@
+{
+  "common": {
+    "selectValue": "Выберите значение",
+    "noItemsFound": "Ничего не найдено",
+    "date": "Дата",
+    "notes": "Примечание",
+    "warning": "Предупреждение"
+  },
+  "header": {
+    "accountingForGoodsAndServices": "Учет товаров и услуг",
+    "order": "Заказ",
+    "supply": "Поступление",
+    "profile": "Профиль",
+    "logOut": "Выйти",
+    "globalSearch": "Глобальный поиск..."
+  },
+  "sidebarMenu": {
+    "analytics": "Аналитика",
+    "orders": "Заказы",
+    "corpOrders": "Корп. заказы",
+    "products": "Товары",
+    "packages": "Упаковка",
+    "suppliers": "Поставщики",
+    "partners": "Партнеры",
+    "logistics": "Логистика",
+    "supplies": "Поступления",
+    "expenses": "Расходы",
+    "gifts": "Подарки",
+    "exhibitions": "Выставки"
+  },
+  "button": {
+    "addOrder": "Добавить новый заказ",
+    "addProduct": "Добавить товар",
+    "remove": "Удалить",
+    "cancel": "Отмена",
+    "yes": "Да",
+    "no": "Нет"
+  },
+  "paymentMethod": {
+    "cash": "Наличный расчет",
+    "transferToCard": "Перевод на карту",
+    "liqPay": "LiqPay",
+    "settlementAccount": "Расчетный счет"
+  },
+  "datatable": {
+    "displayPerPage": "Отображать на странице",
+    "emptyMessage": "'Нет данных для отображения"
+  },
+  "orders": {
+    "orders": "Заказы",
+    "addNewOrder": "Добавление заказа",
+    "editOrder": "Редактирование заказа",
+    "orderDetails": "Данные заказа",
+    "orderNumber": "Номер",
+    "deliveryAddress": "Адрес доставки",
+    "region": "Область",
+    "city": "Населённый пункт",
+    "customerData": "Данные покупателя",
+    "productList": "Список товаров",
+    "productName": "Наименование товара",
+    "vendorCode": "Артикул",
+    "size": "Размер",
+    "costPrice": "Себестоимость",
+    "price": "Цена",
+    "quantity": "Количество",
+    "inStock": "В наличие",
+    "createOrder": "Создать заказ",
+    "updateOrder": "Обновить заказ",
+    "cost": "Оплата",
+    "discount": "Скидка, %",
+    "profit": "Прибыль",
+    "wholesaleOrder": "Оптовый заказ",
+    "orderUpdated": "Заказ был успешно изменен",
+    "orderAdded": "Заказ был успешно добавлен"
+  },
+  "customer": {
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "phone": "Телефон",
+    "email": "Эл. почта"
+  },
+  "confirmation": {
+    "dataNotSaved": "<p>Данные не были сохранены и будут потеряны.<br>Вы уверены, что хотите покинуть страницу без сохранения?</p>"
+  },
+  "dashboard": {
+    "balance": "Баланс вложений, грн",
+    "popularProducts": "Популярные модели",
+    "unpopularProducts": "Непопулярные модели",
+    "popularCities": "Заказы по городам",
+    "ordersQuantity": "Количество заказов",
+    "soldProducts": "Количество проданных носков"
+  }
+}

@@ -1,6 +1,5 @@
 @import "app/variables";
 
-//ngx-datatable
 @mixin checkbox() {
   > input[type='checkbox'] {
     height: $custom-control-indicator-size;

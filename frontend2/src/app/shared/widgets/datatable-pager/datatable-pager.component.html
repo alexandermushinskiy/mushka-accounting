@@ -1,0 +1,24 @@
+<ngb-pagination class="d-flex justify-content-center"
+                aria-label="Default pagination"
+                size="md"
+                maxSize="5"
+                [collectionSize]="totalItems"
+                [pageSize]="pageSize"
+                [boundaryLinks] = "true"
+                [(page)]="currentPage"
+                (pageChange)="pageChanged()">
+  <ng-template ngbPaginationFirst>
+    <i class="datatable-icon-prev"></i>
+  </ng-template>
+  <ng-template ngbPaginationLast>
+    <i class="datatable-icon-skip"></i>
+  </ng-template>
+  <ng-template ngbPaginationPrevious>
+    <i class="datatable-icon-left"></i>
+  </ng-template>
+  <ng-template ngbPaginationNext>
+    <i class="datatable-icon-right"></i>
+  </ng-template>
+  <ng-template ngbPaginationEllipsis>...</ng-template>
+  <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+</ngb-pagination>

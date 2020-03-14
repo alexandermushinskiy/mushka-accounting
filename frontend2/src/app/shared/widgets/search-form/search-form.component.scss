@@ -1,0 +1,29 @@
+@import '../../../variables';
+
+.search-form {
+  position: relative;
+  line-height: 24px;
+}
+
+.search-form input {
+  //padding-right: 30px;
+}
+
+.close-icon {
+  border: none;
+  background: none;
+  display: block;
+  outline: 0;
+}
+
+.close-icon:after {
+  content: "×";
+  display: block;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  //color: $topaz;
+  font-weight: normal;
+  font-size: 18px;
+  cursor: pointer;
+}

@@ -1,0 +1,12 @@
+<ngb-datepicker #ngbdatepicker
+                [(ngModel)]="dateModel"
+                [disabled]="disabled"
+                [navigation]="navigation"
+                [maxDate]="maxDate"
+                [minDate]="minDate"
+                [firstDayOfWeek]="firstDayOfWeek"
+                [displayMonths]="displayMonths"
+                [outsideDays]="outsideDays"
+                [showWeekdays]="showWeekdays"
+                [showWeekNumbers]="showWeekNumbers"
+                (select)="dayChanged($event)"></ngb-datepicker>

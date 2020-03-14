@@ -1,0 +1,56 @@
+@import "app/variables";
+
+.form-control {
+  border-radius: 0;
+  padding: 4px 6px;
+  font-size: .9em;
+  line-height: 18px;
+  height: auto;
+
+  &:hover {
+    border-color: $input-border-hover;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: $input-focus-border-color;
+  }
+
+  &:disabled,
+  &[disabled],
+  &[readonly] {
+    opacity: .65;
+    background-color: $input-disabled-bg;
+  }
+  &.not-valid {
+    box-shadow: inset 1px 0 0 0 $validation-color;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+
+.input-wrapper {
+  position: relative;
+  .form-control {
+    padding-right: 3.2rem;
+  }
+  > .fa,
+  > [class*="fa-"] {
+    color: $text-muted;
+    font-size: 1.6rem;
+    position: absolute;
+    top: calc(50% - 0.8rem);
+    right: 10px;
+  }
+}
+
+.validation-tip {
+  display: block;
+  opacity: 0.65;
+  font-weight: bold;
+  font-size: 13px;
+  color: $red;
+  letter-spacing: 0;
+}

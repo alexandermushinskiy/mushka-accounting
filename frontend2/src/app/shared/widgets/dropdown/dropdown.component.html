@@ -1,0 +1,47 @@
+<ng-select *ngIf="isComplex; else simple"
+      [bindLabel]="textField"
+      [bindValue]="dataField"
+      [items]="options"
+      [clearable]="isClearable"
+      [searchable]="isSearchable"
+      [placeholder]="'common.selectValue' | translate"
+      [notFoundText]="'common.noItemsFound' | translate"
+      [ngModel]="value"
+      (ngModelChange)="onOptionSelect($event)">
+</ng-select>
+
+<ng-template #simple>
+  <ng-select
+      [items]="options"
+      [clearable]="isClearable"
+      [searchable]="isSearchable"
+      [placeholder]="'common.selectValue' | translate"
+      [notFoundText]="'common.noItemsFound' | translate"
+      [ngModel]="value"
+      (change)="onOptionSelect($event)">
+  </ng-select>
+</ng-template>
+
+
+
+<!-- <div ngbDropdown class="dropdown">
+  <button type="button"
+          class="btn form-control"
+          [disabled]="disabled"
+          [ngClass]="(!value && required) ? 'required-dropdown' : ''" ngbDropdownToggle id="dropdown">
+    
+    <span [ngClass]="{'placeholder': !value}">
+      {{ value ? (isComplex ? value[textField] : value) : (defaultValue ? defaultValue : 'Выберите значение') }}
+    </span>
+    <i class="ico-chevron-down"></i>
+  </button>
+  <div ngbDropdownMenu aria-labelledby="dropdown" class="dropdown-max-height">
+    <button type="button" class="dropdown-item" *ngIf="!value && defaultValue">{{ defaultValue }}</button>
+    
+    <button type="button" class="dropdown-item" *ngFor="let option of options" (click)="onOptionSelect(option)">
+      <span>
+        {{ isComplex ? option[textField] : option }}
+      </span>
+    </button>
+  </div>
+</div> -->

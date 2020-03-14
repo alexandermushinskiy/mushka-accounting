@@ -1,0 +1,187 @@
+@import '../node_modules/font-awesome/css/font-awesome.css';
+@import '../node_modules/bootstrap/scss/bootstrap';
+@import '../node_modules/@ng-select/ng-select/themes/default.theme.css';
+@import '../node_modules/@swimlane/ngx-datatable/index.css';
+@import '../node_modules/@swimlane/ngx-datatable/themes/material.css';
+@import '../node_modules/@swimlane/ngx-datatable/assets/icons.css';
+@import '../node_modules/ngx-toastr/toastr-bs4-alert';
+
+@import 'assets/styles/fonts';
+@import 'assets/styles/buttons';
+@import 'assets/styles/forms.scss';
+@import 'assets/styles/ng-select.scss';
+@import 'assets/styles/dropdowns';
+@import 'assets/styles/ngx-datatable.scss';
+@import 'assets/styles/ngb-pagination.scss';
+@import 'assets/styles/modal.scss';
+@import 'assets/styles/ngb-datepicker.scss';
+@import 'assets/styles/ngx-toastr.scss';
+@import 'app/variables';
+
+html {
+  font-size: 10px;    
+}
+html, body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Ericsson Hilda",Helvetica,Arial,sans-serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #4e4e4e;
+  text-align: left;
+  background-color: #f2f2f2;
+  overflow: hidden;
+}
+
+#app {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  min-height: 100%;
+}
+
+#main {
+  height: calc(100vh - #{$header-height});
+  padding-left: $sidebar-width-collapsed;
+  transition: padding-left 250ms cubic-bezier(0.1, .57, .1, 1);
+  position: relative;
+  @media (min-width: $desktop-lg) {
+    padding-left: $sidebar-width;
+  }
+  &.sidebar-collapsed {
+    padding-left: $sidebar-width-collapsed;
+  }
+}
+
+h1 {
+	margin-top: 20px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 30px;
+  color: $black;
+  //letter-spacing: -0.8px;
+}
+
+.h-100vh {
+  height: 100vh;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+textarea {
+  resize: none;
+}
+
+.required-fields-caption {
+  margin-top: 30px;
+  font-weight: bold;
+}
+
+.field-group label {
+  display: block;
+}
+
+.field-group, form .field-group {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.field-group input, .field-group select, .field-group textarea {
+  //width: 100%;
+  background: $white;
+  border: 1px solid #d8d8d8;
+  //border-radius: 5px;
+  //padding: 9px 19px;
+}
+
+.fields-group-title {
+  display: inline-block;
+  //border-bottom: 2px solid #F47721;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  color: $black;
+  letter-spacing: 0.67px;
+  text-transform: uppercase;
+
+  &:before {
+    position: absolute;
+    content: "";
+    left: 15px;
+    right: 15px;
+    height: 2px;
+    background-color: #E2E4E6;
+    bottom: 10px;
+    z-index: -1;
+  }
+}
+
+//General layout styles
+.app-page-container {
+  background-color: $layer2;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding-top: 20px;
+  position: relative;
+  will-change: scroll-position;
+}
+
+.app-page-body {
+  overflow: hidden;
+}
+
+.app-page-header {
+  align-items: center;
+  display: flex;
+  flex: none;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: $padding-base/2;
+}
+
+.app-page-title {
+  color: $blue;
+  font-size: 1.8rem;
+  line-height: 2.1rem;
+  margin: 0;
+  padding-right: 50px;
+  text-transform: uppercase;
+}
+
+.app-page-description {
+  align-items: center;
+  display: flex;
+  padding: $padding-base/2;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  //text-align: right;
+}
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+  margin: 0;
+  //text-align: right;
+}
+
+input[type="number"]::-webkit-input-placeholder { text-align:left  !important; }
+/* mozilla solution */
+input[type="number"]:-moz-placeholder { text-align:left !important; }
+
+.p-right-25 {
+  padding-right: 25px;
+}
+
+.spinner-border-thin .spinner-border {
+  border-width: 0.15em;
+  width: 1.6rem;
+  height: 1.6rem;
+}

@@ -47,7 +47,7 @@ namespace Mushka.Service.Services
         public async Task<ValidationResponse<IEnumerable<Order>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<Order> orders = (await orderRepository.GetAllAsync(cancellationToken))
-                .OrderBy(order => order.OrderDate)
+                .OrderByDescending(order => order.OrderDate)
                 .ToList();
 
             var message = orders.Any()

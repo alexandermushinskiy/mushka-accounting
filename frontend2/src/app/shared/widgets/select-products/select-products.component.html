@@ -1,0 +1,43 @@
+<ng-select
+      #select
+      bindValue="id"
+      [bindLabel]="isMultiple ? 'nameWithVendorCode' : 'name'"
+      [items]="products"
+      [placeholder]="placeholder"
+      [ngModel]="selectedId"
+      [clearable]="canClearAll"
+      [loading]="isLoading"
+      [searchFn]="customSearchFn"
+      [notFoundText]="notFoundText"
+      [multiple]="isMultiple"
+      [closeOnSelect]="!isMultiple"
+      (change)="onChange($event)"
+      (clear)="clear()">
+  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+    <div *ngIf="!isMultiple; else multiple" class="product-name">{{ item.name }}</div>
+    <ng-template #multiple>
+      <mshk-checkbox id="item-{{index}}" [checked]="item$.selected" [text]="item.name"></mshk-checkbox>
+    </ng-template>
+
+    <div class="text-muted" [ngClass]="{'multiple': isMultiple}">
+      <div class="row">
+        <div class="col-md-4">
+          <span class="title">Категория</span>
+          <span>{{ item.category.name }}</span>
+        </div>
+        <div class="col-md-4">
+          <span class="title">Артикул</span>
+          <span>{{ item.vendorCode }}</span>
+        </div>
+        <div class="col-md-4">
+          <span class="title">Размер</span>
+          <span>{{ !!item.size ? item.size.name : '-' }}</span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template ng-footer-tmp *ngIf="isMultiple">
+    <button class="btn btn-primary btn-close" type="button" (click)="select.close()">Закрыть</button>
+  </ng-template>
+</ng-select>
+

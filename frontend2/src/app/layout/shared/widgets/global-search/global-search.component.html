@@ -1,0 +1,16 @@
+<form (ngSubmit)="search(searchField.value)">
+  <input #searchField required autocomplete="off"
+         maxlength="14"
+         minlength="6"
+         name="search"
+         id="search"
+         class="form-control search"
+         [disabled]="isLoading"
+         [placeholder]="'header.globalSearch' | translate" />
+  <button [disabled]="isLoading" type="submit" class="btn btn-submit">
+    <span *ngIf="isLoading; then spinner else searchIcon"></span>
+  </button>
+</form>
+
+<ng-template #searchIcon><i class="fa fa-search"></i></ng-template>
+<ng-template #spinner><mshk-spinner [isLoading]="true"></mshk-spinner></ng-template>

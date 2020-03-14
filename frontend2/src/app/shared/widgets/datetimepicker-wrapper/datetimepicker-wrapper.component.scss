@@ -1,0 +1,10 @@
+@import '../../../variables';
+
+:host(.not-valid) {
+  .input-wrapper .form-control {
+    box-shadow: inset 1px 0 0 0 $validation-color;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
