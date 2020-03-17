@@ -93,17 +93,27 @@
     color: $text-color;
     background-color: $white-smoke;
     font-weight: 600 !important;
- }
+  }
 
   .ng-clear-wrapper {
     width: 19px;
     margin-left: 5px;
+    top: 2px;
+
+    .ng-clear {
+      color: $clear-color;
+    }
 
     &:hover {
       .ng-clear {
-        color: #818182;
+        color: $clear-hover-color;
       }
     }
+  }
+
+  .ng-arrow-wrapper {
+    width: 15px;
+    padding-right: 0;
   }
 }
 

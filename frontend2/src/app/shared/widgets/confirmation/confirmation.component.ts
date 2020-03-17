@@ -6,13 +6,17 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./confirmation.component.scss']
 })
 export class ConfirmationComponent {
-  @Input() text: string;
+  @Input() plainText: string;
   @Input() isSaving = false;
-  @Input() confirmButtonText = 'OK';
-  @Input() headerText = 'Подтверждение';
-  @Input() cancelText = 'Отмена';
+  @Input() confirmButtonText = 'button.yes';
+  @Input() headerText = 'common.confirmation';
+  @Input() cancelText = 'button.cancel';
   @Output() onConfirm = new EventEmitter();
   @Output() onClose = new EventEmitter();
+
+  confirm() {
+    this.onConfirm.emit()
+  }
 
   closeModal() {
     this.onClose.emit();

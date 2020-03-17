@@ -46,6 +46,12 @@
   }
 }
 
+input[placeholder]::-webkit-input-placeholder,
+textarea[placeholder]::-webkit-input-placeholder {
+  opacity: $placeholder-opacity;
+  color: $placeholder-color;
+}
+
 .validation-tip {
   display: block;
   opacity: 0.65;

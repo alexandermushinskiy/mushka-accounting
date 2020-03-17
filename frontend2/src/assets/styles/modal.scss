@@ -1,10 +1,5 @@
 @import 'app/variables';
 
-.modal-content {
-  border: $modal-content-border;
-  border-radius: $modal-content-border-radius;
-  box-shadow: $modal-content-box-shadow;
-}
 .modal-header {
   padding: $modal-body-padding;
 
@@ -20,12 +15,13 @@
   font-size: $modal-title-font-size;
   line-height: $modal-title-line-height;
 }
-.modal-header {
-  .close {
-    padding: 0;
-    margin: 0;
-  }
+
+.modal-content {
+  border: $modal-content-border;
+  border-radius: $modal-content-border-radius;
+  box-shadow: $modal-content-box-shadow;
 }
+
 .modal-body {
   padding: $modal-body-padding;
 }
@@ -71,5 +67,12 @@ button.close:focus {
 .confirm-leave-page-modal {
   .modal-content {
     max-width: 430px;
+  }
+}
+
+.date-range-modal {
+  .modal-dialog {
+    max-width: 620px;
+    max-height: 300px;
   }
 }

@@ -4,7 +4,6 @@
       [disabled]="disabled"
       [placeholder]="placeholder"
       [ngModel]="selectedPaymentMethod"
-      
       (ngModelChange)="onMethodSelected($event)">
   <ng-option *ngFor="let paymentMethod of paymentMethods" [value]="paymentMethod">{{ paymentMethod.description | translate }}</ng-option>
 </ng-select>

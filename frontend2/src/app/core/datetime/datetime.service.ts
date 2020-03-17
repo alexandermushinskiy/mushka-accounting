@@ -1,5 +1,6 @@
 import * as moment from 'moment';
-// import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { DateRange } from '../../shared/models/date-range.model';
 
 export class DatetimeService {
   // parseDate(date: string, format = 'YYYY-MM-DD HH:mm'): string {
@@ -23,14 +24,14 @@ export class DatetimeService {
     return moment(date, inputFormat).locale('ru').format(outputFormat);
   }
 
-  // convertNgbDateToDate(ngbDate: NgbDate): string {
-  //   if (!ngbDate) {
-  //     return null;
-  //   }
+  convertNgbDate(ngbDate: NgbDate): string {
+    if (!ngbDate) {
+      return null;
+    }
 
-  //   const date = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day);
-  //   return this.toString(date);
-  // }
+    const date = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day);
+    return this.toString(date);
+  }
 
   isDateRangeCorrect(fromDate: string, toDate: string): boolean {
     return moment(fromDate) <= moment(toDate);
@@ -38,6 +39,10 @@ export class DatetimeService {
 
   getMonthName(date: string): string {
     return this.capitalized(moment(date).locale('ru').format('MMM \'YY'));
+  }
+
+  isBetween(date: string, dateRange: DateRange): boolean {
+    return moment(date).isBetween(dateRange.from, dateRange.to);
   }
 
   private capitalized(str: string): string {

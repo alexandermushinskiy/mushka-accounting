@@ -1,12 +1,16 @@
 @import '../../../variables';
 
-.search-form {
+.select-form {
   position: relative;
-  line-height: 24px;
 }
 
-.search-form input {
-  //padding-right: 30px;
+.time-frames {
+  display: inline-block;
+  width: calc(100% - 30px)
+}
+
+.btn-range {
+  padding-left: 7px;
 }
 
 .close-icon {
@@ -25,9 +29,8 @@
   content: "×";
   display: block;
   position: absolute;
-  right: 10px;
-  top: 3px;
-  //color: $topaz;
+  right: -7px;
+  top: -8px;
   font-weight: normal;
   font-size: 18px;
   cursor: pointer;

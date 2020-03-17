@@ -8,24 +8,24 @@
     <button class="btn btn-icon">
       <i class="fa fa-download" title="Экспорт в CSV" aria-hidden="true"></i>
     </button>
-    <!-- <button class="btn btn-icon">
-      <i class="fa fa-calendar"></i>
-    </button> -->
-    <div ngbDropdown placement="bottom-right">
-      <button class="btn btn-icon" ngbDropdownToggle id="filters">
-        <i class="fa fa-calendar" title="Show filters" aria-hidden="true"></i>
-      </button>
-      <div ngbDropdownMenu aria-labelledby="filters">
-        <button class="dropdown-item">Сегодня</button>
-        <button class="dropdown-item">Вчера</button>
-        <button class="dropdown-item show-all" (click)="resetQuickFilter()">Показать все</button>
-      </div>
-    </div>
   </div>
   <div class="header-separator"></div>
-  <mshk-search-form [defaultValue]="filterKey"></mshk-search-form>
+  <mshk-select-timeframes class="timeframes" #timeframes
+            (onRangeSelected)="onRangeSelected($event)"
+            (onClear)="onClearRange()">
+  </mshk-select-timeframes>
   <div class="header-separator"></div>
-  <span>{{ total }} всего</span>
+  <mshk-search-form [defaultValue]="filterKey" (onSearch)="onSearch($event)"></mshk-search-form>
+  <div class="header-separator"></div>
+  <span class="text-muted total-count">
+    <span *ngIf="shown !== total; else totalBlock">
+      {{ shown }} {{ 'common.outOf' | translate }} {{ total }}
+    </span>
+    <ng-template #totalBlock>
+      {{ total }} {{ 'common.total' | translate }}
+    </ng-template>
+  </span>
+  
 </header>
 
 <ngx-datatable #datatable
@@ -34,7 +34,7 @@
                   [headerHeight]="40"
                   [rowHeight]="40"
                   [footerHeight]="50"
-                  [rows]="orders"
+                  [rows]="shownOrders"
                   [columnMode]="'force'"
                   [sorts]="sorts"
                   [messages]="{ emptyMessage: 'Нет данных для отображения' }"
@@ -42,16 +42,16 @@
                 
   <ngx-datatable-column name="orderDate" [sortable]="true">
     <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
-      <span (click)="sort($event)">Дата<br>заказа</span>
+      <span [innerHtml]="'datatable.orderDate' | translate" (click)="sort($event)"></span>
     </ng-template>
     <ng-template ngx-datatable-cell-template let-value="value">
-      <span [title]="value">{{ value }}</span>
+      <span [title]="value">{{ value | format }}</span>
     </ng-template>
   </ngx-datatable-column>              
 
   <ngx-datatable-column name="orderNumber" [sortable]="false">
     <ng-template ngx-datatable-header-template let-column="column">
-      <span>Номер<br>заказа</span>
+      <span [innerHtml]="'datatable.orderNumber' | translate"></span>
     </ng-template>
     <ng-template ngx-datatable-cell-template let-value="value">
       <span [title]="value">{{ value }}</span>
@@ -60,7 +60,7 @@
 
   <ngx-datatable-column name="productsCount" [sortable]="true">
     <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
-      <span (click)="sort($event)">Количество<br>Товаров</span>
+      <span [innerHtml]="'datatable.productsCount' | translate" (click)="sort($event)"></span>
     </ng-template>
     <ng-template ngx-datatable-cell-template let-value="value">
       <span [title]="value">{{ value }}</span>
@@ -69,7 +69,7 @@
 
   <ngx-datatable-column name="customerName" [sortable]="true">
     <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
-      <span (click)="sort($event)">Имя<br>покупателя</span>
+      <span [innerHtml]="'datatable.customerName' | translate" (click)="sort($event)"></span>
     </ng-template>
     <ng-template ngx-datatable-cell-template let-value="value">
       <span [title]="value">{{ value }}</span>
@@ -78,7 +78,7 @@
 
   <ngx-datatable-column name="address" [sortable]="false">
     <ng-template ngx-datatable-header-template let-column="column">
-      <span>Адрес<br>доставки</span>
+      <span [innerHtml]="'datatable.deliveryAddress' | translate"></span>
     </ng-template>
     <ng-template ngx-datatable-cell-template let-value="value">
       <span [title]="value">{{ value }}</span>
@@ -108,14 +108,10 @@
 
 </ngx-datatable>
 
-
-
-
-
 <ng-template #confirmRemoveTmpl>
   <mshk-confirmation
-          [confirmButtonText]="'Удалить'"
-          [text]="'Вы уверены, что хотите удалить выбранный заказ <br>от <b>' + orderToDelete.orderDate + '</b>?'"
+          [confirmButtonText]="'button.remove'"
+          [plainText]="'orders.areYouSureToDeleteOrder' | translate: { orderNumber: orderToDelete.orderNumber, orderDate: orderToDelete.orderDate }"
           (onClose)="closeModal()"
           (onConfirm)="confirmDelete();">
   </mshk-confirmation>

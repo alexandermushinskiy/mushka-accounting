@@ -42,7 +42,9 @@ import { SelectProductsComponent } from './widgets/select-products/select-produc
 import { CurrencyInputComponent } from './widgets/currency-input/currency-input.component';
 import { CheckboxComponent } from './widgets/checkbox/checkbox.component';
 import { SelectPaymentMethodsComponent } from './widgets/select-payment-methods/select-payment-methods.component';
-// import { FormattedDatePipe } from './pipes/formatted-date.pipe';
+import { SelectTimeframesComponent } from './widgets/select-timeframes/select-timeframes.component';
+import { DateRangeModalComponent } from './modals/date-range-modal/date-range-modal.component';
+import { FormatPipe } from './pipes/format.pipe';
 // import { DatatableHeaderComponent } from './widgets/datatable/datatable-header/datatable-header.component';
 
 // import { DropdownComponent } from './widgets/dropdown/dropdown.component';
@@ -57,7 +59,6 @@ import { SelectPaymentMethodsComponent } from './widgets/select-payment-methods/
 // import { DropdownSizesComponent } from './widgets/dropdown-sizes/dropdown-sizes.component';
 // import { SuppliersDropdownComponent } from './widgets/suppliers-dropdown/suppliers-dropdown.component';
 // import { OrderQuickFilter } from './filters/order-quick.filter';
-// import { DateRageModalComponent } from './widgets/daterage-modal/daterage-modal.component';
 // import { SupplyQuickFilter } from './filters/supply-quick.filter';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -119,14 +120,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     CurrencyInputComponent,
     CheckboxComponent,
     SelectPaymentMethodsComponent,
-    // FormattedDatePipe,
+    SelectTimeframesComponent,
+    DateRangeModalComponent,
+    FormatPipe,
     // NumberPipe,
     // DatatableHeaderComponent,
     // SelectSizeComponent,
     // ToggleComponent,
     // DropdownSizesComponent,
-    // SuppliersDropdownComponent,
-    // DateRageModalComponent
+    // SuppliersDropdownComponent
   ],
   exports: [
     /* Common modules */
@@ -149,7 +151,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     /* Pipes */
     // DashIfEmptyPipe,
     CurrencyPipe,
-    // FormattedDatePipe,
+    FormatPipe,
     // NumberPipe,
 
     /* Components */
@@ -175,8 +177,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     // SuppliersDropdownComponent,
     SelectProductsComponent,
     SelectPaymentMethodsComponent,
+    SelectTimeframesComponent,
     DelayedInputComponent,
-    // DateRageModalComponent,
+    DateRangeModalComponent,
     ConfirmLeaveComponent
   ],
   providers: [

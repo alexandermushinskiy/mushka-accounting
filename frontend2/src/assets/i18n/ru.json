@@ -4,7 +4,11 @@
     "noItemsFound": "Ничего не найдено",
     "date": "Дата",
     "notes": "Примечание",
-    "warning": "Предупреждение"
+    "warning": "Предупреждение",
+    "total": "всего",
+    "outOf": "из",
+    "selectPeriod": "Выберите период",
+    "confirmation": "Подтверждение"
   },
   "header": {
     "accountingForGoodsAndServices": "Учет товаров и услуг",
@@ -34,7 +38,8 @@
     "remove": "Удалить",
     "cancel": "Отмена",
     "yes": "Да",
-    "no": "Нет"
+    "no": "Нет",
+    "apply": "Применить"
   },
   "paymentMethod": {
     "cash": "Наличный расчет",
@@ -42,9 +47,26 @@
     "liqPay": "LiqPay",
     "settlementAccount": "Расчетный счет"
   },
+  "timeframe": {
+    "range": "Диапазон",
+    "today": "Сегодня",
+    "yesterday": "Вчера",
+    "lastWeek": "Прошлая неделя",
+    "currentWeek": "Текущая неделя",
+    "lastMonth": "Прошлый месяц",
+    "currentMonth": "Текущий месяц",
+    "currentQurter": "Текущий квартал",
+    "currentYear": "Текущий год",
+    "enterRange": "Ввести диапазон"
+  },
   "datatable": {
     "displayPerPage": "Отображать на странице",
-    "emptyMessage": "'Нет данных для отображения"
+    "emptyMessage": "'Нет данных для отображения",
+    "orderDate": "Дата<br>заказа",
+    "orderNumber": "Номер<br>заказа",
+    "productsCount": "Количество<br>Товаров",
+    "customerName": "Имя<br>покупателя",
+    "deliveryAddress": "Адрес<br>доставки"
   },
   "orders": {
     "orders": "Заказы",
@@ -71,7 +93,8 @@
     "profit": "Прибыль",
     "wholesaleOrder": "Оптовый заказ",
     "orderUpdated": "Заказ был успешно изменен",
-    "orderAdded": "Заказ был успешно добавлен"
+    "orderAdded": "Заказ был успешно добавлен",
+    "areYouSureToDeleteOrder": "Вы уверены, что хотите удалить заказ с номером <b>{{orderNumber}}</b> от <b>{{orderDate}}</b>?"
   },
   "customer": {
     "firstName": "Имя",

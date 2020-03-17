@@ -1,8 +1,8 @@
 <div class="row footer" *ngIf="!loadingIndicator && total > minItemsForPagination">
-  <div class="col-md-3">
+  <!-- <div class="col-md-3">
     Всего: {{ total }}
-  </div>
-  <div class="table-paging col-md-6">
+  </div> -->
+  <div class="table-paging col-12">
     <mshk-datatable-pager [currentPage]="currentPage" 
                     [pageSize]="pageSize"
                     [totalItems]="rowCount"

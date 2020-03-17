@@ -244,7 +244,7 @@ export class ConverterService {
   convertToOrderList(source: any): OrderList {
     return new OrderList({
       id: source.id,
-      orderDate: this.datetimeService.toString(source.orderDate, 'DD MMM YYYY'),
+      orderDate: this.datetimeService.toString(source.orderDate),
       orderNumber: source.number,
       cost: source.cost,
       address: source.address,

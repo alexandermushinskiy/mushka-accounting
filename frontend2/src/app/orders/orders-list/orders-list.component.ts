@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { DatetimeService } from '../../core/datetime/datetime.service';
 import { OrdersService } from '../../core/api/orders.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
+import { OrderListFilter } from '../../shared/filters/order-list.filter';
+import { DateRange } from '../../shared/models/date-range.model';
+import { SelectTimeframesComponent } from '../../shared/widgets/select-timeframes/select-timeframes.component';
 
 @Component({
   selector: 'mshk-orders-list',
@@ -14,11 +17,15 @@ import { NotificationsService } from '../../core/notifications/notifications.ser
 })
 export class OrdersListComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
+  @ViewChild('timeframes', { static: false }) timeframesSelect: SelectTimeframesComponent;
   orders: OrderList[];
+  shownOrders: OrderList[];
   loadingIndicator = false;
   total = 0;
   shown = 0;
   orderToDelete: OrderList;
+  searchKey: string;
+  dateRange: DateRange;
   modal: NgbModalRef;
   sorts = [
     { prop: 'orderDate', dir: 'desc' },
@@ -47,6 +54,31 @@ export class OrdersListComponent implements OnInit {
     if (event.type === 'click') {
       event.cellElement.blur();
     }
+  }
+
+  onSearch(searchKey: string) {
+    this.searchKey = searchKey;
+
+    this.filterOrders();
+  }
+
+  onRangeSelected(dateRange: DateRange) {
+    this.dateRange = dateRange;
+    this.filterOrders();
+  }
+
+  onClearRange() {
+    this.dateRange = null;
+    this.filterOrders();
+  }
+
+  private filterOrders() {
+    //debugger;
+    const orderFilter = new OrderListFilter(this.searchKey, this.dateRange);
+    const filteredOrders = this.orders.filter(order => orderFilter.filter(order));
+
+    this.shownOrders = filteredOrders;
+    this.shown = filteredOrders.length;
   }
 
   addOrder() {
@@ -78,7 +110,10 @@ export class OrdersListComponent implements OnInit {
 
   private onOrdersLoaded(orders: OrderList[]) {
     this.orders = orders;
+    this.shownOrders = orders;
+    
     this.total = orders.length;
+    this.shown = orders.length;
 
     this.loadingIndicator = false;
   }

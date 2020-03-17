@@ -24,7 +24,7 @@
     flex-basis: $ngb-datepicker-navigation-select-width;
 
     > .custom-select {
-      padding: $ngb-datepicker-navigation-select-padding-x $ngb-datepicker-navigation-select-padding-y;
+      //padding: $ngb-datepicker-navigation-select-padding-x $ngb-datepicker-navigation-select-padding-y;
       font-size: $ngb-datepicker-navigation-select-font-size;
       border: 1px solid $ngb-datepicker-navigation-select-border-color;
       height: 27px;
@@ -83,6 +83,10 @@
       line-height: $ngb-datepicker-day-selected-line-height;
       border-radius: $ngb-datepicker-day-selected-border-radius;
       transition: color 250ms ease, background-color 250ms ease, border-color 250ms ease;
+    }
+
+    &:focus {
+      outline-width: 0;
     }
   }
 
