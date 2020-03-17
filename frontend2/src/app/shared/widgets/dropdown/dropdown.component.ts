@@ -18,6 +18,8 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
   // @Input() initialValue: string;
   @Input() required: boolean;
   @Input() disabled = false;
+  @Input() clearable = false;
+  @Input() searchable = false;
   // @Input() defaultValue: string;
   @Output() onSelectedValue = new EventEmitter<any>();
 

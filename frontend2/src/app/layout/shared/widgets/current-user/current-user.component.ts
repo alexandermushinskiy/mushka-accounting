@@ -17,4 +17,7 @@ export class CurrentUserComponent implements OnInit {
   ngOnInit() {
     this.user = this.currentUserService.currentUser;
   }
+
+  logOut() {
+  }
 }

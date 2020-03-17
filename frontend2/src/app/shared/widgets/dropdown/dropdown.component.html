@@ -2,8 +2,8 @@
       [bindLabel]="textField"
       [bindValue]="dataField"
       [items]="options"
-      [clearable]="isClearable"
-      [searchable]="isSearchable"
+      [clearable]="clearable"
+      [searchable]="searchable"
       [placeholder]="'common.selectValue' | translate"
       [notFoundText]="'common.noItemsFound' | translate"
       [ngModel]="value"
@@ -13,8 +13,8 @@
 <ng-template #simple>
   <ng-select
       [items]="options"
-      [clearable]="isClearable"
-      [searchable]="isSearchable"
+      [clearable]="clearable"
+      [searchable]="searchable"
       [placeholder]="'common.selectValue' | translate"
       [notFoundText]="'common.noItemsFound' | translate"
       [ngModel]="value"

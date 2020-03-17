@@ -15,7 +15,7 @@
             (onClear)="onClearRange()">
   </mshk-select-timeframes>
   <div class="header-separator"></div>
-  <mshk-search-form [defaultValue]="filterKey" (onSearch)="onSearch($event)"></mshk-search-form>
+  <mshk-search-form [defaultValue]="searchKey" (onSearch)="onSearch($event)"></mshk-search-form>
   <div class="header-separator"></div>
   <span class="text-muted total-count">
     <span *ngIf="shown !== total; else totalBlock">
@@ -113,6 +113,6 @@
           [confirmButtonText]="'button.remove'"
           [plainText]="'orders.areYouSureToDeleteOrder' | translate: { orderNumber: orderToDelete.orderNumber, orderDate: orderToDelete.orderDate }"
           (onClose)="closeModal()"
-          (onConfirm)="confirmDelete();">
+          (onConfirm)="confirmDelete()">
   </mshk-confirmation>
 </ng-template>

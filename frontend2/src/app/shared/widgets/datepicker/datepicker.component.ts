@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
@@ -17,6 +17,7 @@ export class DatepickerComponent implements OnInit {
   @Input() outsideDays = 'visible';
   @Input() showWeekdays = true;
   @Input() showWeekNumbers = false;
+  @Input() hasConfirm = false;
 
   @Input() set max(value: string) {
     this.maxDate = this.adapterDateToObject(value).calendarDate;
@@ -25,6 +26,8 @@ export class DatepickerComponent implements OnInit {
   @Input() set min(value: string) {
     this.minDate = this.adapterDateToObject(value).calendarDate;
   }
+
+  @Output() onDateChanged = new EventEmitter<any>();
 
   dateModel: NgbDateStruct;
   maxDate: NgbDateStruct;

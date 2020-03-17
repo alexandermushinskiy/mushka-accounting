@@ -20,7 +20,7 @@
                     [outsideDays]="outsideDays"
                     [showWeekdays]="showWeekdays"
                     [showWeekNumbers]="showWeekNumbers"
-                    (select)="dayChanged($event)"></ngb-datepicker>
+                    (select)="dayChanged()"></ngb-datepicker>
     <ngb-timepicker *ngIf="isTimePicker"
                     [(ngModel)]="timeModel"
                     [disabled]="disabled"

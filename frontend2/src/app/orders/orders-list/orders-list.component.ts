@@ -92,10 +92,33 @@ export class OrdersListComponent implements OnInit {
     });
   }
 
+  confirmDelete() {
+    this.loadingIndicator = true;
+    this.closeModal();
+
+    this.ordersService.delete(this.orderToDelete.id)
+      .subscribe(
+        () => this.onDeleteSuccess(),
+        (error: string) => this.onDeleteFailed(error)
+      );
+  }
+
   closeModal() {
     if (this.modal) {
       this.modal.close();
     }
+  }
+
+  private onDeleteSuccess() {
+    this.notificationsService.success('Успех', `Заказ успешно удален из системы.`);
+    this.orderToDelete = null;
+    this.loadOrders();
+  }
+
+  private onDeleteFailed(error: string) {
+    this.loadingIndicator = false;
+    this.orderToDelete = null;
+    this.notificationsService.error('Ошибка', `Ошибка при удалении заказа: ${error}.`);
   }
 
   private loadOrders() {
