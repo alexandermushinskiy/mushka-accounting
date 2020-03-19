@@ -4,6 +4,7 @@ import * as moment from 'moment';
 
 import { TimeFrame } from '../../enums/time-frame.enum';
 import { DateRange } from '../../models/date-range.model';
+import { DatetimeService } from '../../../core/datetime/datetime.service';
 
 @Component({
   selector: 'mshk-select-timeframes',
@@ -36,7 +37,8 @@ export class SelectTimeframesComponent implements OnInit {
     size: 'sm'
   };
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal,
+              private datetimeService: DatetimeService) {
   }
 
   ngOnInit() {
@@ -55,17 +57,43 @@ export class SelectTimeframesComponent implements OnInit {
   clear() {
     this.selectedTimeFrame = null;
     this.dateRange = null;
+    this.removeCustomeRange();
     this.onClear.emit();
   }
 
   onDateRangeSelected(dateRange: DateRange) {
     this.closeModal();
+
+    this.selectedTimeFrame = TimeFrame.CUSTOM_RANGE;
+    const rangeName = this.getRangeName(dateRange);
+
+    const customRange = this.timeframes.find(time => time.id === TimeFrame.CUSTOM_RANGE);
+
+    if (!!customRange) {
+      customRange.name = rangeName;
+    } else {
+      this.timeframes.push({ id: TimeFrame.CUSTOM_RANGE, name: rangeName });
+    }
+
     this.selectDateRange(dateRange);
   }
 
   closeModal() {
     if (this.modal) {
       this.modal.close();
+    }
+  }
+
+  private getRangeName(dateRange: DateRange): string {
+    const from = this.datetimeService.convertToFormat(dateRange.from);
+    const to = this.datetimeService.convertToFormat(dateRange.to);
+    return `${from} - ${to}`;
+  }
+
+  private removeCustomeRange() {
+    const index = this.timeframes.findIndex(time => time.id === TimeFrame.CUSTOM_RANGE);
+    if (index >= 0) {
+      this.timeframes.splice(index, 1);
     }
   }
 

@@ -8,5 +8,6 @@ export enum TimeFrame {
   CURRENT_QUARTER = 7,
   LAST_YEAR = 8,
   CURRENT_YEAR = 9,
-  CUSTOM_RANGE = 10
+  RANGE = 10,
+  CUSTOM_RANGE = 11
 }
