@@ -1,10 +1,10 @@
 <ngb-pagination class="d-flex justify-content-center"
-                aria-label="Default pagination"
                 size="md"
                 maxSize="5"
+                rotate="true"
                 [collectionSize]="totalItems"
                 [pageSize]="pageSize"
-                [boundaryLinks] = "true"
+                [boundaryLinks]="true"
                 [(page)]="currentPage"
                 (pageChange)="pageChanged()">
   <ng-template ngbPaginationFirst>
