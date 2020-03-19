@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-//import { LocalStorage } from 'ngx-webstorage';
+// import { LocalStorage } from 'ngx-webstorage';
 
 import { SidebarMenuStateService } from '../../core/sidebar-menu-state/sidebar-menu-state.service';
 
@@ -9,7 +9,7 @@ import { SidebarMenuStateService } from '../../core/sidebar-menu-state/sidebar-m
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  //@LocalStorage() 
+  // @LocalStorage()
   isCollapsed = false;
 
   constructor(private sidebarMenuStateService: SidebarMenuStateService) {

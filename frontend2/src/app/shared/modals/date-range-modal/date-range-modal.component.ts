@@ -20,8 +20,9 @@ export class DateRangeModalComponent implements OnInit {
   fromDate: NgbDate;
   toDate: NgbDate;
 
-  constructor(private datetimeService: DatetimeService) { }
-  
+  constructor(private datetimeService: DatetimeService) {
+  }
+
   ngOnInit() {
   }
 

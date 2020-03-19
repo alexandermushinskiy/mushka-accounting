@@ -15,7 +15,7 @@ export class ConfirmationComponent {
   @Output() onClose = new EventEmitter();
 
   confirm() {
-    this.onConfirm.emit()
+    this.onConfirm.emit();
   }
 
   closeModal() {

@@ -18,7 +18,7 @@ export class SelectTimeframesComponent implements OnInit {
   @Input() dateFormat = 'YYYY-MM-DD';
   @Output() onRangeSelected = new EventEmitter<DateRange>();
   @Output() onClear = new EventEmitter();
-  
+
   modal: NgbModalRef;
   selectedTimeFrame: TimeFrame;
   dateRange: DateRange;
@@ -84,14 +84,14 @@ export class SelectTimeframesComponent implements OnInit {
 
       case TimeFrame.CURRENT_QUARTER:
         return this.getCurrentQuarterRange();
-        
+
       case TimeFrame.CURRENT_YEAR:
         return this.getCurrentYearRange();
 
       default:
         return null;
     }
-  } 
+  }
 
   private getLastMonthRange(): DateRange {
     const lastMonth = moment().subtract(1, 'month');
@@ -113,7 +113,7 @@ export class SelectTimeframesComponent implements OnInit {
     const startOfQuarter = currentQuarter.format(this.dateFormat);
     const endOfQuarter = currentQuarter.format(this.dateFormat);
 
-    return new DateRange(startOfQuarter, endOfQuarter)
+    return new DateRange(startOfQuarter, endOfQuarter);
   }
 
   private getCurrentYearRange(): DateRange {

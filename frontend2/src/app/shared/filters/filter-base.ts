@@ -20,4 +20,3 @@ export abstract class FiltersBase {
     return !Object.values(this).some(value => !!value);
   }
 }
-  

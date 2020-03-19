@@ -46,6 +46,10 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
     return !!this.orderForm.value.customer ? this.orderForm.value.customer.id : null;
   }
 
+  get formProducts(): FormArray {
+    return this.orderForm.get('products') as FormArray;
+  }
+
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,

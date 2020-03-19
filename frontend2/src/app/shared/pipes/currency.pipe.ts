@@ -13,14 +13,15 @@ export class CurrencyPipe implements PipeTransform {
     thousands: ' '
   };
 
-  transform(value: string): string {
+  transform(value: number): string {
     return this.applyMask(value);
   }
 
-  private applyMask(rawValue: string): string {
+  private applyMask(value: number): string {
     const { allowNegative, decimal, precision, prefix, suffix, thousands } = this.options;
 
-    rawValue = Number(rawValue).toFixed(precision);
+    // rawValue = Number(rawValue).toFixed(precision);
+    const rawValue = value.toFixed(precision);
     const onlyNumbers = rawValue.replace(/[^0-9]/g, '');
 
     if (!onlyNumbers) {

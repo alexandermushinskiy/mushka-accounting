@@ -8,7 +8,6 @@ export class OrderListFilter extends FiltersBase {
   }
 
   filter(order: OrderList): boolean {
-//debugger
     let isInDateRange = true;
     let foundBySearch = true;
 

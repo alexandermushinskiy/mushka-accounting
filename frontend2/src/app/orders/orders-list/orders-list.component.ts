@@ -73,7 +73,7 @@ export class OrdersListComponent implements OnInit {
   }
 
   private filterOrders() {
-    //debugger;
+    // debugger;
     const orderFilter = new OrderListFilter(this.searchKey, this.dateRange);
     const filteredOrders = this.orders.filter(order => orderFilter.filter(order));
 
@@ -134,7 +134,7 @@ export class OrdersListComponent implements OnInit {
   private onOrdersLoaded(orders: OrderList[]) {
     this.orders = orders;
     this.shownOrders = orders;
-    
+
     this.total = orders.length;
     this.shown = orders.length;
 
