@@ -94,7 +94,8 @@
     "wholesaleOrder": "Оптовый заказ",
     "orderUpdated": "Заказ был успешно изменен",
     "orderAdded": "Заказ был успешно добавлен",
-    "areYouSureToDeleteOrder": "Вы уверены, что хотите удалить заказ с номером <b>{{orderNumber}}</b> от <b>{{orderDate}}</b>?"
+    "areYouSureToDeleteOrder": "Вы уверены, что хотите удалить заказ с номером <b>{{orderNumber}}</b> от <b>{{orderDate}}</b>?",
+    "orderDeletedSuccessfully": "Заказ успешно удален из системы."
   },
   "customer": {
     "firstName": "Имя",

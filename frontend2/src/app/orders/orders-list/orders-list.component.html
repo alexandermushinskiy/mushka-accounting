@@ -10,7 +10,7 @@
     </button>
   </div>
   <div class="header-separator"></div>
-  <mshk-select-timeframes class="timeframes" #timeframes
+  <mshk-select-timeframes class="timeframes"
             (onRangeSelected)="onRangeSelected($event)"
             (onClear)="onClearRange()">
   </mshk-select-timeframes>
@@ -25,20 +25,27 @@
       {{ total }} {{ 'common.total' | translate }}
     </ng-template>
   </span>
-  
+
+  <div class="filter">
+    <button class="btn btn-icon" (click)="showHideFilterPanel()">
+      <i class="fa fa-filter"></i>
+    </button>
+  </div>
 </header>
 
+<mshk-datatable-filter-bar *ngIf="isFilterPanel" (onClose)="showHideFilterPanel()"></mshk-datatable-filter-bar>
+
 <ngx-datatable #datatable
-                  class="material striped"
-                  [loadingIndicator]="loadingIndicator"
-                  [headerHeight]="40"
-                  [rowHeight]="40"
-                  [footerHeight]="50"
-                  [rows]="shownOrders"
-                  [columnMode]="'force'"
-                  [sorts]="sorts"
-                  [messages]="{ emptyMessage: 'Нет данных для отображения' }"
-                  (activate)="onActive($event)">
+                class="material striped"
+                [loadingIndicator]="loadingIndicator"
+                [headerHeight]="40"
+                [rowHeight]="40"
+                [footerHeight]="50"
+                [rows]="shownOrders"
+                [columnMode]="'force'"
+                [sorts]="sorts"
+                [messages]="{ emptyMessage: 'datatable.emptyMessage' | translate }"
+                (activate)="onActive($event)">
                 
   <ngx-datatable-column name="orderDate" [sortable]="true">
     <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">

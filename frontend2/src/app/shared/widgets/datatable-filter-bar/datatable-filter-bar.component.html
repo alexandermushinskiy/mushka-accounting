@@ -1,0 +1,21 @@
+<div class="filter-bar">
+  <div class="filter-bar--list">
+    <div class="filter-bar--item filter-bar--item-keyword-container">
+      <div class="flex-column flex-grow">
+        <div class="flex-grow flex-row flex-center">
+          <span aria-hidden="true" class="keyword-filter-icon">
+            <i class="fa fa-filter"></i>
+          </span>
+          <input autocomplete="off" aria-label="Filter by keyword" class="filter-input flex-grow" placeholder="Фильтровать по ключевому слову" role="search">
+        </div>
+      </div>
+    </div>
+    <div class="filter-bar--item">
+    </div>
+    <div class="filter-bar--right-items">
+      <button type="button" class="btn btn-icon btn-clear-filters" (click)="close()">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+  </div>
+</div>

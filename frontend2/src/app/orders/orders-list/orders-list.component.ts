@@ -8,7 +8,6 @@ import { OrdersService } from '../../core/api/orders.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { OrderListFilter } from '../../shared/filters/order-list.filter';
 import { DateRange } from '../../shared/models/date-range.model';
-import { SelectTimeframesComponent } from '../../shared/widgets/select-timeframes/select-timeframes.component';
 
 @Component({
   selector: 'mshk-orders-list',
@@ -17,13 +16,13 @@ import { SelectTimeframesComponent } from '../../shared/widgets/select-timeframe
 })
 export class OrdersListComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
-  @ViewChild('timeframes', { static: false }) timeframesSelect: SelectTimeframesComponent;
   orders: OrderList[];
   shownOrders: OrderList[];
   loadingIndicator = false;
   total = 0;
   shown = 0;
   orderToDelete: OrderList;
+  isFilterPanel = false;
   searchKey: string;
   dateRange: DateRange;
   modal: NgbModalRef;
@@ -72,8 +71,11 @@ export class OrdersListComponent implements OnInit {
     this.filterOrders();
   }
 
+  showHideFilterPanel() {
+    this.isFilterPanel = !this.isFilterPanel;
+  }
+
   private filterOrders() {
-    // debugger;
     const orderFilter = new OrderListFilter(this.searchKey, this.dateRange);
     const filteredOrders = this.orders.filter(order => orderFilter.filter(order));
 
@@ -110,7 +112,7 @@ export class OrdersListComponent implements OnInit {
   }
 
   private onDeleteSuccess() {
-    this.notificationsService.success('Успех', `Заказ успешно удален из системы.`);
+    this.notificationsService.success('orders.orderDeletedSuccessfully');
     this.orderToDelete = null;
     this.loadOrders();
   }
@@ -118,7 +120,7 @@ export class OrdersListComponent implements OnInit {
   private onDeleteFailed(error: string) {
     this.loadingIndicator = false;
     this.orderToDelete = null;
-    this.notificationsService.error('Ошибка', `Ошибка при удалении заказа: ${error}.`);
+    this.notificationsService.error(`Ошибка при удалении заказа: ${error}.`);
   }
 
   private loadOrders() {
