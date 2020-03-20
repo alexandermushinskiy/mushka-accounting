@@ -91,7 +91,7 @@ export class CorporateOrdersListComponent implements OnInit {
   }
 
   private onDeleteSuccess() {
-    this.notificationsService.success('Заказ успешно удален из системы.');
+    this.notificationsService.success('orders.orderDeletedSuccessfully');
     this.orderToDelete = null;
     this.loadOrders();
   }
