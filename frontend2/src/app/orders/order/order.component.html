@@ -1,4 +1,4 @@
-<!-- <mshk-progress-linear [isLoading]="loadingIndicator"></mshk-progress-linear> -->
+<mshk-progress-linear [isLoading]="loadingIndicator"></mshk-progress-linear>
 
 <form *ngIf="orderForm" #ngForm="ngForm" class="w-100" [formGroup]="orderForm" autocomplete="off" (ngSubmit)="saveOrder()">
   <div class="app-page-body row flex-nowrap">
@@ -6,7 +6,7 @@
     <div class="app-page-content">
       <div class="app-page-header">
           <div class="app-page-description">
-            <!-- <mshk-back-arrow></mshk-back-arrow> -->
+            <mshk-back-arrow></mshk-back-arrow>
             <h1 class="app-page-title">{{ title | translate }}</h1>
           </div>
         </div>
@@ -260,11 +260,11 @@
 
   <div class="footer">
     <div class="footer-buttons">
-      <button class="btn btn-primary" type="submit" [disabled]="isLoading">
+      <button type="button" class="btn btn-light" [routerLink]="['/orders']" [disabled]="isLoading">{{ 'button.cancel' | translate }}</button>
+      <button type="submit" class="btn btn-primary with-spinner" [disabled]="isLoading">
+        <div *ngIf="isLoading" class="btn-spinner"></div>
         {{ (isEdit ? 'orders.updateOrder' : 'orders.createOrder') | translate }}
-        <div *ngIf="isLoading" class="btn--spinner"></div>
       </button>
-      <button type="button" class="btn btn-primary btn-outline" [routerLink]="['/orders']" [disabled]="isLoading">{{ 'button.cancel' | translate }}</button>
     </div>
   </div>
 </form>

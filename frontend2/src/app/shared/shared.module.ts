@@ -18,7 +18,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { LoadingScreenComponent } from './widgets/loading-screen/loading-screen.component';
 import { SpinnerComponent } from './widgets/spinner/spinner.component';
 import { DropdownComponent } from './widgets/dropdown/dropdown.component';
-import { ConfirmLeaveComponent } from './widgets/confirm-leave/confirm-leave.component';
+import { ConfirmLeaveComponent } from './modals/confirm-leave/confirm-leave.component';
 import { HandleUnsavedDataGuard } from './guards/handle-unsaved-data.guard';
 import { ConfirmationComponent } from './widgets/confirmation/confirmation.component';
 import { DatatableFooterComponent } from './widgets/datatable-footer/datatable-footer.component';

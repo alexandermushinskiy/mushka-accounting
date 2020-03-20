@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Observable, of, forkJoin } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, tap, switchMap, filter, takeUntil, map } from 'rxjs/operators';
+import { Observable, of, forkJoin } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, tap, switchMap, filter, map } from 'rxjs/operators';
 
 import { SelectProduct } from '../../shared/models/select-product.model';
 import { ukrRegions } from '../shared/constants/ukr-regions.const';

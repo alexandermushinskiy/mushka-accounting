@@ -41,6 +41,24 @@
   }
 }
 
+.btn.with-spinner {
+  position: relative;
+
+  .btn-spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 31%;
+    left: 12px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border-top: 2px solid $white;
+    border-right: 2px solid transparent;
+    animation: btn-spinner .6s linear infinite;
+  }
+}
+
 @mixin primary-color-scheme {
   color: $btn-primary-color;
   background-color: $btn-primary-bg;
@@ -223,4 +241,8 @@
       color: $blue;
     }
   }
+}
+
+@keyframes btn-spinner {
+  to { transform: rotate(360deg); }
 }

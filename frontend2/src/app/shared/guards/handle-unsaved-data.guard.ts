@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { CanDeactivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { CanDeactivate, Router } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap';
 import { Subject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { ComponentCanDeactivate } from '../hooks/component-can-deactivate.component';
-import { ConfirmLeaveComponent } from '../widgets/confirm-leave/confirm-leave.component';
+import { ConfirmLeaveComponent } from '../modals/confirm-leave/confirm-leave.component';
 
 @Injectable()
 export class HandleUnsavedDataGuard implements CanDeactivate<ComponentCanDeactivate> {
@@ -18,9 +18,7 @@ export class HandleUnsavedDataGuard implements CanDeactivate<ComponentCanDeactiv
               private router: Router) {
   }
 
-  canDeactivate(component: ComponentCanDeactivate,
-                route: ActivatedRouteSnapshot,
-                state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+  canDeactivate(component: ComponentCanDeactivate): Observable<boolean> | Promise<boolean> | boolean {
     if (component.hasUnsavedData()) {
       const subject = new Subject<boolean>();
 
