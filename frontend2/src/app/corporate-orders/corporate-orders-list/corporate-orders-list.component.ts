@@ -1,34 +1,34 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NgbModalRef, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalRef, NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { OrderList } from '../../shared/models/order-list.model';
-import { OrdersService } from '../../core/api/orders.service';
-import { NotificationsService } from '../../core/notifications/notifications.service';
-import { OrderListFilter } from '../../shared/filters/order-list.filter';
+import { CorporateOrderList } from '../../shared/models/corporate-order-list.model';
 import { DateRange } from '../../shared/models/date-range.model';
+import { CorporateOrdersService } from '../../core/api/corporate-orders.service';
+import { NotificationsService } from '../../core/notifications/notifications.service';
+import { CorporateOrderListFilter } from '../../shared/filters/corporate-order-list.filter';
 
 @Component({
-  selector: 'mshk-orders-list',
-  templateUrl: './orders-list.component.html',
-  styleUrls: ['./orders-list.component.scss']
+  selector: 'mshk-corporate-orders-list',
+  templateUrl: './corporate-orders-list.component.html',
+  styleUrls: ['./corporate-orders-list.component.scss']
 })
-export class OrdersListComponent implements OnInit {
+export class CorporateOrdersListComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
-  orders: OrderList[];
-  shownOrders: OrderList[];
+  orders: CorporateOrderList[];
+  shownOrders: CorporateOrderList[];
   loadingIndicator = false;
   total = 0;
   shown = 0;
-  orderToDelete: OrderList;
+  orderToDelete: CorporateOrderList;
   searchKey: string;
   dateRange: DateRange;
   modal: NgbModalRef;
   sorts = [
-    { prop: 'orderDate', dir: 'desc' },
-    { prop: 'customerName', dir: null },
-    { prop: 'productsCount', dir: null }
+    { prop: 'createdOn', dir: 'desc' },
+    { prop: 'companyName', dir: null }
   ];
 
+  private modalRef: NgbModalRef;
   private readonly modalConfig: NgbModalOptions = {
     windowClass: 'order-modal',
     backdrop: 'static',
@@ -36,7 +36,7 @@ export class OrdersListComponent implements OnInit {
   };
 
   constructor(private modalService: NgbModal,
-              private ordersService: OrdersService,
+              private corporateOrdersService: CorporateOrdersService,
               private notificationsService: NotificationsService) {
   }
 
@@ -66,10 +66,10 @@ export class OrdersListComponent implements OnInit {
     this.filterOrders();
   }
 
-  delete(order: OrderList) {
+  delete(order: CorporateOrderList) {
     setTimeout(() => {
       this.orderToDelete = order;
-      this.modal = this.modalService.open(this.confirmRemoveTmpl, this.modalConfig);
+      this.modalRef = this.modalService.open(this.confirmRemoveTmpl, this.modalConfig);
     });
   }
 
@@ -77,7 +77,7 @@ export class OrdersListComponent implements OnInit {
     this.loadingIndicator = true;
     this.closeModal();
 
-    this.ordersService.delete(this.orderToDelete.id)
+    this.corporateOrdersService.delete(this.orderToDelete.id)
       .subscribe(
         () => this.onDeleteSuccess(),
         (error: string) => this.onDeleteFailed(error)
@@ -85,21 +85,13 @@ export class OrdersListComponent implements OnInit {
   }
 
   closeModal() {
-    if (this.modal) {
-      this.modal.close();
+    if (this.modalRef) {
+      this.modalRef.close();
     }
   }
 
-  private filterOrders() {
-    const orderFilter = new OrderListFilter(this.searchKey, this.dateRange);
-    const filteredOrders = this.orders.filter(order => orderFilter.filter(order));
-
-    this.shownOrders = filteredOrders;
-    this.shown = filteredOrders.length;
-  }
-
   private onDeleteSuccess() {
-    this.notificationsService.success('orders.orderDeletedSuccessfully');
+    this.notificationsService.success('Заказ успешно удален из системы.');
     this.orderToDelete = null;
     this.loadOrders();
   }
@@ -110,17 +102,25 @@ export class OrdersListComponent implements OnInit {
     this.notificationsService.error(`Ошибка при удалении заказа: ${error}.`);
   }
 
+  private filterOrders() {
+    const orderFilter = new CorporateOrderListFilter(this.searchKey, this.dateRange);
+    const filteredOrders = this.orders.filter(order => orderFilter.filter(order));
+
+    this.shownOrders = filteredOrders;
+    this.shown = filteredOrders.length;
+  }
+
   private loadOrders() {
     this.loadingIndicator = true;
 
-    this.ordersService.getAll()
+    this.corporateOrdersService.getAll()
       .subscribe(
-        (res: OrderList[]) => this.onOrdersLoaded(res),
-        () => this.onLoadOrdersFailed()
+        (res: CorporateOrderList[]) => this.onLoadSuccess(res),
+        () => this.onLoadError()
       );
   }
 
-  private onOrdersLoaded(orders: OrderList[]) {
+  private onLoadSuccess(orders: CorporateOrderList[]) {
     this.orders = orders;
     this.shownOrders = orders;
 
@@ -130,8 +130,9 @@ export class OrdersListComponent implements OnInit {
     this.loadingIndicator = false;
   }
 
-  private onLoadOrdersFailed() {
+  private onLoadError() {
     this.loadingIndicator = false;
     this.notificationsService.error('Невозможно загрузить все заказы');
   }
+
 }

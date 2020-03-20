@@ -8,7 +8,8 @@
     "total": "всего",
     "outOf": "из",
     "selectPeriod": "Выберите период",
-    "confirmation": "Подтверждение"
+    "confirmation": "Подтверждение",
+    "exportToCsv": "Экспорт в CSV"
   },
   "header": {
     "accountingForGoodsAndServices": "Учет товаров и услуг",
@@ -34,6 +35,7 @@
   },
   "button": {
     "addOrder": "Добавить новый заказ",
+    "addCorporateOrder": "Добавить корпоративный заказ",
     "addProduct": "Добавить товар",
     "remove": "Удалить",
     "cancel": "Отмена",
@@ -95,7 +97,10 @@
     "orderUpdated": "Заказ был успешно изменен",
     "orderAdded": "Заказ был успешно добавлен",
     "areYouSureToDeleteOrder": "Вы уверены, что хотите удалить заказ с номером <b>{{orderNumber}}</b> от <b>{{orderDate}}</b>?",
-    "orderDeletedSuccessfully": "Заказ успешно удален из системы."
+    "orderDeletedSuccessfully": "Заказ успешно удален из системы.",
+    "corporateOrders": "Корпоративные заказы",
+    "areYouSureToDeleteCorporateOrder": "Вы уверены, что хотите удалить корпоративный заказ с номером <b>{{orderNumber}}</b> от <b>{{orderDate}}</b>?",
+    "companyName": "Имя{{value}}компании"
   },
   "customer": {
     "firstName": "Имя",

@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 import { LayoutModule } from './layout/layout.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { OrdersModule } from './orders/orders.module';
+import { CorporateOrdersModule } from './corporate-orders/corporate-orders.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { OrdersModule } from './orders/orders.module';
     CoreModule,
     LayoutModule,
     DashboardModule,
-    OrdersModule
+    OrdersModule,
+    CorporateOrdersModule
     // NgxWebstorageModule.forRoot()
   ],
   providers: [],

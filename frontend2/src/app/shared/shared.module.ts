@@ -46,6 +46,7 @@ import { SelectTimeframesComponent } from './widgets/select-timeframes/select-ti
 import { DateRangeModalComponent } from './modals/date-range-modal/date-range-modal.component';
 import { FormatPipe } from './pipes/format.pipe';
 import { DatatableFilterBarComponent } from './widgets/datatable-filter-bar/datatable-filter-bar.component';
+import { DatatableBarComponent } from './widgets/datatable-bar/datatable-bar.component';
 // import { DatatableHeaderComponent } from './widgets/datatable/datatable-header/datatable-header.component';
 
 // import { DropdownComponent } from './widgets/dropdown/dropdown.component';
@@ -125,6 +126,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DateRangeModalComponent,
     FormatPipe,
     DatatableFilterBarComponent,
+    DatatableBarComponent,
     // NumberPipe,
     // DatatableHeaderComponent,
     // SelectSizeComponent,
@@ -183,7 +185,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DelayedInputComponent,
     DateRangeModalComponent,
     ConfirmLeaveComponent,
-    DatatableFilterBarComponent
+    DatatableFilterBarComponent,
+    DatatableBarComponent,
   ],
   providers: [
     // OrderQuickFilter,

@@ -4,7 +4,7 @@ import { CorporateOrderProduct } from './corporate-order-product.model';
 export class CorporateOrder {
   id: string;
   createdOn: string;
-  number: string;
+  orderNumber: string;
   cost: number;
   costMethod: PaymentMethod;
   prepayment: number;

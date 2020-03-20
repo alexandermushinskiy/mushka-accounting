@@ -3,7 +3,8 @@ import { OrderList } from '../../shared/models/order-list.model';
 import { DateRange } from '../models/date-range.model';
 
 export class OrderListFilter extends FiltersBase {
-  constructor(private searchKey: string, private dateRange: DateRange) {
+  constructor(private searchKey: string,
+              private dateRange: DateRange) {
     super();
   }
 

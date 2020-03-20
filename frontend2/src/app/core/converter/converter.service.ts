@@ -272,7 +272,7 @@ export class ConverterService {
     return response.map(res => {
       return new CorporateOrderList({
         id: res.id,
-        number: res.number,
+        orderNumber: res.number,
         createdOn: this.datetimeService.toString(res.createdOn),
         address: res.address,
         companyName: res.companyName,
@@ -284,7 +284,7 @@ export class ConverterService {
     return new CorporateOrder({
       id: source.id,
       createdOn: this.datetimeService.toString(source.createdOn),
-      number: source.number,
+      orderNumber: source.number,
       cost: source.cost,
       costMethod: source.costMethod,
       prepayment: source.prepayment,

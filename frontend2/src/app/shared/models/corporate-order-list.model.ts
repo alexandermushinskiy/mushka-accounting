@@ -1,6 +1,6 @@
 export class CorporateOrderList {
   id: string;
-  number: string;
+  orderNumber: string;
   createdOn: string;
   address: string;
   companyName: string;

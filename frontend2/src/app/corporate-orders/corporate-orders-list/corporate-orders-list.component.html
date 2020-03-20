@@ -1,7 +1,7 @@
 <mshk-datatable-bar
-        [title]="'orders.orders'"
-        [addLink]="'/orders/new'"
-        [addButtonTitle]="'button.addOrder'"
+        [title]="'orders.corporateOrders'"
+        [addLink]="'/corporate-orders/new'"
+        [addButtonTitle]="'button.addCorporateOrder'"
         [total]="total"
         [shown]="shown"
         (onSearch)="onSearch($event)"
@@ -20,16 +20,16 @@
                 [sorts]="sorts"
                 [messages]="{ emptyMessage: 'datatable.emptyMessage' | translate }"
                 (activate)="onActive($event)">
-                
-  <ngx-datatable-column name="orderDate" [sortable]="true">
+
+  <ngx-datatable-column name="createdOn" [sortable]="true">
     <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
       <span [innerHtml]="'datatable.orderDate' | translate" (click)="sort($event)"></span>
     </ng-template>
     <ng-template ngx-datatable-cell-template let-value="value">
       <span [title]="value">{{ value | format }}</span>
     </ng-template>
-  </ngx-datatable-column>              
-
+  </ngx-datatable-column>
+  
   <ngx-datatable-column name="orderNumber" [sortable]="false">
     <ng-template ngx-datatable-header-template let-column="column">
       <span [innerHtml]="'datatable.orderNumber' | translate"></span>
@@ -38,26 +38,17 @@
       <span [title]="value">{{ value }}</span>
     </ng-template>
   </ngx-datatable-column>
-
-  <ngx-datatable-column name="productsCount" [sortable]="true">
+  
+  <ngx-datatable-column name="companyName" [sortable]="true">
     <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
-      <span [innerHtml]="'datatable.productsCount' | translate" (click)="sort($event)"></span>
+      <span [innerHtml]="'orders.companyName' | translate: {value: '<br>'}" (click)="sort($event)"></span>
     </ng-template>
     <ng-template ngx-datatable-cell-template let-value="value">
       <span [title]="value">{{ value }}</span>
     </ng-template>
   </ngx-datatable-column>
-
-  <ngx-datatable-column name="customerName" [sortable]="true">
-    <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
-      <span [innerHtml]="'datatable.customerName' | translate" (click)="sort($event)"></span>
-    </ng-template>
-    <ng-template ngx-datatable-cell-template let-value="value">
-      <span [title]="value">{{ value }}</span>
-    </ng-template>
-  </ngx-datatable-column>
-
-  <ngx-datatable-column name="address" [sortable]="false">
+  
+  <ngx-datatable-column name="address">
     <ng-template ngx-datatable-header-template let-column="column">
       <span [innerHtml]="'datatable.deliveryAddress' | translate"></span>
     </ng-template>
@@ -65,8 +56,8 @@
       <span [title]="value">{{ value }}</span>
     </ng-template>
   </ngx-datatable-column>
-
-  <ngx-datatable-column [width]="80" [canAutoResize]="false" [resizeable]="false" [sortable]="false">
+  
+  <ngx-datatable-column [width]="80" [canAutoResize]="false" [resizeable]="false">
     <ng-template ngx-datatable-cell-template let-expanded="expanded" let-row="row" let-rowIndex="rowIndex">
       <span class="grid-buttons">
         <a [routerLink]="[row.id]"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
@@ -74,7 +65,7 @@
       </span>
     </ng-template>
   </ngx-datatable-column>
-
+  
   <ngx-datatable-footer class="p-0">
     <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize" let-curPage="curPage" class="p-0">
       <mshk-datatable-footer [loadingIndicator]="loadingIndicator"
@@ -86,13 +77,12 @@
       </mshk-datatable-footer>
     </ng-template>
   </ngx-datatable-footer>
-
 </ngx-datatable>
 
 <ng-template #confirmRemoveTmpl>
   <mshk-confirmation
           [confirmButtonText]="'button.remove'"
-          [plainText]="'orders.areYouSureToDeleteOrder' | translate: { orderNumber: orderToDelete.orderNumber, orderDate: orderToDelete.orderDate }"
+          [plainText]="'orders.areYouSureToDeleteCorporateOrder' | translate: { orderNumber: orderToDelete.orderNumber, orderDate: orderToDelete.createdOn }"
           (onClose)="closeModal()"
           (onConfirm)="confirmDelete()">
   </mshk-confirmation>
