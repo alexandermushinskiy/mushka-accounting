@@ -13,7 +13,7 @@ export abstract class FiltersBase {
   }
 
   isBetween(date: string, dateRange: DateRange): boolean {
-    return moment(date).isBetween(dateRange.from, !!dateRange.to ? dateRange.to : undefined);
+    return moment(date).isBetween(dateRange.from, !!dateRange.to ? dateRange.to : dateRange.from, null, '[]');
   }
 
   isEmpty(): boolean {

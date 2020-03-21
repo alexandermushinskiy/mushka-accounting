@@ -44,6 +44,12 @@
 .btn.with-spinner {
   position: relative;
 
+  .btn-spinner {
+    position: relative;
+    right: 17px;
+    top: 2px;
+  }
+
   .btn-spinner:before {
     content: '';
     box-sizing: border-box;

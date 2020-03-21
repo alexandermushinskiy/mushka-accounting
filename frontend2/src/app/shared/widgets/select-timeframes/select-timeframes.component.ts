@@ -86,6 +86,11 @@ export class SelectTimeframesComponent implements OnInit {
 
   private getRangeName(dateRange: DateRange): string {
     const from = this.datetimeService.convertToFormat(dateRange.from);
+
+    if (!dateRange.to) {
+      return from;
+    }
+
     const to = this.datetimeService.convertToFormat(dateRange.to);
     return `${from} - ${to}`;
   }
