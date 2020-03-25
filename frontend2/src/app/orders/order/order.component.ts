@@ -110,7 +110,7 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
     this.setRecommendedPrice(index, product.recommendedPrice);
   }
 
-  onQuantityChanged(index: number, quantity: any) {
+  onQuantityChanged(index: number, quantity: number) {
     this.setCostPrice(index);
   }
 

@@ -182,7 +182,7 @@
                                           [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && ngForm.submitted}"
                                           (onInput)="onQuantityChanged(index, $event)">
                           </mshk-delayed-input>
-                          <span class="validation-tip" *ngIf="productControl.hasError('max', ['quantity']) && ngForm.submitted">
+                          <span class="validation-tip" *ngIf="productControl.hasError('max', ['quantity'])">
                             {{ 'products.inStock' | translate: {separator: ' '} }} {{ productControl.value.product.quantity }}
                           </span>
                         </div>  
