@@ -14,7 +14,6 @@ import { DatetimeService } from '../../../core/datetime/datetime.service';
 export class SelectTimeframesComponent implements OnInit {
   @ViewChild('dateRangeTmpl', { static: false }) dateRangeTmpl: ElementRef;
   @Input() disabled = false;
-  @Input() defaultValue: string;
   @Input() placeholder = 'common.selectPeriod';
   @Input() dateFormat = 'YYYY-MM-DD';
   @Output() onRangeSelected = new EventEmitter<DateRange>();

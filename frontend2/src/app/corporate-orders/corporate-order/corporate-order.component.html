@@ -31,7 +31,7 @@
                       <div class="field-group">
                         <label for="address">{{ 'orders.orderNumber' | translate }}</label>
                         <mshk-delayed-input formControlName="number"
-                                          [type]="text"
+                                          [type]="'text'"
                                           [required]="true"
                                           [placeholder]="'common.inputValue' | translate"
                                           [ngClass]="{'not-valid': orderForm.controls.number.invalid && ngForm.submitted}"
@@ -125,7 +125,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <div class="form-row products-titles" [ngClass]="{'p-right-25': orderForm.get('products').controls.length > 1}">
+                  <div class="form-row products-titles" [ngClass]="{'p-right-25': formProducts.length > 1}">
                     <div class="col-sm-5">{{ 'orders.productName' | translate }}</div>
                     <div class="col-sm-7">
                       <div class="form-row">
@@ -137,8 +137,8 @@
                   </div>
                   <div formArrayName="products">
                     <div class="form-row" [formGroupName]="index"
-                                          *ngFor="let productControl of orderForm.get('products').controls; let index=index" 
-                                          [ngClass]="{'p-right-25': orderForm.get('products').controls.length > 1}">
+                                          *ngFor="let productControl of formProducts.controls; let index=index" 
+                                          [ngClass]="{'p-right-25': formProducts.length > 1}">
                       <div class="col-sm-5">
                         <div class="field-group">
                           <input type="text"
@@ -177,11 +177,11 @@
                                       formControlName="quantity"
                                       [ngClass]="{'not-valid': productControl.controls.quantity.invalid && ngForm.submitted}" />
                               <span class="validation-tip" *ngIf="productControl.hasError('max', ['quantity']) && ngForm.submitted">
-                                {{ 'orders.inStock' | translate }} {{ productControl.value.product.quantity }}
+                                {{ 'products.inStock' | translate: {separator: ' '} }} {{ productControl.value.product.quantity }}
                               </span>
                             </div>  
                             <button class="btn-remove" type="button"
-                                    *ngIf="orderForm.get('products').controls.length > 1"
+                                    *ngIf="formProducts.length > 1"
                                     [title]="'button.remove' | translate"
                                     (click)="removeProduct(index)">
                               <i class="ico ico-close"></i>

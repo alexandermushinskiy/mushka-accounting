@@ -95,7 +95,7 @@ textarea {
 .field-group input, .field-group select, .field-group textarea {
   //width: 100%;
   background: $white;
-  border: 1px solid #d8d8d8;
+  border: 1px solid $input-border-color;
   //border-radius: 5px;
   //padding: 9px 19px;
 }

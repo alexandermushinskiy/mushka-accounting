@@ -10,8 +10,8 @@
 </div>
 <div class="modal-footer">
   <button class="btn btn-sm btn-light" (click)="closeModal()" [disabled]="isSaving">{{ cancelText | translate }}</button>
-  <button class="btn btn-sm btn-primary" (click)="confirm()" [disabled]="isSaving">
-    <mshk-spinner [isLoading]="isSaving"></mshk-spinner>
+  <button class="btn btn-sm btn-primary with-spinner" (click)="confirm()" [disabled]="isSaving">
+    <div *ngIf="isSaving" class="btn-spinner"></div>
     {{ confirmButtonText | translate }}
   </button>
 </div>

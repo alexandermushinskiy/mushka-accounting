@@ -1,15 +1,18 @@
-$white:                               #fafafa;
+$white:                               #ffffff; //#fafafa;
 $white-smoke:                         #f4f9fd;
 $blue:                                #0082F0;
 $dark-blue:                           #1d488f;
 $orange:                              #f78521;
-$green-lighten: #67a4a0;
+$green-lighten:                       #67a4a0;
+$green:                               #36b07f;
 $gray:                                #939597;
 $gray-200:                            rgb(214, 214, 214);
 $light-gray:                          #f9f9f9;
 $lighten-gray:                        #d6d6d6;
 $dark-gray:                           #4e4e4e;
 $black:                               #000;
+$red:                                 #f52323;
+$light-green:                         #298964;
 
 
 // Layer colors
@@ -55,7 +58,8 @@ $zindex-sidebar:                  1060 !default;
 
 //forms
 $input-height:                    28px;
-$input-border-hover:             rgb(176, 176, 176);
+$input-border-color:              #cccccc;
+$input-border-hover:              rgb(176, 176, 176);
 
 //form control
 $input-padding-x:                6px !default;

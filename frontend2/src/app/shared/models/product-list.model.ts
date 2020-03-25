@@ -15,6 +15,10 @@ export class ProductList {
   quantity = 0;
   sizeName: string;
 
+  get nameWithSize(): string {
+    return !!this.sizeName ? `${this.name} (${this.sizeName})` : this.name;
+  }
+
   constructor(data: any) {
     Object.assign(this, data);
   }

@@ -28,8 +28,10 @@
 
 .modal-footer {
   padding: $modal-footer-padding;
+  border-top: 0;
+
   .btn {
-    padding: .5em 1em;
+    // padding: .5em 1em;
     min-width: 7rem;
   }
   &-column {

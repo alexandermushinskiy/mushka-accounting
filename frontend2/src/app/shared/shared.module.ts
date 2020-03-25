@@ -47,6 +47,8 @@ import { DateRangeModalComponent } from './modals/date-range-modal/date-range-mo
 import { FormatPipe } from './pipes/format.pipe';
 import { DatatableFilterBarComponent } from './widgets/datatable-filter-bar/datatable-filter-bar.component';
 import { DatatableBarComponent } from './widgets/datatable-bar/datatable-bar.component';
+import { ToggleComponent } from './widgets/toggle/toggle.component';
+import { SelectSizeComponent } from './widgets/select-size/select-size.component';
 // import { DatatableHeaderComponent } from './widgets/datatable/datatable-header/datatable-header.component';
 
 // import { DropdownComponent } from './widgets/dropdown/dropdown.component';
@@ -56,7 +58,6 @@ import { DatatableBarComponent } from './widgets/datatable-bar/datatable-bar.com
 // import { DatatableFooterComponent } from './widgets/datatable/datatable-footer/datatable-footer.component';
 // import { DataTablePagerComponent } from './widgets/datatable/datatable-pager/datatable-pager.component';
 // import { SelectSizeComponent } from './widgets/select-size/select-size.component';
-// import { ToggleComponent } from './widgets/toggle/toggle.component';
 // import { NumberPipe } from './pipes/number.pipe';
 // import { DropdownSizesComponent } from './widgets/dropdown-sizes/dropdown-sizes.component';
 // import { SuppliersDropdownComponent } from './widgets/suppliers-dropdown/suppliers-dropdown.component';
@@ -127,10 +128,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormatPipe,
     DatatableFilterBarComponent,
     DatatableBarComponent,
+    ToggleComponent,
+    SelectSizeComponent,
     // NumberPipe,
     // DatatableHeaderComponent,
-    // SelectSizeComponent,
-    // ToggleComponent,
     // DropdownSizesComponent,
     // SuppliersDropdownComponent
   ],
@@ -174,8 +175,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DatetimepickerComponent,
     DatetimepickerWrapperComponent,
     CurrencyInputComponent,
-    // SelectSizeComponent,
-    // ToggleComponent,
+    SelectSizeComponent,
+    ToggleComponent,
     CheckboxComponent,
     // DropdownSizesComponent,
     // SuppliersDropdownComponent,

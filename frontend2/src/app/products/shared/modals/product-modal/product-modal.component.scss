@@ -1,0 +1,35 @@
+@import "../../../../variables";
+
+.product-form {
+  .product-name {
+    background-color: $layer3;
+    margin: -#{$padding-base} -#{$padding-base} $padding-base;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .form-row {
+    position: relative;
+
+    .form-control[readonly] {
+      opacity: 1;
+      background-color: $white;
+    }
+
+    [class^="col-"] {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+.code {
+  text-transform: uppercase;
+}
+
+.is-archival {
+  padding-top: 5px;
+}
+
+.toggle {
+  display: inline;
+}

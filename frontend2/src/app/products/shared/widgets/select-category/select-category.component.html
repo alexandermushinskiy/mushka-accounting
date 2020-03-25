@@ -1,0 +1,17 @@
+<ng-select #ngselect
+            bindValue="id"
+            bindLabel="name"
+            [items]="categories"
+            [closeOnSelect]="true"
+            [clearable]="false"
+            [searchable]="false"
+            [disabled]="disabled"
+            [loading]="isLoading"
+            [loadingText]="'common.loading' | translate"
+            [placeholder]="'common.selectCategory' | translate"
+            [ngModel]="selectedId"
+            (change)="onChange($event)">
+  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+    <div>{{ item.name }}</div>
+  </ng-template>
+</ng-select>

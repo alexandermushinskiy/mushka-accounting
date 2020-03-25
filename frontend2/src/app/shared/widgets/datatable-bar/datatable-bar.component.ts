@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, TemplateRef } from '@angular/core';
 
 import { DateRange } from '../../models/date-range.model';
 
@@ -13,9 +13,12 @@ export class DatatableBarComponent implements OnInit {
   @Input() addButtonTitle: string;
   @Input() total: number;
   @Input() shown: number;
+  @Input() hasMenuToggle = false;
+  @Input() searchKey: string;
   @Output() onSearch = new EventEmitter<string>();
   @Output() onRangeSelected = new EventEmitter<DateRange>();
   @Output() onClearRange = new EventEmitter();
+  @Output() onAddClicked = new EventEmitter();
   isFilterPanel = false;
 
   constructor() { }

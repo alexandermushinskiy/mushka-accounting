@@ -75,9 +75,13 @@
   white-space: normal !important;
 }
 
+.ng-select.ng-select-opened>.ng-select-container {
+  border-color: $input-border-color;
+}
+
 .ng-select {
   &.ng-select-focused:not(.ng-select-opened)>.ng-select-container {
-    border: 1px solid #CED4DA;
+    border: 1px solid $input-border-color;
     box-shadow: none;
   }
 
@@ -134,4 +138,9 @@
       box-shadow: none;
     }
   }
+}
+
+.timeframes
+.ng-select.ng-select-single .ng-select-container {
+  height: 28px;
 }

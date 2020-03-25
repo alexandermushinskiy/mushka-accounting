@@ -19,8 +19,8 @@ export class NotificationsService {
               private translateService: TranslateService) {
   }
 
-  success(messageKey: string) {
-    this.translateService.get(messageKey)
+  success(messageKey: string, translateParameter: any = null) {
+    this.translateService.get(messageKey, translateParameter)
       .subscribe((message: string) => {
         this.toastrService.success(message, null, this.options);
       });
@@ -30,7 +30,10 @@ export class NotificationsService {
     this.toastrService.warning(message, title, this.options);
   }
 
-  error(error: string, title: string = 'Ошибка') {
-    this.toastrService.error(error, title, this.errorOptions);
+  error(errorMessageKey: string, translateParameter: any = null) {
+    this.translateService.get(errorMessageKey, translateParameter)
+      .subscribe((message: string) => {
+        this.toastrService.success(message, null, this.errorOptions);
+      });
   }
 }

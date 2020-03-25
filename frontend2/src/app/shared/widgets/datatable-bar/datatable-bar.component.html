@@ -1,22 +1,36 @@
 <header class="header">
   <h4 class="header-title">{{ title | translate }}</h4>
-  <div class="header-separator"></div>
+  
+  <div class="separator"></div>
+
   <div class="actions">
-    <button class="btn btn-icon" [routerLink]="addLink">
+    <button class="btn btn-icon" [routerLink]="addLink" (click)="onAddClicked.emit()">
       <i class="fa fa-plus-square" [title]="addButtonTitle | translate"></i>
     </button>
     <button class="btn btn-icon">
       <i class="fa fa-download" [title]="'common.exportToCsv' | translate" aria-hidden="true"></i>
     </button>
   </div>
-  <div class="header-separator"></div>
+  
+  <div class="separator"></div>
+
+  <mshk-search-form class="search" [defaultValue]="searchKey" (onSearch)="search($event)"></mshk-search-form>
+  
+  <div class="separator"></div>
+
   <mshk-select-timeframes class="timeframes"
             (onRangeSelected)="rangeSelected($event)"
             (onClear)="clearRange()">
   </mshk-select-timeframes>
-  <div class="header-separator"></div>
-  <mshk-search-form [defaultValue]="searchKey" (onSearch)="search($event)"></mshk-search-form>
-  <div class="header-separator"></div>
+  
+  <div class="separator"></div>
+
+  <div #outsideFilters>
+    <ng-content></ng-content>
+  </div>
+
+  <div class="separator" *ngIf="outsideFilters.childNodes.length > 0"></div>
+
   <span class="text-muted total-count">
     <span *ngIf="shown !== total; else totalBlock">
       {{ shown }} {{ 'common.outOf' | translate }} {{ total }}

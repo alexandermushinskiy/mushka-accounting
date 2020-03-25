@@ -1,0 +1,38 @@
+<form [formGroup]="categoryForm" #ngForm="ngForm" class="category-form">
+  <div class="modal-header">
+    <h4 class="modal-title">{{ title | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <i class="ico ico-close"></i>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="category-name">
+      <div class="field-group">
+        <label for="name" class="text-muted">{{ 'common.name' | translate }}:</label>
+        <input type="text" class="form-control name" id="name" formControlName="name" autocomplete="off"
+              [ngClass]="{'not-valid': categoryForm.controls.name.invalid && ngForm.submitted}">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="field-group w-50">
+          <mshk-toggle formControlName="isAdditional" [label]="'products.additionalProducts'"></mshk-toggle>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="field-group w-50">
+          <mshk-toggle formControlName="isSizeRequired" [label]="'products.sizeRequired'"></mshk-toggle>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-light btn-cancel" type="button" (click)="close()">{{ 'button.cancel' | translate }}</button>
+    <button class="btn btn-primary with-spinner" type="submit" (click)="save()">
+      <div *ngIf="isSaving" class="btn-spinner"></div>
+      {{ 'button.save' | translate }}
+    </button>
+  </div>
+</form>

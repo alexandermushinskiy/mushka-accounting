@@ -9,8 +9,16 @@
     "total": "всего",
     "outOf": "из",
     "selectPeriod": "Выберите период",
+    "selectFilter": "Выберите фильтр",
+    "selectSize": "Выберете размер",
+    "selectCategory": "Выберете категорию",
+    "selectFromList": "Выберете из списка",
     "confirmation": "Подтверждение",
-    "exportToCsv": "Экспорт в CSV"
+    "exportToCsv": "Экспорт в CSV",
+    "name": "Наименование",
+    "filter": "Фильтр...",
+    "noData": "Нет данных",
+    "loading": "Загрузка..."
   },
   "header": {
     "accountingForGoodsAndServices": "Учет товаров и услуг",
@@ -42,7 +50,8 @@
     "cancel": "Отмена",
     "yes": "Да",
     "no": "Нет",
-    "apply": "Применить"
+    "apply": "Применить",
+    "save": "Сохранить"
   },
   "paymentMethod": {
     "cash": "Наличный расчет",
@@ -64,7 +73,7 @@
   },
   "datatable": {
     "displayPerPage": "Отображать на странице",
-    "emptyMessage": "'Нет данных для отображения",
+    "emptyMessage": "Нет данных для отображения",
     "orderDate": "Дата<br>заказа",
     "orderNumber": "Номер<br>заказа",
     "productsCount": "Количество<br>Товаров",
@@ -87,12 +96,10 @@
     "customerData": "Данные заказчика",
     "productList": "Список товаров",
     "productName": "Наименование товара",
-    "vendorCode": "Артикул",
-    "size": "Размер",
     "costPrice": "Себестоимость",
     "price": "Цена",
     "quantity": "Количество",
-    "inStock": "В наличие",
+    
     "createOrder": "Создать заказ",
     "updateOrder": "Обновить заказ",
     "cost": "Оплата",
@@ -111,7 +118,8 @@
     "areYouSureToDeleteOrder": "Вы уверены, что хотите удалить заказ с номером <b>{{orderNumber}}</b> от <b>{{orderDate}}</b>?",
     "areYouSureToDeleteCorporateOrder": "Вы уверены, что хотите удалить корпоративный заказ с номером <b>{{orderNumber}}</b> от <b>{{orderDate}}</b>?",
     "companyName": "Имя{{value}}компании",
-    "contactPerson": "Контактное лицо"
+    "contactPerson": "Контактное лицо",
+    "orderNumberAlreadyExist": "Номер уже существует"
   },
   "customer": {
     "firstName": "Имя",
@@ -129,5 +137,35 @@
     "popularCities": "Заказы по городам",
     "ordersQuantity": "Количество заказов",
     "soldProducts": "Количество проданных носков"
+  },
+  "products": {
+    "products": "Товары",
+    "addCategory": "Добавить категорию",
+    "editCategory": "Редактировать категории",
+    "additionalProducts": "Вспомогательные товары",
+    "sizeRequired": "Требуются размеры",
+    "areYouSureToDeleteProduct": "Вы уверены, что хотите удалить товар <b>{{name}}</b>?",
+    "areYouSureToDeleteCategory": "Выбранныя категория <b>{{name}}</b> будет удалена. Вы уверены, что хотите продолжить?",
+    "categoryWasAdded": "Категория <b>{{name}}</b> была успешно создана.",
+    "categoryWasUpdated": "Категория <b>{{name}}</b> была успешно обновлена.",
+    "categoryWasDeleted": "Категория <b>{{name}}</b> была успешно удалена.",
+    "deleteCategoryError": "При удалении категории возникла ошибка.",
+    "saveCategoryError": "При сохранении категории возникла ошибка.",
+    "withoutDeliveries": "Без поставок",
+    "almostFinished": "Заканчивающиеся",
+    "inStock": "В{{separator}}наличии",
+    "outOfStock": "Нет в наличие",
+    "vendorCode": "Артикул",
+    "size": "Размер",
+    "inArchive": "В архиве",
+    "recommendedPriceAbbr": "Реком.{{separator}}цена",
+    "recommendedPrice": "Рекомендованная цена",
+    "category": "Категория",
+    "addProductTitle": "Добаление товара",
+    "editProductTitle": "Редактирование товара",
+    "addedDate": "Дата{{value}}добавления",
+    "lastDeliveryDate": "Дата послед.<br>поставки",
+    "deliveriesCount": "Кол-во<br>поставок",
+    "productSaved": "Товар <b>{{name}}</b> был успешно сохранён."
   }
 }

@@ -20,20 +20,23 @@
     margin-bottom: 0;
     margin-right: 10px;
   }
-  
-  &-separator:after {
-    content: "|";
-    padding-left: 7px;
-    padding-right: 7px;
-    font-size: 1.3rem;
-  }
+}
 
+.separator:after,
+.with-separators:before,
+.with-separators:after {
+  content: "|";
+  padding-left: 7px;
+  padding-right: 7px;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .btn-icon:not(:last-child) {
   margin-right: 15px;
 }
 
+.search,
 .timeframes {
   width: 250px;
 }

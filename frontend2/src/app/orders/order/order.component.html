@@ -39,7 +39,7 @@
                         <mshk-spinner class="spinner-border-thin validate-order-number" [isLoading]="isNumberValidating"></mshk-spinner>
                         <!-- <span class="validation-tip" *ngIf="orderForm.hasError('required', ['number']) && ngForm.submitted">Обязательно</span> -->
                         <!-- <span class="validation-tip" *ngIf="!isOrderNumberValid">Номер уже существует</span> -->
-                        <span class="validation-tip" *ngIf="!orderForm.hasError('required', ['number']) && orderForm.hasError('notUnique', ['number'])">Номер уже существует</span>
+                        <span class="validation-tip" *ngIf="!orderForm.hasError('required', ['number']) && orderForm.hasError('notUnique', ['number'])">{{ 'orders.orderNumberAlreadyExist' | translate }}</span>
                       </div>
                     </div>
                   </div>
@@ -133,7 +133,7 @@
                 <div class="col-md-12">
                   <div class="form-row products-titles" [ngClass]="{'p-right-25': formProducts.length > 1}">
                     <div class="col-sm-4">{{ 'orders.productName' | translate }}</div>
-                    <div class="col-sm-2">{{ 'orders.vendorCode' | translate }}/{{ 'orders.size' | translate }}</div>
+                    <div class="col-sm-2">{{ 'products.vendorCode' | translate }}/{{ 'products.size' | translate }}</div>
                     <div class="col-sm-2">{{ 'orders.costPrice' | translate }}</div>
                     <div class="col-sm-2">{{ 'orders.price' | translate }}</div>
                     <div class="col-sm-2">{{ 'orders.quantity' | translate }}</div>
@@ -177,13 +177,13 @@
                         <div class="field-group">
                           <mshk-delayed-input 
                                           formControlName="quantity"
-                                          placeholder="Количество"
+                                          [placeholder]="'orders.quantity' | translate"
                                           [required]="true"
                                           [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && ngForm.submitted}"
                                           (onInput)="onQuantityChanged(index, $event)">
                           </mshk-delayed-input>
                           <span class="validation-tip" *ngIf="productControl.hasError('max', ['quantity']) && ngForm.submitted">
-                            {{ 'orders.inStock' | translate }} {{ productControl.value.product.quantity }}
+                            {{ 'products.inStock' | translate: {separator: ' '} }} {{ productControl.value.product.quantity }}
                           </span>
                         </div>  
                         <button type="button" class="btn-remove"

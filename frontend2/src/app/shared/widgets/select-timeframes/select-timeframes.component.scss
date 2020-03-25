@@ -12,26 +12,3 @@
 .btn-range {
   padding-left: 7px;
 }
-
-.close-icon {
-  border: none;
-  background: none;
-  display: block;
-  outline: 0;
-  color: $clear-color;
-
-  &:hover {
-    color: $clear-hover-color;
-  }
-}
-
-.close-icon:after {
-  content: "×";
-  display: block;
-  position: absolute;
-  right: -7px;
-  top: -8px;
-  font-weight: normal;
-  font-size: 18px;
-  cursor: pointer;
-}
