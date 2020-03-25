@@ -4,9 +4,13 @@
         [addButtonTitle]="'button.addOrder'"
         [total]="total"
         [shown]="shown"
-        (onSearch)="onSearch($event)"
+        (onSearch)="onSearch($event)">
+
+  <mshk-select-timeframes class="timeframes"
         (onRangeSelected)="onRangeSelected($event)"
-        (onClearRange)="onClearRange()">
+        (onClear)="onClearRange()">
+  </mshk-select-timeframes>
+
 </mshk-datatable-bar>
 
 <ngx-datatable #datatable

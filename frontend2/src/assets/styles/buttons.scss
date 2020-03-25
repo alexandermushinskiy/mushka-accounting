@@ -132,6 +132,10 @@
   border-color: $btn-light-border;
   color: $btn-light-color;
 
+  &:focus {
+    border-color: $btn-light-border-hover;
+  }
+
   &:hover {
     background-color: $btn-light-bg-hover;
     border-color: $btn-light-border-hover;
@@ -140,6 +144,8 @@
 
   &:not(:disabled):not(.disabled):active,
   &:not(:disabled):not(.disabled).active {
+    border-color: $btn-light-border-active;
+
     &:focus {
       background-color: $btn-light-bg-active;
       border-color: $btn-light-border-active;

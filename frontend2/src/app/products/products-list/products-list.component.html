@@ -6,7 +6,9 @@
         [hasMenuToggle]="true"
         (onAddClicked)="addProduct(productTmpl)"
         (onSearch)="onSearch($event)">
+
   <mshk-products-filter (onSelected)="onFilterSelected($event)"></mshk-products-filter>
+
 </mshk-datatable-bar>
 
 <div class="area">
