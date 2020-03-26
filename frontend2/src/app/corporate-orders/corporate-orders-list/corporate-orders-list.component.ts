@@ -132,7 +132,7 @@ export class CorporateOrdersListComponent implements OnInit {
 
   private onLoadError() {
     this.loadingIndicator = false;
-    this.notificationsService.error('Невозможно загрузить все заказы');
+    this.notificationsService.error('products.unableLoadOrders');
   }
 
 }

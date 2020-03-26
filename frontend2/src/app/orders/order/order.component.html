@@ -134,9 +134,9 @@
                   <div class="form-row products-titles" [ngClass]="{'p-right-25': formProducts.length > 1}">
                     <div class="col-sm-4">{{ 'orders.productName' | translate }}</div>
                     <div class="col-sm-2">{{ 'products.vendorCode' | translate }}/{{ 'products.size' | translate }}</div>
-                    <div class="col-sm-2">{{ 'orders.costPrice' | translate }}</div>
-                    <div class="col-sm-2">{{ 'orders.price' | translate }}</div>
-                    <div class="col-sm-2">{{ 'orders.quantity' | translate }}</div>
+                    <div class="col-sm-2">{{ 'products.costPrice' | translate }}</div>
+                    <div class="col-sm-2">{{ 'products.price' | translate }}</div>
+                    <div class="col-sm-2">{{ 'products.quantity' | translate }}</div>
                   </div>
                   <div formArrayName="products">
                     <div class="form-row product-row" [formGroupName]="index"
@@ -166,7 +166,7 @@
                       <div class="col-sm-2">
                         <div class="field-group">
                           <mshk-currency-input formControlName="unitPrice"
-                                              [placeholder]="'Цена'"
+                                              [placeholder]="'products.price' | translate"
                                               [required]="true"
                                               [id]="'unitPrice-' + index"
                                               [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && ngForm.submitted}">
@@ -177,7 +177,7 @@
                         <div class="field-group">
                           <mshk-delayed-input 
                                           formControlName="quantity"
-                                          [placeholder]="'orders.quantity' | translate"
+                                          [placeholder]="'products.quantity' | translate"
                                           [required]="true"
                                           [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && ngForm.submitted}"
                                           (onInput)="onQuantityChanged(index, $event)">

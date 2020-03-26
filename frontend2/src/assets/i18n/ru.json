@@ -8,17 +8,20 @@
     "warning": "Предупреждение",
     "total": "всего",
     "outOf": "из",
+    "select": "Выберите",
     "selectPeriod": "Выберите период",
     "selectFilter": "Выберите фильтр",
     "selectSize": "Выберете размер",
     "selectCategory": "Выберете категорию",
     "selectFromList": "Выберете из списка",
+    "selectProduct": "Выберете товар",
     "confirmation": "Подтверждение",
     "exportToCsv": "Экспорт в CSV",
     "name": "Наименование",
     "filter": "Фильтр...",
     "noData": "Нет данных",
-    "loading": "Загрузка..."
+    "loading": "Загрузка...",
+    "search": "Поиск..."
   },
   "header": {
     "accountingForGoodsAndServices": "Учет товаров и услуг",
@@ -51,7 +54,8 @@
     "yes": "Да",
     "no": "Нет",
     "apply": "Применить",
-    "save": "Сохранить"
+    "save": "Сохранить",
+    "close": "Закрыть"
   },
   "paymentMethod": {
     "cash": "Наличный расчет",
@@ -96,10 +100,6 @@
     "customerData": "Данные заказчика",
     "productList": "Список товаров",
     "productName": "Наименование товара",
-    "costPrice": "Себестоимость",
-    "price": "Цена",
-    "quantity": "Количество",
-    
     "createOrder": "Создать заказ",
     "updateOrder": "Обновить заказ",
     "cost": "Оплата",
@@ -166,6 +166,13 @@
     "addedDate": "Дата{{value}}добавления",
     "lastDeliveryDate": "Дата послед.<br>поставки",
     "deliveriesCount": "Кол-во<br>поставок",
-    "productSaved": "Товар <b>{{name}}</b> был успешно сохранён."
+    "productSaved": "Товар <b>{{name}}</b> был успешно сохранён.",
+    "unableLoadOrders": "Невозможно загрузить все заказы",
+    "costPrice": "Себестоимость",
+    "quantity": "Количество",
+    "price": "Цена",
+    "productWasDeleted": "Товар был успешно удалён.",
+    "errorWhileDeletingProduct": "Возникла ошибка при удалении товара.",
+    "productNotFound": "Товар не найден"
   }
 }

@@ -3,12 +3,12 @@
       bindValue="id"
       [bindLabel]="isMultiple ? 'nameWithVendorCode' : 'name'"
       [items]="products"
-      [placeholder]="placeholder"
+      [placeholder]="placeholder | translate"
       [ngModel]="selectedId"
       [clearable]="canClearAll"
       [loading]="isLoading"
       [searchFn]="customSearchFn"
-      [notFoundText]="notFoundText"
+      [notFoundText]="notFoundText | translate"
       [multiple]="isMultiple"
       [closeOnSelect]="!isMultiple"
       (change)="onChange($event)"
@@ -22,22 +22,22 @@
     <div class="text-muted" [ngClass]="{'multiple': isMultiple}">
       <div class="row">
         <div class="col-md-4">
-          <span class="title">Категория</span>
+          <span class="title">{{ 'products.category' | translate }}</span>
           <span>{{ item.category.name }}</span>
         </div>
         <div class="col-md-4">
-          <span class="title">Артикул</span>
+          <span class="title">{{ 'products.vendorCode' | translate }}</span>
           <span>{{ item.vendorCode }}</span>
         </div>
         <div class="col-md-4">
-          <span class="title">Размер</span>
+          <span class="title">{{ 'products.size' | translate }}</span>
           <span>{{ !!item.size ? item.size.name : '-' }}</span>
         </div>
       </div>
     </div>
   </ng-template>
   <ng-template ng-footer-tmp *ngIf="isMultiple">
-    <button class="btn btn-primary btn-close" type="button" (click)="select.close()">Закрыть</button>
+    <button class="btn btn-primary btn-close" type="button" (click)="select.close()">{{ 'button.close' | translate }}</button>
   </ng-template>
 </ng-select>
 

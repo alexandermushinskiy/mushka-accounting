@@ -18,7 +18,7 @@ export class SelectPaymentMethodsComponent implements OnInit, ControlValueAccess
   @Input() required: boolean;
   @Input() disabled = false;
   @Input() defaultValue: string;
-  @Input() placeholder = 'Выберите';
+  @Input() placeholder = 'common.select';
   @Output() onPaymentMethodSelected = new EventEmitter<PaymentMethod>();
 
   selectedPaymentMethod: { id: PaymentMethod, description: string };

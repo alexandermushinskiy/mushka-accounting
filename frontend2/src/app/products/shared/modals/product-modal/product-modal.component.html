@@ -1,73 +1,72 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ (isEdit ? 'products.editProductTitle' : 'products.addProductTitle') | translate }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <i class="ico ico-close"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <mshk-progress-linear [isLoading]="isLoading"></mshk-progress-linear>
+  
+  <form id="productForm" [formGroup]="productForm" #ngForm="ngForm" class="product-form" (ngSubmit)="save()">
+    <div class="product-name row">
+      <div class="col-sm-8 col-name">
+        <div class="field-group">
+          <label for="name" class="text-muted">{{ 'common.name' | translate }}</label>
+          <input type="text" id="name" class="form-control" formControlName="name" autocomplete="off"
+                  [ngClass]="{'not-valid': productForm.controls.name.invalid && ngForm.submitted}">
+        </div>
+      </div>
+      <div class="col-sm-4 col-vendor-code">
+        <div class="field-group">
+          <label for="nacodeme" class="text-muted">{{ 'products.vendorCode' | translate }}</label>
+          <input type="text" id="vendorCode" class="form-control code" formControlName="vendorCode" autocomplete="off"
+                  [ngClass]="{'not-valid': productForm.controls.vendorCode.invalid && ngForm.submitted}">
+        </div>
+      </div>
+    </div>
+    <div class="row category-row">
+      <div class="col-sm-8">
+        <div class="field-group">
+          <label for="nacodeme" class="text-muted">{{ 'products.category' | translate }}</label>
+          <mshk-select-category formControlName="category"
+                  [categories]="categories"
+                  [ngClass]="{'not-valid': productForm.controls.category.invalid && ngForm.submitted}">
+          </mshk-select-category>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="field-group" [ngClass]="{'disabled': !productForm.value.category || !productForm.value.category.isSizeRequired}">
+          <label for="nacodeme" class="text-muted">{{ 'products.size' | translate }}</label>
+          <mshk-select-size formControlName="size"
+                  [isMultiple]="false"
+                  [canClearAll]="false"
+                  [availableSizes]="availableSizes"
+                  [ngClass]="{'not-valid': productForm.controls.size.invalid && ngForm.submitted}">
+          </mshk-select-size>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-5">
+        <div class="field-group">
+          <label for="nacodeme" class="text-muted">{{ 'products.recommendedPriceAbbr' | translate: {separator: ' '} }}</label>
+          <mshk-currency-input formControlName="recommendedPrice" [placeholder]="''"></mshk-currency-input>
+        </div>
+      </div>
+    </div>
+    <div class="row is-archival">
+      <div class="col">
+        <div class="field-group">
+          <mshk-toggle formControlName="isArchival" [label]="'products.inArchive' | translate"></mshk-toggle>
+        </div>
+      </div>
+    </div>
 
-  <div class="modal-header">
-    <h4 class="modal-title">{{ (isEdit ? 'products.editProductTitle' : 'products.addProductTitle') | translate }}</h4>
-    <button type="button" class="close" aria-label="Close" (click)="close()">
-      <i class="ico ico-close"></i>
-    </button>
-  </div>
-  <div class="modal-body">
-    <mshk-progress-linear [isLoading]="isLoading"></mshk-progress-linear>
-    
-    <form id="productForm" [formGroup]="productForm" #ngForm="ngForm" class="product-form" (ngSubmit)="save()">
-      <div class="product-name row">
-        <div class="col-sm-8 col-name">
-          <div class="field-group">
-            <label for="name" class="text-muted">{{ 'common.name' | translate }}</label>
-            <input type="text" id="name" class="form-control" formControlName="name" autocomplete="off"
-                   [ngClass]="{'not-valid': productForm.controls.name.invalid && ngForm.submitted}">
-          </div>
-        </div>
-        <div class="col-sm-4 col-vendor-code">
-          <div class="field-group">
-            <label for="nacodeme" class="text-muted">{{ 'products.vendorCode' | translate }}</label>
-            <input type="text" id="vendorCode" class="form-control code" formControlName="vendorCode" autocomplete="off"
-                   [ngClass]="{'not-valid': productForm.controls.vendorCode.invalid && ngForm.submitted}">
-          </div>
-        </div>
-      </div>
-      <div class="row category-row">
-        <div class="col-sm-8">
-          <div class="field-group">
-            <label for="nacodeme" class="text-muted">{{ 'products.category' | translate }}</label>
-            <mshk-select-category formControlName="category"
-                    [categories]="categories"
-                    [ngClass]="{'not-valid': productForm.controls.category.invalid && ngForm.submitted}">
-            </mshk-select-category>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="field-group" [ngClass]="{'disabled': !productForm.value.category || !productForm.value.category.isSizeRequired}">
-            <label for="nacodeme" class="text-muted">{{ 'products.size' | translate }}</label>
-            <mshk-select-size formControlName="size"
-                    [isMultiple]="false"
-                    [canClearAll]="false"
-                    [availableSizes]="availableSizes"
-                    [ngClass]="{'not-valid': productForm.controls.size.invalid && ngForm.submitted}">
-            </mshk-select-size>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-5">
-          <div class="field-group">
-            <label for="nacodeme" class="text-muted">{{ 'products.recommendedPriceAbbr' | translate: {separator: ' '} }}</label>
-            <mshk-currency-input formControlName="recommendedPrice" [placeholder]="''"></mshk-currency-input>
-          </div>
-        </div>
-      </div>
-      <div class="row is-archival">
-        <div class="col">
-          <div class="field-group">
-            <mshk-toggle formControlName="isArchival" [label]="'products.inArchive' | translate"></mshk-toggle>
-          </div>
-        </div>
-      </div>
-
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-light btn-cancel" type="button" (click)="close()">{{ 'button.cancel' | translate }}</button>
-    <button class="btn btn-primary with-spinner" type="submit" form="productForm">
-      <div *ngIf="isSaving" class="btn-spinner"></div>
-      {{ 'button.save' | translate }}</button>
-  </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-light btn-cancel" type="button" (click)="close()">{{ 'button.cancel' | translate }}</button>
+  <button class="btn btn-primary with-spinner" type="submit" form="productForm">
+    <div *ngIf="isSaving" class="btn-spinner"></div>
+    {{ 'button.save' | translate }}</button>
+</div>

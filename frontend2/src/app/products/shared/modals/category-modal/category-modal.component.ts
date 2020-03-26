@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Category } from '../../../../shared/models/category.model';
-import { CategoriesService } from '../../../../core/api/categories.service';
 
 @Component({
   selector: 'mshk-category-modal',
@@ -20,8 +19,7 @@ export class CategoryModalComponent implements OnInit {
   categoryForm: FormGroup;
   isEdit: boolean;
 
-  constructor(private formBuilder: FormBuilder,
-              private categoriesService: CategoriesService) {
+  constructor(private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {

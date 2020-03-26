@@ -10,7 +10,7 @@ import { UnsubscriberComponent } from '../../hooks/unsubscriber.component';
   styleUrls: ['./search-form.component.scss']
 })
 export class SearchFormComponent extends UnsubscriberComponent implements OnInit {
-  @Input() placeholder = 'Поиск...';
+  @Input() placeholder = 'common.search';
   @Input() set defaultValue(value: string)  {
     this.searchValue = !!value ? value : '';
   }

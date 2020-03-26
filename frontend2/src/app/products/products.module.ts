@@ -10,10 +10,6 @@ import { QuantityLabelComponent } from './shared/widgets/quantity-label/quantity
 import { ProductsFilterComponent } from './shared/widgets/products-filter/products-filter.component';
 import { ProductModalComponent } from './shared/modals/product-modal/product-modal.component';
 import { SelectCategoryComponent } from './shared/widgets/select-category/select-category.component';
-// import { CategoryModalComponent } from './shared/widgets/category-modal/category-modal.component';
-// import { ProductModalComponent } from './shared/widgets/product-modal/product-modal.component';
-// import { QuantityLabelComponent } from './shared/widgets/quantity-label/quantity-label.component';
-// import { SelectCategoryComponent } from './shared/widgets/select-category/select-category.component';
 
 @NgModule({
   imports: [
@@ -30,11 +26,7 @@ import { SelectCategoryComponent } from './shared/widgets/select-category/select
     QuantityLabelComponent,
     ProductsFilterComponent,
     ProductModalComponent,
-    SelectCategoryComponent,
-    // CategoryModalComponent,
-    // ProductModalComponent,
-    // QuantityLabelComponent,
-    // SelectCategoryComponent
+    SelectCategoryComponent
   ],
   exports: [ProductsListComponent]
 })

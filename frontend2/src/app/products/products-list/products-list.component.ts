@@ -4,7 +4,6 @@ import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstr
 import { Category } from '../../shared/models/category.model';
 import { ProductList } from '../../shared/models/product-list.model';
 import { ProductsServce } from '../../core/api/products.service';
-import { DatetimeService } from '../../core/datetime/datetime.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { ProductListFilter } from '../../shared/filters/product-list.filter';
 import { ProductsQuickFilter } from '../../shared/enums/products-quick-filter.enum';
@@ -44,7 +43,6 @@ export class ProductsListComponent implements OnInit {
 
   constructor(private modalService: NgbModal,
               private productsService: ProductsServce,
-              private dateTimeService: DatetimeService,
               private notificationsService: NotificationsService) {
   }
 
@@ -130,11 +128,11 @@ export class ProductsListComponent implements OnInit {
 
   private onDeleteSuccess() {
     this.loadProducts(this.selectedCategory.id);
-    this.notificationsService.success('Товар был успешно удалён.');
+    this.notificationsService.success('products.productWasDeleted');
   }
 
   private onDeleteFailed() {
-    this.notificationsService.error('Возникла ошибка при удалении товара.');
+    this.notificationsService.error('products.errorWhileDeletingProduct');
   }
 
   private loadProducts(categoryId: string) {

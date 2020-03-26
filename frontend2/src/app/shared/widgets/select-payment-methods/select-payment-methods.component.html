@@ -2,7 +2,7 @@
       [clearable]="false"
       [searchable]="false"
       [disabled]="disabled"
-      [placeholder]="placeholder"
+      [placeholder]="placeholder | translate"
       [ngModel]="selectedPaymentMethod"
       (ngModelChange)="onMethodSelected($event)">
   <ng-option *ngFor="let paymentMethod of paymentMethods" [value]="paymentMethod">{{ paymentMethod.description | translate }}</ng-option>

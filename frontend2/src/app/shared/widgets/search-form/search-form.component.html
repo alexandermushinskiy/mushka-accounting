@@ -1,7 +1,7 @@
 <div class="search-form">
   <input class="form-control rounded-0" data-clear-btn="true"
         maxlength="60"
-        [placeholder]="placeholder"
+        [placeholder]="placeholder | translate"
         [ngModel]="searchValue"
         [ngClass]="{'not-valid': isInvalid}"
         (ngModelChange)="onValueChange($event)">
