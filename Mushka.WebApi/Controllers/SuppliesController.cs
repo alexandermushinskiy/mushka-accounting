@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +6,8 @@ using Mushka.Core.Extensibility.Providers;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Entities;
+using Mushka.Domain.Models;
+using Mushka.Service.Extensibility.Dto;
 using Mushka.Service.Extensibility.Services;
 using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Supply;
@@ -30,19 +31,12 @@ namespace Mushka.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> Get([FromQuery] SuppliesFiltersRequestModel suppliesFiltersRequestModel)
         {
-            var suppliesResponse = await supplyService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Supply>>, SuppliesListResponseModel>(suppliesResponse);
+            var suppliesFilters = mapper.Map<SuppliesFiltersRequestModel, SuppliesFiltersModel>(suppliesFiltersRequestModel);
 
-            return actionResultProvider.Get(clientResponse);
-        }
-
-        [HttpPost("filter")]
-        public async Task<IActionResult> GetFiltered([FromBody]FiltersRequestModel filtersRequest)
-        {
-            var suppliesResponse = await supplyService.GetByProductsAsync(filtersRequest.ProductIds, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Supply>>, SuppliesListResponseModel>(suppliesResponse);
+            var suppliesResponse = await supplyService.GetByFilterAsync(suppliesFilters, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidationResponse<ItemsWithTotalCount<Supply>>, DataWithTotalCountResponseModel<SupplyListModel>>(suppliesResponse);
 
             return actionResultProvider.Get(clientResponse);
         }

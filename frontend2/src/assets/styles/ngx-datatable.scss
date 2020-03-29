@@ -143,6 +143,7 @@
 
     .progress-linear {
       height: $progress-linear-loader-height !important;
+      position: relative;
   
       .container {
         height: $progress-linear-loader-height !important;

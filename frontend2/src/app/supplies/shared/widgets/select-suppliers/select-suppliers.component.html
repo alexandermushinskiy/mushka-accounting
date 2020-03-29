@@ -1,0 +1,15 @@
+<ng-select
+      bindLabel="name"
+      [clearable]="false"
+      [searchable]="false"
+      [items]="suppliers"
+      [placeholder]="placeholder | translate"
+      [notFoundText]="'products.productNotFound' | translate"
+      [ngModel]="selectedSupplier"
+      (ngModelChange)="onChange($event)">
+  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+    <span class="supplier-name">{{ item.name }}</span>
+    <br/>
+    <span class="text-muted">{{ item.address }}</span>
+  </ng-template>
+</ng-select>

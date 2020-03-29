@@ -5,6 +5,8 @@ using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
+using Mushka.Domain.Models;
+using Mushka.Service.Extensibility.Dto;
 using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Analytics;
 using Mushka.WebApi.ClientModels.Category;
@@ -91,6 +93,8 @@ namespace Mushka.WebApi
             CreateMap<SupplyRequestModel, Supply>().ConvertUsing<SupplyRequestConverter>();
             CreateMap<Supply, SupplyModel>().ConvertUsing<SupplyConverter>();
 
+            CreateMap<SuppliesFiltersRequestModel, SuppliesFiltersModel>();
+
             CreateMap<ValidationResponse<Supply>, SupplyResponseModel>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SupplyResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
@@ -102,6 +106,11 @@ namespace Mushka.WebApi
             //    .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
 
             CreateMap<ValidationResponse<IEnumerable<Supply>>, SuppliesListResponseModel>()
+                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SuppliesListResponseResolver>())
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
+                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+
+            CreateMap<ValidationResponse<ItemsWithTotalCount<Supply>>, DataWithTotalCountResponseModel<SupplyListModel>>()
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SuppliesListResponseResolver>())
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
                 .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));

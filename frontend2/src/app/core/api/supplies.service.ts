@@ -7,6 +7,7 @@ import { Supply } from '../../shared/models/supply.model';
 import { ConverterService } from '../converter/converter.service';
 import { environment } from '../../../environments/environment';
 import { SupplyList } from '../../shared/models/supply-list.model';
+import { ItemsWithTotalCount } from '../../shared/models/items-with-total-count.model';
 
 @Injectable()
 export class SuppliesService {
@@ -16,15 +17,11 @@ export class SuppliesService {
               private converterService: ConverterService) {
   }
 
-  getAll(): Observable<SupplyList[]> {
-    return this.http.get(this.endPoint).pipe(
-      map((res: any) => this.converterService.convertToSuppliesList(res.data)),
-      catchError((res: any) => throwError(res.error.messages)));
-  }
+  get(searchKey: string, productId: string): Observable<ItemsWithTotalCount<SupplyList>> {
+    const params = this.converterService.convertToHttpParams({ searchKey, productId });
 
-  getFiltered(productIds: string[]): Observable<SupplyList[]> {
-    return this.http.post(`${this.endPoint}/filter`, { productIds }).pipe(
-      map((res: any) => this.converterService.convertToSuppliesList(res.data)),
+    return this.http.get(this.endPoint, { params }).pipe(
+      map((res: any) => this.converterService.convertToSuppliesListWithCount(res.data)),
       catchError((res: any) => throwError(res.error.messages)));
   }
 

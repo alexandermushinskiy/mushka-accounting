@@ -10,6 +10,7 @@ using Mushka.Core.Extensibility.Logging;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Domain.Models;
 using Mushka.Service.Extensibility.ExternalApps;
 using Mushka.Service.Services;
 using Mushka.Tests.Common;
@@ -20,7 +21,7 @@ namespace Mushka.Tests.Service.Services
     public class SupplyServiceTest : ServiceTestBase
     {
         private const string CategoryName = Component.Service + nameof(SupplyService);
-        private const string GetAllAsyncMethodName = nameof(SupplyService.GetAllAsync) + ". ";
+        private const string GetByFilterAsyncMethodName = nameof(SupplyService.GetByFilterAsync) + ". ";
         private const string GetByIdAsyncMethodName = nameof(SupplyService.GetByIdAsync) + ". ";
         private const string AddAsyncMethodName = nameof(SupplyService.AddAsync) + ". ";
         private const string UpdateAsyncMethodName = nameof(SupplyService.UpdateAsync) + ". ";
@@ -68,7 +69,7 @@ namespace Mushka.Tests.Service.Services
         }
 
         [Category(CategoryName)]
-        [Fact(DisplayName = GetAllAsyncMethodName)]
+        [Fact(DisplayName = GetByFilterAsyncMethodName)]
         public async Task GetAllAsyncTest()
         {
             var supplies = new[] { CreateSupply(new[] { CreateSupplyProduct(10) }) };
@@ -76,20 +77,20 @@ namespace Mushka.Tests.Service.Services
             supplyRepositoryMock
                 .SetupAsync(repo => repo.GetAllAsync(default(CancellationToken)), supplies);
 
-            var actual = await supplyService.GetAllAsync();
+            var actual = await supplyService.GetByFilterAsync(new SuppliesFiltersModel());
 
             var expected = CreateValidValidationResponse(supplies, SuppliesRetrievedMessage);
             actual.Should().BeEquivalentTo(expected);
         }
 
         [Category(CategoryName)]
-        [Fact(DisplayName = GetAllAsyncMethodName + "No supplies found")]
+        [Fact(DisplayName = GetByFilterAsyncMethodName + "No supplies found")]
         public async Task GetAllAsyncNoSuppliesFoundTest()
         {
             supplyRepositoryMock
                 .SetupAsync(repo => repo.GetAllAsync(default(CancellationToken)), Enumerable.Empty<Supply>());
 
-            var actual = await supplyService.GetAllAsync();
+            var actual = await supplyService.GetByFilterAsync(new SuppliesFiltersModel());
 
             var expected = CreateValidValidationResponse(Enumerable.Empty<Supply>(), NoSuppliesFoundMessage);
             actual.Should().BeEquivalentTo(expected);

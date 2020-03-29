@@ -33,7 +33,7 @@ export class NotificationsService {
   error(errorMessageKey: string, translateParameter: any = null) {
     this.translateService.get(errorMessageKey, translateParameter)
       .subscribe((message: string) => {
-        this.toastrService.success(message, null, this.errorOptions);
+        this.toastrService.error(message, null, this.errorOptions);
       });
   }
 }

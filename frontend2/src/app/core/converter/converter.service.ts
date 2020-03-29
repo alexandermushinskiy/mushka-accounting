@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 
 import { Supplier } from '../../shared/models/supplier.model';
 import { ContactPerson } from '../../shared/models/contact-person.model';
@@ -24,10 +25,27 @@ import { ProductList } from '../../shared/models/product-list.model';
 import { CorporateOrderList } from '../../shared/models/corporate-order-list.model';
 import { CorporateOrder } from '../../shared/models/corporate-order.model';
 import { CorporateOrderProduct } from '../../shared/models/corporate-order-product.model';
+import { ItemsWithTotalCount } from '../../shared/models/items-with-total-count.model';
 
 @Injectable()
 export class ConverterService {
   constructor(private datetimeService: DatetimeService) {
+  }
+
+  convertToHttpParams(params: any): HttpParams {
+    return Object.keys(params).reduce((queryParams, param) => {
+      const paramValue = params[param];
+
+      if (Array.isArray(paramValue)) {
+        paramValue.forEach((valueItem: any) => {
+          queryParams = queryParams.append(param, valueItem);
+        });
+      } else if (paramValue !== null && paramValue !== undefined) {
+        queryParams = queryParams.set(param, params[param]);
+      }
+
+      return queryParams;
+    }, new HttpParams());
   }
 
   convertToCategories(response: any[]): Category[] {
@@ -151,8 +169,11 @@ export class ConverterService {
     });
   }
 
-  convertToSuppliesList(response: any[]): SupplyList[] {
-    return response.map(res => this.convertToSupplyList(res));
+  convertToSuppliesListWithCount(response: any): ItemsWithTotalCount<SupplyList> {
+    return new ItemsWithTotalCount<SupplyList>(
+      response.items.map(res => this.convertToSupplyList(res)),
+      response.totalCount
+    );
   }
 
   convertToSupplyList(source: any): SupplyList {

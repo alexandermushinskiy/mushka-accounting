@@ -45,7 +45,7 @@ namespace Mushka.Service.Providers
                 return CreateInfoValidationResponse(storedCustomer, $"Existing customer {storedCustomer.FullName} was added.");
             }
 
-            return CreateWarningValidationResponse<Customer>($"Phone number {customer.Phone} is already used for the customer {storedCustomer.FullName}.");
+            return CreateErrorValidationResponse<Customer>($"Phone number {customer.Phone} is already used for the customer {storedCustomer.FullName}.");
         }
 
         public async Task<ValidationResponse<Customer>> GetCustomerForExistingOrderAsync(
@@ -59,7 +59,7 @@ namespace Mushka.Service.Providers
             // validate
             if (samePhoneCustomer != null && !IsCustomerValid(storedCustomer, samePhoneCustomer, inputCustomer))
             {
-                return CreateWarningValidationResponse<Customer>(
+                return CreateErrorValidationResponse<Customer>(
                     $"Phone number {inputCustomer.Phone} is already used for the customer {samePhoneCustomer.FullName}.");
             }
 

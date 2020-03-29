@@ -1,0 +1,11 @@
+@import '../../variables';
+
+:host {
+  display: block;
+  padding: $padding-base $padding-base 0;
+}
+
+.products-list {
+  display: block;
+  width: 300px;
+}

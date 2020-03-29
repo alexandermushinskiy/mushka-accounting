@@ -58,7 +58,7 @@ import { SelectSizeComponent } from './widgets/select-size/select-size.component
 // import { DatatableFooterComponent } from './widgets/datatable/datatable-footer/datatable-footer.component';
 // import { DataTablePagerComponent } from './widgets/datatable/datatable-pager/datatable-pager.component';
 // import { SelectSizeComponent } from './widgets/select-size/select-size.component';
-// import { NumberPipe } from './pipes/number.pipe';
+import { NumberPipe } from './pipes/number.pipe';
 // import { DropdownSizesComponent } from './widgets/dropdown-sizes/dropdown-sizes.component';
 // import { SuppliersDropdownComponent } from './widgets/suppliers-dropdown/suppliers-dropdown.component';
 // import { OrderQuickFilter } from './filters/order-quick.filter';
@@ -130,7 +130,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DatatableBarComponent,
     ToggleComponent,
     SelectSizeComponent,
-    // NumberPipe,
+    NumberPipe,
     // DatatableHeaderComponent,
     // DropdownSizesComponent,
     // SuppliersDropdownComponent
@@ -157,7 +157,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     // DashIfEmptyPipe,
     CurrencyPipe,
     FormatPipe,
-    // NumberPipe,
+    NumberPipe,
 
     /* Components */
     LoadingScreenComponent,

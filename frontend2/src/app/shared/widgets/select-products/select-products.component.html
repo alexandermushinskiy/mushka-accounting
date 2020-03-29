@@ -14,22 +14,22 @@
       (change)="onChange($event)"
       (clear)="clear()">
   <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-    <div *ngIf="!isMultiple; else multiple" class="product-name">{{ item.name }}</div>
+    <div *ngIf="!isMultiple; else multiple" class="product-name">{{ item.name }} <span class="vendor-code">({{ item.vendorCode }})</span></div>
     <ng-template #multiple>
       <mshk-checkbox id="item-{{index}}" [checked]="item$.selected" [text]="item.name"></mshk-checkbox>
     </ng-template>
 
     <div class="text-muted" [ngClass]="{'multiple': isMultiple}">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-7">
           <span class="title">{{ 'products.category' | translate }}</span>
           <span>{{ item.category.name }}</span>
         </div>
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
           <span class="title">{{ 'products.vendorCode' | translate }}</span>
           <span>{{ item.vendorCode }}</span>
-        </div>
-        <div class="col-md-4">
+        </div> -->
+        <div class="col-md-5">
           <span class="title">{{ 'products.size' | translate }}</span>
           <span>{{ !!item.size ? item.size.name : '-' }}</span>
         </div>

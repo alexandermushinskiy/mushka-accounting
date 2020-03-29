@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'mkCurrency'
+  name: 'mshkCurrency'
 })
 export class CurrencyPipe implements PipeTransform {
   options = {

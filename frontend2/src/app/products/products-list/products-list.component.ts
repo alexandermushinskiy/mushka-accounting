@@ -151,7 +151,6 @@ export class ProductsListComponent implements OnInit {
     this.total = products.length;
     this.shown = products.length;
 
-    // this.isAddButtonShown = true;
     this.loadingIndicator = false;
   }
 

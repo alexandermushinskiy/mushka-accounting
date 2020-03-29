@@ -126,7 +126,7 @@
 
               <div class="row">
                 <div class="col-md-12">
-                  <div class="fields-group-title">{{ 'orders.productList' | translate }}</div>
+                  <div class="fields-group-title">{{ 'common.productList' | translate }}</div>
                 </div>
               </div>
               <div class="row">
@@ -235,7 +235,7 @@
           <div class="row">
             <div class="col-md-12 profit">
               <span class="profit-title">{{ 'orders.profit' | translate }}:</span>
-              <span>{{ profit | mkCurrency }}</span>
+              <span>{{ profit | mshkCurrency }}</span>
             </div>
           </div>
           <div class="row notes-row">
@@ -263,7 +263,7 @@
       <button type="button" class="btn btn-light" [routerLink]="['/orders']" [disabled]="isLoading">{{ 'button.cancel' | translate }}</button>
       <button type="submit" class="btn btn-primary with-spinner" [disabled]="isLoading">
         <div *ngIf="isLoading" class="btn-spinner"></div>
-        {{ (isEdit ? 'orders.updateOrder' : 'orders.createOrder') | translate }}
+        {{ 'button.save' | translate }}
       </button>
     </div>
   </div>

@@ -1,0 +1,226 @@
+<mshk-progress-linear [isLoading]="loadingIndicator"></mshk-progress-linear>
+
+<form *ngIf="supplyForm" #ngForm="ngForm" class="w-100" [formGroup]="supplyForm" autocomplete="off" (ngSubmit)="saveSupply()">
+  <div class="app-page-body row flex-nowrap">
+    <!-- left side -->
+    <div class="app-page-content">
+      <div class="app-page-header">
+        <div class="app-page-description">
+          <mshk-back-arrow></mshk-back-arrow>
+          <h1 class="app-page-title">{{ (isEdit ? 'supplies.editSupply' : 'supplies.addSupply') | translate }}</h1>
+        </div>
+      </div>
+
+      <div class="content-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="fields-group-title">{{ 'supplies.requestAndReceivedDate' | translate }}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="field-group">
+                      <label>{{ 'supplies.requestDate' | translate }}</label>
+                      <mshk-datetimepicker-wrapper formControlName="requestDate"
+                                          [ngClass]="{'not-valid': supplyForm.controls.requestDate.invalid && ngForm.submitted}">
+                      </mshk-datetimepicker-wrapper>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="field-group">
+                      <label>{{ 'supplies.receivedDate' | translate: {'separator': ' '} }}</label>
+                      <mshk-datetimepicker-wrapper formControlName="receivedDate"
+                                          [ngClass]="{'not-valid': supplyForm.controls.receivedDate.invalid && ngForm.submitted}">
+                      </mshk-datetimepicker-wrapper>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="fields-group-title">{{ 'supplies.organization' | translate }}</div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="fields-group-title">{{ 'supplies.productService' | translate }}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="field-group">
+                      <label for="address">{{ 'common.name' | translate }}</label>
+                      <mshk-select-suppliers formControlName="supplier"
+                                             [suppliers]="suppliers"
+                                             [ngClass]="{'not-valid': supplyForm.controls.supplier.invalid && ngForm.submitted}">
+                      </mshk-select-suppliers>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="field-group">
+                      <label for="address">{{ 'common.description' | translate }}</label>
+                      <input type="text" class="form-control"
+                                         formControlName="description"
+                                         [ngClass]="{'not-valid': supplyForm.controls.description.invalid && ngForm.submitted}">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="fields-group-title">{{ 'common.productList' | translate }} ({{ formProducts.length }})</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-row product-row" [ngClass]="{'p-right-25': formProducts.length > 1}">
+                      <div class="col-sm-4">{{ 'orders.productName' | translate }}</div>
+                      <div class="col-sm-2">{{ 'products.vendorCode' | translate }}/{{ 'products.size' | translate }}</div>
+                      <div class="col-sm-2">{{ 'products.price' | translate }}</div>
+                      <div class="col-sm-2">{{ 'products.quantity' | translate }}</div>
+                      <div class="col-sm-2">{{ 'products.costPrice' | translate }}</div>
+                    </div>
+                    <div formArrayName="products">
+                      <div class="form-row product-row"
+                                        *ngFor="let productControl of formProducts.controls; let index=index"
+                                        [formGroupName]="index"
+                                        [ngClass]="{'p-right-25': formProducts.length > 1}">
+                        <div class="col-sm-4">
+                          <div class="field-group">
+                            <mshk-select-products formControlName="product"
+                                                [products]="productsList"
+                                                [ngClass]="{'not-valid': productControl.controls.product.invalid && ngForm.submitted}">
+                            </mshk-select-products>
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="field-group">
+                            <input type="text" class="form-control" disabled
+                                    [value]="getProductSizeAndVendorCode(productControl.value.product)">
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="field-group">
+                            <mshk-currency-input formControlName="unitPrice"
+                                               [placeholder]="'products.price' | translate"
+                                               [required]="true"
+                                               [id]="'unitPrice-' + index"
+                                               [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && ngForm.submitted}">
+                            </mshk-currency-input>
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="field-group">
+                            <input type="number" class="form-control" formControlName="quantity" [placeholder]="'products.quantity' | translate"
+                                                [ngClass]="{'not-valid': productControl.controls.quantity.invalid && ngForm.submitted}"/>
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="field-group">
+                            <input type="text" class="form-control" disabled
+                                               [value]="productControl.value.unitPrice + costPriceFactor">
+                          </div>
+                          <button type="button" class="btn-remove"
+                                  *ngIf="formProducts.length > 1"
+                                  [title]="'button.remove' | translate"
+                                  (click)="removeProduct(index)" >
+                            <i class="ico ico-close"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn-add" type="button" (click)="addProduct()">
+                      <i class="fa fa-plus fa-border"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- right side -->
+    <div class="app-page-aside">
+      <div class="aside-body">
+        <div class="aside-body-inner">
+          <div class="row">
+            <div class="col-md-12 cost">
+              <span class="cost-title">{{ 'supplies.payment' | translate }}:</span>
+              <span class="cost-value">
+                <mshk-currency-input formControlName="cost" [placeholder]="'common.amount' | translate"></mshk-currency-input>
+              </span>
+              <span class="cost-payment-type">
+                <mshk-select-payment-methods formControlName="costMethod"
+                                  [ngClass]="{'not-valid': supplyForm.controls.costMethod.invalid && ngForm.submitted}">
+                </mshk-select-payment-methods>
+              </span>
+            </div>
+            <div class="col-md-12 cost">
+              <span class="cost-title">{{ 'common.prepayment' | translate }}:</span>
+              <span class="cost-value">
+                <mshk-currency-input formControlName="prepayment" [placeholder]="'common.amount' | translate"></mshk-currency-input>
+              </span>
+              <span class="cost-payment-type">
+                <mshk-select-payment-methods formControlName="prepaymentMethod"
+                                  [ngClass]="{'not-valid': supplyForm.controls.prepaymentMethod.invalid && ngForm.submitted}">
+                </mshk-select-payment-methods>
+              </span>
+            </div>
+            <div class="col-md-12 cost">
+              <span class="cost-title">{{ 'common.delivery' | translate }}:</span>
+              <span class="cost-value">
+                <mshk-currency-input formControlName="deliveryCost" [placeholder]="'common.amount' | translate"></mshk-currency-input>
+              </span>
+              <span class="cost-payment-type">
+                <mshk-select-payment-methods formControlName="deliveryCostMethod"
+                                  [ngClass]="{'not-valid': supplyForm.controls.deliveryCostMethod.invalid && ngForm.submitted}">
+                                  <!--[required]="supplyForm.hasError('required', ['deliveryCostMethod'])"-->
+                </mshk-select-payment-methods>
+              </span>
+            </div>
+            <div class="col-md-12 cost">
+              <span class="cost-title">{{ 'supplies.bankFee' | translate }}:</span>
+              <span class="cost-value">
+                <mshk-currency-input formControlName="bankFee" [placeholder]="'common.amount' | translate"></mshk-currency-input>
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 total-cost">
+              <span class="total-cost-title">{{ 'supplies.total' | translate }}:</span>
+              <span class="total-cost-value">{{ totalCost | mshkCurrency }}</span>
+            </div>
+          </div>
+          <div class="row notes-row">
+            <div class="col-md-12">
+              <div class="field-group">
+                <label>{{ 'common.notes' | translate }}</label>
+                <textarea class="notes" rows="5" formControlName="notes"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="aside-footer">
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-buttons">
+      <button type="button" class="btn btn-light" [routerLink]="['/supplies']" [disabled]="isLoading">{{ 'button.cancel' | translate }}</button>
+      <button class="btn btn-primary with-spinner" type="submit" [disabled]="isLoading">
+        <div *ngIf="isLoading" class="btn-spinner"></div>
+        {{ 'button.save' | translate }}
+      </button>
+    </div>
+  </div>
+</form>

@@ -12,6 +12,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { OrdersModule } from './orders/orders.module';
 import { CorporateOrdersModule } from './corporate-orders/corporate-orders.module';
 import { ProductsModule } from './products/products.module';
+import { SuppliesModule } from './supplies/supplies.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ProductsModule } from './products/products.module';
     DashboardModule,
     OrdersModule,
     CorporateOrdersModule,
-    ProductsModule
+    ProductsModule,
+    SuppliesModule
     // NgxWebstorageModule.forRoot()
   ],
   providers: [],

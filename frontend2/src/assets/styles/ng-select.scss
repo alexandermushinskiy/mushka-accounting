@@ -19,12 +19,9 @@
   }
 }
 
-.ng-select.ng-select-multiple
-.ng-select-container
-.ng-value-container
-.ng-placeholder {
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
   //top: 10px;
-  //padding-left: 5px;
+  padding-left: 3px;
   font-size: 12.6px;
   font-family: "Ericsson Hilda", Helvetica, Arial, sans-serif;
 
@@ -69,6 +66,7 @@
 .ng-select.ng-select-single .ng-select-container .ng-value-container,
 .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value {
   font-size: 1.3rem;
+  padding-left: 3px;
 }
 
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
@@ -128,6 +126,7 @@
 .ng-select .ng-select-container .ng-value-container .ng-placeholder {
   color: $placeholder-color;
   opacity: $placeholder-opacity;
+  padding-left: 3px;
 }
 
 .not-valid {

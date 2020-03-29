@@ -45,7 +45,7 @@ namespace Mushka.Service.Services
             var expense = await expenseRepository.GetByIdAsync(expenseId, cancellationToken);
 
             return expense == null
-                ? CreateWarningValidationResponse($"Expense with id {expenseId} is not found.", ValidationStatusType.NotFound)
+                ? CreateErrorValidationResponse($"Expense with id {expenseId} is not found.", ValidationStatusType.NotFound)
                 : CreateInfoValidationResponse(expense, $"Expense with id {expenseId} was successfully retrieved.");
         }
 
@@ -63,7 +63,7 @@ namespace Mushka.Service.Services
 
             if (expenseToUpdate == null)
             {
-                return CreateWarningValidationResponse($"Expense with id {expense.Id} is not found.", ValidationStatusType.NotFound);
+                return CreateErrorValidationResponse($"Expense with id {expense.Id} is not found.", ValidationStatusType.NotFound);
             }
             
             var updatedExpense = expenseRepository.Update(expense);
@@ -78,7 +78,7 @@ namespace Mushka.Service.Services
 
             if (expense == null)
             {
-                return CreateWarningValidationResponse($"Expense with id {expenseId} is not found.", ValidationStatusType.NotFound);
+                return CreateErrorValidationResponse($"Expense with id {expenseId} is not found.", ValidationStatusType.NotFound);
             }
 
             expenseRepository.Delete(expense);

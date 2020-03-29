@@ -120,7 +120,7 @@
 
               <div class="row">
                 <div class="col-md-12">
-                  <div class="fields-group-title">{{ 'orders.productList' | translate }}</div>
+                  <div class="fields-group-title">{{ 'common.productList' | translate }}</div>
                 </div>
               </div>
               <div class="row">
@@ -218,9 +218,9 @@
               </span>
             </div>
             <div class="col-md-12 cost">
-              <span class="cost-title">{{ 'orders.prepayment' | translate }}:</span>
+              <span class="cost-title">{{ 'common.prepayment' | translate }}:</span>
               <span class="cost-value">
-                <mshk-currency-input formControlName="prepayment" [placeholder]="'orders.amount' | translate"></mshk-currency-input>
+                <mshk-currency-input formControlName="prepayment" [placeholder]="'common.amount' | translate"></mshk-currency-input>
               </span>
               <span class="cost-payment-type">
                 <mshk-select-payment-methods formControlName="prepaymentMethod"
@@ -229,9 +229,9 @@
               </span>
             </div>
             <div class="col-md-12 cost">
-              <span class="cost-title">{{ 'orders.delivery' | translate }}:</span>
+              <span class="cost-title">{{ 'common.delivery' | translate }}:</span>
               <span class="cost-value">
-                <mshk-currency-input formControlName="deliveryCost" [placeholder]="'orders.amount' | translate"></mshk-currency-input>
+                <mshk-currency-input formControlName="deliveryCost" [placeholder]="'common.amount' | translate"></mshk-currency-input>
               </span>
               <span class="cost-payment-type">
                 <mshk-select-payment-methods formControlName="deliveryCostMethod"
@@ -249,7 +249,7 @@
           <div class="row">
             <div class="col-md-12 profit">
               <span class="profit-title">{{ 'orders.profit' | translate }}:</span>
-              <span>{{ profit | mkCurrency }}</span>
+              <span>{{ profit | mshkCurrency }}</span>
             </div>
           </div>
           <div class="row notes-row">
@@ -272,7 +272,7 @@
       <button type="button" class="btn btn btn-light" [routerLink]="['/corporate-orders']" [disabled]="isLoading">{{ 'button.cancel' | translate }}</button>
       <button class="btn btn-primary with-spinner" type="submit" [disabled]="isLoading">
         <div *ngIf="isLoading" class="btn-spinner"></div>
-        {{ (isEdit ? 'orders.updateOrder' : 'orders.createOrder') | translate }}
+        {{ 'button.save' | translate }}
       </button>
     </div>
   </div>

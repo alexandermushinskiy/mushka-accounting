@@ -8,6 +8,8 @@ import { OrderComponent } from './orders/order/order.component';
 import { CorporateOrdersListComponent } from './corporate-orders/corporate-orders-list/corporate-orders-list.component';
 import { CorporateOrderComponent } from './corporate-orders/corporate-order/corporate-order.component';
 import { ProductsListComponent } from './products/products-list/products-list.component';
+import { SuppliesListComponent } from './supplies/supplies-list/supplies-list.component';
+import { SupplyComponent } from './supplies/supply/supply.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -23,6 +25,11 @@ const routes: Routes = [
     { path: ':id', component: CorporateOrderComponent, pathMatch: 'full', canDeactivate: [HandleUnsavedDataGuard] }
   ]},
   { path: 'products', component: ProductsListComponent, pathMatch: 'full' },
+  { path: 'supplies', children: [
+    { path: '', component: SuppliesListComponent, pathMatch: 'full' },
+    { path: 'new', component: SupplyComponent, pathMatch: 'full' },
+    { path: ':id', component: SupplyComponent, pathMatch: 'full' }
+  ]},
 ];
 
 @NgModule({

@@ -20,11 +20,11 @@ export class SelectProductsComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder = 'common.selectProduct';
   @Input() canClearAll = true;
   @Input() isMultiple = false;
+  @Input() isLoading = false;
   @Output() onProductSelected = new EventEmitter<SelectProduct>();
   @Output() onClear = new EventEmitter<any>();
 
   selectedId: string;
-  isLoading = false;
 
   constructor() { }
 

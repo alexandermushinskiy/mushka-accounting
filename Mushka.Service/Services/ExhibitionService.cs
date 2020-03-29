@@ -46,7 +46,7 @@ namespace Mushka.Service.Services
             var exhibition = await exhibitionRepository.GetByIdAsync(exhibitionId, cancellationToken);
 
             return exhibition == null
-                ? CreateWarningValidationResponse($"Exhibition with id {exhibitionId} is not found.", ValidationStatusType.NotFound)
+                ? CreateErrorValidationResponse($"Exhibition with id {exhibitionId} is not found.", ValidationStatusType.NotFound)
                 : CreateInfoValidationResponse(exhibition, $"Exhibition with id {exhibitionId} was successfully retrieved.");
         }
 
@@ -58,12 +58,12 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateWarningValidationResponse($"Product with id {exhibitionProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return CreateErrorValidationResponse($"Product with id {exhibitionProduct.ProductId} is not found.", ValidationStatusType.NotFound);
                 }
 
                 if (storedProduct.Quantity < exhibitionProduct.Quantity)
                 {
-                    return CreateWarningValidationResponse($"Product with id {exhibitionProduct.ProductId} is not enough in stock.");
+                    return CreateErrorValidationResponse($"Product with id {exhibitionProduct.ProductId} is not enough in stock.");
                 }
 
                 storedProduct.Quantity -= exhibitionProduct.Quantity;
@@ -83,7 +83,7 @@ namespace Mushka.Service.Services
 
             if (storedExhibition == null)
             {
-                return CreateWarningValidationResponse($"Exhibition with id {exhibition.Id} is not found.", ValidationStatusType.NotFound);
+                return CreateErrorValidationResponse($"Exhibition with id {exhibition.Id} is not found.", ValidationStatusType.NotFound);
             }
 
             foreach (var exhibitionProduct in exhibition.Products)
@@ -92,7 +92,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateWarningValidationResponse($"Product with id {exhibitionProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return CreateErrorValidationResponse($"Product with id {exhibitionProduct.ProductId} is not found.", ValidationStatusType.NotFound);
                 }
 
                 var storedOrderQuantity = storedExhibition.Products
@@ -111,7 +111,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateWarningValidationResponse($"Product with id {removedProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return CreateErrorValidationResponse($"Product with id {removedProduct.ProductId} is not found.", ValidationStatusType.NotFound);
                 }
 
                 storedProduct.Quantity += removedProduct.Quantity;
@@ -130,7 +130,7 @@ namespace Mushka.Service.Services
 
             if (exhibition == null)
             {
-                return CreateWarningValidationResponse($"Exhibition with id {exhibitionId} is not found.", ValidationStatusType.NotFound);
+                return CreateErrorValidationResponse($"Exhibition with id {exhibitionId} is not found.", ValidationStatusType.NotFound);
             }
 
             foreach (var orderProduct in exhibition.Products)
@@ -139,7 +139,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateWarningValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return CreateErrorValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
                 }
 
                 storedProduct.Quantity += orderProduct.Quantity;
