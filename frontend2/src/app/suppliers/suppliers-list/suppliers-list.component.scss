@@ -1,0 +1,60 @@
+@import '../../variables';
+
+:host {
+  display: block;
+  padding: $padding-base $padding-base 0;
+}
+
+.switcher {
+  cursor: pointer;
+  
+  i {
+    width: 15px;
+  }
+}
+
+.row-details-wrapper {
+  display: flex;
+  padding: 10px 15px;
+}
+
+.details-column {
+  display: inline-block;
+
+  .column-title {
+    display: inline-block;
+    vertical-align: top;
+    min-width: 120px;
+    //padding-top: 4px;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    &.-short {
+      min-width: 70px;
+    }
+  }
+
+  .column-data {
+    display: inline-block;
+  }
+
+  a {
+    vertical-align: super;
+  }
+}
+
+.contact-person {
+  display: inline-block;
+  min-width: 100px;
+  padding-right: 30px;
+  vertical-align: top;
+
+  &-data {
+    width: 50px;
+    display: inline-block;
+  }
+
+  .name {
+    font-weight: bold;
+  }
+}

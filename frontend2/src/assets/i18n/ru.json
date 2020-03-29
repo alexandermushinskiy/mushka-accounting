@@ -27,7 +27,9 @@
     "productList": "Список товаров",
     "amount": "Сумма",
     "delivery": "Доставка",
-    "prepayment": "Предоплата"
+    "prepayment": "Предоплата",
+    "email": "Эл. почта",
+    "companyName": "Название{{value}}компании"
   },
   "header": {
     "accountingForGoodsAndServices": "Учет товаров и услуг",
@@ -56,6 +58,7 @@
     "addCorporateOrder": "Добавить корпоративный заказ",
     "addProduct": "Добавить товар",
     "addSupply": "Добавить поступление",
+    "addSupplier": "Добавить поставщика",
     "saveSupply": "Сохранить поступление",
     "remove": "Удалить",
     "cancel": "Отмена",
@@ -90,7 +93,8 @@
     "orderNumber": "Номер<br>заказа",
     "productsCount": "Количество<br>Товаров",
     "customerName": "Имя<br>покупателя",
-    "deliveryAddress": "Адрес<br>доставки"
+    "deliveryAddress": "Адрес<br>доставки",
+    "deliveriesCount": "Кол-во<br>поставок"
   },
   "orders": {
     "orders": "Заказы",
@@ -121,15 +125,13 @@
     "orderDeletedSuccessfully": "Заказ успешно удален из системы.",
     "areYouSureToDeleteOrder": "Вы уверены, что хотите удалить заказ с номером <b>{{orderNumber}}</b> от <b>{{orderDate}}</b>?",
     "areYouSureToDeleteCorporateOrder": "Вы уверены, что хотите удалить корпоративный заказ с номером <b>{{orderNumber}}</b> от <b>{{orderDate}}</b>?",
-    "companyName": "Имя{{value}}компании",
     "contactPerson": "Контактное лицо",
     "orderNumberAlreadyExist": "Номер уже существует"
   },
   "customer": {
     "firstName": "Имя",
     "lastName": "Фамилия",
-    "phone": "Телефон",
-    "email": "Эл. почта"
+    "phone": "Телефон"
   },
   "confirmation": {
     "dataNotSaved": "<p>Данные не были сохранены и будут потеряны.<br>Вы уверены, что хотите покинуть страницу без сохранения?</p>"
@@ -169,7 +171,6 @@
     "editProductTitle": "Редактирование товара",
     "addedDate": "Дата{{value}}добавления",
     "lastDeliveryDate": "Дата послед.<br>поставки",
-    "deliveriesCount": "Кол-во<br>поставок",
     "productSaved": "Товар <b>{{name}}</b> был успешно сохранён.",
     "unableLoadOrders": "При загрузке всех заказов возникла ошибка.",
     "costPrice": "Себестоимость",
@@ -200,5 +201,16 @@
     "bankFee": "Комиссия",
     "payment": "Оплата",
     "total": "Итого"
+  },
+  "suppliers": {
+    "suppliers": "Поставщики",
+    "supplierDeleted": "Поставщик был успешно удален.",
+    "errorLoadSuppliers": "При загрузке всех заказов возникла ошибка.",
+    "providedService": "Предоставляемый<br>сервис",
+    "address": "Адрес",
+    "webSite": "Сайт",
+    "company": "Компания",
+    "contacts": "Контакты",
+    "areYouSureToDeleteSupplier": "Вы уверены, что хотите удалить поставщика <b>{{name}}</b>?"
   }
 }

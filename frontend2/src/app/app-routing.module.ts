@@ -10,6 +10,8 @@ import { CorporateOrderComponent } from './corporate-orders/corporate-order/corp
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { SuppliesListComponent } from './supplies/supplies-list/supplies-list.component';
 import { SupplyComponent } from './supplies/supply/supply.component';
+import { SuppliersListComponent } from './suppliers/suppliers-list/suppliers-list.component';
+import { SupplierComponent } from './suppliers/supplier/supplier.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -30,6 +32,11 @@ const routes: Routes = [
     { path: 'new', component: SupplyComponent, pathMatch: 'full' },
     { path: ':id', component: SupplyComponent, pathMatch: 'full' }
   ]},
+  { path: 'suppliers', children: [
+    { path: '', component: SuppliersListComponent, pathMatch: 'full' },
+    { path: 'new', component: SupplierComponent, pathMatch: 'full' },
+    { path: ':id', component: SupplierComponent, pathMatch: 'full' }
+  ]}
 ];
 
 @NgModule({
