@@ -1,0 +1,24 @@
+@import '../../variables';
+
+:host {
+  display: block;
+  padding: $padding-base $padding-base 0;
+}
+
+.timeframes {
+  display: inline-block;
+  width: 250px;
+}
+
+.categories {
+  display: inline-block;
+  width: 180px;
+}
+
+.bar-filter-separator:after {
+  content: "|";
+  padding-left: 7px;
+  padding-right: 7px;
+  font-size: 1.5rem;
+  font-weight: 700;
+}

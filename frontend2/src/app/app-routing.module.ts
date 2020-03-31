@@ -12,6 +12,10 @@ import { SuppliesListComponent } from './supplies/supplies-list/supplies-list.co
 import { SupplyComponent } from './supplies/supply/supply.component';
 import { SuppliersListComponent } from './suppliers/suppliers-list/suppliers-list.component';
 import { SupplierComponent } from './suppliers/supplier/supplier.component';
+import { ExpensesListComponent } from './expenses/expenses-list/expenses-list.component';
+import { ExpenseComponent } from './expenses/expense/expense.component';
+import { ExhibitionsListComponent } from './exhibitions/exhibitions-list/exhibitions-list.component';
+import { ExhibitionComponent } from './exhibitions/exhibition/exhibition.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -36,6 +40,16 @@ const routes: Routes = [
     { path: '', component: SuppliersListComponent, pathMatch: 'full' },
     { path: 'new', component: SupplierComponent, pathMatch: 'full' },
     { path: ':id', component: SupplierComponent, pathMatch: 'full' }
+  ]},
+  { path: 'expenses', children: [
+    { path: '', component: ExpensesListComponent, pathMatch: 'full' },
+    { path: 'new', component: ExpenseComponent, pathMatch: 'full' },
+    { path: ':id', component: ExpenseComponent, pathMatch: 'full' }
+  ] },
+  { path: 'exhibitions', children: [
+    { path: '', component: ExhibitionsListComponent, pathMatch: 'full' },
+    { path: 'new', component: ExhibitionComponent, pathMatch: 'full' },
+    { path: ':id', component: ExhibitionComponent, pathMatch: 'full' }
   ]}
 ];
 

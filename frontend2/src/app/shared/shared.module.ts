@@ -11,9 +11,8 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
-// import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxMaskModule } from 'ngx-mask';
 // import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
-// import { NgxMaskModule } from 'ngx-mask';
 
 import { LoadingScreenComponent } from './widgets/loading-screen/loading-screen.component';
 import { SpinnerComponent } from './widgets/spinner/spinner.component';
@@ -84,6 +83,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CurrencyMaskModule,
     ToastrModule.forRoot(),
     ModalModule.forRoot(),
+    NgxMaskModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -91,9 +91,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     })
-    // NgSelectModule,
     // TypeaheadModule.forRoot(),
-    // NgxMaskModule.forRoot(),
     // NgxMyDatePickerModule.forRoot()
   ],
   declarations: [
@@ -145,7 +143,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NgxDatatableModule,
     TranslateModule,
     NgSelectModule,
-    // NgxMaskModule,
+    NgxMaskModule,
 
     /* Directives */
     // PopoverDirective,

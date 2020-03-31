@@ -1,0 +1,20 @@
+<mshk-progress-linear [isLoading]="loadingIndicator"></mshk-progress-linear>
+
+<form *ngIf="exhibitionForm" class="w-100" [formGroup]="exhibitionForm" autocomplete="off" (ngSubmit)="save()">
+  <div class="app-page-body row flex-nowrap">
+    <!-- left side -->
+    <div class="app-page-content">
+      <div class="app-page-header">
+        <div class="app-page-description">
+          <mshk-back-arrow></mshk-back-arrow>
+          <h1 class="app-page-title">{{ (isEdit ? 'exhibitions.editExhibition' : 'exhibitions.addExhibition') | translate }}</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-body">
+
+    </div>
+
+  </div>
+</form>

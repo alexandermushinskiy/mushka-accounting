@@ -32,7 +32,8 @@
     "phones": "Телефон(ы)",
     "companyName": "Название{{separator}}компании",
     "basicInformation": "Основная информация",
-    "contactInformation": "Контактная информация"
+    "contactInformation": "Контактная информация",
+    "category": "Категория"
   },
   "header": {
     "accountingForGoodsAndServices": "Учет товаров и услуг",
@@ -63,6 +64,7 @@
     "addSupply": "Добавить поступление",
     "addSupplier": "Добавить поставщика",
     "saveSupply": "Сохранить поступление",
+    "addExhibition": "Добавить выстовку",
     "remove": "Удалить",
     "cancel": "Отмена",
     "yes": "Да",
@@ -169,7 +171,6 @@
     "inArchive": "В архиве",
     "recommendedPriceAbbr": "Реком.{{separator}}цена",
     "recommendedPrice": "Рекомендованная цена",
-    "category": "Категория",
     "addProductTitle": "Добаление товара",
     "editProductTitle": "Редактирование товара",
     "addedDate": "Дата{{value}}добавления",
@@ -217,8 +218,8 @@
     "areYouSureToDeleteSupplier": "Вы уверены, что хотите удалить поставщика <b>{{name}}</b>?",
     "editSupplier": "Редактирование поставщика",
     "addSupplier": "Добавление поставщика",
-    "supplierUpdated": "Поставщик был успешно изменен",
-    "supplierAdded": "Поставщик был успешно добавлен",
+    "supplierUpdated": "Поставщик был успешно изменен.",
+    "supplierAdded": "Поставщик был успешно добавлен.",
     "errorLoadingSupplier": "При загрузке поставщика возникла ошибка.",
     "servicesList": "Список услуг",
     "additionally": "Дополнительно",
@@ -226,5 +227,40 @@
     "paymentCards": "Карты для оплаты",
     "cardNumber": "Номер карты",
     "cardOwner": "Владелец карты"
+  },
+  "exhibitions": {
+    "exhibitions": "Выставки",
+    "exhibitionDeleted": "Выставка была успешно удалена.",
+    "errorDeletingExhibition": "При удалении выставки возникла ошибка.",
+    "errorLoadingExhibitions": "При загрузке списка выставок возникла ошибка.",
+    "areYouSureToDeleteExhibition": "Вы уверены, что хотите удалить выбранную выставку <b>{{name}}</b>?",
+    "participationCost": "Стоимость{{separator}}участия",
+    "city": "Город{{separator}}проведения",
+    "startDate": "Дата{{separator}}начала",
+    "finishDate": "Дата{{separator}}завершения",
+    "name": "Название{{separator}}выставки",
+    "editExhibition": "Редактирование выставки",
+    "addExhibition": "Добавление выставки"
+  },
+  "expenses": {
+    "expenses": "Расходы",
+    "addExpenses": "Добавить расходы",
+    "expenseDeleted": "Расходы успешно были удалены.",
+    "errorDeletingExpense": "При удалении расходов возникла ошибка.",
+    "errorLoadingExpenses": "При загрузке списка расходов возникла ошибка.",
+    "areYouSureToDeleteExpense": "Вы уверены, что хотите удалить расходы от <b>{{supplier}}</b> за <b>{{date}}</b>?",
+    "supplier": "Поставщик",
+    "cost": "Стоимость",
+    "purpose": "Назначение"
+  },
+  "expenceCategory": {
+    "advertising": "Реклама",
+    "equipment": "Оборудование",
+    "photography": "Фото",
+    "design": "Дизайн",
+    "website": "Веб сайт",
+    "polygraphy": "Полиграфия",
+    "promo": "Промо",
+    "other": "Другое"
   }
 }

@@ -7,7 +7,7 @@
       <div class="app-page-header">
           <div class="app-page-description">
             <mshk-back-arrow></mshk-back-arrow>
-            <h1 class="app-page-title">{{ title | translate }}</h1>
+            <h1 class="app-page-title">{{ (isEdit ? 'orders.editOrder' : 'orders.addNewOrder') | translate }}</h1>
           </div>
         </div>
         <div class="content-body">

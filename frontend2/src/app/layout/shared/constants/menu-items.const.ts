@@ -39,24 +39,6 @@ export const MenuItems: MenuItem[] = [
     routePath: '/suppliers',
     isEnabled: true,
   }),
-  // new MenuItem({
-  //   title: MenuLabels.PARTNERS,
-  //   icon: 'fa-handshake-o',
-  //   routePath: '/partners',
-  //   isEnabled: false
-  // }),
-  // new MenuItem({
-  //   title: MenuLabels.LOGISTICS,
-  //   icon: 'fa-truck',
-  //   routePath: '/logistics',
-  //   isEnabled: false,
-  // }),
-  new MenuItem({
-    title: MenuLabels.GIFTS,
-    icon: 'fa-gift',
-    routePath: '/gifts',
-    isEnabled: true,
-  }),
   new MenuItem({
     title: MenuLabels.EXHIBITIONS,
     icon: 'fa-id-badge',
@@ -68,6 +50,24 @@ export const MenuItems: MenuItem[] = [
     icon: 'fa-money',
     routePath: '/expenses',
     isEnabled: true,
+  }),
+  new MenuItem({
+    title: MenuLabels.PARTNERS,
+    icon: 'fa-handshake-o',
+    routePath: '/partners',
+    isEnabled: false
+  }),
+  new MenuItem({
+    title: MenuLabels.LOGISTICS,
+    icon: 'fa-truck',
+    routePath: '/logistics',
+    isEnabled: false,
+  }),
+  new MenuItem({
+    title: MenuLabels.GIFTS,
+    icon: 'fa-gift',
+    routePath: '/gifts',
+    isEnabled: false,
   }),
   // new MenuItem({
   //   title: MenuLabels.HELP,

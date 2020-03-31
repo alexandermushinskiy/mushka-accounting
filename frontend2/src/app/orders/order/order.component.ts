@@ -31,7 +31,6 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
   loadingIndicator = false;
   orderId: string;
   errors: string[];
-  title: string;
   productsList: SelectProduct[];
   regions = ukrRegions;
   profit: number;
@@ -187,14 +186,13 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
 
   private onSaveFailed(errors: string[]) {
     this.isLoading = false;
-    this.notificationsService.error(this.title, errors[0]);
+    this.notificationsService.error(errors[0]);
   }
 
   private readRouteParams() {
     this.route.params.subscribe(params => {
       this.orderId = params['id'];
       this.isEdit = !!this.orderId;
-      this.title = this.isEdit ? 'orders.editOrder' : 'orders.addNewOrder';
 
       if (this.isEdit) {
         this.loadExistingOrder();
