@@ -90,7 +90,7 @@
   <ngx-datatable-row-detail [rowHeight]="'auto'" #myDetailRow>
     <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
       <div class="row-details-wrapper">
-        <div class="details-column" [style.width.px]="contactsWidth">
+        <div class="details-column">
           <span class="column-title">{{ 'suppliers.contacts' | translate }}:</span>
           <span class="column-data">
             <div *ngFor="let contactPerson of row.contactPersons" class="contact-person">

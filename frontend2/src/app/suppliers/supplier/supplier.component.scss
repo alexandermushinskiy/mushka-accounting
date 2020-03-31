@@ -1,0 +1,31 @@
+@import '../../variables';
+
+.page-container {
+  margin-right: 0;
+  margin-left: 0;
+  padding: 10px 30px;
+}
+
+.content-body {
+  padding: 0 25px;
+}
+
+.footer-buttons {
+  padding-top: 35px;
+}
+
+.btn-remove {
+  position: absolute;
+  right: -17px;
+  top: 3px;
+  color: $text-muted;
+
+  .ico-close {
+    font-size: 1rem;
+  }
+}
+
+.contact-person-row,
+.card-number-row {
+  margin-bottom: 10px;
+}

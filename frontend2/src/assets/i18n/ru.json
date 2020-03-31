@@ -29,7 +29,10 @@
     "delivery": "Доставка",
     "prepayment": "Предоплата",
     "email": "Эл. почта",
-    "companyName": "Название{{value}}компании"
+    "phones": "Телефон(ы)",
+    "companyName": "Название{{separator}}компании",
+    "basicInformation": "Основная информация",
+    "contactInformation": "Контактная информация"
   },
   "header": {
     "accountingForGoodsAndServices": "Учет товаров и услуг",
@@ -185,7 +188,7 @@
     "supplyWasAdded": "Поступление было успешно добавлено.",
     "supplyWasUpdated": "Поступление было успешно обновлено.",
     "supplyDeleted": "Поступление было успешно удалено.",
-    "loadSuppliesError": "При загрузке всех поступлений возникла ошибка .",
+    "loadSuppliesError": "При загрузке всех поступлений возникла ошибка.",
     "receivedDate": "Дата{{separator}}получения",
     "description": "Описание{{separator}}поставки",
     "supplierName": "Имя{{separator}}поставщика",
@@ -211,6 +214,17 @@
     "webSite": "Сайт",
     "company": "Компания",
     "contacts": "Контакты",
-    "areYouSureToDeleteSupplier": "Вы уверены, что хотите удалить поставщика <b>{{name}}</b>?"
+    "areYouSureToDeleteSupplier": "Вы уверены, что хотите удалить поставщика <b>{{name}}</b>?",
+    "editSupplier": "Редактирование поставщика",
+    "addSupplier": "Добавление поставщика",
+    "supplierUpdated": "Поставщик был успешно изменен",
+    "supplierAdded": "Поставщик был успешно добавлен",
+    "errorLoadingSupplier": "При загрузке поставщика возникла ошибка.",
+    "servicesList": "Список услуг",
+    "additionally": "Дополнительно",
+    "name": "Имя",
+    "paymentCards": "Карты для оплаты",
+    "cardNumber": "Номер карты",
+    "cardOwner": "Владелец карты"
   }
 }

@@ -69,16 +69,6 @@
   background-color: $layer3;
   text-align: right;
   
-  &-buttons {
-    > :first-child {
-      margin-right: 10px;
-      width: 110px;
-    }
-    > :last-child {
-      width: 130px;
-    }
-  }
-
   @media (min-width: $desktop) {
     right: 410px;
   }

@@ -287,3 +287,13 @@
     }
   }
 }
+
+.footer-buttons {
+  > :first-child {
+    margin-right: 10px;
+    width: 110px;
+  }
+  > :last-child {
+    width: 130px;
+  }
+}

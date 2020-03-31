@@ -63,7 +63,7 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
   }
 
   ngOnInit() {
-    this.getRouteParams();
+    this.readRouteParams();
   }
 
   searchName = (text$: Observable<string>) =>
@@ -190,7 +190,7 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
     this.notificationsService.error(this.title, errors[0]);
   }
 
-  private getRouteParams() {
+  private readRouteParams() {
     this.route.params.subscribe(params => {
       this.orderId = params['id'];
       this.isEdit = !!this.orderId;

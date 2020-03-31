@@ -45,7 +45,7 @@
   
   <ngx-datatable-column name="companyName" [sortable]="true">
     <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
-      <span [innerHtml]="'common.companyName' | translate: {value: '<br>'}" (click)="sort($event)"></span>
+      <span [innerHtml]="'common.companyName' | translate: {separator: '<br>'}" (click)="sort($event)"></span>
     </ng-template>
     <ng-template ngx-datatable-cell-template let-value="value">
       <span [title]="value">{{ value }}</span>
