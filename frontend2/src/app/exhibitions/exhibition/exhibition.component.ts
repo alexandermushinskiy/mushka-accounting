@@ -5,7 +5,6 @@ import { Subject } from 'rxjs';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 
 import { SelectProduct } from '../../shared/models/select-product.model';
-import { Exhibition } from '../../shared/models/exhibition.model';
 
 @Component({
   selector: 'mshk-exhibition',
@@ -21,11 +20,16 @@ export class ExhibitionComponent implements OnInit {
   productsList: SelectProduct[];
   profit: number;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+    this.readRouteParams();
   }
 
   save() {
+  }
+
+  readRouteParams() {
   }
 }

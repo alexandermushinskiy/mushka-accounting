@@ -1,1 +1,122 @@
-<p>expense works!</p>
+<mshk-progress-linear [isLoading]="loadingIndicator"></mshk-progress-linear>
+
+<div class="page-container">
+
+  <div class="row">
+    <div class="app-page-description">
+      <mshk-back-arrow></mshk-back-arrow>
+      <h1 class="app-page-title">{{ ( isEdit ? 'expenses.editExpence' : 'expenses.addExpence') | translate }}</h1>
+    </div>
+  </div>
+
+  <form *ngIf="expenseForm" #ngForm="ngForm" [formGroup]="expenseForm" (ngSubmit)="saveExpense()">
+    <div class="content-body">
+      <div class="row">
+        
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="fields-group-title">{{ 'common.basicInformation' | translate }}</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="field-group">
+                <label for="address">{{ 'common.date' | translate }}</label>
+                <mshk-datetimepicker-wrapper
+                             formControlName="createdOn"
+                             [required]="true"
+                             [ngClass]="{'not-valid': expenseForm.controls.createdOn.invalid && ngForm.submitted}">
+                </mshk-datetimepicker-wrapper>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="field-group">
+                <label for="address">{{ 'common.category' | translate }}</label>
+                <mshk-select-category
+                            formControlName="category"
+                            [ngClass]="{'not-valid': expenseForm.controls.category.invalid && ngForm.submitted}">
+                </mshk-select-category>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="field-group">
+                <label for="address">{{ 'expenses.purpose' | translate }}</label>
+                <input type="text" class="form-control"
+                       formControlName="purpose"
+                       [ngClass]="{'not-valid': expenseForm.controls.purpose.invalid && ngForm.submitted}">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="fields-group-title">{{ 'expenses.purpose' | translate }}</div>
+            </div>
+            <div class="col-md-6">
+              <div class="fields-group-title">{{ 'expenses.goodsOrServicesSupplier' | translate }}</div>
+            </div>
+          </div>
+            
+          <div class="row">
+            <div class="col-md-3">
+              <div class="field-group">
+                <label>{{ 'expenses.purpose' | translate }}</label>
+                <mshk-currency-input formControlName="cost"
+                                   [placeholder]="'Цена'"
+                                   [required]="true"
+                                   [ngClass]="{'not-valid': expenseForm.controls.cost.invalid && ngForm.submitted}">
+                </mshk-currency-input>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="field-group">
+                <label>{{ 'expenses.paymentMethod' | translate }}</label>
+                <mshk-select-payment-methods
+                          formControlName="costMethod"
+                          [ngClass]="{'not-valid': expenseForm.controls.costMethod.invalid && ngForm.submitted}">
+                </mshk-select-payment-methods>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="field-group">
+                <label for="address">{{ 'common.name' | translate }}</label>
+                <input type="text" class="form-control"
+                          formControlName="supplierName"
+                          [ngClass]="{'not-valid': expenseForm.controls.supplierName.invalid && ngForm.submitted}">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="fields-group-title">{{ 'common.additionally' | translate }}</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="field-group">
+                <label>{{ 'common.notes' | translate }}</label>
+                <textarea class="form-control text-area-vertical" rows="9" formControlName="notes"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 footer-buttons">
+          <button type="button" class="btn btn-light" [routerLink]="['/expenses']" [disabled]="isLoading">{{ 'button.cancel' | translate }}</button>
+          <button class="btn btn-primary with-spinner" type="submit" [disabled]="isLoading">
+            <div *ngIf="isLoading" class="btn-spinner"></div>
+            {{ 'button.save' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>

@@ -33,7 +33,8 @@
     "companyName": "Название{{separator}}компании",
     "basicInformation": "Основная информация",
     "contactInformation": "Контактная информация",
-    "category": "Категория"
+    "category": "Категория",
+    "additionally": "Дополнительно"
   },
   "header": {
     "accountingForGoodsAndServices": "Учет товаров и услуг",
@@ -71,7 +72,8 @@
     "no": "Нет",
     "apply": "Применить",
     "save": "Сохранить",
-    "close": "Закрыть"
+    "close": "Закрыть",
+    "addExpenses": "Добавить расходы"
   },
   "paymentMethod": {
     "cash": "Наличный расчет",
@@ -160,8 +162,8 @@
     "categoryWasAdded": "Категория <b>{{name}}</b> была успешно создана.",
     "categoryWasUpdated": "Категория <b>{{name}}</b> была успешно обновлена.",
     "categoryWasDeleted": "Категория <b>{{name}}</b> была успешно удалена.",
-    "deleteCategoryError": "При удалении категории возникла ошибка.",
-    "saveCategoryError": "При сохранении категории возникла ошибка.",
+    "deleteCategoryError": "При удалении категории произошла ошибка.",
+    "saveCategoryError": "При сохранении категории произошла ошибка.",
     "withoutDeliveries": "Без поставок",
     "almostFinished": "Заканчивающиеся",
     "inStock": "В{{separator}}наличии",
@@ -176,12 +178,12 @@
     "addedDate": "Дата{{value}}добавления",
     "lastDeliveryDate": "Дата послед.<br>поставки",
     "productSaved": "Товар <b>{{name}}</b> был успешно сохранён.",
-    "unableLoadOrders": "При загрузке всех заказов возникла ошибка.",
+    "unableLoadOrders": "При загрузке всех заказов произошла ошибка.",
     "costPrice": "Себестоимость",
     "quantity": "Количество",
     "price": "Цена",
     "productWasDeleted": "Товар был успешно удалён.",
-    "errorWhileDeletingProduct": "При удалении товара возникла ошибка.",
+    "errorWhileDeletingProduct": "При удалении товара произошла ошибка.",
     "productNotFound": "Товар не найден"
   },
   "supplies": {
@@ -189,7 +191,7 @@
     "supplyWasAdded": "Поступление было успешно добавлено.",
     "supplyWasUpdated": "Поступление было успешно обновлено.",
     "supplyDeleted": "Поступление было успешно удалено.",
-    "loadSuppliesError": "При загрузке всех поступлений возникла ошибка.",
+    "loadSuppliesError": "При загрузке всех поступлений произошла ошибка.",
     "receivedDate": "Дата{{separator}}получения",
     "description": "Описание{{separator}}поставки",
     "supplierName": "Имя{{separator}}поставщика",
@@ -209,7 +211,7 @@
   "suppliers": {
     "suppliers": "Поставщики",
     "supplierDeleted": "Поставщик был успешно удален.",
-    "errorLoadSuppliers": "При загрузке всех заказов возникла ошибка.",
+    "errorLoadSuppliers": "При загрузке всех заказов произошла ошибка.",
     "providedService": "Предоставляемый<br>сервис",
     "address": "Адрес",
     "webSite": "Сайт",
@@ -220,9 +222,8 @@
     "addSupplier": "Добавление поставщика",
     "supplierUpdated": "Поставщик был успешно изменен.",
     "supplierAdded": "Поставщик был успешно добавлен.",
-    "errorLoadingSupplier": "При загрузке поставщика возникла ошибка.",
+    "errorLoadingSupplier": "При загрузке поставщика произошла ошибка.",
     "servicesList": "Список услуг",
-    "additionally": "Дополнительно",
     "name": "Имя",
     "paymentCards": "Карты для оплаты",
     "cardNumber": "Номер карты",
@@ -231,8 +232,8 @@
   "exhibitions": {
     "exhibitions": "Выставки",
     "exhibitionDeleted": "Выставка была успешно удалена.",
-    "errorDeletingExhibition": "При удалении выставки возникла ошибка.",
-    "errorLoadingExhibitions": "При загрузке списка выставок возникла ошибка.",
+    "errorDeletingExhibition": "При удалении выставки произошла ошибка.",
+    "errorLoadingExhibitions": "При загрузке списка выставок произошла ошибка.",
     "areYouSureToDeleteExhibition": "Вы уверены, что хотите удалить выбранную выставку <b>{{name}}</b>?",
     "participationCost": "Стоимость{{separator}}участия",
     "city": "Город{{separator}}проведения",
@@ -244,14 +245,20 @@
   },
   "expenses": {
     "expenses": "Расходы",
-    "addExpenses": "Добавить расходы",
     "expenseDeleted": "Расходы успешно были удалены.",
-    "errorDeletingExpense": "При удалении расходов возникла ошибка.",
-    "errorLoadingExpenses": "При загрузке списка расходов возникла ошибка.",
+    "errorDeletingExpense": "При удалении расходов произошла ошибка.",
+    "errorLoadingExpenses": "При загрузке списка расходов произошла ошибка.",
     "areYouSureToDeleteExpense": "Вы уверены, что хотите удалить расходы от <b>{{supplier}}</b> за <b>{{date}}</b>?",
     "supplier": "Поставщик",
     "cost": "Стоимость",
-    "purpose": "Назначение"
+    "purpose": "Назначение",
+    "addExpence": "Добавление расходов",
+    "editExpence": "Редактирование расходов",
+    "goodsOrServicesSupplier": "Поставщик товаров/услуг",
+    "paymentMethod": "Метод оплаты",
+    "expenseUpdated": "Расходы были успешно изменены.",
+    "expenseAdded": "Расходы были успешно добавлены.",
+    "errorSavingExpense": "При сохранении расходов произошла ошибка."
   },
   "expenceCategory": {
     "advertising": "Реклама",
