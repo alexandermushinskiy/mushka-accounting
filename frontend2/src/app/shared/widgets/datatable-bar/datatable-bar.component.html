@@ -14,9 +14,16 @@
   
   <div class="separator"></div>
 
-  <mshk-search-form class="search" [defaultValue]="searchKey" (onSearch)="search($event)"></mshk-search-form>
+  <mshk-search-form class="search" [defaultValue]="searchKey" (onSearch)="onSearchChanged($event)"></mshk-search-form>
   
   <div class="separator"></div>
+
+  <ng-container *ngIf="hasDateRangeFilter">
+    <mshk-select-timeframes class="timeframes"
+                (onRangeSelected)="onRangeChanged($event)">
+    </mshk-select-timeframes>
+    <div class="separator"></div>
+  </ng-container>
 
   <div #outsideFilters>
     <ng-content></ng-content>

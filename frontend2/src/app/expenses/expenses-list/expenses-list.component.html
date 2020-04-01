@@ -4,7 +4,9 @@
         [addButtonTitle]="'expenses.addExpenses'"
         [total]="total"
         [shown]="shown"
-        (onSearch)="onSearch($event)">
+        [hasDateRangeFilter]="true"
+        (onSearch)="onSearch($event)"
+        (onRangeSelected)="onRangeSelected($event)">
 
   <mshk-select-category class="categories"
         (onCategorySelected)="onCategorySelected($event)">
