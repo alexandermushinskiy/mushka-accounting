@@ -20,6 +20,7 @@
 
   <ng-container *ngIf="hasDateRangeFilter">
     <mshk-select-timeframes class="timeframes"
+                [dateRange]="dateRange"
                 (onRangeSelected)="onRangeChanged($event)">
     </mshk-select-timeframes>
     <div class="separator"></div>

@@ -12,6 +12,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { NgxMaskModule } from 'ngx-mask';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 // import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { LoadingScreenComponent } from './widgets/loading-screen/loading-screen.component';
@@ -84,6 +85,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ToastrModule.forRoot(),
     ModalModule.forRoot(),
     NgxMaskModule.forRoot(),
+    NgxWebstorageModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

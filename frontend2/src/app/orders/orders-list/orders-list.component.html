@@ -4,6 +4,8 @@
         [addButtonTitle]="'button.addOrder'"
         [total]="total"
         [shown]="shown"
+        [searchKey]="ordersFilter.searchKey"
+        [dateRange]="ordersFilter.dateRange"
         [hasDateRangeFilter]="true"
         (onSearch)="onSearch($event)"
         (onRangeSelected)="onRangeSelected($event)">

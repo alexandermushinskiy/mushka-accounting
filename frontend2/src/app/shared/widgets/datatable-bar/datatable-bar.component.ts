@@ -14,6 +14,7 @@ export class DatatableBarComponent implements OnInit {
   @Input() shown: number;
   @Input() hasMenuToggle = false;
   @Input() searchKey: string;
+  @Input() dateRange: DateRange;
   @Input() hasDateRangeFilter = false;
   @Output() onSearch = new EventEmitter<string>();
   @Output() onRangeSelected = new EventEmitter<DateRange>();

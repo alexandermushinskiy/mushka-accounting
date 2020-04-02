@@ -16,12 +16,20 @@ export class SelectTimeframesComponent implements OnInit {
   @Input() disabled = false;
   @Input() placeholder = 'common.selectPeriod';
   @Input() dateFormat = 'YYYY-MM-DD';
+
+  @Input() set dateRange(value: DateRange) {
+    if (!!value) {
+      this.selectedTimeFrame = this.getTimeFrameByDateRange(value);
+      if (this.selectedTimeFrame === TimeFrame.CUSTOM_RANGE) {
+        this.timeframes.push({ id: TimeFrame.CUSTOM_RANGE, name: this.getRangeName(value) });
+      }
+    }
+  }
+
   @Output() onRangeSelected = new EventEmitter<DateRange>();
-  @Output() onClear = new EventEmitter();
 
   modal: NgbModalRef;
   selectedTimeFrame: TimeFrame;
-  dateRange: DateRange;
 
   timeframes = [
     { id: TimeFrame.LAST_MONTH, name: 'timeframe.lastMonth' },
@@ -53,13 +61,6 @@ export class SelectTimeframesComponent implements OnInit {
     this.modal = this.modalService.open(this.dateRangeTmpl, this.dateRangModalConfig);
   }
 
-  clear() {
-    this.selectedTimeFrame = null;
-    this.dateRange = null;
-    this.removeCustomeRange();
-    this.onClear.emit();
-  }
-
   onDateRangeSelected(dateRange: DateRange) {
     this.closeModal();
 
@@ -75,6 +76,11 @@ export class SelectTimeframesComponent implements OnInit {
     }
 
     this.selectDateRange(dateRange);
+  }
+
+  clear() {
+    this.selectedTimeFrame = null;
+    this.removeCustomeRange();
   }
 
   closeModal() {
@@ -102,8 +108,7 @@ export class SelectTimeframesComponent implements OnInit {
   }
 
   private selectDateRange(dateRange: DateRange) {
-    this.dateRange = dateRange;
-    this.onRangeSelected.emit(this.dateRange);
+    this.onRangeSelected.emit(dateRange);
   }
 
   private getDateRange(timeFrame: TimeFrame): DateRange {
@@ -141,17 +146,59 @@ export class SelectTimeframesComponent implements OnInit {
   }
 
   private getCurrentQuarterRange(): DateRange {
-    const currentQuarter = moment().startOf('quarter');
-    const startOfQuarter = currentQuarter.format(this.dateFormat);
-    const endOfQuarter = currentQuarter.format(this.dateFormat);
+    const startOfQuarter = moment().startOf('quarter').format(this.dateFormat);
+    const endOfQuarter = moment().endOf('quarter').format(this.dateFormat);
 
     return new DateRange(startOfQuarter, endOfQuarter);
   }
 
   private getCurrentYearRange(): DateRange {
     const startOfYear = moment().startOf('year').format(this.dateFormat);
-    const today = moment().format(this.dateFormat);
+    const endOfYear = moment().endOf('year').format(this.dateFormat);
 
-    return new DateRange(startOfYear, today);
+    return new DateRange(startOfYear, endOfYear);
+  }
+
+  private getTimeFrameByDateRange(dateRange: DateRange): TimeFrame {
+    if (this.isLastMonth(dateRange)) {
+      return TimeFrame.LAST_MONTH;
+    } else if (this.isCurrentMonth(dateRange)) {
+      return TimeFrame.CURRENT_MONTH;
+    } else if (this.isCurentQuarter(dateRange)) {
+      return TimeFrame.CURRENT_QUARTER;
+    } else if (this.isCurrentYear(dateRange)) {
+      return TimeFrame.CURRENT_YEAR;
+    } else {
+      return TimeFrame.CUSTOM_RANGE;
+    }
+  }
+
+  private isLastMonth(dateRange: DateRange): boolean {
+    const lastMonth = moment().subtract(1, 'month');
+    const startOfMonth = lastMonth.startOf('month').format(this.dateFormat);
+    const endOfMonth = lastMonth.endOf('month').format(this.dateFormat);
+
+    return dateRange.from === startOfMonth && dateRange.to === endOfMonth;
+  }
+
+  private isCurrentMonth(dateRange: DateRange): boolean {
+    const startOfMonth = moment().startOf('month').format(this.dateFormat);
+    const endOfMonth = moment().endOf('month').format(this.dateFormat);
+
+    return dateRange.from === startOfMonth && dateRange.to === endOfMonth;
+  }
+
+  private isCurentQuarter(dateRange: DateRange): boolean {
+    const startOfQuarter = moment().startOf('quarter').format(this.dateFormat);
+    const endOfQuarter = moment().endOf('quarter').format(this.dateFormat);
+
+    return dateRange.from === startOfQuarter && dateRange.to === endOfQuarter;
+  }
+
+  private isCurrentYear(dateRange: DateRange): boolean {
+    const startOfYear = moment().startOf('year').format(this.dateFormat);
+    const endOfYear = moment().endOf('year').format(this.dateFormat);
+
+    return dateRange.from === startOfYear && dateRange.to === endOfYear;
   }
 }

@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-// import { NgxWebstorageModule } from 'ngx-webstorage';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,7 +35,6 @@ import { ExpensesModule } from './expenses/expenses.module';
     SuppliersModule,
     ExhibitionsModule,
     ExpensesModule
-    // NgxWebstorageModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

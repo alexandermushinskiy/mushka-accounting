@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbModalRef, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { LocalStorage } from 'ngx-webstorage';
 
 import { OrderList } from '../../shared/models/order-list.model';
 import { OrdersService } from '../../core/api/orders.service';
@@ -14,14 +15,17 @@ import { DateRange } from '../../shared/models/date-range.model';
 })
 export class OrdersListComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
+
+  @LocalStorage('orders_filter', {searchKey: '', dateRange: null}) ordersFilter: { searchKey: string, dateRange: DateRange };
+
   orders: OrderList[];
   shownOrders: OrderList[];
   loadingIndicator = false;
   total = 0;
   shown = 0;
   orderToDelete: OrderList;
-  searchKey: string;
-  dateRange: DateRange;
+  // searchKey: string;
+  // dateRange: DateRange;
   modal: NgbModalRef;
   sorts = [
     { prop: 'orderDate', dir: 'desc' },
@@ -51,18 +55,14 @@ export class OrdersListComponent implements OnInit {
   }
 
   onSearch(searchKey: string) {
-    this.searchKey = searchKey;
-
+    // this.searchKey = searchKey;
+    this.ordersFilter.searchKey = searchKey;
     this.filterOrders();
   }
 
   onRangeSelected(dateRange: DateRange) {
-    this.dateRange = dateRange;
-    this.filterOrders();
-  }
-
-  onClearRange() {
-    this.dateRange = null;
+    // this.dateRange = dateRange;
+    this.ordersFilter.dateRange = dateRange;
     this.filterOrders();
   }
 
@@ -91,7 +91,7 @@ export class OrdersListComponent implements OnInit {
   }
 
   private filterOrders() {
-    const orderFilter = new OrderListFilter(this.searchKey, this.dateRange);
+    const orderFilter = new OrderListFilter(this.ordersFilter.searchKey, this.ordersFilter.dateRange);
     const filteredOrders = this.orders.filter(order => orderFilter.filter(order));
 
     this.shownOrders = filteredOrders;
@@ -122,10 +122,14 @@ export class OrdersListComponent implements OnInit {
 
   private onOrdersLoaded(orders: OrderList[]) {
     this.orders = orders;
-    this.shownOrders = orders;
-
     this.total = orders.length;
-    this.shown = orders.length;
+
+    if (!!this.ordersFilter.searchKey || !!this.ordersFilter.dateRange) {
+      this.filterOrders();
+    } else {
+      this.shownOrders = orders;
+      this.shown = orders.length;
+    }
 
     this.loadingIndicator = false;
   }
