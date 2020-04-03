@@ -5,6 +5,8 @@
         [total]="total"
         [shown]="shown"
         [hasDateRangeFilter]="true"
+        [searchKey]="ordersFilter.searchKey"
+        [dateRange]="ordersFilter.dateRange"
         (onSearch)="onSearch($event)"
         (onRangeSelected)="onRangeSelected($event)">
 </mshk-datatable-bar>

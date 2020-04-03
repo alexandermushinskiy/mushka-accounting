@@ -5,13 +5,14 @@
         [total]="total"
         [shown]="shown"
         [hasMenuToggle]="true"
+        [searchKey]="suppliesFilter.searchKey"
         (onSearch)="onSearch($event)">
 
   <mshk-select-products class="products-list"
         [products]="productsList"
         [canClearAll]="true"
         [isMultiple]="false"
-        [ngModel]="selectedProduct"
+        [ngModel]="suppliesFilter.product"
         [isLoading]="isProductsLoading"
         (onProductSelected)="onProductSelected($event)">
   </mshk-select-products>

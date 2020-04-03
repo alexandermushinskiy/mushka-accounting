@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbModalRef, NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { LocalStorage } from 'ngx-webstorage';
 
 import { SupplyList } from '../../shared/models/supply-list.model';
 import { SuppliesService } from '../../core/api/supplies.service';
@@ -15,6 +16,7 @@ import { ItemsWithTotalCount } from '../../shared/models/items-with-total-count.
 })
 export class SuppliesListComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
+  @LocalStorage('supplies_filter', {searchKey: null, product: null}) suppliesFilter: { searchKey: string, product: SelectProduct };
   supplies: SupplyList[];
   shownSupplies: SupplyList[];
   loadingIndicator = false;
@@ -22,8 +24,6 @@ export class SuppliesListComponent implements OnInit {
   total = 0;
   shown = 0;
   supplyToDelete: SupplyList;
-  searchKey: string;
-  selectedProduct: SelectProduct;
   productsList: SelectProduct[];
   sorts = [
     { prop: 'supplierName', dir: 'asc' },
@@ -56,13 +56,13 @@ export class SuppliesListComponent implements OnInit {
   }
 
   onSearch(searchKey: string) {
-    this.searchKey = searchKey;
+    this.suppliesFilter.searchKey = searchKey;
 
     this.loadSupplies();
   }
 
   onProductSelected(product: SelectProduct) {
-    this.selectedProduct = product;
+    this.suppliesFilter.product = product;
 
     this.loadSupplies();
   }
@@ -116,7 +116,8 @@ export class SuppliesListComponent implements OnInit {
   private loadSupplies() {
     this.loadingIndicator = true;
 
-    this.suppliesService.get(this.searchKey, !!this.selectedProduct ? this.selectedProduct.id : null)
+    const productId = !!this.suppliesFilter.product ? this.suppliesFilter.product.id : null;
+    this.suppliesService.get(this.suppliesFilter.searchKey, productId)
       .subscribe(
         (res: ItemsWithTotalCount<SupplyList>) => this.onLoadSuccess(res),
         () => this.onLoadError()
@@ -125,9 +126,9 @@ export class SuppliesListComponent implements OnInit {
 
   private onLoadSuccess(response: ItemsWithTotalCount<SupplyList>) {
     this.supplies = response.items;
-    this.shownSupplies = response.items;
-
     this.total = response.totalCount;
+
+    this.shownSupplies = response.items;
     this.shown = response.items.length;
 
     this.loadingIndicator = false;

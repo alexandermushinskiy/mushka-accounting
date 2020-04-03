@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbModalRef, NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { LocalStorage } from 'ngx-webstorage';
 
 import { CorporateOrderList } from '../../shared/models/corporate-order-list.model';
 import { DateRange } from '../../shared/models/date-range.model';
@@ -14,14 +15,14 @@ import { CorporateOrderListFilter } from '../../shared/filters/corporate-order-l
 })
 export class CorporateOrdersListComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
+  @LocalStorage('corporate_orders_filter', {searchKey: null, dateRange: null}) ordersFilter: { searchKey: string, dateRange: DateRange };
+
   orders: CorporateOrderList[];
   shownOrders: CorporateOrderList[];
   loadingIndicator = false;
   total = 0;
   shown = 0;
   orderToDelete: CorporateOrderList;
-  searchKey: string;
-  dateRange: DateRange;
   modal: NgbModalRef;
   sorts = [
     { prop: 'createdOn', dir: 'desc' },
@@ -51,18 +52,12 @@ export class CorporateOrdersListComponent implements OnInit {
   }
 
   onSearch(searchKey: string) {
-    this.searchKey = searchKey;
-
+    this.ordersFilter.searchKey = searchKey;
     this.filterOrders();
   }
 
   onRangeSelected(dateRange: DateRange) {
-    this.dateRange = dateRange;
-    this.filterOrders();
-  }
-
-  onClearRange() {
-    this.dateRange = null;
+    this.ordersFilter.dateRange = dateRange;
     this.filterOrders();
   }
 
@@ -103,7 +98,7 @@ export class CorporateOrdersListComponent implements OnInit {
   }
 
   private filterOrders() {
-    const orderFilter = new CorporateOrderListFilter(this.searchKey, this.dateRange);
+    const orderFilter = new CorporateOrderListFilter(this.ordersFilter.searchKey, this.ordersFilter.dateRange);
     const filteredOrders = this.orders.filter(order => orderFilter.filter(order));
 
     this.shownOrders = filteredOrders;
@@ -122,10 +117,14 @@ export class CorporateOrdersListComponent implements OnInit {
 
   private onLoadSuccess(orders: CorporateOrderList[]) {
     this.orders = orders;
-    this.shownOrders = orders;
-
     this.total = orders.length;
-    this.shown = orders.length;
+
+    if (!!this.ordersFilter.searchKey || !!this.ordersFilter.dateRange) {
+      this.filterOrders();
+    } else {
+      this.shownOrders = orders;
+      this.shown = orders.length;
+    }
 
     this.loadingIndicator = false;
   }

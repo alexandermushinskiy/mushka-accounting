@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbModalRef, NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { LocalStorage } from 'ngx-webstorage';
 
 import { Supplier } from '../../shared/models/supplier.model';
 import { SuppliersService } from '../../core/api/suppliers.service';
@@ -15,13 +16,14 @@ import { SupplierListFilter } from '../../shared/filters/supplier-list.filter';
 export class SuppliersListComponent implements OnInit {
   @ViewChild('datatable', { static: false }) datatable: DatatableComponent;
   @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
+  @LocalStorage('suppliers_filter', {searchKey: null}) suppliersFilter: { searchKey: string };
+
   suppliers: Supplier[];
   shownSuppliers: Supplier[];
   total = 0;
   shown = 0;
   loadingIndicator = true;
   sorts = [{ prop: 'name', dir: 'asc' }];
-  searchKey: string;
   supplierToDelete: Supplier;
 
   private modalRef: NgbModalRef;
@@ -75,13 +77,13 @@ export class SuppliersListComponent implements OnInit {
   }
 
   onSearch(searchKey: string) {
-    this.searchKey = searchKey;
+    this.suppliersFilter.searchKey = searchKey;
 
     this.filterSuppliers();
   }
 
   private filterSuppliers() {
-    const supplierFilter = new SupplierListFilter(this.searchKey);
+    const supplierFilter = new SupplierListFilter(this.suppliersFilter.searchKey);
     const filteredSuppliers = this.suppliers.filter(order => supplierFilter.filter(order));
 
     this.shownSuppliers = filteredSuppliers;
@@ -112,10 +114,14 @@ export class SuppliersListComponent implements OnInit {
 
   private onLoadSuccess(suppliers: Supplier[]) {
     this.suppliers = suppliers;
-    this.shownSuppliers = suppliers;
-
     this.total = suppliers.length;
-    this.shown = suppliers.length;
+
+    if (!!this.suppliersFilter.searchKey) {
+      this.filterSuppliers();
+    } else {
+      this.shownSuppliers = suppliers;
+      this.shown = suppliers.length;
+    }
 
     this.loadingIndicator = false;
   }

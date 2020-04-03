@@ -15,8 +15,7 @@ import { DateRange } from '../../shared/models/date-range.model';
 })
 export class OrdersListComponent implements OnInit {
   @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
-
-  @LocalStorage('orders_filter', {searchKey: '', dateRange: null}) ordersFilter: { searchKey: string, dateRange: DateRange };
+  @LocalStorage('orders_filter', {searchKey: null, dateRange: null}) ordersFilter: { searchKey: string, dateRange: DateRange };
 
   orders: OrderList[];
   shownOrders: OrderList[];
@@ -24,8 +23,6 @@ export class OrdersListComponent implements OnInit {
   total = 0;
   shown = 0;
   orderToDelete: OrderList;
-  // searchKey: string;
-  // dateRange: DateRange;
   modal: NgbModalRef;
   sorts = [
     { prop: 'orderDate', dir: 'desc' },
@@ -55,13 +52,11 @@ export class OrdersListComponent implements OnInit {
   }
 
   onSearch(searchKey: string) {
-    // this.searchKey = searchKey;
     this.ordersFilter.searchKey = searchKey;
     this.filterOrders();
   }
 
   onRangeSelected(dateRange: DateRange) {
-    // this.dateRange = dateRange;
     this.ordersFilter.dateRange = dateRange;
     this.filterOrders();
   }
