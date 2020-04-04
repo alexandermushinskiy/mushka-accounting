@@ -23,7 +23,7 @@
 
   <ngx-datatable-column name="name" [sortable]="true">
     <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
-      <span [innerHtml]="'exhibitions.name' | translate: {separator: '<br>'}" (click)="sort($event)"></span>
+      <span [innerHtml]="'exhibitions.exhibitionName' | translate: {separator: '<br>'}" (click)="sort($event)"></span>
     </ng-template>
     <ng-template ngx-datatable-cell-template let-value="value">
       <span [title]="value">{{ value }}</span>
@@ -100,7 +100,7 @@
 <ng-template #confirmRemoveTmpl>
   <mshk-confirmation
           [confirmButtonText]="'button.remove'"
-          [plainText]="'exhibitions.areYouSureToDeleteExhibition' | translate: { name: exhibitionToDelete.name }"
+          [plainText]="'exhibitions.areYouSureToDeleteExhibition' | translate: { name: exhibitionToDelete.name, fromDate: (exhibitionToDelete.fromDate | format), toDate: exhibitionToDelete.toDate | format }"
           (onClose)="closeModal()"
           (onConfirm)="confirmDelete()">
   </mshk-confirmation>
