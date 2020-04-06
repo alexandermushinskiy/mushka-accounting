@@ -16,9 +16,9 @@ import { CorporateOrderListFilter } from '../../shared/filters/corporate-order-l
   styleUrls: ['./corporate-orders-list.component.scss']
 })
 export class CorporateOrdersListComponent extends SortableDatatableComponent implements OnInit {
-  @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
+  @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
   @LocalStorage('corporate_orders_search_key', '') ordersSearchKey: string;
-  
+
   orders: CorporateOrderList[];
   orderRows: CorporateOrderTableRow[];
   loadingIndicator = false;
@@ -32,7 +32,7 @@ export class CorporateOrdersListComponent extends SortableDatatableComponent imp
     backdrop: 'static',
     size: 'sm'
   };
-  
+
   constructor(private router: Router,
               private modalService: NgbModal,
               private corporateOrdersService: CorporateOrdersService,

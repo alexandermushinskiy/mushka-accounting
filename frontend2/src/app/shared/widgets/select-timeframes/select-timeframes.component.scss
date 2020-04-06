@@ -1,0 +1,14 @@
+@import '../../../variables';
+
+.select-form {
+  position: relative;
+}
+
+.time-frames {
+  display: inline-block;
+  width: calc(100% - 25px)
+}
+
+.btn-range {
+  padding-left: 7px;
+}

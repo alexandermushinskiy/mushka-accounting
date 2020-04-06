@@ -51,8 +51,8 @@ export class DateRageModalComponent implements OnInit {
 
   apply() {
     const convertedFromDate = this.datetimeService.convertNgbDateToDate(this.fromDate);
-    let convertedToDate = this.datetimeService.convertNgbDateToDate(this.toDate);
-    
+    const convertedToDate = this.datetimeService.convertNgbDateToDate(this.toDate);
+
     this.onApply.emit(new DateRange(convertedFromDate, convertedToDate));
   }
 

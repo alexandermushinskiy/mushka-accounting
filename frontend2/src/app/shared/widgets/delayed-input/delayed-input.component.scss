@@ -1,0 +1,25 @@
+@import '../../../variables';
+
+:host(.not-valid) {
+  .input-group input {
+    box-shadow: inset 1px 0 0 0 $validation-color;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  //text-align: right;
+}
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+  margin: 0;
+  //text-align: right;
+}
+
+input:enabled {
+  background-color: #fff;
+}

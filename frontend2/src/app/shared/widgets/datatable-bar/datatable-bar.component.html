@@ -1,0 +1,51 @@
+<header class="header">
+  <h4 class="header-title">{{ title | translate }}</h4>
+  
+  <div class="separator"></div>
+
+  <div class="actions">
+    <button class="btn btn-icon" [routerLink]="addLink" (click)="onAddClicked.emit()">
+      <i class="fa fa-plus-circle" [title]="addButtonTitle | translate"></i>
+    </button>
+    <button class="btn btn-icon">
+      <i class="fa fa-download" [title]="'common.exportToCsv' | translate" aria-hidden="true"></i>
+    </button>
+  </div>
+  
+  <div class="separator"></div>
+
+  <mshk-search-form class="search" [defaultValue]="searchKey" (onSearch)="onSearchChanged($event)"></mshk-search-form>
+  
+  <div class="separator"></div>
+
+  <ng-container *ngIf="hasDateRangeFilter">
+    <mshk-select-timeframes class="timeframes"
+                [dateRange]="dateRange"
+                (onRangeSelected)="onRangeChanged($event)">
+    </mshk-select-timeframes>
+    <div class="separator"></div>
+  </ng-container>
+
+  <div #outsideFilters>
+    <ng-content></ng-content>
+  </div>
+
+  <div class="separator" *ngIf="outsideFilters.childNodes.length > 0"></div>
+
+  <span class="text-muted total-count">
+    <span *ngIf="shown !== total; else totalBlock">
+      {{ shown }} {{ 'common.outOf' | translate }} {{ total }}
+    </span>
+    <ng-template #totalBlock>
+      {{ total }} {{ 'common.total' | translate }}
+    </ng-template>
+  </span>
+
+  <div class="filter">
+    <button class="btn btn-icon" (click)="showHideFilterPanel()">
+      <i class="fa fa-filter"></i>
+    </button>
+  </div>
+</header>
+
+<mshk-datatable-filter-bar *ngIf="isFilterPanel" (onClose)="showHideFilterPanel()"></mshk-datatable-filter-bar>

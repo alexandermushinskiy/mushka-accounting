@@ -1,0 +1,250 @@
+$white:                               #ffffff; //#fafafa;
+$white-smoke:                         #f4f9fd;
+$blue:                                #0082F0;
+$dark-blue:                           #1d488f;
+$orange:                              #f78521;
+$green-lighten:                       #67a4a0;
+$green:                               #36b07f;
+$gray:                                #939597;
+$gray-200:                            rgb(214, 214, 214);
+$light-gray:                          #f9f9f9;
+$lighten-gray:                        #d6d6d6;
+$dark-gray:                           #4e4e4e;
+$black:                               #000;
+$red:                                 #f52323;
+$light-green:                         #298964;
+
+
+// Layer colors
+$layer0: rgb(12, 12, 12);
+$layer1: rgb(224, 224, 224);
+$layer2: rgb(242, 242, 242);
+$layer3: rgb(235, 235, 235);
+
+// Text
+$text: rgb(78, 78, 78);
+$table-hover: rgba(0, 130, 240, .1); // rgba(40, 160, 255, .1);
+$paragraph: rgba(36, 36, 36, .8);
+$validation-color: #f78521;
+$clear-color: #999;
+$clear-hover-color: #818182;
+
+// Body
+$body-color:                      $text !default;
+
+//Breakpoints
+$mobile:                         768px;
+$tablet:                         992px;
+$desktop:                        1200px;
+$desktop-lg:                     1468px;
+
+// Default settings
+$text-color:                      $body-color;
+$padding-base:                    16px;
+$border-radius-base:              3px !default;
+$border-dark-color:               $dark-gray;
+$border-width:                    .1rem;
+
+//typography
+$text-muted:                      transparentize($text-color, .4);
+$font-size-base:                  1.4rem !default;
+$disabled-control-color:              #e9ecef;
+$placeholder-color:                   #888888;
+$placeholder-opacity:                 0.7;
+
+// Z-index master list
+$zindex-loading-screen:           1100;
+$zindex-sidebar:                  1060 !default;
+
+//forms
+$input-height:                    28px;
+$input-border-color:              #cccccc;
+$input-border-hover:              rgb(176, 176, 176);
+
+//form control
+$input-padding-x:                6px !default;
+$input-padding-y:                4px !default;
+$input-font-size:                .9em !default;
+$input-line-height:              18px !default;
+$input-disabled-bg:              #e6e6e6;
+
+//Header
+$header-height:                   48px;
+$header-bg:                       $layer0;
+$header-padding-y:                .8rem;
+$header-padding-x:                1.5rem;
+
+//Main menu
+$menu-padding:                   $padding-base ($padding-base - 1) $padding-base $padding-base;
+$menu-link-color:                $text-color;
+$menu-link-hover-color:          $blue;
+$sidebar-width:                  220px;
+$sidebar-width-collapsed:        50px;
+$sidebar-bg:                     $layer1;
+$sidebar-footer-height:          40px;
+$sidebar-footer-link-bg:         $layer1;
+$sidebar-footer-link-color:      $text-color;
+$sidebar-border:                 $layer1;
+$btn-hamburger-color:            $blue;
+
+
+//btn
+$btn-padding-y:                  .5em;
+$btn-padding-x:                  1em;
+$btn-font-size:                  12px;
+$btn-line-height:                16px;
+$btn-border-radius:              $border-radius-base;
+
+$input-btn-padding-y-xs:        .1rem !default;
+$input-btn-padding-x-xs:        1rem !default;
+$input-btn-font-size-xs:        13px !default;
+$input-btn-line-height-xs:      17px !default;
+
+//btn small
+$btn-font-size-small:            12px !default;
+$btn-line-height-small:          16px !default;
+$btn-font-weight-small:          normal !default;
+
+//btn light
+$btn-light-color:              $text-color;
+$btn-light-bg:                 transparent;
+$btn-light-border:             $dark-gray;
+$btn-light-color-hover:        $white;
+$btn-light-bg-hover:           $dark-gray;
+$btn-light-border-hover:       $dark-gray;
+$btn-light-color-active:       $white;
+$btn-light-bg-active:          darken($dark-gray, 8%);
+$btn-light-border-active:      darken($dark-gray, 8%);
+
+//btn primary
+$btn-primary-color:              $white !default;
+$btn-primary-bg:                 $blue !default;
+$btn-primary-border:             $blue !default;
+$btn-primary-bg-hover:           lighten($blue, 15%);
+$btn-primary-border-hover:       lighten($blue, 15%);
+$btn-primary-bg-active:          darken($blue, 15%);
+$btn-primary-border-active:      darken($blue, 15%);
+
+//btn success
+$btn-success-color:              $white !default;
+$btn-success-bg:                 $green-lighten !default;
+$btn-success-border:             $green-lighten !default;
+$btn-success-bg-hover:           darken($green-lighten, 5%);
+$btn-success-border-hover:       darken($green-lighten, 5%);
+$btn-success-bg-active:          darken($green-lighten, 6%);
+$btn-success-border-active:      darken($green-lighten, 6%);
+$btn-success-bg-disabled:        $green-lighten;
+$btn-success-border-disabled:    $green-lighten;
+
+//btn-toggle
+$btn-toggle-size:                   3.4rem;
+
+//btn add
+$btn-add-size:                   3.4rem;
+$btn-add-size-xs:                2.4rem;
+
+//Dropdowns
+$dropdown-link-dark-hover-bg:    #363636;
+
+//Global search
+$global-search-input-height:                35px;
+$global-search-input-width:                 25rem;
+$global-search-input-padding:               1rem 3.6rem 1rem 1rem;
+$global-search-input-bg:                    #212121;
+$global-search-input-color:                 #898989;
+$global-search-input-border:                $dark-gray;
+$global-search-input-border-disabled:       $dark-gray;
+$global-search-submit-color:                transparentize($gray, .1);
+$global-search-submit-color-disabled:       $blue;
+
+//ngx-datatable
+$table-header-bg:                      $layer2;
+$table-header-border:                  $gray;
+$table-body-bg:                        none;
+$table-body-row-odd:                   #EBEBEB;
+$table-body-row-even:                  $layer2;
+$table-body-row-hover:                 $table-hover;
+$table-body-row-active:                $table-hover;
+$table-body-row-checked:               $table-hover;
+$table-header-font-weight:             bold;
+$table-header-font-size:               1.4rem;
+$table-header-line-height:             1.6rem;
+$table-header-padding-x:               0;
+$table-header-padding-y:               1rem;
+$table-header-color:                   $text;
+$table-cell-font-size-sm:              1.2rem;
+
+//ngb-pagination
+$page-item-color:                     rgba(0,0,0,.54);
+$page-item-background-color:          transparent;
+$page-item-border:                    1px solid #e6e6e6;
+$page-disabled-item-color:            rgba(0,0,0,.26)!important;
+$page-active-item-color:              #A0A0A0;
+$page-active-item-border-color:       #C3C3C3;
+
+//progress linear loader
+$progress-linear-loader-height:        3px;
+$progress-linear-loader-bg:            linear-gradient(to right, $blue 0%,  #63D4FF 100%);
+$progress-linear-loader-bar-bg:        #004fcb;
+
+// Modals
+$modal-lg:                                       800px !default;
+$modal-md:                                       650px !default;
+$modal-sm:                                       420px !default;
+$modal-title-font-size:                          1.6rem;
+$modal-title-line-height:                        2rem;
+$modal-content-border-radius:                    0;
+$modal-content-border:                           0 !default;
+$modal-content-box-shadow:                       none;
+$modal-backdrop-bg:                              $black !default;
+$modal-backdrop-opacity:                         .25 !default;
+$modal-header-border-color:                      transparent;
+$modal-header-padding:                           $padding-base !default;
+$modal-body-padding:                             $padding-base !default;
+$modal-footer-padding:                           $padding-base;
+
+
+$app-page-aside-min-width:           470px;
+$aside-border-width:                 $border-width*3;
+$aside-border-color:                 $layer1;
+
+//ngb-datepicker
+$ngb-datepicker-font-size:                      1.4rem;
+$ngb-datepicker-bg:                             $white;
+$ngb-datepicker-border-radius:                  0.5rem;
+$ngb-datepicker-header-border-radius:           0.5rem 0.5rem 0 0;
+$ngb-datepicker-header-padding-t:               0.5rem;
+$ngb-datepicker-navigation-height:              4rem;
+$ngb-datepicker-navigation-line-height:         3.85rem;
+$ngb-datepicker-navigation-select-width:        18rem;
+$ngb-datepicker-navigation-select-padding-x:    0.5rem;
+$ngb-datepicker-navigation-select-padding-y:    1rem;
+$ngb-datepicker-navigation-select-font-size:    1.4rem;
+$ngb-datepicker-navigation-select-border-color: $gray-200;
+$ngb-datepicker-navigation-select-border-radius-month: 0.5rem 0 0 0.5rem;
+$ngb-datepicker-navigation-select-border-radius-year: 0 0.5rem 0.5rem 0;
+$ngb-datepicker-arrow-size:                     4rem;
+$ngb-datepicker-arrow-btn-padding-x:            0;
+$ngb-datepicker-arrow-btn-padding-y:            2rem;
+$ngb-datepicker-arrow-btn-color:                $blue;
+$ngb-datepicker-arrow-btn-color-hover:          $dark-blue;
+$ngb-datepicker-week-border-radius:             0.5rem;
+$ngb-datepicker-week-first-padding-l:           0.5rem;
+$ngb-datepicker-week-last-padding-r:            0.5rem;
+$ngb-datepicker-month-name-height:              4rem;
+$ngb-datepicker-month-name-line-height:         4rem;
+$ngb-datepicker-month-name-color:               $dark-gray;
+$ngb-datepicker-day-selected-size:              4rem;
+$ngb-datepicker-day-selected-line-height:       4rem;
+$ngb-datepicker-day-selected-border-radius:     0.5rem;
+$ngb-datepicker-weekday-color:                  $blue;
+$ngb-datepicker-cell-size:                      4rem;
+$ngb-datepicker-cell-line-height:               4rem;
+
+
+@mixin text-ellipsis($width) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: $width;
+}

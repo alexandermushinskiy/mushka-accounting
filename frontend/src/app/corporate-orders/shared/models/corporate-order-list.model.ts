@@ -4,7 +4,7 @@ export class CorporateOrderList {
   createdOn: string;
   address: string;
   companyName: string;
-  
+
   constructor(data: any) {
     Object.assign(this, data);
   }

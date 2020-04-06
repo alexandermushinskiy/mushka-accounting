@@ -57,4 +57,4 @@ export const columnsConfig: { [name: string]: DatatableColumn } = {
     canBeFiltered: true,
     cellTemplateName: 'totalCol'
   }
-}
+};

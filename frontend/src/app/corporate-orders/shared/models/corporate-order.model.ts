@@ -21,7 +21,7 @@ export class CorporateOrder {
   email: string;
   notes: string;
   products: CorporateOrderProduct[];
-  
+
   constructor(data: any) {
     Object.assign(this, data);
   }

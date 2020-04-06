@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+
 import { BrowserDetectorService } from '../../../core/browser-detector/browser-detector.service';
 
 @Component({

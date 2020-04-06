@@ -1,0 +1,12 @@
+<div class="select-form">
+  <ng-select class="categories"
+            [clearable]="true"
+            [searchable]="false"
+            [disabled]="disabled"
+            [placeholder]="placeholder | translate"
+            [ngModel]="selectedCategory"
+            (ngModelChange)="onCategoryChanged($event)"
+            (clear)="clear()">
+    <ng-option *ngFor="let category of categories" [value]="category.id">{{ category.name | translate }}</ng-option>
+  </ng-select>
+</div>

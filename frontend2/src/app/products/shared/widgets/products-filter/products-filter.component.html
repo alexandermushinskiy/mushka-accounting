@@ -1,0 +1,11 @@
+<div class="select-form">
+  <ng-select class="filters"
+            [clearable]="true"
+            [searchable]="false"
+            [disabled]="disabled"
+            [placeholder]="placeholder | translate"
+            [ngModel]="selectedFilter"
+            (ngModelChange)="onFilterChanged($event)">
+    <ng-option *ngFor="let filter of filters" [value]="filter.id">{{ filter.name | translate }}</ng-option>
+  </ng-select>
+</div>

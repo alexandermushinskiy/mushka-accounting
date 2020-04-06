@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Mushka.Domain.Comparers;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Domain.Models;
 using Mushka.Infrastructure.DataAccess.Database;
 using Mushka.Infrastructure.DataAccess.Extensions;
 
@@ -18,6 +19,26 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         public SupplyRepository(MushkaDbContext context) : base(context)
         {
         }
+
+        public async Task<int> GetAllCountAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await Context.Supplies.CountAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<Supply>> GetByFilterAsync(SuppliesFiltersModel suppliesFiltersModel, CancellationToken cancellationToken = default(CancellationToken)) =>
+            await Context.Supplies
+                .Include(sup => sup.Supplier)
+                .Include(sup => sup.Products)
+                .ThenInclude(supProd => supProd.Product)
+                .ThenInclude(supProd => supProd.Size)
+                .Where(sup => suppliesFiltersModel.SearchKey == null ||
+                              (sup.Supplier.Name.ToUpper().Contains(suppliesFiltersModel.SearchKey.ToUpper()) ||
+                               sup.Description.ToUpper().Contains(suppliesFiltersModel.SearchKey.ToUpper())))
+                .Where(sup => suppliesFiltersModel.ProductId == null ||
+                              sup.Products.Any(prod => prod.ProductId == suppliesFiltersModel.ProductId))
+                .OrderBy(supply => supply.Supplier.Name)
+                .ThenBy(supply => supply.RequestDate)
+                .ToListAsync(cancellationToken);
 
         public override async Task<IEnumerable<Supply>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
             await Context.Supplies

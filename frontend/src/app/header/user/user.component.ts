@@ -23,6 +23,6 @@ export class UserComponent implements OnInit {
   }
 
   logOut() {
-    //this.currentUserService.logOut();
+    // this.currentUserService.logOut();
   }
 }

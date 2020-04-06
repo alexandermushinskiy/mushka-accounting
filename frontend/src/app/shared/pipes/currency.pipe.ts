@@ -20,7 +20,7 @@ export class CurrencyPipe implements PipeTransform {
   private applyMask(rawValue: string): string {
     const { allowNegative, decimal, precision, prefix, suffix, thousands } = this.options;
 
-    rawValue = new Number(rawValue).toFixed(precision);
+    rawValue = Number(rawValue).toFixed(precision);
     const onlyNumbers = rawValue.replace(/[^0-9]/g, '');
 
     if (!onlyNumbers) {

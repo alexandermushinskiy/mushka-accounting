@@ -1,0 +1,3 @@
+private readonly fakeDataUrl = 'assets/data/statistics.json';
+
+return this.http.get(this.fakeDataUrl)

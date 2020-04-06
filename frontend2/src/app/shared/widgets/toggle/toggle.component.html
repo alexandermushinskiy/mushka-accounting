@@ -1,0 +1,5 @@
+<label class="toggle">
+  <input class="toggle-control" type="checkbox" [ngModel]="isChecked" [disabled]="disabled" (ngModelChange)="onChange($event)">
+  <span class="toggle-control-indicator"></span>
+  <span class="toggle-description">{{ label | translate }}</span>
+</label>

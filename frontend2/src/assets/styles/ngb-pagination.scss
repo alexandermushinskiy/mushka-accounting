@@ -1,0 +1,52 @@
+@import 'app/variables';
+
+.pagination {
+  background-color: none;
+  margin-top: 10px;
+
+  .page-item:nth-child(3) {
+    margin-left: 10px;
+  }
+
+  .page-item:nth-last-child(3) {
+    margin-right: 10px;
+  }
+
+  .page-item.active .page-link {
+    border-radius: 5px;
+    background-color: $blue;
+    border-color: $blue;
+    color: $white;
+  }
+
+  .page-item {
+    margin-right: 5px;
+    border: $page-item-border;
+    border-radius: 5px;
+    width: 40px;
+    font-size: 16px;
+  }
+
+  .page-link {
+    background-color: transparent;
+    border: 0;
+    color: $page-item-color;
+
+    &:hover {
+      color: $blue;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .page-item.disabled {
+    cursor: not-allowed;
+
+    .page-link {
+      background-color: transparent;
+      color: $page-disabled-item-color;
+    }
+  }
+}

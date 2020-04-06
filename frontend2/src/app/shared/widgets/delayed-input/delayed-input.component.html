@@ -1,0 +1,10 @@
+<div class="input-group">
+  <input #inputBox
+         class="form-control"
+         [attr.type]="type"
+         [disabled]="disabled"
+         [required]="required"
+         [ngModel]="value"
+         [attr.placeholder]="placeholder"
+         (keyup)="valueChanged(inputBox.value)" />
+</div>

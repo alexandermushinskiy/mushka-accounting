@@ -34,11 +34,11 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
       this.value = this.initialValue;
     }
   }
-  
+
   writeValue(value: any): void {
     if (value) {
       this.value = this.isComplex ? this.options.find(opt => opt[this.dataField] === value) : value;
-      
+
       setTimeout(() => {
         this.onChangeCallback(this.value);
       }, 100);

@@ -75,7 +75,7 @@ namespace Mushka.Service.Services
             var product = await productRepository.GetByIdAsync(productId, cancellationToken);
 
             return product == null
-                ? CreateWarningValidationResponse($"Product with id {productId} is not found.", ValidationStatusType.NotFound)
+                ? CreateErrorValidationResponse($"Product with id {productId} is not found.", ValidationStatusType.NotFound)
                 : CreateInfoValidationResponse(product, $"Product with id {product.Id} was successfully retrieved.");
         }
 
@@ -83,7 +83,7 @@ namespace Mushka.Service.Services
         {
             if (!await categoryRepository.IsExistAsync(category => category.Id == categoryId, cancellationToken))
             {
-                CreateWarningValidationResponse($"Category with id {categoryId} is not found.", ValidationStatusType.NotFound);
+                CreateErrorValidationResponse($"Category with id {categoryId} is not found.", ValidationStatusType.NotFound);
             }
 
             IEnumerable<Product> products = (await productRepository.GetByCategoryId(categoryId, cancellationToken))
@@ -117,7 +117,7 @@ namespace Mushka.Service.Services
 
             if (product == null)
             {
-                return CreateWarningValidationResponse<ProductCostPrice>($"Product with id {productId} is not found.", ValidationStatusType.NotFound);
+                return CreateErrorValidationResponse<ProductCostPrice>($"Product with id {productId} is not found.", ValidationStatusType.NotFound);
             }
 
             var costPrice = await costPriceProvider.CalculateAsync(productId, productsCount, cancellationToken);
@@ -129,12 +129,12 @@ namespace Mushka.Service.Services
         {
             if (!await categoryRepository.IsExistAsync(category => category.Id == product.CategoryId, cancellationToken))
             {
-                return CreateWarningValidationResponse($"Category with id {product.CategoryId} is not found.", ValidationStatusType.NotFound);
+                return CreateErrorValidationResponse($"Category with id {product.CategoryId} is not found.", ValidationStatusType.NotFound);
             }
             
             if (await productRepository.IsExistAsync(prod => prod.VendorCode == product.VendorCode, cancellationToken))
             {
-                return CreateWarningValidationResponse($"Product with the vendor code {product.VendorCode} is already existed.");
+                return CreateErrorValidationResponse($"Product with the vendor code {product.VendorCode} is already existed.");
             }
 
             productRepository.Add(product);
@@ -151,12 +151,12 @@ namespace Mushka.Service.Services
 
             if (productToUpdate == null)
             {
-                return CreateWarningValidationResponse($"Product with id {product.Id} is not found.", ValidationStatusType.NotFound);
+                return CreateErrorValidationResponse($"Product with id {product.Id} is not found.", ValidationStatusType.NotFound);
             }
 
             if (await productRepository.IsExistAsync(prod => prod.Id != product.Id && prod.VendorCode == product.VendorCode, cancellationToken))
             {
-                return CreateWarningValidationResponse($"Product with the vendor code {product.VendorCode} is already existed.");
+                return CreateErrorValidationResponse($"Product with the vendor code {product.VendorCode} is already existed.");
             }
 
             product.Quantity = productToUpdate.Quantity;
@@ -174,7 +174,7 @@ namespace Mushka.Service.Services
 
             if (product == null)
             {
-                return CreateWarningValidationResponse($"Product with id {productId} is not found.", ValidationStatusType.NotFound);
+                return CreateErrorValidationResponse($"Product with id {productId} is not found.", ValidationStatusType.NotFound);
             }
 
             productRepository.Delete(product);

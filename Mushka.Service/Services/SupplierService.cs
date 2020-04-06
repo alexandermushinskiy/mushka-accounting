@@ -45,7 +45,7 @@ namespace Mushka.Service.Services
             var supplier = await supplierRepository.GetByIdAsync(supplierId, cancellationToken);
 
             return supplier == null
-                ? CreateWarningValidationResponse($"Supplier with id {supplierId} is not found.", ValidationStatusType.NotFound)
+                ? CreateErrorValidationResponse($"Supplier with id {supplierId} is not found.", ValidationStatusType.NotFound)
                 : CreateInfoValidationResponse(supplier, $"Supplier with id {supplier.Id} was successfully retrieved.");
         }
 
@@ -53,7 +53,7 @@ namespace Mushka.Service.Services
         {
             if (await supplierRepository.IsExistAsync(supp => supp.Name == supplier.Name, cancellationToken))
             {
-                return CreateWarningValidationResponse($"Supplier with name {supplier.Name} is already exist.");
+                return CreateErrorValidationResponse($"Supplier with name {supplier.Name} is already exist.");
             }
             
             var addedSupplier = supplierRepository.Add(supplier);
@@ -68,12 +68,12 @@ namespace Mushka.Service.Services
 
             if (supplierToUpdate == null)
             {
-                return CreateWarningValidationResponse($"Supplier with id {supplier.Id} is not found.", ValidationStatusType.NotFound);
+                return CreateErrorValidationResponse($"Supplier with id {supplier.Id} is not found.", ValidationStatusType.NotFound);
             }
 
             if (await supplierRepository.IsExistAsync(supp => supp.Id != supplier.Id && supp.Name == supplier.Name, cancellationToken))
             {
-                return CreateWarningValidationResponse($"Supplier with name {supplier.Name} is already exist.");
+                return CreateErrorValidationResponse($"Supplier with name {supplier.Name} is already exist.");
             }
 
             var updatedSupplier = supplierRepository.Update(supplier);
@@ -88,7 +88,7 @@ namespace Mushka.Service.Services
 
             if (supplier == null)
             {
-                return CreateWarningValidationResponse($"Supplier with id {supplierId} is not found.", ValidationStatusType.NotFound);
+                return CreateErrorValidationResponse($"Supplier with id {supplierId} is not found.", ValidationStatusType.NotFound);
             }
 
             supplierRepository.Delete(supplier);

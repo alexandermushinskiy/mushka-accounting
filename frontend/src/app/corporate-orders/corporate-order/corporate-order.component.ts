@@ -17,8 +17,8 @@ import { ComponentCanDeactivate } from '../../shared/hooks/component-can-deactiv
   styleUrls: ['./corporate-order.component.scss']
 })
 export class CorporateOrderComponent extends ComponentCanDeactivate implements OnInit {
-  @ViewChild('ngForm') ngForm: NgForm;
-  
+  @ViewChild('ngForm', { static: false }) ngForm: NgForm;
+
   orderForm: FormGroup;
   isEdit = false;
   isLoading = false;
@@ -79,7 +79,7 @@ export class CorporateOrderComponent extends ComponentCanDeactivate implements O
     const products = <FormArray>this.orderForm.get('products');
     products.removeAt(index);
   }
-  
+
   onNumberChanged(orderNumber: string) {
     if (!orderNumber && orderNumber.trim().length === 0) {
       return;
@@ -195,7 +195,7 @@ export class CorporateOrderComponent extends ComponentCanDeactivate implements O
       this.calculateProfit();
       this.updateControlValidator('deliveryCostMethod', !!value);
     });
-    
+
     this.orderForm.controls['prepayment'].valueChanges.subscribe((value: number) => {
       this.updateControlValidator('prepaymentMethod', !!value);
     });
@@ -206,7 +206,7 @@ export class CorporateOrderComponent extends ComponentCanDeactivate implements O
     formCtrl.setValidators(hasValidator ? [Validators.required] : []);
     formCtrl.updateValueAndValidity();
   }
-  
+
   private createOrderModel(formRawValue: any): CorporateOrder {
     return new CorporateOrder({
       id: this.orderId,
@@ -233,13 +233,13 @@ export class CorporateOrderComponent extends ComponentCanDeactivate implements O
           quantity: prod.quantity,
           unitPrice: prod.unitPrice,
           costPrice: prod.costPrice
-        })
+        });
       })
     });
   }
 
   private generateCorpNumber(date: string): string {
-    return `CORP-${this.datetimeService.convertFromToFormat(date, 'YYYY-MM-DD', 'DDMMYYYY')}`; 
+    return `CORP-${this.datetimeService.convertFromToFormat(date, 'YYYY-MM-DD', 'DDMMYYYY')}`;
   }
 
   private calculateProfit() {
@@ -255,10 +255,10 @@ export class CorporateOrderComponent extends ComponentCanDeactivate implements O
       profit += (unitPrice - costPrice) * quantity;
     });
 
-    const delivery = this.getFormControlValueAsNumber('deliveryCost')
+    const delivery = this.getFormControlValueAsNumber('deliveryCost');
     this.profit = profit - delivery - this.calculateTax();
   }
-  
+
   private calculateTax(): number {
     const tax = this.getFormControlValueAsNumber('tax');
     const cost = this.getFormControlValueAsNumber('cost');

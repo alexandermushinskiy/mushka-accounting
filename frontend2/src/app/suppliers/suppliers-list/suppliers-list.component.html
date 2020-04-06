@@ -1,0 +1,117 @@
+<mshk-datatable-bar
+        [title]="'suppliers.suppliers'"
+        [addLink]="'/suppliers/new'"
+        [addButtonTitle]="'button.addSupplier'"
+        [total]="total"
+        [shown]="shown"
+        [searchKey]="suppliersFilter.searchKey"
+        (onSearch)="onSearch($event)">
+</mshk-datatable-bar>
+
+<ngx-datatable #datatable
+                class="material striped"
+                [loadingIndicator]="loadingIndicator"
+                [headerHeight]="40"
+                [rowHeight]="40"
+                [rows]="shownSuppliers"
+                [columnMode]="'force'"
+                [sorts]="sorts"
+                [messages]="{ emptyMessage: 'datatable.emptyMessage' | translate }"
+                (activate)="onActive($event)">
+
+  <ngx-datatable-column name="name" [sortable]="true" [resizeable]="false">
+    <ng-template ngx-datatable-header-template let-sort="sortFn">
+      <span [innerHtml]="'suppliers.company' | translate" (click)="sort($event)"></span>
+    </ng-template>
+    <ng-template let-expanded="expanded" ngx-datatable-cell-template let-row="row" let-value="value">
+      <span class="switcher" (click)="showContacts(row)">
+        <i class="arrow fa"
+            href="javascript:void(0)"
+            [ngClass]="expanded ? 'fa-angle-down' : 'fa-angle-right'">
+        </i>
+        <span class="bold" [title]="value">{{ value }}</span>
+      </span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="service" [resizeable]="false">
+    <ng-template ngx-datatable-header-template>
+      <span [innerHtml]="'suppliers.providedService' | translate"></span>
+    </ng-template>
+    <ng-template ngx-datatable-cell-template let-value="value">
+      <span [title]="value">{{ value }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+  
+  <ngx-datatable-column name="address" [resizeable]="false">
+    <ng-template ngx-datatable-header-template>
+      <span>{{ 'suppliers.address' | translate }}</span>
+    </ng-template>
+    <ng-template ngx-datatable-cell-template let-value="value">
+      <span [title]="value">{{ value }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="email" [resizeable]="false">
+    <ng-template ngx-datatable-header-template>
+      <span>{{ 'common.email' | translate }}</span>
+    </ng-template>
+    <ng-template ngx-datatable-cell-template let-value="value">
+      <span [title]="value">{{ value }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+  
+  <ngx-datatable-column name="webSite" [resizeable]="false">
+    <ng-template ngx-datatable-header-template>
+      <span>{{ 'suppliers.webSite' | translate }}</span>
+    </ng-template>
+    <ng-template ngx-datatable-cell-template let-value="value">
+      <span [title]="value"><a [attr.href]="value" target="_blank">{{ value }}</a></span>
+    </ng-template>
+  </ngx-datatable-column>
+  
+  <ngx-datatable-column name="suppliesCount" [width]="50" [resizeable]="false">
+    <ng-template ngx-datatable-header-template>
+      <span [innerHtml]="'datatable.deliveriesCount' | translate"></span>
+    </ng-template>
+    <ng-template ngx-datatable-cell-template let-value="value">
+        <span [title]="value">{{ value }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column [width]="80" [canAutoResize]="false" [resizeable]="false">
+    <ng-template ngx-datatable-cell-template let-expanded="expanded" let-row="row" let-rowIndex="rowIndex">
+      <span class="grid-buttons">
+        <a [routerLink]="[row.id]"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+        <a [routerLink]="" (click)="delete(row)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+      </span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-row-detail [rowHeight]="'auto'" #myDetailRow>
+    <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+      <div class="row-details-wrapper">
+        <div class="details-column">
+          <span class="column-title">{{ 'suppliers.contacts' | translate }}:</span>
+          <span class="column-data">
+            <div *ngFor="let contactPerson of row.contactPersons" class="contact-person">
+              <div class="name">{{ contactPerson.name }}</div>
+              <div>{{ contactPerson.phones }}</div>
+              <div *ngIf="!!contactPerson.email">{{ contactPerson.email }}</div>
+            </div>
+          </span>
+        </div>
+      </div>
+    </ng-template>
+  </ngx-datatable-row-detail>
+
+</ngx-datatable>
+
+<ng-template #confirmRemoveTmpl>
+  <mshk-confirmation
+          [confirmButtonText]="'button.remove'"
+          [plainText]="'suppliers.areYouSureToDeleteSupplier' | translate: {name: supplierToDelete.name}"
+          (onClose)="closeModal()"
+          (onConfirm)="confirmDelete()">
+  </mshk-confirmation>
+</ng-template>

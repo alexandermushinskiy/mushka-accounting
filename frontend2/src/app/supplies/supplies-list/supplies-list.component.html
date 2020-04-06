@@ -1,0 +1,118 @@
+<mshk-datatable-bar
+        [title]="'supplies.supplies'"
+        [addLink]="'/supplies/new'"
+        [addButtonTitle]="'button.addSupply'"
+        [total]="total"
+        [shown]="shown"
+        [hasMenuToggle]="true"
+        [searchKey]="suppliesFilter.searchKey"
+        (onSearch)="onSearch($event)">
+
+  <mshk-select-products class="products-list"
+        [products]="productsList"
+        [canClearAll]="true"
+        [isMultiple]="false"
+        [ngModel]="suppliesFilter.product"
+        [isLoading]="isProductsLoading"
+        (onProductSelected)="onProductSelected($event)">
+  </mshk-select-products>
+
+</mshk-datatable-bar>
+
+<ngx-datatable #datatable
+              class="material striped"
+              [loadingIndicator]="loadingIndicator"
+              [headerHeight]="40"
+              [rowHeight]="40"
+              [footerHeight]="50"
+              [rows]="shownSupplies"
+              [columnMode]="'force'"
+              [messages]="{ emptyMessage: 'datatable.emptyMessage' | translate }"
+              [sorts]="sorts"
+              (activate)="onActive($event)">
+
+  <ngx-datatable-column name="receivedDate" [sortable]="true" [resizeable]="false">
+    <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
+      <span (click)="sort($event)" [innerHtml]="'supplies.receivedDate' | translate: {separator: '<br>'}"></span>
+    </ng-template>
+    <ng-template ngx-datatable-cell-template let-value="value">
+      <span [title]="value">{{ value | format }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+  
+  <ngx-datatable-column name="description" [sortable]="true" [resizeable]="false">
+    <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
+      <span (click)="sort($event)" [innerHtml]="'supplies.description' | translate: {separator: '<br>'}"></span>
+    </ng-template>
+    <ng-template ngx-datatable-cell-template let-value="value">
+      <span [title]="value">{{ value }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="supplierName" [sortable]="true" [resizeable]="false">
+    <ng-template ngx-datatable-header-template let-column="column" let-sort="sortFn">
+      <span (click)="sort($event)" [innerHtml]="'supplies.supplierName' | translate: {separator: '<br>'}"></span>
+    </ng-template>
+    <ng-template ngx-datatable-cell-template let-value="value">
+      <span [title]="value" class="bold">{{ value }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="productsAmount" [width]="150" [canAutoResize]="false" [resizeable]="false">
+    <ng-template ngx-datatable-header-template let-column="column">
+      <span [innerHtml]="'datatable.productsCount' | translate"></span>
+    </ng-template>
+    <ng-template ngx-datatable-cell-template let-value="value">
+      <span [title]="value">{{ value | mshkNumber }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="cost" [width]="150" [canAutoResize]="false" [resizeable]="false">
+    <ng-template ngx-datatable-header-template let-column="column">
+      <span [innerHtml]="'supplies.cost' | translate"></span>
+    </ng-template>
+    <ng-template ngx-datatable-cell-template let-value="value">
+      <span [title]="value">{{ value | mshkCurrency }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="totalCost" [width]="150" [canAutoResize]="false" [resizeable]="false">
+    <ng-template ngx-datatable-header-template let-column="column">
+      <span [innerHtml]="'supplies.totalCost' | translate"></span>
+    </ng-template>
+    <ng-template ngx-datatable-cell-template let-value="value">
+      <span [title]="value">{{ value | mshkCurrency }}</span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column [width]="100" [canAutoResize]="false" [resizeable]="false">
+    <ng-template ngx-datatable-cell-template let-expanded="expanded" let-row="row" let-rowIndex="rowIndex">
+      <span class="grid-buttons">
+        <a [routerLink]="[row.id]"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+        <a [routerLink]="[row.id]" [queryParams]="{clone: true}"><i class="fa fa-files-o" aria-hidden="true"></i></a>
+        <a [routerLink]="" (click)="delete(row)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+      </span>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-footer class="p-0">
+    <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize" let-curPage="curPage" class="p-0">
+      <mshk-datatable-footer [loadingIndicator]="loadingIndicator"
+                            [datatable]="datatable"
+                            [total]="total"
+                            [currentPage]="curPage"
+                            [rowCount]="rowCount"
+                            [pageSize]="pageSize">
+      </mshk-datatable-footer>
+    </ng-template>
+  </ngx-datatable-footer>
+</ngx-datatable>
+
+<ng-template #confirmRemoveTmpl>
+  <mshk-confirmation
+          [confirmButtonText]="'button.remove'"
+          [plainText]="'supplies.areYouSureToDeleteSupply' | translate: { date: supplyToDelete.receivedDate, name: supplyToDelete.supplierName }"
+          (onClose)="closeModal()"
+          (onConfirm)="confirmDelete();">
+  </mshk-confirmation>
+</ng-template>

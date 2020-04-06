@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 import { Supply } from '../../supplies/shared/models/supply.model';
 import { ConverterService } from '../converter/converter.service';
@@ -16,41 +17,41 @@ export class SuppliesService {
   }
 
   getAll(): Observable<SupplyList[]> {
-    return this.http.get(this.endPoint)
-      .map((res: any) => this.converterService.convertToSuppliesList(res.data))
-      .catch((res: any) => throwError(res.error.messages));
+    return this.http.get(this.endPoint).pipe(
+      map((res: any) => this.converterService.convertToSuppliesList(res.data)),
+      catchError((res: any) => throwError(res.error.messages)));
   }
 
   getFiltered(productIds: string[]): Observable<SupplyList[]> {
     const requestBody = {
       productIds: productIds
     };
-    return this.http.post(`${this.endPoint}/filter`, requestBody)
-      .map((res: any) => this.converterService.convertToSuppliesList(res.data))
-      .catch((res: any) => throwError(res.error.messages));
+    return this.http.post(`${this.endPoint}/filter`, requestBody).pipe(
+      map((res: any) => this.converterService.convertToSuppliesList(res.data)),
+      catchError((res: any) => throwError(res.error.messages)));
   }
 
   getById(supplyId: string): Observable<Supply> {
-    return this.http.get(`${this.endPoint}/${supplyId}`)
-      .map((res: any) => this.converterService.convertToSupply(res.data))
-      .catch((res: any) => throwError(res.error.messages));
+    return this.http.get(`${this.endPoint}/${supplyId}`).pipe(
+      map((res: any) => this.converterService.convertToSupply(res.data)),
+      catchError((res: any) => throwError(res.error.messages)));
   }
 
   create(supply: Supply): Observable<Supply> {
-    return this.http.post(this.endPoint, supply)
-      .map((res: any) => this.converterService.convertToSupply(res.data))
-      .catch((res: any) => throwError(res.error.messages));
+    return this.http.post(this.endPoint, supply).pipe(
+      map((res: any) => this.converterService.convertToSupply(res.data)),
+      catchError((res: any) => throwError(res.error.messages)));
   }
 
   update(supplyId: string, supply: Supply): Observable<Supply> {
-    return this.http.put(`${this.endPoint}/${supplyId}`, supply)
-      .map((res: any) => this.converterService.convertToSupply(res.data))
-      .catch((res: any) => throwError(res.error.messages));
+    return this.http.put(`${this.endPoint}/${supplyId}`, supply).pipe(
+      map((res: any) => this.converterService.convertToSupply(res.data)),
+      catchError((res: any) => throwError(res.error.messages)));
   }
 
   delete(supplyId: string): Observable<any> {
-    return this.http.delete(`${this.endPoint}/${supplyId}`)
-      .catch((res: any) => throwError(res.error.messages));
+    return this.http.delete(`${this.endPoint}/${supplyId}`).pipe(
+      catchError((res: any) => throwError(res.error.messages)));
   }
 
   export(supplyIds: string[], productIds: string[] = []): Observable<Blob> {
@@ -59,7 +60,9 @@ export class SuppliesService {
       productIds: productIds
     };
     return this.http.post(`${this.endPoint}/export`, requestBody, { responseType: 'blob', observe: 'response' })
-      .map((res: any) => res.body)
-      .catch((res: any) => throwError(res.error.messages));
+      .pipe(
+        map((res: any) => res.body),
+        catchError((res: any) => throwError(res.error.messages))
+      );
   }
 }

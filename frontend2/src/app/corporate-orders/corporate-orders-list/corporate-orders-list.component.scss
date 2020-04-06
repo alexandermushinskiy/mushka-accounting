@@ -1,0 +1,6 @@
+@import '../../variables';
+
+:host {
+  display: block;
+  padding: $padding-base $padding-base 0;
+}

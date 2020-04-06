@@ -1,0 +1,11 @@
+<div ngbDropdown placement="bottom-right">
+  <div ngbDropdownToggle>
+    <i class="fa fa-user-circle"></i>
+    <span class="username">{{ user.originalName }}</span>
+    <i class="ico ico-chevron-down"></i>
+  </div>
+  <div ngbDropdownMenu>
+    <a class="dropdown-item" routerLink="/profile">{{ 'header.profile' | translate }}</a>
+    <a class="dropdown-item" (click)="logOut()">{{ 'header.logOut' | translate }}</a>
+  </div>
+</div>

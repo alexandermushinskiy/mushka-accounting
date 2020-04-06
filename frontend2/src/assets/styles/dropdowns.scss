@@ -1,0 +1,73 @@
+.dropdown-menu {
+  font-size: 12.6px;
+
+  &:empty {
+    border: 0;
+  }
+  .dropdown-sm & {
+    min-width: 106px;
+  }
+
+  [open="true"] & {
+    display: block;
+  }
+
+  &.dropdown-max-height {
+    max-height: 35rem;
+    overflow: auto;
+    width: 100%;
+  }
+
+  // Dividers (basically an hr) within the dropdown
+  .dropdown-divider {
+    margin: 0;
+    background-color: $gray-200;
+  }
+
+  // Links within the dropdown menu
+  .dropdown-item {
+    line-height: 1.2em;
+    padding: 8px;
+
+    // Hover/Focus state
+    &:hover,
+    &:focus {
+      cursor: pointer;
+      color: $dropdown-link-hover-color;
+      background-color: $dropdown-link-hover-bg;
+    }
+
+    &[disabled],
+    &[disabled]:hover {
+      cursor: default;
+    }
+  }
+};
+
+//custom dropdown toggle button
+.btn.form-control {
+  border-color: $input-border-color;
+  border-radius: $input-border-radius;
+  height: $input-height;
+  text-align: left;
+
+  &:focus {
+    border-color: $input-focus-border-color;
+  }
+}
+
+.dropdown-toggle {
+  &:after {
+    display: none;
+  }
+}
+
+ngb-typeahead-window.dropdown-menu,
+typeahead-container.dropdown-menu {
+  width: 100%;
+  margin-bottom: 1rem;
+  .dropdown-item {
+    white-space: normal;
+  }
+}
+

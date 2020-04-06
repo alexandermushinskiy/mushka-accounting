@@ -1,0 +1,15 @@
+<nav class="menu">
+  <span *ngFor="let item of menuItems">
+    <a class="menu-item"
+       routerLinkActive="active"   
+       [title]="item.title"
+       [routerLink]="item.routePath"
+       [queryParams]="item.queryParams"
+       [ngClass]="{'disabled-control': !item.isEnabled}"
+       (click)="onMenuItemSelected(item)">
+      <i class="icon fa" [ngClass]="item.icon"></i>
+      <span class="title">{{ item.title | translate}}</span>
+      <span *ngIf="item.badges > 0" class="badge">{{ item.badges }}</span>
+    </a>
+  </span>
+</nav>

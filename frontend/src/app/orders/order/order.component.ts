@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Observable, of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged,   tap, switchMap, filter } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, tap, switchMap, filter, takeUntil, map } from 'rxjs/operators';
 
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { OrdersService } from '../../core/api/orders.service';
@@ -23,7 +23,7 @@ import { Customer } from '../../shared/models/customer.model';
   styleUrls: ['./order.component.scss']
 })
 export class OrderComponent extends ComponentCanDeactivate implements OnInit {
-  @ViewChild('ngForm') ngForm: NgForm;
+  @ViewChild('ngForm', { static: false }) ngForm: NgForm;
 
   orderForm: FormGroup;
   isEdit = false;
@@ -40,7 +40,7 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
   searching = false;
   customerModel: any;
   private initialOrder: {};
-  
+
   private quantityTerms$ = new Subject<{ index: number, quantity: number }>();
 
   private get customerId(): string {
@@ -65,16 +65,12 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
       tap(() => this.searching = true),
       filter((term: string) => term.length >= 3),
       switchMap((term: string) => {
-        return this.customersService.getByName(term)
-          .map(res => res.filter(cust => cust.id !== this.customerId))
-          .pipe(
-            catchError(() => {
-              return of([]);
-            }))
-          }
-      ),
+        return this.customersService.getByName(term).pipe(
+          map(res => res.filter(cust => cust.id !== this.customerId)),
+          catchError(() => of([])));
+      }),
       tap(() => this.searching = false)
-    );
+    )
 
   selectCustomer($event: any) {
     $event.preventDefault();
@@ -85,7 +81,7 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
     this.setCustomerFormValue('phone', customer.phone);
     this.setCustomerFormValue('email', customer.email);
   }
-  
+
   ngOnInit() {
     this.productsService.getSelect()
       .subscribe((products: SelectProduct[]) => {
@@ -93,15 +89,14 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
         this.getRouteParams();
       });
 
-    this.quantityTerms$
-      .debounceTime(300)
-      .distinctUntilChanged()
-      .takeUntil(this.ngUnsubscribe$)
-      .subscribe((data: {index: number, quantity: number}) => {
-        this.setCostPrice(data.index);
-      });
+    this.quantityTerms$.pipe(
+      takeUntil(this.ngUnsubscribe$),
+      debounceTime(300))
+        .subscribe((data: {index: number, quantity: number}) => {
+          this.setCostPrice(data.index);
+        });
   }
-  
+
   hasUnsavedData(): boolean {
     if (!this.isSaved) {
       const currentOrder = this.orderForm.getRawValue();
@@ -235,7 +230,7 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
         order.products.map(param => this.createProductFormGroup(param))
       )
     });
-    
+
     this.addFieldChangeListeners();
     this.calculateTotalCost();
     this.calculateProfit();
@@ -378,7 +373,7 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
 
     return (cost / 100) * this.discount;
   }
-  
+
   private setCustomerFormValue(controlName: string, value: string) {
     const ctrl = this.orderForm.controls.customer.get(controlName);
     ctrl.setValue(value, { onlySelf: true });

@@ -1,4 +1,5 @@
 import { Directive, HostListener, ComponentRef, ViewContainerRef, Input, Output, EventEmitter } from '@angular/core';
+import { first } from 'rxjs/operators';
 
 import { PopoverComponent } from '../widgets/popover/popover.component';
 
@@ -57,8 +58,9 @@ export class PopoverDirective {
     popover.appendToSelector = this.appendToSelector;
     popover.shift = { x: this.shiftX, y: this.shiftY };
     popover.placement = this.popoverPlacement;
-    popover.onCloseFromOutside
-      .first()
+    popover.onCloseFromOutside.pipe(
+      first()
+      )
       .subscribe(() => this.hidePopoverElement());
 
     this.onPopoverShown.emit(this);

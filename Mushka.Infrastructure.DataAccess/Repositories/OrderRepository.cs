@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Mushka.Domain.Comparers;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Domain.Models;
 using Mushka.Infrastructure.DataAccess.Database;
 
 namespace Mushka.Infrastructure.DataAccess.Repositories
@@ -17,7 +18,21 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         public OrderRepository(MushkaDbContext context) : base(context)
         {
         }
-        
+
+        public async Task<IEnumerable<Order>> GetAllAsync(
+            string searchKey,
+            DateRange dateRange,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await Context.Orders
+                .AsNoTracking()
+                .Include(order => order.Customer)
+                .Include(order => order.Products)
+                .Where(order => dateRange == null || (order.OrderDate >= dateRange.From && order.OrderDate <= dateRange.To))
+                .Where(order => searchKey == null || order.Customer.FullName.Equals(searchKey, StringComparison.CurrentCultureIgnoreCase))
+                .ToListAsync(cancellationToken);
+        }
+
         public override async Task<IEnumerable<Order>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
             await Context.Orders
                 .AsNoTracking()

@@ -16,9 +16,9 @@ import { ExhibitionListFilter } from '../../shared/filters/exhibition-list.filte
   styleUrls: ['./exhibitions-list.component.scss']
 })
 export class ExhibitionsListComponent extends SortableDatatableComponent implements OnInit {
-  @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
+  @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
   @LocalStorage('exhibitions_search_key', '') exhibitionsSearchKey: string;
-  
+
   exhibitions: ExhibitionList[];
   exhibitionRows: ExhibitionTableRow[];
   loadingIndicator = false;
@@ -32,7 +32,7 @@ export class ExhibitionsListComponent extends SortableDatatableComponent impleme
     backdrop: 'static',
     size: 'sm'
   };
-  
+
   constructor(private router: Router,
               private modalService: NgbModal,
               private exhibitionsService: ExhibitionsService,
@@ -113,7 +113,7 @@ export class ExhibitionsListComponent extends SortableDatatableComponent impleme
         () => this.onLoadError()
       );
   }
-  
+
   private onLoadSuccess(exhibitions: ExhibitionList[]) {
     this.exhibitions = exhibitions;
     this.total = exhibitions.length;

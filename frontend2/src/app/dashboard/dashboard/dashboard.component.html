@@ -1,0 +1,114 @@
+<div class="charts-conteiner">
+  <div class="row">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="d-panel">
+        <div class="d-title">
+          <span>{{ 'dashboard.balance' | translate }}</span>
+        </div>
+        <div class="d-content">
+          <div *ngIf="balanceData">
+            <canvas baseChart
+                    [data]="balanceData"
+                    [labels]="balanceLabels"
+                    [colors]="chartOptions.balanceColor"
+                    [options]="chartOptions.balanceOptions"
+                    [legend]="true"
+                    [chartType]="'pie'"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="d-panel">
+        <div class="d-title">
+          <span>{{ 'dashboard.popularProducts' | translate }}</span>
+        </div>
+        <div class="d-content">
+          <canvas baseChart
+                  [datasets]="popularProductsData"
+                  [labels]="popularProductsLabels"
+                  [options]="chartOptions.defaultOptions"
+                  [colors]="chartOptions.popularProductsColor"
+                  [legend]="false"
+                  [chartType]="'horizontalBar'"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="d-panel">
+        <div class="d-title">
+          <span>{{ 'dashboard.unpopularProducts' | translate }}</span>
+        </div>
+        <div class="d-content">
+          <canvas baseChart
+                  [datasets]="unpopularProductsData"
+                  [labels]="unpopularProductsLabels"
+                  [options]="chartOptions.popularityOptions"
+                  [colors]="chartOptions.unpopularProductsColor"
+                  [legend]="false"
+                  [chartType]="'horizontalBar'"></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-12 indent"></div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="d-panel">
+        <div class="d-title">
+          <span>{{ 'dashboard.popularCities' | translate }}</span>
+        </div>
+        <div class="d-content">
+          <canvas baseChart
+                  [datasets]="popularCitiesData"
+                  [labels]="popularCitiesLabels"
+                  [options]="chartOptions.defaultOptions"
+                  [colors]="chartOptions.popularCitiesColor"
+                  [legend]="false"
+                  [chartType]="'horizontalBar'"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12 orders">
+      <div class="d-panel orders-panel">
+        <div class="d-title">
+          <span>{{ 'dashboard.ordersQuantity' | translate }}</span>
+          <div>
+            <mshk-dropdown class="options"
+                         [options]="chartOptions.periods"
+                         [dataField]="'period'"
+                         [textField]="'desc'"
+                         [ngModel]="defaultPeriod"
+                         (onSelectedValue)="onPeriodSelected($event.period)"></mshk-dropdown>
+          </div>
+        </div>
+        <div class="d-content">
+          <canvas baseChart
+                  [datasets]="ordersData"
+                  [labels]="ordersLabels"
+                  [options]="chartOptions.defaultOptions"
+                  [colors]="chartOptions.ordersColor"
+                  [legend]="false"
+                  [chartType]="'line'"></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="d-panel">
+        <div class="d-title">
+          <span>{{ 'dashboard.soldProducts' | translate }}</span>
+        </div>
+        <div class="d-content">
+          <canvas baseChart
+                  [datasets]="soldProductsData"
+                  [labels]="soldProductsLabels"
+                  [options]="chartOptions.defaultOptions"
+                  [colors]="chartOptions.soldProductsColor"
+                  [legend]="false"
+                  [chartType]="'bar'"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

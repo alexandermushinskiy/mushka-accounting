@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { takeUntil, debounceTime } from 'rxjs/operators';
 
 import { UnsubscriberComponent } from '../../hooks/unsubscriber.component';
 
@@ -9,23 +10,21 @@ import { UnsubscriberComponent } from '../../hooks/unsubscriber.component';
   styleUrls: ['./search-form.component.scss']
 })
 export class SearchFormComponent extends UnsubscriberComponent implements OnInit {
+  @ViewChild('searchBox', { static: false }) searchElementRef: ElementRef;
   @Input() type: 'solid' | 'outline' = 'outline';
   @Input() disabled = false;
   @Input() size: 'default' | 'large' = 'default';
   @Input() placeholder = 'Поиск...';
   @Input() defaultValue = '';
-
   @Output() onSearch = new EventEmitter();
-  @ViewChild('searchBox') searchElementRef: ElementRef;
 
   private searchTerms$ = new Subject<string>();
 
   ngOnInit() {
-    this.searchTerms$
-      .debounceTime(300)
-      .distinctUntilChanged()
-      .takeUntil(this.ngUnsubscribe$)
-      .subscribe((val: string) => this.onSearch.emit(val));
+    this.searchTerms$.pipe(
+      takeUntil(this.ngUnsubscribe$),
+      debounceTime(300))
+        .subscribe((val: string) => this.onSearch.emit(val));
   }
 
   valueChanged(value) {

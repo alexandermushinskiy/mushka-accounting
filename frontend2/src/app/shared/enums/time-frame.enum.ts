@@ -1,0 +1,13 @@
+export enum TimeFrame {
+  TODAY = 1,
+  YESTERDAY = 2,
+  LAST_WEEK = 3,
+  CURRENT_WEEK = 4,
+  LAST_MONTH = 5,
+  CURRENT_MONTH = 6,
+  CURRENT_QUARTER = 7,
+  LAST_YEAR = 8,
+  CURRENT_YEAR = 9,
+  RANGE = 10,
+  CUSTOM_RANGE = 11
+}

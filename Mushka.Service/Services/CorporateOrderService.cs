@@ -45,7 +45,7 @@ namespace Mushka.Service.Services
             var corporateOrder = await corporateOrderRepository.GetByIdAsync(corporateOrderId, cancellationToken);
 
             return corporateOrder == null
-                ? CreateWarningValidationResponse($"Corporate order with id {corporateOrderId} is not found.", ValidationStatusType.NotFound)
+                ? CreateErrorValidationResponse($"Corporate order with id {corporateOrderId} is not found.", ValidationStatusType.NotFound)
                 : CreateInfoValidationResponse(corporateOrder, $"Corporate order with id {corporateOrderId} was successfully retrieved.");
         }
 
@@ -73,7 +73,7 @@ namespace Mushka.Service.Services
 
             if (corporateOrder == null)
             {
-                return CreateWarningValidationResponse($"Corporate order with id {corporateOrderId} is not found.", ValidationStatusType.NotFound);
+                return CreateErrorValidationResponse($"Corporate order with id {corporateOrderId} is not found.", ValidationStatusType.NotFound);
             }
             
             corporateOrderRepository.Delete(corporateOrder);

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { takeUntil } from 'rxjs/operators';
 
 import { MenuItems } from '../shared/constants/menu-items.const';
 import { UnsubscriberComponent } from '../../shared/hooks/unsubscriber.component';
@@ -47,11 +48,11 @@ export class MenuComponent extends UnsubscriberComponent implements OnInit {
   }
 
   private getWorklistUnseenTicketsTotal() {
-    this.badgesService.getUnseenTicketsTotal()
-      .takeUntil(this.ngUnsubscribe$)
-      .subscribe((unseenTicketsCount: number) => {
-        // this.updateBadge(MenuLabels.WORKLIST, unseenTicketsCount);
-      });
+    this.badgesService.getUnseenTicketsTotal().pipe(
+      takeUntil(this.ngUnsubscribe$))
+        .subscribe((unseenTicketsCount: number) => {
+          // this.updateBadge(MenuLabels.WORKLIST, unseenTicketsCount);
+        });
   }
 
   private updateBadge(menuItem: MenuLabels, count: number = 0) {

@@ -1,0 +1,11 @@
+<div class="modal-header modal-block-primary">
+  <h4 class="modal-title">{{ 'common.warning' | translate }}</h4>
+</div>
+<div class="modal-body clearfix">
+  <div class="modal-text" [innerHtml]="'confirmation.dataNotSaved' | translate">
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-light" (click)="action(false)">{{ 'button.no' | translate }}</button>
+  <button class="btn btn-primary right" (click)="action(true)">{{ 'button.yes' | translate }}</button>
+</div>

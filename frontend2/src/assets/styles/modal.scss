@@ -1,0 +1,80 @@
+@import 'app/variables';
+
+.modal-header {
+  padding: $modal-body-padding;
+
+  .close {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.modal-title {
+  font-weight: 700;
+  margin-bottom: 0;
+  font-size: $modal-title-font-size;
+  line-height: $modal-title-line-height;
+}
+
+.modal-content {
+  border: $modal-content-border;
+  border-radius: $modal-content-border-radius;
+  box-shadow: $modal-content-box-shadow;
+}
+
+.modal-body {
+  padding: $modal-body-padding;
+}
+
+.modal-footer {
+  padding: $modal-footer-padding;
+  border-top: 0;
+
+  .btn {
+    // padding: .5em 1em;
+    min-width: 7rem;
+  }
+  &-column {
+    flex: 1 0;
+  }
+  > :not(:first-child) { margin-left: .5rem; }
+  > :not(:last-child) { margin-right: .5rem; }
+}
+
+button.close:focus {
+  outline-color: transparent;
+}
+
+@media (min-width: 576px) {
+  .modal-sm {
+    max-width: 420px;
+  }
+
+  .modal-md {
+    max-width: $modal-md;
+  }
+  
+  .modal-lg {
+    max-width: $modal-lg;
+  }
+}
+
+.products-modal {
+  .modal-dialog {
+    max-width: 500px;
+    max-height: 300px;
+  }
+}
+
+.confirm-leave-page-modal {
+  .modal-content {
+    max-width: 430px;
+  }
+}
+
+.date-range-modal {
+  .modal-dialog {
+    max-width: 620px;
+    max-height: 300px;
+  }
+}

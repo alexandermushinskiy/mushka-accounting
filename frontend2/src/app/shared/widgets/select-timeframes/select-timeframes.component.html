@@ -1,0 +1,22 @@
+<div class="select-form">
+  <ng-select class="time-frames"
+            [clearable]="true"
+            [searchable]="false"
+            [disabled]="disabled"
+            [placeholder]="placeholder | translate"
+            [ngModel]="selectedTimeFrame"
+            (ngModelChange)="onTimeFrameChanged($event)"
+            (clear)="clear()">
+    <ng-option *ngFor="let timeframe of timeframes" [value]="timeframe.id">{{ timeframe.name | translate }}</ng-option>
+  </ng-select>
+  <button class="btn btn-icon btn-range" (click)="showDateRangeSelection()">
+    <i class="fa fa-calendar"></i>
+  </button>
+</div>
+
+<ng-template #dateRangeTmpl>
+  <mshk-date-range-modal
+            (onApply)="onDateRangeSelected($event)"
+            (onClose)="closeModal()">
+  </mshk-date-range-modal>
+</ng-template>

@@ -11,10 +11,10 @@ import { I18n, CustomDatepickerI18n } from '../../../../assets/i18n/datepicker-i
   providers: [I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }]
 })
 export class DatetimepickerComponent implements OnInit {
-  @ViewChild('outsideContent') outsideContent: ElementRef;
-  @ViewChild('root') root: ElementRef;
-  @ViewChild('dialog') dialog: ElementRef;
-  @ViewChild('ngbdatepicker') ngbdatepicker: NgbDatepicker;
+  @ViewChild('outsideContent', { static: false }) outsideContent: ElementRef;
+  @ViewChild('root', { static: false }) root: ElementRef;
+  @ViewChild('dialog', { static: false }) dialog: ElementRef;
+  @ViewChild('ngbdatepicker', { static: false }) ngbdatepicker: NgbDatepicker;
 
   @Output() onDateChanged = new EventEmitter<any>();
 

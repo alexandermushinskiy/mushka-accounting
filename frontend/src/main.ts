@@ -9,5 +9,4 @@ if (environment.production) {
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
-  .then(() => console.info(`Mushka app loaded`))
   .catch(err => console.log(err));

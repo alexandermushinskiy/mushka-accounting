@@ -9,6 +9,8 @@ using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Comparers;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Domain.Models;
+using Mushka.Domain.Strings;
 using Mushka.Service.Extensibility.Dto;
 using Mushka.Service.Extensibility.ExternalApps;
 using Mushka.Service.Extensibility.Services;
@@ -38,41 +40,19 @@ namespace Mushka.Service.Services
             productRepository = storage.GetRepository<IProductRepository>();
         }
 
-        public async Task<ValidationResponse<IEnumerable<Supply>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<ValidationResponse<ItemsWithTotalCount<Supply>>> GetByFilterAsync(SuppliesFiltersModel suppliesFiltersModel, CancellationToken cancellationToken = default(CancellationToken))
         {
-            IEnumerable<Supply> supplies = (await supplyRepository.GetAllAsync(cancellationToken))
-                .OrderBy(supply => supply.Supplier.Name)
-                .ThenBy(supply => supply.RequestDate)
-                .ToList();
+            var totalCount = await supplyRepository.GetAllCountAsync(cancellationToken);
+
+            IEnumerable<Supply> supplies = (await supplyRepository.GetByFilterAsync(suppliesFiltersModel, cancellationToken)).ToList();
+
+            var result = new ItemsWithTotalCount<Supply>(supplies, totalCount);
 
             var message = supplies.Any()
-                ? "Supplies were successfully retrieved."
-                : "No supplies found.";
+                ? ValidationMessages.SuppliesRetrieved
+                : ValidationMessages.NoSuppliesFound;
 
-            return CreateInfoValidationResponse(supplies, message);
-        }
-
-        public async Task<ValidationResponse<IEnumerable<Supply>>> GetByProductsAsync(IEnumerable<Guid> productIds, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var productIdsList = productIds.ToList();
-
-            var includes = new []
-            {
-                nameof(Supply.Supplier),
-                nameof(Supply.Products)
-            };
-
-            IEnumerable<Supply> supplies = 
-                (await supplyRepository.GetAsync(sup => sup.Products.Any(prod => productIdsList.Contains(prod.ProductId)), includes, cancellationToken))
-                    .OrderBy(supply => supply.Supplier.Name)
-                    .ThenBy(supply => supply.RequestDate)
-                    .ToList();
-
-            var message = supplies.Any()
-                ? "Supplies were successfully retrieved."
-                : "No supplies found.";
-
-            return CreateInfoValidationResponse(supplies, message);
+            return CreateInfoValidationResponse(result, message);
         }
 
         public async Task<ValidationResponse<Supply>> GetByIdAsync(Guid supplyId, CancellationToken cancellationToken = default(CancellationToken))
@@ -80,8 +60,8 @@ namespace Mushka.Service.Services
             var supply = await supplyRepository.GetByIdAsync(supplyId, cancellationToken);
 
             return supply == null
-                ? CreateWarningValidationResponse($"Supply with id {supplyId} is not found.", ValidationStatusType.NotFound)
-                : CreateInfoValidationResponse(supply, $"Supply with id {supplyId} was successfully retrieved.");
+                ? CreateErrorValidationResponse(ValidationErrors.SupplyNotFound, ValidationStatusType.NotFound)
+                : CreateInfoValidationResponse(supply, ValidationMessages.SuppliesRetrieved);
         }
 
         public async Task<ValidationResponse<Supply>> AddAsync(Supply supply, CancellationToken cancellationToken = default(CancellationToken))
@@ -92,7 +72,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateWarningValidationResponse($"Product with id {supplyProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return CreateErrorValidationResponse(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
                 }
                 
                 storedProduct.Quantity += supplyProduct.Quantity;
@@ -102,7 +82,7 @@ namespace Mushka.Service.Services
             var addedSupply = supplyRepository.Add(supply);
             await storage.SaveAsync(cancellationToken);
 
-            return CreateInfoValidationResponse(addedSupply, $"Supply with id {addedSupply.Id} was successfully added.");
+            return CreateInfoValidationResponse(addedSupply, ValidationMessages.SupplyAdded);
         }
 
         public async Task<ValidationResponse<Supply>> UpdateAsync(Supply supply, CancellationToken cancellationToken = default(CancellationToken))
@@ -111,7 +91,7 @@ namespace Mushka.Service.Services
 
             if (storedSupply == null)
             {
-                return CreateWarningValidationResponse($"Supply with id {supply.Id} is not found.", ValidationStatusType.NotFound);
+                return CreateErrorValidationResponse(ValidationErrors.SupplyNotFound, ValidationStatusType.NotFound);
             }
 
             foreach (var supplyProduct in supply.Products)
@@ -120,7 +100,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateWarningValidationResponse($"Product with id {supplyProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return CreateErrorValidationResponse(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
                 }
 
                 var storedSupplyQuantity = storedSupply.Products
@@ -139,7 +119,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateWarningValidationResponse($"Product with id {removedProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return CreateErrorValidationResponse(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
                 }
 
                 storedProduct.Quantity -= removedProduct.Quantity;
@@ -149,7 +129,7 @@ namespace Mushka.Service.Services
             var updatedSupply = supplyRepository.Update(supply);
             await storage.SaveAsync(cancellationToken);
 
-            return CreateInfoValidationResponse(updatedSupply, $"Supply with id {supply.Id} was successfully updated.");
+            return CreateInfoValidationResponse(updatedSupply, ValidationMessages.SupplyUpdated);
         }
 
         public async Task<ValidationResponse<Supply>> DeleteAsync(Guid supplyId, CancellationToken cancellationToken = default(CancellationToken))
@@ -158,7 +138,7 @@ namespace Mushka.Service.Services
 
             if (supply == null)
             {
-                return CreateWarningValidationResponse($"Supply with id {supplyId} is not found.", ValidationStatusType.NotFound);
+                return CreateErrorValidationResponse(ValidationErrors.SupplyNotFound, ValidationStatusType.NotFound);
             }
 
             foreach (var supplyProduct in supply.Products)
@@ -167,7 +147,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateWarningValidationResponse($"Product with id {supplyProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return CreateErrorValidationResponse(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
                 }
 
                 storedProduct.Quantity -= supplyProduct.Quantity;
@@ -177,7 +157,7 @@ namespace Mushka.Service.Services
             supplyRepository.Delete(supply);
             await storage.SaveAsync(cancellationToken);
 
-            return CreateInfoValidationResponse(supply, $"Supply with id {supplyId} was successfully deleted.");
+            return CreateInfoValidationResponse(supply, ValidationMessages.SupplyDeleted);
         }
         
         public async Task<ValidationResponse<ExportedFile>> ExportAsync(IEnumerable<Guid> supplyIds, IEnumerable<Guid> productIds, CancellationToken cancellationToken = default(CancellationToken))
@@ -212,7 +192,7 @@ namespace Mushka.Service.Services
             var fileContent = supplyExcelService.ExportSupplies(supplies, products);
             var exportedFile = new ExportedFile(ExportFileName, ExportContentType, fileContent);
 
-            return CreateInfoValidationResponse(exportedFile, "The supplies with products were exported successfully.");
+            return CreateInfoValidationResponse(exportedFile, ValidationMessages.SupplyExported);
         }
     }
 }

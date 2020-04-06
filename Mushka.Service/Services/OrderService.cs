@@ -47,7 +47,7 @@ namespace Mushka.Service.Services
         public async Task<ValidationResponse<IEnumerable<Order>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<Order> orders = (await orderRepository.GetAllAsync(cancellationToken))
-                .OrderBy(order => order.OrderDate)
+                .OrderByDescending(order => order.OrderDate)
                 .ToList();
 
             var message = orders.Any()
@@ -63,7 +63,7 @@ namespace Mushka.Service.Services
 
             if (order == null)
             {
-                return CreateWarningValidationResponse($"Order with id {orderId} is not found.", ValidationStatusType.NotFound);
+                return CreateErrorValidationResponse($"Order with id {orderId} is not found.", ValidationStatusType.NotFound);
             }
 
             order.Products = order.Products.OrderByDescending(p => p.Product.Category.IsAdditional).ToList();
@@ -75,7 +75,7 @@ namespace Mushka.Service.Services
             var customerValidationResponse = await orderCustomerProvider.GetCustomerForNewOrderAsync(order.Customer, cancellationToken);
             if (!customerValidationResponse.IsValid)
             {
-                return CreateWarningValidationResponse(customerValidationResponse.ValidationResult.Message);
+                return CreateErrorValidationResponse(customerValidationResponse.ValidationResult.Message);
             }
             
             order.CustomerId = customerValidationResponse.Result.Id;
@@ -86,12 +86,12 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateWarningValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return CreateErrorValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
                 }
 
                 if (storedProduct.Quantity < orderProduct.Quantity)
                 {
-                    return CreateWarningValidationResponse($"Product with id {orderProduct.ProductId} is not enough in stock.");
+                    return CreateErrorValidationResponse($"Product with id {orderProduct.ProductId} is not enough in stock.");
                 }
 
                 storedProduct.Quantity -= orderProduct.Quantity;
@@ -110,13 +110,13 @@ namespace Mushka.Service.Services
 
             if (storedOrder == null)
             {
-                return CreateWarningValidationResponse($"Order with id {order.Id} is not found.", ValidationStatusType.NotFound);
+                return CreateErrorValidationResponse($"Order with id {order.Id} is not found.", ValidationStatusType.NotFound);
             }
 
             var customerValidationResponse = await orderCustomerProvider.GetCustomerForExistingOrderAsync(storedOrder.CustomerId, order.Customer, cancellationToken);
             if (!customerValidationResponse.IsValid)
             {
-                return CreateWarningValidationResponse(customerValidationResponse.ValidationResult.Message);
+                return CreateErrorValidationResponse(customerValidationResponse.ValidationResult.Message);
             }
             
             order.CustomerId = customerValidationResponse.Result.Id;
@@ -127,7 +127,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateWarningValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return CreateErrorValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
                 }
 
                 var storedOrderQuantity = storedOrder.Products
@@ -146,7 +146,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateWarningValidationResponse($"Product with id {removedProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return CreateErrorValidationResponse($"Product with id {removedProduct.ProductId} is not found.", ValidationStatusType.NotFound);
                 }
 
                 storedProduct.Quantity += removedProduct.Quantity;
@@ -167,7 +167,7 @@ namespace Mushka.Service.Services
 
             if (order == null)
             {
-                return CreateWarningValidationResponse($"Order with id {orderId} is not found.", ValidationStatusType.NotFound);
+                return CreateErrorValidationResponse($"Order with id {orderId} is not found.", ValidationStatusType.NotFound);
             }
 
             var storedCustomer = await customerRepository.GetByPhoneAsync(order.Customer.Phone, cancellationToken);
@@ -182,7 +182,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateWarningValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return CreateErrorValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
                 }
 
                 storedProduct.Quantity += orderProduct.Quantity;

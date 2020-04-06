@@ -1,0 +1,54 @@
+@import '../../variables';
+
+:host {
+  background-color: $header-bg;
+  height: $header-height;
+  display: block;
+}
+
+#header{
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  height: $header-height;
+  padding: $header-padding-y $header-padding-x;
+}
+
+.logo {
+  padding-right: 50px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.actions-left {
+  align-items: center;
+  display: flex;
+  > .btn:not(:last-child) { margin-right: $padding-base; }
+  .btn {
+    width: 100px;
+  }
+}
+
+.actions-right {
+  display: flex;
+  align-items: center;
+  > :not(:first-child) { margin-left: $padding-base; }
+  > :not(:last-child) { margin-right: $padding-base; }
+  .btn {
+    width: 100px;
+  }
+}
+
+.global-search {
+  margin-right: 40px;
+}
+
+.title {
+  display: inline-block;
+  color: $white;
+  position: relative;
+  top: 2px;
+  font-weight: bold;
+}

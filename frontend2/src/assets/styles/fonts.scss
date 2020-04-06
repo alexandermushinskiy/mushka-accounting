@@ -1,0 +1,62 @@
+@font-face {
+  font-family: 'Ericsson Hilda';
+  src: local('Ericsson Hilda Bold'), local('EricssonHilda-Bold'),
+  url('assets/fonts/EricssonHilda-Bold.woff2') format('woff2'),
+  url('assets/fonts/EricssonHilda-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ericsson Hilda';
+  src: local('Ericsson Hilda Regular'), local('EricssonHilda-Regular'),
+  url('assets/fonts/EricssonHilda-Regular.woff2') format('woff2'),
+  url('assets/fonts/EricssonHilda-Regular.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ericsson Hilda';
+  src: local('Ericsson Hilda Light'), local('EricssonHilda-Light'),
+  url('assets/fonts/EricssonHilda-Light.woff2') format('woff2'),
+  url('assets/fonts/EricssonHilda-Light.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Hilda Mono';
+  src: url('assets/fonts/HildaMono02-Regular.eot');
+  src: local('Hilda Mono Regular'), local('HildaMono02-Regular'),
+  url('assets/fonts/HildaMono02-Regular.eot?#iefix') format('embedded-opentype'),
+  url('assets/fonts/HildaMono02-Regular.woff') format('woff'),
+  url('assets/fonts/HildaMono02-Regular.ttf') format('truetype'),
+  url('assets/fonts/HildaMono02-Regular.svg#HildaMono02-Regular') format('svg');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Hilda Mono';
+  src: url('assets/fonts/HildaMono02-Light.eot');
+  src: local('Hilda Mono Light'), local('HildaMono02-Light'),
+  url('assets/fonts/HildaMono02-Light.eot?#iefix') format('embedded-opentype'),
+  url('assets/fonts/HildaMono02-Light.woff') format('woff'),
+  url('assets/fonts/HildaMono02-Light.ttf') format('truetype'),
+  url('assets/fonts/HildaMono02-Light.svg#HildaMono02-Light') format('svg');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Hilda Mono';
+  src: url('assets/fonts/HildaMono02-Bold.eot');
+  src: local('Hilda Mono Bold'), local('HildaMono02-Bold'),
+  url('assets/fonts/HildaMono02-Bold.eot?#iefix') format('embedded-opentype'),
+  url('assets/fonts/HildaMono02-Bold.woff') format('woff'),
+  url('assets/fonts/HildaMono02-Bold.ttf') format('truetype'),
+  url('assets/fonts/HildaMono02-Bold.svg#HildaMono02-Bold') format('svg');
+  font-weight: 700;
+  font-style: normal;
+}

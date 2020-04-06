@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 export function uniqueOrderNumber(input: FormControl) {
   return { notUnique: true };
-  //return hasExclamation ? null : { notUnique: true };
+  // return hasExclamation ? null : { notUnique: true };
 }
 
 // export function orderNumberValidator(ordersService: OrdersService): AsyncValidatorFn {
@@ -30,7 +30,7 @@ export function uniqueOrderNumber(input: FormControl) {
 
 // @Injectable()
 // export class orderNumberValidator implements AsyncValidator  {
-  
+
 //   @Input("uniqueNumber") uniqueNumber: string;
 
 //   constructor(private ordersService: OrdersService) {
@@ -45,9 +45,9 @@ export function uniqueOrderNumber(input: FormControl) {
 //       .map((isValid: boolean) => isValid ? null : {"mobNumExists": true});
 //   }
 
-//    //validate = (control: FormControl) => 
+//    //validate = (control: FormControl) =>
 //     //this.ordersService.validateOrderNumber(control.value);
-   
+
 // //     let value = control.value;
 
 // //     if ((value == null || value == undefined || value == "") && this.uniqueNumber) {

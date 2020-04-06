@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 
 import { UnsubscriberComponent } from '../../../../shared/hooks/unsubscriber.component';
 import { Product, SubProduct } from '../../../../shared/models/product.model';
@@ -45,13 +45,13 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
     this.isLoading = true;
     this.buildForm(new Product({}));
 
-    Observable.forkJoin(
-      //this.productsService.getSelect(),
-      this.isEdit ? this.productsService.getById(this.productId) : Observable.of(null),
+    forkJoin(
+      // this.productsService.getSelect(),
+      this.isEdit ? this.productsService.getById(this.productId) : of(null),
       this.productsService.getSizes(),
       this.categoriesService.getAll()
     ).subscribe(([/*productsList,*/ product, sizes, categories]) => {
-      //this.productsList = productsList;
+      // this.productsList = productsList;
       this.availableSizes = sizes;
       this.onCategoriesLoaded(categories);
 
@@ -170,7 +170,7 @@ export class ProductModalComponent extends UnsubscriberComponent implements OnIn
       categoryId: formRawValue.category.id,
       size: formRawValue.size,
       isArchival: formRawValue.isArchival
-      //subProducts: formRawValue.subproducts.map(subProd => this.createSubProduct(subProd))
+      // subProducts: formRawValue.subproducts.map(subProd => this.createSubProduct(subProd))
     });
   }
 

@@ -10,7 +10,7 @@ import { BsModalRef } from 'ngx-bootstrap';
 export class ConfirmLeaveComponent implements OnInit {
 
   subject: Subject<boolean>;
-  
+
   constructor(public bsModalRef: BsModalRef) { }
 
   ngOnInit() {

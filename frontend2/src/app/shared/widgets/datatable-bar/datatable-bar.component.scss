@@ -1,0 +1,48 @@
+@import '../../../variables';
+
+.header {
+  align-items: stretch;
+  background-color: $layer1;
+  min-height: 45px;
+  margin: -16px -16px 16px;
+  padding-left: 16px;
+  display: flex;
+  align-items: center;
+
+  &-title {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 2.1rem;
+    margin-bottom: 0;
+    margin-right: 10px;
+  }
+}
+
+.separator:after,
+.with-separators:before,
+.with-separators:after {
+  content: "|";
+  padding-left: 7px;
+  padding-right: 7px;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.btn-icon:not(:last-child) {
+  margin-right: 15px;
+}
+
+.timeframes,
+.search {
+  width: 250px;
+}
+
+.filter {
+  font-size: 18px;
+  position: absolute;
+  right: 20px;
+}

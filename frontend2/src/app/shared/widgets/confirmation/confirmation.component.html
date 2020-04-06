@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ headerText | translate }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+    <i class="ico ico-close"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="section" [innerHtml]="plainText | translate">
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-sm btn-light" (click)="closeModal()" [disabled]="isSaving">{{ cancelText | translate }}</button>
+  <button class="btn btn-sm btn-primary with-spinner" (click)="confirm()" [disabled]="isSaving">
+    <div *ngIf="isSaving" class="btn-spinner"></div>
+    {{ confirmButtonText | translate }}
+  </button>
+</div>
+  

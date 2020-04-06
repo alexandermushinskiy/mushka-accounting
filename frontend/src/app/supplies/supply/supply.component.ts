@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, combineLatest } from 'rxjs';
+import { combineLatest, forkJoin } from 'rxjs';
 
 import { SuppliesService } from '../../core/api/supplies.service';
 import { Supply } from '../shared/models/supply.model';
@@ -44,7 +44,7 @@ export class SupplyComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
 
-    Observable.forkJoin(
+    forkJoin(
       this.suppliersService.getAll(),
       this.productsService.getSelect()
       ).subscribe(([suppliers, products]) => {

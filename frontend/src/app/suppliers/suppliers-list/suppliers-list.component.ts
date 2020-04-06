@@ -15,8 +15,8 @@ import { SortableDatatableComponent } from '../../shared/hooks/sortable-datatabl
   styleUrls: ['./suppliers-list.component.scss']
 })
 export class SuppliersListComponent extends SortableDatatableComponent implements OnInit {
-  @ViewChild('datatable') datatable: DatatableComponent;
-  @ViewChild('confirmRemoveTmpl') confirmRemoveTmpl: ElementRef;
+  @ViewChild('datatable', { static: false }) datatable: DatatableComponent;
+  @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
 
   loadingIndicator = true;
   isModalLoading = false;

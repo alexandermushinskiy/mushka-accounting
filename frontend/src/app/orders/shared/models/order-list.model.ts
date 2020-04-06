@@ -6,7 +6,7 @@ export class OrderList {
   address: string;
   customerName: string;
   productsCount: number;
-  
+
   constructor(data: any) {
     Object.assign(this, data);
   }

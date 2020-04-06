@@ -11,10 +11,10 @@ import { PopoverDirective } from '../../directives/popover.directive';
   styleUrls: ['./popover.component.scss']
 })
 export class PopoverComponent implements AfterViewInit {
+  @ViewChild('popover', { static: false }) popoverElement: ElementRef;
   @Input() hasPadding = true;
   @Input() placement: string;
   @Output() onShown = new EventEmitter<boolean>();
-  @ViewChild('popover') popoverElement: ElementRef;
 
   readonly hiddenTopPosition = -4000;
   readonly hiddenLeftPosition = -4000;
