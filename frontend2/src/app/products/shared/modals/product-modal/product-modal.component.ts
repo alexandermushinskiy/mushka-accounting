@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { forkJoin, of } from 'rxjs';
 
-import { Product } from '../../../../shared/models/product.model';
+import { Product, SubProduct } from '../../../../shared/models/product.model';
 import { Size } from '../../../../shared/models/size.model';
 import { Category } from '../../../../shared/models/category.model';
 import { SelectProduct } from '../../../../shared/models/select-product.model';
@@ -27,7 +27,11 @@ export class ProductModalComponent implements OnInit {
   availableSizes: Size[] = [];
   categories: Category[] = [];
   errors: string[];
-  productsList: SelectProduct[];
+  availableSubProducts: SelectProduct[];
+
+  get formSubProducts(): FormArray {
+    return this.productForm.get('subproducts') as FormArray;
+  }
 
   constructor(private formBuilder: FormBuilder,
               private categoriesService: CategoriesService,
@@ -39,6 +43,27 @@ export class ProductModalComponent implements OnInit {
     this.buildForm(new Product({}));
 
     this.loadProduct();
+  }
+
+  addSubproduct() {
+    const products = this.productForm.get('subproducts') as FormArray;
+    products.push(this.createSubProductFormGroup(new SubProduct({ quantity: 1 })));
+  }
+
+  removeSubproduct(index: number) {
+    const products = this.productForm.get('subproducts') as FormArray;
+    products.removeAt(index);
+  }
+
+  getProductSizeAndVendorCode(product: SelectProduct): string {
+    if (!product) {
+      return '';
+    }
+
+    return product.vendorCode + (!!product.size ? ` / ${product.size.name}` : ' / -');
+  }
+
+  onSubproductSelected(product: SelectProduct, index: number) {
   }
 
   save() {
@@ -72,8 +97,10 @@ export class ProductModalComponent implements OnInit {
     forkJoin(
       this.isEdit ? this.productsService.getById(this.productId) : of(null),
       this.productsService.getSizes(),
-      this.categoriesService.getAll()
-    ).subscribe(([product, sizes, categories]) => {
+      this.categoriesService.getAll(),
+      this.productsService.getForSale()
+    ).subscribe(([product, sizes, categories, subProducts]) => {
+      this.availableSubProducts = subProducts;
       this.availableSizes = sizes;
       this.categories = categories;
 
@@ -103,7 +130,10 @@ export class ProductModalComponent implements OnInit {
       vendorCode: [product.vendorCode, Validators.required],
       recommendedPrice: [product.recommendedPrice],
       size: [{value: null, disabled: true}],
-      isArchival: [!!product.isArchival]
+      isArchival: [!!product.isArchival],
+
+      hasSubproducts: [],
+      subproducts: this.formBuilder.array([])
     });
 
     this.addFieldChangeListeners();
@@ -149,5 +179,19 @@ export class ProductModalComponent implements OnInit {
 
   private onSaveError(errors: string[]) {
     this.isSaving = false;
+  }
+
+  private createSubProduct(formValue: any): SubProduct {
+    return new SubProduct({
+      productId: formValue.product.id,
+      quantity: formValue.quantity
+    });
+  }
+
+  private createSubProductFormGroup(subProduct: SubProduct) {
+    return this.formBuilder.group({
+      product: [subProduct.productId, Validators.required],
+      quantity: [subProduct.quantity, [Validators.required, Validators.min(0)]]
+    });
   }
 }

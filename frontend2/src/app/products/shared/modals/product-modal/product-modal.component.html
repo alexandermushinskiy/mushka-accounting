@@ -9,23 +9,16 @@
   
   <form id="productForm" [formGroup]="productForm" #ngForm="ngForm" class="product-form" (ngSubmit)="save()">
     <div class="product-name row">
-      <div class="col-sm-8 col-name">
+      <div class="col-sm-12 col-name">
         <div class="field-group">
           <label for="name" class="text-muted">{{ 'common.name' | translate }}</label>
           <input type="text" id="name" class="form-control" formControlName="name" autocomplete="off"
                   [ngClass]="{'not-valid': productForm.controls.name.invalid && ngForm.submitted}">
         </div>
       </div>
-      <div class="col-sm-4 col-vendor-code">
-        <div class="field-group">
-          <label for="nacodeme" class="text-muted">{{ 'products.vendorCode' | translate }}</label>
-          <input type="text" id="vendorCode" class="form-control code" formControlName="vendorCode" autocomplete="off"
-                  [ngClass]="{'not-valid': productForm.controls.vendorCode.invalid && ngForm.submitted}">
-        </div>
-      </div>
     </div>
     <div class="row category-row">
-      <div class="col-sm-8">
+      <div class="col-sm-12">
         <div class="field-group">
           <label for="nacodeme" class="text-muted">{{ 'common.category' | translate }}</label>
           <mshk-select-category formControlName="category"
@@ -34,7 +27,16 @@
           </mshk-select-category>
         </div>
       </div>
+    </div>
+    <div class="row">
       <div class="col-sm-4">
+        <div class="field-group">
+          <label for="nacodeme" class="text-muted">{{ 'products.vendorCode' | translate }}</label>
+          <input type="text" id="vendorCode" class="form-control code" formControlName="vendorCode" autocomplete="off"
+                  [ngClass]="{'not-valid': productForm.controls.vendorCode.invalid && ngForm.submitted}">
+        </div>
+      </div>
+      <div class="col-sm-4 col-size">
         <div class="field-group" [ngClass]="{'disabled': !productForm.value.category || !productForm.value.category.isSizeRequired}">
           <label for="nacodeme" class="text-muted">{{ 'products.size' | translate }}</label>
           <mshk-select-size formControlName="size"
@@ -45,9 +47,7 @@
           </mshk-select-size>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-5">
+      <div class="col-4">
         <div class="field-group">
           <label for="nacodeme" class="text-muted">{{ 'products.recommendedPriceAbbr' | translate: {separator: ' '} }}</label>
           <mshk-currency-input formControlName="recommendedPrice" [placeholder]="''"></mshk-currency-input>
@@ -61,6 +61,59 @@
         </div>
       </div>
     </div>
+
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="field-group text-muted">
+          <mshk-toggle formControlName="hasSubproducts" [label]="'Состоит из'"></mshk-toggle>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="productForm.get('hasSubproducts').value">
+      <div class="col-md-12">
+        <div class="row product-row text-muted" [ngClass]="{'p-right-25': formSubProducts.length > 1}">
+          <div class="col-sm-6">{{ 'products.productName' | translate }}</div>
+          <div class="col-sm-4">{{ 'products.vendorCode' | translate }}/{{ 'products.size' | translate }}</div>
+          <div class="col-sm-2">{{ 'products.quantityAbbr' | translate }}</div>
+        </div>
+        <div formArrayName="subproducts">
+          <div class="row product-row" [formGroupName]="index"
+                                       [ngClass]="{'p-right-25': formSubProducts.length > 1}"
+                                       *ngFor="let subproductControl of formSubProducts.controls; let index=index">
+            <div class="col-sm-6">
+              <div class="field-group">
+                <mshk-select-products formControlName="product"
+                                    [products]="availableSubProducts"
+                                    [canClearAll]="false"
+                                    (onProductSelected)="onSubproductSelected($event, index)">
+                </mshk-select-products>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="field-group">
+                <input type="text" class="form-control" disabled
+                       [value]="getProductSizeAndVendorCode(subproductControl.value.product)">
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="field-group">
+                <input type="number" class="form-control" formControlName="quantity" placeholder="Количество">
+              </div>
+              <button class="btn-remove" title="Удалить" type="button" (click)="removeSubproduct(index)" *ngIf="formSubProducts.length > 1">
+                <i class="ico ico-close"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <button class="btn-add" type="button" (click)="addSubproduct()">
+          <i class="fa fa-plus fa-border"></i>
+        </button>
+      </div>
+    </div>
+
 
   </form>
 </div>

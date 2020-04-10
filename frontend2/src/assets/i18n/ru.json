@@ -181,6 +181,7 @@
     "unableLoadOrders": "При загрузке всех заказов произошла ошибка.",
     "costPrice": "Себестоимость",
     "quantity": "Количество",
+    "quantityAbbr": "Кол-во",
     "price": "Цена",
     "productWasDeleted": "Товар был успешно удалён.",
     "errorWhileDeletingProduct": "При удалении товара произошла ошибка.",

@@ -48,7 +48,6 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                     .ThenInclude(supProd => supProd.Size)
                 .ToListAsync(cancellationToken);
 
-
         public virtual async Task<IEnumerable<Supply>> GetAsync(
             Expression<Func<Supply, bool>> predicate,
             string[] includes,
@@ -57,7 +56,6 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 .IncludeMultiple(includes)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
-
 
         public override async Task<Supply> GetByIdAsync(Guid id, CancellationToken cancellationToken = default(CancellationToken)) =>
             await Context.Supplies
