@@ -62,7 +62,7 @@ namespace Mushka.WebApi
                         .AllowCredentials());
             });
 
-            services.AddAutoMapper(typeof(AutoMapperProfile));
+            services.AddAutoMapper();
             Mapper.Configuration.AssertConfigurationIsValid();
         }
 
