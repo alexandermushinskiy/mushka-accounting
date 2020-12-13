@@ -33,7 +33,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var deliveriesResponse = await corporateOrderService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<CorporateOrder>>, CorporateOrdersListResponseModel>(deliveriesResponse);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<CorporateOrder>>, CorporateOrdersListResponseModel>(deliveriesResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -42,7 +42,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             var orderResponse = await corporateOrderService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<CorporateOrder>, CorporateOrderResponseModel>(orderResponse);
+            var clientResponse = mapper.Map<OperationResult<CorporateOrder>, CorporateOrderResponseModel>(orderResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -53,7 +53,7 @@ namespace Mushka.WebApi.Controllers
             var order = mapper.Map<CorporateOrderRequestModel, CorporateOrder>(corporateOrderRequest);
 
             var orderResponse = await corporateOrderService.AddAsync(order, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<CorporateOrder>, CorporateOrderResponseModel>(orderResponse);
+            var clientResponse = mapper.Map<OperationResult<CorporateOrder>, CorporateOrderResponseModel>(orderResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -64,7 +64,7 @@ namespace Mushka.WebApi.Controllers
             var order = mapper.Map<CorporateOrderRequestModel, CorporateOrder>(corporateOrderRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var orderResponse = await corporateOrderService.UpdateAsync(order, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<CorporateOrder>, CorporateOrderResponseModel>(orderResponse);
+            var clientResponse = mapper.Map<OperationResult<CorporateOrder>, CorporateOrderResponseModel>(orderResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -73,7 +73,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var orderResponse = await corporateOrderService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<CorporateOrder>, DeleteResponseModel>(orderResponse);
+            var clientResponse = mapper.Map<OperationResult<CorporateOrder>, DeleteResponseModel>(orderResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -82,10 +82,9 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> ValidateOrderNumber(string number)
         {
             var isExist = await corporateOrderService.IsNumberExistAsync(number, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<bool>, ValidationResponseModel>(isExist);
+            var clientResponse = mapper.Map<OperationResult<bool>, ValidationResponseModel>(isExist);
 
             return actionResultProvider.Get(clientResponse);
         }
-
     }
 }

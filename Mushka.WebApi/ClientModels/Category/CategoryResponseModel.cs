@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace Mushka.WebApi.ClientModels.Category
+﻿namespace Mushka.WebApi.ClientModels.Category
 {
-    public class CategoryResponseModel : ResponseModelBase
+    public class CategoryResponseModel : ResponseModelBase<CategoryModel>
     {
-        public CategoryModel Data { get; set; }
     }
 
-    public class CategoriesResponseModel : ResponseModelBase
+    public class CategoriesResponseModel : ResponseModelListBase<CategoryModel>
     {
-        public IEnumerable<CategoryModel> Data { get; set; }
     }
 }

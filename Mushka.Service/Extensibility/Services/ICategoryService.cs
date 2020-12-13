@@ -8,6 +8,6 @@ namespace Mushka.Service.Extensibility.Services
 {
     public interface ICategoryService : IServiceBase<Category>
     {
-        Task<ValidationResponse<IEnumerable<Category>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<OperationResult<IEnumerable<Category>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

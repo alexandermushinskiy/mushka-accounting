@@ -8,12 +8,12 @@ using Mushka.WebApi.ClientModels.Order;
 namespace Mushka.WebApi.Resolvers
 {
     public class OrderProductResponseResolver :
-        IValueResolver<ValidationResponse<IEnumerable<OrderProduct>>, OrderProductsResponseModel, IEnumerable<OrderProductModel>>
+        IValueResolver<OperationResult<IEnumerable<OrderProduct>>, OrderProductsResponseModel, IEnumerable<OrderProductModel>>
     {
         public IEnumerable<OrderProductModel> Resolve(
-            ValidationResponse<IEnumerable<OrderProduct>> source,
+            OperationResult<IEnumerable<OrderProduct>> source,
             OrderProductsResponseModel destination,
             IEnumerable<OrderProductModel> destMember,
-            ResolutionContext context) => source.Result?.Select(Mapper.Map<OrderProduct, OrderProductModel>);
+            ResolutionContext context) => source.Data?.Select(Mapper.Map<OrderProduct, OrderProductModel>);
     }
 }

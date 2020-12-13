@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Mushka.Core.Validation;
 using Mushka.Domain.Dto;
@@ -24,15 +25,17 @@ namespace Mushka.WebApi.AutoMapperProfiles
             CreateMap<Category, CategoryModel>().ConvertUsing<CategoryConverter>();
             CreateMap<CategoryRequestModel, Category>().ConvertUsing<CategoryRequestConverter>();
 
-            CreateMap<ValidationResponse<Category>, CategoryResponseModel>()
+            CreateMap<OperationResult<Category>, CategoryResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<CategoryResponseResolver>())
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
-            CreateMap<ValidationResponse<IEnumerable<Category>>, CategoriesResponseModel>()
+            CreateMap<OperationResult<IEnumerable<Category>>, CategoriesResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<CategoryResponseResolver>())
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
         }
 
         private void CreateProductMaps()
@@ -41,30 +44,35 @@ namespace Mushka.WebApi.AutoMapperProfiles
             CreateMap<Product, ProductModel>().ConvertUsing<ProductConverter>();
             CreateMap<Product, ProductListModel>().ConvertUsing<ProductListConverter>();
 
-            CreateMap<ValidationResponse<Product>, ProductResponseModel>()
+            CreateMap<OperationResult<Product>, ProductResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ProductResponseResolver>())
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
-            CreateMap<ValidationResponse<IEnumerable<Product>>, ProductListResponseModel>()
+            CreateMap<OperationResult<IEnumerable<Product>>, ProductListResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ProductListResponseResolver>())
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
-            CreateMap<ValidationResponse<IEnumerable<Product>>, SelectProductsResponseModel>()
+            CreateMap<OperationResult<IEnumerable<Product>>, SelectProductsResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SelectProductsResponseResolver>())
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
-            CreateMap<ValidationResponse<IEnumerable<Size>>, SizesResponseModel>()
+            CreateMap<OperationResult<IEnumerable<Size>>, SizesResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SizeResponseResolver>())
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
-            CreateMap<ValidationResponse<ProductCostPrice>, CostPriceResponseModel>()
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }))
-                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => new CostPriceModel { CostPrice = src.Result.CostPrice }));
+            CreateMap<OperationResult<ProductCostPrice>, CostPriceResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => new CostPriceModel { CostPrice = src.Data.CostPrice }))
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
         }
     }
 }

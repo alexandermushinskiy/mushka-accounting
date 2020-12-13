@@ -33,7 +33,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var expenses = await expenseService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Expense>>, ExpensesResponseModel>(expenses);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<Expense>>, ExpensesResponseModel>(expenses);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -42,7 +42,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             var expense = await expenseService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Expense>, ExpenseResponseModel>(expense);
+            var clientResponse = mapper.Map<OperationResult<Expense>, ExpenseResponseModel>(expense);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -53,7 +53,7 @@ namespace Mushka.WebApi.Controllers
             var expense = mapper.Map<ExpenseRequestModel, Expense>(expenseRequest);
 
             var expenseResponse = await expenseService.AddAsync(expense, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Expense>, ExpenseResponseModel>(expenseResponse);
+            var clientResponse = mapper.Map<OperationResult<Expense>, ExpenseResponseModel>(expenseResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -64,7 +64,7 @@ namespace Mushka.WebApi.Controllers
             var expense = mapper.Map<ExpenseRequestModel, Expense>(expenseRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var expenseResponse = await expenseService.UpdateAsync(expense, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Expense>, ExpenseResponseModel>(expenseResponse);
+            var clientResponse = mapper.Map<OperationResult<Expense>, ExpenseResponseModel>(expenseResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -73,7 +73,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var expenseResponse = await expenseService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Expense>, DeleteResponseModel>(expenseResponse);
+            var clientResponse = mapper.Map<OperationResult<Expense>, DeleteResponseModel>(expenseResponse);
 
             return actionResultProvider.Get(clientResponse);
         }

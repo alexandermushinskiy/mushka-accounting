@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace Mushka.WebApi.ClientModels.Expenses
+﻿namespace Mushka.WebApi.ClientModels.Expenses
 {
-    public class ExpenseResponseModel : ResponseModelBase
+    public class ExpenseResponseModel : ResponseModelBase<ExpenseModel>
     {
-        public ExpenseModel Data { get; set; }
     }
 
-    public class ExpensesResponseModel : ResponseModelBase
+    public class ExpensesResponseModel : ResponseModelListBase<ExpenseModel>
     {
-        public IEnumerable<ExpenseModel> Data { get; set; }
     }
 }

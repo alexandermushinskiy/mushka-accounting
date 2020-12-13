@@ -8,19 +8,19 @@ using Mushka.WebApi.ClientModels.Exhibition;
 namespace Mushka.WebApi.Resolvers
 {
     public class ExhibitionResponseResolver :
-        IValueResolver<ValidationResponse<Exhibition>, ExhibitionResponseModel, ExhibitionModel>,
-        IValueResolver<ValidationResponse<IEnumerable<Exhibition>>, ExhibitionsResponseModel, IEnumerable<ExhibitionModel>>
+        IValueResolver<OperationResult<IEnumerable<Exhibition>>, ExhibitionsResponseModel, IEnumerable<ExhibitionModel>>,
+        IValueResolver<OperationResult<Exhibition>, ExhibitionResponseModel, ExhibitionModel>
     {
-        public ExhibitionModel Resolve(
-            ValidationResponse<Exhibition> source,
-            ExhibitionResponseModel destination,
-            ExhibitionModel destMember,
-            ResolutionContext context) => source.Result == null ? null : Mapper.Map<Exhibition, ExhibitionModel>(source.Result);
-
         public IEnumerable<ExhibitionModel> Resolve(
-            ValidationResponse<IEnumerable<Exhibition>> source,
+            OperationResult<IEnumerable<Exhibition>> source,
             ExhibitionsResponseModel destination,
             IEnumerable<ExhibitionModel> destMember,
-            ResolutionContext context) => source.Result?.Select(Mapper.Map<Exhibition, ExhibitionModel>);
+            ResolutionContext context) => source.Data?.Select(Mapper.Map<Exhibition, ExhibitionModel>);
+
+        public ExhibitionModel Resolve(
+            OperationResult<Exhibition> source,
+            ExhibitionResponseModel destination,
+            ExhibitionModel destMember,
+            ResolutionContext context) => source.Data == null ? null : Mapper.Map<Exhibition, ExhibitionModel>(source.Data);
     }
 }

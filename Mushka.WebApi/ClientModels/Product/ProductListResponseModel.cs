@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace Mushka.WebApi.ClientModels.Product
+﻿namespace Mushka.WebApi.ClientModels.Product
 {
-    public class ProductListResponseModel : ResponseModelBase
+    public class ProductListResponseModel : ResponseModelListBase<ProductListModel>
     {
-        public IEnumerable<ProductListModel> Data { get; set; }
     }
 }

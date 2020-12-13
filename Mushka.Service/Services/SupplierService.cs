@@ -8,6 +8,7 @@ using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Domain.Strings;
 using Mushka.Service.Extensibility.Services;
 
 namespace Mushka.Service.Services
@@ -27,74 +28,70 @@ namespace Mushka.Service.Services
             supplierRepository = storage.GetRepository<ISupplierRepository>();
         }
 
-        public async Task<ValidationResponse<IEnumerable<Supplier>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<IEnumerable<Supplier>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<Supplier> suppliers = (await supplierRepository.GetAllAsync(cancellationToken))
                 .OrderBy(supp => supp.Name)
                 .ToList();
 
-            var message = suppliers.Any()
-                ? "Suppliers were successfully retrieved."
-                : "No suppliers found.";
-
-            return CreateInfoValidationResponse(suppliers, message);
+            return OperationResult<IEnumerable<Supplier>>.FromResult(suppliers);
         }
 
-        public async Task<ValidationResponse<Supplier>> GetByIdAsync(Guid supplierId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Supplier>> GetByIdAsync(Guid supplierId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var supplier = await supplierRepository.GetByIdAsync(supplierId, cancellationToken);
 
             return supplier == null
-                ? CreateErrorValidationResponse($"Supplier with id {supplierId} is not found.", ValidationStatusType.NotFound)
-                : CreateInfoValidationResponse(supplier, $"Supplier with id {supplier.Id} was successfully retrieved.");
+                ? OperationResult<Supplier>.FromError(ValidationErrors.SupplierNotFound, ValidationStatusType.NotFound)
+                : OperationResult<Supplier>.FromResult(supplier);
         }
 
-        public async Task<ValidationResponse<Supplier>> AddAsync(Supplier supplier, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Supplier>> AddAsync(Supplier supplier, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (await supplierRepository.IsExistAsync(supp => supp.Name == supplier.Name, cancellationToken))
             {
-                return CreateErrorValidationResponse($"Supplier with name {supplier.Name} is already exist.");
+                return OperationResult<Supplier>.FromError(ValidationErrors.SupplierWithNameExist);
             }
             
             var addedSupplier = supplierRepository.Add(supplier);
             await storage.SaveAsync(cancellationToken);
 
-            return CreateInfoValidationResponse(addedSupplier, $"Supplier with id {supplier.Id} was successfully created.");
+            return OperationResult<Supplier>.FromResult(addedSupplier);
         }
 
-        public async Task<ValidationResponse<Supplier>> UpdateAsync(Supplier supplier, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Supplier>> UpdateAsync(Supplier supplier, CancellationToken cancellationToken = default(CancellationToken))
         {
             var supplierToUpdate = await supplierRepository.GetByIdAsync(supplier.Id, cancellationToken);
 
             if (supplierToUpdate == null)
             {
-                return CreateErrorValidationResponse($"Supplier with id {supplier.Id} is not found.", ValidationStatusType.NotFound);
+                OperationResult<Supplier>.FromError(ValidationErrors.SupplierNotFound, ValidationStatusType.NotFound);
             }
 
             if (await supplierRepository.IsExistAsync(supp => supp.Id != supplier.Id && supp.Name == supplier.Name, cancellationToken))
             {
-                return CreateErrorValidationResponse($"Supplier with name {supplier.Name} is already exist.");
+                return OperationResult<Supplier>.FromError(ValidationErrors.SupplierWithNameExist);
             }
 
             var updatedSupplier = supplierRepository.Update(supplier);
             await storage.SaveAsync(cancellationToken);
 
-            return CreateInfoValidationResponse(updatedSupplier, $"Supplier with id {supplier.Id} was successfully updated.");
+            return OperationResult<Supplier>.FromResult(updatedSupplier);
         }
 
-        public async Task<ValidationResponse<Supplier>> DeleteAsync(Guid supplierId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Supplier>> DeleteAsync(Guid supplierId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var supplier = await supplierRepository.GetByIdAsync(supplierId, cancellationToken);
 
             if (supplier == null)
             {
-                return CreateErrorValidationResponse($"Supplier with id {supplierId} is not found.", ValidationStatusType.NotFound);
+                OperationResult<Supplier>.FromError(ValidationErrors.SupplierNotFound, ValidationStatusType.NotFound);
             }
 
             supplierRepository.Delete(supplier);
             await storage.SaveAsync(cancellationToken);
 
-            return CreateInfoValidationResponse(supplier, $"Supplier with id {supplier.Id} was successfully deleted.");
+            return OperationResult<Supplier>.FromResult(supplier);
         }
     }
 }

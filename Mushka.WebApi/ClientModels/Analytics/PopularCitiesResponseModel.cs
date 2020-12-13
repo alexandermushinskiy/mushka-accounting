@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using Mushka.Domain.Dto;
+﻿using Mushka.Domain.Dto;
 
 namespace Mushka.WebApi.ClientModels.Analytics
 {
-    public class PopularCitiesResponseModel : ResponseModelBase
+    public class PopularCitiesResponseModel : ResponseModelListBase<PopularCity>
     {
-        public IEnumerable<PopularCity> Data { get; set; }
     }
 }

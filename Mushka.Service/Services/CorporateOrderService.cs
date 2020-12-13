@@ -8,6 +8,7 @@ using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Domain.Strings;
 using Mushka.Service.Extensibility.Services;
 
 namespace Mushka.Service.Services
@@ -27,66 +28,62 @@ namespace Mushka.Service.Services
             corporateOrderRepository = storage.GetRepository<ICorporateOrderRepository>();
         }
 
-        public async Task<ValidationResponse<IEnumerable<CorporateOrder>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<IEnumerable<CorporateOrder>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<CorporateOrder> orders = (await corporateOrderRepository.GetAllAsync(cancellationToken))
                 .OrderBy(order => order.CreatedOn)
                 .ToList();
 
-            var message = orders.Any()
-                ? "Corporate orders were successfully retrieved."
-                : "No corporate orders found.";
-
-            return CreateInfoValidationResponse(orders, message);
+            return OperationResult<IEnumerable<CorporateOrder>>.FromResult(orders);
         }
 
-        public async Task<ValidationResponse<CorporateOrder>> GetByIdAsync(Guid corporateOrderId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<CorporateOrder>> GetByIdAsync(Guid corporateOrderId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var corporateOrder = await corporateOrderRepository.GetByIdAsync(corporateOrderId, cancellationToken);
 
             return corporateOrder == null
-                ? CreateErrorValidationResponse($"Corporate order with id {corporateOrderId} is not found.", ValidationStatusType.NotFound)
-                : CreateInfoValidationResponse(corporateOrder, $"Corporate order with id {corporateOrderId} was successfully retrieved.");
+                ? OperationResult<CorporateOrder>.FromError(ValidationErrors.CorporateOrderNotFound, ValidationStatusType.NotFound)
+                : OperationResult<CorporateOrder>.FromResult(corporateOrder);
         }
 
-        public async Task<ValidationResponse<CorporateOrder>> AddAsync(CorporateOrder corporateOrder, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<CorporateOrder>> AddAsync(CorporateOrder corporateOrder, CancellationToken cancellationToken = default(CancellationToken))
         {
             var addedCorporateOrder = corporateOrderRepository.Add(corporateOrder);
             await storage.SaveAsync(cancellationToken);
 
-            return CreateInfoValidationResponse(addedCorporateOrder, $"Corporate order with id {addedCorporateOrder.Id} was successfully added.");
+            return OperationResult<CorporateOrder>.FromResult(addedCorporateOrder);
         }
 
-        public async Task<ValidationResponse<CorporateOrder>> UpdateAsync(CorporateOrder corporateOrder, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<CorporateOrder>> UpdateAsync(CorporateOrder corporateOrder, CancellationToken cancellationToken = default(CancellationToken))
         {
             corporateOrderRepository.DeleteProducts(corporateOrder.Id);
 
             var updatedCorporateOrder = corporateOrderRepository.Update(corporateOrder);
             await storage.SaveAsync(cancellationToken);
 
-            return CreateInfoValidationResponse(updatedCorporateOrder, $"Corporate order with id {corporateOrder.Id} was successfully updated.");
+            return OperationResult<CorporateOrder>.FromResult(updatedCorporateOrder);
         }
 
-        public async Task<ValidationResponse<CorporateOrder>> DeleteAsync(Guid corporateOrderId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<CorporateOrder>> DeleteAsync(Guid corporateOrderId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var corporateOrder = await corporateOrderRepository.GetByIdAsync(corporateOrderId, cancellationToken);
 
             if (corporateOrder == null)
             {
-                return CreateErrorValidationResponse($"Corporate order with id {corporateOrderId} is not found.", ValidationStatusType.NotFound);
+                return OperationResult<CorporateOrder>.FromError(ValidationErrors.CorporateOrderNotFound, ValidationStatusType.NotFound);
             }
             
             corporateOrderRepository.Delete(corporateOrder);
             await storage.SaveAsync(cancellationToken);
 
-            return CreateInfoValidationResponse(corporateOrder, $"Corporate order with id {corporateOrder.Id} was successfully deleted.");
+            return OperationResult<CorporateOrder>.FromResult(corporateOrder);
         }
 
-        public async Task<ValidationResponse<bool>> IsNumberExistAsync(string orderNumber, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<bool>> IsNumberExistAsync(string orderNumber, CancellationToken cancellationToken = default(CancellationToken))
         {
             var isValid = !await corporateOrderRepository.IsExistAsync(order => order.Number == orderNumber, cancellationToken);
 
-            return CreateInfoValidationResponse(isValid, $"Corporate order number {orderNumber} is {(isValid ? "" : "not ")}valid.");
+            return OperationResult<bool>.FromResult(isValid);
         }
     }
 }

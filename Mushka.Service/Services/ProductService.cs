@@ -9,6 +9,7 @@ using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Domain.Strings;
 using Mushka.Service.Extensibility.Dto;
 using Mushka.Service.Extensibility.ExternalApps;
 using Mushka.Service.Extensibility.Providers;
@@ -42,20 +43,16 @@ namespace Mushka.Service.Services
             categoryRepository = storage.GetRepository<ICategoryRepository>();
         }
 
-        public async Task<ValidationResponse<IEnumerable<Product>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<IEnumerable<Product>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<Product> products = (await productRepository.GetAllAsync(cancellationToken))
                 .OrderBy(product => product.Name)
                 .ToList();
 
-            var message = products.Any()
-                ? "Products were successfully retrieved."
-                : "No products found.";
-
-            return CreateInfoValidationResponse(products, message);
+            return OperationResult<IEnumerable<Product>>.FromResult(products);
         }
 
-        public async Task<ValidationResponse<IEnumerable<Product>>> GetInStockAsync(bool inStock, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<IEnumerable<Product>>> GetInStockAsync(bool inStock, CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<Product> products = (inStock 
                     ? await productRepository.GetAsync(prod => prod.Quantity > 0, cancellationToken)
@@ -63,23 +60,19 @@ namespace Mushka.Service.Services
                 .OrderBy(product => product.Name)
                 .ToList();
 
-            var message = products.Any()
-                ? "Products in stock were successfully retrieved."
-                : "No products found in stock.";
-
-            return CreateInfoValidationResponse(products, message);
+            return OperationResult<IEnumerable<Product>>.FromResult(products);
         }
 
-        public async Task<ValidationResponse<Product>> GetByIdAsync(Guid productId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Product>> GetByIdAsync(Guid productId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var product = await productRepository.GetByIdAsync(productId, cancellationToken);
 
             return product == null
-                ? CreateErrorValidationResponse($"Product with id {productId} is not found.", ValidationStatusType.NotFound)
-                : CreateInfoValidationResponse(product, $"Product with id {product.Id} was successfully retrieved.");
+                ? OperationResult<Product>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound)
+                : OperationResult<Product>.FromResult(product);
         }
 
-        public async Task<ValidationResponse<IEnumerable<Product>>> GetByCategoryAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<IEnumerable<Product>>> GetByCategoryAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (!await categoryRepository.IsExistAsync(category => category.Id == categoryId, cancellationToken))
             {
@@ -90,51 +83,43 @@ namespace Mushka.Service.Services
                 .OrderBy(product => product.Name)
                 .ToList();
 
-            var message = products.Any()
-                ? $"Products were successfully retrieved for category {categoryId}."
-                : $"No products for category {categoryId}.";
-
-            return CreateInfoValidationResponse(products, message);
+            return OperationResult<IEnumerable<Product>>.FromResult(products);
         }
 
-        public async Task<ValidationResponse<IEnumerable<Product>>> GetByCriteriaAsync(string criteria, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<IEnumerable<Product>>> GetByCriteriaAsync(string criteria, CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<Product> products = (await productRepository.GetAsync(prod =>
                     prod.Name.ToUpper().Contains(criteria.ToUpper()) || prod.VendorCode.ToUpper().Contains(criteria.ToUpper()), cancellationToken))
                 .OrderBy(product => product.Name)
                 .ToList();
 
-            var message = products.Any()
-                ? $"Products were successfully retrieved by criteria {criteria}."
-                : $"No products for criteria {criteria}.";
-
-            return CreateInfoValidationResponse(products, message);
+            return OperationResult<IEnumerable<Product>>.FromResult(products);
         }
 
-        public async Task<ValidationResponse<ProductCostPrice>> GetCostPriceAsync(Guid productId, int productsCount, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<ProductCostPrice>> GetCostPriceAsync(Guid productId, int productsCount, CancellationToken cancellationToken = default(CancellationToken))
         {
             var product = await productRepository.GetByIdAsync(productId, cancellationToken);
 
             if (product == null)
             {
-                return CreateErrorValidationResponse<ProductCostPrice>($"Product with id {productId} is not found.", ValidationStatusType.NotFound);
+                return OperationResult<ProductCostPrice>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
             }
 
             var costPrice = await costPriceProvider.CalculateAsync(productId, productsCount, cancellationToken);
 
-            return CreateInfoValidationResponse(new ProductCostPrice(costPrice), $"Cost price for product with id {product.Id} was successfully retrieved.");
+            return OperationResult<ProductCostPrice>.FromResult(new ProductCostPrice(costPrice));
         }
 
-        public async Task<ValidationResponse<Product>> AddAsync(Product product, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Product>> AddAsync(Product product, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (!await categoryRepository.IsExistAsync(category => category.Id == product.CategoryId, cancellationToken))
             {
-                return CreateErrorValidationResponse($"Category with id {product.CategoryId} is not found.", ValidationStatusType.NotFound);
+                return OperationResult<Product>.FromError(ValidationErrors.CategoryNotFound, ValidationStatusType.NotFound);
             }
             
             if (await productRepository.IsExistAsync(prod => prod.VendorCode == product.VendorCode, cancellationToken))
             {
-                return CreateErrorValidationResponse($"Product with the vendor code {product.VendorCode} is already existed.");
+                return OperationResult<Product>.FromError(ValidationErrors.ProductWithVendorCodeExist);
             }
 
             productRepository.Add(product);
@@ -142,21 +127,21 @@ namespace Mushka.Service.Services
 
             var addedProduct = await productRepository.GetByIdAsync(product.Id, cancellationToken);
 
-            return CreateInfoValidationResponse(addedProduct, $"Product with id {product.Id} was successfully added.");
+            return OperationResult<Product>.FromResult(addedProduct);
         }
 
-        public async Task<ValidationResponse<Product>> UpdateAsync(Product product, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Product>> UpdateAsync(Product product, CancellationToken cancellationToken = default(CancellationToken))
         {
             var productToUpdate = await productRepository.GetByIdAsync(product.Id, cancellationToken);
 
             if (productToUpdate == null)
             {
-                return CreateErrorValidationResponse($"Product with id {product.Id} is not found.", ValidationStatusType.NotFound);
+                return OperationResult<Product>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
             }
 
             if (await productRepository.IsExistAsync(prod => prod.Id != product.Id && prod.VendorCode == product.VendorCode, cancellationToken))
             {
-                return CreateErrorValidationResponse($"Product with the vendor code {product.VendorCode} is already existed.");
+                return OperationResult<Product>.FromError(ValidationErrors.ProductWithVendorCodeExist);
             }
 
             product.Quantity = productToUpdate.Quantity;
@@ -165,43 +150,39 @@ namespace Mushka.Service.Services
             await storage.SaveAsync(cancellationToken);
             var updatedProduct = await productRepository.GetByIdAsync(product.Id, cancellationToken);
 
-            return CreateInfoValidationResponse(updatedProduct, $"Product with id {product.Id} was successfully updated.");
+            return OperationResult<Product>.FromResult(updatedProduct);
         }
 
-        public async Task<ValidationResponse<Product>> DeleteAsync(Guid productId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Product>> DeleteAsync(Guid productId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var product = await productRepository.GetByIdAsync(productId, cancellationToken);
 
             if (product == null)
             {
-                return CreateErrorValidationResponse($"Product with id {productId} is not found.", ValidationStatusType.NotFound);
+                return OperationResult<Product>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
             }
 
             productRepository.Delete(product);
             await storage.SaveAsync(cancellationToken);
 
-            return CreateInfoValidationResponse(product, $"Product with id {product.Id} was successfully deleted.");
+            return OperationResult<Product>.FromResult(product);
         }
 
-        public async Task<ValidationResponse<IEnumerable<Size>>> GetSizesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<IEnumerable<Size>>> GetSizesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var sizes = (await productRepository.GetSizesAsync(cancellationToken)).ToList();
 
-            string message = sizes.Any()
-                ? "Sizes were successfully retrieved."
-                : "No sizes found.";
-
-            return CreateInfoValidationResponse<IEnumerable<Size>>(sizes, message);
+            return OperationResult<IEnumerable<Size>>.FromResult(sizes);
         }
 
-        public async Task<ValidationResponse<ExportedFile>> ExportAsync(string title, IEnumerable<Guid> productIds, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<ExportedFile>> ExportAsync(string title, IEnumerable<Guid> productIds, CancellationToken cancellationToken = default(CancellationToken))
         {
             var products = await productRepository.GetForExportAsync(prod => productIds.Contains(prod.Id), cancellationToken);
 
             var fileContent = excelService.ExportProducts(title, products);
             var exportedFile = new ExportedFile(ExportFileName, ExportContentType, fileContent);
 
-            return CreateInfoValidationResponse(exportedFile, "The products were exported successfully.");
+            return OperationResult<ExportedFile>.FromResult(exportedFile);
         }
     }
 }

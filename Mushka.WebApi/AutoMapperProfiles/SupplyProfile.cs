@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using AutoMapper;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Models;
 using Mushka.Service.Extensibility.Dto;
+using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Supply;
 using Mushka.WebApi.Resolvers;
 
@@ -18,25 +19,17 @@ namespace Mushka.WebApi.AutoMapperProfiles
 
             CreateMap<SuppliesFiltersRequestModel, SuppliesFiltersModel>();
 
-            CreateMap<ValidationResponse<Supply>, SupplyResponseModel>()
+            CreateMap<OperationResult<Supply>, SupplyResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SupplyResponseResolver>())
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
-            //CreateMap<ValidationResponse<IEnumerable<Supply>>, SuppliesResponseModel>()
-            //    .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SupplyResponseResolver>())
-            //    .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-            //    .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
-
-            CreateMap<ValidationResponse<IEnumerable<Supply>>, SuppliesListResponseModel>()
+            CreateMap<OperationResult<ItemsWithTotalCount<Supply>>, DataWithTotalCountResponseModel<SupplyListModel>>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SuppliesListResponseResolver>())
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
-
-            CreateMap<ValidationResponse<ItemsWithTotalCount<Supply>>, DataWithTotalCountResponseModel<SupplyListModel>>()
-                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SuppliesListResponseResolver>())
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
         }
     }
 }

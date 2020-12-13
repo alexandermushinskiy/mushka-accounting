@@ -1,7 +1,6 @@
 ﻿namespace Mushka.WebApi.ClientModels.Product
 {
-    public class CostPriceResponseModel : ResponseModelBase
+    public class CostPriceResponseModel : ResponseModelBase<CostPriceModel>
     {
-        public CostPriceModel Data { get; set; }
     }
 }

@@ -8,8 +8,8 @@ namespace Mushka.Service.Extensibility.Providers
 {
     public interface IOrderCustomerProvider
     {
-        Task<ValidationResponse<Customer>> GetCustomerForNewOrderAsync(Customer customer, CancellationToken cancellationToken = default(CancellationToken));
+        Task<OperationResult<Customer>> GetCustomerForNewOrderAsync(Customer customer, CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<ValidationResponse<Customer>> GetCustomerForExistingOrderAsync(Guid storedCustomerId, Customer customer, CancellationToken cancellationToken = default(CancellationToken));
+        Task<OperationResult<Customer>> GetCustomerForExistingOrderAsync(Guid storedCustomerId, Customer customer, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

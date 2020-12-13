@@ -7,15 +7,15 @@ using Mushka.WebApi.ClientModels.Exhibition;
 
 namespace Mushka.WebApi.Resolvers
 {
-    public class ExhibitionsListResponseResolver : IValueResolver<ValidationResponse<IEnumerable<Exhibition>>, ExhibitionsListResponseModel, IEnumerable<ExhibitionsListModel>>
+    public class ExhibitionsListResponseResolver : IValueResolver<OperationResult<IEnumerable<Exhibition>>, ExhibitionsListResponseModel, IEnumerable<ExhibitionsListModel>>
     {
         public IEnumerable<ExhibitionsListModel> Resolve(
-            ValidationResponse<IEnumerable<Exhibition>> source,
+            OperationResult<IEnumerable<Exhibition>> source,
             ExhibitionsListResponseModel destination,
             IEnumerable<ExhibitionsListModel> destMember,
             ResolutionContext context)
         {
-            var t1 = source.Result?.Select(exhibition => new ExhibitionsListModel
+            return source.Data?.Select(exhibition => new ExhibitionsListModel
             {
                 Id = exhibition.Id,
                 Name = exhibition.Name,
@@ -25,7 +25,6 @@ namespace Mushka.WebApi.Resolvers
                 ParticipationCost = exhibition.ParticipationCost,
                 ProductsCount = exhibition.Products.Sum(p => p.Quantity),
             });
-            return t1;
         }
     }
 }

@@ -23,50 +23,50 @@ namespace Mushka.Service.Services
             analyticsRepository = storage.GetRepository<IAnalyticsRepository>();
         }
 
-        public async Task<ValidationResponse<IEnumerable<PopularProduct>>> GetPopularProducts(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<IEnumerable<PopularProduct>>> GetPopularProducts(CancellationToken cancellationToken = default(CancellationToken))
         {
             var popularProducts = await analyticsRepository.GetProductsByPopularity(DefaultTopCount, Popularity.Popular, cancellationToken);
 
-            return CreateInfoValidationResponse(popularProducts, "Popular products were retrived successfully.");
+            return OperationResult<IEnumerable<PopularProduct>>.FromResult(popularProducts);
         }
 
-        public async Task<ValidationResponse<IEnumerable<PopularProduct>>> GetUnpopularProducts(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<IEnumerable<PopularProduct>>> GetUnpopularProducts(CancellationToken cancellationToken = default(CancellationToken))
         {
             var popularProducts = await analyticsRepository.GetProductsByPopularity(DefaultTopCount, Popularity.Unpopular, cancellationToken);
 
-            return CreateInfoValidationResponse(popularProducts, "Unpopular products were retrived successfully.");
+            return OperationResult<IEnumerable<PopularProduct>>.FromResult(popularProducts);
         }
 
-        public async Task<ValidationResponse<IEnumerable<PopularCity>>> GetPopularCities(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<IEnumerable<PopularCity>>> GetPopularCities(CancellationToken cancellationToken = default(CancellationToken))
         {
             var popularCities = await analyticsRepository.GetPopularCities(DefaultTopCount, cancellationToken);
 
-            return CreateInfoValidationResponse(popularCities, "Popular cities were retrived successfully.");
+            return OperationResult<IEnumerable<PopularCity>>.FromResult(popularCities);
         }
 
-        public async Task<ValidationResponse<Balance>> GetBalance(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Balance>> GetBalance(CancellationToken cancellationToken = default(CancellationToken))
         {
             var balance = await analyticsRepository.GetBalance(cancellationToken);
 
-            return CreateInfoValidationResponse(balance, "Balance was retrived successfully.");
+            return OperationResult<Balance>.FromResult(balance);
         }
 
-        public async Task<ValidationResponse<IEnumerable<OrdersCount>>> GetOrdersCount(int periodInMonth, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<IEnumerable<OrdersCount>>> GetOrdersCount(int periodInMonth, CancellationToken cancellationToken = default(CancellationToken))
         {
             var limitDate = GetDateTimeByPeriod(periodInMonth);
 
             var ordersCount = await analyticsRepository.GetOrdersCount(new DateTime(limitDate.Year, limitDate.Month, 1), cancellationToken);
 
-            return CreateInfoValidationResponse(ordersCount, "Orders count were retrived successfully.");
+            return OperationResult<IEnumerable<OrdersCount>>.FromResult(ordersCount);
         }
 
-        public async Task<ValidationResponse<IEnumerable<SoldProductsCount>>> GetSoldProductsCount(int periodInMonth, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<IEnumerable<SoldProductsCount>>> GetSoldProductsCount(int periodInMonth, CancellationToken cancellationToken = default(CancellationToken))
         {
             var limitDate = GetDateTimeByPeriod(periodInMonth);
 
             var soldProductsCount = await analyticsRepository.GetSoldProductsCount(new DateTime(limitDate.Year, limitDate.Month, 1), cancellationToken);
 
-            return CreateInfoValidationResponse(soldProductsCount, "Sold products count were retrived successfully.");
+            return OperationResult<IEnumerable<SoldProductsCount>>.FromResult(soldProductsCount);
         }
 
         private static DateTime GetDateTimeByPeriod(int periodInMonth) =>

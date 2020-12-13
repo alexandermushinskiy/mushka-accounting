@@ -30,7 +30,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> Filter(string name)
         {
             var customerResponse = await customerService.GetByNameAsync(name, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Customer>>, CustomersResponseModel>(customerResponse);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<Customer>>, CustomersResponseModel>(customerResponse);
 
             return actionResultProvider.Get(clientResponse);
         }

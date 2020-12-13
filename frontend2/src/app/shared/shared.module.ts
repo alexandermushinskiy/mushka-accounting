@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,7 +24,6 @@ import { HandleUnsavedDataGuard } from './guards/handle-unsaved-data.guard';
 import { ConfirmationComponent } from './widgets/confirmation/confirmation.component';
 import { DatatableFooterComponent } from './widgets/datatable-footer/datatable-footer.component';
 import { DatatablePagerComponent } from './widgets/datatable-pager/datatable-pager.component';
-import { HttpClient } from '@angular/common/http';
 import { SearchFormComponent } from './widgets/search-form/search-form.component';
 import { ProgressLinearComponent } from './widgets/progress-linear/progress-linear.component';
 import { BackArrowComponent } from './widgets/back-arrow/back-arrow.component';

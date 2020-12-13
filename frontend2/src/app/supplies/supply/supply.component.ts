@@ -130,19 +130,19 @@ export class SupplyComponent implements OnInit {
       this.route.queryParams,
       this.route.params
     ).subscribe(([queryParams, params]) => {
-      const supplyId = params['id'];
+      this.supplyId = params['id'];
       const isCloning = !!queryParams.clone;
-      this.isEdit = !!supplyId && !queryParams.clone;
+      this.isEdit = !!this.supplyId && !queryParams.clone;
 
-      this.loadData(supplyId, isCloning);
+      this.loadData(isCloning);
     });
   }
 
-  private loadData(supplyId: string, isCloning: boolean) {
+  private loadData(isCloning: boolean) {
     this.loadingIndicator = true;
 
     const getSupply = (this.isEdit || isCloning)
-      ? this.suppliesService.getById(supplyId)
+      ? this.suppliesService.getById(this.supplyId)
       : of(null);
 
     forkJoin(

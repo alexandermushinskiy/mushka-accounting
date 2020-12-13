@@ -8,6 +8,7 @@ using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Domain.Strings;
 using Mushka.Service.Extensibility.Services;
 
 namespace Mushka.Service.Services
@@ -29,53 +30,49 @@ namespace Mushka.Service.Services
             productRepository = storage.GetRepository<IProductRepository>();
         }
 
-        public async Task<ValidationResponse<IEnumerable<Category>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<IEnumerable<Category>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<Category> categories = (await categoryRepository.GetAllAsync(cancellationToken))
                 .OrderBy(category => category.Order)
                 .ToList();
 
-            var message = categories.Any()
-                ? "Categories were successfully retrieved."
-                : "No categories found.";
-
-            return CreateInfoValidationResponse(categories, message);
+            return OperationResult<IEnumerable<Category>>.FromResult(categories);
         }
 
-        public async Task<ValidationResponse<Category>> GetByIdAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Category>> GetByIdAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var category = await categoryRepository.GetByIdAsync(categoryId, cancellationToken);
 
             return category == null
-                ? CreateErrorValidationResponse($"Category with id {categoryId} is not found.", ValidationStatusType.NotFound)
-                : CreateInfoValidationResponse(category, $"Category with id {category.Id} was successfully retrieved.");
+                ? OperationResult<Category>.FromError(ValidationErrors.CategoryNotFound, ValidationStatusType.NotFound)
+                : OperationResult<Category>.FromResult(category);
         }
 
-        public async Task<ValidationResponse<Category>> AddAsync(Category category, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Category>> AddAsync(Category category, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (await categoryRepository.IsExistAsync(cat => cat.Name == category.Name, cancellationToken))
             {
-                return CreateErrorValidationResponse($"Category with name {category.Name} is already exist.");
+                return OperationResult<Category>.FromError(ValidationErrors.CategoryWithNameExist);
             }
             
             var addedCategory = categoryRepository.Add(category);
             await storage.SaveAsync(cancellationToken);
 
-            return CreateInfoValidationResponse(addedCategory, $"Category with id {category.Id} was successfully added.");
+            return OperationResult<Category>.FromResult(addedCategory);
         }
 
-        public async Task<ValidationResponse<Category>> UpdateAsync(Category category, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Category>> UpdateAsync(Category category, CancellationToken cancellationToken = default(CancellationToken))
         {
             var categoryToUpdate = await categoryRepository.GetByIdAsync(category.Id, cancellationToken);
 
             if (categoryToUpdate == null)
             {
-                return CreateErrorValidationResponse($"Category with id {category.Id} is not found.", ValidationStatusType.NotFound);
+                return OperationResult<Category>.FromError(ValidationErrors.CategoryNotFound, ValidationStatusType.NotFound);
             }
 
             if (await categoryRepository.IsExistAsync(cat => cat.Id != category.Id && cat.Name == category.Name, cancellationToken))
             {
-                return CreateErrorValidationResponse($"Category with name {category.Name} is already exist.");
+                return OperationResult<Category>.FromError(ValidationErrors.CategoryWithNameExist);
             }
 
             category.Order = categoryToUpdate.Order;
@@ -83,27 +80,27 @@ namespace Mushka.Service.Services
             var updatedCategory = categoryRepository.Update(category);
             await storage.SaveAsync(cancellationToken);
 
-            return CreateInfoValidationResponse(updatedCategory, $"Category with id {category.Id} was successfully updated.");
+            return OperationResult<Category>.FromResult(updatedCategory);
         }
 
-        public async Task<ValidationResponse<Category>> DeleteAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Category>> DeleteAsync(Guid categoryId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var category = await categoryRepository.GetByIdAsync(categoryId, cancellationToken);
 
             if (category == null)
             {
-                return CreateErrorValidationResponse($"Category with id {categoryId} is not found.", ValidationStatusType.NotFound);
+                return OperationResult<Category>.FromError(ValidationErrors.CategoryNotFound, ValidationStatusType.NotFound);
             }
 
             if ((await productRepository.GetByCategoryId(categoryId, cancellationToken)).Any())
             {
-                return CreateErrorValidationResponse($"Category with id {categoryId} contains products.");
+                return OperationResult<Category>.FromError(ValidationErrors.CategoryCannotBeDeletedWithProducts);
             }
 
-            categoryRepository.Delete(category);
+            var deletedCategory = categoryRepository.Delete(category);
             await storage.SaveAsync(cancellationToken);
 
-            return CreateInfoValidationResponse(category, $"Category with id {category.Id} was successfully deleted.");
+            return OperationResult<Category>.FromResult(deletedCategory);
         }
     }
 }

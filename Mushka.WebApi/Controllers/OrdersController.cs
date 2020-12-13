@@ -37,7 +37,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var deliveriesResponse = await orderService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Order>>, OrdersListResponseModel>(deliveriesResponse);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<Order>>, OrdersListResponseModel>(deliveriesResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -46,7 +46,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetDefaultProducts()
         {
             var productsResponse = await defaultProductsProvider.GetOrderDefaultProducts(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<OrderProduct>>, OrderProductsResponseModel>(productsResponse);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<OrderProduct>>, OrderProductsResponseModel>(productsResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -55,7 +55,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             var orderResponse = await orderService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Order>, OrderResponseModel>(orderResponse);
+            var clientResponse = mapper.Map<OperationResult<Order>, OrderResponseModel>(orderResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -66,7 +66,7 @@ namespace Mushka.WebApi.Controllers
             var order = mapper.Map<OrderRequestModel, Order>(orderRequest);
 
             var orderResponse = await orderService.AddAsync(order, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Order>, OrderResponseModel>(orderResponse);
+            var clientResponse = mapper.Map<OperationResult<Order>, OrderResponseModel>(orderResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -77,7 +77,7 @@ namespace Mushka.WebApi.Controllers
             var order = mapper.Map<OrderRequestModel, Order>(orderRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var orderResponse = await orderService.UpdateAsync(order, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Order>, OrderResponseModel>(orderResponse);
+            var clientResponse = mapper.Map<OperationResult<Order>, OrderResponseModel>(orderResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -86,7 +86,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var orderResponse = await orderService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Order>, DeleteResponseModel>(orderResponse);
+            var clientResponse = mapper.Map<OperationResult<Order>, DeleteResponseModel>(orderResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -95,7 +95,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> ValidateOrderNumber(string number)
         {
             var isExist = await orderService.IsNumberExistAsync(number, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<bool>, ValidationResponseModel>(isExist);
+            var clientResponse = mapper.Map<OperationResult<bool>, ValidationResponseModel>(isExist);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -108,15 +108,10 @@ namespace Mushka.WebApi.Controllers
                 exportRequestModel.OrderIds,
                 cancellationTokenSourceProvider.Get().Token);
 
-            if (exportValidationResponse.IsValid)
-            {
-                return File(
-                    exportValidationResponse.Result.FileContent,
-                    exportValidationResponse.Result.ContentType,
-                    exportValidationResponse.Result.Name);
-            }
-
-            return actionResultProvider.GetFailedResult(exportValidationResponse);
+            return File(
+                exportValidationResponse.Data.FileContent,
+                exportValidationResponse.Data.ContentType,
+                exportValidationResponse.Data.Name);
         }
     }
 }

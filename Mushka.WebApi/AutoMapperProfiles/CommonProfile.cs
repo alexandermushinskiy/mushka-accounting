@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Mushka.Core.Validation;
@@ -16,16 +17,18 @@ namespace Mushka.WebApi.AutoMapperProfiles
 
             CreateMap<IEnumerable<string>, ResponseModelBase>()
                 .ForMember(dest => dest.StatusCode, opt => opt.UseValue(StatusCodes.Status400BadRequest))
-                .ForMember(dest => dest.Messages, opts => opts.MapFrom(src => src));
+                .ForMember(dest => dest.Success, opt => opt.UseValue(false))
+                .ForMember(dest => dest.Errors, opts => opts.MapFrom(src => src));
 
-            CreateMap<ValidationResponse, DeleteResponseModel>()
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }))
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status));
+            CreateMap<OperationResult, DeleteResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
-            CreateMap<ValidationResponse<bool>, ValidationResponseModel>()
-                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => new ValidationRModel(src.Result)))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }))
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status));
+            CreateMap<OperationResult<bool>, ValidationResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
         }
     }
 }

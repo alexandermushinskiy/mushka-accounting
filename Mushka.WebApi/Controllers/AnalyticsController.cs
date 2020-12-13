@@ -30,7 +30,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetBalance()
         {
             var popularProducts = await analyticsService.GetBalance(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Balance>, BalanceResponseModel>(popularProducts);
+            var clientResponse = mapper.Map<OperationResult<Balance>, BalanceResponseModel>(popularProducts);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -39,7 +39,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetPopularProducts()
         {
             var popularProducts = await analyticsService.GetPopularProducts(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<PopularProduct>>, PopularProductsResponseModel>(popularProducts);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<PopularProduct>>, PopularProductsResponseModel>(popularProducts);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -48,7 +48,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetUnpopularProducts()
         {
             var unpopularProducts = await analyticsService.GetUnpopularProducts(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<PopularProduct>>, PopularProductsResponseModel>(unpopularProducts);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<PopularProduct>>, PopularProductsResponseModel>(unpopularProducts);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -57,7 +57,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetPopularCities()
         {
             var popularCities = await analyticsService.GetPopularCities(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<PopularCity>>, PopularCitiesResponseModel>(popularCities);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<PopularCity>>, PopularCitiesResponseModel>(popularCities);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -66,7 +66,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetOrders(int period)
         {
             var orderCounts = await analyticsService.GetOrdersCount(period, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<OrdersCount>>, OrdersCountResponseModel>(orderCounts);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<OrdersCount>>, OrdersCountResponseModel>(orderCounts);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -75,7 +75,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetSoldProducts(int period)
         {
             var soldProductsCounts = await analyticsService.GetSoldProductsCount(period, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<SoldProductsCount>>, SoldProductsCountResponseModel>(soldProductsCounts);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<SoldProductsCount>>, SoldProductsCountResponseModel>(soldProductsCounts);
 
             return actionResultProvider.Get(clientResponse);
         }

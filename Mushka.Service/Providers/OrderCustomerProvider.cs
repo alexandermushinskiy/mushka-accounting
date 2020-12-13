@@ -6,6 +6,7 @@ using Mushka.Core.Extensibility.Providers;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Domain.Strings;
 using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Services;
 
@@ -27,7 +28,7 @@ namespace Mushka.Service.Providers
             customerRepository = storage.GetRepository<ICustomerRepository>();
         }
 
-        public async Task<ValidationResponse<Customer>> GetCustomerForNewOrderAsync(
+        public async Task<OperationResult<Customer>> GetCustomerForNewOrderAsync(
             Customer customer,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -37,18 +38,18 @@ namespace Mushka.Service.Providers
             if (storedCustomer == null)
             {
                 customerRepository.Add(customer);
-                return CreateInfoValidationResponse(customer, $"New customer {customer.FullName} was added.");
+                return OperationResult<Customer>.FromResult(customer);
             }
 
             if (storedCustomer.FirstName == customer.FirstName && storedCustomer.LastName == customer.LastName)
             {
-                return CreateInfoValidationResponse(storedCustomer, $"Existing customer {storedCustomer.FullName} was added.");
+                return OperationResult<Customer>.FromResult(storedCustomer);
             }
 
-            return CreateErrorValidationResponse<Customer>($"Phone number {customer.Phone} is already used for the customer {storedCustomer.FullName}.");
+            return OperationResult<Customer>.FromError(ValidationErrors.CustomerPhoneNumberExist);
         }
 
-        public async Task<ValidationResponse<Customer>> GetCustomerForExistingOrderAsync(
+        public async Task<OperationResult<Customer>> GetCustomerForExistingOrderAsync(
             Guid storedCustomerId,
             Customer inputCustomer,
             CancellationToken cancellationToken = default(CancellationToken))
@@ -59,8 +60,7 @@ namespace Mushka.Service.Providers
             // validate
             if (samePhoneCustomer != null && !IsCustomerValid(storedCustomer, samePhoneCustomer, inputCustomer))
             {
-                return CreateErrorValidationResponse<Customer>(
-                    $"Phone number {inputCustomer.Phone} is already used for the customer {samePhoneCustomer.FullName}.");
+                return OperationResult<Customer>.FromError(ValidationErrors.CustomerPhoneNumberExist);
             }
 
             if (samePhoneCustomer != null)
@@ -80,7 +80,7 @@ namespace Mushka.Service.Providers
                 }
             }
             
-            return CreateInfoValidationResponse(inputCustomer, $"Customer with name {inputCustomer.FullName} is used.");
+            return OperationResult<Customer>.FromResult(inputCustomer);
         }
 
         private static bool IsCustomerValid(Customer storedCustomer, Customer samePhoneCustomer, Customer inputCustomer)

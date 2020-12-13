@@ -2,8 +2,7 @@
 
 namespace Mushka.WebApi.ClientModels.Analytics
 {
-    public class BalanceResponseModel : ResponseModelBase
+    public class BalanceResponseModel : ResponseModelBase<Balance>
     {
-        public Balance Data { get; set; }
     }
 }

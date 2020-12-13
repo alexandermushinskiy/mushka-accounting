@@ -6,12 +6,12 @@ using Mushka.WebApi.ClientModels.Product;
 namespace Mushka.WebApi.Resolvers
 {
     public class ProductResponseResolver :
-        IValueResolver<ValidationResponse<Product>, ProductResponseModel, ProductModel>
+        IValueResolver<OperationResult<Product>, ProductResponseModel, ProductModel>
     {
         public ProductModel Resolve(
-            ValidationResponse<Product> source,
+            OperationResult<Product> source,
             ProductResponseModel destination,
             ProductModel destMember,
-            ResolutionContext context) => source.Result == null ? null : Mapper.Map<Product, ProductModel>(source.Result);
+            ResolutionContext context) => source.Data == null ? null : Mapper.Map<Product, ProductModel>(source.Data);
     }
 }

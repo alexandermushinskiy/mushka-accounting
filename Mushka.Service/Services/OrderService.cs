@@ -9,6 +9,7 @@ using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Comparers;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Domain.Strings;
 using Mushka.Service.Extensibility.Dto;
 using Mushka.Service.Extensibility.ExternalApps;
 using Mushka.Service.Extensibility.Providers;
@@ -44,41 +45,38 @@ namespace Mushka.Service.Services
             customerRepository = storage.GetRepository<ICustomerRepository>();
         }
 
-        public async Task<ValidationResponse<IEnumerable<Order>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<IEnumerable<Order>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<Order> orders = (await orderRepository.GetAllAsync(cancellationToken))
                 .OrderByDescending(order => order.OrderDate)
                 .ToList();
 
-            var message = orders.Any()
-                ? "Orders were successfully retrieved."
-                : "No orders found.";
-
-            return CreateInfoValidationResponse(orders, message);
+            return OperationResult<IEnumerable<Order>>.FromResult(orders);
         }
 
-        public async Task<ValidationResponse<Order>> GetByIdAsync(Guid orderId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Order>> GetByIdAsync(Guid orderId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var order = await orderRepository.GetByIdAsync(orderId, cancellationToken);
 
             if (order == null)
             {
-                return CreateErrorValidationResponse($"Order with id {orderId} is not found.", ValidationStatusType.NotFound);
+                return OperationResult<Order>.FromError(ValidationErrors.OrderNotFound, ValidationStatusType.NotFound);
             }
 
             order.Products = order.Products.OrderByDescending(p => p.Product.Category.IsAdditional).ToList();
-            return CreateInfoValidationResponse(order, $"Order with id {orderId} was successfully retrieved.");
+
+            return OperationResult<Order>.FromResult(order);
         }
 
-        public async Task<ValidationResponse<Order>> AddAsync(Order order, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Order>> AddAsync(Order order, CancellationToken cancellationToken = default(CancellationToken))
         {
             var customerValidationResponse = await orderCustomerProvider.GetCustomerForNewOrderAsync(order.Customer, cancellationToken);
-            if (!customerValidationResponse.IsValid)
+            if (customerValidationResponse.IsFailure)
             {
-                return CreateErrorValidationResponse(customerValidationResponse.ValidationResult.Message);
+                return OperationResult<Order>.FromErrors(customerValidationResponse.Errors);
             }
             
-            order.CustomerId = customerValidationResponse.Result.Id;
+            order.CustomerId = customerValidationResponse.Data.Id;
 
             foreach (var orderProduct in order.Products)
             {
@@ -86,40 +84,40 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateErrorValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return OperationResult<Order>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
                 }
 
                 if (storedProduct.Quantity < orderProduct.Quantity)
                 {
-                    return CreateErrorValidationResponse($"Product with id {orderProduct.ProductId} is not enough in stock.");
+                    return OperationResult<Order>.FromError(ValidationErrors.ProductNotEnoughInStock);
                 }
 
                 storedProduct.Quantity -= orderProduct.Quantity;
                 productRepository.Update(storedProduct);
             }
 
-              var addedOrder = orderRepository.Add(order);
+            var addedOrder = orderRepository.Add(order);
             await storage.SaveAsync(cancellationToken);
             
-            return CreateInfoValidationResponse(addedOrder, $"Order with id {addedOrder.Id} was successfully added.");
+            return OperationResult<Order>.FromResult(addedOrder);
         }
 
-        public async Task<ValidationResponse<Order>> UpdateAsync(Order order, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Order>> UpdateAsync(Order order, CancellationToken cancellationToken = default(CancellationToken))
         {
             var storedOrder = await orderRepository.GetByIdAsync(order.Id, cancellationToken);
 
             if (storedOrder == null)
             {
-                return CreateErrorValidationResponse($"Order with id {order.Id} is not found.", ValidationStatusType.NotFound);
+                return OperationResult<Order>.FromError(ValidationErrors.OrderNotFound, ValidationStatusType.NotFound);
             }
 
             var customerValidationResponse = await orderCustomerProvider.GetCustomerForExistingOrderAsync(storedOrder.CustomerId, order.Customer, cancellationToken);
-            if (!customerValidationResponse.IsValid)
+            if (customerValidationResponse.IsFailure)
             {
-                return CreateErrorValidationResponse(customerValidationResponse.ValidationResult.Message);
+                return OperationResult<Order>.FromErrors(customerValidationResponse.Errors);
             }
             
-            order.CustomerId = customerValidationResponse.Result.Id;
+            order.CustomerId = customerValidationResponse.Data.Id;
 
             foreach (var orderProduct in order.Products)
             {
@@ -127,7 +125,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateErrorValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return OperationResult<Order>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
                 }
 
                 var storedOrderQuantity = storedOrder.Products
@@ -146,7 +144,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateErrorValidationResponse($"Product with id {removedProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return OperationResult<Order>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
                 }
 
                 storedProduct.Quantity += removedProduct.Quantity;
@@ -158,16 +156,16 @@ namespace Mushka.Service.Services
 
             await TryDeleteCustomerWithoutOrders(storedOrder.CustomerId, order.CustomerId, cancellationToken);
 
-            return CreateInfoValidationResponse(updatedOrder, $"Order with id {order.Id} was successfully updated.");
+            return OperationResult<Order>.FromResult(updatedOrder);
         }
 
-        public async Task<ValidationResponse<Order>> DeleteAsync(Guid orderId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<Order>> DeleteAsync(Guid orderId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var order = await orderRepository.GetByIdAsync(orderId, cancellationToken);
 
             if (order == null)
             {
-                return CreateErrorValidationResponse($"Order with id {orderId} is not found.", ValidationStatusType.NotFound);
+                return OperationResult<Order>.FromError(ValidationErrors.OrderNotFound, ValidationStatusType.NotFound);
             }
 
             var storedCustomer = await customerRepository.GetByPhoneAsync(order.Customer.Phone, cancellationToken);
@@ -182,7 +180,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return CreateErrorValidationResponse($"Product with id {orderProduct.ProductId} is not found.", ValidationStatusType.NotFound);
+                    return OperationResult<Order>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
                 }
 
                 storedProduct.Quantity += orderProduct.Quantity;
@@ -192,24 +190,24 @@ namespace Mushka.Service.Services
             orderRepository.Delete(order);
             await storage.SaveAsync(cancellationToken);
 
-            return CreateInfoValidationResponse(order, $"Order with id {order.Id} was successfully deleted.");
+            return OperationResult<Order>.FromResult(order);
         }
 
-        public async Task<ValidationResponse<bool>> IsNumberExistAsync(string orderNumber, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<bool>> IsNumberExistAsync(string orderNumber, CancellationToken cancellationToken = default(CancellationToken))
         {
             var isValid = !await orderRepository.IsExistAsync(order => order.Number == orderNumber, cancellationToken);
 
-            return CreateInfoValidationResponse(isValid, $"Order number {orderNumber} is {(isValid ? "" : "not ")}valid.");
+            return OperationResult<bool>.FromResult(isValid);
         }
 
-        public async Task<ValidationResponse<ExportedFile>> ExportAsync(string title, IEnumerable<Guid> orderIds, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<ExportedFile>> ExportAsync(string title, IEnumerable<Guid> orderIds, CancellationToken cancellationToken = default(CancellationToken))
         {
             var orders = await orderRepository.GetForExportAsync(order => orderIds.Contains(order.Id), cancellationToken);
 
             var fileContent = excelService.ExportOrders(title, orders);
             var exportedFile = new ExportedFile(ExportFileName, ExportContentType, fileContent);
 
-            return CreateInfoValidationResponse(exportedFile, "The orders were exported successfully.");
+            return OperationResult<ExportedFile>.FromResult(exportedFile);
         }
 
         private async Task TryDeleteCustomerWithoutOrders(Guid oldCustomerId, Guid updatedCustomerId, CancellationToken cancellationToken)

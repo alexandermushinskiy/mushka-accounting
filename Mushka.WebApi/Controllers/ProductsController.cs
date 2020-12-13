@@ -34,7 +34,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetSelectProducts(bool inStock)
         {
             var products = await productService.GetInStockAsync(inStock, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Product>>, SelectProductsResponseModel>(products);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<Product>>, SelectProductsResponseModel>(products);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -43,7 +43,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetByCategoryId(Guid categoryId)
         {
             var products = await productService.GetByCategoryAsync(categoryId, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Product>>, ProductListResponseModel>(products);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<Product>>, ProductListResponseModel>(products);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -52,7 +52,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             var product = await productService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Product>, ProductResponseModel>(product);
+            var clientResponse = mapper.Map<OperationResult<Product>, ProductResponseModel>(product);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -61,7 +61,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetCostPrice(Guid id, int productsCount = 1)
         {
             var costPrice = await productService.GetCostPriceAsync(id, productsCount, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<ProductCostPrice>, CostPriceResponseModel>(costPrice);
+            var clientResponse = mapper.Map<OperationResult<ProductCostPrice>, CostPriceResponseModel>(costPrice);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -72,7 +72,7 @@ namespace Mushka.WebApi.Controllers
             var product = mapper.Map<ProductRequestModel, Product>(productRequest);
 
             var productResponse = await productService.AddAsync(product, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Product>, ProductResponseModel>(productResponse);
+            var clientResponse = mapper.Map<OperationResult<Product>, ProductResponseModel>(productResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -83,7 +83,7 @@ namespace Mushka.WebApi.Controllers
             var product = mapper.Map<ProductRequestModel, Product>(productRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var productResponse = await productService.UpdateAsync(product, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Product>, ProductResponseModel>(productResponse);
+            var clientResponse = mapper.Map<OperationResult<Product>, ProductResponseModel>(productResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -92,7 +92,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var productResponse = await productService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Product>, DeleteResponseModel>(productResponse);
+            var clientResponse = mapper.Map<OperationResult<Product>, DeleteResponseModel>(productResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -101,7 +101,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetSizes()
         {
             var sizes = await productService.GetSizesAsync(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Size>>, SizesResponseModel>(sizes);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<Size>>, SizesResponseModel>(sizes);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -114,15 +114,10 @@ namespace Mushka.WebApi.Controllers
                 exportRequestModel.ProductIds,
                 cancellationTokenSourceProvider.Get().Token);
 
-            if (exportValidationResponse.IsValid)
-            {
-                return File(
-                    exportValidationResponse.Result.FileContent,
-                    exportValidationResponse.Result.ContentType,
-                    exportValidationResponse.Result.Name);
-            }
-
-            return actionResultProvider.GetFailedResult(exportValidationResponse);
+            return File(
+                exportValidationResponse.Data.FileContent,
+                exportValidationResponse.Data.ContentType,
+                exportValidationResponse.Data.Name);
         }
     }
 }

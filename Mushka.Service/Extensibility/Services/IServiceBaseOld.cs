@@ -5,7 +5,7 @@ using Mushka.Core.Validation;
 
 namespace Mushka.Service.Extensibility.Services
 {
-    public interface IServiceBase<TEntity>
+    public interface IServiceBaseOld<TEntity>
     {
         Task<ValidationResponse<TEntity>> GetByIdAsync(Guid entityId, CancellationToken cancellationToken = default(CancellationToken));
 
@@ -14,5 +14,16 @@ namespace Mushka.Service.Extensibility.Services
         Task<ValidationResponse<TEntity>> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
 
         Task<ValidationResponse<TEntity>> DeleteAsync(Guid entityId, CancellationToken cancellationToken = default(CancellationToken));
+    }
+
+    public interface IServiceBase<TEntity>
+    {
+        Task<OperationResult<TEntity>> GetByIdAsync(Guid entityId, CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<OperationResult<TEntity>> AddAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<OperationResult<TEntity>> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<OperationResult<TEntity>> DeleteAsync(Guid entityId, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

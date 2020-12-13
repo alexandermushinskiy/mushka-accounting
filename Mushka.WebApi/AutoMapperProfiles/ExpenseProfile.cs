@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
@@ -14,15 +15,17 @@ namespace Mushka.WebApi.AutoMapperProfiles
             CreateMap<ExpenseRequestModel, Expense>().ConvertUsing<ExpenseRequestConverter>();
             CreateMap<Expense, ExpenseModel>().ConvertUsing<ExpenseConverter>();
 
-            CreateMap<ValidationResponse<Expense>, ExpenseResponseModel>()
+            CreateMap<OperationResult<Expense>, ExpenseResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ExpenseResponseResolver>())
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
-            CreateMap<ValidationResponse<IEnumerable<Expense>>, ExpensesResponseModel>()
+            CreateMap<OperationResult<IEnumerable<Expense>>, ExpensesResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ExpenseResponseResolver>())
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
         }
     }
 }

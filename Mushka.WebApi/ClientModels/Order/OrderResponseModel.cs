@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace Mushka.WebApi.ClientModels.Order
+﻿namespace Mushka.WebApi.ClientModels.Order
 {
-    public class OrderResponseModel : ResponseModelBase
+    public class OrderResponseModel : ResponseModelBase<OrderModel>
     {
-        public OrderModel Data { get; set; }
     }
 
-    public class OrdersResponseModel : ResponseModelBase
+    public class OrdersResponseModel : ResponseModelListBase<OrderModel>
     {
-        public IEnumerable<OrderModel> Data { get; set; }
     }
 }

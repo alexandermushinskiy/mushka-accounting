@@ -8,19 +8,18 @@ using Mushka.WebApi.ClientModels.Expenses;
 namespace Mushka.WebApi.Resolvers
 {
     public class ExpenseResponseResolver :
-        IValueResolver<ValidationResponse<Expense>, ExpenseResponseModel, ExpenseModel>,
-        IValueResolver<ValidationResponse<IEnumerable<Expense>>, ExpensesResponseModel, IEnumerable<ExpenseModel>>
+        IValueResolver<OperationResult<Expense>, ExpenseResponseModel, ExpenseModel>,
+        IValueResolver<OperationResult<IEnumerable<Expense>>, ExpensesResponseModel, IEnumerable<ExpenseModel>>
     {
-        public ExpenseModel Resolve(
-            ValidationResponse<Expense> source,
+        public ExpenseModel Resolve(OperationResult<Expense> source,
             ExpenseResponseModel destination,
             ExpenseModel destMember,
-            ResolutionContext context) => source.Result == null ? null : Mapper.Map<Expense, ExpenseModel>(source.Result);
+            ResolutionContext context) => source.Data == null ? null : Mapper.Map<Expense, ExpenseModel>(source.Data);
 
         public IEnumerable<ExpenseModel> Resolve(
-            ValidationResponse<IEnumerable<Expense>> source,
+            OperationResult<IEnumerable<Expense>> source,
             ExpensesResponseModel destination,
             IEnumerable<ExpenseModel> destMember,
-            ResolutionContext context) => source.Result?.Select(Mapper.Map<Expense, ExpenseModel>);
+            ResolutionContext context) => source.Data?.Select(Mapper.Map<Expense, ExpenseModel>);
     }
 }

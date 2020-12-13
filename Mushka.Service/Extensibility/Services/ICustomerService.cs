@@ -8,6 +8,6 @@ namespace Mushka.Service.Extensibility.Services
 {
     public interface ICustomerService
     {
-        Task<ValidationResponse<IEnumerable<Customer>>> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken));
+        Task<OperationResult<IEnumerable<Customer>>> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

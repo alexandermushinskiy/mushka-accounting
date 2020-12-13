@@ -8,19 +8,19 @@ using Mushka.WebApi.ClientModels.Supplier;
 namespace Mushka.WebApi.Resolvers
 {
     public class SupplierResponseResolver :
-        IValueResolver<ValidationResponse<Supplier>, SupplierResponseModel, SupplierModel>,
-        IValueResolver<ValidationResponse<IEnumerable<Supplier>>, SuppliersResponseModel, IEnumerable<SupplierModel>>
+        IValueResolver<OperationResult<Supplier>, SupplierResponseModel, SupplierModel>,
+        IValueResolver<OperationResult<IEnumerable<Supplier>>, SuppliersListResponseModel, IEnumerable<SupplierModel>>
     {
         public SupplierModel Resolve(
-            ValidationResponse<Supplier> source,
+            OperationResult<Supplier> source,
             SupplierResponseModel destination,
             SupplierModel destMember,
-            ResolutionContext context) => source.Result == null ? null : Mapper.Map<Supplier, SupplierModel>(source.Result);
+            ResolutionContext context) => source.Data == null ? null : Mapper.Map<Supplier, SupplierModel>(source.Data);
 
         public IEnumerable<SupplierModel> Resolve(
-            ValidationResponse<IEnumerable<Supplier>> source,
-            SuppliersResponseModel destination,
+            OperationResult<IEnumerable<Supplier>> source,
+            SuppliersListResponseModel destination,
             IEnumerable<SupplierModel> destMember,
-            ResolutionContext context) => source.Result?.Select(Mapper.Map<Supplier, SupplierModel>);
+            ResolutionContext context) => source.Data?.Select(Mapper.Map<Supplier, SupplierModel>);
     }
 }

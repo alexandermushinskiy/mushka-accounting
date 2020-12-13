@@ -1,7 +1,6 @@
 ﻿namespace Mushka.WebApi.ClientModels.CorporateOrder
 {
-    public class CorporateOrderResponseModel : ResponseModelBase
+    public class CorporateOrderResponseModel : ResponseModelBase<CorporateOrderModel>
     {
-        public CorporateOrderModel Data { get; set; }
     }
 }

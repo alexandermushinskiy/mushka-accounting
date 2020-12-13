@@ -7,15 +7,16 @@ using Mushka.WebApi.ClientModels.Order;
 
 namespace Mushka.WebApi.Resolvers
 {
-    public class OrdersListResponseResolver : IValueResolver<ValidationResponse<IEnumerable<Order>>, OrdersListResponseModel, IEnumerable<OrderListModel>>
+    public class OrdersListResponseResolver :
+        IValueResolver<OperationResult<IEnumerable<Order>>, OrdersListResponseModel, IEnumerable<OrderListModel>>
     {
         public IEnumerable<OrderListModel> Resolve(
-            ValidationResponse<IEnumerable<Order>> source,
+            OperationResult<IEnumerable<Order>> source,
             OrdersListResponseModel destination,
             IEnumerable<OrderListModel> destMember,
             ResolutionContext context)
         {
-            return source.Result?.Select(order => new OrderListModel
+            return source.Data?.Select(order => new OrderListModel
             {
                 Id = order.Id,
                 OrderDate = order.OrderDate,

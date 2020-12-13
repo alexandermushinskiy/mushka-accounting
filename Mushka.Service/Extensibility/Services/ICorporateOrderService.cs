@@ -8,7 +8,7 @@ namespace Mushka.Service.Extensibility.Services
 {
     public interface ICorporateOrderService : IServiceBase<CorporateOrder>
     {
-        Task<ValidationResponse<IEnumerable<CorporateOrder>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken));
-        Task<ValidationResponse<bool>> IsNumberExistAsync(string orderNumber, CancellationToken cancellationToken = default(CancellationToken));
+        Task<OperationResult<IEnumerable<CorporateOrder>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<OperationResult<bool>> IsNumberExistAsync(string orderNumber, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

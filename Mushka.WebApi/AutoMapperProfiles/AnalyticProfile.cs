@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Mushka.Core.Validation;
 using Mushka.Domain.Dto;
@@ -10,30 +11,30 @@ namespace Mushka.WebApi.AutoMapperProfiles
     {
         public AnalyticProfile()
         {
-            CreateMap<ValidationResponse<Balance>, BalanceResponseModel>()
-                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+            CreateMap<OperationResult<Balance>, BalanceResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
-            CreateMap<ValidationResponse<IEnumerable<PopularProduct>>, PopularProductsResponseModel>()
-                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+            CreateMap<OperationResult<IEnumerable<PopularProduct>>, PopularProductsResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
-            CreateMap<ValidationResponse<IEnumerable<PopularCity>>, PopularCitiesResponseModel>()
-                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+            CreateMap<OperationResult<IEnumerable<PopularCity>>, PopularCitiesResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
-            CreateMap<ValidationResponse<IEnumerable<OrdersCount>>, OrdersCountResponseModel>()
-                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+            CreateMap<OperationResult<IEnumerable<OrdersCount>>, OrdersCountResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
-            CreateMap<ValidationResponse<IEnumerable<SoldProductsCount>>, SoldProductsCountResponseModel>()
-                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Result))
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+            CreateMap<OperationResult<IEnumerable<SoldProductsCount>>, SoldProductsCountResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
         }
     }
 }

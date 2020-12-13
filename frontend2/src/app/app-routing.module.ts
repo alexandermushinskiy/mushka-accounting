@@ -50,7 +50,8 @@ const routes: Routes = [
     { path: '', component: ExhibitionsListComponent, pathMatch: 'full' },
     { path: 'new', component: ExhibitionComponent, pathMatch: 'full' },
     { path: ':id', component: ExhibitionComponent, pathMatch: 'full' }
-  ]}
+  ]},
+  { path: '**', redirectTo: 'dashboard' }
 ];
 
 @NgModule({

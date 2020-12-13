@@ -21,15 +21,11 @@ namespace Mushka.Service.Services
             customerRepository = storage.GetRepository<ICustomerRepository>();
         }
 
-        public async Task<ValidationResponse<IEnumerable<Customer>>> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<IEnumerable<Customer>>> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             var customers = (await customerRepository.GetByNameAsync(name, cancellationToken)).ToList();
             
-            var message = customers.Count > 0
-                ? "Customers were successfully retrieved."
-                : "No customers found.";
-
-            return CreateInfoValidationResponse<IEnumerable<Customer>>(customers, message);
+            return OperationResult<IEnumerable<Customer>>.FromResult(customers);
         }
     }
 }

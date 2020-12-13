@@ -8,8 +8,8 @@ namespace Mushka.Service.Extensibility.Providers
 {
     public interface IDefaultProductsProvider
     {
-        Task<ValidationResponse<IEnumerable<OrderProduct>>> GetOrderDefaultProducts(CancellationToken cancellationToken = default(CancellationToken));
+        Task<OperationResult<IEnumerable<OrderProduct>>> GetOrderDefaultProducts(CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<ValidationResponse<IEnumerable<ExhibitionProduct>>> GetExhibitionProducts(CancellationToken cancellationToken = default(CancellationToken));
+        Task<OperationResult<IEnumerable<ExhibitionProduct>>> GetExhibitionProducts(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

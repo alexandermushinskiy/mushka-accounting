@@ -7,15 +7,16 @@ using Mushka.WebApi.ClientModels.Product;
 
 namespace Mushka.WebApi.Resolvers
 {
-    public class SelectProductsResponseResolver : IValueResolver<ValidationResponse<IEnumerable<Product>>, SelectProductsResponseModel, IEnumerable<SelectProductModel>>
+    public class SelectProductsResponseResolver :
+        IValueResolver<OperationResult<IEnumerable<Product>>, SelectProductsResponseModel, IEnumerable<SelectProductModel>>
     {
         public IEnumerable<SelectProductModel> Resolve(
-            ValidationResponse<IEnumerable<Product>> source,
+            OperationResult<IEnumerable<Product>> source,
             SelectProductsResponseModel destination,
             IEnumerable<SelectProductModel> destMember,
             ResolutionContext context)
         {
-            return source.Result?.Select(product => new SelectProductModel
+            return source.Data?.Select(product => new SelectProductModel
             {
                 Id = product.Id,
                 Name = product.Name,

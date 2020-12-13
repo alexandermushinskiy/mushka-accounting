@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +38,7 @@ namespace Mushka.WebApi.Controllers
             var suppliesFilters = mapper.Map<SuppliesFiltersRequestModel, SuppliesFiltersModel>(suppliesFiltersRequestModel);
 
             var suppliesResponse = await supplyService.GetByFilterAsync(suppliesFilters, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<ItemsWithTotalCount<Supply>>, DataWithTotalCountResponseModel<SupplyListModel>>(suppliesResponse);
+            var clientResponse = mapper.Map<OperationResult<ItemsWithTotalCount<Supply>>, DataWithTotalCountResponseModel<SupplyListModel>>(suppliesResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -44,10 +46,10 @@ namespace Mushka.WebApi.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var supplyResponse = await supplyService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Supply>, SupplyResponseModel>(supplyResponse);
-
-            return actionResultProvider.Get(clientResponse);
+            var operationResult = await supplyService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<OperationResult<Supply>, SupplyResponseModel>(operationResult);
+            
+            return actionResultProvider.Get(clientResponse, operationResult.Status);
         }
 
         [HttpPost]
@@ -56,7 +58,7 @@ namespace Mushka.WebApi.Controllers
             var supply = mapper.Map<SupplyRequestModel, Supply>(supplyRequest);
 
             var supplyResponse = await supplyService.AddAsync(supply, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Supply>, SupplyResponseModel>(supplyResponse);
+            var clientResponse = mapper.Map<OperationResult<Supply>, SupplyResponseModel>(supplyResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -67,7 +69,7 @@ namespace Mushka.WebApi.Controllers
             var supply = mapper.Map<SupplyRequestModel, Supply>(supplyRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var supplyResponse = await supplyService.UpdateAsync(supply, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Supply>, SupplyResponseModel>(supplyResponse);
+            var clientResponse = mapper.Map<OperationResult<Supply>, SupplyResponseModel>(supplyResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -76,7 +78,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var supplyResponse = await supplyService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Supply>, DeleteResponseModel>(supplyResponse);
+            var clientResponse = mapper.Map<OperationResult<Supply>, DeleteResponseModel>(supplyResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -84,20 +86,14 @@ namespace Mushka.WebApi.Controllers
         [HttpPost("export")]
         public async Task<IActionResult> Export([FromBody] ExportRequestModel exportRequestModel)
         {
-            var exportValidationResponse = await supplyService.ExportAsync(
+            var operationResult = await supplyService.ExportAsync(
                 exportRequestModel.SupplyIds,
                 exportRequestModel.ProductIds,
                 cancellationTokenSourceProvider.Get().Token);
 
-            if (exportValidationResponse.IsValid)
-            {
-                return File(
-                    exportValidationResponse.Result.FileContent,
-                    exportValidationResponse.Result.ContentType,
-                    exportValidationResponse.Result.Name);
-            }
+            var exportedFile = operationResult.Data;
 
-            return actionResultProvider.GetFailedResult(exportValidationResponse);
+            return File(exportedFile.FileContent, exportedFile.ContentType, exportedFile.Name);
         }
     }
 }

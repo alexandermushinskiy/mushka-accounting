@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
@@ -14,15 +15,17 @@ namespace Mushka.WebApi.AutoMapperProfiles
             CreateMap<CorporateOrderRequestModel, CorporateOrder>().ConvertUsing<CorporateOrderRequestConverter>();
             CreateMap<CorporateOrder, CorporateOrderModel>().ConvertUsing<CorporateOrderConverter>();
 
-            CreateMap<ValidationResponse<CorporateOrder>, CorporateOrderResponseModel>()
+            CreateMap<OperationResult<CorporateOrder>, CorporateOrderResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<CorporateOrderResponseResolver>())
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
-            CreateMap<ValidationResponse<IEnumerable<CorporateOrder>>, CorporateOrdersListResponseModel>()
+            CreateMap<OperationResult<IEnumerable<CorporateOrder>>, CorporateOrdersListResponseModel>()
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Data, opt => opt.ResolveUsing<CorporateOrdersListResponseResolver>())
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.ValidationResult.Status))
-                .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => new[] { src.ValidationResult.Message }));
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
         }
     }
 }

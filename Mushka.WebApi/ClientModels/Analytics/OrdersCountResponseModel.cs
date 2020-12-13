@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using Mushka.Domain.Dto;
+﻿using Mushka.Domain.Dto;
 
 namespace Mushka.WebApi.ClientModels.Analytics
 {
-    public class OrdersCountResponseModel : ResponseModelBase
+    public class OrdersCountResponseModel : ResponseModelListBase<OrdersCount>
     {
-        public IEnumerable<OrdersCount> Data { get; set; }
     }
 }

@@ -21,16 +21,24 @@ namespace Mushka.WebApi.Providers
         {
             return new ObjectResult(responseModel)
             {
-                StatusCode = (responseModel as ResponseModelBase)?.StatusCode ?? successfulStatusCode
+                StatusCode = (responseModel as ResponseModelBaseOld)?.StatusCode ?? successfulStatusCode
             };
         }
 
         public IActionResult GetFailedResult(IValidationResponse validationResponse)
         {
             var statusCode = mapper.Map<ValidationStatusType, int?>(validationResponse.ValidationResult.Status);
-            var responseModel = mapper.Map<IValidationResult, ResponseModelBase>(validationResponse.ValidationResult);
+            var responseModel = mapper.Map<IValidationResult, ResponseModelBaseOld>(validationResponse.ValidationResult);
 
             return Get(responseModel, statusCode.Value);
         }
+
+        public IActionResult Get(object responseModel, ValidationStatusType statusType)
+        {
+            return new ObjectResult(responseModel)
+            {
+                StatusCode = mapper.Map<ValidationStatusType, int?>(statusType)
+            };
+        }
     }
-}
+ }

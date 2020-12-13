@@ -36,8 +36,8 @@ namespace Mushka.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var deliveriesResponse = await exhibitionService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<Exhibition>>, ExhibitionsListResponseModel>(deliveriesResponse);
+            var exhibitionsResponse = await exhibitionService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<Exhibition>>, ExhibitionsListResponseModel>(exhibitionsResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -45,8 +45,8 @@ namespace Mushka.WebApi.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var orderResponse = await exhibitionService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Exhibition>, ExhibitionResponseModel>(orderResponse);
+            var exhibitionResponse = await exhibitionService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<OperationResult<Exhibition>, ExhibitionResponseModel>(exhibitionResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -55,7 +55,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetDefaultProducts()
         {
             var productsResponse = await defaultProductsProvider.GetExhibitionProducts(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<IEnumerable<ExhibitionProduct>>, ExhibitionProductsResponseModel>(productsResponse);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<ExhibitionProduct>>, ExhibitionProductsResponseModel>(productsResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -66,7 +66,7 @@ namespace Mushka.WebApi.Controllers
             var exhibition = mapper.Map<ExhibitionRequestModel, Exhibition>(exhibitionRequest);
 
             var exhibitionResponse = await exhibitionService.AddAsync(exhibition, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Exhibition>, ExhibitionResponseModel>(exhibitionResponse);
+            var clientResponse = mapper.Map<OperationResult<Exhibition>, ExhibitionResponseModel>(exhibitionResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -77,7 +77,7 @@ namespace Mushka.WebApi.Controllers
             var exhibition = mapper.Map<ExhibitionRequestModel, Exhibition>(exhibitionRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var exhibitionResponse = await exhibitionService.UpdateAsync(exhibition, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Exhibition>, ExhibitionResponseModel>(exhibitionResponse);
+            var clientResponse = mapper.Map<OperationResult<Exhibition>, ExhibitionResponseModel>(exhibitionResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -86,7 +86,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var exhibitionResponse = await exhibitionService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<ValidationResponse<Exhibition>, DeleteResponseModel>(exhibitionResponse);
+            var clientResponse = mapper.Map<OperationResult<Exhibition>, DeleteResponseModel>(exhibitionResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
