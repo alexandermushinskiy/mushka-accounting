@@ -6,10 +6,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Mushka.Domain.Comparers;
+using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Domain.Models;
+using Mushka.Domain.Strings;
 using Mushka.Infrastructure.DataAccess.Database;
+using Mushka.Infrastructure.DataAccess.Extensions;
 
 namespace Mushka.Infrastructure.DataAccess.Repositories
 {
@@ -19,17 +22,67 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         {
         }
 
-        public async Task<IEnumerable<Order>> GetAllAsync(
-            string searchKey,
-            DateRange dateRange,
+        public async Task<int> GetCountAsync(
+            SearchOrdersFilter searchOrdersFilter,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             return await Context.Orders
                 .AsNoTracking()
-                .Include(order => order.Customer)
-                .Include(order => order.Products)
-                .Where(order => dateRange == null || (order.OrderDate >= dateRange.From && order.OrderDate <= dateRange.To))
-                .Where(order => searchKey == null || order.Customer.FullName.Equals(searchKey, StringComparison.CurrentCultureIgnoreCase))
+                .Where(order => searchOrdersFilter.FromDate == null || (order.OrderDate >= searchOrdersFilter.FromDate))
+                .Where(order => searchOrdersFilter.ToDate == null || (order.OrderDate <= searchOrdersFilter.ToDate))
+                .Where(order => searchOrdersFilter.Criteria == null ||
+                                string.Concat(order.Customer.FirstName, " ", order.Customer.LastName).ToLower()
+                                    .Contains(searchOrdersFilter.Criteria.ToLower()))
+                .CountAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<OrderSummaryDto>> SearchAsync(
+            SearchOrdersFilter searchOrdersFilter,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var query = Context.Orders
+                .AsNoTracking()
+                //.Include(order => order.Products)
+                //.Include(order => order.Customer)
+                //.AsQueryable()
+                .Where(order => searchOrdersFilter.FromDate == null || (order.OrderDate >= searchOrdersFilter.FromDate))
+                .Where(order => searchOrdersFilter.ToDate == null || (order.OrderDate <= searchOrdersFilter.ToDate))
+                .Where(order => searchOrdersFilter.Criteria == null ||
+                                string.Concat(order.Customer.FirstName, " ", order.Customer.LastName).ToLower()
+                                    .Contains(searchOrdersFilter.Criteria.ToLower()))
+                ;
+
+            //if (searchOrdersFilter.FromDate.HasValue)
+            //{
+            //    query = query.Where(order => order.OrderDate >= searchOrdersFilter.FromDate);
+            //}
+
+            //if (searchOrdersFilter.ToDate.HasValue)
+            //{
+            //    query = query.Where(order => order.OrderDate <= searchOrdersFilter.ToDate);
+            //}
+
+            //if (searchOrdersFilter.Criteria != null)
+            //{
+            //    query = query.Where(order => string.Concat(order.Customer.FirstName, " ", order.Customer.LastName).ToLower()
+            //        .Contains(searchOrdersFilter.Criteria.ToLower()));
+            //}
+
+            return await query
+                .Select(order => new OrderSummaryDto
+                    {
+                        Id = order.Id,
+                        OrderDate = order.OrderDate,
+                        OrderNumber = order.Number,
+                        Cost = order.Cost,
+                        Address = string.Concat(order.Region, ", ", order.City),
+                        CustomerName = string.Concat(order.Customer.FirstName, " ", order.Customer.LastName),
+                        ProductsCount = order.Products.Sum(p => p.Quantity),
+                        IsWholesale = order.IsWholesale
+                    })
+                .OrderBy(searchOrdersFilter.SortKey, searchOrdersFilter.SortOrder == SortOrder.Asc)
+                .Skip(searchOrdersFilter.CurrentPage * searchOrdersFilter.PageSize)
+                .Take(searchOrdersFilter.PageSize)
                 .ToListAsync(cancellationToken);
         }
 

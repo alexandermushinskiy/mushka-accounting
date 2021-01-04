@@ -1,9 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mushka.Core.Extensibility.Validation;
+using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
 using Mushka.WebApi.ClientModels;
+using Mushka.WebApi.ClientModels.Order;
 using Mushka.WebApi.Extensibility.Providers;
 
 namespace Mushka.WebApi.Providers
@@ -15,6 +18,20 @@ namespace Mushka.WebApi.Providers
         public ActionResultProvider(IMapper mapper)
         {
             this.mapper = mapper;
+        }
+
+        // TODO: remove other methods
+        public IActionResult GetNew(OperationResult operationResult, object responseModel)
+        {
+            var statusCode = mapper.Map<ValidationStatusType, int?>(operationResult.Status);
+
+            if (operationResult.IsSuccess)
+            {
+                return new ObjectResult(responseModel) { StatusCode = statusCode };
+            }
+
+            var errorResponseModel = mapper.Map<IEnumerable<FieldError>, ErrorResponseModel>(operationResult.Errors);
+            return new ObjectResult(errorResponseModel) { StatusCode = statusCode };
         }
 
         public IActionResult Get(object responseModel, int successfulStatusCode = StatusCodes.Status200OK)

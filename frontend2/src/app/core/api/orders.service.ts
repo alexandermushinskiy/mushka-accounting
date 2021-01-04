@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+import { delay, map, catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { ConverterService } from '../converter/converter.service';
 import { Order } from '../../shared/models/order.model';
 import { OrderList } from '../../shared/models/order-list.model';
 import { OrderProduct } from '../../shared/models/order-product.model';
-import { delay, map, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class OrdersService {

@@ -15,6 +15,7 @@ import { SuppliesModule } from './supplies/supplies.module';
 import { SuppliersModule } from './suppliers/suppliers.module';
 import { ExhibitionsModule } from './exhibitions/exhibitions.module';
 import { ExpensesModule } from './expenses/expenses.module';
+import { DialogsModule } from './shared/widgets/dialogs/dialogs.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,9 @@ import { ExpensesModule } from './expenses/expenses.module';
     SuppliesModule,
     SuppliersModule,
     ExhibitionsModule,
-    ExpensesModule
+    ExpensesModule,
+
+    DialogsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

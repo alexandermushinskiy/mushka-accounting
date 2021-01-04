@@ -20,7 +20,7 @@ namespace Mushka.WebApi.Resolvers
             {
                 Id = order.Id,
                 OrderDate = order.OrderDate,
-                Number = order.Number,
+                OrderNumber = order.Number,
                 Cost = order.Cost,
                 Address = $"{order.Region}, {order.City}",
                 CustomerName = $"{order.Customer.FirstName} {order.Customer.LastName}",

@@ -31,4 +31,10 @@ namespace Mushka.WebApi.ClientModels
     public class ResponseModelListBase<TResponseData> : ResponseModelBase<IEnumerable<TResponseData>>
     {
     }
+
+    public class ListItemsResponseModel<TItemModel> : ResponseModelBase
+    {
+        public IEnumerable<TItemModel> Items { get; set; }
+        public int Length { get; set; }
+    }
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
 using Mushka.WebApi.ClientModels;
+using Mushka.WebApi.ClientModels.Order;
 using Mushka.WebApi.Resolvers;
 
 namespace Mushka.WebApi.AutoMapperProfiles
@@ -14,6 +15,8 @@ namespace Mushka.WebApi.AutoMapperProfiles
         public CommonProfile()
         {
             CreateMap<ValidationStatusType, int?>().ConvertUsing<StatusCodeTypeConverter>();
+
+            CreateMap<IEnumerable<FieldError>, ErrorResponseModel>().ConvertUsing<ErrorResponseConverter>();
 
             CreateMap<IEnumerable<string>, ResponseModelBase>()
                 .ForMember(dest => dest.StatusCode, opt => opt.UseValue(StatusCodes.Status400BadRequest))

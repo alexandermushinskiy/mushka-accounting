@@ -29,8 +29,8 @@ export class LanguageService {
     return this.currentLang$.asObservable();
   }
 
-  translate(key: string): string {
-    return this.translateService.instant(key);
+  translate(key: string, params?: object): string {
+    return this.translateService.instant(key, params);
   }
 
   private loadCurrentLanguage() {

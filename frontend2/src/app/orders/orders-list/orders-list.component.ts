@@ -1,136 +1,88 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NgbModalRef, NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { LocalStorage } from 'ngx-webstorage';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
 import { OrderList } from '../../shared/models/order-list.model';
-import { OrdersService } from '../../core/api/orders.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
-import { OrderListFilter } from '../../shared/filters/order-list.filter';
-import { DateRange } from '../../shared/models/date-range.model';
+import { OrdersFacadeService } from '../services/orders-facade.service';
+import { DialogsService } from '../../shared/widgets/dialogs/services/dialogs.service';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { I18N } from '../constants/i18n.const';
+import { LanguageService } from '../../core/language/language.service';
 
 @Component({
   selector: 'mshk-orders-list',
   templateUrl: './orders-list.component.html',
   styleUrls: ['./orders-list.component.scss']
 })
-export class OrdersListComponent implements OnInit {
-  @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
-  @LocalStorage('orders_filter', {searchKey: null, dateRange: null}) ordersFilter: { searchKey: string, dateRange: DateRange };
+export class OrdersListComponent implements OnInit, OnDestroy {
+  orders$: Observable<OrderList[]>;
+  total$: Observable<number>;
+  isLoading$: Observable<boolean>;
+  pageIndex$: Observable<number>;
+  pageLimit: number;
+  defaultSort = [{ prop: 'orderDate', dir: 'desc' }];
 
-  orders: OrderList[];
-  shownOrders: OrderList[];
-  loadingIndicator = false;
-  total = 0;
-  shown = 0;
-  orderToDelete: OrderList;
-  modal: NgbModalRef;
-  sorts = [
-    { prop: 'orderDate', dir: 'desc' },
-    { prop: 'customerName', dir: null },
-    { prop: 'productsCount', dir: null }
-  ];
+  readonly i18n = I18N.table;
 
-  private readonly modalConfig: NgbModalOptions = {
-    windowClass: 'order-modal',
-    backdrop: 'static',
-    size: 'sm'
-  };
-
-  constructor(private modalService: NgbModal,
-              private ordersService: OrdersService,
-              private notificationsService: NotificationsService) {
+  constructor(private dialogsService: DialogsService,
+              private ordersFacadeService: OrdersFacadeService,
+              private notificationsService: NotificationsService,
+              private languageService: LanguageService) {
   }
 
-  ngOnInit() {
-    this.loadOrders();
+  ngOnInit(): void {
+    this.pageLimit = this.ordersFacadeService.getPageLimit();
+    this.orders$ = this.ordersFacadeService.getTableItems$();
+    this.total$ = this.ordersFacadeService.getTotalTableItems$();
+    this.pageIndex$ = this.ordersFacadeService.getPageIndex$();
+    this.isLoading$ = this.ordersFacadeService.getTableLoadingFlag$();
+
+    this.ordersFacadeService.searchOrders();
   }
 
-  onActive(event: any) {
+  ngOnDestroy(): void {
+  }
+
+  onActive(event: any): void {
     if (event.type === 'click') {
       event.cellElement.blur();
     }
   }
 
-  onSearch(searchKey: string) {
-    this.ordersFilter.searchKey = searchKey;
-    this.filterOrders();
+  onSort({ prop, dir }: any): void {
+    this.ordersFacadeService.sortOrders({ key: prop, order: dir.toUpperCase() });
   }
 
-  onRangeSelected(dateRange: DateRange) {
-    this.ordersFilter.dateRange = dateRange;
-    this.filterOrders();
+  onPage({ limit, offset }: any): void {
+    this.ordersFacadeService.paginateOrders({ offset, limit });
   }
 
   delete(order: OrderList) {
-    setTimeout(() => {
-      this.orderToDelete = order;
-      this.modal = this.modalService.open(this.confirmRemoveTmpl, this.modalConfig);
+    const { title, message, cancelLabel, confirmLabel } = I18N.dialogs.deleteOrder;
+    const dialog = this.dialogsService.openConfirmDialog({
+      title,
+      message: this.languageService.translate(message, { orderNumber: order.orderNumber, orderDate: order.orderDate }),
+      cancelLabel,
+      confirmLabel
     });
-  }
 
-  confirmDelete() {
-    this.loadingIndicator = true;
-    this.closeModal();
-
-    this.ordersService.delete(this.orderToDelete.id)
-      .subscribe(
-        () => this.onDeleteSuccess(),
-        (error: string) => this.onDeleteFailed(error)
-      );
-  }
-
-  closeModal() {
-    if (this.modal) {
-      this.modal.close();
-    }
-  }
-
-  private filterOrders() {
-    const orderFilter = new OrderListFilter(this.ordersFilter.searchKey, this.ordersFilter.dateRange);
-    const filteredOrders = this.orders.filter(order => orderFilter.filter(order));
-
-    this.shownOrders = filteredOrders;
-    this.shown = filteredOrders.length;
+    dialog.confirm$
+      .pipe(
+        mergeMap(() => {
+          dialog.isLoading = true;
+          return this.ordersFacadeService.deleteOrder$(order.id);
+        }),
+        untilDestroyed(this)
+      )
+      .subscribe(() => {
+        dialog.close();
+        this.onDeleteSuccess();
+      });
   }
 
   private onDeleteSuccess() {
     this.notificationsService.success('orders.orderDeletedSuccessfully');
-    this.orderToDelete = null;
-    this.loadOrders();
-  }
-
-  private onDeleteFailed(error: string) {
-    this.loadingIndicator = false;
-    this.orderToDelete = null;
-    this.notificationsService.error(`Ошибка при удалении заказа: ${error}.`);
-  }
-
-  private loadOrders() {
-    this.loadingIndicator = true;
-
-    this.ordersService.getAll()
-      .subscribe(
-        (res: OrderList[]) => this.onOrdersLoaded(res),
-        () => this.onLoadOrdersFailed()
-      );
-  }
-
-  private onOrdersLoaded(orders: OrderList[]) {
-    this.orders = orders;
-    this.total = orders.length;
-
-    if (!!this.ordersFilter.searchKey || !!this.ordersFilter.dateRange) {
-      this.filterOrders();
-    } else {
-      this.shownOrders = orders;
-      this.shown = orders.length;
-    }
-
-    this.loadingIndicator = false;
-  }
-
-  private onLoadOrdersFailed() {
-    this.loadingIndicator = false;
-    this.notificationsService.error('Невозможно загрузить все заказы');
+    this.ordersFacadeService.fetchOrders();
   }
 }

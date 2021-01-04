@@ -5,8 +5,10 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Mushka.Core.Extensibility.Providers;
 using Mushka.Core.Validation;
+using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Entities;
+using Mushka.Domain.Models;
 using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Extensibility.Services;
 using Mushka.WebApi.ClientModels;
@@ -31,6 +33,16 @@ namespace Mushka.WebApi.Controllers
         {
             this.orderService = orderService;
             this.defaultProductsProvider = defaultProductsProvider;
+        }
+
+        [HttpPost("search")]
+        public async Task<IActionResult> Search([FromBody] OrdersFilterRequestModel requestModel)
+        {
+            var searchFilter = mapper.Map<OrdersFilterRequestModel, SearchOrdersFilter>(requestModel);
+            var operationResult = await orderService.SearchAsync(searchFilter, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<OperationResult<ItemsList<OrderSummaryDto>>, SearchOrdersResponseModel>(operationResult);
+            
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpGet]

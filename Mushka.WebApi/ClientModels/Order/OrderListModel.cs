@@ -8,7 +8,7 @@ namespace Mushka.WebApi.ClientModels.Order
 
         public DateTime OrderDate { get; set; }
 
-        public string Number { get; set; }
+        public string OrderNumber { get; set; }
 
         public decimal Cost { get; set; }
 

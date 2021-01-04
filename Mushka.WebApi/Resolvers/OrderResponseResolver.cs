@@ -1,6 +1,8 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
+using Mushka.Domain.Models;
 using Mushka.WebApi.ClientModels.Order;
 
 namespace Mushka.WebApi.Resolvers

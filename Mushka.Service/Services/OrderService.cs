@@ -7,8 +7,10 @@ using Mushka.Core.Extensibility.Logging;
 using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Comparers;
+using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
+using Mushka.Domain.Models;
 using Mushka.Domain.Strings;
 using Mushka.Service.Extensibility.Dto;
 using Mushka.Service.Extensibility.ExternalApps;
@@ -43,6 +45,18 @@ namespace Mushka.Service.Services
             orderRepository = storage.GetRepository<IOrderRepository>();
             productRepository = storage.GetRepository<IProductRepository>();
             customerRepository = storage.GetRepository<ICustomerRepository>();
+        }
+
+        public async Task<OperationResult<ItemsList<OrderSummaryDto>>> SearchAsync(
+            SearchOrdersFilter searchOrdersFilter,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var orders = await orderRepository.SearchAsync(searchOrdersFilter, cancellationToken);
+            var totalCount = await orderRepository.GetCountAsync(searchOrdersFilter, cancellationToken);
+
+            var result = new ItemsList<OrderSummaryDto>(orders.ToArray(), totalCount);
+
+            return OperationResult<ItemsList<OrderSummaryDto>>.FromResult(result);
         }
 
         public async Task<OperationResult<IEnumerable<Order>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
