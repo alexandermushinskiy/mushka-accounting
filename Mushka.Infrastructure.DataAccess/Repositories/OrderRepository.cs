@@ -28,11 +28,11 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         {
             return await Context.Orders
                 .AsNoTracking()
-                .Where(order => searchOrdersFilter.FromDate == null || (order.OrderDate >= searchOrdersFilter.FromDate))
-                .Where(order => searchOrdersFilter.ToDate == null || (order.OrderDate <= searchOrdersFilter.ToDate))
-                .Where(order => searchOrdersFilter.Criteria == null ||
+                .Where(order => searchOrdersFilter.OrderDate.From == null || (order.OrderDate >= searchOrdersFilter.OrderDate.From))
+                .Where(order => searchOrdersFilter.OrderDate.To == null || (order.OrderDate <= searchOrdersFilter.OrderDate.To))
+                .Where(order => searchOrdersFilter.CustomerName == null ||
                                 string.Concat(order.Customer.FirstName, " ", order.Customer.LastName).ToLower()
-                                    .Contains(searchOrdersFilter.Criteria.ToLower()))
+                                    .Contains(searchOrdersFilter.CustomerName.ToLower()))
                 .CountAsync(cancellationToken);
         }
 
@@ -45,11 +45,11 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 //.Include(order => order.Products)
                 //.Include(order => order.Customer)
                 //.AsQueryable()
-                .Where(order => searchOrdersFilter.FromDate == null || (order.OrderDate >= searchOrdersFilter.FromDate))
-                .Where(order => searchOrdersFilter.ToDate == null || (order.OrderDate <= searchOrdersFilter.ToDate))
-                .Where(order => searchOrdersFilter.Criteria == null ||
+                .Where(order => searchOrdersFilter.OrderDate.From == null || (order.OrderDate >= searchOrdersFilter.OrderDate.From))
+                .Where(order => searchOrdersFilter.OrderDate.To == null || (order.OrderDate <= searchOrdersFilter.OrderDate.To))
+                .Where(order => searchOrdersFilter.CustomerName == null ||
                                 string.Concat(order.Customer.FirstName, " ", order.Customer.LastName).ToLower()
-                                    .Contains(searchOrdersFilter.Criteria.ToLower()))
+                                    .Contains(searchOrdersFilter.CustomerName.ToLower()))
                 ;
 
             //if (searchOrdersFilter.FromDate.HasValue)

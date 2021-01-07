@@ -1,4 +1,4 @@
-import { Injectable, TemplateRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dialog.component';

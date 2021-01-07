@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { TableSortOrder } from '../../shared/enums/table-sort-order.enum';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
+import { TableSortOrder } from '../../shared/enums/table-sort-order.enum';
 import { TablePagination } from '../../shared/interfaces/table-pagination.interface';
 import { TableSort } from '../../shared/interfaces/table-sort.interface';
+import { BetweenCriteriaFilter } from '../../shared/models/filtering/between-criteria-filter.model';
+import { LikeCriteriaFilter } from '../../shared/models/filtering/like-criteria-filter.model';
 import { OrdersFiltersSchema } from '../shared/interfaces/orders-filters-schema.interface';
 
 @Injectable({
@@ -20,10 +23,15 @@ export class OrdersSearchParamsService {
     return this.defaultPaginationLimit;
   }
 
-  setFilters(filters: OrdersFiltersSchema): void {
+  setFilters(filters: Partial<Record<string, any>>): void {
     const currentFilters = { ...this.defaultFilters };
 
-    this.filters$.next({ ...filters || currentFilters });
+    Object.entries(currentFilters)
+      .forEach(([filterName, filter]) => {
+        filter.value = filters[filterName];
+      });
+
+    this.filters$.next(currentFilters);
   }
 
   resetPagination(): void {
@@ -36,8 +44,20 @@ export class OrdersSearchParamsService {
     this.resetPagination();
   }
 
+  hasActiveFilters$(): Observable<boolean> {
+    return this.filters$.asObservable()
+      .pipe(
+        map(filter => {
+          return !(filter.customerName.isEmpty() && filter.orderDate.isEmpty());
+        })
+      );
+  }
+
   private get defaultFilters(): OrdersFiltersSchema {
-    return {};
+    return {
+      customerName: new LikeCriteriaFilter(),
+      orderDate: new BetweenCriteriaFilter()
+    };
   }
 
   private get defaultSort(): TableSort {

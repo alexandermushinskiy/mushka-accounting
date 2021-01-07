@@ -1,40 +1,70 @@
 <header class="header">
   <h4 class="header-title">{{ i18n.title | translate }}</h4>
   
-  <div class="separator"></div>
+  <div class="v-divider"></div>
 
   <div class="actions">
     <button class="btn btn-icon" [routerLink]="['/orders/new']">
-      <i class="fa fa-plus-circle" [title]="i18n.actions.addOrder | translate"></i>
+      <i class="fa fa-plus" [title]="i18n.actions.addOrder | translate"></i>
     </button>
     <button class="btn btn-icon">
-      <i class="fa fa-download" [title]="i18n.actions.exportToCsv | translate" aria-hidden="true"></i>
+      <i class="fa fa-cloud-download" [title]="i18n.actions.exportToCsv | translate" aria-hidden="true"></i>
     </button>
   </div>
   
-  <div class="separator"></div>
+  <div class="v-divider"></div>
 
-  <mshk-search-form class="search" [defaultValue]="searchKey" (onSearch)="onSearchChanged($event)"></mshk-search-form>
+  <mshk-search-form class="search" (onSearch)="onSearchChanged($event)"></mshk-search-form>
   
-  <div class="separator"></div>
+  <div class="v-divider"></div>
 
   <mshk-select-timeframes
     class="timeframes"
-    [dateRange]="dateRange"
     (onRangeSelected)="onRangeChanged($event)">
   </mshk-select-timeframes>
   
-  <div class="separator"></div>
+  <div class="v-divider"></div>
 
   <span class="text-muted total-count">
     {{ totalItems$ | async }} {{ i18n.total | translate }}
   </span>
 
   <div class="filter">
-    <button class="btn btn-icon" (click)="showHideFilterPanel()">
+    <button class="btn btn-icon btn-filter" [ngClass]="{'has-active-filters': hasActiveFilters$ | async}" (click)="showHideFilterPanel()">
       <i class="fa fa-filter"></i>
     </button>
   </div>
 </header>
 
-<mshk-datatable-filter-bar *ngIf="isFilterPanel" (onClose)="showHideFilterPanel()"></mshk-datatable-filter-bar>
+<mshk-datatable-filter-bar
+  *ngIf="isFilterPanel"
+  [filtersTmpl]="filtersTmpl"
+  (onSearch)="onSearchChanged($event)"
+  (onClose)="showHideFilterPanel()">
+</mshk-datatable-filter-bar>
+
+<ng-template #filtersTmpl>
+  <div class="order-date-filter" ngbDropdown container="body" placement="bottom-right">
+    <button class="btn" ngbDropdownToggle>
+      <span [ngClass]="{'placeholder': !optionValue}">
+        {{ optionValue ? optionValue : 'Дата заказа' }}
+      </span>
+      <i class="ico-chevron-down"></i>
+    </button>
+
+    <div ngbDropdownMenu aria-labelledby="dropdown" class="dropdown-max-height">
+      <button type="button" ngbDropdownItem class="dropdown-item" *ngFor="let option of options" (click)="onOptionSelect(option)">
+        {{ option }}
+      </button>
+      <div class="dropdown-divider"></div>
+      <button type="button" ngbDropdownItem class="dropdown-item btn-clear" (click)="clearOption()">
+        <i class="ico ico-close"></i>
+        <span>Clear</span>
+      </button>
+      <!-- <div class="btn-clear">
+        <i class="ico ico-close"></i>
+        <span>Clear</span>
+      </div> -->
+    </div>
+  </div>
+</ng-template>

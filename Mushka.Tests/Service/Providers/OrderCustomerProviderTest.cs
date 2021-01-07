@@ -141,11 +141,11 @@ namespace Mushka.Tests.Service.Providers
             actual.Should().BeEquivalentTo(expected);
         }
 
-        [Category(CategoryName)]
-        [Fact(DisplayName = GetCustomerForExistingOrderAsyncMethodName + "Other existing customer is added")]
-        public async Task GetCustomerForExistingOrderAsyncOtherExistingCustomerAdded()
-        {
-        }
+        //[Category(CategoryName)]
+        //[Fact(DisplayName = GetCustomerForExistingOrderAsyncMethodName + "Other existing customer is added")]
+        //public async Task GetCustomerForExistingOrderAsyncOtherExistingCustomerAdded()
+        //{
+        //}
         
         private static Customer CreateCustomer(string firstName = CustomerFirstName, string lastName = CustomerLastName) =>
             CreateCustomer(CustomerId, firstName, lastName, CustomerPhone);

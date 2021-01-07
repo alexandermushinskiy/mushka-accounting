@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
 import { TablePagination } from '../../shared/interfaces/table-pagination.interface';
 import { TableSort } from '../../shared/interfaces/table-sort.interface';
 import { OrderList } from '../../shared/models/order-list.model';
-import { OrdersFiltersSchema } from '../shared/interfaces/orders-filters-schema.interface';
 import { DeleteOrderService } from './delete-order.service';
-
 import { OrdersSearchParamsService } from './orders-search-params.service';
 import { OrdersTableService } from './orders-table.service';
 
@@ -19,7 +18,7 @@ export class OrdersFacadeService {
               ) {
   }
 
-  searchOrders(filters?: OrdersFiltersSchema): void {
+  searchOrders(filters: Partial<Record<string, any>>): void {
     this.ordersSearchParamsService.setFilters(filters);
     this.ordersSearchParamsService.resetPagination();
     this.fetchOrders();
@@ -65,6 +64,10 @@ export class OrdersFacadeService {
 
   getPagination(): TablePagination {
     return this.ordersSearchParamsService.pagination$.value;
+  }
+
+  hasActiveFilters$(): Observable<boolean> {
+    return this.ordersSearchParamsService.hasActiveFilters$();
   }
 
   fetchOrders(): void {

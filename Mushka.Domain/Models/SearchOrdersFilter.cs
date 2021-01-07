@@ -1,12 +1,9 @@
-﻿using System;
-
-namespace Mushka.Domain.Models
+﻿namespace Mushka.Domain.Models
 {
     public class SearchOrdersFilter
     {
-        public string Criteria { get; set; }
-        public DateTime? FromDate { get; set; }
-        public DateTime? ToDate { get; set; }
+        public string CustomerName { get; set; }
+        public DateRange OrderDate { get; set; }
 
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }

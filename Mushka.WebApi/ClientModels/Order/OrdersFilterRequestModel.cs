@@ -11,9 +11,34 @@ namespace Mushka.WebApi.ClientModels.Order
 
     public class SearchOrdersFilterQuery
     {
-        public string Criteria { get; set; }
-        public DateTime? FromDate { get; set; }
-        public DateTime? ToDate { get; set; }
+        public SearchOrdersCustomer Customer { get; set; }
+        public SearchOrdersOrder Order { get; set; }
+    }
+
+    public class SearchOrdersCustomer
+    {
+        public QueryLike Name { get; set; }
+    }
+
+    public class QueryLike
+    {
+        public string Like { get; set; }
+
+        public static implicit operator string(QueryLike queryLike)
+        {
+            return queryLike?.Like;
+        }
+    }
+
+    public class SearchOrdersOrder
+    {
+        public DateRange OrderDate { get; set; }
+    }
+
+    public class DateRange
+    {
+        public DateTime? From { get; set; }
+        public DateTime? To { get; set; }
     }
 
     public class NavigationRequest

@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 import { OrderList } from '../../shared/models/order-list.model';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { OrdersFacadeService } from '../services/orders-facade.service';
 import { DialogsService } from '../../shared/widgets/dialogs/services/dialogs.service';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { I18N } from '../constants/i18n.const';
 import { LanguageService } from '../../core/language/language.service';
 
@@ -38,7 +38,10 @@ export class OrdersListComponent implements OnInit, OnDestroy {
     this.pageIndex$ = this.ordersFacadeService.getPageIndex$();
     this.isLoading$ = this.ordersFacadeService.getTableLoadingFlag$();
 
-    this.ordersFacadeService.searchOrders();
+    this.ordersFacadeService.searchOrders({
+      customerName: null,
+      orderDate: { from: null, to: null }
+    });
   }
 
   ngOnDestroy(): void {

@@ -1,4 +1,6 @@
 import { TableSortOrder } from '../../../../shared/enums/table-sort-order.enum';
+import { BetweenCriteria } from '../../../../shared/interfaces/between-criteria.interface';
+import { LikeCriteria } from '../../../../shared/interfaces/like-criteria.interface';
 
 export namespace ApiSearchOrders {
   export interface Request {
@@ -12,9 +14,12 @@ export namespace ApiSearchOrders {
   }
 
   export interface Query {
-    criteria?: string;
-    fromDate?: string;
-    toDate?: string;
+    customer?: {
+      name: LikeCriteria
+    };
+    order?: {
+      orderDate?: BetweenCriteria;
+    };
   }
 
   export interface Order {

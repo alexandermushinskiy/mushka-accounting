@@ -61,9 +61,12 @@ export class ApiOrdersTransformService {
     }
 
     return {
-      ...filters.criteria && { criteria: filters.criteria },
-      ...filters.fromDate && { fromDate: filters.fromDate },
-      ...filters.toDate && { toDate: filters.toDate }
+      customer: {
+        name: filters.customerName.valueAsCriteria
+      },
+      order: {
+        orderDate: filters.orderDate.valueAsCriteria
+      }
     };
   }
 }

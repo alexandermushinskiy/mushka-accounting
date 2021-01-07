@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { I18N } from '../constants/i18n.const';
 import { OrdersFacadeService } from '../services/orders-facade.service';
 import { DateRange } from '../../shared/models/date-range.model';
-import { OrdersFiltersSchema } from '../shared/interfaces/orders-filters-schema.interface';
 
 @Component({
   selector: 'mshk-orders-actions-bar',
@@ -14,17 +13,32 @@ import { OrdersFiltersSchema } from '../shared/interfaces/orders-filters-schema.
 export class OrdersActionsBarComponent implements OnInit {
   isFilterPanel = false;
   totalItems$: Observable<number>;
+  hasActiveFilters$: Observable<boolean>;
 
   readonly i18n = I18N.actionsBar;
 
-  private searchKey: string;
-  private dateRange: DateRange;
+  searchKey: string;
+  dateRange: DateRange = { from: null, to: null };
+  options = [
+    'AAAAAA', 'Bbbb', 'DDDDD DDDD', '01 янв. 2021 - 21 янв. 2021'
+  ];
+  optionValue: string;
 
   constructor(private ordersFacadeService: OrdersFacadeService) {
   }
 
   ngOnInit(): void {
     this.totalItems$ = this.ordersFacadeService.getTotalTableItems$();
+
+    this.hasActiveFilters$ = this.ordersFacadeService.hasActiveFilters$();
+  }
+
+  onOptionSelect(option: string): void {
+    this.optionValue = option;
+  }
+
+  clearOption(): void {
+    this.optionValue = null;
   }
 
   showHideFilterPanel(): void {
@@ -43,10 +57,9 @@ export class OrdersActionsBarComponent implements OnInit {
 
   private search(): void {
     const searchParams = {
-      criteria: this.searchKey,
-      fromDate: this.dateRange && this.dateRange.from,
-      toDate: this.dateRange && this.dateRange.to
-    } as OrdersFiltersSchema;
+      customerName: this.searchKey,
+      orderDate: { from: this.dateRange.from, to: this.dateRange.to }
+    };
 
     this.ordersFacadeService.searchOrders(searchParams);
   }

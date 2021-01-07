@@ -18,7 +18,7 @@ export class SelectTimeframesComponent implements OnInit {
   @Input() dateFormat = 'YYYY-MM-DD';
 
   @Input() set dateRange(value: DateRange) {
-    if (!!value) {
+    if (!!value && value !== this.defaultValue) {
       this.selectedTimeFrame = this.getTimeFrameByDateRange(value);
       if (this.selectedTimeFrame === TimeFrame.CUSTOM_RANGE) {
         this.timeframes.push({ id: TimeFrame.CUSTOM_RANGE, name: this.getRangeName(value) });
@@ -42,6 +42,11 @@ export class SelectTimeframesComponent implements OnInit {
     windowClass: 'date-range-modal',
     backdrop: 'static',
     size: 'sm'
+  };
+
+  private readonly defaultValue = {
+    from: null,
+    to: null
   };
 
   constructor(private modalService: NgbModal,
@@ -108,7 +113,7 @@ export class SelectTimeframesComponent implements OnInit {
   }
 
   private selectDateRange(dateRange: DateRange) {
-    this.onRangeSelected.emit(dateRange);
+    this.onRangeSelected.emit({ ...(dateRange || this.defaultValue) });
   }
 
   private getDateRange(timeFrame: TimeFrame): DateRange {

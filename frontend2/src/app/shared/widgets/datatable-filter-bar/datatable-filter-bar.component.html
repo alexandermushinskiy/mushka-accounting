@@ -6,11 +6,17 @@
           <span aria-hidden="true" class="keyword-filter-icon">
             <i class="fa fa-filter"></i>
           </span>
-          <input autocomplete="off" aria-label="Filter by keyword" class="filter-input flex-grow" placeholder="Фильтровать по ключевому слову" role="search">
+          <input
+            autocomplete="off"
+            class="filter-input flex-grow"
+            placeholder="Фильтровать по ключевому слову"
+            [ngModel]="searchValue"
+            (ngModelChange)="onSearchChanged($event)">
         </div>
       </div>
     </div>
     <div class="filter-bar--item">
+      <ng-container class="filters" *ngTemplateOutlet="filtersTmpl"></ng-container>
     </div>
     <div class="filter-bar--right-items">
       <button type="button" class="btn btn-icon btn-clear-filters" (click)="close()">

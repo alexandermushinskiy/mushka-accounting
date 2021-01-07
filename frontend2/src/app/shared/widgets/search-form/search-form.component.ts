@@ -37,7 +37,7 @@ export class SearchFormComponent extends UnsubscriberComponent implements OnInit
   }
 
   clear() {
-    this.searchValue = '';
+    this.searchValue = null;
     this.onSearch.emit(this.searchValue);
   }
 }
