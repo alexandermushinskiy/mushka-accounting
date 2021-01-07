@@ -36,7 +36,7 @@
                                         [ngClass]="{'not-valid': orderForm.controls.number.invalid && ngForm.submitted}"
                                         (onInput)="onNumberChanged($event)">
                       </mshk-delayed-input>
-                      <mshk-spinner class="spinner-border-thin validate-order-number" [isLoading]="isNumberValidating"></mshk-spinner>
+                      <mshk-spinner class="spinner-border-thin validate-order-number" [isLoading]="isNumberValidating$ | async"></mshk-spinner>
                       <!-- <span class="validation-tip" *ngIf="orderForm.hasError('required', ['number']) && ngForm.submitted">Обязательно</span> -->
                       <!-- <span class="validation-tip" *ngIf="!isOrderNumberValid">Номер уже существует</span> -->
                       <span class="validation-tip" *ngIf="!orderForm.hasError('required', ['number']) && orderForm.hasError('notUnique', ['number'])">{{ 'orders.orderNumberAlreadyExist' | translate }}</span>
@@ -262,9 +262,9 @@
 
   <div class="footer">
     <div class="footer-buttons">
-      <button type="button" class="btn btn-light" [routerLink]="['/orders']" [disabled]="isLoading">{{ 'button.cancel' | translate }}</button>
-      <button type="submit" class="btn btn-primary with-spinner" [disabled]="isLoading">
-        <div *ngIf="isLoading" class="btn-spinner"></div>
+      <button type="button" class="btn btn-light" [routerLink]="['/orders']" [disabled]="isSaving$ | async">{{ 'button.cancel' | translate }}</button>
+      <button type="submit" class="btn btn-primary with-spinner" [disabled]="isSaving$ | async">
+        <div *ngIf="isSaving$ | async" class="btn-spinner"></div>
         {{ 'button.save' | translate }}
       </button>
     </div>

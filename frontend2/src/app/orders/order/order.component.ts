@@ -2,21 +2,19 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of, forkJoin } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, tap, switchMap, filter, map } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, tap, switchMap, filter, map, finalize } from 'rxjs/operators';
 
 import { SelectProduct } from '../../shared/models/select-product.model';
 import { ukrRegions } from '../shared/constants/ukr-regions.const';
 import { ComponentCanDeactivate } from '../../shared/hooks/component-can-deactivate.component';
 import { DatetimeService } from '../../core/datetime/datetime.service';
-import { OrdersService } from '../../core/api/orders.service';
 import { ProductsServce } from '../../core/api/products.service';
 import { CustomersService } from '../../core/api/customers.service';
-import { NotificationsService } from '../../core/notifications/notifications.service';
 import { OrderProduct } from '../../shared/models/order-product.model';
 import { Customer } from '../../shared/models/customer.model';
 import { Order } from '../../shared/models/order.model';
 import { uniqueOrderNumber } from '../../shared/validators/order-number.validator';
-import { LanguageService } from '../../core/language/language.service';
+import { OrdersFacadeService } from '../services/orders-facade.service';
 
 @Component({
   selector: 'mshk-order',
@@ -27,7 +25,6 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
   @ViewChild('ngForm', { static: false }) ngForm: NgForm;
   orderForm: FormGroup;
   isEdit = false;
-  isLoading = false;
   loadingIndicator = false;
   orderId: string;
   errors: string[];
@@ -35,8 +32,8 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
   regions = ukrRegions;
   profit: number;
   discount: number;
-  isOrderNumberValid = true;
-  isNumberValidating = false;
+  isNumberValidating$: Observable<boolean>;
+  isSaving$: Observable<boolean>;
   searching = false;
   customerModel: any;
   private initialOrder: {};
@@ -52,17 +49,18 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
+              private ordersFacadeService: OrdersFacadeService,
               private datetimeService: DatetimeService,
-              private ordersService: OrdersService,
               private productsService: ProductsServce,
-              private customersService: CustomersService,
-              private languageService: LanguageService,
-              private notificationsService: NotificationsService) {
+              private customersService: CustomersService) {
     super();
   }
 
   ngOnInit() {
     this.readRouteParams();
+
+    this.isNumberValidating$ = this.ordersFacadeService.getValidateOrderNumberLoadingFlag$();
+    this.isSaving$ = this.ordersFacadeService.getSaveOrderLoadingFlag$();
   }
 
   searchName = (text$: Observable<string>) =>
@@ -118,12 +116,8 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
       return;
     }
 
-    this.isNumberValidating = true;
-    this.ordersService.validateOrderNumber(orderNumber)
+    this.ordersFacadeService.validateOrderNumber$(orderNumber)
       .subscribe((isValid: boolean) => {
-        this.isOrderNumberValid = isValid;
-        this.isNumberValidating = false;
-
         const numberCtrl = this.orderForm.controls.number;
 
         numberCtrl.setValidators(isValid ? [Validators.required] : [Validators.required, uniqueOrderNumber]);
@@ -157,36 +151,17 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
       return;
     }
 
-    this.isLoading = true;
     const order = this.createOrderModel(this.orderForm.getRawValue());
 
     (this.isEdit
-      ? this.ordersService.update(this.orderId, order)
-      : this.ordersService.create(order))
+      ? this.ordersFacadeService.updateOrder$(this.orderId, order)
+      : this.ordersFacadeService.createOrder$(order))
       .subscribe(
-        () => this.onSaveSuccess(),
-        (errors: string[]) => this.onSaveFailed(errors)
+        () => {
+          this.isSaved = true;
+          this.router.navigate(['/orders']);
+        }
       );
-  }
-
-  private onSaveSuccess() {
-    this.isLoading = false;
-    this.isSaved = true;
-
-    this.notify();
-    this.router.navigate(['/orders']);
-  }
-
-  private notify() {
-    const messageKey = this.isEdit ? 'orders.orderUpdated' : 'orders.orderAdded';
-    const resultMessage = this.languageService.translate(messageKey);
-
-    this.notificationsService.success(resultMessage);
-  }
-
-  private onSaveFailed(errors: string[]) {
-    this.isLoading = false;
-    this.notificationsService.error(errors[0]);
   }
 
   private readRouteParams() {
@@ -207,13 +182,15 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
 
     forkJoin(
       this.productsService.getForSale(),
-      this.ordersService.getDefaultProducts()
-    ).subscribe(
+      this.ordersFacadeService.getOrderDefaultProducts$()
+    )
+    .pipe(
+      finalize(() => this.loadingIndicator = false)
+    )
+    .subscribe(
       ([products, defaultProducts]) => {
         this.productsList = products;
         this.buildNewOrderForm(defaultProducts);
-
-        this.loadingIndicator = false;
       }
     );
   }
@@ -223,7 +200,7 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
 
     forkJoin(
       this.productsService.getForSale(),
-      this.ordersService.getById(this.orderId)
+      this.ordersFacadeService.loadOrder$(this.orderId)
     ).subscribe(
       ([products, order]) => {
         this.productsList = products;
@@ -358,7 +335,7 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
 
   private createOrderProduct(formValue: any): OrderProduct {
     return new OrderProduct({
-      productId: formValue.product.id,
+      product: formValue.product,
       quantity: formValue.quantity,
       unitPrice: formValue.unitPrice,
       costPrice: formValue.costPrice

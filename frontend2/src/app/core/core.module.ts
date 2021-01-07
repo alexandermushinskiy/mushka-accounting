@@ -13,7 +13,6 @@ import { SuppliersService } from './api/suppliers.service';
 import { SuppliesService } from './api/supplies.service';
 import { ConverterService } from './converter/converter.service';
 import { DatetimeService } from './datetime/datetime.service';
-import { OrdersService } from './api/orders.service';
 import { ExhibitionsService } from './api/exhibitions.service';
 import { ExpensesService } from './api/expenses.service';
 import { AnalyticsService } from './api/analytics.service';
@@ -39,7 +38,6 @@ import { LanguageService } from './language/language.service';
     SuppliesService,
     ConverterService,
     DatetimeService,
-    OrdersService,
     CorporateOrdersService,
     ExhibitionsService,
     ExpensesService,

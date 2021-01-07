@@ -4,9 +4,14 @@ import { Observable } from 'rxjs';
 import { TablePagination } from '../../shared/interfaces/table-pagination.interface';
 import { TableSort } from '../../shared/interfaces/table-sort.interface';
 import { OrderList } from '../../shared/models/order-list.model';
-import { DeleteOrderService } from './delete-order.service';
+import { OrderProduct } from '../../shared/models/order-product.model';
+import { Order } from '../../shared/models/order.model';
+import { OrderDetailsService } from './order-details.service';
+import { OrderProductsService } from './order-products.service';
+import { OrderService } from './order.service';
 import { OrdersSearchParamsService } from './orders-search-params.service';
 import { OrdersTableService } from './orders-table.service';
+import { ValidateOrderNumberService } from './validate-order-number.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +19,10 @@ import { OrdersTableService } from './orders-table.service';
 export class OrdersFacadeService {
   constructor(private ordersSearchParamsService: OrdersSearchParamsService,
               private ordersTableService: OrdersTableService,
-              private deleteOrderService: DeleteOrderService
+              private orderService: OrderService,
+              private orderDetailsService: OrderDetailsService,
+              private orderProductsService: OrderProductsService,
+              private validateOrderNumberService: ValidateOrderNumberService
               ) {
   }
 
@@ -34,8 +42,28 @@ export class OrdersFacadeService {
     this.fetchOrders();
   }
 
+  loadOrder$(orderId: string): Observable<Order> {
+    return this.orderDetailsService.fetchOrder$(orderId);
+  }
+
+  getOrderDefaultProducts$(): Observable<OrderProduct[]> {
+    return this.orderProductsService.fetchOrderDefaultProducts$();
+  }
+
+  createOrder$(order: Order): Observable<Order> {
+    return this.orderService.create$(order);
+  }
+
+  updateOrder$(orderId: string, order: Order): Observable<Order> {
+    return this.orderService.update$(orderId, order);
+  }
+
+  getSaveOrderLoadingFlag$(): Observable<boolean> {
+    return this.orderService.isSaving$.asObservable();
+  }
+
   deleteOrder$(orderId: string): Observable<void> {
-    return this.deleteOrderService.delete(orderId);
+    return this.orderService.delete$(orderId);
   }
 
   getTableItems$(): Observable<OrderList[]> {
@@ -78,5 +106,13 @@ export class OrdersFacadeService {
     };
 
     this.ordersTableService.fetchOrders(params);
+  }
+
+  validateOrderNumber$(orderNumber: string): Observable<boolean> {
+    return this.validateOrderNumberService.validateOrderNumber$(orderNumber);
+  }
+
+  getValidateOrderNumberLoadingFlag$(): Observable<boolean> {
+    return this.validateOrderNumberService.isLoading$.asObservable();
   }
 }

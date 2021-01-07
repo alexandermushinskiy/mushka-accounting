@@ -22,6 +22,12 @@ export const I18N = {
     confirmMessage: 'orders.areYouSureToDeleteOrder',
     succeessMessage: 'orders.orderDeletedSuccessfully'
   },
+  create: {
+    successMessage: 'orders.orderAdded'
+  },
+  update: {
+    successMessage: 'orders.orderUpdated'
+  },
   dialogs: {
     deleteOrder: {
       title: 'Удалить заказ',
@@ -32,6 +38,10 @@ export const I18N = {
   },
   errors: {
     searchOrdersError: 'Невозможно загрузить заказы.',
-    deleteOrderError: 'Ошибка при удалении заказа.'
+    deleteOrderError: 'Ошибка при удалении заказа.',
+    fetchOrderError: 'Ошибка при загрузке заказа.',
+    fetchOrderDefaultProductsError: 'Ошибка при загрузке вспомогательных товаров заказа.',
+    validateOrderNumberError: 'Ошибка при проверки номера заказа.',
+    saveOrderError: 'Ошибка при сохранении заказа.'
   }
 };
