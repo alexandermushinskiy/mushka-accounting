@@ -24,7 +24,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
 
         public async Task<int> GetCountAsync(
             SearchOrdersFilter searchOrdersFilter,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             return await Context.Orders
                 .AsNoTracking()
@@ -38,7 +38,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
 
         public async Task<IEnumerable<OrderSummaryDto>> SearchAsync(
             SearchOrdersFilter searchOrdersFilter,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var query = Context.Orders
                 .AsNoTracking()
@@ -86,14 +86,14 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                 .ToListAsync(cancellationToken);
         }
 
-        public override async Task<IEnumerable<Order>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken)) =>
+        public override async Task<IEnumerable<Order>> GetAllAsync(CancellationToken cancellationToken = default) =>
             await Context.Orders
                 .AsNoTracking()
                 .Include(order => order.Customer)
                 .Include(order => order.Products)
                 .ToListAsync(cancellationToken);
 
-        public override async Task<Order> GetByIdAsync(Guid id, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public override async Task<Order> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
             await Context.Orders
                 .Where(order => order.Id == id)
                 .AsNoTracking()
@@ -104,12 +104,12 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                     .ThenInclude(prod => prod.Product.Category)
                 .FirstOrDefaultAsync(cancellationToken);
 
-        public async Task<int> GetSoldProductCount(Guid productId, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public async Task<int> GetSoldProductCount(Guid productId, CancellationToken cancellationToken = default) =>
             await Context.Set<OrderProduct>()
                 .Where(sp => sp.ProductId == productId)
                 .SumAsync(sp => sp.Quantity, cancellationToken);
 
-        public async Task<IEnumerable<Order>> GetForExportAsync(Expression<Func<Order, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<Order>> GetForExportAsync(Expression<Func<Order, bool>> predicate, CancellationToken cancellationToken = default)
         {
             return await Context.Orders
                 .Where(predicate)

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Mushka.WebApi.ClientModels.Order
+namespace Mushka.WebApi.ClientModels.Order.Search
 {
-    public class OrderListModel
+    public class OrderSummaryModel
     {
         public Guid Id { get; set; }
 

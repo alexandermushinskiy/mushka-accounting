@@ -6,7 +6,7 @@ using Mushka.Core.Extensibility.Validation;
 using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
 using Mushka.WebApi.ClientModels;
-using Mushka.WebApi.ClientModels.Order;
+using Mushka.WebApi.ClientModels.Order.Search;
 using Mushka.WebApi.Extensibility.Providers;
 
 namespace Mushka.WebApi.Providers

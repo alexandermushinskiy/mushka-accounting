@@ -9,6 +9,9 @@ import { ItemsList } from '../../../../shared/interfaces/items-list.interface';
 import { OrderList } from '../../../../shared/models/order-list.model';
 import { OrderProduct } from '../../../../shared/models/order-product.model';
 import { Order } from '../../../../shared/models/order.model';
+import { ApiGetOrderById } from '../interfaces/api-get-order-by-id.interface';
+import { ApiGetOrderDefaultProducts } from '../interfaces/api-get-order-default-products.interface';
+import { ApiSearchOrders } from '../interfaces/api-serach-orders.interface';
 import { ApiOrdersTransformService } from './api-orders-transform.service';
 
 @Injectable({
@@ -25,9 +28,9 @@ export class ApiOrdersService {
     const body = this.transformService.toSearchOrders(searchParams);
     const url = `${this.endPoint}/search`;
 
-    return this.http.post(url, body)
+    return this.http.post<ApiSearchOrders.Response>(url, body)
       .pipe(
-        map((data: any) => this.transformService.fromSearchOrders(data)),
+        map((data: ApiSearchOrders.Response) => this.transformService.fromSearchOrders(data)),
         catchError((res: any) => throwError(res.error.messages))
       );
   }
@@ -44,9 +47,9 @@ export class ApiOrdersService {
   getOrder$(orderId: string): Observable<Order> {
     const url = `${this.endPoint}/${orderId}`;
 
-    return this.http.get(url)
+    return this.http.get<ApiGetOrderById.Response>(url)
       .pipe(
-        map((res: any) => this.transformService.fromGetOrder(res.data)),
+        map((data: ApiGetOrderById.Response) => this.transformService.fromGetOrder(data)),
         catchError((res: any) => throwError(res.error.messages))
       );
   }
@@ -54,37 +57,35 @@ export class ApiOrdersService {
   getDefaultProducts$(): Observable<OrderProduct[]> {
     const url = `${this.endPoint}/default-products`;
 
-    return this.http.get(url)
+    return this.http.get<ApiGetOrderDefaultProducts.Response>(url)
       .pipe(
-        map((res: any) => this.transformService.fromGetOrderDefaultProducts(res.data)),
+        map((data: any) => this.transformService.fromGetOrderDefaultProducts(data)),
         catchError((res: any) => throwError(res.error.messages))
       );
   }
 
-  validateOrderNumber$(orderNumber: string ): Observable<boolean> {
-    const url = `${this.endPoint}/validate-number/${orderNumber}`;
+  validateOrderNumber$(orderNumber: string): Observable<boolean> {
+    const url = `${this.endPoint}/validate-number`;
 
-    return this.http.get(url)
+    return this.http.post(url, this.transformService.validateOrderNumber(orderNumber))
       .pipe(
-        map((res: any) => res.data),
+        map((data: any) => data.isValid),
         catchError((res: any) => throwError(res.error.messages))
       );
   }
 
-  create$(order: Order): Observable<Order> {
-    return this.http.post(this.endPoint, this.transformService.toModifyOrder(order))
+  create$(order: Order): Observable<void> {
+    return this.http.post<void>(this.endPoint, this.transformService.toModifyOrder(order))
       .pipe(
-        map((res: any) => this.transformService.fromModifyOrder(res.data)),
         catchError((res: any) => throwError(res.error.messages))
       );
   }
 
-  update$(orderId: string, order: Order): Observable<Order> {
+  update$(orderId: string, order: Order): Observable<void> {
     const url = `${this.endPoint}/${orderId}`;
 
-    return this.http.put(url, this.transformService.toModifyOrder(order))
+    return this.http.put<void>(url, this.transformService.toModifyOrder(order))
       .pipe(
-        map((res: any) => this.transformService.fromModifyOrder(res.data)),
         catchError((res: any) => throwError(res.error.messages))
       );
   }

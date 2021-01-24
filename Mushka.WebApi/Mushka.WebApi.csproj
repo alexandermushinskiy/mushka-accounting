@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Mushka.Service\Mushka.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resolvers\Orders\" />
+  </ItemGroup>
+
 </Project>

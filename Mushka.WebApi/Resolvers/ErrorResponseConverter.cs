@@ -2,7 +2,7 @@
 using System.Linq;
 using AutoMapper;
 using Mushka.Core.Validation;
-using Mushka.WebApi.ClientModels.Order;
+using Mushka.WebApi.ClientModels;
 
 namespace Mushka.WebApi.Resolvers
 {

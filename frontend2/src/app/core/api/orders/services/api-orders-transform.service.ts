@@ -15,6 +15,7 @@ import { Size } from '../../../../shared/models/size.model';
 import { ApiGetOrderById } from '../interfaces/api-get-order-by-id.interface';
 import { ApiGetOrderDefaultProducts } from '../interfaces/api-get-order-default-products.interface';
 import { ApiCreateOrder } from '../interfaces/api-create-order.interface';
+import { ApiValidateOrderNumber } from '../interfaces/api-validate-order-number.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -41,23 +42,33 @@ export class ApiOrdersTransformService {
 
   fromGetOrder(source: ApiGetOrderById.Response): Order {
     return new Order({
-      id: source.id,
-      orderDate: this.datetimeService.toString(source.orderDate),
-      number: source.number,
-      cost: source.cost,
-      costMethod: source.costMethod,
-      discount: source.discount,
-      region: source.region,
-      city: source.city,
-      isWholesale: source.isWholesale,
-      notes: source.notes,
+      id: source.order.id,
+      orderDate: this.datetimeService.toString(source.order.orderDate),
+      number: source.order.number,
+      cost: source.order.cost,
+      costMethod: source.order.costMethod,
+      discount: source.order.discount,
+      region: source.order.region,
+      city: source.order.city,
+      isWholesale: source.order.isWholesale,
+      notes: source.order.notes,
       customer: this.toCustomer(source.customer),
       products: this.toOrderProducts(source.products)
     });
   }
 
-  fromGetOrderDefaultProducts(source: ApiGetOrderDefaultProducts.Response[]): OrderProduct[] {
-    return this.toOrderProducts(source);
+  fromGetOrderDefaultProducts(response: ApiGetOrderDefaultProducts.Response): OrderProduct[] {
+    return response.items.map((orderProduct: any) => new OrderProduct({
+      quantity: orderProduct.quantity,
+      unitPrice: orderProduct.unitPrice,
+      costPrice: orderProduct.costPrice,
+      product: {
+        id: orderProduct.id,
+        name: orderProduct.name,
+        vendorCode: orderProduct.vendorCode,
+        size: !!orderProduct.sizeName ? new Size({name: orderProduct.sizeName}) : null
+      }
+    }));
   }
 
   toModifyOrder(order: Order): ApiCreateOrder.Request {
@@ -90,21 +101,10 @@ export class ApiOrdersTransformService {
     };
   }
 
-  fromModifyOrder(source: ApiCreateOrder.Response): Order {
-    return new Order({
-      id: source.id,
-      orderDate: this.datetimeService.toString(source.orderDate),
-      number: source.number,
-      cost: source.cost,
-      costMethod: source.costMethod,
-      discount: source.discount,
-      region: source.region,
-      city: source.city,
-      isWholesale: source.isWholesale,
-      notes: source.notes,
-      customer: this.toCustomer(source.customer),
-      products: this.toOrderProducts(source.products)
-    });
+  validateOrderNumber(orderNumber: string): ApiValidateOrderNumber.Request {
+    return {
+      orderNumber
+    };
   }
 
   private toCustomer(source: ApiGetOrderById.Customer): Customer {
@@ -117,7 +117,7 @@ export class ApiOrdersTransformService {
     });
   }
 
-  private toOrderProducts(source: ApiGetOrderDefaultProducts.Response[] | ApiGetOrderById.OrderProduct[]): OrderProduct[] {
+  private toOrderProducts(source: ApiGetOrderById.OrderProduct[]): OrderProduct[] {
     return source.map((orderProduct: any) => new OrderProduct({
       quantity: orderProduct.quantity,
       unitPrice: orderProduct.unitPrice,

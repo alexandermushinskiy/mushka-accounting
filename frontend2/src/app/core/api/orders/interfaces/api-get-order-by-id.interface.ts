@@ -1,5 +1,11 @@
 export namespace ApiGetOrderById {
   export interface Response {
+    order: Order;
+    customer: Customer;
+    products: OrderProduct[];
+  }
+
+  export interface Order {
     id: string;
     orderDate: Date;
     number: string;
@@ -10,8 +16,6 @@ export namespace ApiGetOrderById {
     city: string;
     isWholesale: boolean;
     notes: string;
-    customer: Customer;
-    products: OrderProduct[];
   }
 
   export interface Customer {

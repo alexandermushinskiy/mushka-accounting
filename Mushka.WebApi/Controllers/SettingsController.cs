@@ -23,11 +23,11 @@ namespace Mushka.WebApi.Controllers
             this.orderService = orderService;
         }
 
-        [HttpGet("export/orders")]
-        public async Task<IActionResult> ExportOrders()
-        {
-            var orders = orderService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
-            throw new NotImplementedException();
-        }
+        //[HttpGet("export/orders")]
+        //public async Task<IActionResult> ExportOrders()
+        //{
+        //    var orders = await orderService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
+        //    throw new NotImplementedException();
+        //}
     }
 }

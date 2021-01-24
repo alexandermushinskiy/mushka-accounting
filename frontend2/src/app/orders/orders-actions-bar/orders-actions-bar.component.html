@@ -38,33 +38,12 @@
 
 <mshk-datatable-filter-bar
   *ngIf="isFilterPanel"
+  [searchValue]="searchKey"
   [filtersTmpl]="filtersTmpl"
   (onSearch)="onSearchChanged($event)"
-  (onClose)="showHideFilterPanel()">
+  (onClose)="clearFiltersAndHideFilterPanel()">
 </mshk-datatable-filter-bar>
 
 <ng-template #filtersTmpl>
-  <div class="order-date-filter" ngbDropdown container="body" placement="bottom-right">
-    <button class="btn" ngbDropdownToggle>
-      <span [ngClass]="{'placeholder': !optionValue}">
-        {{ optionValue ? optionValue : 'Дата заказа' }}
-      </span>
-      <i class="ico-chevron-down"></i>
-    </button>
-
-    <div ngbDropdownMenu aria-labelledby="dropdown" class="dropdown-max-height">
-      <button type="button" ngbDropdownItem class="dropdown-item" *ngFor="let option of options" (click)="onOptionSelect(option)">
-        {{ option }}
-      </button>
-      <div class="dropdown-divider"></div>
-      <button type="button" ngbDropdownItem class="dropdown-item btn-clear" (click)="clearOption()">
-        <i class="ico ico-close"></i>
-        <span>Clear</span>
-      </button>
-      <!-- <div class="btn-clear">
-        <i class="ico ico-close"></i>
-        <span>Clear</span>
-      </div> -->
-    </div>
-  </div>
+  <mshk-time-frame [timeFrame]="timeFrame" (onSelected)="onRangeChanged($event)"></mshk-time-frame>
 </ng-template>

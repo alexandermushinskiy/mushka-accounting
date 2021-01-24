@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mushka.WebApi.ClientModels.Order
+namespace Mushka.WebApi.ClientModels.Order.GetById
 {
     public class OrderCustomerModel
     {

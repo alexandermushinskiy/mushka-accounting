@@ -156,8 +156,7 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
     (this.isEdit
       ? this.ordersFacadeService.updateOrder$(this.orderId, order)
       : this.ordersFacadeService.createOrder$(order))
-      .subscribe(
-        () => {
+      .subscribe(() => {
           this.isSaved = true;
           this.router.navigate(['/orders']);
         }

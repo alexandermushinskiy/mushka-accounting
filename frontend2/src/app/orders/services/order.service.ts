@@ -19,7 +19,7 @@ export class OrderService {
               private languageService: LanguageService) {
   }
 
-  create$(order: Order): Observable<Order> {
+  create$(order: Order): Observable<void> {
     this.isSaving$.next(true);
 
     return this.apiOrdersService.create$(order)
@@ -32,7 +32,7 @@ export class OrderService {
       );
   }
 
-  update$(orderId: string, order: Order): Observable<Order> {
+  update$(orderId: string, order: Order): Observable<void> {
     this.isSaving$.next(true);
 
     return this.apiOrdersService.update$(orderId, order)

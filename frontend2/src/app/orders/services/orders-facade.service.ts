@@ -50,11 +50,11 @@ export class OrdersFacadeService {
     return this.orderProductsService.fetchOrderDefaultProducts$();
   }
 
-  createOrder$(order: Order): Observable<Order> {
+  createOrder$(order: Order): Observable<void> {
     return this.orderService.create$(order);
   }
 
-  updateOrder$(orderId: string, order: Order): Observable<Order> {
+  updateOrder$(orderId: string, order: Order): Observable<void> {
     return this.orderService.update$(orderId, order);
   }
 

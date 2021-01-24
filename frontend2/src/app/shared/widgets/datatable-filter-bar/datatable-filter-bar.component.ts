@@ -9,11 +9,10 @@ import { debounceTime } from 'rxjs/operators';
   styleUrls: ['./datatable-filter-bar.component.scss']
 })
 export class DatatableFilterBarComponent implements OnInit, OnDestroy {
+  @Input() searchValue: string;
   @Input() filtersTmpl: TemplateRef<any>;
   @Output() onClose = new EventEmitter();
   @Output() onSearch = new EventEmitter<string>();
-
-  searchValue: string;
 
   private search$ = new Subject<string>();
 

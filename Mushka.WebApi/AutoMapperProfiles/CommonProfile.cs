@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
 using Mushka.WebApi.ClientModels;
-using Mushka.WebApi.ClientModels.Order;
+using Mushka.WebApi.ClientModels.Order.Search;
 using Mushka.WebApi.Resolvers;
 
 namespace Mushka.WebApi.AutoMapperProfiles
@@ -28,7 +28,7 @@ namespace Mushka.WebApi.AutoMapperProfiles
                 .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
                 .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
-            CreateMap<OperationResult<bool>, ValidationResponseModel>()
+            CreateMap<OperationResult<bool>, ValidateOrderNumberResponseModel>()
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
                 .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));

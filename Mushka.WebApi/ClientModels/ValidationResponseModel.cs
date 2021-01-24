@@ -1,6 +1,6 @@
 ﻿namespace Mushka.WebApi.ClientModels
 {
-    public class ValidationResponseModel : ResponseModelBase<bool>
+    public class ValidateOrderNumberResponseModel : ResponseModelBase<bool>
     {
     }
 }

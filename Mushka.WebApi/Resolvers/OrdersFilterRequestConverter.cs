@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Mushka.Domain.Models;
-using Mushka.WebApi.ClientModels.Order;
+using Mushka.WebApi.ClientModels.Order.Search;
 using DateRangeModel = Mushka.Domain.Models.DateRange;
 
 namespace Mushka.WebApi.Resolvers
 {
-    public class OrdersFilterRequestConverter : ITypeConverter<OrdersFilterRequestModel, SearchOrdersFilter>
+    public class OrdersFilterRequestConverter : ITypeConverter<SearchOrdersRequestModel, SearchOrdersFilter>
     {
-        public SearchOrdersFilter Convert(OrdersFilterRequestModel source, SearchOrdersFilter destination, ResolutionContext context)
+        public SearchOrdersFilter Convert(SearchOrdersRequestModel source, SearchOrdersFilter destination, ResolutionContext context)
         {
             return new SearchOrdersFilter
             {

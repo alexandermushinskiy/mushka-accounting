@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { I18N } from '../constants/i18n.const';
 import { OrdersFacadeService } from '../services/orders-facade.service';
 import { DateRange } from '../../shared/models/date-range.model';
+import { TimeFrame } from '../../shared/enums/time-frame.enum';
 
 @Component({
   selector: 'mshk-orders-actions-bar',
@@ -18,11 +19,8 @@ export class OrdersActionsBarComponent implements OnInit {
   readonly i18n = I18N.actionsBar;
 
   searchKey: string;
+  timeFrame: TimeFrame;
   dateRange: DateRange = { from: null, to: null };
-  options = [
-    'AAAAAA', 'Bbbb', 'DDDDD DDDD', '01 янв. 2021 - 21 янв. 2021'
-  ];
-  optionValue: string;
 
   constructor(private ordersFacadeService: OrdersFacadeService) {
   }
@@ -31,14 +29,6 @@ export class OrdersActionsBarComponent implements OnInit {
     this.totalItems$ = this.ordersFacadeService.getTotalTableItems$();
 
     this.hasActiveFilters$ = this.ordersFacadeService.hasActiveFilters$();
-  }
-
-  onOptionSelect(option: string): void {
-    this.optionValue = option;
-  }
-
-  clearOption(): void {
-    this.optionValue = null;
   }
 
   showHideFilterPanel(): void {
@@ -50,9 +40,18 @@ export class OrdersActionsBarComponent implements OnInit {
     this.search();
   }
 
-  onRangeChanged(dateRange: DateRange) {
+  onRangeChanged({ timeFrame, dateRange }: { timeFrame: TimeFrame, dateRange: DateRange }) {
+    this.timeFrame = timeFrame;
     this.dateRange = dateRange;
     this.search();
+  }
+
+  clearFiltersAndHideFilterPanel(): void {
+    this.searchKey = null;
+    this.dateRange = { from: null, to: null };
+
+    this.search();
+    this.showHideFilterPanel();
   }
 
   private search(): void {
