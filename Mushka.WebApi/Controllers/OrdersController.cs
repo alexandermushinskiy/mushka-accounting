@@ -74,7 +74,7 @@ namespace Mushka.WebApi.Controllers
             var order = mapper.Map<OrderRequestModel, Order>(orderRequest);
 
             var orderResponse = await orderService.AddAsync(order, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Order>, EmptyReponseModel>(orderResponse);
+            var clientResponse = mapper.Map<OperationResult<Order>, EmptyResponseModel>(orderResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -85,7 +85,7 @@ namespace Mushka.WebApi.Controllers
             var order = mapper.Map<OrderRequestModel, Order>(orderRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var orderResponse = await orderService.UpdateAsync(order, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Order>, EmptyReponseModel>(orderResponse);
+            var clientResponse = mapper.Map<OperationResult<Order>, EmptyResponseModel>(orderResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -94,7 +94,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var orderResponse = await orderService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Order>, EmptyReponseModel>(orderResponse);
+            var clientResponse = mapper.Map<OperationResult<Order>, EmptyResponseModel>(orderResponse);
 
             return actionResultProvider.Get(clientResponse);
         }

@@ -3,8 +3,4 @@
     public class DeleteResponseModel : ResponseModelBase
     {
     }
-
-    public class EmptyReponseModel
-    {
-    }
 }
