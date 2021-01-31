@@ -12,7 +12,7 @@ namespace Mushka.WebApi.ClientModels.CorporateOrder
         public DateTime CreatedOn { get; set; }
 
         [Required]
-        public string Number { get; set; }
+        public string OrderNumber { get; set; }
 
         [RequireNonDefault]
         public decimal Cost { get; set; }

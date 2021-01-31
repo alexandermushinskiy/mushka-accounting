@@ -5,7 +5,7 @@ using Mushka.Domain.Dto;
 using Mushka.Domain.Models;
 using Mushka.WebApi.ClientModels.Order.Search;
 
-namespace Mushka.WebApi.Resolvers
+namespace Mushka.WebApi.Resolvers.Orders
 {
     public class SearchOrdersResponseConverter :
         ITypeConverter<OperationResult<ItemsList<OrderSummaryDto>>, SearchOrdersResponseModel>

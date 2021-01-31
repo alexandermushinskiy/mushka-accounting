@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using Mushka.Domain.Entities;
 
-namespace Mushka.WebApi.ClientModels.CorporateOrder
+namespace Mushka.WebApi.ClientModels.CorporateOrder.GetById
 {
     public class CorporateOrderModel
     {
@@ -10,7 +9,7 @@ namespace Mushka.WebApi.ClientModels.CorporateOrder
 
         public DateTime CreatedOn { get; set; }
 
-        public string Number { get; set; }
+        public string OrderNumber { get; set; }
 
         public decimal Cost { get; set; }
 
@@ -41,7 +40,5 @@ namespace Mushka.WebApi.ClientModels.CorporateOrder
         public string Email { get; set; }
 
         public string Notes { get; set; }
-
-        public IEnumerable<CorporateOrderProductModel> Products { get; set; }
     }
 }

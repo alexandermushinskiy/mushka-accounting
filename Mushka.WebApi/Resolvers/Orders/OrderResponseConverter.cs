@@ -4,7 +4,7 @@ using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Order.GetById;
 
-namespace Mushka.WebApi.Resolvers
+namespace Mushka.WebApi.Resolvers.Orders
 {
     public class OrderResponseConverter : ITypeConverter<OperationResult<Order>, OrderResponseModel>
     {

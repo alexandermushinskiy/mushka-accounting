@@ -5,7 +5,7 @@ using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Order.GetDefaultProducts;
 
-namespace Mushka.WebApi.Resolvers
+namespace Mushka.WebApi.Resolvers.Orders
 {
     public class OrderDefaultProductsResponseConverter :
          ITypeConverter<OperationResult<IEnumerable<OrderProduct>>, OrderDefaultProductResponseModel>

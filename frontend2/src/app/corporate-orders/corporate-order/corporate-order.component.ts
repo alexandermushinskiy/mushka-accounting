@@ -1,16 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ukrRegions } from '../../orders/shared/constants/ukr-regions.const';
 import { ComponentCanDeactivate } from '../../shared/hooks/component-can-deactivate.component';
 import { DatetimeService } from '../../core/datetime/datetime.service';
-import { CorporateOrdersService } from '../../core/api/corporate-orders.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { CorporateOrderProduct } from '../../shared/models/corporate-order-product.model';
 import { uniqueOrderNumber } from '../../shared/validators/order-number.validator';
 import { LanguageService } from '../../core/language/language.service';
 import { CorporateOrder } from '../../shared/models/corporate-order.model';
+import { ApiCorporateOrdersService } from '../../core/api/corporate-orders/services/api-corporate-orders.service';
 
 @Component({
   selector: 'mshk-corporate-order',
@@ -38,7 +38,7 @@ export class CorporateOrderComponent extends ComponentCanDeactivate implements O
               private route: ActivatedRoute,
               private router: Router,
               private datetimeService: DatetimeService,
-              private corporateOrdersService: CorporateOrdersService,
+              private apiCorporateOrdersService: ApiCorporateOrdersService,
               private languageService: LanguageService,
               private notificationsService: NotificationsService) {
     super();
@@ -69,20 +69,19 @@ export class CorporateOrderComponent extends ComponentCanDeactivate implements O
     }
 
     this.isOrderNumberValidating = true;
-    this.corporateOrdersService.validateOrderNumber(orderNumber)
+    this.apiCorporateOrdersService.validateOrderNumber$(orderNumber)
       .subscribe((isValid: boolean) => {
         this.isOrderNumberValid = isValid;
         this.isOrderNumberValidating = false;
 
-        const numberCtrl = this.orderForm.controls.number;
+        const numberCtrl = this.orderForm.controls.orderNumber;
 
         numberCtrl.setValidators(isValid ? [Validators.required] : [Validators.required, uniqueOrderNumber]);
-        numberCtrl.updateValueAndValidity({onlySelf: true, emitEvent: false});
+        numberCtrl.updateValueAndValidity({ onlySelf: true, emitEvent: false });
       });
   }
 
   saveOrder() {
-    // this.isFormSubmitted = true;
     // const t1 = this.createOrderModel(this.orderForm.getRawValue());
     // console.info(t1);
     // return;
@@ -95,8 +94,8 @@ export class CorporateOrderComponent extends ComponentCanDeactivate implements O
     const order = this.createOrderModel(this.orderForm.getRawValue());
 
     (this.isEdit
-      ? this.corporateOrdersService.update(this.orderId, order)
-      : this.corporateOrdersService.create(order))
+      ? this.apiCorporateOrdersService.updateOrder$(this.orderId, order)
+      : this.apiCorporateOrdersService.createOrder$(order))
       .subscribe(
         () => this.onSaveSuccess(),
         (errors: string[]) => this.onSaveFailed(errors)
@@ -110,19 +109,24 @@ export class CorporateOrderComponent extends ComponentCanDeactivate implements O
       this.title = this.isEdit ? 'orders.editCorporateOrder' : 'orders.addCorporateOrder';
 
       if (this.isEdit) {
-        this.corporateOrdersService.getById(this.orderId)
+        this.apiCorporateOrdersService.getOrder$(this.orderId)
           .subscribe((order: CorporateOrder) => this.buildForm(order));
       } else {
-        const today = this.datetimeService.getCurrentDateInString();
-        const orderNumber = this.generateCorpNumber(today);
-        this.buildForm(new CorporateOrder({
-          createdOn: today,
-          orderNumber,
-          products: [new CorporateOrderProduct({ quantity: 1 })]
-        }));
-
-        this.onNumberChanged(orderNumber);
+        const order = this.createEmptyOrder();
+        this.buildForm(order);
+        this.onNumberChanged(order.orderNumber);
       }
+    });
+  }
+
+  private createEmptyOrder(): CorporateOrder {
+    const today = this.datetimeService.getCurrentDateInString();
+    const orderNumber = this.generateCorpNumber(today);
+
+    return new CorporateOrder({
+      createdOn: today,
+      orderNumber,
+      products: [new CorporateOrderProduct({ quantity: 1 })]
     });
   }
 
@@ -150,7 +154,7 @@ export class CorporateOrderComponent extends ComponentCanDeactivate implements O
     this.profit = !!order.profit ? order.profit : 0;
 
     this.orderForm = this.formBuilder.group({
-      number: [order.orderNumber, Validators.required],
+      orderNumber: [order.orderNumber, Validators.required],
       createdOn: [order.createdOn, Validators.required],
       region: [order.region, Validators.required],
       city: [order.city, Validators.required],
@@ -225,7 +229,7 @@ export class CorporateOrderComponent extends ComponentCanDeactivate implements O
       id: this.orderId,
       profit: this.profit,
       createdOn: formRawValue.createdOn,
-      number: formRawValue.number,
+      orderNumber: formRawValue.orderNumber,
       cost: formRawValue.cost,
       costMethod: formRawValue.costMethod,
       prepayment: formRawValue.prepayment,

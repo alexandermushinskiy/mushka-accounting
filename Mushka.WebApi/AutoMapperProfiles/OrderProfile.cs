@@ -9,7 +9,7 @@ using Mushka.WebApi.ClientModels.Order.GetById;
 using Mushka.WebApi.ClientModels.Order.GetDefaultProducts;
 using Mushka.WebApi.ClientModels.Order.Search;
 using Mushka.WebApi.ClientModels.Order.ValidateOrderNumber;
-using Mushka.WebApi.Resolvers;
+using Mushka.WebApi.Resolvers.Orders;
 
 namespace Mushka.WebApi.AutoMapperProfiles
 {

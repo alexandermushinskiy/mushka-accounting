@@ -6,11 +6,11 @@ namespace Mushka.WebApi.ClientModels.Order.Search
     // TODO: Move each class to it's own file
     public class SearchOrdersRequestModel
     {
-        public SearchOrdersrQuery Query { get; set; }
+        public SearchOrdersQuery Query { get; set; }
         public NavigationRequest Navigation { get; set; }
     }
 
-    public class SearchOrdersrQuery
+    public class SearchOrdersQuery
     {
         public SearchOrdersCustomer Customer { get; set; }
         public SearchOrdersOrder Order { get; set; }

@@ -5,7 +5,7 @@ using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.CorporateOrder;
 using Mushka.WebApi.Extensions;
 
-namespace Mushka.WebApi.Resolvers
+namespace Mushka.WebApi.Resolvers.CorporateOrders
 {
     public class CorporateOrderRequestConverter : ITypeConverter<CorporateOrderRequestModel, CorporateOrder>
     {
@@ -24,7 +24,7 @@ namespace Mushka.WebApi.Resolvers
             {
                 Id = corporateOrderId,
                 CreatedOn = source.CreatedOn,
-                Number = source.Number,
+                Number = source.OrderNumber,
                 Cost = source.Cost,
                 CostMethod = source.CostMethod,
                 DeliveryCost = source.DeliveryCost,

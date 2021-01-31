@@ -6,7 +6,7 @@ using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Order;
 using Mushka.WebApi.Extensions;
 
-namespace Mushka.WebApi.Resolvers
+namespace Mushka.WebApi.Resolvers.Orders
 {
     public class OrderRequestConverter : ITypeConverter<OrderRequestModel, Order>
     {

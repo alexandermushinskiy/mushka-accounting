@@ -67,7 +67,7 @@ export class ApiOrdersService {
   validateOrderNumber$(orderNumber: string): Observable<boolean> {
     const url = `${this.endPoint}/validate-number`;
 
-    return this.http.post(url, this.transformService.validateOrderNumber(orderNumber))
+    return this.http.post(url, this.transformService.toValidateOrderNumber(orderNumber))
       .pipe(
         map((data: any) => data.isValid),
         catchError((res: any) => throwError(res.error.messages))

@@ -19,7 +19,6 @@ using Mushka.WebApi.ClientModels.Order.GetDefaultProducts;
 using Mushka.WebApi.ClientModels.Order.Search;
 using Mushka.WebApi.ClientModels.Order.ValidateOrderNumber;
 using Mushka.WebApi.Extensibility.Providers;
-using ValidateOrderNumberResponseModel = Mushka.WebApi.ClientModels.Order.ValidateOrderNumber.ValidateOrderNumberResponseModel;
 
 namespace Mushka.WebApi.Controllers
 {

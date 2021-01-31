@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.CorporateOrder;
-using Mushka.WebApi.Resolvers;
+using Mushka.WebApi.ClientModels.CorporateOrder.GetById;
+using Mushka.WebApi.ClientModels.CorporateOrder.GetAll;
+using Mushka.WebApi.ClientModels.CorporateOrder.ValidateOrderNumber;
+using Mushka.WebApi.Resolvers.CorporateOrders;
 
 namespace Mushka.WebApi.AutoMapperProfiles
 {
@@ -13,19 +15,18 @@ namespace Mushka.WebApi.AutoMapperProfiles
         public CorporateOrderProfile()
         {
             CreateMap<CorporateOrderRequestModel, CorporateOrder>().ConvertUsing<CorporateOrderRequestConverter>();
+
+            CreateMap<CorporateOrder, CorporateOrderSummaryModel>().ConvertUsing<CorporateOrderSummaryConverter>();
+            CreateMap<OperationResult<IEnumerable<CorporateOrder>>, GetAllResponseModel>()
+                .ConvertUsing<GetAllResponseResolver>();
+
             CreateMap<CorporateOrder, CorporateOrderModel>().ConvertUsing<CorporateOrderConverter>();
-
+            CreateMap<CorporateOrderProduct, CorporateOrderProductModel>().ConvertUsing<CorporateOrderProductConverter>();
             CreateMap<OperationResult<CorporateOrder>, CorporateOrderResponseModel>()
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<CorporateOrderResponseResolver>())
-                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
-                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
+                .ConvertUsing<CorporateOrderResponseConverter>();
 
-            CreateMap<OperationResult<IEnumerable<CorporateOrder>>, CorporateOrdersListResponseModel>()
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<CorporateOrdersListResponseResolver>())
-                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
-                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
+            CreateMap<OperationResult<bool>, ValidateCorporateOrderNumberResponseModel>()
+                .ForMember(dest => dest.IsValid, opt => opt.MapFrom(src => src.Data));
         }
     }
 }

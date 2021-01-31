@@ -1,18 +1,18 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using Mushka.Domain.Entities;
-using Mushka.WebApi.ClientModels.CorporateOrder;
+using Mushka.WebApi.ClientModels.CorporateOrder.GetById;
 
-namespace Mushka.WebApi.Resolvers
+namespace Mushka.WebApi.Resolvers.CorporateOrders
 {
-    public class CorporateOrderConverter : ITypeConverter<CorporateOrder, CorporateOrderModel>
+    public class CorporateOrderConverter :
+        ITypeConverter<CorporateOrder, CorporateOrderModel>
     {
         public CorporateOrderModel Convert(CorporateOrder source, CorporateOrderModel destination, ResolutionContext context) =>
             new CorporateOrderModel
             {
                 Id = source.Id,
                 CreatedOn = source.CreatedOn,
-                Number = source.Number,
+                OrderNumber = source.Number,
                 Cost = source.Cost,
                 CostMethod = source.CostMethod,
                 Prepayment = source.Prepayment,
@@ -27,14 +27,7 @@ namespace Mushka.WebApi.Resolvers
                 Phone = source.Phone,
                 Email = source.Email,
                 Region = source.Region,
-                City = source.City,
-                Products = source.Products.Select(prod => new CorporateOrderProductModel
-                {
-                    Name = prod.Name,
-                    Quantity = prod.Quantity,
-                    CostPrice = prod.CostPrice,
-                    UnitPrice = prod.UnitPrice
-                })
+                City = source.City
             };
     }
 }

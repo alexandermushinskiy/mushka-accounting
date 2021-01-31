@@ -1,14 +1,14 @@
 ﻿using System;
 
-namespace Mushka.WebApi.ClientModels.CorporateOrder
+namespace Mushka.WebApi.ClientModels.CorporateOrder.GetAll
 {
-    public class CorporateOrderListModel
+    public class CorporateOrderSummaryModel
     {
         public Guid Id { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
-        public string Number { get; set; }
+        public string OrderNumber { get; set; }
 
         public string CompanyName { get; set; }
 

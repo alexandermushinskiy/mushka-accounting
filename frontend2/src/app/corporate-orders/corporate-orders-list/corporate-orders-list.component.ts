@@ -4,9 +4,10 @@ import { LocalStorage } from 'ngx-webstorage';
 
 import { CorporateOrderList } from '../../shared/models/corporate-order-list.model';
 import { DateRange } from '../../shared/models/date-range.model';
-import { CorporateOrdersService } from '../../core/api/corporate-orders.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { CorporateOrderListFilter } from '../../shared/filters/corporate-order-list.filter';
+import { ApiCorporateOrdersService } from '../../core/api/corporate-orders/services/api-corporate-orders.service';
+import { ItemsList } from '../../shared/interfaces/items-list.interface';
 
 @Component({
   selector: 'mshk-corporate-orders-list',
@@ -37,7 +38,7 @@ export class CorporateOrdersListComponent implements OnInit {
   };
 
   constructor(private modalService: NgbModal,
-              private corporateOrdersService: CorporateOrdersService,
+              private apiCorporateOrdersService: ApiCorporateOrdersService,
               private notificationsService: NotificationsService) {
   }
 
@@ -72,7 +73,7 @@ export class CorporateOrdersListComponent implements OnInit {
     this.loadingIndicator = true;
     this.closeModal();
 
-    this.corporateOrdersService.delete(this.orderToDelete.id)
+    this.apiCorporateOrdersService.deleteOrder$(this.orderToDelete.id)
       .subscribe(
         () => this.onDeleteSuccess(),
         (error: string) => this.onDeleteFailed(error)
@@ -108,22 +109,22 @@ export class CorporateOrdersListComponent implements OnInit {
   private loadOrders() {
     this.loadingIndicator = true;
 
-    this.corporateOrdersService.getAll()
+    this.apiCorporateOrdersService.searchOrders$()
       .subscribe(
-        (res: CorporateOrderList[]) => this.onLoadSuccess(res),
+        (result: ItemsList<CorporateOrderList>) => this.onLoadSuccess(result),
         () => this.onLoadError()
       );
   }
 
-  private onLoadSuccess(orders: CorporateOrderList[]) {
-    this.orders = orders;
-    this.total = orders.length;
+  private onLoadSuccess(result: ItemsList<CorporateOrderList>) {
+    this.orders = result.items;
+    this.total = result.length;
 
     if (!!this.ordersFilter.searchKey || !!this.ordersFilter.dateRange) {
       this.filterOrders();
     } else {
-      this.shownOrders = orders;
-      this.shown = orders.length;
+      this.shownOrders = result.items;
+      this.shown = result.length;
     }
 
     this.loadingIndicator = false;

@@ -3,7 +3,7 @@ using Mushka.Domain.Models;
 using Mushka.WebApi.ClientModels.Order.Search;
 using DateRangeModel = Mushka.Domain.Models.DateRange;
 
-namespace Mushka.WebApi.Resolvers
+namespace Mushka.WebApi.Resolvers.Orders
 {
     public class OrdersFilterRequestConverter : ITypeConverter<SearchOrdersRequestModel, SearchOrdersFilter>
     {

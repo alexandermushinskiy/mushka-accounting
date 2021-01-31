@@ -27,11 +27,6 @@ namespace Mushka.WebApi.AutoMapperProfiles
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
                 .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
-
-            CreateMap<OperationResult<bool>, ValidateOrderNumberResponseModel>()
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
-                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
         }
     }
 }

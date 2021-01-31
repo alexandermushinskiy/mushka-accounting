@@ -101,7 +101,7 @@ export class ApiOrdersTransformService {
     };
   }
 
-  validateOrderNumber(orderNumber: string): ApiValidateOrderNumber.Request {
+  toValidateOrderNumber(orderNumber: string): ApiValidateOrderNumber.Request {
     return {
       orderNumber
     };
