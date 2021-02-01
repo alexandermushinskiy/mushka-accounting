@@ -15,15 +15,10 @@ namespace Mushka.WebApi.Resolvers.Orders
             SearchOrdersResponseModel destination,
             ResolutionContext context)
         {
-            if (source.Data == null)
-            {
-                return null;
-            }
-
             return new SearchOrdersResponseModel
             {
-                Total = source.Data.Total,
-                Items = source.Data.Items.Select(Mapper.Map<OrderSummaryDto, OrderSummaryModel>)
+                Total = source.Data?.Total ?? 0,
+                Items = source.Data?.Items.Select(Mapper.Map<OrderSummaryDto, OrderSummaryModel>) ?? Enumerable.Empty<OrderSummaryModel>()
             };
         }
     }

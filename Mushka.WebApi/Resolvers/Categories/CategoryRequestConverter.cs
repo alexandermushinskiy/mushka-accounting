@@ -4,7 +4,7 @@ using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Category;
 using Mushka.WebApi.Extensions;
 
-namespace Mushka.WebApi.Resolvers
+namespace Mushka.WebApi.Resolvers.Categories
 {
     public class CategoryRequestConverter : ITypeConverter<CategoryRequestModel, Category>
     {

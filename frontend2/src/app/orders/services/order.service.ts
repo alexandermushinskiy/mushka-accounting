@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 
-import { ApiOrdersService } from '../../core/api/orders/services/api-orders.service';
+import { ApiOrdersService } from '../../api/orders/services/api-orders.service';
 import { LanguageService } from '../../core/language/language.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { Order } from '../../shared/models/order.model';

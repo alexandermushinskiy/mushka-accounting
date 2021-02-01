@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { ApiOrdersService } from '../../core/api/orders/services/api-orders.service';
+import { ApiOrdersService } from '../../api/orders/services/api-orders.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { OrderProduct } from '../../shared/models/order-product.model';
 import { I18N } from '../constants/i18n.const';

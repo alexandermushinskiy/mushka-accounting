@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { environment } from '../../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { ApiCorporateOrdersTransformService } from './api-corporate-orders-transform.service';
-import { CorporateOrderList } from '../../../../shared/models/corporate-order-list.model';
-import { ItemsList } from '../../../../shared/interfaces/items-list.interface';
+import { CorporateOrderList } from '../../../shared/models/corporate-order-list.model';
+import { ItemsList } from '../../../shared/interfaces/items-list.interface';
 import { ApiSearchCorporateOrders } from '../interfaces/api-search-corporate-orders.interface';
-import { CorporateOrder } from '../../../../shared/models/corporate-order.model';
+import { CorporateOrder } from '../../../shared/models/corporate-order.model';
 
 @Injectable({
   providedIn: 'root'

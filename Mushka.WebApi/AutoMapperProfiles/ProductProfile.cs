@@ -4,10 +4,8 @@ using AutoMapper;
 using Mushka.Core.Validation;
 using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
-using Mushka.WebApi.ClientModels.Category;
 using Mushka.WebApi.ClientModels.Product;
 using Mushka.WebApi.Resolvers;
-using CategoryModel = Mushka.WebApi.ClientModels.Category.CategoryModel;
 using ProductModel = Mushka.WebApi.ClientModels.Product.ProductModel;
 
 namespace Mushka.WebApi.AutoMapperProfiles
@@ -16,26 +14,7 @@ namespace Mushka.WebApi.AutoMapperProfiles
     {
         public ProductProfile()
         {
-            CreateCategoryMaps();
             CreateProductMaps();
-        }
-
-        private void CreateCategoryMaps()
-        {
-            CreateMap<Category, CategoryModel>().ConvertUsing<CategoryConverter>();
-            CreateMap<CategoryRequestModel, Category>().ConvertUsing<CategoryRequestConverter>();
-
-            CreateMap<OperationResult<Category>, CategoryResponseModel>()
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<CategoryResponseResolver>())
-                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
-                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
-
-            CreateMap<OperationResult<IEnumerable<Category>>, CategoriesResponseModel>()
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<CategoryResponseResolver>())
-                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
-                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
         }
 
         private void CreateProductMaps()

@@ -12,15 +12,10 @@ namespace Mushka.WebApi.Resolvers.CorporateOrders
     {
         public GetAllResponseModel Convert(OperationResult<IEnumerable<CorporateOrder>> source, GetAllResponseModel destination, ResolutionContext context)
         {
-            if (source.Data == null)
-            {
-                return null;
-            }
-
             return new GetAllResponseModel
             {
-                Total = source.Data.Count(),
-                Items = source.Data.Select(Mapper.Map<CorporateOrder, CorporateOrderSummaryModel>)
+                Total = source.Data?.Count() ?? 0,
+                Items = source.Data?.Select(Mapper.Map<CorporateOrder, CorporateOrderSummaryModel>) ?? Enumerable.Empty<CorporateOrderSummaryModel>()
             };
         }
     }

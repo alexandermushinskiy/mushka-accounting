@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Mushka.Core.Validation;
 using Mushka.Core.Validation.Enums;
 using Mushka.WebApi.ClientModels;
-using Mushka.WebApi.ClientModels.Order.Search;
 using Mushka.WebApi.Resolvers;
 
 namespace Mushka.WebApi.AutoMapperProfiles

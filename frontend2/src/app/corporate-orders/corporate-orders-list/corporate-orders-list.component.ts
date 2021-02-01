@@ -6,7 +6,7 @@ import { CorporateOrderList } from '../../shared/models/corporate-order-list.mod
 import { DateRange } from '../../shared/models/date-range.model';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { CorporateOrderListFilter } from '../../shared/filters/corporate-order-list.filter';
-import { ApiCorporateOrdersService } from '../../core/api/corporate-orders/services/api-corporate-orders.service';
+import { ApiCorporateOrdersService } from '../../api/corporate-orders/services/api-corporate-orders.service';
 import { ItemsList } from '../../shared/interfaces/items-list.interface';
 
 @Component({

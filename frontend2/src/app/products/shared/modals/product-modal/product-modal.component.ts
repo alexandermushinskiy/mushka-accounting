@@ -6,8 +6,8 @@ import { Product, SubProduct } from '../../../../shared/models/product.model';
 import { Size } from '../../../../shared/models/size.model';
 import { Category } from '../../../../shared/models/category.model';
 import { SelectProduct } from '../../../../shared/models/select-product.model';
-import { CategoriesService } from '../../../../core/api/categories.service';
 import { ProductsServce } from '../../../../core/api/products.service';
+import { ApiCategoriesService } from '../../../../api/categories/services/api-cateries.service';
 
 @Component({
   selector: 'mshk-product-modal',
@@ -34,7 +34,7 @@ export class ProductModalComponent implements OnInit {
   }
 
   constructor(private formBuilder: FormBuilder,
-              private categoriesService: CategoriesService,
+              private apiCategoriesService: ApiCategoriesService,
               private productsService: ProductsServce) {
   }
 
@@ -97,12 +97,12 @@ export class ProductModalComponent implements OnInit {
     forkJoin(
       this.isEdit ? this.productsService.getById(this.productId) : of(null),
       this.productsService.getSizes(),
-      this.categoriesService.getAll(),
+      this.apiCategoriesService.searchCategories$(),
       this.productsService.getForSale()
     ).subscribe(([product, sizes, categories, subProducts]) => {
       this.availableSubProducts = subProducts;
       this.availableSizes = sizes;
-      this.categories = categories;
+      this.categories = categories.items;
 
       if (this.isEdit) {
         this.productForm.patchValue({

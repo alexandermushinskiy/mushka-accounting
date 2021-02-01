@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Mushka.WebApi.ClientModels.Category
+namespace Mushka.WebApi.ClientModels.Category.Search
 {
-    public class CategoryModel
+    public class CategorySummaryModel
     {
         public Guid Id { get; set; }
 

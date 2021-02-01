@@ -1,4 +1,4 @@
-import { PaymentMethod } from '../../../../shared/enums/payment-method.enum';
+import { PaymentMethod } from '../../../shared/enums/payment-method.enum';
 
 export namespace ApiCreateOrder {
   export interface Request {

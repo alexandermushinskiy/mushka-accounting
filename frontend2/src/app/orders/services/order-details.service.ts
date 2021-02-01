@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 
 import { Order } from '../../shared/models/order.model';
 import { I18N } from '../constants/i18n.const';
-import { ApiOrdersService } from '../../core/api/orders/services/api-orders.service';
+import { ApiOrdersService } from '../../api/orders/services/api-orders.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { catchError, tap } from 'rxjs/operators';
 

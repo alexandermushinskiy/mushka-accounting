@@ -5,8 +5,9 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 
 import { UnsubscriberComponent } from '../../../../shared/hooks/unsubscriber.component';
 import { Category } from '../../../../shared/models/category.model';
-import { CategoriesService } from '../../../../core/api/categories.service';
 import { NotificationsService } from '../../../../core/notifications/notifications.service';
+import { ApiCategoriesService } from '../../../../api/categories/services/api-cateries.service';
+import { ItemsList } from '../../../../shared/interfaces/items-list.interface';
 
 @Component({
   selector: 'mshk-categories',
@@ -41,7 +42,7 @@ export class CategoriesComponent extends UnsubscriberComponent implements OnInit
   }
 
   constructor(private modalService: NgbModal,
-              private categoriesService: CategoriesService,
+              private apiCategoriesService: ApiCategoriesService,
               private notificationsService: NotificationsService) {
     super();
   }
@@ -72,7 +73,7 @@ export class CategoriesComponent extends UnsubscriberComponent implements OnInit
 
   confirmDelete() {
     this.isDeleting = true;
-    this.categoriesService.delete(this.categoryToDelete.id)
+    this.apiCategoriesService.deleteCategory$(this.categoryToDelete.id)
       .subscribe(
         () => this.onCategotyDeleted(),
         () => this.onDeleteCategoryError()
@@ -87,7 +88,9 @@ export class CategoriesComponent extends UnsubscriberComponent implements OnInit
   saveCategory(category: Category) {
     this.isSaving = true;
 
-    (category.id ? this.categoriesService.update(category.id, category) : this.categoriesService.create(category))
+    (category.id
+        ? this.apiCategoriesService.updateCategory$(category.id, category)
+        : this.apiCategoriesService.createCategory$(category))
       .subscribe(
         () => this.onSavedSucces(category.name, !!category.id),
         () => this.onSaveError(),
@@ -104,11 +107,11 @@ export class CategoriesComponent extends UnsubscriberComponent implements OnInit
   }
 
   private loadCategories() {
-    this.categoriesService.getAll()
-      .subscribe((categories: Category[]) => {
-        this.categories = categories;
+    this.apiCategoriesService.searchCategories$()
+      .subscribe((categories: ItemsList<Category>) => {
+        this.categories = categories.items;
         if (categories.length > 0) {
-          this.selectCategory(categories[0]);
+          this.selectCategory(categories.items[0]);
         }
       });
   }

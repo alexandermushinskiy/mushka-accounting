@@ -1,6 +1,6 @@
-import { PaymentMethod } from '../../../../shared/enums/payment-method.enum';
+import { PaymentMethod } from '../../../shared/enums/payment-method.enum';
 
-export namespace ApiCreateCorporateOrder {
+export namespace ApiUpdateCorporateOrder {
   export interface Request {
     createdOn: string;
     orderNumber: string;

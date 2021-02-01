@@ -10,7 +10,7 @@ import { CorporateOrderProduct } from '../../shared/models/corporate-order-produ
 import { uniqueOrderNumber } from '../../shared/validators/order-number.validator';
 import { LanguageService } from '../../core/language/language.service';
 import { CorporateOrder } from '../../shared/models/corporate-order.model';
-import { ApiCorporateOrdersService } from '../../core/api/corporate-orders/services/api-corporate-orders.service';
+import { ApiCorporateOrdersService } from '../../api/corporate-orders/services/api-corporate-orders.service';
 
 @Component({
   selector: 'mshk-corporate-order',
