@@ -3,17 +3,17 @@ using System.Linq;
 using AutoMapper;
 using Mushka.Core.Extensibility.Providers;
 using Mushka.Domain.Entities;
-using Mushka.WebApi.ClientModels.Supplier;
+using Mushka.WebApi.ClientModels.Supplier.Modify;
 using Mushka.WebApi.Extensions;
 
-namespace Mushka.WebApi.Resolvers
+namespace Mushka.WebApi.Resolvers.Suppliers
 {
-    public class SupplierRequestConverter : ITypeConverter<SupplierRequestModel, Supplier>
+    public class CreateSupplierRequestConverter : ITypeConverter<CreateSupplierRequestModel, Supplier>
     {
         private readonly IGuidProvider guidProvider;
         private readonly IDateTimeProvider dateTimeProvider;
 
-        public SupplierRequestConverter(
+        public CreateSupplierRequestConverter(
             IGuidProvider guidProvider,
             IDateTimeProvider dateTimeProvider)
         {
@@ -21,19 +21,19 @@ namespace Mushka.WebApi.Resolvers
             this.dateTimeProvider = dateTimeProvider;
         }
 
-        public Supplier Convert(SupplierRequestModel source, Supplier destination, ResolutionContext context)
+        public Supplier Convert(CreateSupplierRequestModel source, Supplier destination, ResolutionContext context)
         {
             var supplierId = context.GetId() ?? guidProvider.NewGuid();
 
             return new Supplier
             {
                 Id = supplierId,
-                Name = source.Name,
-                Address = source.Address,
-                Email = source.Email,
-                WebSite = source.WebSite,
-                Notes = source.Notes,
-                Service = source.Service,
+                Name = source.Supplier.Name,
+                Address = source.Supplier.Address,
+                Email = source.Supplier.Email,
+                WebSite = source.Supplier.WebSite,
+                Notes = source.Supplier.Notes,
+                Service = source.Supplier.Service,
                 CreatedOn = dateTimeProvider.GetNow(),
                 ContactPersons = source.ContactPersons.Select(cp => CreateContactPerson(supplierId, cp)).ToList(),
                 PaymentCards = source.PaymentCards.Select(pc => CreatePaymentCard(supplierId, pc)).ToList()

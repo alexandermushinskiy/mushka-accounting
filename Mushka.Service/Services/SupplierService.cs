@@ -65,7 +65,7 @@ namespace Mushka.Service.Services
 
             if (supplierToUpdate == null)
             {
-                OperationResult<Supplier>.FromError(ValidationErrors.SupplierNotFound, ValidationStatusType.NotFound);
+                return OperationResult<Supplier>.FromError(ValidationErrors.SupplierNotFound, ValidationStatusType.NotFound);
             }
 
             if (await supplierRepository.IsExistAsync(supp => supp.Id != supplier.Id && supp.Name == supplier.Name, cancellationToken))
@@ -73,6 +73,7 @@ namespace Mushka.Service.Services
                 return OperationResult<Supplier>.FromError(ValidationErrors.SupplierWithNameExist);
             }
 
+            supplier.CreatedOn = supplierToUpdate.CreatedOn;
             var updatedSupplier = supplierRepository.Update(supplier);
             await storage.SaveAsync(cancellationToken);
 

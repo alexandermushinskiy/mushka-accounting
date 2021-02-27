@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Mushka.WebApi.ClientModels.Supplier
+namespace Mushka.WebApi.ClientModels.Supplier.Describe
 {
-    public class SupplierContactPersonModel
+    public class DescribeSupplierContactPersonModel
     {
         public Guid Id { get; set; }
 

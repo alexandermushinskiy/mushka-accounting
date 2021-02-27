@@ -4,13 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, forkJoin, of } from 'rxjs';
 
 import { NotificationsService } from '../../core/notifications/notifications.service';
-import { SuppliersService } from '../../core/api/suppliers.service';
 import { ProductsServce } from '../../core/api/products.service';
 import { SuppliesService } from '../../core/api/supplies.service';
 import { SelectProduct } from '../../shared/models/select-product.model';
 import { Supplier } from '../../shared/models/supplier.model';
 import { Supply } from '../../shared/models/supply.model';
 import { SupplyProduct } from '../../shared/models/supply-product.model';
+import { ApiSuppliersService } from '../../api/suppliers/services/api-suppliers.service';
 
 @Component({
   selector: 'mshk-supply',
@@ -36,7 +36,7 @@ export class SupplyComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private notificationsService: NotificationsService,
-              private suppliersService: SuppliersService,
+              private apiSuppliersService: ApiSuppliersService,
               private productsService: ProductsServce,
               private suppliesService: SuppliesService) {
   }
@@ -147,10 +147,10 @@ export class SupplyComponent implements OnInit {
 
     forkJoin(
       getSupply,
-      this.suppliersService.getAll(),
+      this.apiSuppliersService.searchSuppliers$(),
       this.productsService.getForSale()
       ).subscribe(([supply, suppliers, products]) => {
-        this.suppliers = suppliers;
+        this.suppliers = suppliers.items;
         this.productsList = products;
 
         this.buildForm(!!supply ? supply : new Supply({ cost: 0, products: [new SupplyProduct({})] }));

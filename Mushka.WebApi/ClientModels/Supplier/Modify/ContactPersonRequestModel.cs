@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Mushka.WebApi.ClientModels.Supplier
+namespace Mushka.WebApi.ClientModels.Supplier.Modify
 {
     public class ContactPersonRequestModel
     {

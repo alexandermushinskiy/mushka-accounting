@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mushka.WebApi.ClientModels.Supplier
+namespace Mushka.WebApi.ClientModels.Supplier.Modify
 {
     public class PaymentCardRequestModel
     {

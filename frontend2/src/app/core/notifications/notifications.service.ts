@@ -8,13 +8,13 @@ export class NotificationsService {
     enableHtml: true,
     tapToDismiss: true,
     timeOut: 5000,
-    positionClass: 'toast-bottom-right'
+    positionClass: 'toast-bottom-center'
   };
 
   private errorOptions = {
     enableHtml: true,
     disableTimeOut: true,
-    positionClass: 'toast-bottom-right'
+    positionClass: 'toast-bottom-center'
   };
 
   constructor(private toastrService: ToastrService,

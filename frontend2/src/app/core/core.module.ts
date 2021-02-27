@@ -8,7 +8,6 @@ import { SidebarMenuStateService } from './sidebar-menu-state/sidebar-menu-state
 // import { UserNotificationsService } from './user-notifications/user-notifications.service';
 import { CurrentUserService } from './api/current-user.service';
 import { ProductsServce } from './api/products.service';
-import { SuppliersService } from './api/suppliers.service';
 import { SuppliesService } from './api/supplies.service';
 import { ConverterService } from './converter/converter.service';
 import { DatetimeService } from './datetime/datetime.service';
@@ -31,7 +30,6 @@ import { LanguageService } from './language/language.service';
     // UserNotificationsService,
     CurrentUserService,
     ProductsServce,
-    SuppliersService,
     SuppliesService,
     ConverterService,
     DatetimeService,

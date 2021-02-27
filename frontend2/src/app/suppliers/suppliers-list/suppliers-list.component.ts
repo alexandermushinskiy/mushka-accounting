@@ -1,19 +1,24 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NgbModalRef, NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { LocalStorage } from 'ngx-webstorage';
 
 import { Supplier } from '../../shared/models/supplier.model';
-import { SuppliersService } from '../../core/api/suppliers.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { SupplierListFilter } from '../../shared/filters/supplier-list.filter';
+import { ApiSuppliersService } from '../../api/suppliers/services/api-suppliers.service';
+import { ItemsList } from '../../shared/interfaces/items-list.interface';
+import { DialogsService } from '../../shared/widgets/dialogs/services/dialogs.service';
+import { I18N } from '../constants/i18n.const';
+import { LanguageService } from '../../core/language/language.service';
+import { mergeMap } from 'rxjs/operators';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'mshk-suppliers-list',
   templateUrl: './suppliers-list.component.html',
   styleUrls: ['./suppliers-list.component.scss']
 })
-export class SuppliersListComponent implements OnInit {
+export class SuppliersListComponent implements OnInit, OnDestroy {
   @ViewChild('datatable', { static: false }) datatable: DatatableComponent;
   @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
   @LocalStorage('suppliers_filter', {searchKey: null}) suppliersFilter: { searchKey: string };
@@ -24,22 +29,18 @@ export class SuppliersListComponent implements OnInit {
   shown = 0;
   loadingIndicator = true;
   sorts = [{ prop: 'name', dir: 'asc' }];
-  supplierToDelete: Supplier;
 
-  private modalRef: NgbModalRef;
-  private readonly modalConfig: NgbModalOptions = {
-    windowClass: 'supplier-modal',
-    backdrop: 'static',
-    size: 'sm'
-  };
-
-  constructor(private modalService: NgbModal,
-              private suppliersService: SuppliersService,
-              private notificationsService: NotificationsService) {
+  constructor(private dialogsService: DialogsService,
+              private apiSuppliersService: ApiSuppliersService,
+              private notificationsService: NotificationsService,
+              private languageService: LanguageService) {
   }
 
   ngOnInit() {
     this.loadSuppliers();
+  }
+
+  ngOnDestroy(): void {
   }
 
   onActive(event: any) {
@@ -53,27 +54,26 @@ export class SuppliersListComponent implements OnInit {
   }
 
   delete(supplier: Supplier) {
-    setTimeout(() => {
-      this.supplierToDelete = supplier;
-      this.modalRef = this.modalService.open(this.confirmRemoveTmpl, this.modalConfig);
+    const { title, message, cancelLabel, confirmLabel } = I18N.dialogs.deleteSupplier;
+    const dialog = this.dialogsService.openConfirmDialog({
+      title,
+      message: this.languageService.translate(message, { name: supplier.name }),
+      cancelLabel,
+      confirmLabel
     });
-  }
 
-  confirmDelete() {
-    this.loadingIndicator = true;
-    this.closeModal();
-
-    this.suppliersService.delete(this.supplierToDelete.id)
-      .subscribe(
-        () => this.onDeleteSuccess(),
-        (error: string) => this.onDeleteFailed(error)
-      );
-  }
-
-  closeModal() {
-    if (this.modalRef) {
-      this.modalRef.close();
-    }
+    dialog.confirm$
+      .pipe(
+        mergeMap(() => {
+          dialog.isLoading = true;
+          return this.apiSuppliersService.deleteSupplier$(supplier.id);
+        }),
+        untilDestroyed(this)
+      )
+      .subscribe(() => {
+        dialog.close();
+        this.onDeleteSuccess();
+      });
   }
 
   onSearch(searchKey: string) {
@@ -91,35 +91,28 @@ export class SuppliersListComponent implements OnInit {
   }
 
   private onDeleteSuccess() {
-    this.notificationsService.success('suppliers.supplierDeleted');
-    this.supplierToDelete = null;
+    this.notificationsService.success(I18N.messages.supplierDeleted);
     this.loadSuppliers();
-  }
-
-  private onDeleteFailed(error: string) {
-    this.loadingIndicator = false;
-    this.supplierToDelete = null;
-    this.notificationsService.error(`Ошибка при удалении поставщика: ${error}.`);
   }
 
   private loadSuppliers() {
     this.loadingIndicator = true;
 
-    this.suppliersService.getAll()
+    this.apiSuppliersService.searchSuppliers$()
       .subscribe(
-        (res: Supplier[]) => this.onLoadSuccess(res),
+        (res: ItemsList<Supplier>) => this.onLoadSuccess(res),
         () => this.onLoadError()
       );
   }
 
-  private onLoadSuccess(suppliers: Supplier[]) {
-    this.suppliers = suppliers;
+  private onLoadSuccess(suppliers: ItemsList<Supplier>) {
+    this.suppliers = suppliers.items;
     this.total = suppliers.length;
 
     if (!!this.suppliersFilter.searchKey) {
       this.filterSuppliers();
     } else {
-      this.shownSuppliers = suppliers;
+      this.shownSuppliers = suppliers.items;
       this.shown = suppliers.length;
     }
 

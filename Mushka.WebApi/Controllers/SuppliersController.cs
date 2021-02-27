@@ -10,6 +10,9 @@ using Mushka.Domain.Extensibility.Entities;
 using Mushka.Service.Extensibility.Services;
 using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Supplier;
+using Mushka.WebApi.ClientModels.Supplier.Describe;
+using Mushka.WebApi.ClientModels.Supplier.Modify;
+using Mushka.WebApi.ClientModels.Supplier.Search;
 using Mushka.WebApi.Extensibility.Providers;
 
 namespace Mushka.WebApi.Controllers
@@ -29,42 +32,42 @@ namespace Mushka.WebApi.Controllers
             this.supplierService = supplierService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpPost("search")]
+        public async Task<IActionResult> Search()
         {
             var suppliersResponse = await supplierService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<IEnumerable<Supplier>>, SuppliersListResponseModel>(suppliersResponse);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<Supplier>>, SearchSuppliersResponseModel>(suppliersResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
 
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetById(Guid id)
+        [HttpGet("{id:guid}/describe")]
+        public async Task<IActionResult> Describe(Guid id)
         {
             var supplierResponse = await supplierService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Supplier>, SupplierResponseModel>(supplierResponse);
+            var clientResponse = mapper.Map<OperationResult<Supplier>, DescribeSupplierResponseModel>(supplierResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]SupplierRequestModel supplierRequest)
+        public async Task<IActionResult> Post([FromBody] CreateSupplierRequestModel supplierRequest)
         {
-            var supplier = mapper.Map<SupplierRequestModel, Supplier>(supplierRequest);
+            var supplier = mapper.Map<CreateSupplierRequestModel, Supplier>(supplierRequest);
 
             var supplierResponse = await supplierService.AddAsync(supplier, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Supplier>, SupplierResponseModel>(supplierResponse);
+            var clientResponse = mapper.Map<OperationResult<Supplier>, EmptyResponseModel>(supplierResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody]SupplierRequestModel supplierRequest)
+        public async Task<IActionResult> Put(Guid id, [FromBody] UpdateSupplierRequestModel supplierRequest)
         {
-            var supplier = mapper.Map<SupplierRequestModel, Supplier>(supplierRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
+            var supplier = mapper.Map<UpdateSupplierRequestModel, Supplier>(supplierRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var supplierResponse = await supplierService.UpdateAsync(supplier, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Supplier>, SupplierResponseModel>(supplierResponse);
+            var clientResponse = mapper.Map<OperationResult<Supplier>, EmptyResponseModel>(supplierResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -73,7 +76,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var supplierResponse = await supplierService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Supplier>, DeleteResponseModel>(supplierResponse);
+            var clientResponse = mapper.Map<OperationResult<Supplier>, EmptyResponseModel>(supplierResponse);
 
             return actionResultProvider.Get(clientResponse);
         }

@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace Mushka.WebApi.ClientModels.Supplier
+namespace Mushka.WebApi.ClientModels.Supplier.Describe
 {
-    public class SupplierModel
+    public class DescribeSupplierModel
     {
         public Guid Id { get; set; }
 
         public string Name { get; set; }
 
         public string Address { get; set; }
-        
+
         public string Email { get; set; }
 
         public string WebSite { get; set; }
@@ -22,9 +21,5 @@ namespace Mushka.WebApi.ClientModels.Supplier
         public string PaymentMethods { get; set; }
 
         public int SuppliesCount { get; set; }
-
-        public IEnumerable<SupplierContactPersonModel> ContactPersons { get; set; }
-
-        public IEnumerable<PaymentCardModel> PaymentCards { get; set; }
     }
 }

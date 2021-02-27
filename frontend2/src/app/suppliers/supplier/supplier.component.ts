@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { SuppliersService } from '../../core/api/suppliers.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { Supplier } from '../../shared/models/supplier.model';
 import { ContactPerson } from '../../shared/models/contact-person.model';
 import { PaymentCard } from '../../shared/models/payment-card.model';
+import { ApiSuppliersService } from '../../api/suppliers/services/api-suppliers.service';
 
 @Component({
   selector: 'mshk-supplier',
@@ -31,7 +31,7 @@ export class SupplierComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private suppliersService: SuppliersService,
+              private apiSuppliersService: ApiSuppliersService,
               private notificationsService: NotificationsService) {
   }
 
@@ -60,6 +60,10 @@ export class SupplierComponent implements OnInit {
   }
 
   saveSupplier() {
+    // const t1 = this.createSupplierModel(this.supplierForm.getRawValue());
+    // console.info(t1);
+    // return;
+
     if (this.supplierForm.invalid) {
       return;
     }
@@ -68,8 +72,8 @@ export class SupplierComponent implements OnInit {
     const supplier = this.createSupplierModel(this.supplierForm.value);
 
     (this.isEdit
-      ? this.suppliersService.update(this.supplierId, supplier)
-      : this.suppliersService.create(supplier))
+      ? this.apiSuppliersService.updateSupplier$(this.supplierId, supplier)
+      : this.apiSuppliersService.createSupplier$(supplier))
       .subscribe(
         () => this.onSaveSuccess(),
         (errors: string[]) => this.onSaveFailed(errors)
@@ -107,7 +111,7 @@ export class SupplierComponent implements OnInit {
   private loadSupplier() {
     this.loadingIndicator = true;
 
-    this.suppliersService.getById(this.supplierId)
+    this.apiSuppliersService.describeSupplier$(this.supplierId)
       .subscribe(
         (supplier: Supplier) => this.onSupplierLoaded(supplier),
         () => this.onloadSupplierFailed());

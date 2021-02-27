@@ -106,12 +106,3 @@
   </ngx-datatable-row-detail>
 
 </ngx-datatable>
-
-<ng-template #confirmRemoveTmpl>
-  <mshk-confirmation
-          [confirmButtonText]="'button.remove'"
-          [plainText]="'suppliers.areYouSureToDeleteSupplier' | translate: {name: supplierToDelete.name}"
-          (onClose)="closeModal()"
-          (onConfirm)="confirmDelete()">
-  </mshk-confirmation>
-</ng-template>

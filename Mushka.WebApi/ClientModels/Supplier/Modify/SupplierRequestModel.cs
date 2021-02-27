@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Mushka.WebApi.ClientModels.Supplier
+namespace Mushka.WebApi.ClientModels.Supplier.Modify
 {
     public class SupplierRequestModel
     {
@@ -17,10 +16,5 @@ namespace Mushka.WebApi.ClientModels.Supplier
         public string Service { get; set; }
 
         public string Notes { get; set; }
-
-        [Required]
-        public IEnumerable<ContactPersonRequestModel> ContactPersons { get; set; }
-
-        public IEnumerable<PaymentCardRequestModel> PaymentCards { get; set; }
     }
 }
