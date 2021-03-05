@@ -10,7 +10,7 @@ namespace Mushka.Domain.Extensibility.Repositories
 {
     public interface ISupplyRepository : IRepositoryBase<Supply>
     {
-        Task<IEnumerable<Supply>> GetByFilterAsync(SuppliesFiltersModel suppliesFiltersModel, CancellationToken cancellationToken = default(CancellationToken));
+        Task<IEnumerable<Supply>> GetByFilterAsync(SearchSuppliesFilter searchSuppliesFilter, CancellationToken cancellationToken = default(CancellationToken));
 
         Task<int> GetAllCountAsync(CancellationToken cancellationToken = default(CancellationToken));
 

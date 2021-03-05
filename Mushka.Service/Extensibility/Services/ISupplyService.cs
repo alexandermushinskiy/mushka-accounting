@@ -11,7 +11,7 @@ namespace Mushka.Service.Extensibility.Services
 {
     public interface ISupplyService : IServiceBase<Supply>
     {
-        Task<OperationResult<ItemsWithTotalCount<Supply>>> GetByFilterAsync(SuppliesFiltersModel suppliesFiltersModel, CancellationToken cancellationToken = default(CancellationToken));
+        Task<OperationResult<ItemsWithTotalCount<Supply>>> SearchAsync(SearchSuppliesFilter searchSuppliesFilter, CancellationToken cancellationToken = default(CancellationToken));
 
         Task<OperationResult<ExportedFile>> ExportAsync(IEnumerable<Guid> supplyIds, IEnumerable<Guid> productIds, CancellationToken cancellationToken = default(CancellationToken));
     }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -35,11 +33,11 @@ namespace Mushka.WebApi.Controllers
         }
 
         [HttpPost("search")]
-        public async Task<IActionResult> Search([FromBody] SuppliesFiltersRequestModel suppliesFiltersRequestModel)
+        public async Task<IActionResult> Search([FromBody] SearchSuppliesRequestModel suppliesFiltersRequestModel)
         {
-            var suppliesFilters = mapper.Map<SuppliesFiltersRequestModel, SuppliesFiltersModel>(suppliesFiltersRequestModel);
+            var suppliesFilters = mapper.Map<SearchSuppliesRequestModel, SearchSuppliesFilter> (suppliesFiltersRequestModel);
 
-            var suppliesResponse = await supplyService.GetByFilterAsync(suppliesFilters, cancellationTokenSourceProvider.Get().Token);
+            var suppliesResponse = await supplyService.SearchAsync(suppliesFilters, cancellationTokenSourceProvider.Get().Token);
             var clientResponse = mapper.Map<OperationResult<ItemsWithTotalCount<Supply>>, SearchSuppliesResponseModel>(suppliesResponse);
 
             return actionResultProvider.Get(clientResponse);

@@ -9,7 +9,6 @@ using Mushka.WebApi.ClientModels.Supply;
 using Mushka.WebApi.ClientModels.Supply.Describe;
 using Mushka.WebApi.ClientModels.Supply.Search;
 using Mushka.WebApi.Resolvers;
-using Mushka.WebApi.Resolvers.Suppliers;
 using Mushka.WebApi.Resolvers.Supplies;
 using SupplyModel = Mushka.WebApi.ClientModels.Supply.SupplyModel;
 
@@ -28,7 +27,8 @@ namespace Mushka.WebApi.AutoMapperProfiles
             CreateMap<SupplyRequestModel, Supply>().ConvertUsing<SupplyRequestConverter>();
             CreateMap<Supply, SupplyModel>().ConvertUsing<SupplyConverter>();
 
-            CreateMap<SuppliesFiltersRequestModel, SuppliesFiltersModel>();
+            CreateMap<SearchSuppliesRequestModel, SearchSuppliesFilter>()
+                .ConvertUsing<SearchSuppliesRequestConverter>();
 
             //CreateMap<OperationResult<Supply>, SupplyResponseModel>()
             //    .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))

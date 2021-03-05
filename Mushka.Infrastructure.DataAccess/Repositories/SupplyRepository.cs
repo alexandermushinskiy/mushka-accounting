@@ -25,17 +25,17 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
             return await Context.Supplies.CountAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<Supply>> GetByFilterAsync(SuppliesFiltersModel suppliesFiltersModel, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public async Task<IEnumerable<Supply>> GetByFilterAsync(SearchSuppliesFilter searchSuppliesFilter, CancellationToken cancellationToken = default(CancellationToken)) =>
             await Context.Supplies
                 .Include(sup => sup.Supplier)
                 .Include(sup => sup.Products)
                 .ThenInclude(supProd => supProd.Product)
                 .ThenInclude(supProd => supProd.Size)
-                .Where(sup => suppliesFiltersModel.SearchKey == null ||
-                              (sup.Supplier.Name.ToUpper().Contains(suppliesFiltersModel.SearchKey.ToUpper()) ||
-                               sup.Description.ToUpper().Contains(suppliesFiltersModel.SearchKey.ToUpper())))
-                .Where(sup => suppliesFiltersModel.ProductId == null ||
-                              sup.Products.Any(prod => prod.ProductId == suppliesFiltersModel.ProductId))
+                .Where(sup => searchSuppliesFilter.SearchKey == null ||
+                              (sup.Supplier.Name.ToUpper().Contains(searchSuppliesFilter.SearchKey.ToUpper()) ||
+                               sup.Description.ToUpper().Contains(searchSuppliesFilter.SearchKey.ToUpper())))
+                .Where(sup => searchSuppliesFilter.ProductId == null ||
+                              sup.Products.Any(prod => prod.ProductId == searchSuppliesFilter.ProductId))
                 .OrderBy(supply => supply.Supplier.Name)
                 .ThenBy(supply => supply.RequestDate)
                 .ToListAsync(cancellationToken);

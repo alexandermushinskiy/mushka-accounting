@@ -40,12 +40,12 @@ namespace Mushka.Service.Services
             productRepository = storage.GetRepository<IProductRepository>();
         }
 
-        public async Task<OperationResult<ItemsWithTotalCount<Supply>>> GetByFilterAsync(
-            SuppliesFiltersModel suppliesFiltersModel, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<ItemsWithTotalCount<Supply>>> SearchAsync(
+            SearchSuppliesFilter searchSuppliesFilter, CancellationToken cancellationToken = default(CancellationToken))
         {
             var totalCount = await supplyRepository.GetAllCountAsync(cancellationToken);
 
-            IEnumerable<Supply> supplies = (await supplyRepository.GetByFilterAsync(suppliesFiltersModel, cancellationToken)).ToList();
+            IEnumerable<Supply> supplies = (await supplyRepository.GetByFilterAsync(searchSuppliesFilter, cancellationToken)).ToList();
 
             var result = new ItemsWithTotalCount<Supply>(supplies, totalCount);
 

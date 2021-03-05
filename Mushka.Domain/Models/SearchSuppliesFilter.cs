@@ -2,7 +2,7 @@
 
 namespace Mushka.Domain.Models
 {
-    public class SuppliesFiltersModel
+    public class SearchSuppliesFilter
     {
         public string SearchKey { get; set; }
         public Guid? ProductId { get; set; }
