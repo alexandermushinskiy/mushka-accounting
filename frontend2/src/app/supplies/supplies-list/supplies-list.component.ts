@@ -1,21 +1,24 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NgbModalRef, NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { mergeMap } from 'rxjs/operators';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { LocalStorage } from 'ngx-webstorage';
 
 import { SupplyList } from '../../shared/models/supply-list.model';
-import { SuppliesService } from '../../core/api/supplies.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { ProductsServce } from '../../core/api/products.service';
 import { SelectProduct } from '../../shared/models/select-product.model';
 import { ItemsWithTotalCount } from '../../shared/models/items-with-total-count.model';
+import { ApiSuppliesService } from '../../api/supplies/services/api-supplies.service';
+import { DialogsService } from '../../shared/widgets/dialogs/services/dialogs.service';
+import { I18N } from '../constants/i18n.const';
+import { LanguageService } from '../../core/language/language.service';
 
 @Component({
   selector: 'mshk-supplies-list',
   templateUrl: './supplies-list.component.html',
   styleUrls: ['./supplies-list.component.scss']
 })
-export class SuppliesListComponent implements OnInit {
-  @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
+export class SuppliesListComponent implements OnInit, OnDestroy {
   @LocalStorage('supplies_filter', {searchKey: null, product: null}) suppliesFilter: { searchKey: string, product: SelectProduct };
   supplies: SupplyList[];
   shownSupplies: SupplyList[];
@@ -23,7 +26,6 @@ export class SuppliesListComponent implements OnInit {
   isProductsLoading = false;
   total = 0;
   shown = 0;
-  supplyToDelete: SupplyList;
   productsList: SelectProduct[];
   sorts = [
     { prop: 'supplierName', dir: 'asc' },
@@ -31,22 +33,19 @@ export class SuppliesListComponent implements OnInit {
     { prop: 'description', dir: null }
   ];
 
-  private modalRef: NgbModalRef;
-  private readonly modalConfig: NgbModalOptions = {
-    windowClass: 'supply-modal',
-    backdrop: 'static',
-    size: 'sm'
-  };
-
-  constructor(private modalService: NgbModal,
-              private suppliesService: SuppliesService,
+  constructor(private apiSuppliesService: ApiSuppliesService,
               private productsService: ProductsServce,
-              private notificationsService: NotificationsService) {
+              private dialogService: DialogsService,
+              private notificationsService: NotificationsService,
+              private languageService: LanguageService) {
   }
 
   ngOnInit() {
     this.loadProducts();
     this.loadSupplies();
+  }
+
+  ngOnDestroy(): void {
   }
 
   onActive(event: any) {
@@ -68,27 +67,29 @@ export class SuppliesListComponent implements OnInit {
   }
 
   delete(supply: SupplyList) {
-    setTimeout(() => {
-      this.supplyToDelete = supply;
-      this.modalRef = this.modalService.open(this.confirmRemoveTmpl, this.modalConfig);
+    const { title, message, cancelLabel, confirmLabel } = I18N.dialogs.deleteSupply;
+    const dialog = this.dialogService.openConfirmDialog({
+      title,
+      message: this.languageService.translate(message, { date: supply.receivedDate, name: supply.supplierName }),
+      cancelLabel,
+      confirmLabel
     });
-  }
 
-  confirmDelete() {
-    this.loadingIndicator = true;
-    this.closeModal();
-
-    this.suppliesService.delete(this.supplyToDelete.id)
+    dialog.confirm$
+      .pipe(
+        mergeMap(() => {
+          dialog.isLoading = true;
+          return this.apiSuppliesService.deleteSupply$(supply.id);
+        }),
+        untilDestroyed(this)
+      )
       .subscribe(
-        () => this.onDeleteSuccess(),
+        () => {
+          dialog.close();
+          this.onDeleteSuccess();
+        },
         (error: string) => this.onDeleteFailed(error)
       );
-  }
-
-  closeModal() {
-    if (this.modalRef) {
-      this.modalRef.close();
-    }
   }
 
   private loadProducts() {
@@ -103,13 +104,11 @@ export class SuppliesListComponent implements OnInit {
 
   private onDeleteSuccess() {
     this.notificationsService.success('supplies.supplyDeleted');
-    this.supplyToDelete = null;
     this.loadSupplies();
   }
 
   private onDeleteFailed(error: string) {
     this.loadingIndicator = false;
-    this.supplyToDelete = null;
     this.notificationsService.error(`Ошибка при удалении поставки: ${error}.`);
   }
 
@@ -117,7 +116,7 @@ export class SuppliesListComponent implements OnInit {
     this.loadingIndicator = true;
 
     const productId = !!this.suppliesFilter.product ? this.suppliesFilter.product.id : null;
-    this.suppliesService.get(this.suppliesFilter.searchKey, productId)
+    this.apiSuppliesService.searchSupplies$(this.suppliesFilter.searchKey, productId)
       .subscribe(
         (res: ItemsWithTotalCount<SupplyList>) => this.onLoadSuccess(res),
         () => this.onLoadError()

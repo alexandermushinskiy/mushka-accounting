@@ -5,12 +5,12 @@ import { combineLatest, forkJoin, of } from 'rxjs';
 
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { ProductsServce } from '../../core/api/products.service';
-import { SuppliesService } from '../../core/api/supplies.service';
 import { SelectProduct } from '../../shared/models/select-product.model';
 import { Supplier } from '../../shared/models/supplier.model';
 import { Supply } from '../../shared/models/supply.model';
 import { SupplyProduct } from '../../shared/models/supply-product.model';
 import { ApiSuppliersService } from '../../api/suppliers/services/api-suppliers.service';
+import { ApiSuppliesService } from '../../api/supplies/services/api-supplies.service';
 
 @Component({
   selector: 'mshk-supply',
@@ -38,7 +38,7 @@ export class SupplyComponent implements OnInit {
               private notificationsService: NotificationsService,
               private apiSuppliersService: ApiSuppliersService,
               private productsService: ProductsServce,
-              private suppliesService: SuppliesService) {
+              private apiSuppliesService: ApiSuppliesService) {
   }
 
   ngOnInit() {
@@ -76,8 +76,8 @@ export class SupplyComponent implements OnInit {
     const supply = this.createSupplyModel(this.supplyForm.getRawValue());
 
     (this.isEdit
-      ? this.suppliesService.update(this.supplyId, supply)
-      : this.suppliesService.create(supply))
+      ? this.apiSuppliesService.updateSupply$(this.supplyId, supply)
+      : this.apiSuppliesService.createSupply$(supply))
       .subscribe(
         () => this.onSaveSuccess(),
         (errors: string[]) => this.onSaveFailed(errors)
@@ -142,7 +142,7 @@ export class SupplyComponent implements OnInit {
     this.loadingIndicator = true;
 
     const getSupply = (this.isEdit || isCloning)
-      ? this.suppliesService.getById(this.supplyId)
+      ? this.apiSuppliesService.describeSupply$(this.supplyId)
       : of(null);
 
     forkJoin(

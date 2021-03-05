@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { LocalStorage } from 'ngx-webstorage';
 
@@ -20,7 +20,6 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 })
 export class SuppliersListComponent implements OnInit, OnDestroy {
   @ViewChild('datatable', { static: false }) datatable: DatatableComponent;
-  @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
   @LocalStorage('suppliers_filter', {searchKey: null}) suppliersFilter: { searchKey: string };
 
   suppliers: Supplier[];

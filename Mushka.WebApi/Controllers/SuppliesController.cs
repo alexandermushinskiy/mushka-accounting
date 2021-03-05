@@ -13,6 +13,8 @@ using Mushka.Service.Extensibility.Dto;
 using Mushka.Service.Extensibility.Services;
 using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Supply;
+using Mushka.WebApi.ClientModels.Supply.Describe;
+using Mushka.WebApi.ClientModels.Supply.Search;
 using Mushka.WebApi.Extensibility.Providers;
 
 namespace Mushka.WebApi.Controllers
@@ -32,44 +34,44 @@ namespace Mushka.WebApi.Controllers
             this.supplyService = supplyService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] SuppliesFiltersRequestModel suppliesFiltersRequestModel)
+        [HttpPost("search")]
+        public async Task<IActionResult> Search([FromBody] SuppliesFiltersRequestModel suppliesFiltersRequestModel)
         {
             var suppliesFilters = mapper.Map<SuppliesFiltersRequestModel, SuppliesFiltersModel>(suppliesFiltersRequestModel);
 
             var suppliesResponse = await supplyService.GetByFilterAsync(suppliesFilters, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<ItemsWithTotalCount<Supply>>, DataWithTotalCountResponseModel<SupplyListModel>>(suppliesResponse);
+            var clientResponse = mapper.Map<OperationResult<ItemsWithTotalCount<Supply>>, SearchSuppliesResponseModel>(suppliesResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
 
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetById(Guid id)
+        [HttpGet("{id:guid}/describe")]
+        public async Task<IActionResult> Describe(Guid id)
         {
             var operationResult = await supplyService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Supply>, SupplyResponseModel>(operationResult);
+            var clientResponse = mapper.Map<OperationResult<Supply>, DescribeSupplyResponseModel>(operationResult);
             
             return actionResultProvider.Get(clientResponse, operationResult.Status);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]SupplyRequestModel supplyRequest)
+        public async Task<IActionResult> Post([FromBody] SupplyRequestModel supplyRequest)
         {
             var supply = mapper.Map<SupplyRequestModel, Supply>(supplyRequest);
 
             var supplyResponse = await supplyService.AddAsync(supply, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Supply>, SupplyResponseModel>(supplyResponse);
+            var clientResponse = mapper.Map<OperationResult<Supply>, EmptyResponseModel>(supplyResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody]SupplyRequestModel supplyRequest)
+        public async Task<IActionResult> Put(Guid id, [FromBody] SupplyRequestModel supplyRequest)
         {
             var supply = mapper.Map<SupplyRequestModel, Supply>(supplyRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var supplyResponse = await supplyService.UpdateAsync(supply, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Supply>, SupplyResponseModel>(supplyResponse);
+            var clientResponse = mapper.Map<OperationResult<Supply>, EmptyResponseModel>(supplyResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -78,7 +80,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var supplyResponse = await supplyService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Supply>, DeleteResponseModel>(supplyResponse);
+            var clientResponse = mapper.Map<OperationResult<Supply>, EmptyResponseModel>(supplyResponse);
 
             return actionResultProvider.Get(clientResponse);
         }

@@ -25,6 +25,7 @@ export class SelectSuppliersComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
   }
+
   writeValue(supplier: Supplier): void {
     if (supplier) {
       this.selectedSupplier = this.suppliers.find(sup => sup.id === supplier.id);

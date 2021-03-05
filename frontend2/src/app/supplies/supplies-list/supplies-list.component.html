@@ -97,22 +97,14 @@
 
   <ngx-datatable-footer class="p-0">
     <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize" let-curPage="curPage" class="p-0">
-      <mshk-datatable-footer [loadingIndicator]="loadingIndicator"
-                            [datatable]="datatable"
-                            [total]="total"
-                            [currentPage]="curPage"
-                            [rowCount]="rowCount"
-                            [pageSize]="pageSize">
+      <mshk-datatable-footer
+        [loadingIndicator]="loadingIndicator"
+        [datatable]="datatable"
+        [total]="total"
+        [currentPage]="curPage"
+        [rowCount]="rowCount"
+        [pageSize]="pageSize">
       </mshk-datatable-footer>
     </ng-template>
   </ngx-datatable-footer>
 </ngx-datatable>
-
-<ng-template #confirmRemoveTmpl>
-  <mshk-confirmation
-          [confirmButtonText]="'button.remove'"
-          [plainText]="'supplies.areYouSureToDeleteSupply' | translate: { date: supplyToDelete.receivedDate, name: supplyToDelete.supplierName }"
-          (onClose)="closeModal()"
-          (onConfirm)="confirmDelete();">
-  </mshk-confirmation>
-</ng-template>

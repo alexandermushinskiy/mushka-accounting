@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DatetimeService } from '../../../core/datetime/datetime.service';
 
 @Component({
   selector: 'mshk-datetimepicker-wrapper',
@@ -18,7 +19,7 @@ export class DatetimepickerWrapperComponent implements OnInit, ControlValueAcces
 
   dateValue: string;
 
-  constructor() { }
+  constructor(private datetimeService: DatetimeService) { }
 
   ngOnInit() {
   }
@@ -31,7 +32,9 @@ export class DatetimepickerWrapperComponent implements OnInit, ControlValueAcces
   }
 
   writeValue(value: any): void {
-    this.dateValue = value;
+    if (value) {
+      this.dateValue = this.datetimeService.toString(value);
+    }
   }
 
   registerOnChange(fn: any) {
