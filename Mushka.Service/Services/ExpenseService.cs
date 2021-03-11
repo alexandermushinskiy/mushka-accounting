@@ -28,6 +28,15 @@ namespace Mushka.Service.Services
             expenseRepository = storage.GetRepository<IExpenseRepository>();
         }
 
+        public async Task<OperationResult<IEnumerable<Expense>>> SearchAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            IEnumerable<Expense> expenses = (await expenseRepository.GetAllAsync(cancellationToken))
+                .OrderBy(expense => expense.CreatedOn)
+                .ToList();
+
+            return OperationResult<IEnumerable<Expense>>.FromResult(expenses);
+        }
+
         public async Task<OperationResult<IEnumerable<Expense>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<Expense> expenses = (await expenseRepository.GetAllAsync(cancellationToken))

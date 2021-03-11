@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CurrentUserService } from '../../../../core/api/current-user.service';
+import { ApiCurrentUserService } from '../../../../api/current-user/services/api-current-user.service';
 import { UserData } from '../../../../shared/models/user-data.model';
 
 @Component({
@@ -11,11 +11,11 @@ import { UserData } from '../../../../shared/models/user-data.model';
 export class CurrentUserComponent implements OnInit {
   user: UserData;
 
-  constructor(private currentUserService: CurrentUserService) {
+  constructor(private apiCurrentUserService: ApiCurrentUserService) {
   }
 
   ngOnInit() {
-    this.user = this.currentUserService.currentUser;
+    this.user = this.apiCurrentUserService.currentUser;
   }
 
   logOut() {

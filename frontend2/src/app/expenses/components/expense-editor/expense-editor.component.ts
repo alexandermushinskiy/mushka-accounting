@@ -3,17 +3,17 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 
-import { DatetimeService } from '../../core/datetime/datetime.service';
-import { ExpensesService } from '../../core/api/expenses.service';
-import { NotificationsService } from '../../core/notifications/notifications.service';
-import { Expense } from '../../shared/models/expense.model';
+import { DatetimeService } from '../../../core/datetime/datetime.service';
+import { NotificationsService } from '../../../core/notifications/notifications.service';
+import { Expense } from '../../models/expense.model';
+import { ApiExpensesService } from '../../../api/expenses/services/api-expenses.service';
 
 @Component({
   selector: 'mshk-expense',
-  templateUrl: './expense.component.html',
-  styleUrls: ['./expense.component.scss']
+  templateUrl: './expense-editor.component.html',
+  styleUrls: ['./expense-editor.component.scss']
 })
-export class ExpenseComponent implements OnInit {
+export class ExpenseEditorComponent implements OnInit {
   expenseForm: FormGroup;
   expenseId: string;
   isEdit: boolean;
@@ -24,7 +24,7 @@ export class ExpenseComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private datetimeService: DatetimeService,
-              private expensesService: ExpensesService,
+              private apiExpensesService: ApiExpensesService,
               private notificationsService: NotificationsService) {
 }
 
@@ -38,7 +38,7 @@ export class ExpenseComponent implements OnInit {
       this.isEdit = !!this.expenseId;
 
       const getExpence = this.isEdit
-        ? this.expensesService.getById(this.expenseId)
+        ? this.apiExpensesService.describeExpense$(this.expenseId)
         : of(new Expense({ createdOn: this.datetimeService.getCurrentDateInString() }));
 
       getExpence
@@ -59,8 +59,8 @@ export class ExpenseComponent implements OnInit {
     const expense = this.createExpenseModel(this.expenseForm.getRawValue());
 
     (this.isEdit
-      ? this.expensesService.update(this.expenseId, expense)
-      : this.expensesService.create(expense))
+      ? this.apiExpensesService.updateExpense$(this.expenseId, expense)
+      : this.apiExpensesService.createExpense$(expense))
       .subscribe(
         () => this.onSaveSuccess(),
         (errors: string[]) => this.onSaveFailed(errors)

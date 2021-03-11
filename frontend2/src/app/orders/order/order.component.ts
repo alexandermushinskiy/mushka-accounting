@@ -9,12 +9,12 @@ import { ukrRegions } from '../shared/constants/ukr-regions.const';
 import { ComponentCanDeactivate } from '../../shared/hooks/component-can-deactivate.component';
 import { DatetimeService } from '../../core/datetime/datetime.service';
 import { ProductsServce } from '../../core/api/products.service';
-import { CustomersService } from '../../core/api/customers.service';
 import { OrderProduct } from '../../shared/models/order-product.model';
 import { Customer } from '../../shared/models/customer.model';
 import { Order } from '../../shared/models/order.model';
 import { uniqueOrderNumber } from '../../shared/validators/order-number.validator';
 import { OrdersFacadeService } from '../services/orders-facade.service';
+import { ApiCustomersService } from '../../api/customers/services/api-customers.service';
 
 @Component({
   selector: 'mshk-order',
@@ -52,7 +52,7 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
               private ordersFacadeService: OrdersFacadeService,
               private datetimeService: DatetimeService,
               private productsService: ProductsServce,
-              private customersService: CustomersService) {
+              private apiCustomersService: ApiCustomersService) {
     super();
   }
 
@@ -70,7 +70,7 @@ export class OrderComponent extends ComponentCanDeactivate implements OnInit {
       tap(() => this.searching = true),
       filter((term: string) => term.length >= 3),
       switchMap((term: string) => {
-        return this.customersService.getByName(term).pipe(
+        return this.apiCustomersService.getCustomerByName$(term).pipe(
           map(res => res.filter(cust => cust.id !== this.customerId)),
           catchError(() => of([])));
       }),

@@ -4,7 +4,9 @@ using AutoMapper;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Expenses;
-using Mushka.WebApi.Resolvers;
+using Mushka.WebApi.ClientModels.Expenses.Describe;
+using Mushka.WebApi.ClientModels.Expenses.Search;
+using Mushka.WebApi.Resolvers.Expenses;
 
 namespace Mushka.WebApi.AutoMapperProfiles
 {
@@ -12,20 +14,28 @@ namespace Mushka.WebApi.AutoMapperProfiles
     {
         public ExpenseProfile()
         {
-            CreateMap<ExpenseRequestModel, Expense>().ConvertUsing<ExpenseRequestConverter>();
-            CreateMap<Expense, ExpenseModel>().ConvertUsing<ExpenseConverter>();
+            CreateMap<OperationResult<IEnumerable<Expense>>, SearchExpensesResponseModel>()
+                .ConvertUsing<SearchExpensesResponseConverter>();
 
-            CreateMap<OperationResult<Expense>, ExpenseResponseModel>()
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ExpenseResponseResolver>())
-                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
-                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
+            CreateMap<OperationResult<Expense>, DescribeExpenseResponseModel>()
+                .ConvertUsing<DescribeExpenseResponseConverter>();
 
-            CreateMap<OperationResult<IEnumerable<Expense>>, ExpensesResponseModel>()
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ExpenseResponseResolver>())
-                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
-                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
+            CreateMap<ExpenseRequestModel, Expense>()
+                .ConvertUsing<ExpenseRequestConverter>();
+
+            //CreateMap<Expense, ExpenseModel>().ConvertUsing<ExpenseConverter>();
+
+            //CreateMap<OperationResult<Expense>, ExpenseResponseModel>()
+            //    .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
+            //    .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ExpenseResponseResolver>())
+            //    .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+            //    .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
+
+            //CreateMap<OperationResult<IEnumerable<Expense>>, ExpensesResponseModel>()
+            //    .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
+            //    .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ExpenseResponseResolver>())
+            //    .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
+            //    .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
         }
     }
 }

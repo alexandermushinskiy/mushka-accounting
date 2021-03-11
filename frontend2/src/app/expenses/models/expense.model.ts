@@ -1,6 +1,6 @@
-import { PaymentMethod } from '../enums/payment-method.enum';
+import { PaymentMethod } from '../../shared/enums/payment-method.enum';
 import { ExpenseCategory } from '../enums/expense-category.enum';
-import { expenceCategory } from '../constants/expence-category.const';
+import { expenceCategory } from '../../shared/constants/expence-category.const';
 
 export class Expense {
   id: string;

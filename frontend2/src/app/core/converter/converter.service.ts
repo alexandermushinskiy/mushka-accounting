@@ -19,7 +19,7 @@ import { SelectProduct } from '../../shared/models/select-product.model';
 import { Exhibition } from '../../shared/models/exhibition.model';
 import { ExhibitionProduct } from '../../shared/models/exhibition-product.model';
 import { ExhibitionList } from '../../shared/models/exhibition-list.model';
-import { Expense } from '../../shared/models/expense.model';
+import { Expense } from '../../expenses/models/expense.model';
 import { SupplyList } from '../../shared/models/supply-list.model';
 import { ProductList } from '../../shared/models/product-list.model';
 import { CorporateOrderList } from '../../shared/models/corporate-order-list.model';

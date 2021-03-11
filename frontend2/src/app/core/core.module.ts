@@ -6,14 +6,11 @@ import { AppLoaderService } from './app-loader/app-loader.service';
 import { SidebarMenuStateService } from './sidebar-menu-state/sidebar-menu-state.service';
 // import { NotificationsService } from './notifications/notifications.service';
 // import { UserNotificationsService } from './user-notifications/user-notifications.service';
-import { CurrentUserService } from './api/current-user.service';
 import { ProductsServce } from './api/products.service';
 import { ConverterService } from './converter/converter.service';
 import { DatetimeService } from './datetime/datetime.service';
 import { ExhibitionsService } from './api/exhibitions.service';
-import { ExpensesService } from './api/expenses.service';
 import { AnalyticsService } from './api/analytics.service';
-import { CustomersService } from './api/customers.service';
 import { NotificationsService } from './notifications/notifications.service';
 import { LanguageService } from './language/language.service';
 
@@ -27,14 +24,11 @@ import { LanguageService } from './language/language.service';
     SidebarMenuStateService,
     NotificationsService,
     // UserNotificationsService,
-    CurrentUserService,
     ProductsServce,
     ConverterService,
     DatetimeService,
     ExhibitionsService,
-    ExpensesService,
     AnalyticsService,
-    CustomersService,
     LanguageService
   ],
   declarations: [],

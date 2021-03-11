@@ -1,7 +1,7 @@
 import { FiltersBase } from './filter-base';
 import { DateRange } from '../models/date-range.model';
-import { Expense } from '../models/expense.model';
-import { ExpenseCategory } from '../enums/expense-category.enum';
+import { Expense } from '../../expenses/models/expense.model';
+import { ExpenseCategory } from '../../expenses/enums/expense-category.enum';
 
 export class ExpenseListFilter extends FiltersBase {
   constructor(private searchKey: string,

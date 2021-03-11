@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { UserData } from '../../shared/models/user-data.model';
+import { UserData } from '../../../shared/models/user-data.model';
 
-@Injectable()
-export class CurrentUserService {
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiCurrentUserService {
   currentUser: UserData = this.getDummyUser();
 
   private getDummyUser(): UserData {

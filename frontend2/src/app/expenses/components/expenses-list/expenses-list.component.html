@@ -74,7 +74,7 @@
   <ngx-datatable-column [width]="80" [canAutoResize]="false" [resizeable]="false">
     <ng-template ngx-datatable-cell-template let-expanded="expanded" let-row="row" let-rowIndex="rowIndex">
       <span class="grid-buttons">
-        <a [routerLink]="[row.id]"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+        <a [routerLink]="[row.id, 'edit']"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
         <a [routerLink]="" (click)="delete(row)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
       </span>
     </ng-template>
@@ -82,22 +82,14 @@
   
   <ngx-datatable-footer class="p-0">
     <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize" let-curPage="curPage" class="p-0">
-      <mshk-datatable-footer [loadingIndicator]="loadingIndicator"
-                            [datatable]="datatable"
-                            [total]="total"
-                            [currentPage]="curPage"
-                            [rowCount]="rowCount"
-                            [pageSize]="pageSize">
+      <mshk-datatable-footer
+        [loadingIndicator]="loadingIndicator"
+        [datatable]="datatable"
+        [total]="total"
+        [currentPage]="curPage"
+        [rowCount]="rowCount"
+        [pageSize]="pageSize">
       </mshk-datatable-footer>
     </ng-template>
   </ngx-datatable-footer>
 </ngx-datatable>
-
-<ng-template #confirmRemoveTmpl>
-  <mshk-confirmation
-            [confirmButtonText]="'button.remove'"
-            [plainText]="'expenses.areYouSureToDeleteExpense' | translate: {supplier: expenseToDelete.supplierName, date: (expenseToDelete.createdOn | format)}"
-            (onClose)="closeModal()"
-            (onConfirm)="confirmDelete()">
-  </mshk-confirmation>
-</ng-template>

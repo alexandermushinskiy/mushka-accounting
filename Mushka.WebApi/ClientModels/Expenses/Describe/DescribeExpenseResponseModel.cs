@@ -1,9 +1,9 @@
 ﻿using System;
 using Mushka.Domain.Entities;
 
-namespace Mushka.WebApi.ClientModels.Expenses
+namespace Mushka.WebApi.ClientModels.Expenses.Describe
 {
-    public class ExpenseModel
+    public class DescribeExpenseResponseModel
     {
         public Guid Id { get; set; }
 

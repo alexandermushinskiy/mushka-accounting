@@ -4,7 +4,7 @@ using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Expenses;
 using Mushka.WebApi.Extensions;
 
-namespace Mushka.WebApi.Resolvers
+namespace Mushka.WebApi.Resolvers.Expenses
 {
     public class ExpenseRequestConverter : ITypeConverter<ExpenseRequestModel, Expense>
     {

@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { ExpenseCategory } from '../../../../shared/enums/expense-category.enum';
+import { ExpenseCategory } from '../../enums/expense-category.enum';
 
 @Component({
   selector: 'mshk-select-category',

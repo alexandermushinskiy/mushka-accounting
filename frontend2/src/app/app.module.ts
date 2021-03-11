@@ -36,7 +36,6 @@ import { DialogsModule } from './shared/widgets/dialogs/dialogs.module';
     SuppliersModule,
     ExhibitionsModule,
     ExpensesModule,
-
     DialogsModule
   ],
   providers: [],
