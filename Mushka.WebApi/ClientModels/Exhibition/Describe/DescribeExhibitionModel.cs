@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using Mushka.Domain.Entities;
 
-namespace Mushka.WebApi.ClientModels.Exhibition
+namespace Mushka.WebApi.ClientModels.Exhibition.Describe
 {
-    public class ExhibitionModel
+    public class DescribeExhibitionModel
     {
         public Guid Id { get; set; }
 
@@ -31,7 +30,5 @@ namespace Mushka.WebApi.ClientModels.Exhibition
         public decimal Profit { get; set; }
 
         public string Notes { get; set; }
-
-        public IEnumerable<ExhibitionProductModel> Products { get; set; }
     }
 }

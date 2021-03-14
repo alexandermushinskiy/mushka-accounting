@@ -22,6 +22,8 @@ import { DialogsModule } from '../shared/widgets/dialogs/dialogs.module';
     SelectCategoryComponent,
     ExpensesComponent
   ],
-  exports: []
+  exports: [
+    ExpensesComponent
+  ]
 })
 export class ExpensesModule { }

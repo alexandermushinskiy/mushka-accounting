@@ -6,7 +6,7 @@ using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Exhibition;
 using Mushka.WebApi.Extensions;
 
-namespace Mushka.WebApi.Resolvers
+namespace Mushka.WebApi.Resolvers.Exhibitions
 {
     public class ExhibitionRequestConverter : ITypeConverter<ExhibitionRequestModel, Exhibition>
     {

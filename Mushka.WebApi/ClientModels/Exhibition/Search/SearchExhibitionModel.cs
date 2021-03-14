@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Mushka.WebApi.ClientModels.Exhibition
+namespace Mushka.WebApi.ClientModels.Exhibition.Search
 {
-    public class ExhibitionsListModel
+    public class SearchExhibitionModel
     {
         public Guid Id { get; set; }
 

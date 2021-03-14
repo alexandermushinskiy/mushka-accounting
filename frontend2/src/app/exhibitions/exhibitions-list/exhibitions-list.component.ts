@@ -1,25 +1,29 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ExhibitionList } from '../../shared/models/exhibition-list.model';
-import { ExhibitionsService } from '../../core/api/exhibitions.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { DateRange } from '../../shared/models/date-range.model';
 import { ExhibitionListFilter } from '../../shared/filters/exhibition-list.filter';
+import { ApiExhibitionsService } from '../../api/exhibitions/services/api-exhibitions.services';
+import { ItemsList } from '../../shared/interfaces/items-list.interface';
+import { DialogsService } from '../../shared/widgets/dialogs/services/dialogs.service';
+import { I18N } from '../constants/i18n.const';
+import { LanguageService } from '../../core/language/language.service';
+import { DatetimeService } from '../../core/datetime/datetime.service';
+import { mergeMap } from 'rxjs/operators';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'mshk-exhibitions-list',
   templateUrl: './exhibitions-list.component.html',
   styleUrls: ['./exhibitions-list.component.scss']
 })
-export class ExhibitionsListComponent implements OnInit {
-  @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
+export class ExhibitionsListComponent implements OnInit, OnDestroy {
   exhibitions: ExhibitionList[];
   shownExhibitions: ExhibitionList[];
   loadingIndicator = false;
   total = 0;
   shown = 0;
-  exhibitionToDelete: ExhibitionList;
   searchKey: string;
   dateRange: DateRange;
   sorts = [
@@ -27,20 +31,18 @@ export class ExhibitionsListComponent implements OnInit {
     { prop: 'name', dir: null }
   ];
 
-  private modalRef: NgbModalRef;
-  private readonly modalConfig: NgbModalOptions = {
-    windowClass: 'exhibition-modal',
-    backdrop: 'static',
-    size: 'sm'
-  };
-
-  constructor(private modalService: NgbModal,
-              private exhibitionsService: ExhibitionsService,
+  constructor(private dialogService: DialogsService,
+              private languageService: LanguageService,
+              private datetimeService: DatetimeService,
+              private apiExhibitionsService: ApiExhibitionsService,
               private notificationsService: NotificationsService) {
   }
 
   ngOnInit() {
     this.loadExhibitions();
+  }
+
+  ngOnDestroy(): void {
   }
 
   onActive(event: any) {
@@ -61,27 +63,33 @@ export class ExhibitionsListComponent implements OnInit {
   }
 
   delete(exhibition: ExhibitionList) {
-    setTimeout(() => {
-      this.exhibitionToDelete = exhibition;
-      this.modalRef = this.modalService.open(this.confirmRemoveTmpl, this.modalConfig);
+    const { title, message, cancelLabel, confirmLabel } = I18N.dialogs.deleteExhibition;
+    const dialog = this.dialogService.openConfirmDialog({
+      title,
+      message: this.languageService.translate(message, {
+        name: exhibition.name,
+        fromDate: this.datetimeService.convertToFormat(exhibition.fromDate),
+        toDate: this.datetimeService.convertToFormat(exhibition.toDate)
+      }),
+      cancelLabel,
+      confirmLabel
     });
-  }
 
-  confirmDelete() {
-    this.loadingIndicator = true;
-    this.closeModal();
-
-    this.exhibitionsService.delete(this.exhibitionToDelete.id)
+    dialog.confirm$
+      .pipe(
+        mergeMap(() => {
+          dialog.isLoading = true;
+          return this.apiExhibitionsService.deleteExhibition$(exhibition.id);
+        }),
+        untilDestroyed(this)
+      )
       .subscribe(
-        () => this.onDeleteSuccess(),
-        (error: string) => this.onDeleteFailed(error)
+        () => {
+          dialog.close();
+          this.onDeleteSuccess();
+        },
+        () => this.onDeleteFailed()
       );
-  }
-
-  closeModal() {
-    if (this.modalRef) {
-      this.modalRef.close();
-    }
   }
 
   private filterExhibitions() {
@@ -93,30 +101,28 @@ export class ExhibitionsListComponent implements OnInit {
   }
 
   private onDeleteSuccess() {
-    this.notificationsService.success('exhibitions.exhibitionDeleted');
-    this.exhibitionToDelete = null;
+    this.notificationsService.success(I18N.messages.exhibitionDeleted);
     this.loadExhibitions();
   }
 
-  private onDeleteFailed(error: string) {
+  private onDeleteFailed() {
     this.loadingIndicator = false;
-    this.exhibitionToDelete = null;
-    this.notificationsService.error('exhibitions.errorDeletingExhibition');
+    this.notificationsService.error(I18N.errors.deleteExhibitionError);
   }
 
   private loadExhibitions() {
     this.loadingIndicator = true;
 
-    this.exhibitionsService.getAll()
+    this.apiExhibitionsService.searchExhibitions$()
       .subscribe(
-        (res: ExhibitionList[]) => this.onLoadSuccess(res),
+        (res: ItemsList<ExhibitionList>) => this.onLoadSuccess(res),
         () => this.onLoadOrdersFailed()
       );
   }
 
-  private onLoadSuccess(exhibitions: ExhibitionList[]) {
-    this.exhibitions = exhibitions;
-    this.shownExhibitions = exhibitions;
+  private onLoadSuccess(exhibitions: ItemsList<ExhibitionList>) {
+    this.exhibitions = exhibitions.items;
+    this.shownExhibitions = exhibitions.items;
 
     this.total = exhibitions.length;
     this.shown = exhibitions.length;
@@ -126,6 +132,6 @@ export class ExhibitionsListComponent implements OnInit {
 
   private onLoadOrdersFailed() {
     this.loadingIndicator = false;
-    this.notificationsService.error('exhibitions.errorLoadingExhibitions');
+    this.notificationsService.error(I18N.errors.loadExhibitionsError);
   }
 }

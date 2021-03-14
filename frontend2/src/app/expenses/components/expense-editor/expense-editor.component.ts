@@ -9,7 +9,7 @@ import { Expense } from '../../models/expense.model';
 import { ApiExpensesService } from '../../../api/expenses/services/api-expenses.service';
 
 @Component({
-  selector: 'mshk-expense',
+  selector: 'mshk-expense-editor',
   templateUrl: './expense-editor.component.html',
   styleUrls: ['./expense-editor.component.scss']
 })

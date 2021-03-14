@@ -74,7 +74,7 @@
   <ngx-datatable-column [width]="80" [canAutoResize]="false" [resizeable]="false">
     <ng-template ngx-datatable-cell-template let-expanded="expanded" let-row="row" let-rowIndex="rowIndex">
       <span class="grid-buttons">
-        <a [routerLink]="[row.id, 'edit']"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+        <a [routerLink]="[row.id, 'editor']"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
         <a [routerLink]="" (click)="delete(row)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
       </span>
     </ng-template>

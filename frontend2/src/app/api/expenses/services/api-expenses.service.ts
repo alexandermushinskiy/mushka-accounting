@@ -50,8 +50,8 @@ export class ApiExpensesService {
       );
   }
 
-  deleteExpense$(expenseId: string): Observable<any> {
-    return this.http.delete(`${this.endPoint}/${expenseId}`)
+  deleteExpense$(expenseId: string): Observable<void> {
+    return this.http.delete<void>(`${this.endPoint}/${expenseId}`)
       .pipe(
         catchError((res: any) => throwError(res.error.messages))
       );

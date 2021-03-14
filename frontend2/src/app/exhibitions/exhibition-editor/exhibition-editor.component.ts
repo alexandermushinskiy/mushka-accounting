@@ -5,18 +5,19 @@ import { forkJoin } from 'rxjs';
 
 import { SelectProduct } from '../../shared/models/select-product.model';
 import { ProductsServce } from '../../core/api/products.service';
-import { ExhibitionsService } from '../../core/api/exhibitions.service';
 import { DatetimeService } from '../../core/datetime/datetime.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
 import { Exhibition } from '../../shared/models/exhibition.model';
 import { ExhibitionProduct } from '../../shared/models/exhibition-product.model';
+import { ApiExhibitionsService } from '../../api/exhibitions/services/api-exhibitions.services';
+import { I18N } from '../constants/i18n.const';
 
 @Component({
-  selector: 'mshk-exhibition',
-  templateUrl: './exhibition.component.html',
-  styleUrls: ['./exhibition.component.scss']
+  selector: 'mshk-exhibition-editor',
+  templateUrl: './exhibition-editor.component.html',
+  styleUrls: ['./exhibition-editor.component.scss']
 })
-export class ExhibitionComponent implements OnInit {
+export class ExhibitionEditorComponent implements OnInit {
   exhibitionForm: FormGroup;
   exhibitionId: string;
   isEdit = false;
@@ -33,10 +34,10 @@ export class ExhibitionComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private productsService: ProductsServce,
-              private exhibitionsService: ExhibitionsService,
+              private apiExhibitionsService: ApiExhibitionsService,
               private datetimeService: DatetimeService,
               private notificationsService: NotificationsService) {
-}
+  }
 
   ngOnInit() {
     this.readRouteParams();
@@ -80,24 +81,24 @@ export class ExhibitionComponent implements OnInit {
     const exhibition = this.createExhibitionModel(this.exhibitionForm.getRawValue());
 
     (this.isEdit
-      ? this.exhibitionsService.update(this.exhibitionId, exhibition)
-      : this.exhibitionsService.create(exhibition))
+      ? this.apiExhibitionsService.updateExhibition$(this.exhibitionId, exhibition)
+      : this.apiExhibitionsService.createExhibition$(exhibition))
       .subscribe(
         () => this.onSaveSuccess(),
-        (errors: string[]) => this.onSaveFailed(errors)
+        () => this.onSaveFailed()
       );
   }
 
   private onSaveSuccess() {
     this.isLoading = false;
-    this.notificationsService.success(this.isEdit ? 'exhibitions.exhibitionUpdated' : 'exhibitions.exhibitionAdded');
+    this.notificationsService.success(this.isEdit ? I18N.messages.exhibitionUpdated : I18N.messages.exhibitionAdded);
 
     this.router.navigate(['/exhibitions']);
   }
 
-  private onSaveFailed(errors: string[]) {
+  private onSaveFailed() {
     this.isLoading = false;
-    this.notificationsService.error('exhibitions.saveExhibitionError');
+    this.notificationsService.error(I18N.errors.saveExhibitionError);
   }
 
   private createExhibitionModel(formRawValue: any): Exhibition {
@@ -146,7 +147,7 @@ export class ExhibitionComponent implements OnInit {
 
     forkJoin(
       this.productsService.getForSale(),
-      this.exhibitionsService.getById(this.exhibitionId)
+      this.apiExhibitionsService.describeExhibition$(this.exhibitionId)
     ).subscribe(
       ([products, exhibition]) => {
         this.productsList = products;
@@ -162,7 +163,7 @@ export class ExhibitionComponent implements OnInit {
 
     forkJoin(
       this.productsService.getForSale(),
-      this.exhibitionsService.getDefaultProducts()
+      this.apiExhibitionsService.getDefaultExhibitionProducts$()
     ).subscribe(
       ([products, defaultProducts]) => {
         this.productsList = products;

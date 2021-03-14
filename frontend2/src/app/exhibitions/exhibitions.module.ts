@@ -3,7 +3,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
 import { ExhibitionsListComponent } from './exhibitions-list/exhibitions-list.component';
-import { ExhibitionComponent } from './exhibition/exhibition.component';
+import { ExhibitionEditorComponent } from './exhibition-editor/exhibition-editor.component';
+import { ExhibitionsComponent } from './exhibitions.component';
 
 @NgModule({
   imports: [
@@ -12,8 +13,11 @@ import { ExhibitionComponent } from './exhibition/exhibition.component';
   ],
   declarations: [
     ExhibitionsListComponent,
-    ExhibitionComponent
+    ExhibitionEditorComponent,
+    ExhibitionsComponent
   ],
-  exports: []
+  exports: [
+    ExhibitionsComponent
+  ]
 })
 export class ExhibitionsModule { }

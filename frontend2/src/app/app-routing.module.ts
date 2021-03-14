@@ -15,8 +15,9 @@ import { SupplierComponent } from './suppliers/supplier/supplier.component';
 import { ExpensesListComponent } from './expenses/components/expenses-list/expenses-list.component';
 import { ExpenseEditorComponent } from './expenses/components/expense-editor/expense-editor.component';
 import { ExhibitionsListComponent } from './exhibitions/exhibitions-list/exhibitions-list.component';
-import { ExhibitionComponent } from './exhibitions/exhibition/exhibition.component';
+import { ExhibitionEditorComponent } from './exhibitions/exhibition-editor/exhibition-editor.component';
 import { ExpensesComponent } from './expenses/expenses.component';
+import { ExhibitionsComponent } from './exhibitions/exhibitions.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -48,14 +49,18 @@ const routes: Routes = [
     children: [
       { path: '', component: ExpensesListComponent, pathMatch: 'full' },
       { path: 'new', component: ExpenseEditorComponent },
-      { path: ':id/edit', component: ExpenseEditorComponent }
+      { path: ':id/editor', component: ExpenseEditorComponent }
     ]
   },
-  { path: 'exhibitions', children: [
-    { path: '', component: ExhibitionsListComponent, pathMatch: 'full' },
-    { path: 'new', component: ExhibitionComponent, pathMatch: 'full' },
-    { path: ':id', component: ExhibitionComponent, pathMatch: 'full' }
-  ]},
+  {
+    path: 'exhibitions',
+    component: ExhibitionsComponent,
+    children: [
+      { path: '', component: ExhibitionsListComponent, pathMatch: 'full' },
+      { path: 'new', component: ExhibitionEditorComponent },
+      { path: ':id/editor', component: ExhibitionEditorComponent }
+    ]
+  },
   { path: '**', redirectTo: 'dashboard' }
 ];
 

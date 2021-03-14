@@ -19,7 +19,7 @@ namespace Mushka.Tests.Service.Services
     public class ExhibitionServiceTest : ServiceTestBase
     {
         private const string CategoryName = Component.Service + nameof(ExhibitionService);
-        private const string GetAllAsyncMethodName = nameof(ExhibitionService.GetAllAsync) + ". ";
+        private const string SearchAsyncMethodName = nameof(ExhibitionService.SearchAsync) + ". ";
         private const string GetByIdAsyncMethodName = nameof(ExhibitionService.GetByIdAsync) + ". ";
         private const string AddAsyncMethodName = nameof(ExhibitionService.AddAsync) + ". ";
         private const string UpdateAsyncMethodName = nameof(ExhibitionService.UpdateAsync) + ". ";
@@ -64,28 +64,28 @@ namespace Mushka.Tests.Service.Services
         }
 
         [Category(CategoryName)]
-        [Fact(DisplayName = GetAllAsyncMethodName)]
-        public async Task GetAllAsyncTest()
+        [Fact(DisplayName = SearchAsyncMethodName)]
+        public async Task SearchAsyncTest()
         {
             var exhibitions = new[] { CreateExhibition(new[] { CreateExhibitionProduct(10) }) };
 
             exhibitionRepositoryMock
                 .SetupAsync(repo => repo.GetAllAsync(default(CancellationToken)), exhibitions);
 
-            var actual = await exhibitionService.GetAllAsync();
+            var actual = await exhibitionService.SearchAsync();
 
             var expected = CreateValidValidationResponse(exhibitions, ExhibitionsRetrievedMessage);
             actual.Should().BeEquivalentTo(expected);
         }
 
         [Category(CategoryName)]
-        [Fact(DisplayName = GetAllAsyncMethodName + "No exhibitions found")]
-        public async Task GetAllAsyncNoOrdersFoundTest()
+        [Fact(DisplayName = SearchAsyncMethodName + "No exhibitions found")]
+        public async Task SearchAsyncNoOrdersFoundTest()
         {
             exhibitionRepositoryMock
                 .SetupAsync(repo => repo.GetAllAsync(default(CancellationToken)), Enumerable.Empty<Exhibition>());
 
-            var actual = await exhibitionService.GetAllAsync();
+            var actual = await exhibitionService.SearchAsync();
 
             var expected = CreateValidValidationResponse(Enumerable.Empty<Exhibition>(), NoExhibitionsFoundMessage);
             actual.Should().BeEquivalentTo(expected);

@@ -31,7 +31,7 @@ namespace Mushka.Service.Services
             productRepository = storage.GetRepository<IProductRepository>();
         }
 
-        public async Task<OperationResult<IEnumerable<Exhibition>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult<IEnumerable<Exhibition>>> SearchAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<Exhibition> exhibitions = (await exhibitionRepository.GetAllAsync(cancellationToken)).ToList();
 

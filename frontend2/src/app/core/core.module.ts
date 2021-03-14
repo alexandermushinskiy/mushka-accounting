@@ -9,7 +9,6 @@ import { SidebarMenuStateService } from './sidebar-menu-state/sidebar-menu-state
 import { ProductsServce } from './api/products.service';
 import { ConverterService } from './converter/converter.service';
 import { DatetimeService } from './datetime/datetime.service';
-import { ExhibitionsService } from './api/exhibitions.service';
 import { AnalyticsService } from './api/analytics.service';
 import { NotificationsService } from './notifications/notifications.service';
 import { LanguageService } from './language/language.service';
@@ -27,7 +26,6 @@ import { LanguageService } from './language/language.service';
     ProductsServce,
     ConverterService,
     DatetimeService,
-    ExhibitionsService,
     AnalyticsService,
     LanguageService
   ],

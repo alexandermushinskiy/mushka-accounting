@@ -11,6 +11,9 @@ using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Extensibility.Services;
 using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Exhibition;
+using Mushka.WebApi.ClientModels.Exhibition.Describe;
+using Mushka.WebApi.ClientModels.Exhibition.GetDefaultProducts;
+using Mushka.WebApi.ClientModels.Exhibition.Search;
 using Mushka.WebApi.Extensibility.Providers;
 
 namespace Mushka.WebApi.Controllers
@@ -33,20 +36,20 @@ namespace Mushka.WebApi.Controllers
             this.defaultProductsProvider = defaultProductsProvider;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpPost("search")]
+        public async Task<IActionResult> Search()
         {
-            var exhibitionsResponse = await exhibitionService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<IEnumerable<Exhibition>>, ExhibitionsListResponseModel>(exhibitionsResponse);
+            var exhibitionsResponse = await exhibitionService.SearchAsync(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<Exhibition>>, SearchExhibitionsResponseModel>(exhibitionsResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
 
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetById(Guid id)
+        [HttpGet("{id:guid}/describe")]
+        public async Task<IActionResult> Describe(Guid id)
         {
             var exhibitionResponse = await exhibitionService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Exhibition>, ExhibitionResponseModel>(exhibitionResponse);
+            var clientResponse = mapper.Map<OperationResult<Exhibition>, DescribeExhibitionResponseModel>(exhibitionResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -55,29 +58,29 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetDefaultProducts()
         {
             var productsResponse = await defaultProductsProvider.GetExhibitionProducts(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<IEnumerable<ExhibitionProduct>>, ExhibitionProductsResponseModel>(productsResponse);
+            var clientResponse = mapper.Map<OperationResult<IEnumerable<ExhibitionProduct>>, GetDefaultExhibitionProductsResponseModel>(productsResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
         
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]ExhibitionRequestModel exhibitionRequest)
+        public async Task<IActionResult> Post([FromBody] ExhibitionRequestModel exhibitionRequest)
         {
             var exhibition = mapper.Map<ExhibitionRequestModel, Exhibition>(exhibitionRequest);
 
             var exhibitionResponse = await exhibitionService.AddAsync(exhibition, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Exhibition>, ExhibitionResponseModel>(exhibitionResponse);
+            var clientResponse = mapper.Map<OperationResult<Exhibition>, EmptyResponseModel>(exhibitionResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody]ExhibitionRequestModel exhibitionRequest)
+        public async Task<IActionResult> Put(Guid id, [FromBody] ExhibitionRequestModel exhibitionRequest)
         {
             var exhibition = mapper.Map<ExhibitionRequestModel, Exhibition>(exhibitionRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var exhibitionResponse = await exhibitionService.UpdateAsync(exhibition, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Exhibition>, ExhibitionResponseModel>(exhibitionResponse);
+            var clientResponse = mapper.Map<OperationResult<Exhibition>, EmptyResponseModel>(exhibitionResponse);
 
             return actionResultProvider.Get(clientResponse);
         }

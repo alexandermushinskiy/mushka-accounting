@@ -8,6 +8,6 @@ namespace Mushka.Service.Extensibility.Services
 {
     public interface IExhibitionService : IServiceBase<Exhibition>
     {
-        Task<OperationResult<IEnumerable<Exhibition>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<OperationResult<IEnumerable<Exhibition>>> SearchAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }
