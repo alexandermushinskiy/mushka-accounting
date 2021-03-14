@@ -2,22 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ukrRegions } from '../../shared/constants/ukr-regions.const';
-import { ComponentCanDeactivate } from '../../shared/hooks/component-can-deactivate.component';
-import { DatetimeService } from '../../core/datetime/datetime.service';
-import { NotificationsService } from '../../core/notifications/notifications.service';
-import { CorporateOrderProduct } from '../../shared/models/corporate-order-product.model';
-import { uniqueOrderNumber } from '../../shared/validators/order-number.validator';
-import { LanguageService } from '../../core/language/language.service';
-import { CorporateOrder } from '../../shared/models/corporate-order.model';
-import { ApiCorporateOrdersService } from '../../api/corporate-orders/services/api-corporate-orders.service';
+import { ukrRegions } from '../../../shared/constants/ukr-regions.const';
+import { ComponentCanDeactivate } from '../../../shared/hooks/component-can-deactivate.component';
+import { DatetimeService } from '../../../core/datetime/datetime.service';
+import { NotificationsService } from '../../../core/notifications/notifications.service';
+import { CorporateOrderProduct } from '../../../shared/models/corporate-order-product.model';
+import { uniqueOrderNumber } from '../../../shared/validators/order-number.validator';
+import { LanguageService } from '../../../core/language/language.service';
+import { CorporateOrder } from '../../../shared/models/corporate-order.model';
+import { ApiCorporateOrdersService } from '../../../api/corporate-orders/services/api-corporate-orders.service';
 
 @Component({
-  selector: 'mshk-corporate-order',
-  templateUrl: './corporate-order.component.html',
-  styleUrls: ['./corporate-order.component.scss']
+  selector: 'mshk-corporate-order-editor',
+  templateUrl: './corporate-order-editor.component.html',
+  styleUrls: ['./corporate-order-editor.component.scss']
 })
-export class CorporateOrderComponent extends ComponentCanDeactivate implements OnInit {
+export class CorporateOrderEditorComponent extends ComponentCanDeactivate implements OnInit {
   orderForm: FormGroup;
   isEdit = false;
   isLoading = false;

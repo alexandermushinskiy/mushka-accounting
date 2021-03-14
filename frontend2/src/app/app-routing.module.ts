@@ -5,8 +5,8 @@ import { HandleUnsavedDataGuard } from './shared/guards/handle-unsaved-data.guar
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { OrdersListComponent } from './orders/components/orders-list/orders-list.component';
 import { OrderEditorComponent } from './orders/components/order-editor/order-editor.component';
-import { CorporateOrdersListComponent } from './corporate-orders/corporate-orders-list/corporate-orders-list.component';
-import { CorporateOrderComponent } from './corporate-orders/corporate-order/corporate-order.component';
+import { CorporateOrdersListComponent } from './corporate-orders/components/corporate-orders-list/corporate-orders-list.component';
+import { CorporateOrderEditorComponent } from './corporate-orders/components/corporate-order-editor/corporate-order-editor.component';
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { SuppliesListComponent } from './supplies/supplies-list/supplies-list.component';
 import { SupplyComponent } from './supplies/supply/supply.component';
@@ -19,6 +19,7 @@ import { ExhibitionEditorComponent } from './exhibitions/components/exhibition-e
 import { ExpensesComponent } from './expenses/expenses.component';
 import { ExhibitionsComponent } from './exhibitions/exhibitions.component';
 import { OrdersComponent } from './orders/orders.component';
+import { CorporateOrdersComponent } from './corporate-orders/corporate-orders.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -32,11 +33,15 @@ const routes: Routes = [
       { path: ':id/editor', component: OrderEditorComponent, canDeactivate: [HandleUnsavedDataGuard] }
     ]
   },
-  { path: 'corporate-orders', children: [
-    { path: '', component: CorporateOrdersListComponent, pathMatch: 'full' },
-    { path: 'new', component: CorporateOrderComponent, pathMatch: 'full', canDeactivate: [HandleUnsavedDataGuard] },
-    { path: ':id', component: CorporateOrderComponent, pathMatch: 'full', canDeactivate: [HandleUnsavedDataGuard] }
-  ]},
+  {
+    path: 'corporate-orders',
+    component: CorporateOrdersComponent,
+    children: [
+      { path: '', component: CorporateOrdersListComponent, pathMatch: 'full' },
+      { path: 'new', component: CorporateOrderEditorComponent, canDeactivate: [HandleUnsavedDataGuard] },
+      { path: ':id/editor', component: CorporateOrderEditorComponent, canDeactivate: [HandleUnsavedDataGuard] }
+    ]
+  },
   { path: 'products', component: ProductsListComponent, pathMatch: 'full' },
   { path: 'supplies', children: [
     { path: '', component: SuppliesListComponent, pathMatch: 'full' },

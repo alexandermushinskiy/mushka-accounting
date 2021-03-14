@@ -1,20 +1,24 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NgbModalRef, NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { LocalStorage } from 'ngx-webstorage';
 
-import { CorporateOrderList } from '../../shared/models/corporate-order-list.model';
-import { DateRange } from '../../shared/models/date-range.model';
-import { NotificationsService } from '../../core/notifications/notifications.service';
-import { CorporateOrderListFilter } from '../../shared/filters/corporate-order-list.filter';
-import { ApiCorporateOrdersService } from '../../api/corporate-orders/services/api-corporate-orders.service';
-import { ItemsList } from '../../shared/interfaces/items-list.interface';
+import { CorporateOrderList } from '../../../shared/models/corporate-order-list.model';
+import { DateRange } from '../../../shared/models/date-range.model';
+import { NotificationsService } from '../../../core/notifications/notifications.service';
+import { CorporateOrderListFilter } from '../../../shared/filters/corporate-order-list.filter';
+import { ApiCorporateOrdersService } from '../../../api/corporate-orders/services/api-corporate-orders.service';
+import { ItemsList } from '../../../shared/interfaces/items-list.interface';
+import { I18N } from '../../constants/i18n.const';
+import { DialogsService } from '../../../shared/widgets/dialogs/services/dialogs.service';
+import { LanguageService } from '../../../core/language/language.service';
+import { mergeMap } from 'rxjs/operators';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'mshk-corporate-orders-list',
   templateUrl: './corporate-orders-list.component.html',
   styleUrls: ['./corporate-orders-list.component.scss']
 })
-export class CorporateOrdersListComponent implements OnInit {
+export class CorporateOrdersListComponent implements OnInit, OnDestroy {
   @ViewChild('confirmRemoveTmpl', { static: false }) confirmRemoveTmpl: ElementRef;
   @LocalStorage('corporate_orders_filter', {searchKey: null, dateRange: null}) ordersFilter: { searchKey: string, dateRange: DateRange };
 
@@ -23,27 +27,22 @@ export class CorporateOrdersListComponent implements OnInit {
   loadingIndicator = false;
   total = 0;
   shown = 0;
-  orderToDelete: CorporateOrderList;
-  modal: NgbModalRef;
   sorts = [
     { prop: 'createdOn', dir: 'desc' },
     { prop: 'companyName', dir: null }
   ];
 
-  private modalRef: NgbModalRef;
-  private readonly modalConfig: NgbModalOptions = {
-    windowClass: 'order-modal',
-    backdrop: 'static',
-    size: 'sm'
-  };
-
-  constructor(private modalService: NgbModal,
+  constructor(private dialogsService: DialogsService,
               private apiCorporateOrdersService: ApiCorporateOrdersService,
+              private languageService: LanguageService,
               private notificationsService: NotificationsService) {
   }
 
   ngOnInit() {
     this.loadOrders();
+  }
+
+  ngOnDestroy(): void {
   }
 
   onActive(event: any) {
@@ -63,39 +62,31 @@ export class CorporateOrdersListComponent implements OnInit {
   }
 
   delete(order: CorporateOrderList) {
-    setTimeout(() => {
-      this.orderToDelete = order;
-      this.modalRef = this.modalService.open(this.confirmRemoveTmpl, this.modalConfig);
+    const { title, message, cancelLabel, confirmLabel } = I18N.dialogs.deleteCorporateOrder;
+    const dialog = this.dialogsService.openConfirmDialog({
+      title,
+      message: this.languageService.translate(message, { orderNumber: order.orderNumber, orderDate: order.createdOn }),
+      cancelLabel,
+      confirmLabel
     });
-  }
 
-  confirmDelete() {
-    this.loadingIndicator = true;
-    this.closeModal();
-
-    this.apiCorporateOrdersService.deleteOrder$(this.orderToDelete.id)
-      .subscribe(
-        () => this.onDeleteSuccess(),
-        (error: string) => this.onDeleteFailed(error)
-      );
-  }
-
-  closeModal() {
-    if (this.modalRef) {
-      this.modalRef.close();
-    }
+    dialog.confirm$
+      .pipe(
+        mergeMap(() => {
+          dialog.isLoading = true;
+          return this.apiCorporateOrdersService.deleteOrder$(order.id);
+        }),
+        untilDestroyed(this)
+      )
+      .subscribe(() => {
+          dialog.close();
+          this.onDeleteSuccess();
+        });
   }
 
   private onDeleteSuccess() {
-    this.notificationsService.success('orders.orderDeletedSuccessfully');
-    this.orderToDelete = null;
+    this.notificationsService.success(I18N.messages.orderDeleted);
     this.loadOrders();
-  }
-
-  private onDeleteFailed(error: string) {
-    this.loadingIndicator = false;
-    this.orderToDelete = null;
-    this.notificationsService.error(`Ошибка при удалении заказа: ${error}.`);
   }
 
   private filterOrders() {
