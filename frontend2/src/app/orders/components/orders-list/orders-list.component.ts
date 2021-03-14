@@ -3,12 +3,12 @@ import { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 
-import { OrderList } from '../../shared/models/order-list.model';
-import { NotificationsService } from '../../core/notifications/notifications.service';
-import { OrdersFacadeService } from '../services/orders-facade.service';
-import { DialogsService } from '../../shared/widgets/dialogs/services/dialogs.service';
-import { I18N } from '../constants/i18n.const';
-import { LanguageService } from '../../core/language/language.service';
+import { OrderList } from '../../../shared/models/order-list.model';
+import { NotificationsService } from '../../../core/notifications/notifications.service';
+import { OrdersFacadeService } from '../../services/orders-facade.service';
+import { DialogsService } from '../../../shared/widgets/dialogs/services/dialogs.service';
+import { I18N } from '../../constants/i18n.const';
+import { LanguageService } from '../../../core/language/language.service';
 
 @Component({
   selector: 'mshk-orders-list',

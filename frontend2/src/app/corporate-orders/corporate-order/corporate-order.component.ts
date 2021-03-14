@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ukrRegions } from '../../orders/shared/constants/ukr-regions.const';
+import { ukrRegions } from '../../shared/constants/ukr-regions.const';
 import { ComponentCanDeactivate } from '../../shared/hooks/component-can-deactivate.component';
 import { DatetimeService } from '../../core/datetime/datetime.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';

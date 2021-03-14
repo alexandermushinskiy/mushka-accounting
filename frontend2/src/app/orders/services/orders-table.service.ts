@@ -7,7 +7,7 @@ import { NotificationsService } from '../../core/notifications/notifications.ser
 import { ItemsList } from '../../shared/interfaces/items-list.interface';
 import { OrderList } from '../../shared/models/order-list.model';
 import { I18N } from '../constants/i18n.const';
-import { OrdersSearchParams } from '../shared/interfaces/orders-search-params.interface';
+import { OrdersSearchParams } from '../interfaces/orders-search-params.interface';
 
 @Injectable({
   providedIn: 'root'

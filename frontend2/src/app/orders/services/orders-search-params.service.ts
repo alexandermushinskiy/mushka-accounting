@@ -7,7 +7,7 @@ import { TablePagination } from '../../shared/interfaces/table-pagination.interf
 import { TableSort } from '../../shared/interfaces/table-sort.interface';
 import { BetweenCriteriaFilter } from '../../shared/models/filtering/between-criteria-filter.model';
 import { LikeCriteriaFilter } from '../../shared/models/filtering/like-criteria-filter.model';
-import { OrdersFiltersSchema } from '../shared/interfaces/orders-filters-schema.interface';
+import { OrdersFiltersSchema } from '../interfaces/orders-filters-schema.interface';
 
 @Injectable({
   providedIn: 'root'

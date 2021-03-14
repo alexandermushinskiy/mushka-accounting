@@ -4,24 +4,24 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of, forkJoin } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, tap, switchMap, filter, map, finalize } from 'rxjs/operators';
 
-import { SelectProduct } from '../../shared/models/select-product.model';
-import { ukrRegions } from '../shared/constants/ukr-regions.const';
-import { ComponentCanDeactivate } from '../../shared/hooks/component-can-deactivate.component';
-import { DatetimeService } from '../../core/datetime/datetime.service';
-import { ProductsServce } from '../../core/api/products.service';
-import { OrderProduct } from '../../shared/models/order-product.model';
-import { Customer } from '../../shared/models/customer.model';
-import { Order } from '../../shared/models/order.model';
-import { uniqueOrderNumber } from '../../shared/validators/order-number.validator';
-import { OrdersFacadeService } from '../services/orders-facade.service';
-import { ApiCustomersService } from '../../api/customers/services/api-customers.service';
+import { SelectProduct } from '../../../shared/models/select-product.model';
+import { ukrRegions } from '../../../shared/constants/ukr-regions.const';
+import { ComponentCanDeactivate } from '../../../shared/hooks/component-can-deactivate.component';
+import { DatetimeService } from '../../../core/datetime/datetime.service';
+import { ProductsServce } from '../../../core/api/products.service';
+import { OrderProduct } from '../../../shared/models/order-product.model';
+import { Customer } from '../../../shared/models/customer.model';
+import { Order } from '../../../shared/models/order.model';
+import { uniqueOrderNumber } from '../../../shared/validators/order-number.validator';
+import { OrdersFacadeService } from '../../services/orders-facade.service';
+import { ApiCustomersService } from '../../../api/customers/services/api-customers.service';
 
 @Component({
-  selector: 'mshk-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.scss']
+  selector: 'mshk-order-editor',
+  templateUrl: './order-editor.component.html',
+  styleUrls: ['./order-editor.component.scss']
 })
-export class OrderComponent extends ComponentCanDeactivate implements OnInit {
+export class OrderEditorComponent extends ComponentCanDeactivate implements OnInit {
   @ViewChild('ngForm', { static: false }) ngForm: NgForm;
   orderForm: FormGroup;
   isEdit = false;

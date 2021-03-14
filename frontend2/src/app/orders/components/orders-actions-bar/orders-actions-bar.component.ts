@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { I18N } from '../constants/i18n.const';
-import { OrdersFacadeService } from '../services/orders-facade.service';
-import { DateRange } from '../../shared/models/date-range.model';
-import { TimeFrame } from '../../shared/enums/time-frame.enum';
+import { I18N } from '../../constants/i18n.const';
+import { OrdersFacadeService } from '../../services/orders-facade.service';
+import { DateRange } from '../../../shared/models/date-range.model';
+import { TimeFrame } from '../../../shared/enums/time-frame.enum';
 
 @Component({
   selector: 'mshk-orders-actions-bar',

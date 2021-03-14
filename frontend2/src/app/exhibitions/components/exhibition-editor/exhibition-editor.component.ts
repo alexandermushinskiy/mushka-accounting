@@ -3,14 +3,14 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 
-import { SelectProduct } from '../../shared/models/select-product.model';
-import { ProductsServce } from '../../core/api/products.service';
-import { DatetimeService } from '../../core/datetime/datetime.service';
-import { NotificationsService } from '../../core/notifications/notifications.service';
-import { Exhibition } from '../../shared/models/exhibition.model';
-import { ExhibitionProduct } from '../../shared/models/exhibition-product.model';
-import { ApiExhibitionsService } from '../../api/exhibitions/services/api-exhibitions.services';
-import { I18N } from '../constants/i18n.const';
+import { SelectProduct } from '../../../shared/models/select-product.model';
+import { ProductsServce } from '../../../core/api/products.service';
+import { DatetimeService } from '../../../core/datetime/datetime.service';
+import { NotificationsService } from '../../../core/notifications/notifications.service';
+import { Exhibition } from '../../../shared/models/exhibition.model';
+import { ExhibitionProduct } from '../../../shared/models/exhibition-product.model';
+import { ApiExhibitionsService } from '../../../api/exhibitions/services/api-exhibitions.services';
+import { I18N } from '../../constants/i18n.const';
 
 @Component({
   selector: 'mshk-exhibition-editor',

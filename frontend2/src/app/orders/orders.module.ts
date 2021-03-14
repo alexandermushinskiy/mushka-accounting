@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
-import { OrdersListComponent } from './orders-list/orders-list.component';
-import { OrderComponent } from './order/order.component';
-import { OrdersActionsBarComponent } from './orders-actions-bar/orders-actions-bar.component';
+import { OrdersListComponent } from './components/orders-list/orders-list.component';
+import { OrderEditorComponent } from './components/order-editor/order-editor.component';
+import { OrdersActionsBarComponent } from './components/orders-actions-bar/orders-actions-bar.component';
 import { TimeFrameModule } from '../shared/widgets/timeframe/timeframe.module';
+import { OrdersComponent } from './orders.component';
 
 @NgModule({
   imports: [
@@ -15,9 +16,12 @@ import { TimeFrameModule } from '../shared/widgets/timeframe/timeframe.module';
   ],
   declarations: [
     OrdersListComponent,
-    OrderComponent,
-    OrdersActionsBarComponent
+    OrderEditorComponent,
+    OrdersActionsBarComponent,
+    OrdersComponent
   ],
-  exports: []
+  exports: [
+    OrdersComponent
+  ]
 })
 export class OrdersModule { }

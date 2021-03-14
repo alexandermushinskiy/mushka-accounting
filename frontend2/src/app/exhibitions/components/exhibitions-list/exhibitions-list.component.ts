@@ -1,15 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { ExhibitionList } from '../../shared/models/exhibition-list.model';
-import { NotificationsService } from '../../core/notifications/notifications.service';
-import { DateRange } from '../../shared/models/date-range.model';
-import { ExhibitionListFilter } from '../../shared/filters/exhibition-list.filter';
-import { ApiExhibitionsService } from '../../api/exhibitions/services/api-exhibitions.services';
-import { ItemsList } from '../../shared/interfaces/items-list.interface';
-import { DialogsService } from '../../shared/widgets/dialogs/services/dialogs.service';
-import { I18N } from '../constants/i18n.const';
-import { LanguageService } from '../../core/language/language.service';
-import { DatetimeService } from '../../core/datetime/datetime.service';
+import { ExhibitionList } from '../../../shared/models/exhibition-list.model';
+import { NotificationsService } from '../../../core/notifications/notifications.service';
+import { DateRange } from '../../../shared/models/date-range.model';
+import { ExhibitionListFilter } from '../../../shared/filters/exhibition-list.filter';
+import { ApiExhibitionsService } from '../../../api/exhibitions/services/api-exhibitions.services';
+import { ItemsList } from '../../../shared/interfaces/items-list.interface';
+import { DialogsService } from '../../../shared/widgets/dialogs/services/dialogs.service';
+import { I18N } from '../../constants/i18n.const';
+import { LanguageService } from '../../../core/language/language.service';
+import { DatetimeService } from '../../../core/datetime/datetime.service';
 import { mergeMap } from 'rxjs/operators';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 

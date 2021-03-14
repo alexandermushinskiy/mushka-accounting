@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { environment } from '../../../../environments/environment';
-import { OrdersSearchParams } from '../../../orders/shared/interfaces/orders-search-params.interface';
+import { OrdersSearchParams } from '../../../orders/interfaces/orders-search-params.interface';
 import { ItemsList } from '../../../shared/interfaces/items-list.interface';
 import { OrderList } from '../../../shared/models/order-list.model';
 import { OrderProduct } from '../../../shared/models/order-product.model';
