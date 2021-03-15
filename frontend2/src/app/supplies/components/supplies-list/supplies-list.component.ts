@@ -3,15 +3,15 @@ import { mergeMap } from 'rxjs/operators';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { LocalStorage } from 'ngx-webstorage';
 
-import { SupplyList } from '../../shared/models/supply-list.model';
-import { NotificationsService } from '../../core/notifications/notifications.service';
-import { ProductsServce } from '../../core/api/products.service';
-import { SelectProduct } from '../../shared/models/select-product.model';
-import { ItemsWithTotalCount } from '../../shared/models/items-with-total-count.model';
-import { ApiSuppliesService } from '../../api/supplies/services/api-supplies.service';
-import { DialogsService } from '../../shared/widgets/dialogs/services/dialogs.service';
-import { I18N } from '../constants/i18n.const';
-import { LanguageService } from '../../core/language/language.service';
+import { SupplyList } from '../../../shared/models/supply-list.model';
+import { NotificationsService } from '../../../core/notifications/notifications.service';
+import { ProductsServce } from '../../../core/api/products.service';
+import { SelectProduct } from '../../../shared/models/select-product.model';
+import { ItemsWithTotalCount } from '../../../shared/models/items-with-total-count.model';
+import { ApiSuppliesService } from '../../../api/supplies/services/api-supplies.service';
+import { DialogsService } from '../../../shared/widgets/dialogs/services/dialogs.service';
+import { I18N } from '../../constants/i18n.const';
+import { LanguageService } from '../../../core/language/language.service';
 
 @Component({
   selector: 'mshk-supplies-list',

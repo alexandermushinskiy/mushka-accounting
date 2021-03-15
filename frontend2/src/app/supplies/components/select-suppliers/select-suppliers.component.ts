@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { Supplier } from '../../../../shared/models/supplier.model';
+import { Supplier } from '../../../shared/models/supplier.model';
 
 @Component({
   selector: 'mshk-select-suppliers',

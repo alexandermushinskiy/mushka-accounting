@@ -2,14 +2,14 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { LocalStorage } from 'ngx-webstorage';
 
-import { Supplier } from '../../shared/models/supplier.model';
-import { NotificationsService } from '../../core/notifications/notifications.service';
-import { SupplierListFilter } from '../../shared/filters/supplier-list.filter';
-import { ApiSuppliersService } from '../../api/suppliers/services/api-suppliers.service';
-import { ItemsList } from '../../shared/interfaces/items-list.interface';
-import { DialogsService } from '../../shared/widgets/dialogs/services/dialogs.service';
-import { I18N } from '../constants/i18n.const';
-import { LanguageService } from '../../core/language/language.service';
+import { Supplier } from '../../../shared/models/supplier.model';
+import { NotificationsService } from '../../../core/notifications/notifications.service';
+import { SupplierListFilter } from '../../../shared/filters/supplier-list.filter';
+import { ApiSuppliersService } from '../../../api/suppliers/services/api-suppliers.service';
+import { ItemsList } from '../../../shared/interfaces/items-list.interface';
+import { DialogsService } from '../../../shared/widgets/dialogs/services/dialogs.service';
+import { I18N } from '../../constants/i18n.const';
+import { LanguageService } from '../../../core/language/language.service';
 import { mergeMap } from 'rxjs/operators';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 

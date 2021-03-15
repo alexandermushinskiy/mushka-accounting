@@ -4,9 +4,10 @@ import { TypeaheadModule } from 'ngx-bootstrap';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 import { SharedModule } from '../shared/shared.module';
-import { SuppliesListComponent } from './supplies-list/supplies-list.component';
-import { SupplyComponent } from './supply/supply.component';
-import { SelectSuppliersComponent } from './shared/widgets/select-suppliers/select-suppliers.component';
+import { SuppliesListComponent } from './components/supplies-list/supplies-list.component';
+import { SupplyEditorComponent } from './components/supply-editor/supply-editor.component';
+import { SelectSuppliersComponent } from './components/select-suppliers/select-suppliers.component';
+import { SuppliesComponent } from './supplies.component';
 
 @NgModule({
   imports: [
@@ -17,11 +18,12 @@ import { SelectSuppliersComponent } from './shared/widgets/select-suppliers/sele
   ],
   declarations: [
     SuppliesListComponent,
-    SupplyComponent,
-    SelectSuppliersComponent
+    SupplyEditorComponent,
+    SelectSuppliersComponent,
+    SuppliesComponent
   ],
   exports: [
-    // SupplyComponent
+    SuppliesComponent
   ]
 })
 export class SuppliesModule {

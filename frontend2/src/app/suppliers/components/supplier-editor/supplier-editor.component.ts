@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { NotificationsService } from '../../core/notifications/notifications.service';
-import { Supplier } from '../../shared/models/supplier.model';
-import { ContactPerson } from '../../shared/models/contact-person.model';
-import { PaymentCard } from '../../shared/models/payment-card.model';
-import { ApiSuppliersService } from '../../api/suppliers/services/api-suppliers.service';
+import { NotificationsService } from '../../../core/notifications/notifications.service';
+import { Supplier } from '../../../shared/models/supplier.model';
+import { ContactPerson } from '../../../shared/models/contact-person.model';
+import { PaymentCard } from '../../../shared/models/payment-card.model';
+import { ApiSuppliersService } from '../../../api/suppliers/services/api-suppliers.service';
 
 @Component({
-  selector: 'mshk-supplier',
-  templateUrl: './supplier.component.html',
-  styleUrls: ['./supplier.component.scss']
+  selector: 'mshk-supplier-editor',
+  templateUrl: './supplier-editor.component.html',
+  styleUrls: ['./supplier-editor.component.scss']
 })
-export class SupplierComponent implements OnInit {
+export class SupplierEditorComponent implements OnInit {
   supplierForm: FormGroup;
   supplierId: string;
   isEdit = false;

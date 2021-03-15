@@ -3,21 +3,21 @@ import { FormBuilder, FormGroup, Validators, FormArray, AbstractControl } from '
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, forkJoin, of } from 'rxjs';
 
-import { NotificationsService } from '../../core/notifications/notifications.service';
-import { ProductsServce } from '../../core/api/products.service';
-import { SelectProduct } from '../../shared/models/select-product.model';
-import { Supplier } from '../../shared/models/supplier.model';
-import { Supply } from '../../shared/models/supply.model';
-import { SupplyProduct } from '../../shared/models/supply-product.model';
-import { ApiSuppliersService } from '../../api/suppliers/services/api-suppliers.service';
-import { ApiSuppliesService } from '../../api/supplies/services/api-supplies.service';
+import { NotificationsService } from '../../../core/notifications/notifications.service';
+import { ProductsServce } from '../../../core/api/products.service';
+import { SelectProduct } from '../../../shared/models/select-product.model';
+import { Supplier } from '../../../shared/models/supplier.model';
+import { Supply } from '../../../shared/models/supply.model';
+import { SupplyProduct } from '../../../shared/models/supply-product.model';
+import { ApiSuppliersService } from '../../../api/suppliers/services/api-suppliers.service';
+import { ApiSuppliesService } from '../../../api/supplies/services/api-supplies.service';
 
 @Component({
-  selector: 'mshk-supply',
-  templateUrl: './supply.component.html',
-  styleUrls: ['./supply.component.scss']
+  selector: 'mshk-supply-editor',
+  templateUrl: './supply-editor.component.html',
+  styleUrls: ['./supply-editor.component.scss']
 })
-export class SupplyComponent implements OnInit {
+export class SupplyEditorComponent implements OnInit {
   supplyForm: FormGroup;
   supplyId: string;
   isEdit = false;
