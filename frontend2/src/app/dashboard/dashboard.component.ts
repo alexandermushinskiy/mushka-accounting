@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AnalyticsService } from '../../core/api/analytics.service';
-import { DatetimeService } from '../../core/datetime/datetime.service';
-import { SoldProductsCount } from '../shared/models/sold-products-count.model';
-import { OrdersCount } from '../shared/models/orders-count.model';
-import { PopularCity } from '../shared/models/popular-city.model';
-import { PopularProduct } from '../shared/models/popular-product.model';
-import { Balance } from '../shared/models/balance.model';
-import { chartOptions } from '../shared/constants/chart-options.const';
+import { DatetimeService } from '../core/datetime/datetime.service';
+import { SoldProductsCount } from './models/sold-products-count.model';
+import { OrdersCount } from './models/orders-count.model';
+import { PopularCity } from './models/popular-city.model';
+import { PopularProduct } from './models/popular-product.model';
+import { Balance } from './models/balance.model';
+import { chartOptions } from './constants/chart-options.const';
+import { ApiAnalyticsService } from '../api/analytics/services/api-analytics.service';
 
 @Component({
   selector: 'mshk-dashboard',
@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
   soldProductsData: Array<any> = [{ data: [], label: '' }];
   soldProductsLabels: Array<string> = [];
 
-  constructor(private analyticsService: AnalyticsService,
+  constructor(private apiAnalyticsService: ApiAnalyticsService,
               private datetimeService: DatetimeService) {
   }
 
@@ -54,16 +54,16 @@ export class DashboardComponent implements OnInit {
   }
 
   private loadBalance() {
-    this.analyticsService.getBalance()
-      .subscribe((res: Balance) => {
-        this.balanceData = [res.expense, res.profit];
-        this.balanceLabels[0] = `Потратили\t\t\t: ${this.addThousandsSeparator(res.expense)}`;
-        this.balanceLabels[1] = `Заработали\t: ${this.addThousandsSeparator(res.profit)}`;
+    this.apiAnalyticsService.getBalance$()
+      .subscribe(({ expense, profit }: Balance) => {
+        this.balanceData = [expense, profit];
+        this.balanceLabels[0] = `Потратили\t\t\t: ${this.addThousandsSeparator(expense)}`;
+        this.balanceLabels[1] = `Заработали\t: ${this.addThousandsSeparator(profit)}`;
       });
   }
 
   private loadPopularProducts() {
-    this.analyticsService.getPopularProducts()
+    this.apiAnalyticsService.getPopularProducts$()
       .subscribe((res: PopularProduct[]) => {
         this.popularProductsLabels = res.map(pp => `${pp.name} (${pp.sizeName})`);
         this.popularProductsData[0].data = res.map(pp => pp.quantity);
@@ -71,7 +71,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private loadUnpopularProducts() {
-    this.analyticsService.getUnpopularProducts()
+    this.apiAnalyticsService.getUnpopularProducts$()
       .subscribe((res: PopularProduct[]) => {
         this.unpopularProductsLabels = res.map(pp => `${pp.name} (${pp.sizeName})`);
         this.unpopularProductsData[0].data = res.map(pp => pp.quantity);
@@ -79,7 +79,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private loadPopularCities() {
-    this.analyticsService.getPopularCities()
+    this.apiAnalyticsService.getPopularCities$()
       .subscribe((res: PopularCity[]) => {
         this.popularCitiesLabels = res.map(pc => pc.city);
         this.popularCitiesData[0].data = res.map(pc => pc.quantity);
@@ -87,7 +87,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private loadOrdersCount(period: number) {
-    this.analyticsService.getOrdersCount(period)
+    this.apiAnalyticsService.getOrdersCount$(period)
       .subscribe((res: OrdersCount[]) => {
         this.ordersLabels = res.map(pc => this.datetimeService.getMonthName(pc.createdOn));
         this.ordersData[0].data = res.map(pc => pc.quantity);
@@ -95,7 +95,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private loadSoldProductsCount(period: number) {
-    this.analyticsService.getSoldProductsCount(period)
+    this.apiAnalyticsService.getSoldProductsCount$(period)
       .subscribe((res: SoldProductsCount[]) => {
         this.soldProductsLabels = res.map(pc => this.datetimeService.getMonthName(pc.createdOn));
         this.soldProductsData[0].data = res.map(pc => pc.quantity);

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HandleUnsavedDataGuard } from './shared/guards/handle-unsaved-data.guard';
-import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { OrdersListComponent } from './orders/components/orders-list/orders-list.component';
 import { OrderEditorComponent } from './orders/components/order-editor/order-editor.component';
 import { CorporateOrdersListComponent } from './corporate-orders/components/corporate-orders-list/corporate-orders-list.component';
