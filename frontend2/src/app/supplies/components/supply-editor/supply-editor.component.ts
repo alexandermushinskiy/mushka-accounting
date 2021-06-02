@@ -4,13 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, forkJoin, of } from 'rxjs';
 
 import { NotificationsService } from '../../../core/notifications/notifications.service';
-import { ProductsServce } from '../../../core/api/products.service';
 import { SelectProduct } from '../../../shared/models/select-product.model';
 import { Supplier } from '../../../shared/models/supplier.model';
 import { Supply } from '../../../shared/models/supply.model';
 import { SupplyProduct } from '../../../shared/models/supply-product.model';
 import { ApiSuppliersService } from '../../../api/suppliers/services/api-suppliers.service';
 import { ApiSuppliesService } from '../../../api/supplies/services/api-supplies.service';
+import { ApiProductsService } from '../../../api/products/services/api-products.service';
 
 @Component({
   selector: 'mshk-supply-editor',
@@ -37,7 +37,7 @@ export class SupplyEditorComponent implements OnInit {
               private router: Router,
               private notificationsService: NotificationsService,
               private apiSuppliersService: ApiSuppliersService,
-              private productsService: ProductsServce,
+              private apiProductsService: ApiProductsService,
               private apiSuppliesService: ApiSuppliesService) {
   }
 
@@ -148,7 +148,7 @@ export class SupplyEditorComponent implements OnInit {
     forkJoin(
       getSupply,
       this.apiSuppliersService.searchSuppliers$(),
-      this.productsService.getForSale()
+      this.apiProductsService.getProductsForSale$()
       ).subscribe(([supply, suppliers, products]) => {
         this.suppliers = suppliers.items;
         this.productsList = products;

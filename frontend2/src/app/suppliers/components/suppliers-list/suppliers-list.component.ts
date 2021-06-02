@@ -7,7 +7,7 @@ import { NotificationsService } from '../../../core/notifications/notifications.
 import { SupplierListFilter } from '../../../shared/filters/supplier-list.filter';
 import { ApiSuppliersService } from '../../../api/suppliers/services/api-suppliers.service';
 import { ItemsList } from '../../../shared/interfaces/items-list.interface';
-import { DialogsService } from '../../../shared/widgets/dialogs/services/dialogs.service';
+import { DialogsService } from '../../../shared/components/dialogs/services/dialogs.service';
 import { I18N } from '../../constants/i18n.const';
 import { LanguageService } from '../../../core/language/language.service';
 import { mergeMap } from 'rxjs/operators';

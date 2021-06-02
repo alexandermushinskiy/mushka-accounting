@@ -1,0 +1,27 @@
+@import '../../../variables';
+
+:host {
+  display: block;
+  height: 100%;
+  padding: $padding-base $padding-base 0;
+}
+
+.products-list {
+  flex: auto;
+  position: relative;
+  margin: 16px 16px 0;
+}
+
+.area {
+  height: 100%;
+  display: flex;
+  flex: 1 1 auto;
+  flex-flow: row nowrap;
+  overflow: hidden;
+  position: relative;
+}
+
+.bar {
+  background-color: $layer1;
+  flex: none;
+}

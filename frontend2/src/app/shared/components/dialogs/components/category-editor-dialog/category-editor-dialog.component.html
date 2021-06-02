@@ -1,0 +1,40 @@
+<form [formGroup]="categoryForm" #ngForm="ngForm" class="category-form">
+  <div class="modal-header">
+    <h4 class="modal-title">{{ (isEdit ? i18n.editTitle : i18n.addTitle) | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="cancelAction()">
+      <i class="ico ico-close"></i>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="category-name">
+      <div class="field-group">
+        <label for="name" class="text-muted">{{ i18n.nameLabel | translate }}:</label>
+        <input type="text" class="form-control name" id="name" formControlName="name" autocomplete="off"
+              [ngClass]="{'not-valid': categoryForm.controls.name.invalid && ngForm.submitted}">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="field-group w-50">
+          <mshk-toggle formControlName="isAdditional" [label]="i18n.additionalProductsLabel"></mshk-toggle>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="field-group w-50">
+          <mshk-toggle formControlName="isSizeRequired" [label]="i18n.sizeRequiredLabel"></mshk-toggle>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-light btn-cancel" type="button" (click)="cancelAction()">
+      {{ i18n.cancelLabel | translate }}
+    </button>
+    <button class="btn btn-primary with-spinner" type="submit" (click)="confirmAction()">
+      <div *ngIf="isLoading" class="btn-spinner"></div>
+      {{ i18n.confirmLabel | translate }}
+    </button>
+  </div>
+</form>

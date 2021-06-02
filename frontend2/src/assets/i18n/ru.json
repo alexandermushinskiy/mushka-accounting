@@ -151,7 +151,7 @@
     "soldProducts": "Количество проданных носков"
   },
   "products": {
-    "products": "Товары",
+    "title": "Товары",
     "addCategory": "Добавить категорию",
     "editCategory": "Редактировать категории",
     "additionalProducts": "Вспомогательные товары",
@@ -177,15 +177,20 @@
     "editProductTitle": "Редактирование товара",
     "addedDate": "Дата{{value}}добавления",
     "lastDeliveryDate": "Дата послед.<br>поставки",
-    "productSaved": "Товар <b>{{name}}</b> был успешно сохранён.",
+    
     "unableLoadOrders": "При загрузке всех заказов произошла ошибка.",
     "costPrice": "Себестоимость",
     "quantity": "Количество",
     "quantityAbbr": "Кол-во",
     "price": "Цена",
-    "productWasDeleted": "Товар был успешно удалён.",
+    
     "errorWhileDeletingProduct": "При удалении товара произошла ошибка.",
-    "productNotFound": "Товар не найден"
+    "productNotFound": "Товар не найден",
+    "messages": {
+      "productAdded": "Товар <b>{{name}}</b> был успешно добавлен.",
+      "productUpdated": "Товар <b>{{name}}</b> был успешно обновлён.",
+      "productDeleted": "Товар <b>{{name}}</b> был успешно удалён."
+    }
   },
   "supplies": {
     "supplies": "Поступления",
@@ -278,5 +283,15 @@
     "polygraphy": "Полиграфия",
     "promo": "Промо",
     "other": "Другое"
+  },
+  "ui": {
+    "widgets": {
+      "selectSize": {
+        "placeholder": "Выберете размер",
+        "disabledPlaceholder": "Pазмер недоступен",
+        "notFoundText": "Размер не найден"
+      }
+    },
+    "dialogs": {}
   }
 }

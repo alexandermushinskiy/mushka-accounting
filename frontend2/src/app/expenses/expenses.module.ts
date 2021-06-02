@@ -7,7 +7,7 @@ import { ExpensesListComponent } from './components/expenses-list/expenses-list.
 import { ExpenseEditorComponent } from './components/expense-editor/expense-editor.component';
 import { SelectCategoryComponent } from './components/select-category/select-category.component';
 import { ExpensesComponent } from './expenses.component';
-import { DialogsModule } from '../shared/widgets/dialogs/dialogs.module';
+import { DialogsModule } from '../shared/components/dialogs/dialogs.module';
 
 @NgModule({
   imports: [

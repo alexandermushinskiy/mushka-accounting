@@ -16,7 +16,6 @@ import { NgxMaskModule } from 'ngx-mask';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 // import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
-import { LoadingScreenComponent } from './widgets/loading-screen/loading-screen.component';
 import { SpinnerComponent } from './widgets/spinner/spinner.component';
 import { DropdownComponent } from './widgets/dropdown/dropdown.component';
 import { ConfirmLeaveComponent } from './modals/confirm-leave/confirm-leave.component';
@@ -44,11 +43,10 @@ import { CheckboxComponent } from './widgets/checkbox/checkbox.component';
 import { SelectPaymentMethodsComponent } from './widgets/select-payment-methods/select-payment-methods.component';
 import { SelectTimeframesComponent } from './widgets/select-timeframes/select-timeframes.component';
 import { DateRangeModalComponent } from './modals/date-range-modal/date-range-modal.component';
-import { FormatPipe } from './pipes/format.pipe';
+import { DateFormatPipe } from './pipes/date-format.pipe';
 import { DatatableFilterBarComponent } from './widgets/datatable-filter-bar/datatable-filter-bar.component';
 import { DatatableBarComponent } from './widgets/datatable-bar/datatable-bar.component';
 import { ToggleComponent } from './widgets/toggle/toggle.component';
-import { SelectSizeComponent } from './widgets/select-size/select-size.component';
 // import { DatatableHeaderComponent } from './widgets/datatable/datatable-header/datatable-header.component';
 
 // import { DropdownComponent } from './widgets/dropdown/dropdown.component';
@@ -97,7 +95,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     // NgxMyDatePickerModule.forRoot()
   ],
   declarations: [
-    LoadingScreenComponent,
     SpinnerComponent,
     DropdownComponent,
     ConfirmLeaveComponent,
@@ -125,11 +122,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     SelectPaymentMethodsComponent,
     SelectTimeframesComponent,
     DateRangeModalComponent,
-    FormatPipe,
+    DateFormatPipe,
     DatatableFilterBarComponent,
     DatatableBarComponent,
     ToggleComponent,
-    SelectSizeComponent,
     NumberPipe,
     // DatatableHeaderComponent,
     // DropdownSizesComponent,
@@ -156,11 +152,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     /* Pipes */
     // DashIfEmptyPipe,
     CurrencyPipe,
-    FormatPipe,
+    DateFormatPipe,
     NumberPipe,
 
     /* Components */
-    LoadingScreenComponent,
     SpinnerComponent,
     DropdownComponent,
     ConfirmationComponent,
@@ -175,7 +170,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     DatetimepickerComponent,
     DatetimepickerWrapperComponent,
     CurrencyInputComponent,
-    SelectSizeComponent,
     ToggleComponent,
     CheckboxComponent,
     // DropdownSizesComponent,

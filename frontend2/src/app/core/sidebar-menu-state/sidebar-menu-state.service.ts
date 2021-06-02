@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class SidebarMenuStateService {
   private isMenuCollapsed$ = new BehaviorSubject<boolean>(false);
 

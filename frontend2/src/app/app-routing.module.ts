@@ -7,7 +7,7 @@ import { OrdersListComponent } from './orders/components/orders-list/orders-list
 import { OrderEditorComponent } from './orders/components/order-editor/order-editor.component';
 import { CorporateOrdersListComponent } from './corporate-orders/components/corporate-orders-list/corporate-orders-list.component';
 import { CorporateOrderEditorComponent } from './corporate-orders/components/corporate-order-editor/corporate-order-editor.component';
-import { ProductsListComponent } from './products/products-list/products-list.component';
+import { ProductsListComponent } from './products/components/products-list/products-list.component';
 import { SuppliesListComponent } from './supplies/components/supplies-list/supplies-list.component';
 import { SupplyEditorComponent } from './supplies/components/supply-editor/supply-editor.component';
 import { SuppliersListComponent } from './suppliers/components/suppliers-list/suppliers-list.component';
@@ -22,6 +22,7 @@ import { OrdersComponent } from './orders/orders.component';
 import { CorporateOrdersComponent } from './corporate-orders/corporate-orders.component';
 import { SuppliesComponent } from './supplies/supplies.component';
 import { SuppliersComponent } from './suppliers/suppliers.component';
+import { ProductsComponent } from './products/products.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -44,7 +45,13 @@ const routes: Routes = [
       { path: ':id/editor', component: CorporateOrderEditorComponent, canDeactivate: [HandleUnsavedDataGuard] }
     ]
   },
-  { path: 'products', component: ProductsListComponent, pathMatch: 'full' },
+  {
+    path: 'products',
+    component: ProductsComponent,
+    children: [
+      { path: '', component: ProductsListComponent, pathMatch: 'full' }
+    ]
+  },
   {
     path: 'supplies',
     component: SuppliesComponent,

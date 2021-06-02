@@ -33,7 +33,7 @@ namespace Mushka.Service.Services
         public async Task<OperationResult<IEnumerable<Category>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<Category> categories = (await categoryRepository.GetAllAsync(cancellationToken))
-                .OrderBy(category => category.Order)
+                .OrderByDescending(category => category.Order)
                 .ToList();
 
             return OperationResult<IEnumerable<Category>>.FromResult(categories);

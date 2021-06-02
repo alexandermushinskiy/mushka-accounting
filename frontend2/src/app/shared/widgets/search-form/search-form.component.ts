@@ -1,15 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Subject } from 'rxjs';
-import { takeUntil, debounceTime } from 'rxjs/operators';
-
-import { UnsubscriberComponent } from '../../hooks/unsubscriber.component';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'mshk-search-form',
   templateUrl: './search-form.component.html',
   styleUrls: ['./search-form.component.scss']
 })
-export class SearchFormComponent extends UnsubscriberComponent implements OnInit {
+export class SearchFormComponent implements OnInit, OnDestroy {
   @Input() placeholder = 'common.search';
   @Input() set defaultValue(value: string)  {
     this.searchValue = !!value ? value : '';
@@ -21,14 +20,18 @@ export class SearchFormComponent extends UnsubscriberComponent implements OnInit
   private searchListener: Subject<string> = new Subject<string>();
 
   constructor() {
-    super();
   }
 
   ngOnInit() {
-    this.searchListener.pipe(
-      takeUntil(this.ngUnsubscribe$),
-      debounceTime(200))
-        .subscribe((key: string) => this.onSearch.emit(key));
+    this.searchListener
+      .pipe(
+        untilDestroyed(this),
+        debounceTime(200)
+      )
+      .subscribe((key: string) => this.onSearch.emit(key));
+  }
+
+  ngOnDestroy(): void {
   }
 
   onValueChange(value: string) {

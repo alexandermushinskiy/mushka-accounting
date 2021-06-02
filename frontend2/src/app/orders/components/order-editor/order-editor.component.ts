@@ -8,13 +8,13 @@ import { SelectProduct } from '../../../shared/models/select-product.model';
 import { ukrRegions } from '../../../shared/constants/ukr-regions.const';
 import { ComponentCanDeactivate } from '../../../shared/hooks/component-can-deactivate.component';
 import { DatetimeService } from '../../../core/datetime/datetime.service';
-import { ProductsServce } from '../../../core/api/products.service';
 import { OrderProduct } from '../../../shared/models/order-product.model';
 import { Customer } from '../../../shared/models/customer.model';
 import { Order } from '../../../shared/models/order.model';
 import { uniqueOrderNumber } from '../../../shared/validators/order-number.validator';
 import { OrdersFacadeService } from '../../services/orders-facade.service';
 import { ApiCustomersService } from '../../../api/customers/services/api-customers.service';
+import { ApiProductsService } from '../../../api/products/services/api-products.service';
 
 @Component({
   selector: 'mshk-order-editor',
@@ -51,7 +51,7 @@ export class OrderEditorComponent extends ComponentCanDeactivate implements OnIn
               private router: Router,
               private ordersFacadeService: OrdersFacadeService,
               private datetimeService: DatetimeService,
-              private productsService: ProductsServce,
+              private apiProductsService: ApiProductsService,
               private apiCustomersService: ApiCustomersService) {
     super();
   }
@@ -180,7 +180,7 @@ export class OrderEditorComponent extends ComponentCanDeactivate implements OnIn
     this.loadingIndicator = true;
 
     forkJoin(
-      this.productsService.getForSale(),
+      this.apiProductsService.getProductsForSale$(),
       this.ordersFacadeService.getOrderDefaultProducts$()
     )
     .pipe(
@@ -198,7 +198,7 @@ export class OrderEditorComponent extends ComponentCanDeactivate implements OnIn
     this.loadingIndicator = true;
 
     forkJoin(
-      this.productsService.getForSale(),
+      this.apiProductsService.getProductsForSale$(),
       this.ordersFacadeService.loadOrder$(this.orderId)
     ).subscribe(
       ([products, order]) => {
@@ -358,7 +358,7 @@ export class OrderEditorComponent extends ComponentCanDeactivate implements OnIn
       const productId = ctrlValue.product.id;
       const quantity = !!ctrlValue.quantity ? ctrlValue.quantity : 1;
 
-      this.productsService.getCostPrice(productId, quantity)
+      this.apiProductsService.getProductCostPrice$(productId, quantity)
         .subscribe((costPrice: number) => {
           productCtrl.controls.costPrice.setValue(costPrice);
         });

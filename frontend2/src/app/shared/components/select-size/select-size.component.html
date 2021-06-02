@@ -1,0 +1,21 @@
+<ng-select #ngSelect
+            bindValue="id"
+            bindLabel="name"
+            [items]="sizes"
+            [multiple]="isMultiple"
+            [closeOnSelect]="!isMultiple"
+            [placeholder]="(disabled ? i18n.disabledPlaceholder : i18n.placeholder) | translate"
+            [ngModel]="selectedId"
+            [clearable]="canClearAll"
+            [searchable]="false"
+            [loading]="isLoading"
+            [notFoundText]="i18n.notFoundText | translate"
+            [disabled]="disabled"
+            (change)="onChange($event)">
+  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+    <div *ngIf="!isMultiple">{{ item.name }}</div>
+    <div *ngIf="isMultiple">
+      <mshk-checkbox id="item-{{index}}" [checked]="item$.selected" [text]="item.name"></mshk-checkbox>
+    </div>
+  </ng-template>
+</ng-select>

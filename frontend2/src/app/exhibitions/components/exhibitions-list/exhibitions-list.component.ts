@@ -6,7 +6,7 @@ import { DateRange } from '../../../shared/models/date-range.model';
 import { ExhibitionListFilter } from '../../../shared/filters/exhibition-list.filter';
 import { ApiExhibitionsService } from '../../../api/exhibitions/services/api-exhibitions.services';
 import { ItemsList } from '../../../shared/interfaces/items-list.interface';
-import { DialogsService } from '../../../shared/widgets/dialogs/services/dialogs.service';
+import { DialogsService } from '../../../shared/components/dialogs/services/dialogs.service';
 import { I18N } from '../../constants/i18n.const';
 import { LanguageService } from '../../../core/language/language.service';
 import { DatetimeService } from '../../../core/datetime/datetime.service';

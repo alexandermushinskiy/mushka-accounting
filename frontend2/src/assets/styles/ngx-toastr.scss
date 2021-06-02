@@ -1,9 +1,10 @@
 @import 'app/variables';
 
-.toast-container .ngx-toastr {
+.toast-container.toast-top-center .ngx-toastr,
+.toast-container.toast-bottom-center .ngx-toastr {
   border-radius: 0;
   box-shadow: none;
-  width: 300px;
+  width: 400px;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
 }

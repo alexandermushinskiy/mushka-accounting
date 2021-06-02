@@ -5,13 +5,13 @@ import { LocalStorage } from 'ngx-webstorage';
 
 import { SupplyList } from '../../../shared/models/supply-list.model';
 import { NotificationsService } from '../../../core/notifications/notifications.service';
-import { ProductsServce } from '../../../core/api/products.service';
 import { SelectProduct } from '../../../shared/models/select-product.model';
 import { ItemsWithTotalCount } from '../../../shared/models/items-with-total-count.model';
 import { ApiSuppliesService } from '../../../api/supplies/services/api-supplies.service';
-import { DialogsService } from '../../../shared/widgets/dialogs/services/dialogs.service';
+import { DialogsService } from '../../../shared/components/dialogs/services/dialogs.service';
 import { I18N } from '../../constants/i18n.const';
 import { LanguageService } from '../../../core/language/language.service';
+import { ApiProductsService } from '../../../api/products/services/api-products.service';
 
 @Component({
   selector: 'mshk-supplies-list',
@@ -34,7 +34,7 @@ export class SuppliesListComponent implements OnInit, OnDestroy {
   ];
 
   constructor(private apiSuppliesService: ApiSuppliesService,
-              private productsService: ProductsServce,
+              private apiProductsService: ApiProductsService,
               private dialogService: DialogsService,
               private notificationsService: NotificationsService,
               private languageService: LanguageService) {
@@ -95,7 +95,7 @@ export class SuppliesListComponent implements OnInit, OnDestroy {
   private loadProducts() {
     this.isProductsLoading = true;
 
-    this.productsService.getForSale()
+    this.apiProductsService.getProductsForSale$()
       .subscribe((products: SelectProduct[]) => {
         this.productsList = products;
         this.isProductsLoading = false;

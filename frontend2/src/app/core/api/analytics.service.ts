@@ -4,7 +4,6 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import { ConverterService } from '../converter/converter.service';
 import { PopularProduct } from '../../dashboard/shared/models/popular-product.model';
 import { PopularCity } from '../../dashboard/shared/models/popular-city.model';
 import { Balance } from '../../dashboard/shared/models/balance.model';
@@ -17,8 +16,7 @@ export class AnalyticsService {
   private readonly endPoint = `${environment.apiEndpoint}/api/v1/analytics`;
 
   constructor(private http: HttpClient,
-              private datetimeService: DatetimeService,
-              private converterService: ConverterService) {
+              private datetimeService: DatetimeService) {
   }
 
   getBalance(): Observable<Balance> {

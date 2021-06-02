@@ -28,7 +28,7 @@
       <span [innerHtml]="'datatable.orderDate' | translate" (click)="sort($event)"></span>
     </ng-template>
     <ng-template ngx-datatable-cell-template let-value="value">
-      <span [title]="value">{{ value | format }}</span>
+      <span [title]="value">{{ value | dateFormat }}</span>
     </ng-template>
   </ngx-datatable-column>
   

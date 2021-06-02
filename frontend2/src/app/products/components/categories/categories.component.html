@@ -1,0 +1,21 @@
+<nav class="categories-nav">
+  <div class="categories-nav-search">
+    <mshk-search-form [placeholder]="'common.filter' | translate" (onSearch)="onSearch($event)"></mshk-search-form>
+  </div>
+  <div class="categories-nav-header">
+    <button class="btn btn-light btn-block" (click)="createCategory()">{{ 'products.addCategory' | translate }}</button>
+  </div>
+  <div class="categories-nav-body">
+    <ul class="categories-list">
+      <li *ngFor="let category of filteredCategories" [ngClass]="{'active': selectedCategory && selectedCategory.id === category.id}">
+        <a href="javascript:void(0);" (click)="selectCategory(category)" [title]="category.name">{{ category.name }}</a>
+        <button type="button" class="btn btn-delete pull-right" (click)="delete(category)">
+          <i class="fa fa-trash-o" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-edit pull-right" (click)="editCategory(category, content)">
+          <i class="fa fa-edit" aria-hidden="true"></i>
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>

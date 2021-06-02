@@ -1,7 +1,12 @@
+import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+
 import { DateRange } from '../../shared/models/date-range.model';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class DatetimeService {
   // parseDate(date: string, format = 'YYYY-MM-DD HH:mm'): string {
   //   const utcDate = moment.utc(date);

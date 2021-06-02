@@ -15,7 +15,7 @@ import { SuppliesModule } from './supplies/supplies.module';
 import { SuppliersModule } from './suppliers/suppliers.module';
 import { ExhibitionsModule } from './exhibitions/exhibitions.module';
 import { ExpensesModule } from './expenses/expenses.module';
-import { DialogsModule } from './shared/widgets/dialogs/dialogs.module';
+import { LoadingScreenModule } from './shared/components/loading-screen/loading-screen.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +25,7 @@ import { DialogsModule } from './shared/widgets/dialogs/dialogs.module';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    LoadingScreenModule,
     SharedModule,
     CoreModule,
     LayoutModule,
@@ -35,8 +36,7 @@ import { DialogsModule } from './shared/widgets/dialogs/dialogs.module';
     SuppliesModule,
     SuppliersModule,
     ExhibitionsModule,
-    ExpensesModule,
-    DialogsModule
+    ExpensesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

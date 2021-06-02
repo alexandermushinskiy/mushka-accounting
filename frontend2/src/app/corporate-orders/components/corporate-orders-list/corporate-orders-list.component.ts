@@ -8,7 +8,7 @@ import { CorporateOrderListFilter } from '../../../shared/filters/corporate-orde
 import { ApiCorporateOrdersService } from '../../../api/corporate-orders/services/api-corporate-orders.service';
 import { ItemsList } from '../../../shared/interfaces/items-list.interface';
 import { I18N } from '../../constants/i18n.const';
-import { DialogsService } from '../../../shared/widgets/dialogs/services/dialogs.service';
+import { DialogsService } from '../../../shared/components/dialogs/services/dialogs.service';
 import { LanguageService } from '../../../core/language/language.service';
 import { mergeMap } from 'rxjs/operators';
 import { untilDestroyed } from 'ngx-take-until-destroy';

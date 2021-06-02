@@ -4,7 +4,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { languages } from '../../shared/constants/languages.const';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class LanguageService {
   private readonly defaultLanguage = languages.ru;
   readonly languages = [languages.ru];

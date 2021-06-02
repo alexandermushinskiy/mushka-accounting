@@ -9,7 +9,7 @@ import { ExpenseListFilter } from '../../../shared/filters/expense-list.filter';
 import { ExpenseCategory } from '../../enums/expense-category.enum';
 import { ApiExpensesService } from '../../../api/expenses/services/api-expenses.service';
 import { ItemsList } from '../../../shared/interfaces/items-list.interface';
-import { DialogsService } from '../../../shared/widgets/dialogs/services/dialogs.service';
+import { DialogsService } from '../../../shared/components/dialogs/services/dialogs.service';
 import { LanguageService } from '../../../core/language/language.service';
 import { DatetimeService } from '../../../core/datetime/datetime.service';
 import { I18N } from '../../constants/i18n.const';

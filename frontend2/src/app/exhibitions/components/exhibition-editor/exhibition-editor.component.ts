@@ -4,13 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 
 import { SelectProduct } from '../../../shared/models/select-product.model';
-import { ProductsServce } from '../../../core/api/products.service';
 import { DatetimeService } from '../../../core/datetime/datetime.service';
 import { NotificationsService } from '../../../core/notifications/notifications.service';
 import { Exhibition } from '../../../shared/models/exhibition.model';
 import { ExhibitionProduct } from '../../../shared/models/exhibition-product.model';
 import { ApiExhibitionsService } from '../../../api/exhibitions/services/api-exhibitions.services';
 import { I18N } from '../../constants/i18n.const';
+import { ApiProductsService } from '../../../api/products/services/api-products.service';
 
 @Component({
   selector: 'mshk-exhibition-editor',
@@ -33,7 +33,7 @@ export class ExhibitionEditorComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private productsService: ProductsServce,
+              private apiProductsService: ApiProductsService,
               private apiExhibitionsService: ApiExhibitionsService,
               private datetimeService: DatetimeService,
               private notificationsService: NotificationsService) {
@@ -146,7 +146,7 @@ export class ExhibitionEditorComponent implements OnInit {
     this.loadingIndicator = true;
 
     forkJoin(
-      this.productsService.getForSale(),
+      this.apiProductsService.getProductsForSale$(),
       this.apiExhibitionsService.describeExhibition$(this.exhibitionId)
     ).subscribe(
       ([products, exhibition]) => {
@@ -162,7 +162,7 @@ export class ExhibitionEditorComponent implements OnInit {
     this.loadingIndicator = true;
 
     forkJoin(
-      this.productsService.getForSale(),
+      this.apiProductsService.getProductsForSale$(),
       this.apiExhibitionsService.getDefaultExhibitionProducts$()
     ).subscribe(
       ([products, defaultProducts]) => {
@@ -295,7 +295,7 @@ export class ExhibitionEditorComponent implements OnInit {
       const productId = ctrlValue.product.id;
       const quantity = !!ctrlValue.quantity ? ctrlValue.quantity : 1;
 
-      this.productsService.getCostPrice(productId, quantity)
+      this.apiProductsService.getProductCostPrice$(productId, quantity)
         .subscribe((costPrice: number) => {
           productCtrl.controls.costPrice.setValue(costPrice);
         });
