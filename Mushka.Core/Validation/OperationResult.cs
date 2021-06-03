@@ -25,6 +25,15 @@ namespace Mushka.Core.Validation
             Errors = errors.ToList();
             Status = status;
         }
+
+        public static OperationResult Success()
+            => new OperationResult(ValidationStatusType.Success);
+
+        public static OperationResult FromError(string errorKey, ValidationStatusType status = ValidationStatusType.BadOperation)
+            => new OperationResult(new[] { new FieldError(errorKey) }, status);
+
+        public static OperationResult FromErrors(IEnumerable<FieldError> errors, ValidationStatusType status = ValidationStatusType.BadOperation)
+            => new OperationResult(errors, status);
     }
 
     public class OperationResult<TResultData> : OperationResult
@@ -45,10 +54,10 @@ namespace Mushka.Core.Validation
         public static OperationResult<TResultData> FromResult(TResultData data)
             => new OperationResult<TResultData>(data);
 
-        public static OperationResult<TResultData> FromError(string errorKey, ValidationStatusType status = ValidationStatusType.BadOperation)
+        public static new OperationResult<TResultData> FromError(string errorKey, ValidationStatusType status = ValidationStatusType.BadOperation)
             => new OperationResult<TResultData>(new[] { new FieldError(errorKey) }, status);
 
-        public static OperationResult<TResultData> FromErrors(IEnumerable<FieldError> errors, ValidationStatusType status = ValidationStatusType.BadOperation)
+        public static new OperationResult<TResultData> FromErrors(IEnumerable<FieldError> errors, ValidationStatusType status = ValidationStatusType.BadOperation)
             => new OperationResult<TResultData>(errors, status);
     }
 }

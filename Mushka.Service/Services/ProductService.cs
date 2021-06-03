@@ -110,62 +110,59 @@ namespace Mushka.Service.Services
             return OperationResult<ProductCostPrice>.FromResult(new ProductCostPrice(costPrice));
         }
 
-        public async Task<OperationResult<Product>> AddAsync(Product product, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> AddAsync(Product product, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (!await categoryRepository.IsExistAsync(category => category.Id == product.CategoryId, cancellationToken))
             {
-                return OperationResult<Product>.FromError(ValidationErrors.CategoryNotFound, ValidationStatusType.NotFound);
+                return OperationResult.FromError(ValidationErrors.CategoryNotFound, ValidationStatusType.NotFound);
             }
             
             if (await productRepository.IsExistAsync(prod => prod.VendorCode == product.VendorCode, cancellationToken))
             {
-                return OperationResult<Product>.FromError(ValidationErrors.ProductWithVendorCodeExist);
+                return OperationResult.FromError(ValidationErrors.ProductWithVendorCodeExist);
             }
 
             productRepository.Add(product);
             await storage.SaveAsync(cancellationToken);
 
-            var addedProduct = await productRepository.GetByIdAsync(product.Id, cancellationToken);
-
-            return OperationResult<Product>.FromResult(addedProduct);
+            return OperationResult.Success();
         }
 
-        public async Task<OperationResult<Product>> UpdateAsync(Product product, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> UpdateAsync(Product product, CancellationToken cancellationToken = default(CancellationToken))
         {
             var productToUpdate = await productRepository.GetByIdAsync(product.Id, cancellationToken);
 
             if (productToUpdate == null)
             {
-                return OperationResult<Product>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
+                return OperationResult.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
             }
 
             if (await productRepository.IsExistAsync(prod => prod.Id != product.Id && prod.VendorCode == product.VendorCode, cancellationToken))
             {
-                return OperationResult<Product>.FromError(ValidationErrors.ProductWithVendorCodeExist);
+                return OperationResult.FromError(ValidationErrors.ProductWithVendorCodeExist);
             }
 
             product.Quantity = productToUpdate.Quantity;
 
             productRepository.Update(product);
             await storage.SaveAsync(cancellationToken);
-            var updatedProduct = await productRepository.GetByIdAsync(product.Id, cancellationToken);
 
-            return OperationResult<Product>.FromResult(updatedProduct);
+            return OperationResult.Success();
         }
 
-        public async Task<OperationResult<Product>> DeleteAsync(Guid productId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> DeleteAsync(Guid productId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var product = await productRepository.GetByIdAsync(productId, cancellationToken);
 
             if (product == null)
             {
-                return OperationResult<Product>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
+                return OperationResult.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
             }
 
             productRepository.Delete(product);
             await storage.SaveAsync(cancellationToken);
 
-            return OperationResult<Product>.FromResult(product);
+            return OperationResult.Success();
         }
 
         public async Task<OperationResult<IEnumerable<Size>>> GetSizesAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -184,5 +181,5 @@ namespace Mushka.Service.Services
 
             return OperationResult<ExportedFile>.FromResult(exportedFile);
         }
-    }
+     }
 }

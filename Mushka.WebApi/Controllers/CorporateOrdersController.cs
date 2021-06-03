@@ -45,7 +45,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             var orderResponse = await corporateOrderService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<CorporateOrder>, CorporateOrderResponseModel>(orderResponse);
+            var clientResponse = mapper.Map<OperationResult, CorporateOrderResponseModel>(orderResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -56,7 +56,7 @@ namespace Mushka.WebApi.Controllers
             var order = mapper.Map<CorporateOrderRequestModel, CorporateOrder>(corporateOrderRequest);
 
             var orderResponse = await corporateOrderService.AddAsync(order, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<CorporateOrder>, EmptyResponseModel>(orderResponse);
+            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(orderResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -67,7 +67,7 @@ namespace Mushka.WebApi.Controllers
             var order = mapper.Map<CorporateOrderRequestModel, CorporateOrder>(corporateOrderRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var orderResponse = await corporateOrderService.UpdateAsync(order, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<CorporateOrder>, EmptyResponseModel>(orderResponse);
+            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(orderResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -76,7 +76,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var orderResponse = await corporateOrderService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<CorporateOrder>, EmptyResponseModel>(orderResponse);
+            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(orderResponse);
 
             return actionResultProvider.Get(clientResponse);
         }

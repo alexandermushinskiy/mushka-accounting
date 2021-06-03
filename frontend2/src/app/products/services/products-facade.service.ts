@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Category } from '../../shared/models/category.model';
 
+import { Category } from '../../shared/models/category.model';
 import { ProductList } from '../../shared/models/product-list.model';
 import { CategoriesService } from './categories.service';
 import { ProductsTableService } from './products-table.service';

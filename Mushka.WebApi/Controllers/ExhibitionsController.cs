@@ -69,7 +69,7 @@ namespace Mushka.WebApi.Controllers
             var exhibition = mapper.Map<ExhibitionRequestModel, Exhibition>(exhibitionRequest);
 
             var exhibitionResponse = await exhibitionService.AddAsync(exhibition, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Exhibition>, EmptyResponseModel>(exhibitionResponse);
+            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(exhibitionResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -80,7 +80,7 @@ namespace Mushka.WebApi.Controllers
             var exhibition = mapper.Map<ExhibitionRequestModel, Exhibition>(exhibitionRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var exhibitionResponse = await exhibitionService.UpdateAsync(exhibition, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Exhibition>, EmptyResponseModel>(exhibitionResponse);
+            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(exhibitionResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -89,7 +89,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var exhibitionResponse = await exhibitionService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Exhibition>, DeleteResponseModel>(exhibitionResponse);
+            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(exhibitionResponse);
 
             return actionResultProvider.Get(clientResponse);
         }

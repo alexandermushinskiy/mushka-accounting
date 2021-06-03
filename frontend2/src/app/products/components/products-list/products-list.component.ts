@@ -1,4 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 import { Category } from '../../../shared/models/category.model';
 import { ProductList } from '../../../shared/models/product-list.model';
@@ -9,11 +12,8 @@ import { Product } from '../../../shared/models/product.model';
 import { DialogsService } from '../../../shared/components/dialogs/services/dialogs.service';
 import { I18N } from '../../constants/i18n.const';
 import { LanguageService } from '../../../core/language/language.service';
-import { map, mergeMap } from 'rxjs/operators';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ApiCategoriesService } from '../../../api/categories/services/api-cateries.service';
 import { ProductsFacadeService } from '../../services/products-facade.service';
-import { Observable } from 'rxjs';
 import { ApiProductsService } from '../../../api/products/services/api-products.service';
 
 @Component({
@@ -50,9 +50,19 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.productsFacadeService.getSelectedCategory$()
+      .pipe(untilDestroyed(this))
+      .subscribe((category) => {
+        this.selectedCategory = category;
+        if (!!category) {
+          this.productsFacadeService.fetchProducts(category.id);
+        }
+      });
+
     this.isLoading$ = this.productsFacadeService.getTableLoadingFlag$();
 
     this.productsFacadeService.getTableItems$()
+      .pipe(untilDestroyed(this))
       .subscribe(products => {
         this.products = products;
         this.shownProducts = products;
@@ -79,12 +89,6 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   onFilterSelected(filter: ProductsQuickFilter): void {
     this.selectedFilter = filter;
     this.filterOrders();
-  }
-
-  onCategotySelected(category: Category): void {
-    this.selectedCategory = category;
-
-    this.productsFacadeService.fetchProducts(category.id);
   }
 
   addProduct(): void {
@@ -168,7 +172,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     this.notificationsService.success(message, { name: product.name });
 
     if (this.selectedCategory.id !== product.category.id) {
-      this.onCategotySelected(product.category);
+      this.productsFacadeService.setSelectedCategory(product.category);
     } else {
       this.productsFacadeService.fetchProducts(this.selectedCategory.id);
     }

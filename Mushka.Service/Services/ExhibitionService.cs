@@ -47,7 +47,7 @@ namespace Mushka.Service.Services
                 : OperationResult<Exhibition>.FromResult(exhibition);
         }
 
-        public async Task<OperationResult<Exhibition>> AddAsync(Exhibition exhibition, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> AddAsync(Exhibition exhibition, CancellationToken cancellationToken = default(CancellationToken))
         {
             foreach (var exhibitionProduct in exhibition.Products)
             {
@@ -55,32 +55,31 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return OperationResult<Exhibition>.FromError(ValidationErrors.ExhibitionNotFound, ValidationStatusType.NotFound);
+                    return OperationResult.FromError(ValidationErrors.ExhibitionNotFound, ValidationStatusType.NotFound);
                 }
 
                 if (storedProduct.Quantity < exhibitionProduct.Quantity)
                 {
-                    return OperationResult<Exhibition>.FromError(ValidationErrors.ProductNotEnoughInStock);
+                    return OperationResult.FromError(ValidationErrors.ProductNotEnoughInStock);
                 }
 
                 storedProduct.Quantity -= exhibitionProduct.Quantity;
                 productRepository.Update(storedProduct);
             }
             
-            var addedExhibition = exhibitionRepository.Add(exhibition);
-
+            exhibitionRepository.Add(exhibition);
             await storage.SaveAsync(cancellationToken);
 
-            return OperationResult<Exhibition>.FromResult(addedExhibition);
+            return OperationResult.Success();
         }
 
-        public async Task<OperationResult<Exhibition>> UpdateAsync(Exhibition exhibition, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> UpdateAsync(Exhibition exhibition, CancellationToken cancellationToken = default(CancellationToken))
         {
             var storedExhibition = await exhibitionRepository.GetByIdAsync(exhibition.Id, cancellationToken);
 
             if (storedExhibition == null)
             {
-                return OperationResult<Exhibition>.FromError(ValidationErrors.ExhibitionNotFound, ValidationStatusType.NotFound);
+                return OperationResult.FromError(ValidationErrors.ExhibitionNotFound, ValidationStatusType.NotFound);
             }
 
             foreach (var exhibitionProduct in exhibition.Products)
@@ -89,7 +88,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return OperationResult<Exhibition>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
+                    return OperationResult.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
                 }
 
                 var storedOrderQuantity = storedExhibition.Products
@@ -108,26 +107,26 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return OperationResult<Exhibition>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
+                    return OperationResult.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
                 }
 
                 storedProduct.Quantity += removedProduct.Quantity;
                 productRepository.Update(storedProduct);
             }
 
-            var updatedExhibition = exhibitionRepository.Update(exhibition);
+            exhibitionRepository.Update(exhibition);
             await storage.SaveAsync(cancellationToken);
 
-            return OperationResult<Exhibition>.FromResult(updatedExhibition);
+            return OperationResult.Success();
         }
 
-        public async Task<OperationResult<Exhibition>> DeleteAsync(Guid exhibitionId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> DeleteAsync(Guid exhibitionId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var exhibition = await exhibitionRepository.GetByIdAsync(exhibitionId, cancellationToken);
 
             if (exhibition == null)
             {
-                return OperationResult<Exhibition>.FromError(ValidationErrors.ExhibitionNotFound, ValidationStatusType.NotFound);
+                return OperationResult.FromError(ValidationErrors.ExhibitionNotFound, ValidationStatusType.NotFound);
             }
 
             foreach (var orderProduct in exhibition.Products)
@@ -136,17 +135,17 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return OperationResult<Exhibition>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
+                    return OperationResult.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
                 }
 
                 storedProduct.Quantity += orderProduct.Quantity;
                 productRepository.Update(storedProduct);
             }
 
-            var deletedExhibition = exhibitionRepository.Delete(exhibition);
+            exhibitionRepository.Delete(exhibition);
             await storage.SaveAsync(cancellationToken);
 
-            return OperationResult<Exhibition>.FromResult(deletedExhibition);
+            return OperationResult.Success();
         }
     }
 }

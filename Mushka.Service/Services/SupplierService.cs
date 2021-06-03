@@ -46,53 +46,53 @@ namespace Mushka.Service.Services
                 : OperationResult<Supplier>.FromResult(supplier);
         }
 
-        public async Task<OperationResult<Supplier>> AddAsync(Supplier supplier, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> AddAsync(Supplier supplier, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (await supplierRepository.IsExistAsync(supp => supp.Name == supplier.Name, cancellationToken))
             {
                 return OperationResult<Supplier>.FromError(ValidationErrors.SupplierWithNameExist);
             }
             
-            var addedSupplier = supplierRepository.Add(supplier);
+            supplierRepository.Add(supplier);
             await storage.SaveAsync(cancellationToken);
 
-            return OperationResult<Supplier>.FromResult(addedSupplier);
+            return OperationResult.Success();
         }
 
-        public async Task<OperationResult<Supplier>> UpdateAsync(Supplier supplier, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> UpdateAsync(Supplier supplier, CancellationToken cancellationToken = default(CancellationToken))
         {
             var supplierToUpdate = await supplierRepository.GetByIdAsync(supplier.Id, cancellationToken);
 
             if (supplierToUpdate == null)
             {
-                return OperationResult<Supplier>.FromError(ValidationErrors.SupplierNotFound, ValidationStatusType.NotFound);
+                return OperationResult.FromError(ValidationErrors.SupplierNotFound, ValidationStatusType.NotFound);
             }
 
             if (await supplierRepository.IsExistAsync(supp => supp.Id != supplier.Id && supp.Name == supplier.Name, cancellationToken))
             {
-                return OperationResult<Supplier>.FromError(ValidationErrors.SupplierWithNameExist);
+                return OperationResult.FromError(ValidationErrors.SupplierWithNameExist);
             }
 
             supplier.CreatedOn = supplierToUpdate.CreatedOn;
-            var updatedSupplier = supplierRepository.Update(supplier);
+            supplierRepository.Update(supplier);
             await storage.SaveAsync(cancellationToken);
 
-            return OperationResult<Supplier>.FromResult(updatedSupplier);
+            return OperationResult.Success();
         }
 
-        public async Task<OperationResult<Supplier>> DeleteAsync(Guid supplierId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> DeleteAsync(Guid supplierId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var supplier = await supplierRepository.GetByIdAsync(supplierId, cancellationToken);
 
             if (supplier == null)
             {
-                OperationResult<Supplier>.FromError(ValidationErrors.SupplierNotFound, ValidationStatusType.NotFound);
+                OperationResult.FromError(ValidationErrors.SupplierNotFound, ValidationStatusType.NotFound);
             }
 
             supplierRepository.Delete(supplier);
             await storage.SaveAsync(cancellationToken);
 
-            return OperationResult<Supplier>.FromResult(supplier);
+            return OperationResult.Success();
         }
     }
 }

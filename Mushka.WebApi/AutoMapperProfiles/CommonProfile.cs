@@ -21,11 +21,6 @@ namespace Mushka.WebApi.AutoMapperProfiles
                 .ForMember(dest => dest.StatusCode, opt => opt.UseValue(StatusCodes.Status400BadRequest))
                 .ForMember(dest => dest.Success, opt => opt.UseValue(false))
                 .ForMember(dest => dest.Errors, opts => opts.MapFrom(src => src));
-
-            CreateMap<OperationResult, DeleteResponseModel>()
-                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
-                .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
         }
     }
 }

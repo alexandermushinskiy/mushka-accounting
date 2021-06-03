@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { mergeMap } from 'rxjs/operators';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 import { Category } from '../../../shared/models/category.model';
 import { NotificationsService } from '../../../core/notifications/notifications.service';
@@ -7,7 +8,6 @@ import { ApiCategoriesService } from '../../../api/categories/services/api-cater
 import { DialogsService } from '../../../shared/components/dialogs/services/dialogs.service';
 import { LanguageService } from '../../../core/language/language.service';
 import { I18N } from '../../constants/i18n.const';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import {
   CategoryEditorDialogResult
 } from '../../../shared/components/dialogs/components/category-editor-dialog/interfaces/category-editor-dialog-result.interface';
@@ -19,11 +19,10 @@ import { ProductsFacadeService } from '../../services/products-facade.service';
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit, OnDestroy {
-  @Input() selectedCategory: Category;
-  @Output() onCategorySelected = new EventEmitter<Category>();
   @Output() onEditCategory = new EventEmitter<Category>();
   @Output() onDeleteCategory = new EventEmitter<string>();
 
+  selectedCategory: Category;
   categories: Category[];
   keywords = '';
   isSaving = false;
@@ -42,13 +41,13 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.productsFacadeService.getSelectedCategory$()
+      .pipe(untilDestroyed(this))
+      .subscribe((category) => this.selectedCategory = category);
+
     this.productsFacadeService.getCategoriesItems$()
-      .subscribe(categories => {
-        this.categories = categories;
-        if (categories.length > 0) {
-          this.selectCategory(categories[0]);
-        }
-      });
+      .pipe(untilDestroyed(this))
+      .subscribe(categories => this.categories = categories);
 
     this.productsFacadeService.fetchCategories();
   }
@@ -122,8 +121,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   }
 
   selectCategory(category: Category): void {
-    this.selectedCategory = category;
-    this.onCategorySelected.emit(category);
+    this.productsFacadeService.setSelectedCategory(category);
   }
 
   onSearch(keywords: string): void {

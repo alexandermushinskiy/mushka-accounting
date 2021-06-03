@@ -55,7 +55,7 @@ namespace Mushka.WebApi.Controllers
             var category = mapper.Map<CategoryRequestModel, Category>(categoryRequest);
 
             var categoryResponse = await categoryService.AddAsync(category, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Category>, EmptyResponseModel>(categoryResponse);
+            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(categoryResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -66,7 +66,7 @@ namespace Mushka.WebApi.Controllers
             var category = mapper.Map<CategoryRequestModel, Category>(categoryRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
             var categoryResponse = await categoryService.UpdateAsync(category, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Category>, EmptyResponseModel>(categoryResponse);
+            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(categoryResponse);
 
             return actionResultProvider.Get(clientResponse);
         }
@@ -75,7 +75,7 @@ namespace Mushka.WebApi.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var categoryResponse = await categoryService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Category>, DeleteResponseModel>(categoryResponse);
+            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(categoryResponse);
 
             return actionResultProvider.Get(clientResponse);
         }

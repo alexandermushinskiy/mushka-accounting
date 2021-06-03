@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, Subscription, throwError } from 'rxjs';
-import { catchError, finalize, map, tap } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 
 import { ApiCategoriesService } from '../../api/categories/services/api-cateries.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';

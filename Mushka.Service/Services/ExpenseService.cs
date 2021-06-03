@@ -55,30 +55,30 @@ namespace Mushka.Service.Services
                 : OperationResult<Expense>.FromResult(expense);
         }
 
-        public async Task<OperationResult<Expense>> AddAsync(Expense expense, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> AddAsync(Expense expense, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var addedExpense = expenseRepository.Add(expense);
+            expenseRepository.Add(expense);
             await storage.SaveAsync(cancellationToken);
 
-            return OperationResult<Expense>.FromResult(addedExpense);
+            return OperationResult.Success();
         }
 
-        public async Task<OperationResult<Expense>> UpdateAsync(Expense expense, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> UpdateAsync(Expense expense, CancellationToken cancellationToken = default(CancellationToken))
         {
             var expenseToUpdate = await expenseRepository.GetByIdAsync(expense.Id, cancellationToken);
 
             if (expenseToUpdate == null)
             {
-                return OperationResult<Expense>.FromError(ValidationErrors.ExpenseNotFound, ValidationStatusType.NotFound);
+                return OperationResult.FromError(ValidationErrors.ExpenseNotFound, ValidationStatusType.NotFound);
             }
 
-            var updatedExpense = expenseRepository.Update(expense);
+            expenseRepository.Update(expense);
             await storage.SaveAsync(cancellationToken);
 
-            return OperationResult<Expense>.FromResult(updatedExpense);
+            return OperationResult.Success();
         }
 
-        public async Task<OperationResult<Expense>> DeleteAsync(Guid expenseId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> DeleteAsync(Guid expenseId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var expense = await expenseRepository.GetByIdAsync(expenseId, cancellationToken);
 
@@ -87,10 +87,10 @@ namespace Mushka.Service.Services
                 return OperationResult<Expense>.FromError(ValidationErrors.ExpenseNotFound, ValidationStatusType.NotFound);
             }
 
-            var deletedExpense = expenseRepository.Delete(expense);
+            expenseRepository.Delete(expense);
             await storage.SaveAsync(cancellationToken);
 
-            return OperationResult<Expense>.FromResult(deletedExpense);
+            return OperationResult.Success();
         }
     }
 }

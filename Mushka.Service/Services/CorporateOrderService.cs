@@ -46,37 +46,37 @@ namespace Mushka.Service.Services
                 : OperationResult<CorporateOrder>.FromResult(corporateOrder);
         }
 
-        public async Task<OperationResult<CorporateOrder>> AddAsync(CorporateOrder corporateOrder, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> AddAsync(CorporateOrder corporateOrder, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var addedCorporateOrder = corporateOrderRepository.Add(corporateOrder);
+            corporateOrderRepository.Add(corporateOrder);
             await storage.SaveAsync(cancellationToken);
 
-            return OperationResult<CorporateOrder>.FromResult(addedCorporateOrder);
+            return OperationResult.Success();
         }
 
-        public async Task<OperationResult<CorporateOrder>> UpdateAsync(CorporateOrder corporateOrder, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> UpdateAsync(CorporateOrder corporateOrder, CancellationToken cancellationToken = default(CancellationToken))
         {
             corporateOrderRepository.DeleteProducts(corporateOrder.Id);
 
-            var updatedCorporateOrder = corporateOrderRepository.Update(corporateOrder);
+            corporateOrderRepository.Update(corporateOrder);
             await storage.SaveAsync(cancellationToken);
 
-            return OperationResult<CorporateOrder>.FromResult(updatedCorporateOrder);
+            return OperationResult.Success();
         }
 
-        public async Task<OperationResult<CorporateOrder>> DeleteAsync(Guid corporateOrderId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> DeleteAsync(Guid corporateOrderId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var corporateOrder = await corporateOrderRepository.GetByIdAsync(corporateOrderId, cancellationToken);
 
             if (corporateOrder == null)
             {
-                return OperationResult<CorporateOrder>.FromError(ValidationErrors.CorporateOrderNotFound, ValidationStatusType.NotFound);
+                return OperationResult.FromError(ValidationErrors.CorporateOrderNotFound, ValidationStatusType.NotFound);
             }
             
             corporateOrderRepository.Delete(corporateOrder);
             await storage.SaveAsync(cancellationToken);
 
-            return OperationResult<CorporateOrder>.FromResult(corporateOrder);
+            return OperationResult.Success();
         }
 
         public async Task<OperationResult<bool>> IsNumberExistAsync(string orderNumber, CancellationToken cancellationToken = default(CancellationToken))

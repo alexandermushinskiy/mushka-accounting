@@ -82,12 +82,12 @@ namespace Mushka.Service.Services
             return OperationResult<Order>.FromResult(order);
         }
 
-        public async Task<OperationResult<Order>> AddAsync(Order order, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> AddAsync(Order order, CancellationToken cancellationToken = default(CancellationToken))
         {
             var customerValidationResponse = await orderCustomerProvider.GetCustomerForNewOrderAsync(order.Customer, cancellationToken);
             if (customerValidationResponse.IsFailure)
             {
-                return OperationResult<Order>.FromErrors(customerValidationResponse.Errors);
+                return OperationResult.FromErrors(customerValidationResponse.Errors);
             }
             
             order.CustomerId = customerValidationResponse.Data.Id;
@@ -98,12 +98,12 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return OperationResult<Order>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
+                    return OperationResult.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
                 }
 
                 if (storedProduct.Quantity < orderProduct.Quantity)
                 {
-                    return OperationResult<Order>.FromError(ValidationErrors.ProductNotEnoughInStock);
+                    return OperationResult.FromError(ValidationErrors.ProductNotEnoughInStock);
                 }
 
                 storedProduct.Quantity -= orderProduct.Quantity;
@@ -113,22 +113,22 @@ namespace Mushka.Service.Services
             var addedOrder = orderRepository.Add(order);
             await storage.SaveAsync(cancellationToken);
             
-            return OperationResult<Order>.FromResult(addedOrder);
+            return OperationResult.Success();
         }
 
-        public async Task<OperationResult<Order>> UpdateAsync(Order order, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> UpdateAsync(Order order, CancellationToken cancellationToken = default(CancellationToken))
         {
             var storedOrder = await orderRepository.GetByIdAsync(order.Id, cancellationToken);
 
             if (storedOrder == null)
             {
-                return OperationResult<Order>.FromError(ValidationErrors.OrderNotFound, ValidationStatusType.NotFound);
+                return OperationResult.FromError(ValidationErrors.OrderNotFound, ValidationStatusType.NotFound);
             }
 
             var customerValidationResponse = await orderCustomerProvider.GetCustomerForExistingOrderAsync(storedOrder.CustomerId, order.Customer, cancellationToken);
             if (customerValidationResponse.IsFailure)
             {
-                return OperationResult<Order>.FromErrors(customerValidationResponse.Errors);
+                return OperationResult.FromErrors(customerValidationResponse.Errors);
             }
             
             order.CustomerId = customerValidationResponse.Data.Id;
@@ -139,7 +139,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return OperationResult<Order>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
+                    return OperationResult.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
                 }
 
                 var storedOrderQuantity = storedOrder.Products
@@ -158,28 +158,28 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return OperationResult<Order>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
+                    return OperationResult.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
                 }
 
                 storedProduct.Quantity += removedProduct.Quantity;
                 productRepository.Update(storedProduct);
             }
             
-            var updatedOrder = orderRepository.Update(order);
+            orderRepository.Update(order);
             await storage.SaveAsync(cancellationToken);
 
             await TryDeleteCustomerWithoutOrders(storedOrder.CustomerId, order.CustomerId, cancellationToken);
 
-            return OperationResult<Order>.FromResult(updatedOrder);
+            return OperationResult.Success();
         }
 
-        public async Task<OperationResult<Order>> DeleteAsync(Guid orderId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<OperationResult> DeleteAsync(Guid orderId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var order = await orderRepository.GetByIdAsync(orderId, cancellationToken);
 
             if (order == null)
             {
-                return OperationResult<Order>.FromError(ValidationErrors.OrderNotFound, ValidationStatusType.NotFound);
+                return OperationResult.FromError(ValidationErrors.OrderNotFound, ValidationStatusType.NotFound);
             }
 
             var storedCustomer = await customerRepository.GetByPhoneAsync(order.Customer.Phone, cancellationToken);
@@ -194,7 +194,7 @@ namespace Mushka.Service.Services
 
                 if (storedProduct == null)
                 {
-                    return OperationResult<Order>.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
+                    return OperationResult.FromError(ValidationErrors.ProductNotFound, ValidationStatusType.NotFound);
                 }
 
                 storedProduct.Quantity += orderProduct.Quantity;
@@ -204,7 +204,7 @@ namespace Mushka.Service.Services
             orderRepository.Delete(order);
             await storage.SaveAsync(cancellationToken);
 
-            return OperationResult<Order>.FromResult(order);
+            return OperationResult.Success();
         }
 
         public async Task<OperationResult<bool>> IsNumberExistAsync(string orderNumber, CancellationToken cancellationToken = default(CancellationToken))
