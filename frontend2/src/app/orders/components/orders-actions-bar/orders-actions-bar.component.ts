@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { I18N } from '../../constants/i18n.const';
 import { OrdersFacadeService } from '../../services/orders-facade.service';
 import { DateRange } from '../../../shared/models/date-range.model';
-import { TimeFrame } from '../../../shared/enums/time-frame.enum';
+import { TimeFrame } from '../../../shared/components/time-frame/enums/time-frame.enum';
 
 @Component({
   selector: 'mshk-orders-actions-bar',
@@ -12,27 +12,27 @@ import { TimeFrame } from '../../../shared/enums/time-frame.enum';
   styleUrls: ['./orders-actions-bar.component.scss']
 })
 export class OrdersActionsBarComponent implements OnInit {
-  isFilterPanel = false;
+  isFiltersShown = false;
   totalItems$: Observable<number>;
   hasActiveFilters$: Observable<boolean>;
-
-  readonly i18n = I18N.actionsBar;
-
+  isLoading$: Observable<boolean>;
   searchKey: string;
   timeFrame: TimeFrame;
   dateRange: DateRange = { from: null, to: null };
+
+  readonly i18n = I18N.actionsBar;
 
   constructor(private ordersFacadeService: OrdersFacadeService) {
   }
 
   ngOnInit(): void {
     this.totalItems$ = this.ordersFacadeService.getTotalTableItems$();
-
+    this.isLoading$ = this.ordersFacadeService.getTableLoadingFlag$();
     this.hasActiveFilters$ = this.ordersFacadeService.hasActiveFilters$();
   }
 
-  showHideFilterPanel(): void {
-    this.isFilterPanel = !this.isFilterPanel;
+  toggleFilters(): void {
+    this.isFiltersShown = !this.isFiltersShown;
   }
 
   onSearchChanged(searchKey: string) {
@@ -46,18 +46,19 @@ export class OrdersActionsBarComponent implements OnInit {
     this.search();
   }
 
-  clearFiltersAndHideFilterPanel(): void {
+  resetFilters(): void {
     this.searchKey = null;
     this.dateRange = { from: null, to: null };
 
     this.search();
-    this.showHideFilterPanel();
+    this.toggleFilters();
   }
 
   private search(): void {
     const searchParams = {
-      customerName: this.searchKey,
-      orderDate: { from: this.dateRange.from, to: this.dateRange.to }
+      searchKey: this.searchKey,
+      fromDate: this.dateRange.from,
+      toDate: this.dateRange.to
     };
 
     this.ordersFacadeService.searchOrders(searchParams);

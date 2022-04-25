@@ -76,7 +76,7 @@ namespace Mushka.Service.Services
         {
             if (!await categoryRepository.IsExistAsync(category => category.Id == categoryId, cancellationToken))
             {
-                CreateErrorValidationResponse($"Category with id {categoryId} is not found.", ValidationStatusType.NotFound);
+                CreateErrorOperationResult($"Category with id {categoryId} is not found.", ValidationStatusType.NotFound);
             }
 
             IEnumerable<Product> products = (await productRepository.GetByCategoryId(categoryId, cancellationToken))

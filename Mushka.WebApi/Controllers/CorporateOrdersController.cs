@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Mushka.Core.Extensibility.Providers;
-using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Entities;
 using Mushka.Service.Extensibility.Services;
@@ -35,59 +33,59 @@ namespace Mushka.WebApi.Controllers
         [HttpPost("search")]
         public async Task<IActionResult> Search()
         {
-            var deliveriesResponse = await corporateOrderService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<IEnumerable<CorporateOrder>>, GetAllResponseModel>(deliveriesResponse);
+            var operationResult = await corporateOrderService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<GetAllResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var orderResponse = await corporateOrderService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, CorporateOrderResponseModel>(orderResponse);
+            var operationResult = await corporateOrderService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<CorporateOrderResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CorporateOrderRequestModel corporateOrderRequest)
         {
-            var order = mapper.Map<CorporateOrderRequestModel, CorporateOrder>(corporateOrderRequest);
+            var order = mapper.Map<CorporateOrder>(corporateOrderRequest);
 
-            var orderResponse = await corporateOrderService.AddAsync(order, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(orderResponse);
+            var operationResult = await corporateOrderService.AddAsync(order, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] CorporateOrderRequestModel corporateOrderRequest)
         {
-            var order = mapper.Map<CorporateOrderRequestModel, CorporateOrder>(corporateOrderRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
+            var order = mapper.Map<CorporateOrder>(corporateOrderRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
-            var orderResponse = await corporateOrderService.UpdateAsync(order, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(orderResponse);
+            var operationResult = await corporateOrderService.UpdateAsync(order, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var orderResponse = await corporateOrderService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(orderResponse);
+            var operationResult = await corporateOrderService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpPost("validate-number")]
         public async Task<IActionResult> ValidateOrderNumber([FromBody] ValidateCorporateOrderNumberRequestModel requestModel)
         {
-            var isExist = await corporateOrderService.IsNumberExistAsync(requestModel.OrderNumber, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<bool>, ValidateCorporateOrderNumberResponseModel>(isExist);
+            var operationResult = await corporateOrderService.IsNumberExistAsync(requestModel.OrderNumber, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidateCorporateOrderNumberResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
     }
 }

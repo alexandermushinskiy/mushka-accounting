@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Mushka.Domain.Models;
+using Mushka.Domain.Strings;
 using Mushka.WebApi.ClientModels.Order.Search;
 using DateRangeModel = Mushka.Domain.Models.DateRange;
 
@@ -7,18 +8,21 @@ namespace Mushka.WebApi.Resolvers.Orders
 {
     public class OrdersFilterRequestConverter : ITypeConverter<SearchOrdersRequestModel, SearchOrdersFilter>
     {
-        public SearchOrdersFilter Convert(SearchOrdersRequestModel source, SearchOrdersFilter destination, ResolutionContext context)
+        public SearchOrdersFilter Convert(
+            SearchOrdersRequestModel source,
+            SearchOrdersFilter destination,
+            ResolutionContext context)
         {
             return new SearchOrdersFilter
             {
-                CustomerName = source.Query.Customer?.Name,
-                OrderDate = new DateRangeModel(source.Query.Order.OrderDate.From, source.Query.Order.OrderDate.To),
+                SearchKey = source.Query.SearchKey,
+                OrderDate = new DateRangeModel(source.Query.FromDate, source.Query.ToDate),
 
-                CurrentPage = source.Navigation.Page.From,
-                PageSize = source.Navigation.Page.Size,
+                CurrentPage = source.Page.From,
+                PageSize = source.Page.Size,
 
-                SortKey = source.Navigation.Sort.Key,
-                SortOrder = source.Navigation.Sort.Order
+                SortKey = source.Sort.Key,
+                IsAsc = source.Sort.Order == SortOrder.Asc
             };
         }
     }

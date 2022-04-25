@@ -1,0 +1,68 @@
+<ng-select
+      #select
+      [formControl]="control"
+      [bindValue]="bindValue"
+      [bindLabel]="bindLabel"
+      [items]="products"
+      [placeholder]="i18n.placeholder | translate"
+      [clearable]="canClearAll"
+      [loading]="isLoading"
+      [searchFn]="customSearchFn"
+      [notFoundText]="i18n.notFoundText | translate"
+      [multiple]="isMultiple"
+      [closeOnSelect]="!isMultiple"
+      [ngClass]="{ 'not-valid': hasError && !isOpened }"
+      (change)="onChange($event)"
+      (clear)="clear()"
+      (open)="toggleIsOpen(true)"
+      (close)="toggleIsOpen(false)">
+  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+    <div *ngIf="!isMultiple; else multiple" class="product-name">
+      {{ item.name }} <span class="vendor-code">({{ item.vendorCode }})</span>
+    </div>
+
+    <ng-template #multiple>
+      <mshk-checkbox2 id="item-{{index}}" [checked]="item$.selected" [label]="item.name"></mshk-checkbox2>
+    </ng-template>
+
+    <div class="text-muted" [ngClass]="{'multiple': isMultiple}">
+      <div class="row">
+        <div class="col-md-7">
+          <span class="title">{{ i18n.table.category | translate }}</span>
+          <span>{{ item.categoryName }}</span>
+        </div>
+        <!-- <div class="col-md-4">
+          <span class="title">{{ 'products.vendorCode' | translate }}</span>
+          <span>{{ item.vendorCode }}</span>
+        </div> -->
+        <div class="col-md-5">
+          <span class="title">{{ i18n.table.size | translate }}</span>
+          <span>{{ !!item.sizeName ? item.sizeName : '-' }}</span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template ng-footer-tmp *ngIf="isMultiple">
+    <button class="btn btn-primary btn-close" type="button" (click)="select.close()">
+      {{ i18n.close | translate }}
+    </button>
+  </ng-template>
+</ng-select>
+
+<mshk-icon
+  *ngIf="hasError"
+  class="error-icon"
+  [tooltip]="tooltipTmpl"
+  [name]="warningIconName"
+  [color]="warningIconColor">
+</mshk-icon>
+
+<ng-template #tooltipTmpl>
+  <div *ngIf="errors" class="validation-message">
+    <ng-container *ngFor="let error of errors | keyvalue">
+      <ng-container *ngIf="control.hasError(error.key)">
+        {{ error.value | translate }}
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template>

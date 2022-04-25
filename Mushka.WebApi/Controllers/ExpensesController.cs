@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Mushka.Core.Extensibility.Providers;
-using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Entities;
 using Mushka.Service.Extensibility.Services;
@@ -34,30 +32,30 @@ namespace Mushka.WebApi.Controllers
         [HttpPost("search")]
         public async Task<IActionResult> Search()
         {
-            var expenses = await expenseService.SearchAsync(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<IEnumerable<Expense>>, SearchExpensesResponseModel>(expenses);
+            var operationResult = await expenseService.SearchAsync(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<SearchExpensesResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpGet("{id:guid}/describe")]
         public async Task<IActionResult> Describe(Guid id)
         {
-            var expense = await expenseService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Expense>, DescribeExpenseResponseModel>(expense);
+            var operationResult = await expenseService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<DescribeExpenseResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ExpenseRequestModel expenseRequest)
         {
-            var expense = mapper.Map<ExpenseRequestModel, Expense>(expenseRequest);
+            var expense = mapper.Map<Expense>(expenseRequest);
 
-            var expenseResponse = await expenseService.AddAsync(expense, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(expenseResponse);
+            var operationResult = await expenseService.AddAsync(expense, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpPut("{id:guid}")]
@@ -65,19 +63,19 @@ namespace Mushka.WebApi.Controllers
         {
             var expense = mapper.Map<ExpenseRequestModel, Expense>(expenseRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
-            var expenseResponse = await expenseService.UpdateAsync(expense, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(expenseResponse);
+            var operationResult = await expenseService.UpdateAsync(expense, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var expenseResponse = await expenseService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(expenseResponse);
+            var operationResult = await expenseService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
     }
 }

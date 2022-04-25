@@ -1,0 +1,18 @@
+<div class="field-group typeahead-input">
+  <label *ngIf="label">{{ label | translate }}</label>
+
+  <input
+    type="text"
+    class="form-control"
+    [formControl]="control"
+    [ngbTypeahead]="searchFunc"
+    [focusFirst]="false"
+    [resultTemplate]="resultTmpl"
+    [ngClass]="{ 'not-valid': hasError }"
+    (selectItem)="selectItem($event)">
+</div>
+
+<mshk-spinner2
+  class="spinner spinner-border-thin"
+  [isLoading]="isLoading">
+</mshk-spinner2>

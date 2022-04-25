@@ -56,7 +56,7 @@ export class ExhibitionEditorComponent implements OnInit {
       return '';
     }
 
-    return product.vendorCode + (!!product.size ? ` / ${product.size.name}` : ' / -');
+    return product.vendorCode + (!!product.sizeName ? ` / ${product.sizeName}` : ' / -');
   }
 
   onProductSelected(product: SelectProduct, index: number) {
@@ -150,7 +150,7 @@ export class ExhibitionEditorComponent implements OnInit {
       this.apiExhibitionsService.describeExhibition$(this.exhibitionId)
     ).subscribe(
       ([products, exhibition]) => {
-        this.productsList = products;
+        this.productsList = products.items;
         this.buildForm(exhibition);
 
         this.loadingIndicator = false;
@@ -166,7 +166,7 @@ export class ExhibitionEditorComponent implements OnInit {
       this.apiExhibitionsService.getDefaultExhibitionProducts$()
     ).subscribe(
       ([products, defaultProducts]) => {
-        this.productsList = products;
+        this.productsList = products.items;
         this.buildForm(new Exhibition({ cost: 0, products: defaultProducts }));
 
         this.loadingIndicator = false;

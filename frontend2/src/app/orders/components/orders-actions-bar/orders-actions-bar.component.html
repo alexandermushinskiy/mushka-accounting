@@ -1,49 +1,40 @@
-<header class="header">
-  <h4 class="header-title">{{ i18n.title | translate }}</h4>
-  
-  <div class="v-divider"></div>
+<mshk-actions-bar>
+  <mshk-actions-bar-primary-area>
+    <h4 class="header-title">{{ i18n.title | translate }}</h4>
 
-  <div class="actions">
-    <button class="btn btn-icon" [routerLink]="['/orders/new']">
-      <i class="fa fa-plus" [title]="i18n.actions.addOrder | translate"></i>
+    <mshk-divider></mshk-divider>
+
+    <button type="button" class="btn btn-light" [routerLink]="['/orders/new']">
+      {{ i18n.actions.addOrder | translate }}
     </button>
-    <button class="btn btn-icon">
-      <i class="fa fa-cloud-download" [title]="i18n.actions.exportToCsv | translate" aria-hidden="true"></i>
-    </button>
-  </div>
+  </mshk-actions-bar-primary-area>
+
+  <mshk-actions-bar-secondary-area>
+    <div class="text-muted total-count" *ngIf="(isLoading$ | async) === false; else loading">
+      {{ totalItems$ | async }} {{ i18n.total | translate }}
+    </div>
+    <ng-template #loading>
+      <mshk-spinner class="spinner-border-thin" [isLoading]="true"></mshk-spinner>
+    </ng-template>
   
-  <div class="v-divider"></div>
+    <mshk-toggle-filter-button
+      [hasActiveFilters]="hasActiveFilters$ | async"
+      (onToggle)="toggleFilters()">
+    </mshk-toggle-filter-button>
+  </mshk-actions-bar-secondary-area>
+</mshk-actions-bar>
 
-  <mshk-search-form class="search" (onSearch)="onSearchChanged($event)"></mshk-search-form>
-  
-  <div class="v-divider"></div>
-
-  <mshk-select-timeframes
-    class="timeframes"
-    (onRangeSelected)="onRangeChanged($event)">
-  </mshk-select-timeframes>
-  
-  <div class="v-divider"></div>
-
-  <span class="text-muted total-count">
-    {{ totalItems$ | async }} {{ i18n.total | translate }}
-  </span>
-
-  <div class="filter">
-    <button class="btn btn-icon btn-filter" [ngClass]="{'has-active-filters': hasActiveFilters$ | async}" (click)="showHideFilterPanel()">
-      <i class="fa fa-filter"></i>
-    </button>
-  </div>
-</header>
-
-<mshk-datatable-filter-bar
-  *ngIf="isFilterPanel"
+<mshk-filter-bar
+  *ngIf="isFiltersShown"
   [searchValue]="searchKey"
   [filtersTmpl]="filtersTmpl"
   (onSearch)="onSearchChanged($event)"
-  (onClose)="clearFiltersAndHideFilterPanel()">
-</mshk-datatable-filter-bar>
+  (onClose)="resetFilters()">
+</mshk-filter-bar>
 
 <ng-template #filtersTmpl>
-  <mshk-time-frame [timeFrame]="timeFrame" (onSelected)="onRangeChanged($event)"></mshk-time-frame>
+  <mshk-time-frame
+    [timeFrame]="timeFrame"
+    (onSelected)="onRangeChanged($event)">
+  </mshk-time-frame>
 </ng-template>

@@ -33,12 +33,29 @@
 
 .ng-select.ng-select-single .ng-select-container {
   height: auto;
+  min-height: 28px;
 }
 
 .ng-select .ng-select-container {
   border-radius: 0;
   min-height: auto;
   padding: 3px 6px;
+
+  &:hover {
+    box-shadow: none;
+    border-color: #b0b0b0;
+  }
+}
+
+.ng-select.ng-select-opened>.ng-select-container:hover {
+  box-shadow: inherit;
+}
+
+ng-select.not-valid,
+.form-control.not-valid {
+  .ng-select-container {
+    box-shadow: inset 1px 0 0 0 $validation-color;
+  }
 }
 
 .ng-dropdown-panel.ng-select-bottom {
@@ -127,16 +144,6 @@
   color: $placeholder-color;
   opacity: $placeholder-opacity;
   padding-left: 3px;
-}
-
-.not-valid {
-  .ng-select-container {
-    box-shadow: inset 1px 0 0 0 $validation-color;
-    
-    &:focus {
-      box-shadow: none;
-    }
-  }
 }
 
 .timeframes

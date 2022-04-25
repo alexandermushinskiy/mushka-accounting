@@ -59,6 +59,7 @@ export class SelectTimeframesComponent implements OnInit {
   onTimeFrameChanged(timeFrame: TimeFrame) {
     this.selectedTimeFrame = timeFrame;
     const dateRange = this.getDateRange(timeFrame);
+    debugger
     this.selectDateRange(dateRange);
   }
 
@@ -113,7 +114,9 @@ export class SelectTimeframesComponent implements OnInit {
   }
 
   private selectDateRange(dateRange: DateRange) {
-    this.onRangeSelected.emit({ ...(dateRange || this.defaultValue) });
+    const t1 = { ...(dateRange || this.defaultValue) };
+    debugger
+    this.onRangeSelected.emit(t1); // { ...(dateRange || this.defaultValue) });
   }
 
   private getDateRange(timeFrame: TimeFrame): DateRange {

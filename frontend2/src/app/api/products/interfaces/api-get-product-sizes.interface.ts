@@ -1,6 +1,6 @@
 export namespace ApiGetProductSizes {
   export interface Response {
-    data: {
+    items: {
       id: string;
       name: string;
     }[];

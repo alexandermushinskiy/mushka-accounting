@@ -2,8 +2,8 @@
 
 namespace Mushka.WebApi.ClientModels.Customer
 {
-    public class CustomersResponseModel : ResponseModelBase
+    public class CustomersResponseModel
     {
-        public IEnumerable<CustomerModel> Data { get; set; }
+        public IEnumerable<CustomerModel> Customers { get; set; }
     }
 }

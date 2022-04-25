@@ -4,6 +4,7 @@ import { catchError, finalize, map, tap } from 'rxjs/operators';
 
 import { ApiProductsService } from '../../api/products/services/api-products.service';
 import { NotificationsService } from '../../core/notifications/notifications.service';
+import { ItemsList } from '../../shared/interfaces/items-list.interface';
 import { ProductList } from '../../shared/models/product-list.model';
 import { I18N } from '../constants/i18n.const';
 
@@ -24,7 +25,7 @@ export class ProductsTableService {
   }
 
   fetchProducts(categoryId: string): void {
-    const sources$ = new Subject<ProductList[]>();
+    const sources$ = new Subject<ItemsList<ProductList>>();
     this.setStartFetchingState();
 
     this.fetchSubscription = combineLatest([
@@ -34,8 +35,8 @@ export class ProductsTableService {
       .pipe(
         map(x => x[1]),
         finalize(() => this.setEndFetchingState()),
-        tap((products: ProductList[]) => {
-          this.items$.next(products);
+        tap((products: ItemsList<ProductList>) => {
+          this.items$.next(products.items);
         }),
         catchError(error => {
           this.items$.next([]);

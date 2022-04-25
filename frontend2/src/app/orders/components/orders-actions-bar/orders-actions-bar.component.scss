@@ -1,64 +1,34 @@
 @import '../../../variables';
 
-.header {
-  align-items: stretch;
-  background-color: $layer1;
-  min-height: 45px;
+mshk-actions-bar {
+  display: block;
   margin: -16px -16px 16px;
-  padding-left: 16px;
+}
+
+.header-title {
   display: flex;
   align-items: center;
+  min-height: 48px;
 
-  &-title {
-    display: flex;
-    align-items: center;
-    min-height: 48px;
-
-    font-size: 1.8rem;
-    font-weight: 700;
-    line-height: 2.1rem;
-    margin-bottom: 0;
-  }
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 2.1rem;
+  margin-bottom: 0;
 }
 
-.v-divider {
-  flex: 0 1 auto;
-  align-self: center;
-  width: 1px;
-  min-width: 1px;
-  height: 24px;
-  background-color: $black;
-  margin: 0 16px;
-}
+// .btn-filter {
+//   .fa-filter {
+//     color: transparent;
+//     -webkit-text-stroke-width: 1px;
+//     -webkit-text-stroke-color: $paragraph;
+//   }
 
-.btn-icon:not(:last-child) {
-  margin-right: 15px;
-}
-
-.timeframes,
-.search {
-  width: 250px;
-}
-
-.filter {
-  font-size: 18px;
-  position: absolute;
-  right: 20px;
-}
-
-.btn-filter {
-  .fa-filter {
-    color: transparent;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: $paragraph;
-  }
-
-  &:hover {
-    .fa-filter {
-      -webkit-text-stroke-color: $blue;
-    }
-  }
-}
+//   &:hover {
+//     .fa-filter {
+//       -webkit-text-stroke-color: $blue;
+//     }
+//   }
+// }
 
 .has-active-filters.btn-filter {
   .fa-filter {

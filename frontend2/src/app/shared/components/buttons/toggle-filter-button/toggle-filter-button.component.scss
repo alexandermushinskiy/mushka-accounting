@@ -1,0 +1,27 @@
+@import '../../../../variables';
+
+.btn-filter {
+  .fa-filter {
+    color: transparent;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: $paragraph;
+  }
+
+  &:hover {
+    .fa-filter {
+      -webkit-text-stroke-color: $blue;
+    }
+  }
+}
+
+.has-active-filters.btn-filter {
+  .fa-filter {
+    color: $paragraph
+  }
+
+  &:hover {
+    .fa-filter {
+      color: $blue;
+    }
+  }
+}

@@ -1,13 +1,17 @@
 export namespace ApiDescribeProduct {
   export interface Response {
+    product: Product;
+    category: Category;
+    size?: Size;
+  }
+
+  export interface Product {
     id: string;
     name: string;
     vendorCode: string;
     recommendedPrice: number;
     createdOn: string;
     isArchival: boolean;
-    category: Category;
-    size?: Size;
   }
 
   export interface Size {

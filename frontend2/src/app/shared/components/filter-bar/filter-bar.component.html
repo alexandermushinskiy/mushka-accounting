@@ -1,0 +1,28 @@
+<div class="filter-bar">
+  <div class="filter-bar--list">
+    <div class="filter-bar--item filter-bar--item-keyword-container">
+      <div class="flex-column flex-grow">
+        <div class="flex-grow flex-row flex-center">
+          <span aria-hidden="true" class="keyword-filter-icon">
+            <i class="fa fa-filter"></i>
+          </span>
+          <input
+            #searchInput
+            autocomplete="off"
+            class="filter-input flex-grow"
+            [placeholder]="i18n.placeholder"
+            [ngModel]="searchValue"
+            (ngModelChange)="onSearchChanged($event)">
+        </div>
+      </div>
+    </div>
+    <div class="filter-bar--item">
+      <ng-container class="filters" *ngTemplateOutlet="filtersTmpl"></ng-container>
+    </div>
+    <div class="filter-bar--right-items">
+      <button type="button" class="btn btn-icon btn-clear-filters" (click)="close()">
+        <i class="ico ico-close"></i>
+      </button>
+    </div>
+  </div>
+</div>

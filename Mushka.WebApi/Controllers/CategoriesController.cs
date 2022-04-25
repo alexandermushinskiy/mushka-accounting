@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Mushka.Core.Extensibility.Providers;
-using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Entities;
 using Mushka.Service.Extensibility.Services;
@@ -34,50 +32,50 @@ namespace Mushka.WebApi.Controllers
         [HttpPost("search")]
         public async Task<IActionResult> Search()
         {
-            var categories = await categoryService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<IEnumerable<Category>>, SearchCategoriesResponseModel>(categories);
+            var operationResult = await categoryService.GetAllAsync(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<SearchCategoriesResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var category = await categoryService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Category>, CategoryResponseModel>(category);
+            var operationResult = await categoryService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<CategoryResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CategoryRequestModel categoryRequest)
         {
-            var category = mapper.Map<CategoryRequestModel, Category>(categoryRequest);
+            var category = mapper.Map<Category>(categoryRequest);
 
-            var categoryResponse = await categoryService.AddAsync(category, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(categoryResponse);
+            var operationResult = await categoryService.AddAsync(category, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] CategoryRequestModel categoryRequest)
         {
-            var category = mapper.Map<CategoryRequestModel, Category>(categoryRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
+            var category = mapper.Map<Category>(categoryRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
-            var categoryResponse = await categoryService.UpdateAsync(category, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(categoryResponse);
+            var operationResult = await categoryService.UpdateAsync(category, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var categoryResponse = await categoryService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(categoryResponse);
+            var operationResult = await categoryService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
     }
 }

@@ -1,6 +1,7 @@
 export namespace ApiGetProductsForSale {
   export interface Response {
-    data: {
+    total: number;
+    items: {
       id: string;
       name: string;
       vendorCode: string;

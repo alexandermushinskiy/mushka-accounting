@@ -1,0 +1,23 @@
+@import '../../../variables.scss';
+
+:host(.not-valid) {
+  .datepicker-control {
+    box-shadow: inset 1px 0 0 0 $validation-color;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+
+.datepicker-control {
+  opacity: 1;
+  background-color: $white;
+}
+
+.calendar-icon {
+  font-size: 1.6rem;
+  position: absolute;
+  bottom: 16px;
+  right: 22px;
+  cursor: pointer;
+}

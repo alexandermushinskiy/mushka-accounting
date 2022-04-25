@@ -13,6 +13,10 @@ export class DatetimeService {
   //   return moment(utcDate).local().format(format);
   // }
 
+  isValid(date: string, format: string): boolean {
+    return moment(date, format).isValid();
+  }
+
   convertToFormat(date: string, format = 'DD MMM YYYY'): string {
     return moment(date).locale('ru').format(format);
   }
@@ -23,6 +27,10 @@ export class DatetimeService {
 
   toString(date: Date, format = 'YYYY-MM-DD'): string {
     return moment(date).locale('ru').format(format);
+  }
+
+  toDate(date: string, format = 'YYYY-MM-DD'): Date {
+    return moment(date, format).toDate();
   }
 
   convertFromToFormat(date: string, inputFormat = 'DD MMM YYYY', outputFormat = 'YYYY-MM-DD'): string {

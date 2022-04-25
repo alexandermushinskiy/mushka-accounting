@@ -22,12 +22,6 @@ export const I18N = {
     confirmMessage: 'orders.areYouSureToDeleteOrder',
     succeessMessage: 'orders.orderDeletedSuccessfully'
   },
-  create: {
-    successMessage: 'orders.orderAdded'
-  },
-  update: {
-    successMessage: 'orders.orderUpdated'
-  },
   dialogs: {
     deleteOrder: {
       title: 'Удалить заказ',
@@ -35,6 +29,18 @@ export const I18N = {
       confirmLabel: 'button.remove',
       cancelLabel: 'Отмена'
     }
+  },
+  messages: {
+    orderDeleted: 'orders.orderDeletedSuccessfully',
+    orderCreated: 'orders.orderAdded',
+    orderUpdated: 'orders.orderUpdated'
+  },
+  validation: {
+    requiredField: 'Поле, обязательное для заполнения.',
+    invalidEmailFormat: 'Неверный формат электронной почты.',
+    existingName: '',
+    alreadyExist: '',
+    notUnique: 'orders.orderNumberAlreadyExist'
   },
   errors: {
     searchOrdersError: 'Невозможно загрузить заказы.',

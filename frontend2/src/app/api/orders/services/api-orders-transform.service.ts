@@ -5,9 +5,6 @@ import { OrderList } from '../../../shared/models/order-list.model';
 import { DatetimeService } from '../../../core/datetime/datetime.service';
 import { ApiSearchOrders } from '../interfaces/api-serach-orders.interface';
 import { OrdersSearchParams } from '../../../orders/interfaces/orders-search-params.interface';
-import { TableSort } from '../../../shared/interfaces/table-sort.interface';
-import { TablePagination } from '../../../shared/interfaces/table-pagination.interface';
-import { OrdersFiltersSchema } from '../../../orders/interfaces/orders-filters-schema.interface';
 import { Order } from '../../../shared/models/order.model';
 import { Customer } from '../../../shared/models/customer.model';
 import { OrderProduct } from '../../../shared/models/order-product.model';
@@ -26,8 +23,17 @@ export class ApiOrdersTransformService {
 
   toSearchOrders({ filters, sort, pagination }: OrdersSearchParams): ApiSearchOrders.Request {
     return {
-      query: this.getSearchOrdersQuery(filters),
-      navigation: this.toNavigation(sort, pagination)
+      query: {
+        searchKey: filters.searchKey,
+        region: filters.region,
+        fromDate: filters.fromDate,
+        toDate: filters.toDate
+      },
+      sort,
+      page: {
+        from: pagination.offset.toString(),
+        size: pagination.limit.toString()
+      }
     };
   }
 
@@ -59,6 +65,7 @@ export class ApiOrdersTransformService {
 
   fromGetOrderDefaultProducts(response: ApiGetOrderDefaultProducts.Response): OrderProduct[] {
     return response.items.map((orderProduct: any) => new OrderProduct({
+      productId: orderProduct.id,
       quantity: orderProduct.quantity,
       unitPrice: orderProduct.unitPrice,
       costPrice: orderProduct.costPrice,
@@ -92,7 +99,7 @@ export class ApiOrdersTransformService {
       },
       products: order.products.map(orderProduct => {
         return {
-          productId: orderProduct.product.id,
+          productId: orderProduct.productId,
           quantity: orderProduct.quantity,
           unitPrice: orderProduct.unitPrice,
           costPrice: orderProduct.costPrice,
@@ -119,6 +126,7 @@ export class ApiOrdersTransformService {
 
   private toOrderProducts(source: ApiGetOrderById.OrderProduct[]): OrderProduct[] {
     return source.map((orderProduct: any) => new OrderProduct({
+      productId: orderProduct.id,
       quantity: orderProduct.quantity,
       unitPrice: orderProduct.unitPrice,
       costPrice: orderProduct.costPrice,
@@ -142,30 +150,5 @@ export class ApiOrdersTransformService {
       productsCount: source.productsCount,
       isWholesale: source.isWholesale
     });
-  }
-
-  private toNavigation(sort: TableSort, pagination: TablePagination): ApiSearchOrders.Navigation {
-    return {
-      sort: sort as ApiSearchOrders.Sort,
-      page: {
-        from: pagination.offset.toString(),
-        size: pagination.limit.toString()
-      }
-    };
-  }
-
-  private getSearchOrdersQuery(filters: OrdersFiltersSchema): ApiSearchOrders.Query {
-    if (!filters || Object.keys(filters).length === 0) {
-      return {};
-    }
-
-    return {
-      customer: {
-        name: filters.customerName.valueAsCriteria
-      },
-      order: {
-        orderDate: filters.orderDate.valueAsCriteria
-      }
-    };
   }
 }

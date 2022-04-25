@@ -10,7 +10,6 @@ using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Domain.Models;
-using Mushka.Domain.Strings;
 using Mushka.Infrastructure.DataAccess.Database;
 using Mushka.Infrastructure.DataAccess.Extensions;
 
@@ -24,49 +23,32 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
 
         public async Task<int> GetCountAsync(
             SearchOrdersFilter searchOrdersFilter,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
-            return await Context.Orders
+            var query = Context.Orders
                 .AsNoTracking()
+                .Include(order => order.Customer)
                 .Where(order => searchOrdersFilter.OrderDate.From == null || (order.OrderDate >= searchOrdersFilter.OrderDate.From))
                 .Where(order => searchOrdersFilter.OrderDate.To == null || (order.OrderDate <= searchOrdersFilter.OrderDate.To))
-                .Where(order => searchOrdersFilter.CustomerName == null ||
-                                string.Concat(order.Customer.FirstName, " ", order.Customer.LastName).ToLower()
-                                    .Contains(searchOrdersFilter.CustomerName.ToLower()))
-                .CountAsync(cancellationToken);
+                .Where(order => String.IsNullOrEmpty(searchOrdersFilter.SearchKey) ||
+                                    EF.Functions.Like(order.Customer.FullName, $"%{searchOrdersFilter.SearchKey}%") ||
+                                    EF.Functions.Like(order.Number, $"%{searchOrdersFilter.SearchKey}%"));
+
+            return await query.CountAsync(cancellationToken);
         }
 
         public async Task<IEnumerable<OrderSummaryDto>> SearchAsync(
             SearchOrdersFilter searchOrdersFilter,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             var query = Context.Orders
                 .AsNoTracking()
-                //.Include(order => order.Products)
-                //.Include(order => order.Customer)
-                //.AsQueryable()
+                .Include(order => order.Customer)
                 .Where(order => searchOrdersFilter.OrderDate.From == null || (order.OrderDate >= searchOrdersFilter.OrderDate.From))
                 .Where(order => searchOrdersFilter.OrderDate.To == null || (order.OrderDate <= searchOrdersFilter.OrderDate.To))
-                .Where(order => searchOrdersFilter.CustomerName == null ||
-                                string.Concat(order.Customer.FirstName, " ", order.Customer.LastName).ToLower()
-                                    .Contains(searchOrdersFilter.CustomerName.ToLower()))
-                ;
-
-            //if (searchOrdersFilter.FromDate.HasValue)
-            //{
-            //    query = query.Where(order => order.OrderDate >= searchOrdersFilter.FromDate);
-            //}
-
-            //if (searchOrdersFilter.ToDate.HasValue)
-            //{
-            //    query = query.Where(order => order.OrderDate <= searchOrdersFilter.ToDate);
-            //}
-
-            //if (searchOrdersFilter.Criteria != null)
-            //{
-            //    query = query.Where(order => string.Concat(order.Customer.FirstName, " ", order.Customer.LastName).ToLower()
-            //        .Contains(searchOrdersFilter.Criteria.ToLower()));
-            //}
+                .Where(order => String.IsNullOrEmpty(searchOrdersFilter.SearchKey) ||
+                                    EF.Functions.Like(order.Customer.FullName, $"%{searchOrdersFilter.SearchKey}%") ||
+                                    EF.Functions.Like(order.Number, $"%{searchOrdersFilter.SearchKey}%"));
 
             return await query
                 .Select(order => new OrderSummaryDto
@@ -75,25 +57,25 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                         OrderDate = order.OrderDate,
                         OrderNumber = order.Number,
                         Cost = order.Cost,
-                        Address = string.Concat(order.Region, ", ", order.City),
-                        CustomerName = string.Concat(order.Customer.FirstName, " ", order.Customer.LastName),
+                        Address = order.Address,
+                        CustomerName = order.Customer.FullName,
                         ProductsCount = order.Products.Sum(p => p.Quantity),
                         IsWholesale = order.IsWholesale
                     })
-                .OrderBy(searchOrdersFilter.SortKey, searchOrdersFilter.SortOrder == SortOrder.Asc)
+                .OrderBy(searchOrdersFilter.SortKey, searchOrdersFilter.IsAsc)
                 .Skip(searchOrdersFilter.CurrentPage * searchOrdersFilter.PageSize)
                 .Take(searchOrdersFilter.PageSize)
                 .ToListAsync(cancellationToken);
         }
 
-        public override async Task<IEnumerable<Order>> GetAllAsync(CancellationToken cancellationToken = default) =>
+        public override async Task<IEnumerable<Order>> GetAllAsync(CancellationToken cancellationToken) =>
             await Context.Orders
                 .AsNoTracking()
                 .Include(order => order.Customer)
                 .Include(order => order.Products)
                 .ToListAsync(cancellationToken);
 
-        public override async Task<Order> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
+        public override async Task<Order> GetByIdAsync(Guid id, CancellationToken cancellationToken) =>
             await Context.Orders
                 .Where(order => order.Id == id)
                 .AsNoTracking()
@@ -104,7 +86,7 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
                     .ThenInclude(prod => prod.Product.Category)
                 .FirstOrDefaultAsync(cancellationToken);
 
-        public async Task<int> GetSoldProductCount(Guid productId, CancellationToken cancellationToken = default) =>
+        public async Task<int> GetSoldProductCount(Guid productId, CancellationToken cancellationToken) =>
             await Context.Set<OrderProduct>()
                 .Where(sp => sp.ProductId == productId)
                 .SumAsync(sp => sp.Quantity, cancellationToken);

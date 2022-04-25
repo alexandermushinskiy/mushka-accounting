@@ -27,7 +27,7 @@ namespace Mushka.WebApi.Filters
                     .Select(GetMessage)
                     .ToArray();
 
-                context.Result = new BadRequestObjectResult(mapper.Map<IEnumerable<string>, ResponseModelBase>(errorMessages));
+                context.Result = new BadRequestObjectResult(mapper.Map<ErrorResponseModel>(errorMessages));
             }
         }
 

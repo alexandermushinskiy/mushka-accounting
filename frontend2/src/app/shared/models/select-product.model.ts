@@ -7,8 +7,8 @@ export class SelectProduct {
   vendorCode: string;
   recommendedPrice: number;
   quantity: number;
-  category: Category;
-  size: Size;
+  categoryName: Category;
+  sizeName: Size;
   disabled: boolean;
 
   get nameWithVendorCode(): string {

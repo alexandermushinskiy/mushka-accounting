@@ -1,0 +1,28 @@
+<div class="field-group datepicker-input">
+  <label *ngIf="label">{{ label | translate }}</label>
+
+  <mshk-datepicker
+    #datepicker
+    [control]="control"
+    [placeholder]="placeholder"
+    [ngClass]="{ 'not-valid': !this.datepicker.isOpen() && hasError }">
+  </mshk-datepicker>
+    
+  <mshk-icon
+    *ngIf="!this.datepicker.isOpen() && hasError"
+    class="error-icon"
+    [tooltip]="tooltipTmpl"
+    [name]="warningIconName"
+    [color]="warningIconColor">
+  </mshk-icon>
+</div>
+
+<ng-template #tooltipTmpl>
+  <div *ngIf="errors" class="validation-message">
+    <ng-container *ngFor="let error of errors | keyvalue">
+      <ng-container *ngIf="control.hasError(error.key) && !datepicker.isOpen()">
+        {{ error.value | translate }}
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template>

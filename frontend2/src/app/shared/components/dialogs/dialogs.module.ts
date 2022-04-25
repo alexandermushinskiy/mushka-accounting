@@ -10,6 +10,8 @@ import { CategoryEditorDialogComponent } from './components/category-editor-dial
 import { ProductEditorDialogComponent } from './components/product-editor-dialog/product-editor-dialog.component';
 import { SelectCategoryModule } from '../select-category/select-category.module';
 import { SelectSizeModule } from '../select-size/select-size.module';
+import { ModalModule } from 'ngx-bootstrap';
+import { DateRangeDialogComponent } from './components/date-range-dialog/date-range-dialog.component';
 
 @NgModule({
   imports: [
@@ -24,17 +26,20 @@ import { SelectSizeModule } from '../select-size/select-size.module';
   declarations: [
     ConfirmDialogComponent,
     CategoryEditorDialogComponent,
-    ProductEditorDialogComponent
+    ProductEditorDialogComponent,
+    DateRangeDialogComponent
   ],
   exports: [
     ConfirmDialogComponent,
     CategoryEditorDialogComponent,
-    ProductEditorDialogComponent
+    ProductEditorDialogComponent,
+    DateRangeDialogComponent
   ],
   entryComponents: [
     ConfirmDialogComponent,
     CategoryEditorDialogComponent,
-    ProductEditorDialogComponent
+    ProductEditorDialogComponent,
+    DateRangeDialogComponent
   ]
 })
 export class DialogsModule {

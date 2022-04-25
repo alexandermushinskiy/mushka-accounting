@@ -1,0 +1,27 @@
+@import '../../../../variables.scss';
+
+// .form-control.not-valid:focus {
+//   box-shadow:  !important;
+// }
+
+.datepicker-control {
+  opacity: 1;
+  background-color: $white;
+}
+
+.calendar-icon {
+  font-size: 1.6rem;
+  position: absolute;
+  bottom: 16px;
+  right: 22px;
+  cursor: pointer;
+}
+
+.datepicker-input {
+  .error-icon {
+    position: absolute;
+    right: 44px;
+    bottom: 17px;
+    color: $error-color;
+  }
+}

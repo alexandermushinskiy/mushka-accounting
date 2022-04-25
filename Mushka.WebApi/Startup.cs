@@ -95,6 +95,5 @@ namespace Mushka.WebApi
         {
             return Configuration.GetConnectionString("MushkaDb");
         }
-
     }
 }

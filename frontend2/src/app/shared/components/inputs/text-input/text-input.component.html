@@ -1,0 +1,31 @@
+<div class="field-group text-input">
+  <label *ngIf="label">{{ label | translate }}</label>
+  <input
+    type="text"
+    class="form-control"
+    [formControl]="control"
+    [readonly]="readonly"
+    [placeholder]="placeholder | translate"
+    [ngClass]="{ 'not-valid': hasError }"
+    (focus)="onFocus()"
+    (blur)="onBlur()">
+</div>
+<!-- 
+<span class="validation-tip" *ngIf="hasError">
+  Error
+</span> -->
+
+<!-- <ng-template #tooltipTmpl>
+  <div *ngIf="errors" class="validation-message">
+    <ng-container *ngFor="let error of errors | keyvalue">
+      <ng-container *ngIf="control.hasError(error.key)">
+        {{ error.value | translate }}
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template> -->
+
+<mshk-spinner2
+  class="spinner spinner-border-thin"
+  [isLoading]="isLoading">
+</mshk-spinner2>

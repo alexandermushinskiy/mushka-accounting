@@ -12,6 +12,7 @@ import { DialogsService } from '../../../shared/components/dialogs/services/dial
 import { I18N } from '../../constants/i18n.const';
 import { LanguageService } from '../../../core/language/language.service';
 import { ApiProductsService } from '../../../api/products/services/api-products.service';
+import { ItemsList } from '../../../shared/interfaces/items-list.interface';
 
 @Component({
   selector: 'mshk-supplies-list',
@@ -96,8 +97,8 @@ export class SuppliesListComponent implements OnInit, OnDestroy {
     this.isProductsLoading = true;
 
     this.apiProductsService.getProductsForSale$()
-      .subscribe((products: SelectProduct[]) => {
-        this.productsList = products;
+      .subscribe((products: ItemsList<SelectProduct>) => {
+        this.productsList = products.items;
         this.isProductsLoading = false;
       });
   }

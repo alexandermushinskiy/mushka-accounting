@@ -1,5 +1,5 @@
 import { OnDestroy, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { BsModalRef } from 'ngx-bootstrap';
 import { Subject } from 'rxjs';
 
 export abstract class BaseDialogComponent<T = void> implements OnInit, OnDestroy {
@@ -17,7 +17,7 @@ export abstract class BaseDialogComponent<T = void> implements OnInit, OnDestroy
     return !this.isCancelDisabled;
   }
 
-  protected constructor(private dialogReference: NgbActiveModal) {
+  constructor(private bsModalRef: BsModalRef) {
   }
 
   ngOnInit(): void {
@@ -27,7 +27,7 @@ export abstract class BaseDialogComponent<T = void> implements OnInit, OnDestroy
   }
 
   close(): void {
-    this.dialogReference.close();
+    this.bsModalRef.hide();
   }
 
   confirmAction(): void {

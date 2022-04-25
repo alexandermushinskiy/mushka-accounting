@@ -12,6 +12,7 @@ import { BaseDialogComponent } from '../base-dialog/base-dialog.component';
 import { ProductEditorDialogResult } from './interfaces/product-editor-dialog-result.interface';
 import { ProductEditorDialogData } from './interfaces/product-editor-dialog-data.interface';
 import { Size } from '../../../../models/size.model';
+import { BsModalRef } from 'ngx-bootstrap';
 
 @Component({
   selector: 'mshk-product-editor-dialog',
@@ -33,9 +34,9 @@ export class ProductEditorDialogComponent extends BaseDialogComponent<ProductEdi
     return super.canConfirm && this.productForm.valid;
   }
 
-  constructor(dialogReference: NgbActiveModal,
+  constructor(bsModalRef: BsModalRef,
               private formBuilder: FormBuilder) {
-    super(dialogReference);
+    super(bsModalRef);
   }
 
   ngOnInit(): void {
@@ -53,7 +54,7 @@ export class ProductEditorDialogComponent extends BaseDialogComponent<ProductEdi
       return '';
     }
 
-    return product.vendorCode + (!!product.size ? ` / ${product.size.name}` : ' / -');
+    return product.vendorCode + (!!product.sizeName ? ` / ${product.sizeName}` : ' / -');
   }
 
   confirmAction(): void {

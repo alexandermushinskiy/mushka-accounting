@@ -28,6 +28,7 @@ $paragraph: rgba(36, 36, 36, .8);
 $validation-color: #f78521;
 $clear-color: #999;
 $clear-hover-color: #818182;
+$error-color: #dc3545;
 
 // Body
 $body-color:                      $text !default;
@@ -241,6 +242,10 @@ $ngb-datepicker-weekday-color:                  $blue;
 $ngb-datepicker-cell-size:                      4rem;
 $ngb-datepicker-cell-line-height:               4rem;
 
+// Actions bar
+$actions-bar-height: 45px;
+$actions-bar-padding-x: 14px;
+$actions-bar-padding-y: 5px;
 
 @mixin text-ellipsis($width) {
   overflow: hidden;

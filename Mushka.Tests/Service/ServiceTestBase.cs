@@ -15,20 +15,20 @@ namespace Mushka.Tests.Service
             LoggerMock = MockRepository.Create<ILogger>();
         }
 
-        protected static ValidationResponse<TEntity> CreateWarningValidationResponse<TEntity>(
-            string message,
-            ValidationStatusType validationStatus = ValidationStatusType.BadOperation) =>
-            new ValidationResponse<TEntity>(default(TEntity), ValidationResult.CreateError(message, validationStatus));
+        //protected static ValidationResponse<TEntity> CreateWarningValidationResponse<TEntity>(
+        //    string message,
+        //    ValidationStatusType validationStatus = ValidationStatusType.BadOperation) =>
+        //    new ValidationResponse<TEntity>(default(TEntity), ValidationResult.CreateError(message, validationStatus));
 
-        protected static ValidationResponse<TEntity> CreateValidValidationResponse<TEntity>(
-            TEntity source,
-            string message,
-            ValidationStatusType validationStatus = ValidationStatusType.Success) =>
-            new ValidationResponse<TEntity>(source, ValidationResult.CreateInfo(message, validationStatus));
+        //protected static ValidationResponse<TEntity> CreateValidValidationResponse<TEntity>(
+        //    TEntity source,
+        //    string message,
+        //    ValidationStatusType validationStatus = ValidationStatusType.Success) =>
+        //    new ValidationResponse<TEntity>(source, ValidationResult.CreateInfo(message, validationStatus));
 
-        protected static ValidationResponse<TEntity> CreateForbiddenValidationResponse<TEntity>(
-            string message,
-            ValidationStatusType validationStatus = ValidationStatusType.Forbidden) =>
-            new ValidationResponse<TEntity>(default(TEntity), ValidationResult.CreateError(message, validationStatus));
+        //protected static ValidationResponse<TEntity> CreateForbiddenValidationResponse<TEntity>(
+        //    string message,
+        //    ValidationStatusType validationStatus = ValidationStatusType.Forbidden) =>
+        //    new ValidationResponse<TEntity>(default(TEntity), ValidationResult.CreateError(message, validationStatus));
     }
 }

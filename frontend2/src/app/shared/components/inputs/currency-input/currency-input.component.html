@@ -1,0 +1,33 @@
+<div class="field-group currency-input">
+  <label *ngIf="label">{{ label | translate }}</label>
+
+  <input
+    type="text"
+    class="form-control"
+    currencyMask
+    [options]="{ prefix: '', thousands: ' ', decimal: ',', align:'left' }"
+    [attr.placeholder]="placeholder | translate"
+    [formControl]="control"
+    [ngClass]="{ 'not-valid': hasError }"
+    (clickOutside)="blur()"
+    (blur)="blur()" />
+    
+  <mshk-icon
+    *ngIf="hasError"
+    class="error-icon"
+    [tooltip]="tooltipTmpl"
+    [name]="warningIconName"
+    [color]="warningIconColor">
+  </mshk-icon>
+</div>
+
+<ng-template #tooltipTmpl>
+  <div *ngIf="errors" class="validation-message">
+    <ng-container *ngFor="let error of errors | keyvalue">
+      <ng-container *ngIf="control.hasError(error.key)">
+        {{ error.value | translate }}
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+

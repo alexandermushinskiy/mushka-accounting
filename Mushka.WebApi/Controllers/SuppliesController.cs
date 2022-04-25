@@ -37,50 +37,50 @@ namespace Mushka.WebApi.Controllers
         {
             var suppliesFilters = mapper.Map<SearchSuppliesRequestModel, SearchSuppliesFilter> (suppliesFiltersRequestModel);
 
-            var suppliesResponse = await supplyService.SearchAsync(suppliesFilters, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<ItemsWithTotalCount<Supply>>, SearchSuppliesResponseModel>(suppliesResponse);
+            var operationResult = await supplyService.SearchAsync(suppliesFilters, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<SearchSuppliesResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpGet("{id:guid}/describe")]
         public async Task<IActionResult> Describe(Guid id)
         {
             var operationResult = await supplyService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Supply>, DescribeSupplyResponseModel>(operationResult);
-            
-            return actionResultProvider.Get(clientResponse, operationResult.Status);
+            var clientResponse = mapper.Map<DescribeSupplyResponseModel>(operationResult);
+
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] SupplyRequestModel supplyRequest)
         {
-            var supply = mapper.Map<SupplyRequestModel, Supply>(supplyRequest);
+            var supply = mapper.Map<Supply>(supplyRequest);
 
-            var supplyResponse = await supplyService.AddAsync(supply, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(supplyResponse);
+            var operationResult = await supplyService.AddAsync(supply, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] SupplyRequestModel supplyRequest)
         {
-            var supply = mapper.Map<SupplyRequestModel, Supply>(supplyRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
+            var supply = mapper.Map<Supply>(supplyRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
-            var supplyResponse = await supplyService.UpdateAsync(supply, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(supplyResponse);
+            var operationResult = await supplyService.UpdateAsync(supply, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var supplyResponse = await supplyService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(supplyResponse);
+            var operationResult = await supplyService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpPost("export")]

@@ -20,8 +20,8 @@ export class ApiCustomersService {
   getCustomerByName$(name: string): Observable<Customer[]> {
     return this.http.get(`${this.endPoint}/filter?name=${name}`)
       .pipe(
-        map((res: any) => this.transformService.fromGetCustomersByName(res.data)),
-        catchError((res: any) => throwError(res.error.messages))
+        map((res: any) => this.transformService.fromGetCustomersByName(res)),
+        catchError((error: any) => throwError(error))
       );
   }
 }

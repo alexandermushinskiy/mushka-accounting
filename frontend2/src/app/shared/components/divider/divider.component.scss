@@ -1,0 +1,14 @@
+@import '../../../variables';
+
+:host {
+  display: block;
+}
+
+.v-divider {
+  flex: 0 1 auto;
+  align-self: center;
+  width: 1px;
+  min-width: 1px;
+  height: 24px;
+  background-color: $black;
+}

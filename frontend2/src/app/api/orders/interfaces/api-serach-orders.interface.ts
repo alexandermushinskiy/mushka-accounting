@@ -1,25 +1,20 @@
 import { TableSortOrder } from '../../../shared/enums/table-sort-order.enum';
-import { BetweenCriteria } from '../../../shared/interfaces/between-criteria.interface';
-import { LikeCriteria } from '../../../shared/interfaces/like-criteria.interface';
 
 export namespace ApiSearchOrders {
   export interface Request {
-    query: Query;
-    navigation: Navigation;
+    query: {
+      searchKey?: string;
+      region?: string;
+      fromDate?: string;
+      toDate?: string;
+    };
+    sort: Sort;
+    page: Page;
   }
 
   export interface Response {
     total: number;
     items?: Order[];
-  }
-
-  export interface Query {
-    customer?: {
-      name: LikeCriteria
-    };
-    order?: {
-      orderDate?: BetweenCriteria;
-    };
   }
 
   export interface Order {
@@ -31,11 +26,6 @@ export namespace ApiSearchOrders {
     customerName: string;
     productsCount: number;
     isWholesale: boolean;
-  }
-
-  export interface Navigation {
-    sort: Sort;
-    page: Page;
   }
 
   export interface Sort {

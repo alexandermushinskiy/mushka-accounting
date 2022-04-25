@@ -1,0 +1,63 @@
+@import 'app/variables';
+
+.actions-bar {
+  background-color: $layer1;
+  height: $actions-bar-height;
+  padding: $actions-bar-padding-y $actions-bar-padding-x;
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  > :not(:first-child) {
+    margin-left: 7px;
+  }
+
+  > :not(:last-child) {
+    margin-right: 7px;
+  }
+
+  mshk-actions-bar-primary-area,
+  mshk-actions-bar-secondary-area {
+    display: flex;
+    align-items: center;
+
+    mshk-divider:not(:first-child) {
+      margin-left: 8px;
+    }
+
+    mshk-divider:not(:last-child) {
+      margin-right: 8px;
+    }
+
+    > :not(:first-child) {
+      margin-left: 8px;
+    }
+
+    > :not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+
+  mshk-actions-bar-primary-area {
+    flex: 1;
+
+    mshk-icon {
+      .icon {
+        font-size: 24px;
+      }
+    }
+  }
+
+  mshk-actions-bar-secondary-area {
+    justify-content: flex-end;
+  }
+
+  mshk-divider {
+    width: 1px;
+    height: 24px;
+  }
+}
