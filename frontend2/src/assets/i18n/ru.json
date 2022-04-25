@@ -59,8 +59,8 @@
     "exhibitions": "Выставки"
   },
   "button": {
-    "addOrder": "Добавить новый заказ",
-    "addCorporateOrder": "Добавить корпоративный заказ",
+    "addOrder": "Добавить заказ",
+    "addCorporateOrder": "Добавить заказ",
     "addProduct": "Добавить товар",
     "addSupply": "Добавить поступление",
     "addSupplier": "Добавить поставщика",
@@ -170,6 +170,7 @@
     "productName": "Наименование товара",
     "vendorCode": "Артикул",
     "size": "Размер",
+    "vendorCodeAndSize": "Артикул/Размер",
     "inArchive": "В архиве",
     "recommendedPriceAbbr": "Реком.{{separator}}цена",
     "recommendedPrice": "Рекомендованная цена",

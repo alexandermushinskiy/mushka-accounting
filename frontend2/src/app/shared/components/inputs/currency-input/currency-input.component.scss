@@ -1,0 +1,14 @@
+$error-color: #dc3545;
+
+.currency-input {
+  .error-icon {
+    position: absolute;
+    right: 16px;
+    bottom: 17px;
+    color: $error-color;
+  }
+}
+
+.validation-message {
+  font-size: 12px;
+}

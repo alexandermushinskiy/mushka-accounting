@@ -1,5 +1,5 @@
-﻿using Mushka.WebApi.ClientModels.Infrastructure.Navigation;
-using Mushka.WebApi.ClientModels.Infrastructure.Queries;
+﻿using System;
+using Mushka.WebApi.ClientModels.Infrastructure.Navigation;
 
 namespace Mushka.WebApi.ClientModels.Order.Search
 {
@@ -7,22 +7,21 @@ namespace Mushka.WebApi.ClientModels.Order.Search
     public class SearchOrdersRequestModel
     {
         public SearchOrdersQuery Query { get; set; }
-        public NavigationRequest Navigation { get; set; }
+        public SortRequestModel Sort { get; set; }
+        public PageRequestModel Page { get; set; }
     }
 
     public class SearchOrdersQuery
     {
-        public SearchOrdersCustomer Customer { get; set; }
-        public SearchOrdersOrder Order { get; set; }
+        public string SearchKey { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
     }
 
-    public class SearchOrdersCustomer
+    public abstract class SearchRequestModel<TQuery>
     {
-        public QueryLike Name { get; set; }
-    }
-
-    public class SearchOrdersOrder
-    {
-        public QueryBetween OrderDate { get; set; }
+        public TQuery Query { get; set; }
+        public SortRequestModel Sort { get; set; }
+        public PageRequestModel Page { get; set; }
     }
 }

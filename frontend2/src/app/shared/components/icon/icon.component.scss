@@ -1,0 +1,17 @@
+@import '../../../variables.scss';
+
+:host {
+  display: inline-flex;
+  align-items: center;
+}
+
+.fa-border {
+  width: $btn-add-size;
+  height: $btn-add-size;
+  color: $paragraph;
+  background-color: $white;
+  border: $border-width solid $btn-light-border !important;
+  border-radius: 100% !important;
+  padding: 0 !important;
+  line-height: ($btn-add-size - $border-width*2) !important;
+}

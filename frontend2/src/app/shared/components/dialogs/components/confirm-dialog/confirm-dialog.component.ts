@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { BsModalRef } from 'ngx-bootstrap';
 
 import { BaseDialogComponent } from '../base-dialog/base-dialog.component';
 import { ConfirmDialog } from './interfaces/confirm-dialog.interface';
@@ -12,8 +13,8 @@ import { ConfirmDialog } from './interfaces/confirm-dialog.interface';
 export class ConfirmDialogComponent extends BaseDialogComponent<void> implements OnInit {
   @Input() dialogData: ConfirmDialog;
 
-  constructor(dialogReference: NgbActiveModal) {
-    super(dialogReference);
+  constructor(bsModalRef: BsModalRef) {
+    super(bsModalRef);
   }
 
   ngOnInit(): void {

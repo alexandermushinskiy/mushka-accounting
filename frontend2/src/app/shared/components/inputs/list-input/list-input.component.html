@@ -1,0 +1,25 @@
+<div class="field-group list-input">
+  <label *ngIf="label" class="form-label">
+    {{ label | translate }}
+  </label>
+  <div class="input-group">
+    <ng-select
+      class="form-control form-select"
+      [ngClass]="{ 'not-valid': hasError && !isOpened }"
+      [bindLabel]="textField"
+      [bindValue]="dataField"
+      [clearable]="clearable"
+      [searchable]="searchable"
+      [placeholder]="placeholder | translate"
+      [notFoundText]="notFoundText | translate"
+      [formControl]="control"
+      (change)="onChange.emit($event)"
+      (open)="toggleIsOpen(true)"
+      (close)="toggleIsOpen(false)"
+    >
+      <ng-option *ngFor="let option of options" [value]="option.value">
+        {{ option.label | translate }}
+      </ng-option>
+    </ng-select>
+  </div>
+</div>

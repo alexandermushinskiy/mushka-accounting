@@ -1,0 +1,81 @@
+<!-- <div class="row">
+  <div class="col-md-12"> -->
+    <div class="form-row products-titles" [ngClass]="{'p-right-25': formProducts.length > 1}">
+      <div class="col-sm-4">
+        {{ i18n.products.productName.label | translate }}
+      </div>
+      <div class="col-sm-2">
+        {{ i18n.products.vendorCodeAndSize.label | translate }}
+      </div>
+      <div class="col-sm-2">{{ i18n.products.costPrice.label | translate }}</div>
+      <div class="col-sm-2">{{ i18n.products.price.label | translate }}</div>
+      <div class="col-sm-2">{{ i18n.products.quantity.label | translate }}</div>
+    </div>
+    <div class="form-row product-row"
+         *ngFor="let productCtrl of formProducts.controls; let index=index"
+         [ngClass]="{'p-right-25': formProducts.length > 1}">
+      
+      <div class="col-sm-4">
+        <div class="field-group">
+          <mshk-select-product2
+            [control]="productCtrl.get('productId')"
+            [products]="availableProducts"
+            [canClearAll]="false"
+            [errors]="errors"
+            (onSelected)="onChanged(index)">
+          </mshk-select-product2>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <mshk-text-input
+          [control]="productCtrl.get('sizeAndVendorCode')">
+        </mshk-text-input>
+      </div>
+      <div class="col-sm-2">
+        <mshk-text-input
+          [control]="productCtrl.get('costPrice')">
+        </mshk-text-input>
+      </div>
+      <div class="col-sm-2">
+        <div class="field-group">
+          <mshk-currency-input2
+            [id]="'unitPrice-' + index"
+            [placeholder]="i18n.products.price.label"
+            [control]="productCtrl.get('unitPrice')"
+            [errors]="errors">
+          </mshk-currency-input2>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="field-group">
+          <mshk-text-input
+            [control]="productCtrl.get('quantity')"
+            [placeholder]="i18n.products.quantity.label"
+            [withDelay]="true"
+            [debounceTime]="0"
+            [errors]="errors"
+            (onChange)="onChanged(index)">
+          </mshk-text-input>
+          <span class="validation-tip" *ngIf="productCtrl.hasError('max', ['quantity'])">
+            Q{{ i18n.products.inStock | translate: {separator: ' '} }} {{ productCtrl.value.maxQuantity }}
+          </span>
+        </div>  
+        <button type="button" class="btn-remove"
+                *ngIf="formProducts.length > 1"
+                [title]="i18n.actions.removeProduct | translate" 
+                (click)="removeProduct(index)">
+          <i class="ico ico-close"></i>
+        </button>
+      </div>
+
+    </div>
+    <button class="btn-add" type="button" [title]="i18n.actions.addProduct | translate" (click)="addProduct()">
+      <i class="fa fa-plus fa-border"></i>
+    </button>
+    <!-- <mshk-icon-button
+      [label]="i18n.actions.addProduct"
+      [iconName]="'plus'"
+      (onClick)="addProduct()">
+    </mshk-icon-button> -->
+  <!-- </div>
+</div> -->

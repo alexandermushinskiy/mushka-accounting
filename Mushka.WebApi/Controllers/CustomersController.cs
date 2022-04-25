@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Mushka.Core.Extensibility.Providers;
-using Mushka.Core.Validation;
-using Mushka.Domain.Entities;
 using Mushka.Service.Extensibility.Services;
 using Mushka.WebApi.ClientModels.Customer;
 using Mushka.WebApi.Extensibility.Providers;
@@ -29,11 +26,10 @@ namespace Mushka.WebApi.Controllers
         [HttpGet("filter")]
         public async Task<IActionResult> Filter(string name)
         {
-            var customerResponse = await customerService.GetByNameAsync(name, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<IEnumerable<Customer>>, CustomersResponseModel>(customerResponse);
+            var operationResult = await customerService.GetByNameAsync(name, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<CustomersResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
-
     }
 }

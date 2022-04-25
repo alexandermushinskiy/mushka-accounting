@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { NgbDate, NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
 
-import { I18n, CustomDatepickerI18n } from '../../../../assets/i18n/datepicker-i18n';
+import { I18n, DatepickerI18n } from '../../components/datepicker/services/datepicker-i18n';
 import { DateRange } from '../../models/date-range.model';
 import { DatetimeService } from '../../../core/datetime/datetime.service';
 
@@ -9,7 +9,7 @@ import { DatetimeService } from '../../../core/datetime/datetime.service';
   selector: 'mshk-date-range-modal',
   templateUrl: './date-range-modal.component.html',
   styleUrls: ['./date-range-modal.component.scss'],
-  providers: [I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }]
+  providers: [I18n, { provide: NgbDatepickerI18n, useClass: DatepickerI18n }]
 })
 export class DateRangeModalComponent implements OnInit {
   @Input() title = 'timeframe.range';

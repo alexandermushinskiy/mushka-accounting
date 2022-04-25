@@ -33,6 +33,8 @@ namespace Mushka.Domain.Entities
 
         public string Region { get; set; }
 
+        public string Address => $"{Region}, {City}";
+
         public Guid CustomerId { get; set; }
         public Customer Customer { get; set; }
 

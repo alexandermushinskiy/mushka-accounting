@@ -7,7 +7,9 @@
       <div class="app-page-header">
         <div class="app-page-description">
           <mshk-back-arrow></mshk-back-arrow>
-          <h1 class="app-page-title">{{ (isEdit ? 'orders.editOrder' : 'orders.addNewOrder') | translate }}</h1>
+          <h1 class="app-page-title">
+            {{ (isEdit ? i18n.title.editOrder : i18n.title.createOrder) | translate }}
+          </h1>
         </div>
       </div>
       <div class="content-body">
@@ -17,55 +19,53 @@
               <div class="col-sm-6">
                 <div class="row">
                   <div class="col-md-12">
-                    <div class="fields-group-title">{{ 'orders.orderDetails' | translate }}</div>
+                    <div class="fields-group-title">{{ i18n.orderDetails.title | translate }}</div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-6">
                     <div class="field-group">
-                      <label for="address">{{ 'common.date' | translate }}</label>
-                      <mshk-datetimepicker-wrapper formControlName="orderDate" [required]="true"></mshk-datetimepicker-wrapper>
+                      <mshk-datepicker-input
+                        [control]="orderForm.get('orderDate')"
+                        [label]="i18n.orderDetails.orderDate.label"
+                        [errors]="validationErrors">
+                      </mshk-datepicker-input>
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <div class="field-group">
-                      <label for="address">{{ 'orders.orderNumber' | translate }}</label>
-                      <mshk-delayed-input formControlName="number"
-                                        [type]="'text'"
-                                        [required]="true"
-                                        [ngClass]="{'not-valid': orderForm.controls.number.invalid && ngForm.submitted}"
-                                        (onInput)="onNumberChanged($event)">
-                      </mshk-delayed-input>
-                      <mshk-spinner class="spinner-border-thin validate-order-number" [isLoading]="isNumberValidating$ | async"></mshk-spinner>
-                      <!-- <span class="validation-tip" *ngIf="orderForm.hasError('required', ['number']) && ngForm.submitted">Обязательно</span> -->
-                      <!-- <span class="validation-tip" *ngIf="!isOrderNumberValid">Номер уже существует</span> -->
-                      <span class="validation-tip" *ngIf="!orderForm.hasError('required', ['number']) && orderForm.hasError('notUnique', ['number'])">{{ 'orders.orderNumberAlreadyExist' | translate }}</span>
-                    </div>
+                    <mshk-text-input
+                      [control]="orderForm.get('number')"
+                      [label]="i18n.orderDetails.orderNumber.label"
+                      [withDelay]="true"
+                      [isLoading]="isNumberValidating$ | async"
+                      [errors]="validationErrors"
+                      (onChange)="onNumberChanged($event)">
+                    </mshk-text-input>
                   </div>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="row">
                   <div class="col-md-12">
-                    <div class="fields-group-title">{{ 'orders.deliveryAddress' | translate }}</div>
+                    <div class="fields-group-title">{{ i18n.deliveryAddress.title | translate }}</div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-6">
-                    <div class="field-group">
-                      <label for="address">{{ 'orders.region' | translate }}</label>
-                      <mshk-dropdown formControlName="region"
-                                    [options]="regions"
-                                    [ngClass]="{'not-valid': orderForm.controls.region.invalid && ngForm.submitted}">
-                      </mshk-dropdown>
-                    </div>
+                    <mshk-list-input
+                      [label]="i18n.deliveryAddress.region.label"
+                      [control]="orderForm.get('region')"
+                      [options]="regionOptions"
+                      [placeholder]="i18n.payment.costMethod.placeholder"
+                      [errors]="validationErrors">
+                    </mshk-list-input>
                   </div>
                   <div class="col-md-6">
-                    <div class="field-group">
-                      <label for="address">{{ 'orders.city' | translate }}</label>
-                      <input type="text" class="form-control" formControlName="city"
-                              [ngClass]="{'not-valid': orderForm.controls.city.invalid && ngForm.submitted}">
-                    </div>
+                    <mshk-text-input
+                      [control]="orderForm.get('city')"
+                      [label]="i18n.deliveryAddress.city.label"
+                      [errors]="validationErrors">
+                    </mshk-text-input>
                   </div>
                 </div>
               </div>
@@ -76,46 +76,43 @@
               <div class="col-sm-12">
                 <div class="row">
                   <div class="col-sm-12">
-                    <div class="fields-group-title">{{ 'orders.buyerData' | translate }}</div>
+                    <div class="fields-group-title">{{ i18n.buyerDetails.title | translate }}</div>
                   </div>
                 </div>
                 <div class="row" formGroupName="customer">
                   <div class="col-sm-3">
-                    <div class="field-group">
-                      <label>{{ 'customer.firstName' | translate }}</label>
-                      <input type="text" class="form-control" 
-                                          formControlName="firstName"
-                                          [ngbTypeahead]="searchName"
-                                          [focusFirst]="false"
-                                          [resultTemplate]="customerTemplate"
-                                          [ngClass]="{'not-valid': orderForm.get('customer').get('firstName').invalid && ngForm.submitted}"
-                                          (selectItem)="onSelectCustomer($event)">
-                    </div>
+                    <mshk-typeahead-input
+                      [control]="orderForm.get('customer.firstName')"
+                      [label]="i18n.buyerDetails.firstName.label"
+                      [source$]="searchNameSource$"
+                      [resultTmpl]="customerTmpl"
+                      [errors]="validationErrors"
+                      (onSelect)="onSelectCustomer($event)">
+                    </mshk-typeahead-input>
                   </div>
                   <div class="col-sm-3">
-                    <div class="field-group">
-                      <label>{{ 'customer.lastName' | translate }}</label>
-                      <input type="text" class="form-control"
-                                          formControlName="lastName"
-                                          [ngbTypeahead]="searchName"
-                                          [focusFirst]="false"
-                                          [resultTemplate]="customerTemplate"
-                                          [ngClass]="{'not-valid': orderForm.get('customer').get('lastName').invalid && ngForm.submitted}"
-                                          (selectItem)="onSelectCustomer($event)">
-                    </div>
+                    <mshk-typeahead-input
+                      [control]="orderForm.get('customer.lastName')"
+                      [label]="i18n.buyerDetails.lastName.label"
+                      [source$]="searchNameSource$"
+                      [resultTmpl]="customerTmpl"
+                      [errors]="validationErrors"
+                      (onSelect)="onSelectCustomer($event)">
+                    </mshk-typeahead-input>
                   </div>
                   <div class="col-sm-3">
-                    <div class="field-group">
-                      <label>{{ 'customer.phone' | translate }}</label>
-                      <input type="text" class="form-control" formControlName="phone"
-                              [ngClass]="{'not-valid': orderForm.get('customer').get('phone').invalid && ngForm.submitted}">
-                    </div>
+                    <mshk-text-input
+                      [control]="orderForm.get('customer.phone')"
+                      [label]="i18n.buyerDetails.phone.label"
+                      [errors]="validationErrors">
+                    </mshk-text-input>
                   </div>
                   <div class="col-sm-3">
-                    <div class="field-group">
-                      <label>{{ 'common.email' | translate }}</label>
-                      <input type="text" class="form-control" formControlName="email">
-                    </div>
+                    <mshk-text-input
+                      [control]="orderForm.get('customer.email')"
+                      [label]="i18n.buyerDetails.email.label"
+                      [errors]="validationErrors">
+                    </mshk-text-input>
                   </div>
                 </div>
                 
@@ -127,18 +124,31 @@
 
             <div class="row">
               <div class="col-md-12">
-                <div class="fields-group-title">{{ 'common.productList' | translate }}</div>
+                <div class="fields-group-title">{{ i18n.products.title | translate }}</div>
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-12">
+                <mshk-order-products
+                  #orderProducts
+                  [availableProducts]="availableProducts"
+                  [products]="products"
+                  (onChange)="onProductsChanged($event)">
+                </mshk-order-products>
+              </div>
+            </div>
+
+            <!-- <div class="row">
+              <div class="col-md-12">
                 <div class="form-row products-titles" [ngClass]="{'p-right-25': formProducts.length > 1}">
-                  <div class="col-sm-4">{{ 'products.productName' | translate }}</div>
-                  <div class="col-sm-2">{{ 'products.vendorCode' | translate }}/{{ 'products.size' | translate }}</div>
-                  <div class="col-sm-2">{{ 'products.costPrice' | translate }}</div>
-                  <div class="col-sm-2">{{ 'products.price' | translate }}</div>
-                  <div class="col-sm-2">{{ 'products.quantity' | translate }}</div>
+                  <div class="col-sm-4">{{ i18n.products.productName.label | translate }}</div>
+                  <div class="col-sm-2">
+                    {{ i18n.products.vendorCodeAndSize.label | translate }}
+                  </div>
+                  <div class="col-sm-2">{{ i18n.products.costPrice.label | translate }}</div>
+                  <div class="col-sm-2">{{ i18n.products.price.label | translate }}</div>
+                  <div class="col-sm-2">{{ i18n.products.quantity.label | translate }}</div>
                 </div>
                 <div formArrayName="products">
                   <div class="form-row product-row" [formGroupName]="index"
@@ -146,62 +156,63 @@
                                   [ngClass]="{'p-right-25': formProducts.length > 1}">
                     <div class="col-sm-4">
                       <div class="field-group">
-                        <mshk-select-products formControlName="product"
-                                            [products]="productsList"
-                                            [canClearAll]="false"
-                                            [ngClass]="{'not-valid': productControl.controls.product.invalid && ngForm.submitted}"
-                                            (onProductSelected)="onProductSelected($event, index)">
-                        </mshk-select-products>
+                        <mshk-select-product2
+                          [control]="productControl.get('product')"
+                          [products]="productsList"
+                          [canClearAll]="false"
+                          (onSelected)="onProductSelected($event, index)">
+                        </mshk-select-product2>
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <mshk-text-input
+                        [readonly]="true"
+                        [value]="getProductSizeAndVendorCode(productControl.value.product)">
+                      </mshk-text-input>
+                    </div>
+                    <div class="col-sm-2">
+                      <mshk-text-input
+                        [control]="productControl.get('costPrice')">
+                      </mshk-text-input>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="field-group">
+                        <mshk-currency-input2
+                          [id]="'unitPrice-' + index"
+                          [placeholder]="i18n.products.price.label"
+                          [control]="productControl.get('unitPrice')"
+                          [errors]="validationErrors">
+                        </mshk-currency-input2>
                       </div>
                     </div>
                     <div class="col-sm-2">
                       <div class="field-group">
-                        <input type="text" class="form-control" disabled
-                              [value]="getProductSizeAndVendorCode(productControl.value.product)">
-                      </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="field-group">
-                        <input type="text" class="form-control" formControlName="costPrice">
-                      </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="field-group">
-                        <mshk-currency-input formControlName="unitPrice"
-                                            [placeholder]="'products.price' | translate"
-                                            [required]="true"
-                                            [id]="'unitPrice-' + index"
-                                            [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && ngForm.submitted}">
-                        </mshk-currency-input>
-                      </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="field-group">
-                        <mshk-delayed-input 
-                                        formControlName="quantity"
-                                        [placeholder]="'products.quantity' | translate"
-                                        [required]="true"
-                                        [ngClass]="{'not-valid': productControl.controls.unitPrice.invalid && ngForm.submitted}"
-                                        (onInput)="onQuantityChanged(index, $event)">
-                        </mshk-delayed-input>
+                        <mshk-text-input
+                          [control]="productControl.get('quantity')"
+                          [placeholder]="i18n.products.quantity.label"
+                          [withDelay]="true"
+                          [isLoading]="isNumberValidating$ | async"
+                          [errors]="validationErrors"
+                          (onChange)="onQuantityChanged(index, $event)">
+                        </mshk-text-input>
                         <span class="validation-tip" *ngIf="productControl.hasError('max', ['quantity'])">
-                          {{ 'products.inStock' | translate: {separator: ' '} }} {{ productControl.value.product.quantity }}
+                          {{ i18n.products.inStock | translate: {separator: ' '} }} {{ productControl.value.product.quantity }}
                         </span>
                       </div>  
                       <button type="button" class="btn-remove"
                               *ngIf="formProducts.length > 1"
-                              [title]="'button.remove' | translate" 
+                              [title]="i18n.actions.removeProduct | translate" 
                               (click)="removeProduct(index)">
                         <i class="ico ico-close"></i>
                       </button>
                     </div>
                   </div>
                 </div>
-                <button class="btn-add" type="button" [title]="'button.addProduct' | translate" (click)="addProduct()">
+                <button class="btn-add" type="button" [title]="i18n.actions.addProduct | translate" (click)="addProduct()">
                   <i class="fa fa-plus fa-border"></i>
                 </button>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -213,45 +224,54 @@
         <div class="aside-body-inner">
           <div class="row">
             <div class="col-md-12 cost">
-              <span class="cost-title">{{ 'orders.cost' | translate }}:</span>
+              <span class="cost-title">{{ i18n.payment.cost | translate }}:</span>
               <span class="cost-value">
-                <mshk-currency-input formControlName="cost"></mshk-currency-input>
+                <mshk-currency-input2
+                  [control]="orderForm.get('cost')">
+                </mshk-currency-input2>
               </span>
               <span class="cost-payment-type">
-                <mshk-select-payment-methods
-                              formControlName="costMethod"
-                              [required]="true"
-                              [ngClass]="{'not-valid': orderForm.controls.costMethod.invalid && ngForm.submitted}">
-                </mshk-select-payment-methods>
+                <mshk-list-input
+                  [control]="orderForm.get('costMethod')"
+                  [options]="costMethodOptions"
+                  [placeholder]="i18n.payment.costMethod.placeholder"
+                  [errors]="validationErrors">
+                </mshk-list-input>
               </span>
             </div>
             <div class="col-md-12 cost">
-              <span class="cost-title">{{ 'orders.discount' | translate }}:</span>
+              <span class="cost-title">{{ i18n.payment.discount | translate }}:</span>
               <span class="cost-value">
-                <mshk-delayed-input [value]="discount"
-                                  (onInput)="onDiscountChanged($event)">
-                </mshk-delayed-input>
+                <mshk-text-input
+                  [value]="discount"
+                  [withDelay]="true"
+                  (onChange)="onDiscountChanged($event)">
+                </mshk-text-input>
               </span>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12 profit">
-              <span class="profit-title">{{ 'orders.profit' | translate }}:</span>
+              <span class="profit-title">{{ i18n.payment.profit | translate }}:</span>
               <span>{{ profit | mshkCurrency }}</span>
             </div>
           </div>
           <div class="row notes-row">
             <div class="col-md-12">
-              <div class="field-group">
-                <label>{{ 'common.notes' | translate }}</label>
-                <textarea class="notes" rows="5" formControlName="notes"></textarea>
-              </div>
+              <mshk-textarea-input
+                class="notes"
+                [label]="i18n.payment.notes"
+                [control]="orderForm.get('notes')">
+              </mshk-textarea-input>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
               <div class="field-group">
-                <mshk-checkbox formControlName="isWholesale" [text]="'orders.wholesaleOrder' | translate"></mshk-checkbox>
+                <mshk-checkbox2
+                  [control]="orderForm.get('isWholesale')"
+                  [label]="i18n.payment.wholesaleOrder">
+                </mshk-checkbox2>
               </div>
             </div>
           </div>
@@ -262,16 +282,17 @@
 
   <div class="footer">
     <div class="footer-buttons">
-      <button type="button" class="btn btn-light" [routerLink]="['/orders']" [disabled]="isSaving$ | async">{{ 'button.cancel' | translate }}</button>
-      <button type="submit" class="btn btn-primary with-spinner" [disabled]="isSaving$ | async">
-        <div *ngIf="isSaving$ | async" class="btn-spinner"></div>
-        {{ 'button.save' | translate }}
+      <button type="button" class="btn btn-light" [routerLink]="['/orders']" [disabled]="isSaving">
+        {{ i18n.actions.cancel | translate }}
+      </button>
+      <button type="submit" class="btn btn-primary with-spinner" [disabled]="isSaving">
+        <div *ngIf="isSaving" class="btn-spinner"></div>
+        {{ i18n.actions.save | translate }}
       </button>
     </div>
   </div>
 </form>
 
-<ng-template #customerTemplate let-r="result" let-t="term">
+<ng-template #customerTmpl let-r="result" let-t="term">
   <ngb-highlight [result]="r.nameWithPhone" [term]="t"></ngb-highlight>
 </ng-template>
-

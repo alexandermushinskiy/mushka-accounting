@@ -10,16 +10,23 @@ import { I18N } from '../constants/i18n.const';
   providedIn: 'root'
 })
 export class ValidateOrderNumberService {
-  isValid$ = new Subject<boolean>();
-  isLoading$ = new BehaviorSubject<boolean>(false);
-
   private readonly fetchMinDelay = 500;
   private readonly defaultError = I18N.errors.validateOrderNumberError;
 
   private fetchSubscription: Subscription;
+  private isValid$ = new Subject<boolean>();
+  private isLoading$ = new BehaviorSubject<boolean>(false);
 
   constructor(private apiOrdersService: ApiOrdersService,
               private notificationsService: NotificationsService) {
+  }
+
+  getIsLoading$(): Observable<boolean> {
+    return this.isLoading$.asObservable();
+  }
+
+  getIsValid$(): Observable<boolean> {
+    return this.isValid$.asObservable();
   }
 
   validateOrderNumber$(orderNumber: string): Observable<boolean> {

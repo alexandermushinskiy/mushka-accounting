@@ -8,10 +8,8 @@ import { OrderProduct } from '../../shared/models/order-product.model';
 import { Order } from '../../shared/models/order.model';
 import { OrderDetailsService } from './order-details.service';
 import { OrderProductsService } from './order-products.service';
-import { OrderService } from './order.service';
 import { OrdersSearchParamsService } from './orders-search-params.service';
 import { OrdersTableService } from './orders-table.service';
-import { ValidateOrderNumberService } from './validate-order-number.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +17,8 @@ import { ValidateOrderNumberService } from './validate-order-number.service';
 export class OrdersFacadeService {
   constructor(private ordersSearchParamsService: OrdersSearchParamsService,
               private ordersTableService: OrdersTableService,
-              private orderService: OrderService,
               private orderDetailsService: OrderDetailsService,
-              private orderProductsService: OrderProductsService,
-              private validateOrderNumberService: ValidateOrderNumberService
+              private orderProductsService: OrderProductsService
               ) {
   }
 
@@ -48,22 +44,6 @@ export class OrdersFacadeService {
 
   getOrderDefaultProducts$(): Observable<OrderProduct[]> {
     return this.orderProductsService.fetchOrderDefaultProducts$();
-  }
-
-  createOrder$(order: Order): Observable<void> {
-    return this.orderService.create$(order);
-  }
-
-  updateOrder$(orderId: string, order: Order): Observable<void> {
-    return this.orderService.update$(orderId, order);
-  }
-
-  getSaveOrderLoadingFlag$(): Observable<boolean> {
-    return this.orderService.isSaving$.asObservable();
-  }
-
-  deleteOrder$(orderId: string): Observable<void> {
-    return this.orderService.delete$(orderId);
   }
 
   getTableItems$(): Observable<OrderList[]> {
@@ -106,13 +86,5 @@ export class OrdersFacadeService {
     };
 
     this.ordersTableService.fetchOrders(params);
-  }
-
-  validateOrderNumber$(orderNumber: string): Observable<boolean> {
-    return this.validateOrderNumberService.validateOrderNumber$(orderNumber);
-  }
-
-  getValidateOrderNumberLoadingFlag$(): Observable<boolean> {
-    return this.validateOrderNumberService.isLoading$.asObservable();
   }
 }

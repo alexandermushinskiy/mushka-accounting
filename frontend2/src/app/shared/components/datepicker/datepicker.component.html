@@ -1,0 +1,17 @@
+<input
+    ngbDatepicker
+    readonly
+    #datepicker="ngbDatepicker"
+    type="text"
+    name="dp"
+    class="form-control datepicker-control"
+    [formControl]="formControl"
+    [placeholder]="placeholder"
+    (click)="togglePicker()">
+
+<mshk-icon
+  class="calendar-icon"
+  [name]="calendarIconName"
+  [color]="calendarIconColor"
+  (click)="togglePicker()">
+</mshk-icon>

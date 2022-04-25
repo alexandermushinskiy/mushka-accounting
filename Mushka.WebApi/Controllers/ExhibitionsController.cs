@@ -39,59 +39,59 @@ namespace Mushka.WebApi.Controllers
         [HttpPost("search")]
         public async Task<IActionResult> Search()
         {
-            var exhibitionsResponse = await exhibitionService.SearchAsync(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<IEnumerable<Exhibition>>, SearchExhibitionsResponseModel>(exhibitionsResponse);
+            var operationResult = await exhibitionService.SearchAsync(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<SearchExhibitionsResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpGet("{id:guid}/describe")]
         public async Task<IActionResult> Describe(Guid id)
         {
-            var exhibitionResponse = await exhibitionService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Exhibition>, DescribeExhibitionResponseModel>(exhibitionResponse);
+            var operationResult = await exhibitionService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<DescribeExhibitionResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpGet("default-products")]
         public async Task<IActionResult> GetDefaultProducts()
         {
-            var productsResponse = await defaultProductsProvider.GetExhibitionProducts(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<IEnumerable<ExhibitionProduct>>, GetDefaultExhibitionProductsResponseModel>(productsResponse);
+            var operationResult = await defaultProductsProvider.GetExhibitionProducts(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<GetDefaultExhibitionProductsResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
         
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ExhibitionRequestModel exhibitionRequest)
         {
-            var exhibition = mapper.Map<ExhibitionRequestModel, Exhibition>(exhibitionRequest);
+            var exhibition = mapper.Map<Exhibition>(exhibitionRequest);
 
-            var exhibitionResponse = await exhibitionService.AddAsync(exhibition, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(exhibitionResponse);
+            var operationResult = await exhibitionService.AddAsync(exhibition, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] ExhibitionRequestModel exhibitionRequest)
         {
-            var exhibition = mapper.Map<ExhibitionRequestModel, Exhibition>(exhibitionRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
+            var exhibition = mapper.Map<Exhibition>(exhibitionRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
-            var exhibitionResponse = await exhibitionService.UpdateAsync(exhibition, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(exhibitionResponse);
+            var operationResult = await exhibitionService.UpdateAsync(exhibition, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var exhibitionResponse = await exhibitionService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(exhibitionResponse);
+            var operationResult = await exhibitionService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
     }
 }

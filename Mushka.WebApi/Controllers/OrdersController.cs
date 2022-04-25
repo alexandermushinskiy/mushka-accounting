@@ -43,9 +43,9 @@ namespace Mushka.WebApi.Controllers
         [HttpPost("search")]
         public async Task<IActionResult> Search([FromBody] SearchOrdersRequestModel requestModel)
         {
-            var searchFilter = mapper.Map<SearchOrdersRequestModel, SearchOrdersFilter>(requestModel);
+            var searchFilter = mapper.Map<SearchOrdersFilter>(requestModel);
             var operationResult = await orderService.SearchAsync(searchFilter, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<ItemsList<OrderSummaryDto>>, SearchOrdersResponseModel>(operationResult);
+            var clientResponse = mapper.Map<SearchOrdersResponseModel>(operationResult);
             
             return actionResultProvider.GetNew(operationResult, clientResponse);
         }
@@ -53,19 +53,19 @@ namespace Mushka.WebApi.Controllers
         [HttpGet("default-products")]
         public async Task<IActionResult> GetDefaultProducts()
         {
-            var productsResponse = await defaultProductsProvider.GetOrderDefaultProducts(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<IEnumerable<OrderProduct>>, OrderDefaultProductResponseModel>(productsResponse);
+            var operationResult = await defaultProductsProvider.GetOrderDefaultProducts(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<OrderDefaultProductResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var orderResponse = await orderService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Order>, OrderResponseModel>(orderResponse);
+            var operationResult = await orderService.GetByIdAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<OrderResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpPost]
@@ -73,10 +73,10 @@ namespace Mushka.WebApi.Controllers
         {
             var order = mapper.Map<OrderRequestModel, Order>(orderRequest);
 
-            var orderResponse = await orderService.AddAsync(order, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(orderResponse);
+            var operationResult = await orderService.AddAsync(order, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpPut("{id:guid}")]
@@ -84,28 +84,28 @@ namespace Mushka.WebApi.Controllers
         {
             var order = mapper.Map<OrderRequestModel, Order>(orderRequest, opt => opt.Items.Add(nameof(IEntity.Id), id));
 
-            var orderResponse = await orderService.UpdateAsync(order, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(orderResponse);
+            var operationResult = await orderService.UpdateAsync(order, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var orderResponse = await orderService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult, EmptyResponseModel>(orderResponse);
+            var operationResult = await orderService.DeleteAsync(id, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<EmptyResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpPost("validate-number")]
         public async Task<IActionResult> ValidateOrderNumber([FromBody] ValidateOrderNumberRequestModel requestModel)
         {
-            var isExist = await orderService.IsNumberExistAsync(requestModel.OrderNumber, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<bool>, ValidateOrderNumberResponseModel>(isExist);
+            var operationResult = await orderService.IsNumberExistAsync(requestModel.OrderNumber, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<ValidateOrderNumberResponseModel>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpPost("export")]

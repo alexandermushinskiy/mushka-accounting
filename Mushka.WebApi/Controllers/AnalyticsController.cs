@@ -29,55 +29,55 @@ namespace Mushka.WebApi.Controllers
         [HttpGet("balance")]
         public async Task<IActionResult> GetBalance()
         {
-            var popularProducts = await analyticsService.GetBalance(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<Balance>, AnalyticsResponseModel<Balance>>(popularProducts);
+            var operationResult = await analyticsService.GetBalance(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<AnalyticsResponseModel<Balance>>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpGet("popular-products")]
         public async Task<IActionResult> GetPopularProducts()
         {
-            var popularProducts = await analyticsService.GetPopularProducts(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<IEnumerable<PopularProduct>>, AnalyticsResponseModel<PopularProduct[]>>(popularProducts);
+            var operationResult = await analyticsService.GetPopularProducts(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<AnalyticsResponseModel<PopularProduct[]>>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpGet("unpopular-products")]
         public async Task<IActionResult> GetUnpopularProducts()
         {
-            var unpopularProducts = await analyticsService.GetUnpopularProducts(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<IEnumerable<PopularProduct>>, AnalyticsResponseModel<PopularProduct[]>>(unpopularProducts);
+            var operationResult = await analyticsService.GetUnpopularProducts(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<AnalyticsResponseModel<PopularProduct[]>>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpGet("popular-cities")]
         public async Task<IActionResult> GetPopularCities()
         {
-            var popularCities = await analyticsService.GetPopularCities(cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<IEnumerable<PopularCity>>, AnalyticsResponseModel<PopularCity[]>>(popularCities);
+            var operationResult = await analyticsService.GetPopularCities(cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<AnalyticsResponseModel<PopularCity[]>>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpGet("orders")]
         public async Task<IActionResult> GetOrders(int period)
         {
-            var orderCounts = await analyticsService.GetOrdersCount(period, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<IEnumerable<OrdersCount>>, AnalyticsResponseModel<OrdersCount[]>>(orderCounts);
+            var operationResult = await analyticsService.GetOrdersCount(period, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<AnalyticsResponseModel<OrdersCount[]>>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
 
         [HttpGet("sold-products")]
         public async Task<IActionResult> GetSoldProducts(int period)
         {
-            var soldProductsCounts = await analyticsService.GetSoldProductsCount(period, cancellationTokenSourceProvider.Get().Token);
-            var clientResponse = mapper.Map<OperationResult<IEnumerable<SoldProductsCount>>, AnalyticsResponseModel<SoldProductsCount[]>>(soldProductsCounts);
+            var operationResult = await analyticsService.GetSoldProductsCount(period, cancellationTokenSourceProvider.Get().Token);
+            var clientResponse = mapper.Map<AnalyticsResponseModel<SoldProductsCount[]>>(operationResult);
 
-            return actionResultProvider.Get(clientResponse);
+            return actionResultProvider.GetNew(operationResult, clientResponse);
         }
     }
 }

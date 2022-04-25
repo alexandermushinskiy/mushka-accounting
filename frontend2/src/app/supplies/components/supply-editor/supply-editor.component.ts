@@ -50,7 +50,7 @@ export class SupplyEditorComponent implements OnInit {
       return '';
     }
 
-    return `${product.vendorCode} / ${(!!product.size ? `${product.size.name}` : '-')}`;
+    return `${product.vendorCode} / ${(!!product.sizeName ? `${product.sizeName}` : '-')}`;
   }
 
   addProduct() {
@@ -151,7 +151,7 @@ export class SupplyEditorComponent implements OnInit {
       this.apiProductsService.getProductsForSale$()
       ).subscribe(([supply, suppliers, products]) => {
         this.suppliers = suppliers.items;
-        this.productsList = products;
+        this.productsList = products.items;
 
         this.buildForm(!!supply ? supply : new Supply({ cost: 0, products: [new SupplyProduct({})] }));
 

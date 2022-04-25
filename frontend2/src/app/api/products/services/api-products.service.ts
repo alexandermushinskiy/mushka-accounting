@@ -9,6 +9,7 @@ import { environment } from '../../../../environments/environment';
 import { Size } from '../../../shared/models/size.model';
 import { Product } from '../../../shared/models/product.model';
 import { SelectProduct } from '../../../shared/models/select-product.model';
+import { ItemsList } from '../../../shared/interfaces/items-list.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class ApiProductsService {
               private transformService: ApiProductsTransformService) {
   }
 
-  getProductsByCategory$(categoryId: string): Observable<ProductList[]> {
+  getProductsByCategory$(categoryId: string): Observable<ItemsList<ProductList>> {
     const url = `${environment.apiEndpoint}/api/v1/categories/${categoryId}/products`;
 
     return this.http.get(url)
@@ -33,7 +34,7 @@ export class ApiProductsService {
   describeProduct$(productId: string): Observable<Product> {
     return this.http.get(`${this.endPoint}/${productId}`)
       .pipe(
-        map((res: any) => this.transformService.fromDescribeProduct(res.data)),
+        map((res: any) => this.transformService.fromDescribeProduct(res)),
         catchError((res: any) => throwError(res.error.messages))
       );
   }
@@ -74,12 +75,12 @@ export class ApiProductsService {
   getProductCostPrice$(productId: string, productsCount: number): Observable<number> {
     return this.http.get(`${this.endPoint}/${productId}/costprice?productsCount=${productsCount}`)
       .pipe(
-        map((res: any) => res.data.costPrice),
+        map((res: any) => res.costPrice),
         catchError((res: any) => throwError(res.error.messages))
       );
   }
 
-  getProductsForSale$(): Observable<SelectProduct[]> {
+  getProductsForSale$(): Observable<ItemsList<SelectProduct>> {
     return this.http.get(`${this.endPoint}/select`)
       .pipe(
         map((res: any) => this.transformService.fromGetProductsForSale(res)),

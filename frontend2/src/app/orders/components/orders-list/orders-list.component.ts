@@ -4,11 +4,11 @@ import { mergeMap } from 'rxjs/operators';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 
 import { OrderList } from '../../../shared/models/order-list.model';
-import { NotificationsService } from '../../../core/notifications/notifications.service';
 import { OrdersFacadeService } from '../../services/orders-facade.service';
 import { DialogsService } from '../../../shared/components/dialogs/services/dialogs.service';
 import { I18N } from '../../constants/i18n.const';
 import { LanguageService } from '../../../core/language/language.service';
+import { DeleteOrderService } from '../../services/delete-order.service';
 
 @Component({
   selector: 'mshk-orders-list',
@@ -27,8 +27,8 @@ export class OrdersListComponent implements OnInit, OnDestroy {
 
   constructor(private dialogsService: DialogsService,
               private ordersFacadeService: OrdersFacadeService,
-              private notificationsService: NotificationsService,
-              private languageService: LanguageService) {
+              private languageService: LanguageService,
+              private deleteOrderService: DeleteOrderService) {
   }
 
   ngOnInit(): void {
@@ -38,26 +38,17 @@ export class OrdersListComponent implements OnInit, OnDestroy {
     this.pageIndex$ = this.ordersFacadeService.getPageIndex$();
     this.isLoading$ = this.ordersFacadeService.getTableLoadingFlag$();
 
-    this.ordersFacadeService.searchOrders({
-      customerName: null,
-      orderDate: { from: null, to: null }
-    });
+    this.ordersFacadeService.searchOrders({});
   }
 
   ngOnDestroy(): void {
   }
 
-  onActive(event: any): void {
-    if (event.type === 'click') {
-      event.cellElement.blur();
-    }
+  sort({ key, order }: any): void {
+    this.ordersFacadeService.sortOrders({ key, order });
   }
 
-  onSort({ prop, dir }: any): void {
-    this.ordersFacadeService.sortOrders({ key: prop, order: dir.toUpperCase() });
-  }
-
-  onPage({ limit, offset }: any): void {
+  changePage({ limit, offset }: any): void {
     this.ordersFacadeService.paginateOrders({ offset, limit });
   }
 
@@ -72,20 +63,15 @@ export class OrdersListComponent implements OnInit, OnDestroy {
 
     dialog.confirm$
       .pipe(
+        untilDestroyed(this),
         mergeMap(() => {
           dialog.isLoading = true;
-          return this.ordersFacadeService.deleteOrder$(order.id);
-        }),
-        untilDestroyed(this)
+          return this.deleteOrderService.deleteOrder$(order.id);
+        })
       )
       .subscribe(() => {
         dialog.close();
-        this.onDeleteSuccess();
+        this.ordersFacadeService.fetchOrders();
       });
-  }
-
-  private onDeleteSuccess() {
-    this.notificationsService.success('orders.orderDeletedSuccessfully');
-    this.ordersFacadeService.fetchOrders();
   }
 }

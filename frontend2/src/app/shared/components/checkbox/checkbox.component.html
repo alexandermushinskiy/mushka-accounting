@@ -1,0 +1,5 @@
+<span class="area" (click)="change()">
+  <input id="mk-checkbox" type="checkbox">
+  <span class="checkbox" [ngClass]="{ 'checked': control.value }"></span>
+  <span class="text">{{ label | translate }}</span>
+</span>

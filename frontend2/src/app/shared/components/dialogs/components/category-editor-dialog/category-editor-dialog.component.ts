@@ -6,6 +6,7 @@ import { BaseDialogComponent } from '../base-dialog/base-dialog.component';
 import { I18N } from './constants/i18n.const';
 import { CategoryEditorDialogResult } from './interfaces/category-editor-dialog-result.interface';
 import { CategoryEditorDialogData } from './interfaces/category-editor-dialog-data.interface';
+import { BsModalRef } from 'ngx-bootstrap';
 
 @Component({
   selector: 'mshk-category-editor-dialog',
@@ -25,9 +26,9 @@ export class CategoryEditorDialogComponent extends BaseDialogComponent<CategoryE
     return super.canConfirm && this.categoryForm.valid;
   }
 
-  constructor(dialogReference: NgbActiveModal,
+  constructor(bsModalRef: BsModalRef,
               private formBuilder: FormBuilder) {
-    super(dialogReference);
+    super(bsModalRef);
   }
 
   ngOnInit(): void {

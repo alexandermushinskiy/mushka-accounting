@@ -5,15 +5,13 @@ import { map } from 'rxjs/operators';
 import { TableSortOrder } from '../../shared/enums/table-sort-order.enum';
 import { TablePagination } from '../../shared/interfaces/table-pagination.interface';
 import { TableSort } from '../../shared/interfaces/table-sort.interface';
-import { BetweenCriteriaFilter } from '../../shared/models/filtering/between-criteria-filter.model';
-import { LikeCriteriaFilter } from '../../shared/models/filtering/like-criteria-filter.model';
-import { OrdersFiltersSchema } from '../interfaces/orders-filters-schema.interface';
+import { OrderFilters } from '../interfaces/order-filters.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrdersSearchParamsService {
-  filters$ = new BehaviorSubject<OrdersFiltersSchema>(this.defaultFilters);
+  filters$ = new BehaviorSubject<OrderFilters>(this.defaultFilters);
   pagination$ = new BehaviorSubject<TablePagination>(this.defaultPagination);
   sort$ = new BehaviorSubject<TableSort>(this.defaultSort);
 
@@ -27,8 +25,8 @@ export class OrdersSearchParamsService {
     const currentFilters = { ...this.defaultFilters };
 
     Object.entries(currentFilters)
-      .forEach(([filterName, filter]) => {
-        filter.value = filters[filterName];
+      .forEach(([filterName, _]) => {
+        currentFilters[filterName] = filters[filterName];
       });
 
     this.filters$.next(currentFilters);
@@ -48,15 +46,16 @@ export class OrdersSearchParamsService {
     return this.filters$.asObservable()
       .pipe(
         map(filter => {
-          return !(filter.customerName.isEmpty() && filter.orderDate.isEmpty());
+          return !!filter.searchKey || !!filter.fromDate || !!filter.toDate;
         })
       );
   }
 
-  private get defaultFilters(): OrdersFiltersSchema {
+  private get defaultFilters(): OrderFilters {
     return {
-      customerName: new LikeCriteriaFilter(),
-      orderDate: new BetweenCriteriaFilter()
+      searchKey: null,
+      fromDate: null,
+      toDate: null
     };
   }
 

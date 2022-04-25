@@ -17,6 +17,8 @@
 @import 'assets/styles/ngb-datepicker.scss';
 @import 'assets/styles/ngx-toastr.scss';
 @import 'assets/styles/icons.scss';
+@import 'assets/styles/actions-bar.scss';
+@import 'assets/styles/scrollbar.scss';
 @import 'app/variables';
 
 html {
@@ -85,6 +87,7 @@ textarea {
 
 .field-group label {
   display: block;
+  margin-bottom: 0;
 }
 
 .field-group, form .field-group {

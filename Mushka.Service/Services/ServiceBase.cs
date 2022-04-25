@@ -12,16 +12,11 @@ namespace Mushka.Service.Services
         {
         }
 
-        protected ValidationResponse<TEntity> CreateInfoValidationResponse(TEntity entity, string message)
-        {
-            return CreateInfoValidationResponse<TEntity>(entity, message);
-        }
-
-        protected ValidationResponse<TEntity> CreateErrorValidationResponse(
+        protected OperationResult<TEntity> CreateErrorOperationResult(
             string message,
             ValidationStatusType validationStatus = ValidationStatusType.BadOperation)
         {
-            return CreateErrorValidationResponse<TEntity>(message, validationStatus);
+            return CreateErrorOperationResult<TEntity>(message, validationStatus);
         }
     }
 
@@ -34,16 +29,11 @@ namespace Mushka.Service.Services
             Logger = loggerFactory.CreateLogger(GetType().Name);
         }
 
-        protected ValidationResponse<TResult> CreateInfoValidationResponse<TResult>(TResult result, string message)
-        {
-            return new ValidationResponse<TResult>(result, ValidationResult.CreateInfo(message));
-        }
-
-        protected ValidationResponse<TResult> CreateErrorValidationResponse<TResult>(
+        protected OperationResult<TResult> CreateErrorOperationResult<TResult>(
             string message,
-            ValidationStatusType validationStatus = ValidationStatusType.BadOperation) where TResult : class
+            ValidationStatusType validationStatus)
         {
-            return new ValidationResponse<TResult>(null, ValidationResult.CreateError(message, validationStatus));
+            return OperationResult<TResult>.FromError(message, validationStatus);
         }
     }
 }

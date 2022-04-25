@@ -1,0 +1,31 @@
+<div class="order-date-filter" ngbDropdown container="body" placement="bottom-right">
+  <button class="btn" ngbDropdownToggle>
+    <span [ngClass]="{ 'placeholder': !selectedValue, 'selected-value': selectedValue }">
+      {{ selectedValue ? selectedValue : i18n.placeholder }}
+    </span>
+    <i class="ico-chevron-down"></i>
+  </button>
+
+  <div ngbDropdownMenu aria-labelledby="dropdown" class="dropdown-max-height">
+    <button
+      type="button"
+      ngbDropdownItem
+      class="dropdown-item"
+      *ngFor="let timeframe of timeframes"
+      (click)="onChange(timeframe.id)"
+    >
+      {{ timeframe.name | translate }}
+    </button>
+    <ng-container *ngIf="!!selectedValue">
+      <div class="dropdown-divider"></div>
+      <button type="button" ngbDropdownItem class="dropdown-item btn-clear" (click)="clear()">
+        <i class="ico ico-close"></i>
+        <span>{{ i18n.clear | translate }}</span>
+      </button>
+    </ng-container>
+    <!-- <div class="btn-clear">
+      <i class="ico ico-close"></i>
+      <span>Clear</span>
+    </div> -->
+  </div>
+</div>

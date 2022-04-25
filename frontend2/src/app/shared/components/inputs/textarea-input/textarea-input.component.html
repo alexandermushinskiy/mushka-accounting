@@ -1,0 +1,11 @@
+<div class="field-group textarea-input">
+  <label *ngIf="label">{{ label | translate }}</label>
+
+  <textarea
+    class="form-control"
+    [rows]="rowsCount"
+    [formControl]="control"
+    [readonly]="readonly"
+    [placeholder]="placeholder | translate">
+  </textarea>
+</div>
