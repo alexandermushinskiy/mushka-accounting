@@ -5,13 +5,16 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Mushka.Api.Converters.Exhibitions;
 using Mushka.Api.Converters.Expenses;
 using Mushka.Api.Converters.Suppliers;
 using Mushka.Api.Converters.Supplies;
 using Mushka.Api.Exporters;
 using Mushka.Api.Filters;
 using Mushka.Application.Behaviors;
+using Mushka.Application.Exhibitions.Converters;
 using Mushka.Application.Expenses.Converters;
+using Mushka.Application.Providers;
 using Mushka.Application.Suppliers.Converters;
 using Mushka.Application.Supplies.Converters;
 using Mushka.Application.Supplies.Export;
@@ -100,6 +103,14 @@ static void RegisterServices(ContainerBuilder container)
     container.RegisterType<SearchSuppliersConverter>().As<ISearchSuppliersConverter>();
     container.RegisterType<DescribeSupplierConverter>().As<IDescribeSupplierConverter>();
     container.RegisterType<SupplierRequestConverter>().As<ISupplierRequestConverter>();
+
+    container.RegisterType<CreateExhibitionConverter>().As<ICreateExhibitionConverter>();
+    container.RegisterType<UpdateExhibitionConverter>().As<IUpdateExhibitionConverter>();
+    container.RegisterType<SearchExhibitionsConverter>().As<ISearchExhibitionsConverter>();
+    container.RegisterType<DescribeExhibitionConverter>().As<IDescribeExhibitionConverter>();
+    container.RegisterType<GetDefaultExhibitionProductsConverter>().As<IGetDefaultExhibitionProductsConverter>();
+    container.RegisterType<ExhibitionRequestConverter>().As<IExhibitionRequestConverter>();
+    container.RegisterType<CostPriceProvider>().As<ICostPriceProvider>();
 
     container.RegisterType<CreateSupplyConverter>().As<ICreateSupplyConverter>();
     container.RegisterType<UpdateSupplyConverter>().As<IUpdateSupplyConverter>();
