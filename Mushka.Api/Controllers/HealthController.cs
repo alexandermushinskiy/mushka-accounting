@@ -1,8 +1,8 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Mediator;
 using Microsoft.AspNetCore.Mvc;
-using Mushka.Application.Health.Queries;
+using Mushka.Application.Health.Queries.Ping;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Mushka.Api.Controllers;
 
