@@ -66,7 +66,7 @@ public class SuppliesControllerTests
     public async Task Post_SendsConvertedCommand_AndReturnsOk()
     {
         var request = new SupplyRequestModel();
-        var command = new CreateSupplyCommand(null, new List<SupplyProductCommandModel>());
+        var command = new CreateSupplyCommand(null, new List<SupplyProductData>());
         _converter.Setup(converter => converter.ToCreateCommand(request)).Returns(command);
         _sender
             .Setup(sender => sender.Send(command, It.IsAny<CancellationToken>()))
@@ -83,7 +83,7 @@ public class SuppliesControllerTests
     {
         var id = Guid.NewGuid();
         var request = new SupplyRequestModel();
-        var command = new UpdateSupplyCommand(id, null, new List<SupplyProductCommandModel>());
+        var command = new UpdateSupplyCommand(id, null, new List<SupplyProductData>());
         _converter.Setup(converter => converter.ToUpdateCommand(id, request)).Returns(command);
         _sender
             .Setup(sender => sender.Send(command, It.IsAny<CancellationToken>()))

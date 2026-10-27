@@ -147,14 +147,14 @@ public class SupplierCommandHandlerTests
 
     private static CreateSupplierCommand CreateCommand(string name) =>
         new CreateSupplierCommand(
-            new SupplierCommandModel(name, null, null, null, null, null),
-            new List<ContactPersonCommandModel>(),
-            new List<PaymentCardCommandModel>());
+            new SupplierData(name, null, null, null, null, null),
+            new List<ContactPersonData>(),
+            new List<PaymentCardData>());
 
     private static UpdateSupplierCommand UpdateCommand(Guid id, string name) =>
         new UpdateSupplierCommand(
             id,
-            new SupplierCommandModel(name, null, null, null, null, null),
-            new List<ContactPersonCommandModel>(),
-            new List<PaymentCardCommandModel>());
+            new SupplierData(name, null, null, null, null, null),
+            new List<ContactPersonData>(),
+            new List<PaymentCardData>());
 }

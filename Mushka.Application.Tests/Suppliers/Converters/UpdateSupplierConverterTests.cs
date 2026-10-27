@@ -29,9 +29,9 @@ public class UpdateSupplierConverterTests
         var contactPersonId = Guid.NewGuid();
         var command = new UpdateSupplierCommand(
             supplierId,
-            new SupplierCommandModel("Acme", "Street", "acme@example.com", "https://acme.example", "socks", "note"),
-            new List<ContactPersonCommandModel> { new ContactPersonCommandModel(contactPersonId, "Ann", "ann@example.com", "123") },
-            new List<PaymentCardCommandModel> { new PaymentCardCommandModel(null, "1111", "Ann") });
+            new SupplierData("Acme", "Street", "acme@example.com", "https://acme.example", "socks", "note"),
+            new List<ContactPersonData> { new ContactPersonData(contactPersonId, "Ann", "ann@example.com", "123") },
+            new List<PaymentCardData> { new PaymentCardData(null, "1111", "Ann") });
 
         var supplier = _converter.ToSupplier(command);
 
@@ -55,7 +55,7 @@ public class UpdateSupplierConverterTests
     {
         var command = new UpdateSupplierCommand(
             Guid.NewGuid(),
-            new SupplierCommandModel("Acme", null, null, null, null, null),
+            new SupplierData("Acme", null, null, null, null, null),
             null,
             null);
 

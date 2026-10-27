@@ -3,7 +3,7 @@ using Mushka.Domain.Entities;
 
 namespace Mushka.Application.Supplies.Commands;
 
-public sealed record SupplyCommandModel(
+public sealed record SupplyData(
     Guid SupplierId,
     DateTime RequestDate,
     DateTime ReceivedDate,
@@ -18,7 +18,7 @@ public sealed record SupplyCommandModel(
     decimal TotalCost,
     string Notes);
 
-public sealed record SupplyProductCommandModel(
+public sealed record SupplyProductData(
     Guid ProductId,
     int Quantity,
     decimal UnitPrice,

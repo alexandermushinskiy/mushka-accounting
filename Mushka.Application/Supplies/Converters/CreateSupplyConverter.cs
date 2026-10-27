@@ -40,8 +40,8 @@ public sealed class CreateSupplyConverter : ICreateSupplyConverter
         };
     }
 
-    private static List<SupplyProduct> ToProducts(Guid supplyId, IEnumerable<SupplyProductCommandModel> products) =>
-        (products ?? Enumerable.Empty<SupplyProductCommandModel>())
+    private static List<SupplyProduct> ToProducts(Guid supplyId, IEnumerable<SupplyProductData> products) =>
+        (products ?? Enumerable.Empty<SupplyProductData>())
             .Select(product => new SupplyProduct
             {
                 SupplyId = supplyId,

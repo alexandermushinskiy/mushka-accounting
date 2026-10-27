@@ -269,14 +269,14 @@ public class SupplyCommandHandlerTests
 
     private static CreateSupplyCommand CreateCommand(Guid productId, int quantity) =>
         new CreateSupplyCommand(
-            new SupplyCommandModel(Guid.NewGuid(), DateTime.UtcNow, DateTime.UtcNow, "desc", null, null, 1, PaymentMethod.Cash, null, null, null, 1, null),
-            new List<SupplyProductCommandModel> { new SupplyProductCommandModel(productId, quantity, 1, 1) });
+            new SupplyData(Guid.NewGuid(), DateTime.UtcNow, DateTime.UtcNow, "desc", null, null, 1, PaymentMethod.Cash, null, null, null, 1, null),
+            new List<SupplyProductData> { new SupplyProductData(productId, quantity, 1, 1) });
 
     private static UpdateSupplyCommand UpdateCommand(Guid id, Guid productId, int quantity) =>
         new UpdateSupplyCommand(
             id,
-            new SupplyCommandModel(Guid.NewGuid(), DateTime.UtcNow, DateTime.UtcNow, "desc", null, null, 1, PaymentMethod.Cash, null, null, null, 1, null),
-            new List<SupplyProductCommandModel> { new SupplyProductCommandModel(productId, quantity, 1, 1) });
+            new SupplyData(Guid.NewGuid(), DateTime.UtcNow, DateTime.UtcNow, "desc", null, null, 1, PaymentMethod.Cash, null, null, null, 1, null),
+            new List<SupplyProductData> { new SupplyProductData(productId, quantity, 1, 1) });
 
     private static Supply SupplyWith(Guid supplyId, Guid productId, int quantity) =>
         new Supply

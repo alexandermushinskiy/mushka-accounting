@@ -29,7 +29,7 @@ public sealed class ExpenseRequestConverter : IExpenseRequestConverter
                 request.SupplierName,
                 request.Notes));
 
-    private static ExpenseCommandModel ToExpense(
+    private static ExpenseData ToExpense(
         DateTime createdOn,
         ExpenseCategory category,
         string purpose,
@@ -37,5 +37,5 @@ public sealed class ExpenseRequestConverter : IExpenseRequestConverter
         PaymentMethod costMethod,
         string supplierName,
         string notes) =>
-        new ExpenseCommandModel(createdOn, category, purpose, cost, costMethod, supplierName, notes);
+        new ExpenseData(createdOn, category, purpose, cost, costMethod, supplierName, notes);
 }

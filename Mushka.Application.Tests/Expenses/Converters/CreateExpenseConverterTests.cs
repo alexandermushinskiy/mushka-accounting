@@ -25,7 +25,7 @@ public class CreateExpenseConverterTests
     public void ToExpense_MapsCommand_AndAssignsGeneratedId()
     {
         var createdOn = new DateTime(2024, 5, 6);
-        var command = new CreateExpenseCommand(new ExpenseCommandModel(
+        var command = new CreateExpenseCommand(new ExpenseData(
             createdOn,
             ExpenseCategory.Design,
             "Logo",

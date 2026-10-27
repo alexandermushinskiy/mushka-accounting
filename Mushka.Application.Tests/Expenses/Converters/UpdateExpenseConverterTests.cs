@@ -18,7 +18,7 @@ public class UpdateExpenseConverterTests
         var createdOn = new DateTime(2024, 5, 6);
         var command = new UpdateExpenseCommand(
             expenseId,
-            new ExpenseCommandModel(
+            new ExpenseData(
                 createdOn,
                 ExpenseCategory.Equipment,
                 "Camera",

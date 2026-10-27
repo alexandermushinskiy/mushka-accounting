@@ -21,8 +21,8 @@ public sealed class SupplierRequestConverter : ISupplierRequestConverter
             ToContactPersons(request.ContactPersons),
             ToPaymentCards(request.PaymentCards));
 
-    private static SupplierCommandModel ToSupplier(SupplierRequestModel supplier) =>
-        new SupplierCommandModel(
+    private static SupplierData ToSupplier(SupplierRequestModel supplier) =>
+        new SupplierData(
             supplier.Name,
             supplier.Address,
             supplier.Email,
@@ -30,18 +30,18 @@ public sealed class SupplierRequestConverter : ISupplierRequestConverter
             supplier.Service,
             supplier.Notes);
 
-    private static IReadOnlyList<ContactPersonCommandModel> ToContactPersons(IEnumerable<ContactPersonRequestModel> contactPersons) =>
+    private static IReadOnlyList<ContactPersonData> ToContactPersons(IEnumerable<ContactPersonRequestModel> contactPersons) =>
         (contactPersons ?? Enumerable.Empty<ContactPersonRequestModel>())
-            .Select(contactPerson => new ContactPersonCommandModel(
+            .Select(contactPerson => new ContactPersonData(
                 contactPerson.Id,
                 contactPerson.Name,
                 contactPerson.Email,
                 contactPerson.Phones))
             .ToList();
 
-    private static IReadOnlyList<PaymentCardCommandModel> ToPaymentCards(IEnumerable<PaymentCardRequestModel> paymentCards) =>
+    private static IReadOnlyList<PaymentCardData> ToPaymentCards(IEnumerable<PaymentCardRequestModel> paymentCards) =>
         (paymentCards ?? Enumerable.Empty<PaymentCardRequestModel>())
-            .Select(paymentCard => new PaymentCardCommandModel(
+            .Select(paymentCard => new PaymentCardData(
                 paymentCard.Id,
                 paymentCard.Number,
                 paymentCard.Owner))

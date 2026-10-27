@@ -35,15 +35,15 @@ public class CreateSupplierConverterTests
     {
         var contactPersonId = Guid.NewGuid();
         var command = new CreateSupplierCommand(
-            new SupplierCommandModel("Acme", "Street", "acme@example.com", "https://acme.example", "socks", "note"),
-            new List<ContactPersonCommandModel>
+            new SupplierData("Acme", "Street", "acme@example.com", "https://acme.example", "socks", "note"),
+            new List<ContactPersonData>
             {
-                new ContactPersonCommandModel(contactPersonId, "Ann", "ann@example.com", "123"),
-                new ContactPersonCommandModel(null, "Bob", null, null)
+                new ContactPersonData(contactPersonId, "Ann", "ann@example.com", "123"),
+                new ContactPersonData(null, "Bob", null, null)
             },
-            new List<PaymentCardCommandModel>
+            new List<PaymentCardData>
             {
-                new PaymentCardCommandModel(null, "1111", "Ann")
+                new PaymentCardData(null, "1111", "Ann")
             });
 
         var supplier = _converter.ToSupplier(command);
