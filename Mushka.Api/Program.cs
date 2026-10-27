@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Mushka.Api.Converters.Expenses;
 using Mushka.Api.Converters.Suppliers;
 using Mushka.Api.Converters.Supplies;
 using Mushka.Api.Exporters;
 using Mushka.Api.Filters;
 using Mushka.Application.Behaviors;
+using Mushka.Application.Expenses.Converters;
 using Mushka.Application.Suppliers.Converters;
 using Mushka.Application.Supplies.Converters;
 using Mushka.Application.Supplies.Export;
@@ -86,6 +88,12 @@ static void RegisterServices(ContainerBuilder container)
     container.RegisterModule<CoreAutofacModule>();
     container.RegisterModule<DataAccessAutofacModule>();
     container.RegisterModule<ExcelAutofacModule>();
+
+    container.RegisterType<CreateExpenseConverter>().As<ICreateExpenseConverter>();
+    container.RegisterType<UpdateExpenseConverter>().As<IUpdateExpenseConverter>();
+    container.RegisterType<SearchExpensesConverter>().As<ISearchExpensesConverter>();
+    container.RegisterType<DescribeExpenseConverter>().As<IDescribeExpenseConverter>();
+    container.RegisterType<ExpenseRequestConverter>().As<IExpenseRequestConverter>();
 
     container.RegisterType<CreateSupplierConverter>().As<ICreateSupplierConverter>();
     container.RegisterType<UpdateSupplierConverter>().As<IUpdateSupplierConverter>();
