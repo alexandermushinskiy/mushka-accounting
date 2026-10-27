@@ -1,10 +1,9 @@
 using Mushka.Application.Supplies.Commands;
 using Mushka.Domain.Entities;
 
-namespace Mushka.Application.Supplies.Converters
+namespace Mushka.Application.Supplies.Converters;
+
+public interface IUpdateSupplyConverter
 {
-    public interface IUpdateSupplyConverter
-    {
-        Supply ToSupply(UpdateSupplyCommand command);
-    }
+    Supply ToSupply(UpdateSupplyCommand command);
 }

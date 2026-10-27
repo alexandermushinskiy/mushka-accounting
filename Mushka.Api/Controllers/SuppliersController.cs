@@ -9,52 +9,51 @@ using Mushka.Application.Suppliers.Commands;
 using Mushka.Application.Suppliers.Queries.Describe;
 using Mushka.Application.Suppliers.Queries.Search;
 
-namespace Mushka.Api.Controllers
+namespace Mushka.Api.Controllers;
+
+[Route("api/v1/suppliers")]
+public class SuppliersController : ControllerBase
 {
-    [Route("api/v1/suppliers")]
-    public class SuppliersController : ControllerBase
+    private readonly ISupplierRequestConverter _supplierRequestConverter;
+
+    public SuppliersController(ISender sender, ISupplierRequestConverter supplierRequestConverter)
+        : base(sender)
     {
-        private readonly ISupplierRequestConverter _supplierRequestConverter;
+        _supplierRequestConverter = supplierRequestConverter;
+    }
 
-        public SuppliersController(ISender sender, ISupplierRequestConverter supplierRequestConverter)
-            : base(sender)
-        {
-            _supplierRequestConverter = supplierRequestConverter;
-        }
+    [HttpPost("search")]
+    public async Task<IActionResult> Search(CancellationToken cancellationToken)
+    {
+        var suppliers = await sender.Send(new SearchSuppliersQuery(), cancellationToken);
+        return Ok(suppliers);
+    }
 
-        [HttpPost("search")]
-        public async Task<IActionResult> Search(CancellationToken cancellationToken)
-        {
-            var suppliers = await sender.Send(new SearchSuppliersQuery(), cancellationToken);
-            return Ok(suppliers);
-        }
+    [HttpGet("{id:guid}/describe")]
+    public async Task<IActionResult> Describe(Guid id, CancellationToken cancellationToken)
+    {
+        var supplier = await sender.Send(new DescribeSupplierQuery(id), cancellationToken);
+        return Ok(supplier);
+    }
 
-        [HttpGet("{id:guid}/describe")]
-        public async Task<IActionResult> Describe(Guid id, CancellationToken cancellationToken)
-        {
-            var supplier = await sender.Send(new DescribeSupplierQuery(id), cancellationToken);
-            return Ok(supplier);
-        }
+    [HttpPost]
+    public async Task<IActionResult> Post([FromBody] CreateSupplierRequestModel request, CancellationToken cancellationToken)
+    {
+        await sender.Send(_supplierRequestConverter.ToCreateCommand(request), cancellationToken);
+        return Ok();
+    }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateSupplierRequestModel request, CancellationToken cancellationToken)
-        {
-            await sender.Send(_supplierRequestConverter.ToCreateCommand(request), cancellationToken);
-            return Ok();
-        }
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Put(Guid id, [FromBody] UpdateSupplierRequestModel request, CancellationToken cancellationToken)
+    {
+        await sender.Send(_supplierRequestConverter.ToUpdateCommand(id, request), cancellationToken);
+        return Ok();
+    }
 
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] UpdateSupplierRequestModel request, CancellationToken cancellationToken)
-        {
-            await sender.Send(_supplierRequestConverter.ToUpdateCommand(id, request), cancellationToken);
-            return Ok();
-        }
-
-        [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
-        {
-            await sender.Send(new DeleteSupplierCommand(id), cancellationToken);
-            return Ok();
-        }
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        await sender.Send(new DeleteSupplierCommand(id), cancellationToken);
+        return Ok();
     }
 }

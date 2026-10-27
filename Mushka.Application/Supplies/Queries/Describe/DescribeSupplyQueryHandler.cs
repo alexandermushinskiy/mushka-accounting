@@ -6,29 +6,28 @@ using Mushka.Application.Supplies.Converters;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Domain.Strings;
 
-namespace Mushka.Application.Supplies.Queries.Describe
+namespace Mushka.Application.Supplies.Queries.Describe;
+
+public sealed class DescribeSupplyQueryHandler : IQueryHandler<DescribeSupplyQuery, DescribeSupplyReadModel>
 {
-    public sealed class DescribeSupplyQueryHandler : IQueryHandler<DescribeSupplyQuery, DescribeSupplyReadModel>
+    private readonly ISupplyRepository _supplyRepository;
+    private readonly IDescribeSupplyConverter _converter;
+
+    public DescribeSupplyQueryHandler(IStorage storage, IDescribeSupplyConverter converter)
     {
-        private readonly ISupplyRepository _supplyRepository;
-        private readonly IDescribeSupplyConverter _converter;
+        _supplyRepository = storage.GetRepository<ISupplyRepository>();
+        _converter = converter;
+    }
 
-        public DescribeSupplyQueryHandler(IStorage storage, IDescribeSupplyConverter converter)
+    public async ValueTask<DescribeSupplyReadModel> Handle(DescribeSupplyQuery query, CancellationToken cancellationToken)
+    {
+        var supply = await _supplyRepository.GetByIdAsync(query.Id, cancellationToken);
+
+        if (supply == null)
         {
-            _supplyRepository = storage.GetRepository<ISupplyRepository>();
-            _converter = converter;
+            throw new NotFoundException(ValidationErrors.SupplyNotFound);
         }
 
-        public async ValueTask<DescribeSupplyReadModel> Handle(DescribeSupplyQuery query, CancellationToken cancellationToken)
-        {
-            var supply = await _supplyRepository.GetByIdAsync(query.Id, cancellationToken);
-
-            if (supply == null)
-            {
-                throw new NotFoundException(ValidationErrors.SupplyNotFound);
-            }
-
-            return _converter.ToReadModel(supply);
-        }
+        return _converter.ToReadModel(supply);
     }
 }

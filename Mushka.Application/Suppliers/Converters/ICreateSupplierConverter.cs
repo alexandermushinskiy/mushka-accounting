@@ -1,10 +1,9 @@
 using Mushka.Application.Suppliers.Commands;
 using Mushka.Domain.Entities;
 
-namespace Mushka.Application.Suppliers.Converters
+namespace Mushka.Application.Suppliers.Converters;
+
+public interface ICreateSupplierConverter
 {
-    public interface ICreateSupplierConverter
-    {
-        Supplier ToSupplier(CreateSupplierCommand command);
-    }
+    Supplier ToSupplier(CreateSupplierCommand command);
 }
