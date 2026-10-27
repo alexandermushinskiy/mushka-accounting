@@ -1,22 +1,15 @@
-/.vs/Mushka.Accounting/v15/*
-Mushka.Domain/bin/*
-Mushka.Domain/obj/*
-/Mushka.Core/obj
-/Mushka.Core/bin
-/Mushka.Domain/obj
-/Mushka.Domain/bin
-/Mushka.Infrastructure.DataAccess/obj
-/Mushka.Infrastructure.DataAccess/bin
-/Mushka.Service/obj
-/Mushka.Service/bin
-/Mushka.WebApi/obj
-/Mushka.WebApi/bin
-Mushka.Tests/obj
-Mushka.Tests/bin
+# directories
+**/bin/
+**/obj/
+**/out/
+**/.git/
+**/.vs/
+**/.nuget/
+
+# files
+Dockerfile*
+**/*.trx
+**/*.md
+**/*.user
 *.suo
-*.user
-.vs/
 *.bak
-/Mushka.WebApi/*.user
-/Mushka.Infrastructure.Excel/obj
-/Mushka.Infrastructure.Excel/bin
