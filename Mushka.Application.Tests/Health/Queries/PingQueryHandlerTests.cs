@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
-using Mushka.Application.Health.Queries;
+using Mushka.Application.Health.Queries.Ping;
 using Mushka.Domain.Extensibility.Repositories;
 using Xunit;
 
