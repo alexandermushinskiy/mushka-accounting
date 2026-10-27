@@ -9,129 +9,128 @@ using Mushka.Domain.Comparers;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Domain.Strings;
 
-namespace Mushka.Application.Supplies.Commands
+namespace Mushka.Application.Supplies.Commands;
+
+public sealed class SupplyCommandHandler :
+    ICommandHandler<CreateSupplyCommand>,
+    ICommandHandler<UpdateSupplyCommand>,
+    ICommandHandler<DeleteSupplyCommand>
 {
-    public sealed class SupplyCommandHandler :
-        ICommandHandler<CreateSupplyCommand>,
-        ICommandHandler<UpdateSupplyCommand>,
-        ICommandHandler<DeleteSupplyCommand>
+    private readonly IStorage _storage;
+    private readonly ISupplyRepository _supplyRepository;
+    private readonly IProductRepository _productRepository;
+    private readonly ICreateSupplyConverter _createSupplyConverter;
+    private readonly IUpdateSupplyConverter _updateSupplyConverter;
+
+    public SupplyCommandHandler(
+        IStorage storage,
+        ICreateSupplyConverter createSupplyConverter,
+        IUpdateSupplyConverter updateSupplyConverter)
     {
-        private readonly IStorage _storage;
-        private readonly ISupplyRepository _supplyRepository;
-        private readonly IProductRepository _productRepository;
-        private readonly ICreateSupplyConverter _createSupplyConverter;
-        private readonly IUpdateSupplyConverter _updateSupplyConverter;
+        _storage = storage;
+        _supplyRepository = storage.GetRepository<ISupplyRepository>();
+        _productRepository = storage.GetRepository<IProductRepository>();
+        _createSupplyConverter = createSupplyConverter;
+        _updateSupplyConverter = updateSupplyConverter;
+    }
 
-        public SupplyCommandHandler(
-            IStorage storage,
-            ICreateSupplyConverter createSupplyConverter,
-            IUpdateSupplyConverter updateSupplyConverter)
+    public async ValueTask<Unit> Handle(CreateSupplyCommand command, CancellationToken cancellationToken)
+    {
+        var supply = _createSupplyConverter.ToSupply(command);
+
+        foreach (var supplyProduct in supply.Products)
         {
-            _storage = storage;
-            _supplyRepository = storage.GetRepository<ISupplyRepository>();
-            _productRepository = storage.GetRepository<IProductRepository>();
-            _createSupplyConverter = createSupplyConverter;
-            _updateSupplyConverter = updateSupplyConverter;
+            var storedProduct = await _productRepository.GetByIdAsync(supplyProduct.ProductId, cancellationToken);
+
+            if (storedProduct == null)
+            {
+                throw new NotFoundException(ValidationErrors.ProductNotFound);
+            }
+
+            storedProduct.Quantity += supplyProduct.Quantity;
+            _productRepository.Update(storedProduct);
         }
 
-        public async ValueTask<Unit> Handle(CreateSupplyCommand command, CancellationToken cancellationToken)
+        _supplyRepository.Add(supply);
+        await _storage.SaveAsync(cancellationToken);
+
+        return Unit.Value;
+    }
+
+    public async ValueTask<Unit> Handle(UpdateSupplyCommand command, CancellationToken cancellationToken)
+    {
+        var storedSupply = await _supplyRepository.GetByIdAsync(command.Id, cancellationToken);
+
+        if (storedSupply == null)
         {
-            var supply = _createSupplyConverter.ToSupply(command);
+            throw new NotFoundException(ValidationErrors.SupplyNotFound);
+        }
 
-            foreach (var supplyProduct in supply.Products)
+        var supply = _updateSupplyConverter.ToSupply(command);
+
+        foreach (var supplyProduct in supply.Products)
+        {
+            var storedProduct = await _productRepository.GetByIdAsync(supplyProduct.ProductId, cancellationToken);
+
+            if (storedProduct == null)
             {
-                var storedProduct = await _productRepository.GetByIdAsync(supplyProduct.ProductId, cancellationToken);
+                throw new NotFoundException(ValidationErrors.ProductNotFound);
+            }
 
-                if (storedProduct == null)
-                {
-                    throw new NotFoundException(ValidationErrors.ProductNotFound);
-                }
+            var storedSupplyQuantity = storedSupply.Products
+                .FirstOrDefault(product => product.ProductId == storedProduct.Id)?.Quantity ?? 0;
 
-                storedProduct.Quantity += supplyProduct.Quantity;
+            if (storedSupplyQuantity != supplyProduct.Quantity)
+            {
+                storedProduct.Quantity = storedProduct.Quantity - storedSupplyQuantity + supplyProduct.Quantity;
                 _productRepository.Update(storedProduct);
             }
-
-            _supplyRepository.Add(supply);
-            await _storage.SaveAsync(cancellationToken);
-
-            return Unit.Value;
         }
 
-        public async ValueTask<Unit> Handle(UpdateSupplyCommand command, CancellationToken cancellationToken)
+        foreach (var removedProduct in storedSupply.Products.Except(supply.Products, new SupplyProductComparer()))
         {
-            var storedSupply = await _supplyRepository.GetByIdAsync(command.Id, cancellationToken);
+            var storedProduct = await _productRepository.GetByIdAsync(removedProduct.ProductId, cancellationToken);
 
-            if (storedSupply == null)
+            if (storedProduct == null)
             {
-                throw new NotFoundException(ValidationErrors.SupplyNotFound);
+                throw new NotFoundException(ValidationErrors.ProductNotFound);
             }
 
-            var supply = _updateSupplyConverter.ToSupply(command);
-
-            foreach (var supplyProduct in supply.Products)
-            {
-                var storedProduct = await _productRepository.GetByIdAsync(supplyProduct.ProductId, cancellationToken);
-
-                if (storedProduct == null)
-                {
-                    throw new NotFoundException(ValidationErrors.ProductNotFound);
-                }
-
-                var storedSupplyQuantity = storedSupply.Products
-                    .FirstOrDefault(product => product.ProductId == storedProduct.Id)?.Quantity ?? 0;
-
-                if (storedSupplyQuantity != supplyProduct.Quantity)
-                {
-                    storedProduct.Quantity = storedProduct.Quantity - storedSupplyQuantity + supplyProduct.Quantity;
-                    _productRepository.Update(storedProduct);
-                }
-            }
-
-            foreach (var removedProduct in storedSupply.Products.Except(supply.Products, new SupplyProductComparer()))
-            {
-                var storedProduct = await _productRepository.GetByIdAsync(removedProduct.ProductId, cancellationToken);
-
-                if (storedProduct == null)
-                {
-                    throw new NotFoundException(ValidationErrors.ProductNotFound);
-                }
-
-                storedProduct.Quantity -= removedProduct.Quantity;
-                _productRepository.Update(storedProduct);
-            }
-
-            _supplyRepository.Update(supply);
-            await _storage.SaveAsync(cancellationToken);
-
-            return Unit.Value;
+            storedProduct.Quantity -= removedProduct.Quantity;
+            _productRepository.Update(storedProduct);
         }
 
-        public async ValueTask<Unit> Handle(DeleteSupplyCommand command, CancellationToken cancellationToken)
+        _supplyRepository.Update(supply);
+        await _storage.SaveAsync(cancellationToken);
+
+        return Unit.Value;
+    }
+
+    public async ValueTask<Unit> Handle(DeleteSupplyCommand command, CancellationToken cancellationToken)
+    {
+        var supply = await _supplyRepository.GetByIdAsync(command.Id, cancellationToken);
+
+        if (supply == null)
         {
-            var supply = await _supplyRepository.GetByIdAsync(command.Id, cancellationToken);
-
-            if (supply == null)
-            {
-                throw new NotFoundException(ValidationErrors.SupplyNotFound);
-            }
-
-            foreach (var supplyProduct in supply.Products)
-            {
-                var storedProduct = await _productRepository.GetByIdAsync(supplyProduct.ProductId, cancellationToken);
-
-                if (storedProduct == null)
-                {
-                    throw new NotFoundException(ValidationErrors.ProductNotFound);
-                }
-
-                storedProduct.Quantity -= supplyProduct.Quantity;
-                _productRepository.Update(storedProduct);
-            }
-
-            _supplyRepository.Delete(supply);
-            await _storage.SaveAsync(cancellationToken);
-
-            return Unit.Value;
+            throw new NotFoundException(ValidationErrors.SupplyNotFound);
         }
+
+        foreach (var supplyProduct in supply.Products)
+        {
+            var storedProduct = await _productRepository.GetByIdAsync(supplyProduct.ProductId, cancellationToken);
+
+            if (storedProduct == null)
+            {
+                throw new NotFoundException(ValidationErrors.ProductNotFound);
+            }
+
+            storedProduct.Quantity -= supplyProduct.Quantity;
+            _productRepository.Update(storedProduct);
+        }
+
+        _supplyRepository.Delete(supply);
+        await _storage.SaveAsync(cancellationToken);
+
+        return Unit.Value;
     }
 }

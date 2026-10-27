@@ -1,10 +1,9 @@
 using Mushka.Application.Supplies.Queries.Describe;
 using Mushka.Domain.Entities;
 
-namespace Mushka.Application.Supplies.Converters
+namespace Mushka.Application.Supplies.Converters;
+
+public interface IDescribeSupplyConverter
 {
-    public interface IDescribeSupplyConverter
-    {
-        DescribeSupplyReadModel ToReadModel(Supply supply);
-    }
+    DescribeSupplyReadModel ToReadModel(Supply supply);
 }

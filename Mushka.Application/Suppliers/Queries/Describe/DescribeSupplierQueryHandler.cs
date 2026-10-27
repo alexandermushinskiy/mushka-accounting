@@ -6,29 +6,28 @@ using Mushka.Application.Suppliers.Converters;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Domain.Strings;
 
-namespace Mushka.Application.Suppliers.Queries.Describe
+namespace Mushka.Application.Suppliers.Queries.Describe;
+
+public sealed class DescribeSupplierQueryHandler : IQueryHandler<DescribeSupplierQuery, DescribeSupplierReadModel>
 {
-    public sealed class DescribeSupplierQueryHandler : IQueryHandler<DescribeSupplierQuery, DescribeSupplierReadModel>
+    private readonly ISupplierRepository _supplierRepository;
+    private readonly IDescribeSupplierConverter _converter;
+
+    public DescribeSupplierQueryHandler(IStorage storage, IDescribeSupplierConverter converter)
     {
-        private readonly ISupplierRepository _supplierRepository;
-        private readonly IDescribeSupplierConverter _converter;
+        _supplierRepository = storage.GetRepository<ISupplierRepository>();
+        _converter = converter;
+    }
 
-        public DescribeSupplierQueryHandler(IStorage storage, IDescribeSupplierConverter converter)
+    public async ValueTask<DescribeSupplierReadModel> Handle(DescribeSupplierQuery query, CancellationToken cancellationToken)
+    {
+        var supplier = await _supplierRepository.GetByIdAsync(query.Id, cancellationToken);
+
+        if (supplier == null)
         {
-            _supplierRepository = storage.GetRepository<ISupplierRepository>();
-            _converter = converter;
+            throw new NotFoundException(ValidationErrors.SupplierNotFound);
         }
 
-        public async ValueTask<DescribeSupplierReadModel> Handle(DescribeSupplierQuery query, CancellationToken cancellationToken)
-        {
-            var supplier = await _supplierRepository.GetByIdAsync(query.Id, cancellationToken);
-
-            if (supplier == null)
-            {
-                throw new NotFoundException(ValidationErrors.SupplierNotFound);
-            }
-
-            return _converter.ToReadModel(supplier);
-        }
+        return _converter.ToReadModel(supplier);
     }
 }

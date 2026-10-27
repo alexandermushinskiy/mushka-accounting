@@ -1,10 +1,9 @@
-namespace Mushka.Application.Exceptions
+namespace Mushka.Application.Exceptions;
+
+public sealed class BusinessRuleException : ApplicationErrorException
 {
-    public sealed class BusinessRuleException : ApplicationErrorException
+    public BusinessRuleException(string errorKey)
+        : base(errorKey)
     {
-        public BusinessRuleException(string errorKey)
-            : base(errorKey)
-        {
-        }
     }
 }

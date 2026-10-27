@@ -1,10 +1,9 @@
-namespace Mushka.Application.Exceptions
+namespace Mushka.Application.Exceptions;
+
+public sealed class NotFoundException : ApplicationErrorException
 {
-    public sealed class NotFoundException : ApplicationErrorException
+    public NotFoundException(string errorKey)
+        : base(errorKey)
     {
-        public NotFoundException(string errorKey)
-            : base(errorKey)
-        {
-        }
     }
 }

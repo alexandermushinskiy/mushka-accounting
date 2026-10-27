@@ -1,17 +1,16 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Mushka.Api.ClientModels.Supplier
+namespace Mushka.Api.ClientModels.Supplier;
+
+public class ContactPersonRequestModel
 {
-    public class ContactPersonRequestModel
-    {
-        public Guid? Id { get; set; }
+    public Guid? Id { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+    [Required]
+    public string Name { get; set; }
 
-        public string Email { get; set; }
+    public string Email { get; set; }
 
-        public string Phones { get; set; }
-    }
+    public string Phones { get; set; }
 }
