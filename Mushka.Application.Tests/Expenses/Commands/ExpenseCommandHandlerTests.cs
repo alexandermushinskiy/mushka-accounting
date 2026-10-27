@@ -110,8 +110,8 @@ public class ExpenseCommandHandlerTests
     private static UpdateExpenseCommand UpdateCommand(Guid id) =>
         new UpdateExpenseCommand(id, ExpenseModel());
 
-    private static ExpenseCommandModel ExpenseModel() =>
-        new ExpenseCommandModel(
+    private static ExpenseData ExpenseModel() =>
+        new ExpenseData(
             new DateTime(2024, 2, 3),
             ExpenseCategory.Advertising,
             "Ads",

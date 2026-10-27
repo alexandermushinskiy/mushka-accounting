@@ -32,8 +32,8 @@ public sealed class UpdateSupplierConverter : IUpdateSupplierConverter
         };
     }
 
-    private List<ContactPerson> ToContactPersons(Guid supplierId, IEnumerable<ContactPersonCommandModel> contactPersons) =>
-        (contactPersons ?? Enumerable.Empty<ContactPersonCommandModel>())
+    private List<ContactPerson> ToContactPersons(Guid supplierId, IEnumerable<ContactPersonData> contactPersons) =>
+        (contactPersons ?? Enumerable.Empty<ContactPersonData>())
             .Select(contactPerson => new ContactPerson
             {
                 SupplierId = supplierId,
@@ -44,8 +44,8 @@ public sealed class UpdateSupplierConverter : IUpdateSupplierConverter
             })
             .ToList();
 
-    private List<PaymentCard> ToPaymentCards(Guid supplierId, IEnumerable<PaymentCardCommandModel> paymentCards) =>
-        (paymentCards ?? Enumerable.Empty<PaymentCardCommandModel>())
+    private List<PaymentCard> ToPaymentCards(Guid supplierId, IEnumerable<PaymentCardData> paymentCards) =>
+        (paymentCards ?? Enumerable.Empty<PaymentCardData>())
             .Select(paymentCard => new PaymentCard
             {
                 SupplierId = supplierId,

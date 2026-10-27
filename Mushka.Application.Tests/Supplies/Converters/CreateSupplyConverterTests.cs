@@ -30,7 +30,7 @@ public class CreateSupplyConverterTests
         var requestDate = new DateTime(2024, 1, 2);
         var receivedDate = new DateTime(2024, 1, 5);
         var command = new CreateSupplyCommand(
-            new SupplyCommandModel(
+            new SupplyData(
                 supplierId,
                 requestDate,
                 receivedDate,
@@ -44,9 +44,9 @@ public class CreateSupplyConverterTests
                 1,
                 24,
                 "note"),
-            new List<SupplyProductCommandModel>
+            new List<SupplyProductData>
             {
-                new SupplyProductCommandModel(productId, 4, 5, 6)
+                new SupplyProductData(productId, 4, 5, 6)
             });
 
         var supply = _converter.ToSupply(command);
@@ -80,7 +80,7 @@ public class CreateSupplyConverterTests
     public void ToSupply_WhenProductsAreNull_ReturnsEmptyProducts()
     {
         var command = new CreateSupplyCommand(
-            new SupplyCommandModel(Guid.NewGuid(), DateTime.UtcNow, DateTime.UtcNow, "desc", null, null, 0, PaymentMethod.Cash, null, null, null, 0, null),
+            new SupplyData(Guid.NewGuid(), DateTime.UtcNow, DateTime.UtcNow, "desc", null, null, 0, PaymentMethod.Cash, null, null, null, 0, null),
             null);
 
         var supply = _converter.ToSupply(command);

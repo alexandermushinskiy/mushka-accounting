@@ -60,7 +60,7 @@ public class SuppliersControllerTests
     public async Task Post_SendsConvertedCommand_AndReturnsOk()
     {
         var request = new CreateSupplierRequestModel();
-        var command = new CreateSupplierCommand(null, new List<ContactPersonCommandModel>(), new List<PaymentCardCommandModel>());
+        var command = new CreateSupplierCommand(null, new List<ContactPersonData>(), new List<PaymentCardData>());
         _converter.Setup(converter => converter.ToCreateCommand(request)).Returns(command);
         _sender
             .Setup(sender => sender.Send(command, It.IsAny<CancellationToken>()))
@@ -77,7 +77,7 @@ public class SuppliersControllerTests
     {
         var id = Guid.NewGuid();
         var request = new UpdateSupplierRequestModel();
-        var command = new UpdateSupplierCommand(id, null, new List<ContactPersonCommandModel>(), new List<PaymentCardCommandModel>());
+        var command = new UpdateSupplierCommand(id, null, new List<ContactPersonData>(), new List<PaymentCardData>());
         _converter.Setup(converter => converter.ToUpdateCommand(id, request)).Returns(command);
         _sender
             .Setup(sender => sender.Send(command, It.IsAny<CancellationToken>()))

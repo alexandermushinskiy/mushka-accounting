@@ -19,8 +19,8 @@ public class UpdateSupplyConverterTests
         var productId = Guid.NewGuid();
         var command = new UpdateSupplyCommand(
             supplyId,
-            new SupplyCommandModel(Guid.NewGuid(), new DateTime(2024, 4, 1), new DateTime(2024, 4, 2), "desc", null, null, 8, PaymentMethod.Cash, null, null, null, 8, "n"),
-            new List<SupplyProductCommandModel> { new SupplyProductCommandModel(productId, 2, 3, 4) });
+            new SupplyData(Guid.NewGuid(), new DateTime(2024, 4, 1), new DateTime(2024, 4, 2), "desc", null, null, 8, PaymentMethod.Cash, null, null, null, 8, "n"),
+            new List<SupplyProductData> { new SupplyProductData(productId, 2, 3, 4) });
 
         var supply = _converter.ToSupply(command);
 

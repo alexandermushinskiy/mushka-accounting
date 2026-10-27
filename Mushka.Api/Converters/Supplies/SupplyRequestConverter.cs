@@ -14,8 +14,8 @@ public sealed class SupplyRequestConverter : ISupplyRequestConverter
     public UpdateSupplyCommand ToUpdateCommand(Guid id, SupplyRequestModel request) =>
         new UpdateSupplyCommand(id, ToSupply(request), ToProducts(request.Products));
 
-    private static SupplyCommandModel ToSupply(SupplyRequestModel request) =>
-        new SupplyCommandModel(
+    private static SupplyData ToSupply(SupplyRequestModel request) =>
+        new SupplyData(
             request.SupplierId,
             request.RequestDate,
             request.ReceivedDate,
@@ -30,9 +30,9 @@ public sealed class SupplyRequestConverter : ISupplyRequestConverter
             request.TotalCost,
             request.Notes);
 
-    private static IReadOnlyList<SupplyProductCommandModel> ToProducts(IEnumerable<SupplyProductRequestModel> products) =>
+    private static IReadOnlyList<SupplyProductData> ToProducts(IEnumerable<SupplyProductRequestModel> products) =>
         (products ?? Enumerable.Empty<SupplyProductRequestModel>())
-            .Select(product => new SupplyProductCommandModel(
+            .Select(product => new SupplyProductData(
                 product.ProductId,
                 product.Quantity,
                 product.UnitPrice,

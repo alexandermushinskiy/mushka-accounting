@@ -3,7 +3,7 @@ using Mushka.Domain.Entities;
 
 namespace Mushka.Application.Expenses.Commands;
 
-public sealed record ExpenseCommandModel(
+public sealed record ExpenseData(
     DateTime CreatedOn,
     ExpenseCategory Category,
     string Purpose,

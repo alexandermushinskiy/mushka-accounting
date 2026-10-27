@@ -4,6 +4,6 @@ using Mediator;
 namespace Mushka.Application.Suppliers.Commands;
 
 public sealed record CreateSupplierCommand(
-    SupplierCommandModel Supplier,
-    IReadOnlyList<ContactPersonCommandModel> ContactPersons,
-    IReadOnlyList<PaymentCardCommandModel> PaymentCards) : ICommand;
+    SupplierData Supplier,
+    IReadOnlyList<ContactPersonData> ContactPersons,
+    IReadOnlyList<PaymentCardData> PaymentCards) : ICommand;
