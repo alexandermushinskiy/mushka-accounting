@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using Autofac;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -24,7 +25,7 @@ namespace Mushka.WebApi
         public const string BearerAuthorizationHeaderKey = "Bearer";
         public const string ContentDispositionHeaderKey = "Content-Disposition";
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             Console.WriteLine("EnvironmentName: " + env.EnvironmentName);
 
@@ -41,9 +42,9 @@ namespace Mushka.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
+            services.AddControllers()
                 .AddMvcOptions(options => options.Filters.Add(typeof(ApiExceptionFilterAttribute)))
-                .AddJsonOptions(options =>
+                .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     options.SerializerSettings.DateFormatString = "yyyy-MM-dd'T'HH:mm:ss'Z'";
@@ -58,28 +59,34 @@ namespace Mushka.WebApi
                     builder => builder.AllowAnyOrigin()
                         .WithExposedHeaders(ContentDispositionHeaderKey)
                         .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials());
+                        .AllowAnyHeader());
             });
 
-            services.AddAutoMapper();
-            Mapper.Configuration.AssertConfigurationIsValid();
+            services.AddAutoMapper(cfg => cfg.AddMaps(typeof(Startup).Assembly));
+
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen(c => c.CustomSchemaIds(type => type.FullName?.Replace("+", ".")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mushka API v1");
+                c.RoutePrefix = string.Empty;
+            });
+
+            app.UseRouting();
             app.UseCors(CorsPolicyName);
 
-            loggerFactory.AddNLog();
-            env.ConfigureNLog("Logging/nlog.config");
-
-            app.UseMvc();
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

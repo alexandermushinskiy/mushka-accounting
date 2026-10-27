@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Category.GetById;
@@ -11,7 +11,7 @@ namespace Mushka.WebApi.Resolvers.Categories
         {
             return new CategoryResponseModel
             {
-                Category = Mapper.Map<Category, CategoryModel>(source.Data)
+                Category = context.Mapper.Map<Category, CategoryModel>(source.Data)
             };
         }
     }

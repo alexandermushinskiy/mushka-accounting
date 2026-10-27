@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using AutoMapper;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
@@ -16,8 +16,8 @@ namespace Mushka.WebApi.Resolvers.CorporateOrders
         {
             return new CorporateOrderResponseModel
             {
-                Order = Mapper.Map<CorporateOrder, CorporateOrderModel>(source.Data),
-                Products = source.Data.Products.Select(Mapper.Map<CorporateOrderProduct, CorporateOrderProductModel>)
+                Order = context.Mapper.Map<CorporateOrder, CorporateOrderModel>(source.Data),
+                Products = source.Data.Products.Select(x => context.Mapper.Map<CorporateOrderProduct, CorporateOrderProductModel>(x))
             };
         }
     }

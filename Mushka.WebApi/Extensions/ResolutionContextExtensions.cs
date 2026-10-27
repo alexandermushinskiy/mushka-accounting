@@ -10,13 +10,12 @@ namespace Mushka.WebApi.Extensions
 
         public static Guid? GetId(this ResolutionContext context)
         {
-            if (!context.Items.ContainsKey(IdName))
+            if (!context.TryGetItems(out var items) || !items.TryGetValue(IdName, out var value))
             {
                 return null;
             }
 
-            Guid.TryParse(context.Items[IdName].ToString(), out var id);
-            return id;
+            return Guid.TryParse(value?.ToString(), out var id) ? id : (Guid?)null;
         }
     }
 }

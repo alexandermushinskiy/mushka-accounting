@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Product;
@@ -12,6 +12,6 @@ namespace Mushka.WebApi.Resolvers
             OperationResult<Product> source,
             ProductResponseModel destination,
             ProductModel destMember,
-            ResolutionContext context) => source.Data == null ? null : Mapper.Map<Product, ProductModel>(source.Data);
+            ResolutionContext context) => source.Data == null ? null : context.Mapper.Map<Product, ProductModel>(source.Data);
     }
 }

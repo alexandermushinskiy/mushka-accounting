@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Mushka.Core.Validation;
 using Mushka.Domain.Entities;
 using Mushka.WebApi.ClientModels.Supply;
@@ -11,6 +11,6 @@ namespace Mushka.WebApi.Resolvers
             OperationResult<Supply> source,
             SupplyResponseModel destination,
             SupplyModel destMember,
-            ResolutionContext context) => source.Data == null ? null : Mapper.Map<Supply, SupplyModel>(source.Data);
+            ResolutionContext context) => source.Data == null ? null : context.Mapper.Map<Supply, SupplyModel>(source.Data);
     }
 }

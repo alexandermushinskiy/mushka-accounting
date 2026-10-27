@@ -1,6 +1,6 @@
 ﻿using Autofac.Extensions.DependencyInjection;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using NLog.Web;
 
 namespace Mushka.WebApi
@@ -22,11 +22,11 @@ namespace Mushka.WebApi
             //host.Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .ConfigureServices(services => services.AddAutofac())
+        public static IHost BuildWebHost(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
                 .UseNLog()
-                .UseStartup<Startup>()
                 .Build();
     }
 }

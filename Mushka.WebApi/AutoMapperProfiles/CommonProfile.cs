@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -18,8 +18,8 @@ namespace Mushka.WebApi.AutoMapperProfiles
             CreateMap<IEnumerable<FieldError>, ErrorResponseModel>().ConvertUsing<ErrorResponseConverter>();
 
             CreateMap<IEnumerable<string>, ResponseModelBase>()
-                .ForMember(dest => dest.StatusCode, opt => opt.UseValue(StatusCodes.Status400BadRequest))
-                .ForMember(dest => dest.Success, opt => opt.UseValue(false))
+                .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => StatusCodes.Status400BadRequest))
+                .ForMember(dest => dest.Success, opt => opt.MapFrom(src => false))
                 .ForMember(dest => dest.Errors, opts => opts.MapFrom(src => src));
         }
     }
