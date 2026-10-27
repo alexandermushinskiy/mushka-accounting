@@ -22,6 +22,7 @@
     <ProjectReference Include="..\Mushka.Application\Mushka.Application.csproj" />
     <ProjectReference Include="..\Mushka.Core\Mushka.Core.csproj" />
     <ProjectReference Include="..\Mushka.Infrastructure.DataAccess\Mushka.Infrastructure.DataAccess.csproj" />
+    <ProjectReference Include="..\Mushka.Infrastructure.Excel\Mushka.Infrastructure.Excel.csproj" />
   </ItemGroup>
 
 </Project>
