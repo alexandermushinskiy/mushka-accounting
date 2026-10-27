@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Mushka.Core.Validation;
@@ -14,6 +14,6 @@ namespace Mushka.WebApi.Resolvers
             OperationResult<IEnumerable<Customer>> source,
             CustomersResponseModel destination,
             IEnumerable<CustomerModel> destMember,
-            ResolutionContext context) => source.Data?.Select(Mapper.Map<Customer, CustomerModel>);
+            ResolutionContext context) => source.Data?.Select(x => context.Mapper.Map<Customer, CustomerModel>(x));
     }
 }

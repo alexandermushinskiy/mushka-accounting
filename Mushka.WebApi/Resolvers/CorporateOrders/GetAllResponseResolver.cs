@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Mushka.Core.Validation;
@@ -15,7 +15,7 @@ namespace Mushka.WebApi.Resolvers.CorporateOrders
             return new GetAllResponseModel
             {
                 Total = source.Data?.Count() ?? 0,
-                Items = source.Data?.Select(Mapper.Map<CorporateOrder, CorporateOrderSummaryModel>) ?? Enumerable.Empty<CorporateOrderSummaryModel>()
+                Items = source.Data?.Select(x => context.Mapper.Map<CorporateOrder, CorporateOrderSummaryModel>(x)) ?? Enumerable.Empty<CorporateOrderSummaryModel>()
             };
         }
     }

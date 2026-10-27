@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using AutoMapper;
 using Mushka.Core.Validation;
 using Mushka.Domain.Dto;
@@ -18,7 +18,7 @@ namespace Mushka.WebApi.Resolvers.Orders
             return new SearchOrdersResponseModel
             {
                 Total = source.Data?.Total ?? 0,
-                Items = source.Data?.Items.Select(Mapper.Map<OrderSummaryDto, OrderSummaryModel>) ?? Enumerable.Empty<OrderSummaryModel>()
+                Items = source.Data?.Items.Select(x => context.Mapper.Map<OrderSummaryDto, OrderSummaryModel>(x)) ?? Enumerable.Empty<OrderSummaryModel>()
             };
         }
     }

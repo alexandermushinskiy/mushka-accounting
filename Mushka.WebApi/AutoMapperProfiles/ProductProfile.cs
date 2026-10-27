@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Mushka.Core.Validation;
@@ -25,25 +25,25 @@ namespace Mushka.WebApi.AutoMapperProfiles
 
             CreateMap<OperationResult<Product>, ProductResponseModel>()
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ProductResponseResolver>())
+                .ForMember(dest => dest.Data, opt => opt.MapFrom<ProductResponseResolver>())
                 .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
                 .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
             CreateMap<OperationResult<IEnumerable<Product>>, ProductListResponseModel>()
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<ProductListResponseResolver>())
+                .ForMember(dest => dest.Data, opt => opt.MapFrom<ProductListResponseResolver>())
                 .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
                 .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
             CreateMap<OperationResult<IEnumerable<Product>>, SelectProductsResponseModel>()
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SelectProductsResponseResolver>())
+                .ForMember(dest => dest.Data, opt => opt.MapFrom<SelectProductsResponseResolver>())
                 .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
                 .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
             CreateMap<OperationResult<IEnumerable<Size>>, SizesResponseModel>()
                 .ForMember(dest => dest.StatusCode, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Data, opt => opt.ResolveUsing<SizeResponseResolver>())
+                .ForMember(dest => dest.Data, opt => opt.MapFrom<SizeResponseResolver>())
                 .ForMember(dest => dest.Success, opt => opt.MapFrom(src => src.IsSuccess))
                 .ForMember(dest => dest.Errors, opt => opt.MapFrom(src => src.Errors.Select(x => x.ErrorKey)));
 
