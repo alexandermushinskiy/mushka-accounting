@@ -6,12 +6,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Mushka.Api.Converters.Suppliers;
+using Mushka.Api.Converters.Supplies;
+using Mushka.Api.Exporters;
 using Mushka.Api.Filters;
 using Mushka.Application.Behaviors;
 using Mushka.Application.Suppliers.Converters;
+using Mushka.Application.Supplies.Converters;
+using Mushka.Application.Supplies.Export;
 using Mushka.Core;
 using Mushka.Infrastructure.DataAccess;
 using Mushka.Infrastructure.DataAccess.Extensions;
+using Mushka.Infrastructure.Excel;
 using Newtonsoft.Json.Serialization;
 using NLog.Web;
 
@@ -80,10 +85,18 @@ static void RegisterServices(ContainerBuilder container)
 {
     container.RegisterModule<CoreAutofacModule>();
     container.RegisterModule<DataAccessAutofacModule>();
+    container.RegisterModule<ExcelAutofacModule>();
 
     container.RegisterType<CreateSupplierConverter>().As<ICreateSupplierConverter>();
     container.RegisterType<UpdateSupplierConverter>().As<IUpdateSupplierConverter>();
     container.RegisterType<SearchSuppliersConverter>().As<ISearchSuppliersConverter>();
     container.RegisterType<DescribeSupplierConverter>().As<IDescribeSupplierConverter>();
     container.RegisterType<SupplierRequestConverter>().As<ISupplierRequestConverter>();
+
+    container.RegisterType<CreateSupplyConverter>().As<ICreateSupplyConverter>();
+    container.RegisterType<UpdateSupplyConverter>().As<IUpdateSupplyConverter>();
+    container.RegisterType<SearchSuppliesConverter>().As<ISearchSuppliesConverter>();
+    container.RegisterType<DescribeSupplyConverter>().As<IDescribeSupplyConverter>();
+    container.RegisterType<SupplyRequestConverter>().As<ISupplyRequestConverter>();
+    container.RegisterType<SupplyExcelExporter>().As<ISupplyExcelExporter>();
 }
