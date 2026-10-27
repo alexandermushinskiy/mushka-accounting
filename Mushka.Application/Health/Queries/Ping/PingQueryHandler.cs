@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Mediator;
 using Mushka.Domain.Extensibility.Repositories;
 
-namespace Mushka.Application.Health.Queries;
+namespace Mushka.Application.Health.Queries.Ping;
 
 public sealed class PingQueryHandler : IQueryHandler<PingQuery, HealthReadModel>
 {

@@ -5,7 +5,7 @@ using Mediator;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Mushka.Api.Controllers;
-using Mushka.Application.Health.Queries;
+using Mushka.Application.Health.Queries.Ping;
 using Xunit;
 
 namespace Mushka.Api.Tests.Controllers;
