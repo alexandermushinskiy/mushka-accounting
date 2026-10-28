@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Mushka.Api.Converters.Categories;
 using Mushka.Api.Converters.Exhibitions;
 using Mushka.Api.Converters.Expenses;
 using Mushka.Api.Converters.Suppliers;
@@ -12,6 +13,8 @@ using Mushka.Api.Converters.Supplies;
 using Mushka.Api.Exporters;
 using Mushka.Api.Filters;
 using Mushka.Application.Behaviors;
+using Mushka.Application.Categories.Converters;
+using Mushka.Application.Customers.Converters;
 using Mushka.Application.Exhibitions.Converters;
 using Mushka.Application.Expenses.Converters;
 using Mushka.Application.Providers;
@@ -97,6 +100,14 @@ static void RegisterServices(ContainerBuilder container)
     container.RegisterType<SearchExpensesConverter>().As<ISearchExpensesConverter>();
     container.RegisterType<DescribeExpenseConverter>().As<IDescribeExpenseConverter>();
     container.RegisterType<ExpenseRequestConverter>().As<IExpenseRequestConverter>();
+
+    container.RegisterType<CreateCategoryConverter>().As<ICreateCategoryConverter>();
+    container.RegisterType<UpdateCategoryConverter>().As<IUpdateCategoryConverter>();
+    container.RegisterType<SearchCategoriesConverter>().As<ISearchCategoriesConverter>();
+    container.RegisterType<DescribeCategoryConverter>().As<IDescribeCategoryConverter>();
+    container.RegisterType<CategoryRequestConverter>().As<ICategoryRequestConverter>();
+
+    container.RegisterType<GetCustomersByNameConverter>().As<IGetCustomersByNameConverter>();
 
     container.RegisterType<CreateSupplierConverter>().As<ICreateSupplierConverter>();
     container.RegisterType<UpdateSupplierConverter>().As<IUpdateSupplierConverter>();
