@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Mushka.Api.Converters.Categories;
 using Mushka.Api.Converters.Exhibitions;
 using Mushka.Api.Converters.Expenses;
+using Mushka.Api.Converters.Products;
 using Mushka.Api.Converters.Suppliers;
 using Mushka.Api.Converters.Supplies;
 using Mushka.Api.Exporters;
@@ -17,6 +18,8 @@ using Mushka.Application.Categories.Converters;
 using Mushka.Application.Customers.Converters;
 using Mushka.Application.Exhibitions.Converters;
 using Mushka.Application.Expenses.Converters;
+using Mushka.Application.Products.Converters;
+using Mushka.Application.Products.Export;
 using Mushka.Application.Providers;
 using Mushka.Application.Suppliers.Converters;
 using Mushka.Application.Supplies.Converters;
@@ -122,6 +125,15 @@ static void RegisterServices(ContainerBuilder container)
     container.RegisterType<GetDefaultExhibitionProductsConverter>().As<IGetDefaultExhibitionProductsConverter>();
     container.RegisterType<ExhibitionRequestConverter>().As<IExhibitionRequestConverter>();
     container.RegisterType<CostPriceProvider>().As<ICostPriceProvider>();
+
+    container.RegisterType<CreateProductConverter>().As<ICreateProductConverter>();
+    container.RegisterType<UpdateProductConverter>().As<IUpdateProductConverter>();
+    container.RegisterType<DescribeProductConverter>().As<IDescribeProductConverter>();
+    container.RegisterType<GetProductsByCategoryConverter>().As<IGetProductsByCategoryConverter>();
+    container.RegisterType<SelectProductsConverter>().As<ISelectProductsConverter>();
+    container.RegisterType<GetProductSizesConverter>().As<IGetProductSizesConverter>();
+    container.RegisterType<ProductRequestConverter>().As<IProductRequestConverter>();
+    container.RegisterType<ProductExcelExporter>().As<IProductExcelExporter>();
 
     container.RegisterType<CreateSupplyConverter>().As<ICreateSupplyConverter>();
     container.RegisterType<UpdateSupplyConverter>().As<IUpdateSupplyConverter>();
