@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Mushka.Api.Converters.Categories;
 using Mushka.Api.Converters.CorporateOrders;
 using Mushka.Api.Converters.Exhibitions;
+using Mushka.Api.Converters.Orders;
 using Mushka.Api.Converters.Expenses;
 using Mushka.Api.Converters.Products;
 using Mushka.Api.Converters.Suppliers;
@@ -18,6 +19,9 @@ using Mushka.Application.Behaviors;
 using Mushka.Application.Categories.Converters;
 using Mushka.Application.CorporateOrders.Converters;
 using Mushka.Application.Customers.Converters;
+using Mushka.Application.Orders.Converters;
+using Mushka.Application.Orders.Providers;
+using Mushka.Application.Orders.Export;
 using Mushka.Application.Exhibitions.Converters;
 using Mushka.Application.Expenses.Converters;
 using Mushka.Application.Products.Converters;
@@ -113,6 +117,15 @@ static void RegisterServices(ContainerBuilder container)
     container.RegisterType<CategoryRequestConverter>().As<ICategoryRequestConverter>();
 
     container.RegisterType<GetCustomersByNameConverter>().As<IGetCustomersByNameConverter>();
+
+    container.RegisterType<CreateOrderConverter>().As<ICreateOrderConverter>();
+    container.RegisterType<UpdateOrderConverter>().As<IUpdateOrderConverter>();
+    container.RegisterType<SearchOrdersConverter>().As<ISearchOrdersConverter>();
+    container.RegisterType<DescribeOrderConverter>().As<IDescribeOrderConverter>();
+    container.RegisterType<GetDefaultOrderProductsConverter>().As<IGetDefaultOrderProductsConverter>();
+    container.RegisterType<OrderCustomerProvider>().As<IOrderCustomerProvider>();
+    container.RegisterType<OrderRequestConverter>().As<IOrderRequestConverter>();
+    container.RegisterType<OrderExcelExporter>().As<IOrderExcelExporter>();
 
     container.RegisterType<CreateCorporateOrderConverter>().As<ICreateCorporateOrderConverter>();
     container.RegisterType<UpdateCorporateOrderConverter>().As<IUpdateCorporateOrderConverter>();
