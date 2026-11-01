@@ -1,36 +1,13 @@
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using Mediator;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Mushka.Api.Converters.Categories;
-using Mushka.Api.Converters.CorporateOrders;
-using Mushka.Api.Converters.Exhibitions;
-using Mushka.Api.Converters.Orders;
-using Mushka.Api.Converters.Expenses;
-using Mushka.Api.Converters.Products;
-using Mushka.Api.Converters.Suppliers;
-using Mushka.Api.Converters.Supplies;
+using Mushka.Api.Extentions;
 using Mushka.Api.Filters;
-using Mushka.Application.Analytics.Converters;
-using Mushka.Application.Analytics.Providers;
 using Mushka.Application.Behaviors;
-using Mushka.Application.Categories.Converters;
-using Mushka.Application.CorporateOrders.Converters;
-using Mushka.Application.Customers.Converters;
-using Mushka.Application.Orders.Converters;
-using Mushka.Application.Orders.Providers;
-using Mushka.Application.Exhibitions.Converters;
-using Mushka.Application.Expenses.Converters;
-using Mushka.Application.Products.Converters;
-using Mushka.Application.Providers;
-using Mushka.Application.Suppliers.Converters;
-using Mushka.Application.Supplies.Converters;
-using Mushka.Core;
-using Mushka.Infrastructure.DataAccess;
-using Mushka.Infrastructure.DataAccess.Extensions;
+using Mushka.Application.Extentions;
+using Mushka.Core.Extentions;
+using Mushka.Infrastructure.DataAccess.Extentions;
 using Newtonsoft.Json.Serialization;
 using NLog.Web;
 
@@ -38,10 +15,13 @@ const string CorsPolicyName = "CorsPolicy";
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host
-    .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-    .UseNLog()
-    .ConfigureContainer<ContainerBuilder>(RegisterServices);
+builder.Host.UseNLog();
+
+builder.Services
+    .AddCore()
+    .AddApplication()
+    .AddInfrastructure(builder.Configuration)
+    .AddApi();
 
 builder.Services
     .AddControllers()
@@ -51,8 +31,6 @@ builder.Services
         options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         options.SerializerSettings.DateFormatString = "yyyy-MM-dd'T'HH:mm:ss'Z'";
     });
-
-builder.Services.AddDbContext(builder.Configuration.GetConnectionString("MushkaDb"));
 
 builder.Services.AddMediator(options =>
 {
@@ -92,68 +70,3 @@ app.UseCors(CorsPolicyName);
 app.MapControllers();
 
 app.Run();
-
-static void RegisterServices(ContainerBuilder container)
-{
-    container.RegisterModule<CoreAutofacModule>();
-    container.RegisterModule<DataAccessAutofacModule>();
-
-    container.RegisterType<AnalyticsPeriodProvider>().As<IAnalyticsPeriodProvider>();
-    container.RegisterType<AnalyticConverter>().As<IAnalyticConverter>();
-
-    container.RegisterType<CreateExpenseConverter>().As<ICreateExpenseConverter>();
-    container.RegisterType<UpdateExpenseConverter>().As<IUpdateExpenseConverter>();
-    container.RegisterType<SearchExpensesConverter>().As<ISearchExpensesConverter>();
-    container.RegisterType<DescribeExpenseConverter>().As<IDescribeExpenseConverter>();
-    container.RegisterType<ExpenseRequestConverter>().As<IExpenseRequestConverter>();
-
-    container.RegisterType<CreateCategoryConverter>().As<ICreateCategoryConverter>();
-    container.RegisterType<UpdateCategoryConverter>().As<IUpdateCategoryConverter>();
-    container.RegisterType<SearchCategoriesConverter>().As<ISearchCategoriesConverter>();
-    container.RegisterType<DescribeCategoryConverter>().As<IDescribeCategoryConverter>();
-    container.RegisterType<CategoryRequestConverter>().As<ICategoryRequestConverter>();
-
-    container.RegisterType<GetCustomersByNameConverter>().As<IGetCustomersByNameConverter>();
-
-    container.RegisterType<CreateOrderConverter>().As<ICreateOrderConverter>();
-    container.RegisterType<UpdateOrderConverter>().As<IUpdateOrderConverter>();
-    container.RegisterType<SearchOrdersConverter>().As<ISearchOrdersConverter>();
-    container.RegisterType<DescribeOrderConverter>().As<IDescribeOrderConverter>();
-    container.RegisterType<GetDefaultOrderProductsConverter>().As<IGetDefaultOrderProductsConverter>();
-    container.RegisterType<OrderCustomerProvider>().As<IOrderCustomerProvider>();
-    container.RegisterType<OrderRequestConverter>().As<IOrderRequestConverter>();
-
-    container.RegisterType<CreateCorporateOrderConverter>().As<ICreateCorporateOrderConverter>();
-    container.RegisterType<UpdateCorporateOrderConverter>().As<IUpdateCorporateOrderConverter>();
-    container.RegisterType<SearchCorporateOrdersConverter>().As<ISearchCorporateOrdersConverter>();
-    container.RegisterType<DescribeCorporateOrderConverter>().As<IDescribeCorporateOrderConverter>();
-    container.RegisterType<CorporateOrderRequestConverter>().As<ICorporateOrderRequestConverter>();
-
-    container.RegisterType<CreateSupplierConverter>().As<ICreateSupplierConverter>();
-    container.RegisterType<UpdateSupplierConverter>().As<IUpdateSupplierConverter>();
-    container.RegisterType<SearchSuppliersConverter>().As<ISearchSuppliersConverter>();
-    container.RegisterType<DescribeSupplierConverter>().As<IDescribeSupplierConverter>();
-    container.RegisterType<SupplierRequestConverter>().As<ISupplierRequestConverter>();
-
-    container.RegisterType<CreateExhibitionConverter>().As<ICreateExhibitionConverter>();
-    container.RegisterType<UpdateExhibitionConverter>().As<IUpdateExhibitionConverter>();
-    container.RegisterType<SearchExhibitionsConverter>().As<ISearchExhibitionsConverter>();
-    container.RegisterType<DescribeExhibitionConverter>().As<IDescribeExhibitionConverter>();
-    container.RegisterType<GetDefaultExhibitionProductsConverter>().As<IGetDefaultExhibitionProductsConverter>();
-    container.RegisterType<ExhibitionRequestConverter>().As<IExhibitionRequestConverter>();
-    container.RegisterType<CostPriceProvider>().As<ICostPriceProvider>();
-
-    container.RegisterType<CreateProductConverter>().As<ICreateProductConverter>();
-    container.RegisterType<UpdateProductConverter>().As<IUpdateProductConverter>();
-    container.RegisterType<DescribeProductConverter>().As<IDescribeProductConverter>();
-    container.RegisterType<GetProductsByCategoryConverter>().As<IGetProductsByCategoryConverter>();
-    container.RegisterType<SelectProductsConverter>().As<ISelectProductsConverter>();
-    container.RegisterType<GetProductSizesConverter>().As<IGetProductSizesConverter>();
-    container.RegisterType<ProductRequestConverter>().As<IProductRequestConverter>();
-
-    container.RegisterType<CreateSupplyConverter>().As<ICreateSupplyConverter>();
-    container.RegisterType<UpdateSupplyConverter>().As<IUpdateSupplyConverter>();
-    container.RegisterType<SearchSuppliesConverter>().As<ISearchSuppliesConverter>();
-    container.RegisterType<DescribeSupplyConverter>().As<IDescribeSupplyConverter>();
-    container.RegisterType<SupplyRequestConverter>().As<ISupplyRequestConverter>();
-}
