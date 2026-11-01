@@ -1,7 +1,7 @@
 name: PR Build & Test
 on:
   pull_request:
-    branches: [ main ]        # add develop etc. if you use them
+    branches: [ develop, master ]
   workflow_dispatch:           # lets you run it manually
 
 concurrency:
