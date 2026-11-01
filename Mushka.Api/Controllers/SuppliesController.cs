@@ -7,7 +7,6 @@ using Mushka.Api.ClientModels.Supply;
 using Mushka.Api.Converters.Supplies;
 using Mushka.Application.Supplies.Commands;
 using Mushka.Application.Supplies.Queries.Describe;
-using Mushka.Application.Supplies.Queries.Export;
 using Mushka.Application.Supplies.Queries.Search;
 
 namespace Mushka.Api.Controllers;
@@ -56,12 +55,5 @@ public class SuppliesController : ControllerBase
     {
         await sender.Send(new DeleteSupplyCommand(id), cancellationToken);
         return Ok();
-    }
-
-    [HttpPost("export")]
-    public async Task<IActionResult> Export([FromBody] ExportSuppliesRequestModel request, CancellationToken cancellationToken)
-    {
-        var file = await sender.Send(new ExportSuppliesQuery(request.SupplyIds, request.ProductIds), cancellationToken);
-        return File(file.Content, file.ContentType, file.Name);
     }
 }

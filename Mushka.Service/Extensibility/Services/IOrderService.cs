@@ -6,7 +6,6 @@ using Mushka.Core.Validation;
 using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Models;
-using Mushka.Service.Extensibility.Dto;
 
 namespace Mushka.Service.Extensibility.Services
 {
@@ -18,7 +17,5 @@ namespace Mushka.Service.Extensibility.Services
         Task<OperationResult<IEnumerable<Order>>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         Task<OperationResult<bool>> IsNumberExistAsync(string orderNumber, CancellationToken cancellationToken = default(CancellationToken));
-
-        Task<OperationResult<ExportedFile>> ExportAsync(string title, IEnumerable<Guid> orderIds, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

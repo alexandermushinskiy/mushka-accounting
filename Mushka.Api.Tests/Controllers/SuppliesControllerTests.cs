@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -12,7 +11,6 @@ using Mushka.Api.Controllers;
 using Mushka.Api.Converters.Supplies;
 using Mushka.Application.Supplies.Commands;
 using Mushka.Application.Supplies.Queries.Describe;
-using Mushka.Application.Supplies.Queries.Export;
 using Mushka.Application.Supplies.Queries.Search;
 using Xunit;
 
@@ -106,34 +104,5 @@ public class SuppliesControllerTests
         var result = await _controller.Delete(id, CancellationToken.None);
 
         result.Should().BeOfType<OkResult>();
-    }
-
-    [Fact]
-    public async Task Export_SendsQuery_AndReturnsFile()
-    {
-        var supplyId = Guid.NewGuid();
-        var productId = Guid.NewGuid();
-        var request = new ExportSuppliesRequestModel
-        {
-            SupplyIds = new[] { supplyId },
-            ProductIds = new[] { productId }
-        };
-        var content = new MemoryStream();
-        var readModel = new ExportSuppliesReadModel
-        {
-            Name = "mushka_export_supply_products.xlsx",
-            ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            Content = content
-        };
-        _sender
-            .Setup(sender => sender.Send(It.IsAny<ExportSuppliesQuery>(), It.IsAny<CancellationToken>()))
-            .Returns(new ValueTask<ExportSuppliesReadModel>(readModel));
-
-        var result = await _controller.Export(request, CancellationToken.None);
-
-        var file = result.Should().BeOfType<FileStreamResult>().Subject;
-        file.FileStream.Should().BeSameAs(content);
-        file.FileDownloadName.Should().Be(readModel.Name);
-        file.ContentType.Should().Be(readModel.ContentType);
     }
 }

@@ -70,19 +70,6 @@ export class ProductsServce {
       catchError((res: any) => throwError(res.error.messages)));
   }
 
-  export(categoryId: string, productIds: string[]): Observable<Blob> {
-    const requestBody = {
-      categoryId: categoryId,
-      productIds: productIds
-    };
-
-    return this.http.post(`${this.endPoint}/export`, requestBody, { responseType: 'blob', observe: 'response' })
-      .pipe(
-        map((res: any) => res.body),
-        catchError((res: any) => throwError(res.error.messages))
-      );
-  }
-
   private convertToRequestData(product: Product): any {
     return {
       name: product.name,

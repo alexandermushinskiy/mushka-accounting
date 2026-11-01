@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -13,7 +11,6 @@ using Mushka.Api.Controllers;
 using Mushka.Api.Converters.Orders;
 using Mushka.Application.Orders.Commands;
 using Mushka.Application.Orders.Queries.Describe;
-using Mushka.Application.Orders.Queries.Export;
 using Mushka.Application.Orders.Queries.GetDefaultProducts;
 using Mushka.Application.Orders.Queries.Search;
 using Mushka.Application.Orders.Queries.ValidateNumber;
@@ -139,31 +136,5 @@ public class OrdersControllerTests
 
         var ok = result.Should().BeOfType<OkObjectResult>().Subject;
         ok.Value.Should().BeSameAs(readModel);
-    }
-
-    [Fact]
-    public async Task Export_SendsQuery_AndReturnsFile()
-    {
-        var orderId = Guid.NewGuid();
-        var request = new ExportOrdersRequestModel { Title = "March", OrderIds = new[] { orderId } };
-        var content = new MemoryStream();
-        var readModel = new ExportOrdersReadModel
-        {
-            Name = "mushka_export_orders.xlsx",
-            ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            Content = content
-        };
-        _sender
-            .Setup(sender => sender.Send(
-                It.Is<ExportOrdersQuery>(query => query.Title == "March" && query.OrderIds.Contains(orderId)),
-                It.IsAny<CancellationToken>()))
-            .Returns(new ValueTask<ExportOrdersReadModel>(readModel));
-
-        var result = await _controller.Export(request, CancellationToken.None);
-
-        var file = result.Should().BeOfType<FileStreamResult>().Subject;
-        file.FileStream.Should().BeSameAs(content);
-        file.FileDownloadName.Should().Be(readModel.Name);
-        file.ContentType.Should().Be(readModel.ContentType);
     }
 }

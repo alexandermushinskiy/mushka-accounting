@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 using Mushka.Core;
 using Mushka.Infrastructure.DataAccess;
 using Mushka.Infrastructure.DataAccess.Extensions;
-using Mushka.Infrastructure.Excel;
 using Mushka.Service;
 using Mushka.WebApi.Filters;
 using Newtonsoft.Json.Serialization;
@@ -23,7 +22,6 @@ namespace Mushka.WebApi
     {
         private const string CorsPolicyName = "CorsPolicy";
         public const string BearerAuthorizationHeaderKey = "Bearer";
-        public const string ContentDispositionHeaderKey = "Content-Disposition";
 
         public Startup(IWebHostEnvironment env)
         {
@@ -57,7 +55,6 @@ namespace Mushka.WebApi
                 options.AddPolicy(
                     CorsPolicyName,
                     builder => builder.AllowAnyOrigin()
-                        .WithExposedHeaders(ContentDispositionHeaderKey)
                         .AllowAnyMethod()
                         .AllowAnyHeader());
             });
@@ -94,7 +91,6 @@ namespace Mushka.WebApi
             builder.RegisterModule<CoreAutofacModule>();
             builder.RegisterModule<DataAccessAutofacModule>();
             builder.RegisterModule<ServiceAutofacModule>();
-            builder.RegisterModule<ExcelAutofacModule>();
             builder.RegisterModule<WebApiAutofacModule>();
         }
 

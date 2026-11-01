@@ -89,14 +89,4 @@ export class ApiOrdersService {
         catchError((res: any) => throwError(res.error.messages))
       );
   }
-
-  export$(orderIds: string[]): Observable<Blob> {
-    const url = `${this.endPoint}/export`;
-
-    return this.http.post(url, { orderIds }, { responseType: 'blob', observe: 'response' })
-      .pipe(
-        map((res: any) => res.body),
-        catchError((res: any) => throwError(res.error.messages))
-      );
-  }
 }

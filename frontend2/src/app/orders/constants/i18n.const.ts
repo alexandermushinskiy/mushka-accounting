@@ -3,8 +3,7 @@ export const I18N = {
     title: 'orders.orders',
     total: 'common.total',
     actions: {
-      addOrder: 'button.addOrder',
-      exportToCsv: 'common.exportToCsv'
+      addOrder: 'button.addOrder'
     }
   },
   table: {

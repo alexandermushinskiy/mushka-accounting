@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -13,7 +10,6 @@ using Mushka.Api.Controllers;
 using Mushka.Api.Converters.Products;
 using Mushka.Application.Products.Commands;
 using Mushka.Application.Products.Queries.Describe;
-using Mushka.Application.Products.Queries.Export;
 using Mushka.Application.Products.Queries.GetByCategory;
 using Mushka.Application.Products.Queries.GetCostPrice;
 using Mushka.Application.Products.Queries.GetSizes;
@@ -150,33 +146,5 @@ public class ProductsControllerTests
 
         var ok = result.Should().BeOfType<OkObjectResult>().Subject;
         ok.Value.Should().BeSameAs(readModel);
-    }
-
-    [Fact]
-    public async Task Export_SendsQuery_AndReturnsFile()
-    {
-        var productId = Guid.NewGuid();
-        var request = new ExportProductsRequestModel
-        {
-            Title = "Stock",
-            ProductIds = new[] { productId }
-        };
-        var content = new MemoryStream();
-        var readModel = new ExportProductsReadModel
-        {
-            Name = "mushka_export_products.xlsx",
-            ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            Content = content
-        };
-        _sender
-            .Setup(sender => sender.Send(It.Is<ExportProductsQuery>(query => query.Title == "Stock" && query.ProductIds.Single() == productId), It.IsAny<CancellationToken>()))
-            .Returns(new ValueTask<ExportProductsReadModel>(readModel));
-
-        var result = await _controller.Export(request, CancellationToken.None);
-
-        var file = result.Should().BeOfType<FileStreamResult>().Subject;
-        file.FileStream.Should().BeSameAs(content);
-        file.FileDownloadName.Should().Be(readModel.Name);
-        file.ContentType.Should().Be(readModel.ContentType);
     }
 }

@@ -53,16 +53,4 @@ export class SuppliesService {
     return this.http.delete(`${this.endPoint}/${supplyId}`).pipe(
       catchError((res: any) => throwError(res.error.messages)));
   }
-
-  export(supplyIds: string[], productIds: string[] = []): Observable<Blob> {
-    const requestBody = {
-      supplyIds: supplyIds,
-      productIds: productIds
-    };
-    return this.http.post(`${this.endPoint}/export`, requestBody, { responseType: 'blob', observe: 'response' })
-      .pipe(
-        map((res: any) => res.body),
-        catchError((res: any) => throwError(res.error.messages))
-      );
-  }
 }

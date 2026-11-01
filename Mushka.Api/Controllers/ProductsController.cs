@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Mediator;
@@ -8,7 +7,6 @@ using Mushka.Api.ClientModels.Product;
 using Mushka.Api.Converters.Products;
 using Mushka.Application.Products.Commands;
 using Mushka.Application.Products.Queries.Describe;
-using Mushka.Application.Products.Queries.Export;
 using Mushka.Application.Products.Queries.GetByCategory;
 using Mushka.Application.Products.Queries.GetCostPrice;
 using Mushka.Application.Products.Queries.GetSizes;
@@ -81,12 +79,5 @@ public class ProductsController : ControllerBase
     {
         var sizes = await sender.Send(new GetProductSizesQuery(), cancellationToken);
         return Ok(sizes);
-    }
-
-    [HttpPost("export")]
-    public async Task<IActionResult> Export([FromBody] ExportProductsRequestModel request, CancellationToken cancellationToken)
-    {
-        var file = await sender.Send(new ExportProductsQuery(request.Title, request.ProductIds?.ToList()), cancellationToken);
-        return File(file.Content, file.ContentType, file.Name);
     }
 }
