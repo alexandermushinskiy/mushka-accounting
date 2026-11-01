@@ -10,6 +10,8 @@ concurrency:
 
 permissions:
   contents: read
+  checks: write
+  pull-requests: write
 
 jobs:
   build-and-test:
@@ -37,11 +39,11 @@ jobs:
       - name: Unit tests
         run: >
           dotnet test --no-build --configuration Release
-          --logger "trx;LogFileName=test-results.trx"
+          --logger trx
           --results-directory ./TestResults
 
       - name: Upload test results
-        if: always()
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
           name: test-results
