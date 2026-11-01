@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autofac;
+using Microsoft.Extensions.DependencyInjection;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Infrastructure.DataAccess.Database;
 
@@ -10,20 +10,20 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
     internal class Storage : IStorage, IDisposable
     {
         private readonly MushkaDbContext dbContext;
-        private readonly ILifetimeScope lifetimeScope;
+        private readonly IServiceProvider serviceProvider;
         private bool isDisposed;
 
         public Storage(
             MushkaDbContext dbContext,
-            ILifetimeScope lifetimeScope)
+            IServiceProvider serviceProvider)
         {
             this.dbContext = dbContext;
-            this.lifetimeScope = lifetimeScope;
+            this.serviceProvider = serviceProvider;
         }
 
         public TRepository GetRepository<TRepository>() where TRepository : IRepositoryBase
         {
-            return lifetimeScope.Resolve<TRepository>(new TypedParameter(typeof(MushkaDbContext), dbContext));
+            return serviceProvider.GetRequiredService<TRepository>();
         }
 
         public async Task SaveAsync(CancellationToken cancellationToken = default(CancellationToken))

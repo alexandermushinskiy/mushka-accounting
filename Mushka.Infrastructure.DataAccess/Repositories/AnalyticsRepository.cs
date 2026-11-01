@@ -35,18 +35,29 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
         {
             var query = Context.Set<OrderProduct>()
                 .Where(op => op.Product.CategoryId == SocksCategoryId)
-                .Include(op => op.Product.Size)
-                .GroupBy(op => op.Product)
-                .Select(res => new { Product = res.Key, SoldQuantity = res.Sum(x => x.Quantity) })
+                .GroupBy(op => new
+                {
+                    op.Product.Name,
+                    SizeName = op.Product.Size.Name,
+                    op.Product.VendorCode
+                })
+                .Select(g => new
+                {
+                    g.Key.Name,
+                    g.Key.SizeName,
+                    g.Key.VendorCode,
+                    SoldQuantity = g.Sum(x => x.Quantity)
+                })
                 .Where(res => res.SoldQuantity > PopularityMinSoldCount);
 
-            query = popularity == Popularity.Popular ? query.OrderByDescending(res => res.SoldQuantity) : query.OrderBy(res => res.SoldQuantity);
-            
-            var result = await query.Take(topCount)
-                .ToListAsync(cancellationToken);
+            query = popularity == Popularity.Popular
+                ? query.OrderByDescending(res => res.SoldQuantity)
+                : query.OrderBy(res => res.SoldQuantity);
 
-            return result
-                .Select(res => new PopularProduct(res.Product.Name, res.Product.Size.Name, res.Product.VendorCode, res.SoldQuantity));
+            var result = await query.Take(topCount).ToListAsync(cancellationToken);
+
+            return result.Select(res =>
+                new PopularProduct(res.Name, res.SizeName, res.VendorCode, res.SoldQuantity));
         }
 
         public async Task<IEnumerable<PopularCity>> GetPopularCities(int topCount, CancellationToken cancellationToken = default(CancellationToken))
