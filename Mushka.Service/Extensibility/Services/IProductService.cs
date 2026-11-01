@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Mushka.Core.Validation;
 using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
-using Mushka.Service.Extensibility.Dto;
 
 namespace Mushka.Service.Extensibility.Services
 {
@@ -20,7 +19,5 @@ namespace Mushka.Service.Extensibility.Services
         Task<OperationResult<IEnumerable<Size>>> GetSizesAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         Task<OperationResult<ProductCostPrice>> GetCostPriceAsync(Guid productId, int count, CancellationToken cancellationToken = default(CancellationToken));
-
-        Task<OperationResult<ExportedFile>> ExportAsync(string title, IEnumerable<Guid> productIds, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

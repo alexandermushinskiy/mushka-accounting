@@ -10,8 +10,6 @@ using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Domain.Strings;
-using Mushka.Service.Extensibility.Dto;
-using Mushka.Service.Extensibility.ExternalApps;
 using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Extensibility.Services;
 
@@ -19,25 +17,19 @@ namespace Mushka.Service.Services
 {
     internal class ProductService : ServiceBase<Product>, IProductService
     {
-        private const string ExportContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-        private const string ExportFileName = "mushka_export_products.xlsx";
-
         private readonly IStorage storage;
         private readonly IProductRepository productRepository;
         private readonly ICategoryRepository categoryRepository;
         private readonly ICostPriceProvider costPriceProvider;
-        private readonly IExcelService excelService;
 
         public ProductService(
             IStorage storage,
             ICostPriceProvider costPriceProvider,
-            IExcelService excelService,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             this.storage = storage;
             this.costPriceProvider = costPriceProvider;
-            this.excelService = excelService;
 
             productRepository = storage.GetRepository<IProductRepository>();
             categoryRepository = storage.GetRepository<ICategoryRepository>();
@@ -170,16 +162,6 @@ namespace Mushka.Service.Services
             var sizes = (await productRepository.GetSizesAsync(cancellationToken)).ToList();
 
             return OperationResult<IEnumerable<Size>>.FromResult(sizes);
-        }
-
-        public async Task<OperationResult<ExportedFile>> ExportAsync(string title, IEnumerable<Guid> productIds, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var products = await productRepository.GetForExportAsync(prod => productIds.Contains(prod.Id), cancellationToken);
-
-            var fileContent = excelService.ExportProducts(title, products);
-            var exportedFile = new ExportedFile(ExportFileName, ExportContentType, fileContent);
-
-            return OperationResult<ExportedFile>.FromResult(exportedFile);
         }
      }
 }

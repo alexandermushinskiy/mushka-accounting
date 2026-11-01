@@ -59,16 +59,4 @@ export class ApiSuppliesService {
         catchError((res: any) => throwError(res.error.messages))
       );
   }
-
-  exportSupply$(supplyIds: string[], productIds: string[] = []): Observable<Blob> {
-    const requestBody = {
-      supplyIds,
-      productIds
-    };
-    return this.http.post(`${this.endPoint}/export`, requestBody, { responseType: 'blob', observe: 'response' })
-      .pipe(
-        map((res: any) => res.body),
-        catchError((res: any) => throwError(res.error.messages))
-      );
-  }
 }

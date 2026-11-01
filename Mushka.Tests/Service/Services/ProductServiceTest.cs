@@ -11,7 +11,6 @@ using Mushka.Core.Validation.Enums;
 using Mushka.Domain.Dto;
 using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
-using Mushka.Service.Extensibility.ExternalApps;
 using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Services;
 using Mushka.Tests.Common;
@@ -51,7 +50,6 @@ namespace Mushka.Tests.Service.Services
         private readonly Mock<IProductRepository> productRepositoryMock;
         private readonly Mock<ICategoryRepository> categoryRepositoryMock;
         private readonly Mock<ICostPriceProvider> costPriceProviderMock;
-        private readonly Mock<IExcelService> excelServiceMock;
         private readonly ProductService productService;
 
         public ProductServiceTest()
@@ -59,7 +57,6 @@ namespace Mushka.Tests.Service.Services
             productRepositoryMock = MockRepository.Create<IProductRepository>();
             categoryRepositoryMock = MockRepository.Create<ICategoryRepository>();
             costPriceProviderMock = MockRepository.Create<ICostPriceProvider>();
-            excelServiceMock = MockRepository.Create<IExcelService>();
 
             var loggerFactory = MockRepository
                 .Create<ILoggerFactory>()
@@ -74,7 +71,6 @@ namespace Mushka.Tests.Service.Services
             productService = new ProductService(
                 storageMock.Object,
                 costPriceProviderMock.Object,
-                excelServiceMock.Object,
                 loggerFactory);
         }
 

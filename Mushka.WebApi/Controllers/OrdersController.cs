@@ -13,7 +13,6 @@ using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Extensibility.Services;
 using Mushka.WebApi.ClientModels;
 using Mushka.WebApi.ClientModels.Order;
-using Mushka.WebApi.ClientModels.Order.Export;
 using Mushka.WebApi.ClientModels.Order.GetById;
 using Mushka.WebApi.ClientModels.Order.GetDefaultProducts;
 using Mushka.WebApi.ClientModels.Order.Search;
@@ -106,20 +105,6 @@ namespace Mushka.WebApi.Controllers
             var clientResponse = mapper.Map<OperationResult<bool>, ValidateOrderNumberResponseModel>(isExist);
 
             return actionResultProvider.Get(clientResponse);
-        }
-
-        [HttpPost("export")]
-        public async Task<IActionResult> Export([FromBody] ExportRequestModel exportRequestModel)
-        {
-            var exportValidationResponse = await orderService.ExportAsync(
-                exportRequestModel.Title,
-                exportRequestModel.OrderIds,
-                cancellationTokenSourceProvider.Get().Token);
-
-            return File(
-                exportValidationResponse.Data.FileContent,
-                exportValidationResponse.Data.ContentType,
-                exportValidationResponse.Data.Name);
         }
     }
 }

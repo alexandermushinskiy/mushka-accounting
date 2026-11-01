@@ -52,18 +52,6 @@ export class OrdersService {
       catchError((res: any) => throwError(res.error.messages)));
   }
 
-  export(orderIds: string[]): Observable<Blob> {
-    const requestBody = {
-      orderIds: orderIds
-    };
-
-    return this.http.post(`${this.endPoint}/export`, requestBody, { responseType: 'blob', observe: 'response' })
-      .pipe(
-        map((res: any) => res.body),
-        catchError((res: any) => throwError(res.error.messages))
-      );
-  }
-
   validateOrderNumber(number: string ): Observable<boolean> {
     return this.http.get(`${this.endPoint}/validate-number/${number}`).pipe(
       delay(1000),

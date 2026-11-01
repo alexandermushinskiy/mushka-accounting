@@ -87,17 +87,4 @@ export class ApiProductsService {
       );
   }
 
-  export(categoryId: string, productIds: string[]): Observable<Blob> {
-    const requestBody = {
-      categoryId,
-      productIds
-    };
-
-    return this.http.post(`${this.endPoint}/export`, requestBody, { responseType: 'blob', observe: 'response' })
-      .pipe(
-        map((res: any) => res.body),
-        catchError((res: any) => throwError(res.error.messages))
-      );
-  }
-
 }

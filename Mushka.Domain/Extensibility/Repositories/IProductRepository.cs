@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Mushka.Domain.Entities;
@@ -16,7 +15,5 @@ namespace Mushka.Domain.Extensibility.Repositories
         //Task<ProductSize> UpdateProductSize(ProductSize productSize, CancellationToken cancellationToken);
 
         Task<IEnumerable<Size>> GetSizesAsync(CancellationToken cancellationToken);
-
-        Task<IEnumerable<Product>> GetForExportAsync(Expression<Func<Product, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

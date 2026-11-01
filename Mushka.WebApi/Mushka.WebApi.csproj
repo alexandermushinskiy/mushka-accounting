@@ -18,7 +18,6 @@
     <ProjectReference Include="..\Mushka.Core\Mushka.Core.csproj" />
     <ProjectReference Include="..\Mushka.Domain\Mushka.Domain.csproj" />
     <ProjectReference Include="..\Mushka.Infrastructure.DataAccess\Mushka.Infrastructure.DataAccess.csproj" />
-    <ProjectReference Include="..\Mushka.Infrastructure.Excel\Mushka.Infrastructure.Excel.csproj" />
     <ProjectReference Include="..\Mushka.Service\Mushka.Service.csproj" />
   </ItemGroup>
 

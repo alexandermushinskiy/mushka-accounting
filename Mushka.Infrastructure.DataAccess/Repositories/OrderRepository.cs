@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -108,16 +107,6 @@ namespace Mushka.Infrastructure.DataAccess.Repositories
             await Context.Set<OrderProduct>()
                 .Where(sp => sp.ProductId == productId)
                 .SumAsync(sp => sp.Quantity, cancellationToken);
-
-        public async Task<IEnumerable<Order>> GetForExportAsync(Expression<Func<Order, bool>> predicate, CancellationToken cancellationToken = default)
-        {
-            return await Context.Orders
-                .Where(predicate)
-                .AsNoTracking()
-                .Include(order => order.Products)
-                    .ThenInclude(prod => prod.Product.Size)
-                .ToListAsync(cancellationToken);
-        }
 
         public override Order Add(Order order)
         {

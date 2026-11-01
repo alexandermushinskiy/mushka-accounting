@@ -7,7 +7,6 @@ using Mushka.Api.ClientModels.Order;
 using Mushka.Api.Converters.Orders;
 using Mushka.Application.Orders.Commands;
 using Mushka.Application.Orders.Queries.Describe;
-using Mushka.Application.Orders.Queries.Export;
 using Mushka.Application.Orders.Queries.GetDefaultProducts;
 using Mushka.Application.Orders.Queries.Search;
 using Mushka.Application.Orders.Queries.ValidateNumber;
@@ -74,12 +73,5 @@ public class OrdersController : ControllerBase
     {
         var result = await sender.Send(new ValidateOrderNumberQuery(request.OrderNumber), cancellationToken);
         return Ok(result);
-    }
-
-    [HttpPost("export")]
-    public async Task<IActionResult> Export([FromBody] ExportOrdersRequestModel request, CancellationToken cancellationToken)
-    {
-        var file = await sender.Send(new ExportOrdersQuery(request.Title, request.OrderIds), cancellationToken);
-        return File(file.Content, file.ContentType, file.Name);
     }
 }

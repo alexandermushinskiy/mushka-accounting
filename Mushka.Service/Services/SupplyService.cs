@@ -12,29 +12,22 @@ using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Domain.Models;
 using Mushka.Domain.Strings;
 using Mushka.Service.Extensibility.Dto;
-using Mushka.Service.Extensibility.ExternalApps;
 using Mushka.Service.Extensibility.Services;
 
 namespace Mushka.Service.Services
 {
     internal class SupplyService : ServiceBase<Supply>, ISupplyService
     {
-        private const string ExportContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-        private const string ExportFileName = "mushka_export_supply_products.xlsx";
-
         private readonly IStorage storage;
         private readonly ISupplyRepository supplyRepository;
         private readonly IProductRepository productRepository;
-        private readonly ISupplyExcelService supplyExcelService;
 
         public SupplyService(
             IStorage storage,
-            ISupplyExcelService supplyExcelService,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             this.storage = storage;
-            this.supplyExcelService = supplyExcelService;
 
             supplyRepository = storage.GetRepository<ISupplyRepository>();
             productRepository = storage.GetRepository<IProductRepository>();
@@ -155,41 +148,6 @@ namespace Mushka.Service.Services
             await storage.SaveAsync(cancellationToken);
 
             return OperationResult.Success();
-        }
-
-        public async Task<OperationResult<ExportedFile>> ExportAsync(IEnumerable<Guid> supplyIds, IEnumerable<Guid> productIds, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var includes = new[]
-            {
-                nameof(Supply.Supplier),
-                nameof(Supply.Products)
-            };
-
-            IEnumerable<Supply> supplies =
-                (await supplyRepository.GetAsync(sup => supplyIds.Contains(sup.Id), includes, cancellationToken))
-                    .OrderBy(supply => supply.Supplier.Name)
-                    .ThenBy(supply => supply.RequestDate)
-                    .ToList();
-
-            var productIdsList = productIds.ToList();
-            if (productIdsList.Count == 0)
-            {
-                productIdsList = supplies.SelectMany(sup => sup.Products)
-                    .Select(supProd => supProd.ProductId)
-                    .ToList();
-            }
-
-            var products = (productIdsList.Count == 0
-                ? await productRepository.GetAllAsync(cancellationToken)
-                : await productRepository.GetAsync(prod => productIdsList.Contains(prod.Id), cancellationToken))
-                    .OrderBy(prod => prod.Name)
-                    .ThenBy(prod => prod.VendorCode)
-                    .ToList();
-            
-            var fileContent = supplyExcelService.ExportSupplies(supplies, products);
-            var exportedFile = new ExportedFile(ExportFileName, ExportContentType, fileContent);
-
-            return OperationResult<ExportedFile>.FromResult(exportedFile);
         }
     }
 }

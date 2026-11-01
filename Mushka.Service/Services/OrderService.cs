@@ -12,8 +12,6 @@ using Mushka.Domain.Entities;
 using Mushka.Domain.Extensibility.Repositories;
 using Mushka.Domain.Models;
 using Mushka.Domain.Strings;
-using Mushka.Service.Extensibility.Dto;
-using Mushka.Service.Extensibility.ExternalApps;
 using Mushka.Service.Extensibility.Providers;
 using Mushka.Service.Extensibility.Services;
 
@@ -21,25 +19,19 @@ namespace Mushka.Service.Services
 {
     internal class OrderService : ServiceBase<Order>, IOrderService
     {
-        private const string ExportContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-        private const string ExportFileName = "mushka_export_orders.xlsx";
-
         private readonly IStorage storage;
         private readonly IOrderRepository orderRepository;
         private readonly IProductRepository productRepository;
         private readonly ICustomerRepository customerRepository;
-        private readonly IExcelService excelService;
         private readonly IOrderCustomerProvider orderCustomerProvider;
 
         public OrderService(
             IStorage storage,
-            IExcelService excelService,
             IOrderCustomerProvider orderCustomerProvider,
             ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             this.storage = storage;
-            this.excelService = excelService;
             this.orderCustomerProvider = orderCustomerProvider;
 
             orderRepository = storage.GetRepository<IOrderRepository>();
@@ -212,16 +204,6 @@ namespace Mushka.Service.Services
             var isValid = !await orderRepository.IsExistAsync(order => order.Number == orderNumber, cancellationToken);
 
             return OperationResult<bool>.FromResult(isValid);
-        }
-
-        public async Task<OperationResult<ExportedFile>> ExportAsync(string title, IEnumerable<Guid> orderIds, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var orders = await orderRepository.GetForExportAsync(order => orderIds.Contains(order.Id), cancellationToken);
-
-            var fileContent = excelService.ExportOrders(title, orders);
-            var exportedFile = new ExportedFile(ExportFileName, ExportContentType, fileContent);
-
-            return OperationResult<ExportedFile>.FromResult(exportedFile);
         }
 
         private async Task TryDeleteCustomerWithoutOrders(Guid oldCustomerId, Guid updatedCustomerId, CancellationToken cancellationToken)
