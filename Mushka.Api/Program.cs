@@ -14,6 +14,8 @@ using Mushka.Api.Converters.Products;
 using Mushka.Api.Converters.Suppliers;
 using Mushka.Api.Converters.Supplies;
 using Mushka.Api.Filters;
+using Mushka.Application.Analytics.Converters;
+using Mushka.Application.Analytics.Providers;
 using Mushka.Application.Behaviors;
 using Mushka.Application.Categories.Converters;
 using Mushka.Application.CorporateOrders.Converters;
@@ -95,6 +97,9 @@ static void RegisterServices(ContainerBuilder container)
 {
     container.RegisterModule<CoreAutofacModule>();
     container.RegisterModule<DataAccessAutofacModule>();
+
+    container.RegisterType<AnalyticsPeriodProvider>().As<IAnalyticsPeriodProvider>();
+    container.RegisterType<AnalyticConverter>().As<IAnalyticConverter>();
 
     container.RegisterType<CreateExpenseConverter>().As<ICreateExpenseConverter>();
     container.RegisterType<UpdateExpenseConverter>().As<IUpdateExpenseConverter>();
